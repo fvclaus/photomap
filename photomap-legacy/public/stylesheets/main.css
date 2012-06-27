@@ -1,0 +1,288 @@
+/* Photo Map Style */
+/* variable declaration */
+/*end variable declaration */
+/* mixins */
+transition {
+  -webkit-transition: all 0.2s ease-in-out;
+  -moz-transition: all 0.2s ease-in-out;
+  -o-transition: all 0.2s ease-in-out;
+  -ms-transition: all 0.2s ease-in-out;
+  transition: all 0.2s ease-in-out;
+}
+/* end mixins */
+/* imports */
+.mp-login {
+  position: absolute;
+  width: 25%;
+  height: 25%;
+  top: 50%;
+  left: 50%;
+}
+.mp-login input {
+  float: right;
+}
+.mp-dialog > div > * {
+  margin-top: 5px;
+}
+.mp-dialog > * {
+  margin-top: 5px;
+}
+.mp-dialog input,
+.mp-dialog textarea {
+  margin-left: 10px;
+  width: 70%;
+  float: left;
+}
+.mp-dialog textarea {
+  height: 100px;
+}
+.mp-dialog label {
+  width: 20%;
+  float: left;
+}
+.mp-dialog input[name=submit] {
+  position: relative;
+  left: 20%;
+}
+.mp-dialog input[type="checkbox"] {
+  float: right;
+  margin-right: 10px;
+  width: 20px;
+}
+.mp-dialog .mp-dialog-long {
+  width: 80%;
+}
+.mp-album-zoom {
+  width: 10%;
+  height: auto;
+  position: absolute;
+  display: none;
+}
+.mp-album-overlay {
+  position: absolute;
+  padding-left: 1%;
+  background: #f4f4f4;
+}
+.mp-album-wrapper {
+  width: 49%;
+  height: 69%;
+  overflow: hidden;
+  float: left;
+  padding-left: 1%;
+  background: #f4f4f4 url("../images/bgalbum.png") no-repeat center center;
+}
+.mp-album img {
+  display: block;
+  float: left;
+  padding: 2px;
+  background: #f4f4f4;
+  display: block;
+  width: 19%;
+  height: 20%;
+}
+.mp-album img transition,
+.mp-album img.current {
+  background: #306d12;
+}
+.mp-album img.visited {
+  background: #d60000;
+}
+.mp-album img imghover,
+.mp-album img.current img {
+  opacity: 0.8;
+}
+.mp-album-image {
+  display: block;
+  text-align: center;
+  vertical-align: middle;
+  position: relative;
+}
+.mp-album-image img {
+  vertical-align: middle;
+  max-height: 95%;
+  max-width: 95%;
+}
+.mp-album-overlay-close {
+  position: absolute;
+  width: 5%;
+  height: auto;
+  top: 0%;
+  right: 0%;
+  cursor: pointer;
+  z-index: 100;
+}
+.mp-album-nav img {
+  position: absolute;
+  width: 5%;
+  height: auto;
+  top: 50%;
+  margin-top: -2.5%;
+  cursor: pointer;
+  z-index: 10;
+}
+.mp-album-nav img.mp-album-nav-next {
+  left: auto;
+  right: 0%;
+}
+.mp-image-loading-small {
+  width: 5%;
+  height: auto;
+  position: absolute;
+  display: none;
+}
+.mp-image-zoom {
+  width: 5%;
+  height: auto;
+  position: absolute;
+  display: none;
+  z-index: 999;
+}
+#mp-image-overlay-close {
+  right: 4%;
+  left: auto;
+  float: none;
+}
+.mp-image-overlay-close,
+.mp-image-nav img {
+  position: absolute;
+  width: 3%;
+  height: auto;
+  left: 1%;
+  cursor: pointer;
+  z-index: 10;
+}
+.mp-image-overlay-close.mp-image-nav-next,
+.mp-image-nav img.mp-image-nav-next {
+  left: auto;
+  right: 1%;
+}
+.mp-image-overlay {
+  position: fixed;
+  z-index: 1000;
+  top: 0px;
+  left: 0px;
+  background: transparent url("../images/black.png") repeat top left;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+.mp-image-overlay .mp-image-overlay-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border: 5px solid #fff;
+  -moz-box-shadow: 1px 1px 3px #000;
+  -webkit-box-shadow: 1px 1px 3px #000;
+  box-shadow: 1px 1px 3px #000;
+}
+.mp-image-overlay-desc {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  background: transparent url("../images/black.png") repeat top left;
+}
+.mp-loading {
+  background: transparent url("../images/ajax-loader.gif") no-repeat center center;
+  width: 48px;
+  height: 48px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -24px 0 0 -24px;
+  text-indent: -9000px;
+}
+.mp-description-wrapper {
+  position: absolute;
+  overflow: auto;
+  text-align: center;
+  padding-top: 1%;
+  height: 75%;
+  font-size: 100%;
+}
+.mp-status-wrapper {
+  width: 100%;
+  float: left;
+}
+.mp-options-wrapper {
+  width: 100%;
+  height: 25%;
+  border-top: 5px solid #fff;
+  background: #333;
+  text-align: center;
+}
+.mp-description-name {
+  position: absolute;
+}
+.mp-options {
+  position: relative;
+  float: left;
+}
+.mp-options img {
+  cursor: pointer;
+}
+.mp-status-image {
+  float: right;
+  color: #fff;
+  position: absolute;
+  right: 1%;
+}
+/* end imports */
+/* css */
+/* highest level styling */
+body {
+  height: 100%;
+  overflow: hidden;
+}
+html {
+  height: 100%;
+}
+.mp-container {
+  background: #f4f4f4;
+  border: 5px solid #fff;
+  min-height: 100%;
+  margin: 0 auto;
+  -moz-box-shadow: 1px 1px 3px #cac4ab;
+  -webkit-box-shadow: 1px 1px 3px #cac4ab;
+  box-shadow: 1px 1px 3px #cac4ab;
+}
+.mp-invisible {
+  visibility: hidden;
+  position: absolute;
+  whitespace: nowrap;
+}
+.mp-title-wrapper {
+  background: #333;
+  border-top: 5px solid #fff;
+  border-bottom: 5px solid #fff;
+  width: 100%;
+  height: 5%;
+}
+.mp-title-name {
+  position: absolute;
+}
+.mp-font {
+  font-family: 'Rokkitt', sans-serif;
+  font-size: 120%;
+  text-align: center;
+}
+.mp-map-wrapper {
+  width: 50%;
+  height: 69%;
+  float: left;
+  background: #f4f4f4;
+}
+.mp-label {
+  font-weight: 700;
+  text-shadow: 1px 1px 1px #000;
+  text-align: center;
+  margin: auto;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #fff;
+  max-width: 50%;
+}
+.disabled {
+  opacity: 0.3;
+}

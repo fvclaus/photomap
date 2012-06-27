@@ -1,0 +1,21 @@
+!!! html
+head
+	title Login
+	meta(property="og:title",content="Photo Map")
+	meta(property="og:type",content="website")
+	meta(property="og:image",content="#{imgurl}")
+	meta(property="og:url",content="#{url}")
+	link(rel="shortcut icon",href="images/icon.png")
+	meta(property="og:description",content="Karte mit Photos und Beschreibungen")
+	link(rel="stylesheet",href="/stylesheets/main.css")
+	script(type="text/javascript",src="/javascripts/jquery.all.min.js")
+body
+	div.mp-login
+		form(action="/",method="get")
+			fieldset
+				legend Login
+				p User 
+					input(type="text",name="login")
+				p Password
+					input(type="text",name="password")
+				input(type="submit",value="Einloggen")

@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<album>
+	<name>Thailand 2011</name>
+	<description>A wonderful trip</description>
+
+		<places>
+			<name>Bangkok</name>		
+				<lat>13.696693336737654</lat>
+				<lng>100.57159423828125</lng>
+			
+
+				<photos>
+					<thumb>photos/Bangkok/thumbs/1.jpg</thumb>
+					<source>photos/Bangkok/1.jpg</source>
+					<description>Some image description</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>
+				<photos>
+					<thumb>photos/Bangkok/thumbs/2.jpg</thumb>					
+					<source>photos/Bangkok/2.jpg</source>
+					<description>Some image description</description>
+										<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>
+				<photos>
+					<thumb>photos/Bangkok/thumbs/3.jpg</thumb>					
+					<source>photos/Bangkok/3.jpg</source>
+					<description>Some image description</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>	
+
+		</places>
+		<places>
+			<name>Phuket</name>
+			
+				<lat>7.965397563771541</lat>
+				<lng>98.33999633789062</lng>
+		
+
+				<photos>
+					<thumb>photos/Phuket/thumbs/1.jpg</thumb>
+					<source>photos/Phuket/1.jpg</source>
+					<description>Some image description3</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>
+				<photos>
+					<thumb>photos/Phuket/thumbs/2.jpg</thumb>					
+					<source>photos/Phuket/2.jpg</source>
+					<description>Some image description</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>
+				<photos>
+					<thumb>photos/Phuket/thumbs/3.jpg</thumb>					
+					<source>photos/Phuket/3.jpg</source>
+					<description>Some image description</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>
+
+		</places>
+		<places>
+			<name>Myeik</name>
+			
+				<lat>12.43844</lat>
+				<lng>98.60878</lng>
+			
+
+				<photos>
+					<thumb>photos/Myeik/thumbs/1.jpg</thumb>
+					<source>photos/Myeik/1.jpg</source>
+					<description>Some image description3</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>
+				<photos>
+					<thumb>photos/Myeik/thumbs/2.jpg</thumb>					
+					<source>photos/Myeik/2.jpg</source>
+					<description>Some image description</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+				</photos>
+				<photos>
+					<thumb>photos/Myeik/thumbs/3.jpg</thumb>					
+					<source>photos/Myeik/3.jpg</source>
+					<description>Some image description</description>
+					<longDescription> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </longDescription>
+
+				</photos>
+
+		</places>
+
+</album>

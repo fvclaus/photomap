@@ -1,0 +1,112 @@
+!!! html
+html
+	head 
+		title Photo Map
+		meta(charset="UTF-8")
+		meta(name="viewport",content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no")
+		link(rel="shortcut icon",href="images/icon.png")
+		link(rel="stylesheet",type="text/css",href="/stylesheets-plain/jquery.jscrollpane.css")
+		link(rel="stylesheet",type="text/css",href="/stylesheets/main.css")
+		link(rel="stylesheet",type="text/css",href="/fancybox/jquery.fancybox-1.3.4.css")
+		link(href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow&v1",rel="stylesheet",type="text/css")
+		link(href="http://fonts.googleapis.com/css?family=Rokkitt:400,700",rel="stylesheet",type="text/css")
+
+		script(id="galleryTmpl",type="text/x-jquery-tmpl")
+						<div class="mp-album-outer">
+						<div class="mp-album">
+						{{each(i, option) tmplPhotosData}}
+						<img src="${tmplPhotosData[i]}"/></img>
+						{{/each}}
+						</div>
+						</div>			
+
+		script(id="galleryFullscreenTmpl",type="text/x-jquery-tmpl")
+						<div id="mp-image-overlay" class="mp-image-overlay">
+						<img src="images/ajax-loader.gif" class="mp-loading">
+						<img class="mp-image-zoom" src="images/zoom.png" />
+						<img class="mp-image-full" src="${tmplPhotoData.source}" style="display:none;"/>
+						<div class="mp-image-overlay-desc">
+						<div class="mp-image-nav">
+						<img src="images/image-arrow-left.png" class="mp-image-nav-prev"/>
+						<img src="images/image-arrow-right.png" class="mp-image-nav-next"/>
+						<img src="images/close.png" id="mp-image-overlay-close" class="mp-image-overlay-close"/>
+						</div>
+						<h2 class="mp-label">${tmplPhotoData.description}</h2>
+						</div>
+						</div>
+	script(type="text/javascript",src="/javascripts/jquery.all.min.js")
+	script(type="text/javascript",src="/javascripts/jquery.tmpl.min.js")
+	script(src="http://maps.google.com/maps/api/js?sensor=false",type="text/javascript")
+	script(type="text/javascript",src="/javascripts/jquery.jscrollpane.min.js")
+	script(type="text/javascript",src="/javascripts/jquery.mousewheel.min.js")
+	script(type="text/javascript",src="/javascripts/tzoom.min.js")
+	script(type="text/javascript",src="/javascripts/jquery.cookie.js")
+	script(type="text/javascript",src="/javascripts/jquery.json.js")		
+	script(type="text/javascript",src="/javascripts/ie.js")
+	script(type="text/javascript",src="/javascripts/date.js")
+	script(type="text/javascript",src="/javascripts/noconsole.js")
+
+	script(type="text/javascript",src="/javascripts/main/UI/UIFullscreen.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UISlideshow.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UIAlbum.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UIState.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UIInput.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UIControls.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UITitle.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UIInformation.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UITools.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UIGallery.js")
+	script(type="text/javascript",src="/javascripts/main/UI/UI.js")
+
+	script(type="text/javascript",src="/javascripts/main/ClientState.js")		
+	script(type="text/javascript",src="/javascripts/main/ClientServer.js")
+
+	script(type="text/javascript",src="/javascripts/main/Map.js")
+
+	script(type="text/javascript",src="/javascripts/main/Marker.js")
+	script(type="text/javascript",src="/javascripts/main/Photo.js")
+	script(type="text/javascript",src="/javascripts/main/Place.js")
+		
+	script(type="text/javascript",src="/javascripts/main/Main.js");
+
+
+
+
+body
+	div.mp-container#mp-container
+		div.mp-title-wrapper
+			div.mp-title
+				p.mp-label.mp-title-name Photo Map
+		div.mp-map-wrapper#map
+		div.mp-album-wrapper#mp-album-wrapper
+		div.mp-album-overlay#mp-album-overlay
+			div.mp-album-nav
+				img.mp-album-nav-prev(src="images/album-arrow-left.png") Previous
+				img.mp-album-nav-next(src="images/album-arrow-right.png") Next
+			img.mp-image-loading-small(src="../images/ajax-loader.gif")
+			div.mp-album-image
+				img.mp-album-zoom(src="images/magnify.png")
+				img
+			img.mp-album-overlay-close(src="images/close.png") Close overlay
+		div.mp-status-wrapper
+				div.mp-options-wrapper
+					div.mp-status-image.mp-font
+					div.mp-options
+						a(href="/logout")
+							img.mp-options.mp-option-logout(src="images/logout.png")
+						img.mp-options.mp-option-center(src="images/center.png")
+						img.mp-options.mp-option-delete(src="images/delete.png")
+						img.mp-options.mp-option-modify(src="images/modify.png")
+						img.mp-options.mp-option-add(src="images/add.png")
+					div
+						div
+							p.mp-label.mp-font.mp-description-name
+
+				div.mp-font.mp-description-wrapper
+
+	script(type="text/javascript",src="/javascripts/main/Init.js")
+
+
+
+
+

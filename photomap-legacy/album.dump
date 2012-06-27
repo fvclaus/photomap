@@ -1,0 +1,5 @@
+PRAGMA foreign_keys=OFF;
+BEGIN TRANSACTION;
+CREATE TABLE albums(id integer unique primary key, name text not null, desc text );
+INSERT INTO "albums" VALUES(1,'Japan 2011/2012',NULL);
+COMMIT;

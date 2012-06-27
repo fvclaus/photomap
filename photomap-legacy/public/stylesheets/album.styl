@@ -1,0 +1,79 @@
+/* img album and slideshow */
+$album-width = 49%
+.mp-album-zoom
+  width 10%
+  height auto
+  position absolute
+  display none
+
+//sized and positioned with js
+.mp-album-overlay
+  position absolute
+  padding-left 1%
+  background $background-color-light
+
+//reserve 1% for scrollbar 
+.mp-album-wrapper
+  width $album-width
+  height $height-main
+  overflow hidden
+  float left
+  padding-left 1%
+  background $background-color-light url(../images/bgalbum.png) no-repeat center center
+
+
+.mp-album img
+  display block
+  float left
+  padding 2px
+  background $background-color-light
+  display block
+  width 19% //trial and error with debugger
+  height 20%
+  transition
+  &.current
+    background $current-color
+  &.visited
+    background $visited-color
+  imghover, &.current img
+    opacity 0.8
+
+// display was table-cell before -> incompatible with oper
+// div around slideshow image and zoom
+.mp-album-image
+  display block
+  text-align center
+  vertical-align middle
+  position relative
+  img
+    vertical-align middle
+    max-height 95%
+    max-width 95%
+    border($box-shadow-light-grey)
+
+.mp-album-overlay-close
+  position absolute
+  width 5%
+  height auto
+  top 0%
+  right 0%
+  cursor pointer
+  z-index 100
+
+.mp-album-nav img
+  position absolute
+  width 5%
+  height auto
+  top 50%
+  margin-top -2.5%
+  cursor pointer
+  z-index 10
+  &.mp-album-nav-next
+    left auto
+    right 0%
+
+.mp-image-loading-small
+  width 5%
+  height auto
+  position absolute
+  display none

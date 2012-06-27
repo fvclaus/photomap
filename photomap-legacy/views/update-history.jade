@@ -1,0 +1,11 @@
+div
+	form.mp-dialog(method="post",action="update-history")
+		input(type="hidden",name="mp-history-content")
+		input(type="hidden",name="mp-history-method")
+		div
+			label(for="mp-history-slot") Name
+			input(type="text",name="mp-history-slot",required="required",min-length=4)
+		div 
+			label.mp-dialog-long(for="mp-history-save") Automatisch speichern
+			input(type="checkbox",name="mp-history-save");
+		input(type="submit",value="Speichern")
