@@ -1,5 +1,7 @@
 upload/
 .metadata/
+*.*#
+*.dump
 *.pyc
 *.aux
 *.log
