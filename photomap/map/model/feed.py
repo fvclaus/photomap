@@ -6,11 +6,12 @@ Created on Jun 22, 2012
 from django.contrib.auth.models import User
 from django.db import models
 from album import Album
+from map import appsettings
 
 class Feed(models.Model):
     album = models.ForeignKey(Album)
     user = models.ForeignKey(User)
     
     class Meta:
-        pass
+        app_label = appsettings.APP_NAME
     

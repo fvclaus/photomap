@@ -22,7 +22,7 @@ for package in appsettings.MODEL_DEFINITION :
             if filename.search(name) or ext == ".pyc":
                 continue
             module = __name__ + "." + package + "." + name
-            print "Trying to import %s" % (module)
+#            print "Trying to import %s" % (module)
             __import__(module)
 
     except Exception as e:
