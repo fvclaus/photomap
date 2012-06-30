@@ -13,6 +13,7 @@ setup_environ(settings)
 
 
 def loaddefinitions(packages, importall = False, nglobals = globals()):
+    " Import every module in packages or import every definition from every module in packages. Probably not compatible with nested packages."  
     
     filename = re.compile("__init__|test")
     

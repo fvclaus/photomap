@@ -1,13 +1,15 @@
-"""
-This file demonstrates writing tests using the unittest module. These will pass
-when you run "manage.py test".
+#===============================================================================
+# TESTS
+#===============================================================================
+# Tests are spread over the test package.
+#------------------------------------------------------------------------------ 
 
-Replace this with more appropriate tests for your application.
-"""
 from map import loadtests
+
+# loads every definition from every module in the test package into the global namespace 
 loadtests(nglobals = globals())
 
-#from map.test.photocontroller import PhotoController
+
 
 
 
