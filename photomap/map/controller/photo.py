@@ -12,11 +12,14 @@ from django.utils.datastructures import MultiValueDictKeyError
 
 
 # TODO: maybe this can be abstracted by using middleware that checks for the existence of an error string and renders the error message
-def insert(request):
+def delete(request):
     try:
         id = request.POST["id"]
         Photo.objects.get(pk = id).delete()
         return success()
     except (KeyError, Photo.DoesNotExist), e:
         return error(str(e))
+    
+def insert(request):
+    pass
     
