@@ -1,4 +1,6 @@
 upload/
+photomap/*.sql
+photomap/static/photo
 .metadata/
 *.*#
 *.dump
