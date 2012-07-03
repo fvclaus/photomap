@@ -11,9 +11,12 @@ from place import Place
 
 class Photo(Description):
   
-    thumb = models.ImageField(upload_to=settings.PHOTO_PATH, height_field=75 , width_field=75)
-    photo = models.ImageField(upload_to=settings.PHOTO_PATH)
+    thumb = models.ImageField(upload_to = settings.PHOTO_PATH)
+    photo = models.ImageField(upload_to = settings.PHOTO_PATH)
     place = models.ForeignKey(Place)
+    
+    def __unicode__(self):
+        return "%s in %s" % (self.title, self.place.title)
     
     class Meta(Description.Meta):
         pass
