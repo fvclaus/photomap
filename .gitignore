@@ -1,5 +1,6 @@
 upload/
 photomap/*.sql
+photomap-legacy/*.sqlite
 photomap/static/photo
 .metadata/
 *.*#
@@ -20,5 +21,6 @@ photomap/static/photo
 *.*~
 *.acn
 *.css
+*.project
 CACHE/
 .sass-cache

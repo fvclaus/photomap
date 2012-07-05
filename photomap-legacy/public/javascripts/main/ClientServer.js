@@ -1,9 +1,9 @@
-  ClientServer = function() {
+ClientServer = function() {
 	// array of places
 	this.places = new Array();
-    };
+};
 
-    ClientServer.prototype = {
+ClientServer.prototype = {
 	init				: function() {
 	    var instance 	= this;
 	    // make an AJAX call to get the places from the XML file, and display them on the Map
@@ -63,7 +63,7 @@
 		    if (photo == null){
 			return;
 		    }
-		    nullIndex = place.photos.firstUndef();
+		    nullIndex = arrayExtension.firstUndef(place.photos);
 		    if (nullIndex != -1){
 			place.photos[nullIndex] = photo;
 		    }
@@ -85,4 +85,4 @@
 	    information.albumName = this.name;
 	    information.albumDesc = this.desc;
 	}
-    };
+};

@@ -12,17 +12,21 @@ $album-width = 49%
   padding-left 1%
   background $background-color-light
 
-//reserve 1% for scrollbar 
-.mp-album-wrapper
-  width $album-width
-  height $height-main
-  overflow hidden
+ 
+.mp-album
   float left
-  padding-left 1%
+  overflow hidden
+  width 50%
+  height $height-main
   background $background-color-light url(../images/bgalbum.png) no-repeat center center
+  
+//reserve 1% (of body-width) for scrollbar
+.mp-album-wrapper
+  width 98%
+  height 100%
+  padding-left 2%
 
-
-.mp-album img
+.mp-gallery img
   display block
   float left
   padding 2px

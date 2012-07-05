@@ -1,4 +1,4 @@
-// place stores severall pictures and is itself stored in the map
+// place stores several pictures and is itself stored in the map
 Place = function(data) {
     this.name = data.name; // will be used for the Map Marker title (mouseover on the map)
     this.id = data.id;
@@ -29,7 +29,7 @@ Place = function(data) {
 	instance._clear();
 	main.getUIState().setCurrentPlace(instance);
 
-	// set title in mp-options bar
+	// set title in mp-controls bar
 	information = main.getUI().getInformation();
 	information.setInfo(instance);
 	information.hideImageNumber();
@@ -89,7 +89,7 @@ Place.prototype = {
     _clear  : function(){
 	// hide galleryAlbum container if present
 	main.getUI().getGallery().hide();
-	// $("div.mp-album-outer").remove();
+	// $("div.mp-gallery-outer").remove();
     },
     checkIconStatus : function(){
 	var status = true;

@@ -1,4 +1,3 @@
-
 Map	= function() {		
     // google.maps.Map
     this.map			= null;
@@ -59,6 +58,7 @@ Map	= function() {
     this.mode			= 'normal';	
     this._create();		
 };
+
 Map.prototype = {
     // initialize the google.maps.Map instance.
     _create				: function() {

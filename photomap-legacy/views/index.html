@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="de" >
+	<head>
+		<title>Photo Map</title>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<link rel="shortcut icon" href="images/icon.png" />
+		<link rel="stylesheet" type="text/css" href="/stylesheets-plain/jquery.jscrollpane.css" />
+		<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+		<link rel="stylesheet" type="text/css" href="/fancybox/jquery.fancybox-1.3.4.css" />
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=PT+Sans+Narrow&v1" />
+		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rokkitt:400,700" />
+
+		
+		<script id="galleryTmpl" type="text/html">
+			<div class="mp-gallery-outer">
+				<div class="mp-gallery">
+					<% for (thumb in this.thumbAddress) { %>
+					<img class="overlay-description" src="<%= this.thumbAddress[thumb] %>" rel="#mp-photo-description"></img>
+					<% }; %>
+				</div>
+			</div>
+		</script>
+						
+		<script id="descriptionTmpl" type="text/html">
+			<div class="mp-font mp-description-wrapper">
+				<div class="mp-font mp-status-image"></div>
+				<p class="mp-font mp-label mp-description-name"></p>
+				<div class="mp-font mp-description"></div>
+			</div>	
+		</script>
+		
+		<script id="galleryFullscreenTmpl" type="text/html">
+			<div id="mp-image-overlay" class="mp-image-overlay">
+				<img class="mp-loading"></img>
+				<img class="mp-image-zoom" src="images/zoom.png" ></img>
+				<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
+				<div class="mp-image-overlay-desc">
+					<div class="mp-image-nav">
+						<img class="mp-image-nav-prev" src="images/image-arrow-left.png" ></img>
+						<img class="mp-image-nav-next" src="images/image-arrow-right.png" ></img>
+						<img id="mp-image-overlay-close" class="mp-image-overlay-close" src="images/close.png" ></img>
+					</div>
+					<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
+				</div>
+			</div>
+		</script>
+			
+		<script type="text/javascript" src="/javascripts/main/Extensions.js" ></script>
+		
+		<script type="text/javascript" src="/javascripts/jquery.all.min.js" ></script>
+		<script type="text/javascript" src="/javascripts/jquery.tmpl.min.js" ></script>
+		<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false" ></script>
+		<script type="text/javascript" src="/javascripts/jquery.jscrollpane.min.js" ></script>
+		<script type="text/javascript" src="/javascripts/jquery.mousewheel.min.js" ></script>
+		<script type="text/javascript" src="/javascripts/tzoom.min.js" ></script>
+		<script type="text/javascript" src="/javascripts/jquery.cookie.js" ></script>
+		<script type="text/javascript" src="/javascripts/jquery.json.js" ></script>
+		<script type="text/javascript" src="/javascripts/ie.js" ></script>
+		<script type="text/javascript" src="/javascripts/date.js" ></script>
+		<script type="text/javascript" src="/javascripts/noconsole.js" ></script>
+		<script type="text/javascript" src="/javascripts/jquery.jqote2.js" ></script>
+		
+		<script type="text/javascript" src="/javascripts/main/UI/UIFullscreen.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UISlideshow.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UIAlbum.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UIState.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UIInput.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UIControls.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UIInformation.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UIPanel.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UITools.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UIGallery.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/UI/UI.js" ></script>
+
+		<script type="text/javascript" src="/javascripts/main/ClientState.js" ></script>
+		<script type="text/javascript" src="/javascripts/main/ClientServer.js" ></script>
+
+		<script type="text/javascript" src="/javascripts/main/Map.js" ></script>
+		
+		<script type="text/javascript" src="/javascripts/main/Marker.js" ></script>	
+		<script type="text/javascript" src="/javascripts/main/Photo.js" ></script>	
+		<script type="text/javascript" src="/javascripts/main/Place.js" ></script>	
+		<script type="text/javascript" src="/javascripts/main/Main.js" ></script>	
+
+
+	</head>
+
+
+	<body>
+		
+		<div class="mp-container" id="mp-container">
+			
+			<header class="mp-header" id="mp-header">
+				<section class="mp-userpanel">
+					<div class="mp-logo">LOGO</div>
+					<div class="mp-controls-wrapper">
+						<div class="mp-controls">
+							<a href="/logout">
+								<img class="mp-controls mp-option-logout" src="images/logout.png"></img>
+							</a>
+							<img class="mp-controls mp-option-center" src="images/center.png"></img>
+							<img class="mp-controls mp-option-delete" src="images/delete.png"></img>
+							<img class="mp-controls mp-option-modify" src="images/modify.png"></img>
+							<img class="mp-controls mp-option-add" src="images/add.png"></img>
+						<div></div>
+						</div>
+					</div>
+				</section>
+			</header>
+			
+			<section class="mp-map" id="mp-map">
+				<div class="mp-map-container">
+					<div class="mp-map-wrapper" id="map"></div>
+				</div>
+				<div id="mp-photo-description">
+					<div class="mp-status-image mp-font"></div>
+					<div>
+						<p class="mp-label mp-font mp-description-name"></p>
+					</div>
+					<div class="mp-font mp-description-wrapper"></div>
+				</div>
+			</section>
+			
+			<section class="mp-album" id="mp-album">
+				<div class="mp-album-wrapper" id="mp-album-wrapper">
+					<div class="mp-album-title-wrapper">
+						<div class="mp-album-title">
+							<p class="mp-label mp-album-title-name">Photo Map</p>
+						</div>
+					</div>
+					<div class="mp-gallery-wrapper">
+					</div>
+				</div>
+				<div class="mp-album-overlay" id="mp-album-overlay">
+					<div class="mp-album-nav">
+						<img class="mp-album-nav-prev" src="images/album-arrow-left.png"></img>
+						<img class="mp-album-nav-next" src="images/album-arrow-right.png"></img>
+					</div>
+					<img class="mp-image-loading-small" src="../images/ajax-loader.gif"></img>
+					<div class="mp-album-image">
+						<img class="mp-album-zoom" src="images/magnify.png"></img>
+						<img></img>
+					</div>
+					<img class="mp-album-overlay-close" src="images/close.png"></img>
+				</div>
+			</section>
+			
+			<footer class="mp-footer" id="mp-footer">
+				<section class="mp-bottom-panel">
+					<a href="#">Impressum</a> |
+					<a href="#">Kontakt / Support</a> |
+					<a href="#">Datenschutzerklärung / Privacy Policy</a> |
+					<a href="#">Copyright</a> |
+					<a href="#">Hilfe / Help</a>
+				</section>
+			</footer>
+		</div>
+		
+		<script type="text/javascript" src="/javascripts/main/Init.js" ></script>
+		
+	</body>
+
+</html>

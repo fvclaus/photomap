@@ -15,7 +15,7 @@ UIAlbum = function (gallery) {
 UIAlbum.prototype =  {
 
     searchImages : function(){
-	this.$elements = this.$album.find('div.mp-album > img');
+	this.$elements = this.$album.find('div.mp-gallery > img');
     },
 
     getEl : function(){
@@ -48,15 +48,15 @@ UIAlbum.prototype =  {
 		    instance.gallery.hideLoading();
 		    instance.gallery.enableUI();
 		    // create wrapping anchors for images
-		    $('#galleryTmpl')
-			.tmpl( {tmplPhotosData : tmplPhotosData} )
-			.appendTo( instance.$album );
+			instance.$album.append(
+			$.jqote( '#galleryTmpl', {thumbAddress: tmplPhotosData} )
+			);
 		    //search all anchors
 		    instance.searchImages();
 		    // make wrapping anchors sortable
 		    // write height and width in album image wrapper
 		    instance.$album
-			.find("div.mp-album")
+			.find("div.mp-gallery")
 			.width(instance.$album.width())
 			.height(instance.$album.height())
 			.sortable({
@@ -78,7 +78,7 @@ UIAlbum.prototype =  {
 				});
 			    }
 			});
-		    // create scrollpane
+		    // create scrollpane 
 		    instance.$album
 			.css("padding-left",instance.albumPadding)
 			.width(instance.albumWidth)
@@ -133,7 +133,7 @@ UIAlbum.prototype =  {
 	    
 	    // starts little slideshow in gallery div
 	    instance.gallery.startSlider();
-	    
+	    $(".overlay-description[rel]").overlay().load();
 	    return false;
 	});
 	//draw border on visited elements

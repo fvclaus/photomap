@@ -1,4 +1,3 @@
-
 ClientState = function(){
     value = $.cookie("visited") || new String("");
     this._parseValue(value);

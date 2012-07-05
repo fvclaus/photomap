@@ -24,8 +24,7 @@ UIFullscreen.prototype = {
 	    source	: main.getUIState().getCurrentPhoto().source,
 	    description	: main.getUIState().getCurrentPhoto().name
 	};
-	$('#galleryFullscreenTmpl').tmpl( {tmplPhotoData : data} )
-	    .appendTo($mpContainer);
+	$mpContainer.append($.jqote('#galleryFullscreenTmpl', {tmplPhotoData : data} ));
 	
 	this.$fullscreen = $('#mp-image-overlay');
 	this.$close = this.$fullscreen.find('img.mp-image-overlay-close');
