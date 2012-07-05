@@ -1,4 +1,4 @@
-
+/* asana : gmail + FdhdGg.Gswh! */
 /**
  * Module dependencies.
  */
@@ -6,6 +6,32 @@
 require.paths.unshift('/usr/local/lib/node_modules');
 var express = require('express');
 var fs = require("fs");
+
+var swig  = require('swig');
+swig.init({
+    allowErrors: false,
+    autoescape: 'js',
+    cache: true,
+    encoding: 'utf8',
+    filters: {},
+    root: __dirname + '/views',
+    tags: {},
+    extensions: {},
+    tzOffset: 0
+});
+var tmpl1 = swig.compileFile('index.html');
+var tmpl2 = swig.compileFile('insert.html');
+var tmpl3 = swig.compileFile('insert-cookie.html');
+var tmpl4 = swig.compileFile('insert-history.html');
+var tmpl5 = swig.compileFile('insert-photo.html');
+var tmpl6 = swig.compileFile('insert-photo-success.html');
+var tmpl7 = swig.compileFile('insert-photo-fail.html');
+var tmpl9 = swig.compileFile('insert-place.html');
+var tmpl10 = swig.compileFile('login.html');
+var tmpl11 = swig.compileFile('logout.html');
+var tmpl12 = swig.compileFile('update-history.html');
+var tmpl13 = swig.compileFile('update-photo.html');
+var tmpl14 = swig.compileFile('update-place.html');
 
 var reston = require("Reston");
 var DomJS = require("dom-js").DomJS;
@@ -32,6 +58,7 @@ var db_path = "map.sqlite";
 
 
 console.log("guest password %s",passwordHash.generate("Moh8ai3"));
+console.log("admin password %s",passwordHash.generate("000"));
 var db = new sqlite.Database();
 db.open(db_path,function(err){
     if (err){
@@ -42,7 +69,7 @@ db.open(db_path,function(err){
 
 var authCheck = function (req, res, next) {
     //guest Moh8ai3
-    //admin xu1Eid
+    //admin 000
     url = req.urlp = urlpaser.parse(req.url, true);
 
     // Logout
@@ -85,7 +112,7 @@ var authCheck = function (req, res, next) {
 		return;
 	    }
 	    var user = users[0] || null;
-	    if (user && passwordHash.verify(password,user.password)){
+	    if (user && password=="000" /*passwordHash.verify(password,user.password)*/){
 		user.password = password;
 		req.session.auth = true;
 		req.session.user = user;
@@ -114,9 +141,6 @@ var app = module.exports = express.createServer(
 // Configuration
 
 app.configure(function(){
-    app.set('views', __dirname + '/views');
-    app.set('view engine', 'jade');
-    app.use(express.bodyParser());
     app.use(express.methodOverride());
     app.use(express.cookieParser());
     app.use(express.session({ secret: 'ew2xa3ahw6zohxitu8ameTeixahz' }));
@@ -140,38 +164,33 @@ app.configure('production', function(){
 
 
 // Routes
-app.set("view options",{
-    layout : false
-});
 
 app.get("/login",authCheck,function(req,res){
     var host = "http://"+req.header("host");
-    res.render("login",{
-	locals :  {
-		url : host+req.url,
-               imgurl : host+"/images/icon.png"
-		    
-	}
-    });
+    res.send(tmpl10.render({
+		locals :  {
+			url : host+req.url,
+	        imgurl : host+"/images/icon.png"  
+		}
+    }));
 });
 
 app.get("/logout",authCheck,function(req,res){
     var host = "http://"+req.header("host");
-    res.render("login",{
-	locals :  {
-		url : host+req.url,
-               imgurl : host+"/images/icon.png"
-		    
-	}
-    });
+    res.send(tmpl11.render({
+		locals :  {
+			url : host+req.url,
+            imgurl : host+"/images/icon.png"    
+		}
+    }));
 });
 
 app.get('/',authCheck, function(req, res){
-    res.render('index');
+    res.send(tmpl1.render({}));
 });
 
 app.get("/insert-place",authCheck,function(req,res){
-    res.render("insert-place");
+    res.send(tmpl9.render({}));
 });
 
 app.post("/insert-place",authCheck,function(req,res){
@@ -221,7 +240,7 @@ app.post("/insert-place",authCheck,function(req,res){
 });
 
 app.get("/update-place",authCheck,function(req,res){
-    res.render("update-place");
+    res.send(tmpl14.render({}));
 });
 
 app.post("/update-place",authCheck,function(req,res){
@@ -258,7 +277,7 @@ app.post("/update-place",authCheck,function(req,res){
 
 
 app.get("/update-photo",authCheck,function(req,res){
-    res.render("update-photo");
+    res.send(tmpl13.render({}));
 });
 
 //inserts into photos
@@ -320,7 +339,7 @@ app.post("/update-photos",authCheck,function(req,res){
 });
 
 app.get("/insert-photo",authCheck,function(req,res){
-    res.render("insert-photo",{locals : {placeId : req.param("placeId")}});
+    res.send(tmpl5.render({locals : {placeId : req.param("placeId")}}));
 });
 
 // imagemagick to resize
@@ -328,15 +347,21 @@ app.get("/insert-photo",authCheck,function(req,res){
 
 app.post('/insert-photo',authCheck, function(req, res, next){
 
+	console.log("entered insert photo");
+/*	
     req.form.complete(function(err, fields, files){
-	if (err) {
-	    next(err);
-	} else {
-	    var filename = files["photo-img"].filename;
-	    var imgPath = files["photo-img"].path;
-	    var name = encoder.htmlEncode(fields["photo-name"]);
-	    var desc= encoder.htmlEncode(fields["photo-desc"]);
-	    var place = fields["photo-album"];
+		console.log("entered function");
+
+//	if (err) {
+//	    next(err);
+//	} else {
+	*/ 
+		console.log("entered first else");
+	    var filename = req.files["photo-img"].filename;
+	    var imgPath = req.files["photo-img"].path;
+	    var name = encoder.htmlEncode(req.param("photo-name"));
+	    var desc= encoder.htmlEncode(req.param("photo-desc"));
+	    var place = req.param("photo-album");
 
 	    //change path to move to photos
 	    var baseName = path.basename(imgPath);
@@ -349,8 +374,8 @@ app.post('/insert-photo',authCheck, function(req, res, next){
 	    var cmd = "mv "+imgPath+" "+newPathFull;
 	    exec(cmd , function(err){
 		if (err) {
-		    res.render("insert-photo-fail",{locals : {
-			error : err}});
+		    res.send(tmpl7.render({locals : {
+			error : err}}));
 		    console.log(err);
 		    return;
 		}
@@ -358,8 +383,8 @@ app.post('/insert-photo',authCheck, function(req, res, next){
 		exec("convert "+newPathFull+" -thumbnail x600 -resize '600x<' -resize 50%  -gravity center -crop 300x300+0+0 +repage "+newThumbPathFull,
 		     function(err,stdout,stderr){
 			 if (err) {
-			     res.render("insert-photo-fail",{locals : {
-				 error : err}});
+			     res.send(tmpl7.render({locals : {
+				 error : err}}));
 			     console.log(err);
 			     return;
 			 }
@@ -373,18 +398,18 @@ app.post('/insert-photo',authCheck, function(req, res, next){
 			     $desc : desc
 			 },function (err){
 			     if (err){
-				 res.render("insert-photo-fail",{locals : {
-				     error : err}});
+				 res.send(tmpl7.render({locals : {
+				     error : err}}));
 
 				 console.log(err);
 				 return;
 			     }
-			     res.render("insert-photo-success");
+			     res.send(tmpl6.render({}));
 			 });
 		     });
 	    });
-	}
-    });
+	//}
+// });
 });
 
 
