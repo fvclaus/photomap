@@ -48,7 +48,7 @@ var urlpaser = require("url");
 var passwordHash = require("password-hash");
 var sprintf = require("sprintf").sprintf;
 
-var db_path = "map.sqlite";
+var db_path = "development-database.sqlite"; // originally "map.sqlite"
 // db scheme // sqlite3
 // create table users(id integer primary key,login text not null,password text not null);
 // create table albums(id integer primary key  autoincrement, name text not null, desc text );
@@ -346,17 +346,16 @@ app.get("/insert-photo",authCheck,function(req,res){
 // convert 1.jpg -thumbnail x600 -resize '600x<' -resize 50%  -gravity center -crop 300x300+0+0 +repage 1_1.jpg
 
 app.post('/insert-photo',authCheck, function(req, res, next){
-
-	console.log("entered insert photo");
-/*	
+    
+/*
     req.form.complete(function(err, fields, files){
 		console.log("entered function");
 
 //	if (err) {
 //	    next(err);
 //	} else {
-	*/ 
-		console.log("entered first else");
+*/ 
+	    console.log(req.files);
 	    var filename = req.files["photo-img"].filename;
 	    var imgPath = req.files["photo-img"].path;
 	    var name = encoder.htmlEncode(req.param("photo-name"));
