@@ -19,5 +19,6 @@ photomap/static/photo
 *.lof
 *.*~
 *.acn
+*.css
 CACHE/
 .sass-cache
