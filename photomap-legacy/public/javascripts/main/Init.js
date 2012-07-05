@@ -11,22 +11,13 @@
  *
  * Date: Dec 2011
  */
-Array.prototype.firstUndef = function(){
-	   index = -1;
-    for (i = 0; i<= this.length;i++){
-	if (this[i] == null){
-	    return i;
-	}
-    }
-    return -1;
-};
 
-var $mpContainer = $('#mp-container');
-//http://stevenbenner.com/2010/04/calculate-page-size-and-view-port-position-in-javascript/
-$mpContainer
-    .width($(window).width()-17)
-    .height($(window).height()-17);
-
-var main = new Main();
-main.init();
+	var $mpContainer = $('#mp-container');
+	//http://stevenbenner.com/2010/04/calculate-page-size-and-view-port-position-in-javascript/
+	$mpContainer
+	    .width($(window).width()-17)
+	    .height($(window).height()-17);
+	
+	var main = new Main();
+	main.init();
 

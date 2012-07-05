@@ -1,8 +1,8 @@
 UI = function (){
 	this.tools = new UITools();
 	this.information = new UIInformation();
-	this.controls = new UIControls(this.information.getControlsBarHeight());
-	this.title = new UITitle();
+	this.panel = new UIPanel();
+	this.controls = new UIControls(this.panel.getControlsBarHeight());
 	this.gallery = new UIGallery();
 	this.input = new UIInput();
 }
@@ -10,7 +10,6 @@ UI = function (){
 UI.prototype = {
 
 	init : function(){
-		this.title.init();
 		this.gallery.init();
 	},
 	getAlbum : function(){

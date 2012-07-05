@@ -1,13 +1,13 @@
 UIControls = function(maxHeight) {
 
-    this.$options = $('.mp-options');
-    this.$options.height(maxHeight);
+    this.$controls = $('.mp-controls');
+    this.$controls.height(maxHeight);
 
-    this.$delete = this.$options.find(".mp-option-delete").hide();
-    this.$modify = this.$options.find(".mp-option-modify").hide();
-    this.$add = this.$options.find(".mp-option-add").hide();
-    this.$logout = this.$options.find(".mp-option-logout").show();
-    this.$center = this.$options.find(".mp-option-center").hide();
+    this.$delete = this.$controls.find(".mp-option-delete").hide();
+    this.$modify = this.$controls.find(".mp-option-modify").hide();
+    this.$add = this.$controls.find(".mp-option-add").hide();
+    this.$logout = this.$controls.find(".mp-option-logout").show();
+    this.$center = this.$controls.find(".mp-option-center").hide();
     this.bindListener();
 
 };

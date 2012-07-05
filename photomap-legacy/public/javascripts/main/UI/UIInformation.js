@@ -1,11 +1,10 @@
 UIInformation = function(){
+	
     //root action bar
-    this.$wrapper = $(".mp-status-wrapper").height(0.2*$("body").height());
-    // buttons
-
-    this.$controls = $('.mp-options-wrapper');
-    this.$controls.height(0.25 * this.$wrapper.height());
     
+    this.$wrapper = $(".mp-photo-description");
+    this.$controls = $(".mp-controls");
+
     this.$description = 
 	$(".mp-description-wrapper")
 	.height(0.75 * this.$wrapper.height())
@@ -29,9 +28,6 @@ UIInformation = function(){
 
 UIInformation.prototype = {
     
-    getControlsBarHeight : function(){
-	return this.$controls.height();
-    },
     setInfo : function(info){
 	if (info == null){
 	    info = {
