@@ -1,19 +1,23 @@
-script(type="text/javascript",src="/javascripts/jquery.all.min.js")
-link(rel="stylesheet",type="text/css",href="/stylesheets/main.css")
-script(type="text/javascript",src="/javascripts/insert-photo.js")
-div.insert
-	form.jquery-validator.mp-dialog(id="insert-photo",method="post",action="/insert-photo", enctype="multipart/form-data")
-		input(type="hidden",name="photo-album",required="required") 
-		div
-			label(for="photo-name") name
-			input(type="text",name="photo-name",required="required")
-		div
-			label(for="photo-desc")  description
-			textarea(name="photo-desc")
-		div
-			label(for="photo-img") img
-			input(type="file",name="photo-img",required="required")
-		p.mp-invisible #{placeId}
-		input(type="submit",value="submit",name="submit")
-	script
-
+<script type="text/javascript" src="/javascripts/jquery.all.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
+<script type="text/javascript" src="/javascripts/insert-photo.js"></script>
+<div>insert
+	<form class="jquery-validator mp-dialog" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
+		<input type="hidden" name="photo-album" required="required" />
+		<div>
+			<label for="photo-name">name</label>
+			<input type="text" name="photo-name" required="required" />
+		</div>
+		<div>
+			<label for="photo-desc">description</label>
+			<textarea name="photo-desc"></textarea>
+		</div>
+		<div>
+			<label for="photo-img">img</label>
+			<input type="file" name="photo-img" required="required" />
+		</div>
+		<p class="mp-invisible">#{placeId}</p>
+		<input type="submit" value="submit" name="submit" />
+	</form>
+	<script></script>
+</div>

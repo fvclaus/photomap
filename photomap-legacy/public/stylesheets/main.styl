@@ -14,7 +14,7 @@ $padding = 5px
 $border = 5px 
 $border-light = $border solid #fff
 
-$height-main = 69%
+$height-main = 87%
 $width-main = 50%
 
 $box-shadow = 1px 1px 3px
@@ -58,6 +58,7 @@ transition
 @import "album"
 @import "image"
 @import "description"
+@import "panel"
 
 /* end imports */
 
@@ -66,8 +67,8 @@ transition
 
 /* highest level styling */  
 body 
-  height 100%
-  overflow hidden
+  height 101%
+ /* overflow hidden */
 html
   height 100%  
 
@@ -83,27 +84,25 @@ html
   position absolute
   whitespace nowrap
 
-
-.mp-title-wrapper
-  background $background-color-darker
-  border-top $border-light
-  border-bottom $border-light
-  width 100%
-  height 5%
-
-.mp-title-name
-	position absolute
-
 .mp-font 
   font-family $font-family
   font-size 120%
   text-align center
 
-.mp-map-wrapper
+.mp-map
+  float left
   width $width-main
   height $height-main
-  float left
+  background red // $background-color-light
+  
+.mp-map-container
+  width 100%
+  height 100%
   background $background-color-light
+  
+.mp-map-wrapper
+  width 100%
+  height 100%
 
 
 .mp-label
@@ -118,7 +117,18 @@ html
   max-width 50%
 
 .disabled
-	opacity 0.3
+  opacity 0.3
 
+.mp-footer
+  height 3%
+  width 100%
+  float left
+  
+.mp-header
+  background $background-color-darker
+  border-bottom $border-light
+  width 100%
+  height 5%
+  
 
 
