@@ -12,22 +12,14 @@
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rokkitt:400,700" />
 
 		
-		<script id="galleryTmpl" type="text/html">
-			<div class="mp-gallery-outer">
-				<div class="mp-gallery">
+		<script id="exhibitionTmpl" type="text/html">
+			<div class="mp-exhibition-outer">
+				<div class="mp-exhibition">
 					<% for (thumb in this.thumbAddress) { %>
 					<img class="overlay-description" src="<%= this.thumbAddress[thumb] %>" rel="#mp-photo-description"></img>
 					<% }; %>
 				</div>
 			</div>
-		</script>
-						
-		<script id="descriptionTmpl" type="text/html">
-			<div class="mp-font mp-description-wrapper">
-				<div class="mp-font mp-status-image"></div>
-				<p class="mp-font mp-label mp-description-name"></p>
-				<div class="mp-font mp-description"></div>
-			</div>	
 		</script>
 		
 		<script id="galleryFullscreenTmpl" type="text/html">
@@ -83,7 +75,6 @@
 		<script type="text/javascript" src="/javascripts/main/Place.js" ></script>	
 		<script type="text/javascript" src="/javascripts/main/Main.js" ></script>	
 
-
 	</head>
 
 
@@ -129,7 +120,7 @@
 							<p class="mp-label mp-album-title-name">Photo Map</p>
 						</div>
 					</div>
-					<div class="mp-gallery-wrapper">
+					<div class="mp-exhibition-wrapper" id="mp-exhibition-wrapper">
 					</div>
 				</div>
 				<div class="mp-album-overlay" id="mp-album-overlay">

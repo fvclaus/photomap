@@ -1,6 +1,6 @@
 UIPanel = function (){
 
-    this.$wrapper = $('.mp-userpanel');
+    this.$userpanel = $('.mp-userpanel');
     this.$bottomPanel = $('.mp-footer');
 
 };
@@ -8,7 +8,7 @@ UIPanel = function (){
 UIPanel.prototype = {
 	
     getControlsBarHeight : function(){
-	return this.$wrapper.height();
+	return this.$userpanel.height();
     },
     
 };

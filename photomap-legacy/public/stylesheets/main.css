@@ -63,15 +63,29 @@ transition {
   padding-left: 1%;
   background: #f4f4f4;
 }
-.mp-album-wrapper {
-  width: 49%;
-  height: 69%;
-  overflow: hidden;
+.mp-album {
   float: left;
-  padding-left: 1%;
+  overflow: hidden;
+  width: 50%;
+  height: 87%;
   background: #f4f4f4 url("../images/bgalbum.png") no-repeat center center;
 }
-.mp-album img {
+.mp-album-wrapper {
+  width: 98%;
+  height: 100%;
+  padding-left: 2%;
+}
+.mp-album-title-wrapper {
+  background: #333;
+  border-bottom: 5px solid #fff;
+  width: 100%;
+  height: 5%;
+}
+.mp-exhibition-wrapper {
+  width: 100%;
+  height: 95%;
+}
+.mp-exhibition img {
   display: block;
   float: left;
   padding: 2px;
@@ -80,15 +94,15 @@ transition {
   width: 19%;
   height: 20%;
 }
-.mp-album img transition,
-.mp-album img.current {
+.mp-exhibition img transition,
+.mp-exhibition img.current {
   background: #306d12;
 }
-.mp-album img.visited {
+.mp-exhibition img.visited {
   background: #d60000;
 }
-.mp-album img imghover,
-.mp-album img.current img {
+.mp-exhibition img imghover,
+.mp-exhibition img.current img {
   opacity: 0.8;
 }
 .mp-album-image {
@@ -200,26 +214,11 @@ transition {
   height: 75%;
   font-size: 100%;
 }
-.mp-status-wrapper {
-  width: 100%;
-  float: left;
-}
-.mp-options-wrapper {
-  width: 100%;
-  height: 25%;
-  border-top: 5px solid #fff;
-  background: #333;
-  text-align: center;
+#mp-photo-description {
+  display: none;
 }
 .mp-description-name {
   position: absolute;
-}
-.mp-options {
-  position: relative;
-  float: left;
-}
-.mp-options img {
-  cursor: pointer;
 }
 .mp-status-image {
   float: right;
@@ -227,13 +226,52 @@ transition {
   position: absolute;
   right: 1%;
 }
+.mp-userpanel {
+  width: 100%;
+  height: 100%;
+}
+.mp-controls-wrapper {
+  width: 79%;
+  height: 100%;
+  padding-left: 1%;
+  float: left;
+  text-align: center;
+}
+.mp-controls {
+  position: relative;
+  float: right;
+}
+.mp-controls img {
+  cursor: pointer;
+}
+.mp-bottom-panel {
+  background: #333;
+  border-top: 5px solid #fff;
+  border-bottom: 5px solid #fff;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+.mp-bottom-panel a {
+  text-decoration: none;
+  color: #fff;
+}
+.mp-logo {
+  background-color: #00f;
+  float: left;
+  color: #fff;
+  text-align: center;
+  font-size: 120%;
+  width: 20%;
+  height: 100%;
+}
 /* end imports */
 /* css */
 /* highest level styling */
 body {
-  height: 100%;
-  overflow: hidden;
+  height: 101%;
 }
+/* overflow hidden */
 html {
   height: 100%;
 }
@@ -251,26 +289,25 @@ html {
   position: absolute;
   whitespace: nowrap;
 }
-.mp-title-wrapper {
-  background: #333;
-  border-top: 5px solid #fff;
-  border-bottom: 5px solid #fff;
-  width: 100%;
-  height: 5%;
-}
-.mp-title-name {
-  position: absolute;
-}
 .mp-font {
   font-family: 'Rokkitt', sans-serif;
   font-size: 120%;
   text-align: center;
 }
-.mp-map-wrapper {
-  width: 50%;
-  height: 69%;
+.mp-map {
   float: left;
+  width: 50%;
+  height: 87%;
+  background: #f00;
+}
+.mp-map-container {
+  width: 100%;
+  height: 100%;
   background: #f4f4f4;
+}
+.mp-map-wrapper {
+  width: 100%;
+  height: 100%;
 }
 .mp-label {
   font-weight: 700;
@@ -285,4 +322,15 @@ html {
 }
 .disabled {
   opacity: 0.3;
+}
+.mp-footer {
+  height: 3%;
+  width: 100%;
+  float: left;
+}
+.mp-header {
+  background: #333;
+  border-bottom: 5px solid #fff;
+  width: 100%;
+  height: 5%;
 }

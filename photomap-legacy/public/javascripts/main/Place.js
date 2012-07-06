@@ -89,7 +89,7 @@ Place.prototype = {
     _clear  : function(){
 	// hide galleryAlbum container if present
 	main.getUI().getGallery().hide();
-	// $("div.mp-gallery-outer").remove();
+	// $("div.mp-exhibition-outer").remove();
     },
     checkIconStatus : function(){
 	var status = true;

@@ -4,6 +4,7 @@ UIAlbum = function (gallery) {
 
     //reserve  4px as buffer
     this.$album	= $('#mp-album-wrapper');
+    this.$exhibition = $('#mp-exhibition-wrapper');
     this.$album.width(this.$album.width() - 4);
     this.albumPadding = this.$album.css("padding-left");
     this.albumWidth = this.$album.width();
@@ -15,25 +16,25 @@ UIAlbum = function (gallery) {
 UIAlbum.prototype =  {
 
     searchImages : function(){
-	this.$elements = this.$album.find('div.mp-gallery > img');
+	this.$elements = this.$exhibition.find('div.mp-exhibition > img');
     },
 
     getEl : function(){
-	return this.$album;
+	return this.$exhibition;
     },
     
     getDimensions : function(){
-	var position =  this.$album.position();
-	position.width = this.$album.width();
-	position.height = this.$album.height();
+	var position =  this.$exhibition.position();
+	position.width = this.$exhibition.width();
+	position.height = this.$exhibition.height();
 	return position;
     },
 
     show : function( photos ) {
-	var instance	= this;
+	var instance = this;
 	main.getUIState().setPhotos(photos);
 	main.getUIState().setAlbumLoading(true);
-	var tmplPhotosData 	= new Array();
+	var tmplPhotosData = new Array();
 	var loaded = 0;
 	this.gallery.disableUI();
 	this.gallery.showLoading();
@@ -48,17 +49,17 @@ UIAlbum.prototype =  {
 		    instance.gallery.hideLoading();
 		    instance.gallery.enableUI();
 		    // create wrapping anchors for images
-			instance.$album.append(
-			$.jqote( '#galleryTmpl', {thumbAddress: tmplPhotosData} )
-			);
+		    instance.$exhibition.append(
+			$.jqote( '#exhibitionTmpl', {thumbAddress: tmplPhotosData} )
+		    );
 		    //search all anchors
 		    instance.searchImages();
 		    // make wrapping anchors sortable
 		    // write height and width in album image wrapper
-		    instance.$album
-			.find("div.mp-gallery")
-			.width(instance.$album.width())
-			.height(instance.$album.height())
+		    instance.$exhibition
+			.find("div.mp-exhibition")
+			.width(instance.$exhibition.width())
+			.height(instance.$exhibition.height())
 			.sortable({
 			    items : "img",
 			    update : function(event,ui){
@@ -79,7 +80,7 @@ UIAlbum.prototype =  {
 			    }
 			});
 		    // create scrollpane 
-		    instance.$album
+		    instance.$exhibition
 			.css("padding-left",instance.albumPadding)
 			.width(instance.albumWidth)
 			.jScrollPane({
