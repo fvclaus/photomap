@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jul 06 10:08:30 CEST 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jul 06 10:38:40 CEST 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -2806,7 +2806,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
           isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
           <UML:Classifier.feature>
             <UML:Attribute xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000BA8'
-              name = '$name' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              name = '$title' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
               changeability = 'changeable' targetScope = 'instance'>
               <UML:StructuralFeature.multiplicity>
                 <UML:Multiplicity xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000BA9'>
@@ -2845,7 +2845,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
               </UML:BehavioralFeature.parameter>
             </UML:Operation>
             <UML:Operation xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000BB0'
-              name = 'setName' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              name = 'setTitle' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
               isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
               isAbstract = 'false'>
               <UML:BehavioralFeature.parameter>
@@ -8102,7 +8102,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         bold="false"
         textsize="12"
         justification="Left"
-      >$name : Integer</text>
+      >$title : Integer</text>
       <text name="Fig28.4.2"
         x="473"
         y="40"
@@ -8230,7 +8230,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         bold="false"
         textsize="12"
         justification="Left"
-      >setName()</text>
+      >setTitle()</text>
       <text name="Fig28.6.3"
         x="473"
         y="152"

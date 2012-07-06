@@ -4,6 +4,7 @@ UIInformation = function(){
     
     this.$wrapper = $(".mp-photo-description");
     this.$controls = $(".mp-controls");
+    this.$album = $("#mp-album");
 
     this.$description = 
 	$(".mp-description-wrapper")
@@ -19,7 +20,7 @@ UIInformation = function(){
 	});
     
     // title and image count
-    this.$name = this.$wrapper.find('p.mp-label.mp-font').show();
+    this.$title = this.$album.find(".mp-album-title-wrapper").find('p.mp-label.mp-font').show();
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     // calculate width and height
     
@@ -35,13 +36,13 @@ UIInformation.prototype = {
 		desc : this.albumDesc
 	    };
 	}
-	this._setName(info.name);
+	this._setTitle(info.name);
 	this._setDescription(info.desc);
     },
     // sets the current title
-    _setName			: function( title ) {
+    _setTitle			: function( title ) {
 	this.titleLbl	= title;
-	this.$name.text( title );
+	this.$title.text( title );
 
 	//calculate font size once for both image count and image name
 	if (!main.getUIState().getFontSize()){
@@ -50,13 +51,13 @@ UIInformation.prototype = {
 	    desiredHeight = this.$controls.height();
 	    size = main.getUI().getTools().calculateFontSize(title,desiredWidth,desiredHeight);
 	    main.getUIState().setFontSize(size);
-	    this.$name.css("font-size",size+"px");
+	    this.$title.css("font-size",size+"px");
 	    this.$imageNumber.css("font-size",size+"px");
 	}
 
 	//center text
-	left  = this.$controls.width()/2 - this.$name.width()/2;
-	this.$name.css("left",left);
+	left  = this.$controls.width()/2 - this.$title.width()/2;
+	this.$title.css("left",left);
 	
     },
     _setDescription : function (desc) {
