@@ -11,7 +11,7 @@ from place import Place
 
 class Photo(Description):
   
-#    thumb = models.ImageField(upload_to = settings.PHOTO_PATH)
+    thumb = models.ImageField(upload_to = settings.PHOTO_PATH, null = True, blank = True)
     photo = models.ImageField(upload_to = settings.PHOTO_PATH)
     place = models.ForeignKey(Place)
     
