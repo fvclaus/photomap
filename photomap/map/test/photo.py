@@ -111,6 +111,14 @@ class PhotoTest(TestCase):
         self.assertTrue(content["success"])
         self.assertEqual(Photo.objects.get(pk = 2).description, data["description"])
         #=======================================================================
+        # with order
+        #=======================================================================
+        data["order"] = 3
+        response = self.c.post("/update-photo", data)
+        content = json.loads(response.content)
+        self.assertTrue(content["success"])
+        self.assertEqual(Photo.objects.get(pk = 2).order, data["order"])
+        #=======================================================================
         # wrong id test
         #=======================================================================
         data["id"] = "does not exist"
