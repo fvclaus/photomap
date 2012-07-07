@@ -5,6 +5,7 @@ UIInformation = function(){
     this.$wrapper = $(".mp-photo-description");
     this.$controls = $(".mp-controls");
     this.$album = $("#mp-album");
+    this.$titleWrapper = $(".mp-album-title-wrapper")
 
     this.$description = 
 	$(".mp-description-wrapper")
@@ -30,13 +31,14 @@ UIInformation = function(){
 UIInformation.prototype = {
     
     setInfo : function(info){
-	if (info == null){
-	    info = {
-		name : this.albumName,
-		desc : this.albumDesc
-	    };
+	if (this.albumName == null) {
+	    title = info.name;
 	}
-	this._setTitle(info.name);
+	else {
+	    info.albumName = this.albumName;
+	    title = info.albumName + " >> " + info.name;
+	}
+	this._setTitle(title);
 	this._setDescription(info.desc);
     },
     // sets the current title
@@ -47,8 +49,8 @@ UIInformation.prototype = {
 	//calculate font size once for both image count and image name
 	if (!main.getUIState().getFontSize()){
 	    
-	    desiredWidth = this.$controls.width();
-	    desiredHeight = this.$controls.height();
+	    desiredWidth = this.$titleWrapper.width();
+	    desiredHeight = this.$titleWrapper.height();
 	    size = main.getUI().getTools().calculateFontSize(title,desiredWidth,desiredHeight);
 	    main.getUIState().setFontSize(size);
 	    this.$title.css("font-size",size+"px");
