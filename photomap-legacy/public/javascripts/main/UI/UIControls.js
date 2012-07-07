@@ -58,7 +58,7 @@ UIControls.prototype = {
 		    url = "/delete-place";
 		    data = {"place-id":place.id};
 		    place._delete();
-		    main.getUI().getControls().hideButtons();
+		    main.getUI().getControls().hideControls();
 		    main.getUI().getInformation().setInfo();
 		}
 		else

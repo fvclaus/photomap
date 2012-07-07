@@ -31,7 +31,14 @@ UIInformation = function(){
 UIInformation.prototype = {
     
     setInfo : function(info){
-	if (this.albumName == null) {
+	if (info == null){
+	    info = {
+		name : this.albumName,
+		desc : this.albumDesc
+	    };
+	    title = info.name;
+	}
+	else if (this.albumName == null) {
 	    title = info.name;
 	}
 	else {

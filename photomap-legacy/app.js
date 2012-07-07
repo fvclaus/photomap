@@ -142,6 +142,7 @@ var app = module.exports = express.createServer(
 
 app.configure(function(){
     app.use(express.methodOverride());
+    app.use(express.bodyParser());
     app.use(express.cookieParser());
     app.use(express.session({ secret: 'ew2xa3ahw6zohxitu8ameTeixahz' }));
     app.use(require("stylus").middleware({
@@ -198,10 +199,10 @@ app.post("/insert-place",authCheck,function(req,res){
     var lng = req.param("place-lng");
     var name = encoder.htmlEncode(req.param("place-name"));
     var desc = encoder.htmlEncode(req.param("place-desc"));
-
+    
     if (lat == null || lng == null || name == null){
 	res.json({
-	    error : "one of lat,lng,name is null"
+	    error : "one of lat,lng,name is null",
 	});
 	return;
     };
@@ -289,7 +290,7 @@ app.post("/update-photo",authCheck,function(req,res,next){
 
     if (id == null || name == null){
 	res.json({
-	    error : "one of id,name,desc was null"
+	    error : "one of id,name was null"
 	});
 	return;
     }
