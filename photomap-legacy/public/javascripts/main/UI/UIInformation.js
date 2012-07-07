@@ -48,7 +48,6 @@ UIInformation.prototype = {
 
 	//calculate font size once for both image count and image name
 	if (!main.getUIState().getFontSize()){
-	    
 	    desiredWidth = this.$titleWrapper.width();
 	    desiredHeight = this.$titleWrapper.height();
 	    size = main.getUI().getTools().calculateFontSize(title,desiredWidth,desiredHeight);
