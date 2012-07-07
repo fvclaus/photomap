@@ -17,6 +17,6 @@ UIPanel.prototype = {
 	    width = bottomPanel.width();
 	    height = bottomPanel.height();
 	    size = this.tools.calculateFontSize(text,width,height);
-	    bottomPanel.css("fontSize",size);
+	    bottomPanel.css("fontSize",size + "px");
     },
 };
