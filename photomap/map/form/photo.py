@@ -10,10 +10,10 @@ from map.model.photo import Photo
 class PhotoInsertForm(forms.ModelForm):
     class Meta:
         model = Photo
-#        exclude = ("thumb",)
+        exclude = ("thumb", "order",)
         
 class PhotoUpdateForm(forms.ModelForm):
     id = forms.IntegerField()
     class Meta:
         model = Photo
-        exclude = ("photo", "place")
+        exclude = ("photo", "place" , "thumb",)

@@ -14,6 +14,7 @@ class Photo(Description):
     thumb = models.ImageField(upload_to = settings.PHOTO_PATH, null = True, blank = True)
     photo = models.ImageField(upload_to = settings.PHOTO_PATH)
     place = models.ForeignKey(Place)
+    order = models.IntegerField(null = True, blank = True)
     
     def __unicode__(self):
         return "%s in %s" % (self.title, self.place.title)

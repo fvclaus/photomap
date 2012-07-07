@@ -8,10 +8,10 @@ from django.http import HttpResponse, HttpResponseBadRequest
 from map.model.photo import Photo
 
 from message import success, error 
-from django.utils.datastructures import MultiValueDictKeyError
+from map.form.photo import PhotoInsertForm, PhotoUpdateForm
 
 import logging
-
+import os
 logger = logging.getLogger(__name__)
 
 # TODO: maybe this can be abstracted by using middleware that checks for the existence of an error string and renders the error message
@@ -20,7 +20,12 @@ def delete(request):
         logger.debug("inside delete post")
         try:
             id = request.POST["id"]
-            Photo.objects.get(pk = id).delete()
+            photo = Photo.objects.get(pk = id)
+            try:
+                os.remove(photo.photo.path)
+            except OSError:
+                pass
+            photo.delete()
             return success()
         except (KeyError, Photo.DoesNotExist), e:
             return error(str(e))
@@ -30,6 +35,27 @@ def delete(request):
     
 def insert(request):
     if request.method == "POST":
-        pass
+        form = PhotoInsertForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = form.save()
+            return success(id = photo.pk)
+        else:
+            return error(str(form.errors))
+    else:
+        return HttpResponseBadRequest()
+        
+    
+def update(request):
+    if request.method == "POST":
+        form = PhotoUpdateForm(request.POST)
+        if form.is_valid():
+            photo = Photo.objects.get(pk = form.cleaned_data["id"])
+            form = PhotoUpdateForm(request.POST, instance = photo)
+            form.save()
+            return success()
+        else:
+            return error(str(form.errors))
+    else:
+        return HttpResponseBadRequest()
         
     

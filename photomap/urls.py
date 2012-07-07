@@ -22,5 +22,6 @@ urlpatterns = patterns("",
 #               (r'^$', direct_to_template, {"template": "index.tpl"}),
                url(r'^admin/', include(admin.site.urls)),
                url(r'^delete-photo', photo.delete),
-               url(r'^insert-photo', photo.insert)
+               url(r'^insert-photo', photo.insert),
+               url(r'^update-photo', photo.update),
                ) 
