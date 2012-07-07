@@ -24,3 +24,4 @@ photomap/static/photo
 *.project
 CACHE/
 .sass-cache
+.settings
