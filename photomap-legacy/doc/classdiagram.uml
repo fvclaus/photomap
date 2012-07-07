@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Fri Jul 06 10:38:40 CEST 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sat Jul 07 11:24:15 CEST 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -3703,6 +3703,15 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
               isLeaf = 'false' isAbstract = 'false'>
               <UML:BehavioralFeature.parameter>
                 <UML:Parameter xmi.id = '127-0-1-1-202e3c6c:1385b4e9a9a:-8000:0000000000001215'
+                  name = 'return' isSpecification = 'false' kind = 'return'/>
+              </UML:BehavioralFeature.parameter>
+            </UML:Operation>
+            <UML:Operation xmi.id = '127-0-1-1-6b092a15:13860bf903d:-8000:0000000000000D0F'
+              name = 'resizeBottomPanelLinks' visibility = 'public' isSpecification = 'false'
+              ownerScope = 'instance' isQuery = 'false' concurrency = 'sequential' isRoot = 'false'
+              isLeaf = 'false' isAbstract = 'false'>
+              <UML:BehavioralFeature.parameter>
+                <UML:Parameter xmi.id = '127-0-1-1-6b092a15:13860bf903d:-8000:0000000000000D10'
                   name = 'return' isSpecification = 'false' kind = 'return'/>
               </UML:BehavioralFeature.parameter>
             </UML:Operation>
@@ -10377,7 +10386,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       justification="Center"
     >UIPanel</text>
     <group name="Fig49.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[121, 513, 64, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[121, 513, 166, 0]"
          href="127-0-1-1-202e3c6c:1385b4e9a9a:-8000:000000000000120A"
          fill="0"
          fillcolor="white"
@@ -10391,7 +10400,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       <rectangle name="Fig49.2.0"
         x="121"
         y="513"
-        width="64"
+        width="166"
         height="0"
         fill="0"
         fillcolor="white"
@@ -10410,7 +10419,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig49.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[121, 536, 166, 83]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[121, 536, 166, 75]"
          href="127-0-1-1-202e3c6c:1385b4e9a9a:-8000:000000000000120A"
          fill="0"
          fillcolor="white"
@@ -10424,7 +10433,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         x="121"
         y="536"
         width="166"
-        height="83"
+        height="75"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -10465,7 +10474,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
     </group>
     <rectangle name="Fig49.5"
       x="120"
-      y="619"
+      y="611"
       width="168"
       height="1"
       fill="1"
@@ -10474,7 +10483,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig49.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[121, 620, 166, 67]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[121, 612, 166, 75]"
          href="127-0-1-1-202e3c6c:1385b4e9a9a:-8000:000000000000120A"
          fill="0"
          fillcolor="white"
@@ -10486,9 +10495,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       
       <rectangle name="Fig49.6.0"
         x="121"
-        y="620"
+        y="612"
         width="166"
-        height="67"
+        height="75"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -10496,7 +10505,23 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       />
       <text name="Fig49.6.1"
         x="121"
-        y="620"
+        y="612"
+        width="166"
+        height="16"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Dialog"
+        italic="false"
+        bold="false"
+        textsize="12"
+        justification="Left"
+      >getControlsBarHeight()</text>
+      <text name="Fig49.6.2"
+        x="121"
+        y="628"
         width="166"
         height="22"
         fill="0"
@@ -10509,7 +10534,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         bold="false"
         textsize="12"
         justification="Left"
-      >getControlsBarHeight()</text>
+      >resizeBottomPanelLinks()</text>
     </group>
   </group>
   <group name="Fig50"
@@ -10557,7 +10582,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
                         offset="5" />
     </private>
     <path name="Fig50.0"
-      description="org.tigris.gef.presentation.FigPoly"
+      description="org.argouml.gefext.ArgoFigPoly"
       fill="0"
       fillcolor="white"
       stroke="1"
