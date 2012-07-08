@@ -15,6 +15,34 @@ import os
 logger = logging.getLogger(__name__)
 
 # TODO: maybe this can be abstracted by using middleware that checks for the existence of an error string and renders the error message
+def insert(request):
+    if request.method == "POST":
+        form = PhotoInsertForm(request.POST, request.FILES)
+        if form.is_valid():
+            photo = form.save()
+            return success(id = photo.pk)
+        else:
+            return error(str(form.errors))
+    else:
+        return HttpResponseBadRequest()
+    
+def update(request):
+    if request.method == "POST":
+        form = PhotoUpdateForm(request.POST)
+        if form.is_valid():
+            photo = None
+            try:
+                photo = Photo.objects.get(pk = form.cleaned_data["id"])
+            except Photo.DoesNotExist:
+                return error("photo does not exist")
+            form = PhotoUpdateForm(request.POST, instance = photo)
+            form.save()
+            return success()
+        else:
+            return error(str(form.errors))
+    else:
+        return HttpResponseBadRequest()
+    
 def delete(request):
     if request.method == "POST":
         logger.debug("inside delete post")
@@ -33,29 +61,9 @@ def delete(request):
         logger.debug("form not available yet")
         return HttpResponseBadRequest()
     
-def insert(request):
-    if request.method == "POST":
-        form = PhotoInsertForm(request.POST, request.FILES)
-        if form.is_valid():
-            photo = form.save()
-            return success(id = photo.pk)
-        else:
-            return error(str(form.errors))
-    else:
-        return HttpResponseBadRequest()
+
         
     
-def update(request):
-    if request.method == "POST":
-        form = PhotoUpdateForm(request.POST)
-        if form.is_valid():
-            photo = Photo.objects.get(pk = form.cleaned_data["id"])
-            form = PhotoUpdateForm(request.POST, instance = photo)
-            form.save()
-            return success()
-        else:
-            return error(str(form.errors))
-    else:
-        return HttpResponseBadRequest()
+
         
     
