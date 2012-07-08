@@ -68,6 +68,7 @@ UIInformation.prototype = {
 	    this.$wrapper.show();
 	};
 	api.reinitialise();
+	this.resizeRepositionDescription();
     },
     
     resizeRepositionDescription : function () {
@@ -93,9 +94,6 @@ UIInformation.prototype = {
 	}
 	this.$close.offset(closeButtonOffset);
 	
-	// resizing description
-	//height = descriptionHeight - $(".mp-description-title").height();
-	//this.$description.height(height);
     },
     
     closeDescription: function(){
