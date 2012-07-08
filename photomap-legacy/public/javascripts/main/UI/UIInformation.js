@@ -2,15 +2,15 @@ UIInformation = function(){
 	
     //root action bar
     
-    this.$wrapper = $(".mp-photo-description");
+    this.$wrapper = $("#mp-photo-description");
     this.$controls = $(".mp-controls");
     this.$album = $("#mp-album");
     this.$titleWrapper = $(".mp-album-title-wrapper")
 
     this.$description = 
 	$(".mp-description-wrapper")
-	.height(0.75 * this.$wrapper.height())
-	.width(this.$wrapper.width() )
+	.height(this.$wrapper.height())
+	.width(this.$wrapper.width())
 	.jScrollPane( {
 	    verticalDragMinHeight	: 5,
 	    verticalDragMaxHeight	: 100,
@@ -23,8 +23,8 @@ UIInformation = function(){
     // title and image count
     this.$title = this.$album.find(".mp-album-title-wrapper").find('p.mp-label.mp-font').show();
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
-    // calculate width and height
-    
+    // resize description div
+    this.resizeRepositionDescription();
     
 };
 
@@ -74,6 +74,24 @@ UIInformation.prototype = {
 	    .empty()
 	    .append($("<p style='padding:0px;margin:0px 0px;margin-top:5px;'/>").html(desc));
 	api.reinitialise();
+	this.$wrapper.show();
+	this.$description.show();
+    },
+    
+    resizeRepositionDescription : function () {
+	$map = this.$wrapper.parent();
+	mapOffset = $map.offset();
+	mapOffset.top = mapOffset.top + 20;
+	mapOffset.left = mapOffset.left + 20;
+	topOffset = 0.5 * (0.25 * $map.height());
+	descriptionWidth = 0.75 * $map.width();
+	descriptionHeight = 0.75 * $map.height();
+	this.$wrapper
+	    .width(descriptionWidth)
+	    .height(descriptionHeight)
+	    .css('margin',topOffset + 'px auto');
+	    //.offset(mapOffset);
+	    
     },
 
     hideImageNumber : function(){
