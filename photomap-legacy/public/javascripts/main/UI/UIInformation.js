@@ -5,7 +5,8 @@ UIInformation = function(){
     this.$wrapper = $("#mp-photo-description");
     this.$controls = $(".mp-controls");
     this.$album = $("#mp-album");
-    this.$titleWrapper = $(".mp-album-title-wrapper")
+    this.$titleWrapper = $(".mp-album-title-wrapper");
+    this.$close = $(".mp-description-overlay-close");
 
     this.$description = 
 	$(".mp-description-wrapper")
@@ -17,6 +18,7 @@ UIInformation = function(){
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     // resize description div
     this.resizeRepositionDescription();
+    this.bindListener();
     
 };
 
@@ -64,11 +66,13 @@ UIInformation.prototype = {
 	var api = this.$description;
 	api.empty().append($("<p style='padding:0px;margin:0px 0px;margin-top:5px;'/>").html(desc));
 	api.css('height','100%').css('width','100%');
+	if (this.$wrapper.is(":hidden")){
+	    this.$wrapper.show();
+	};
     },
     
     resizeRepositionDescription : function () {
 	$map = this.$wrapper.parent();
-	$closeImage = $(".mp-description-overlay-close");
 	mapOffset = $map.offset();
 	topOffset = mapOffset.top + (0.5 * (0.25 * $map.height()));
 	leftOffset = mapOffset.left + (0.5 * (0.25 * $map.width()));
@@ -81,14 +85,25 @@ UIInformation.prototype = {
 	    //.css('margin',topOffset + 'px ' + leftOffset + 'px');
 	    
 	// reposition closing "button"
-	imgHeight = $closeImage.height();
-	imgWidth = $closeImage.width();
+	imgHeight = this.$close.height();
+	imgWidth = this.$close.width();
 	closeButtonOffset = {
 	    top: topOffset - (0.5 * imgHeight),
 	    left: leftOffset + descriptionWidth - (0.5 * imgWidth)
 	}
-	$closeImage.offset(closeButtonOffset);
+	this.$close.offset(closeButtonOffset);
 	    
+    },
+    
+    closeDescription: function(){
+	this.$wrapper.fadeOut(500);
+    },
+    
+    bindListener: function(){
+	instance = this;
+	this.$close.bind('click',function(){
+	    instance.closeDescription();
+	});
     },
 
     hideImageNumber : function(){

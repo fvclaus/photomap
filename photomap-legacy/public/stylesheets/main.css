@@ -222,14 +222,10 @@ transition {
   background: #f4f4f4;
   opacity: 0.9;
 }
-.mp-description-name,
 .mp-status-image {
   float: right;
   color: #fff;
   right: 1%;
-}
-mp-description-title {
-  background: #333;
 }
 .mp-description-overlay-close {
   position: absolute;
