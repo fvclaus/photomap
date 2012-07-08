@@ -13,8 +13,10 @@ UIInformation = function(){
     // title and image count
     this.$title = this.$album.find(".mp-album-title-wrapper").find('p.mp-label.mp-font').show();
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
+    
     // resize description div
     this.resizeRepositionDescription();
+    
     this.bindListener();
     
 };
@@ -83,7 +85,6 @@ UIInformation.prototype = {
 	    .width(descriptionWidth)
 	    .height(descriptionHeight)
 	    .offset({top: topOffset, left: leftOffset});
-	    //.css('margin',topOffset + 'px ' + leftOffset + 'px');
 	    
 	// reposition closing "button"
 	imgHeight = this.$close.height();

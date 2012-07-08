@@ -1,6 +1,13 @@
 /* image description styling */
 
 //width calculated by js
+
+#mp-photo-description
+  border 2px solid $background-color-dark
+  position absolute
+  background $background-color-light
+  opacity 0.8
+  
 .mp-description-wrapper
   width 100%
   height 92%
@@ -8,11 +15,12 @@
   text-align center
   font-size 100%
 
-#mp-photo-description
-  border 2px solid $background-color-dark
-  position absolute
-  background $background-color-light
-  opacity 0.8
+.mp-description-title
+  width 100%
+  height 8%
+  background $background-color-darker
+  color white
+  font-weight bold
 
 .mp-status-image
   float right
@@ -23,10 +31,3 @@
   position absolute
   height 40px
   width 40px
-
-.mp-description-title
-  width 100%
-  height 8%
-  background $background-color-darker
-  color white
-  font-weight bold
