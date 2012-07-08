@@ -7,6 +7,12 @@ Created on Jul 3, 2012
 from django import forms
 from map.model.place import Place
 
-class Place(forms.ModelForm):
+class InsertPlaceForm(forms.ModelForm):
     class Meta:
         model = Place
+        
+class UpdatePlaceForm(forms.ModelForm):
+    id = forms.IntegerField()
+    class Meta:
+        model = Place
+        exclude = ("album", "lat", "lon")

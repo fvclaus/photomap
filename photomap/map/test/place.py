@@ -24,17 +24,18 @@ class PlaceControllerTest(SimpleTestCase):
         #=======================================================================
         # without description
         #=======================================================================
-        data = {"lat": Decimal(-48.01230012),
+        data = {"album" : 1,
+                "lat": Decimal(-48.01230012),
                 "lon": Decimal(8.0123123),
                 "title": "Next to EO", }
         (place, content) = self.assertCreates(data)
-        self.assertEqual(place.title, content["title"])
+        self.assertEqual(place.title, data["title"])
         #=======================================================================
         # with description 
         #=======================================================================
         data["description"] = "Some description, blah, blah..."
         (place, content) = self.assertCreates(data)
-        self.assertEqual(place.title, content["description"])
+        self.assertEqual(place.description, data["description"])
         #=======================================================================
         # something invalid
         #=======================================================================
@@ -48,7 +49,7 @@ class PlaceControllerTest(SimpleTestCase):
     
         
     def test_update(self):
-        self.url = "/update-photo"
+        self.url = "/update-place"
         #=======================================================================
         # without description
         #=======================================================================
@@ -75,7 +76,7 @@ class PlaceControllerTest(SimpleTestCase):
         # valid request
         #=======================================================================
         place = Place.objects.get(pk = 1)
-        photos = Photo.objects.get(place = place)
+        photos = Photo.objects.all().filter(place = place)
         self.assertDeletes({"id": place.pk})
 #        assert on delete cascade
         for photo in photos:
