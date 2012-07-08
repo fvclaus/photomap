@@ -68,6 +68,7 @@ UIInformation.prototype = {
     
     resizeRepositionDescription : function () {
 	$map = this.$wrapper.parent();
+	$closeImage = $(".mp-description-overlay-close");
 	mapOffset = $map.offset();
 	topOffset = mapOffset.top + (0.5 * (0.25 * $map.height()));
 	leftOffset = mapOffset.left + (0.5 * (0.25 * $map.width()));
@@ -78,6 +79,15 @@ UIInformation.prototype = {
 	    .height(descriptionHeight)
 	    .offset({top: topOffset, left: leftOffset});
 	    //.css('margin',topOffset + 'px ' + leftOffset + 'px');
+	    
+	// reposition closing "button"
+	imgHeight = $closeImage.height();
+	imgWidth = $closeImage.width();
+	closeButtonOffset = {
+	    top: topOffset - (0.5 * imgHeight),
+	    left: leftOffset + descriptionWidth - (0.5 * imgWidth)
+	}
+	$closeImage.offset(closeButtonOffset);
 	    
     },
 
