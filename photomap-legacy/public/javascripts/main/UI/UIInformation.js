@@ -8,10 +8,7 @@ UIInformation = function(){
     this.$titleWrapper = $(".mp-album-title-wrapper");
     this.$close = $(".mp-description-overlay-close");
 
-    this.$description = 
-	$(".mp-description-wrapper")
-	.height(this.$wrapper.height())
-	.width(this.$wrapper.width());
+    this.$description = $(".mp-description-wrapper").jScrollPane();
     
     // title and image count
     this.$title = this.$album.find(".mp-album-title-wrapper").find('p.mp-label.mp-font').show();
@@ -63,16 +60,19 @@ UIInformation.prototype = {
 	
     },
     _setDescription : function (desc) {
-	var api = this.$description;
-	api.empty().append($("<p style='padding:0px;margin:0px 0px;margin-top:5px;'/>").html(desc));
-	api.css('height','100%').css('width','100%');
+	api = this.$description.data('jsp');
+	api.getContentPane()
+	    .empty()
+	    .append($("<p style='padding:0px;margin:0px 0px;margin-top:5px;'/>").html(desc));
 	if (this.$wrapper.is(":hidden")){
 	    this.$wrapper.show();
 	};
+	api.reinitialise();
     },
     
     resizeRepositionDescription : function () {
-	$map = this.$wrapper.parent();
+	// resizing and repositioning description wrapper
+	$map = $(".mp-map");
 	mapOffset = $map.offset();
 	topOffset = mapOffset.top + (0.5 * (0.25 * $map.height()));
 	leftOffset = mapOffset.left + (0.5 * (0.25 * $map.width()));
@@ -92,7 +92,10 @@ UIInformation.prototype = {
 	    left: leftOffset + descriptionWidth - (0.5 * imgWidth)
 	}
 	this.$close.offset(closeButtonOffset);
-	    
+	
+	// resizing description
+	//height = descriptionHeight - $(".mp-description-title").height();
+	//this.$description.height(height);
     },
     
     closeDescription: function(){
