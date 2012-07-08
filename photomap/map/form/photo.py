@@ -7,6 +7,13 @@ Created on Jul 3, 2012
 from django import forms
 from map.model.photo import Photo
 
-class Photo(forms.ModelForm):
+class PhotoInsertForm(forms.ModelForm):
     class Meta:
         model = Photo
+        exclude = ("thumb", "order",)
+        
+class PhotoUpdateForm(forms.ModelForm):
+    id = forms.IntegerField()
+    class Meta:
+        model = Photo
+        exclude = ("photo", "place" , "thumb",)

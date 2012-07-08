@@ -13,6 +13,7 @@ STATIC_PATH = os.path.join(PROJECT_PATH, "static")
 
 UPLOAD_PATH = os.path.join("upload", "%Y", "%m", "%d")
 PHOTO_PATH = os.path.join(STATIC_PATH, "photo")
+TEST_PATH = os.path.join(PROJECT_PATH, "test")
 
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
 MANAGERS = ADMINS

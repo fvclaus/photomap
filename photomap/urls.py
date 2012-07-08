@@ -10,7 +10,7 @@ from django.contrib import admin
 
 from django.contrib import admin
 
-from map.controller import photo
+from map.controller import photo, place
 
 #admin.site.register(model.album.Album)
 #admin.site.register(model.photo.Photo)
@@ -21,6 +21,16 @@ admin.autodiscover()
 urlpatterns = patterns("",
 #               (r'^$', direct_to_template, {"template": "index.tpl"}),
                url(r'^admin/', include(admin.site.urls)),
+               #================================================================
+               # photo hooks
+               #================================================================
+               url(r'^insert-photo', photo.insert),
+               url(r'^update-photo', photo.update),
                url(r'^delete-photo', photo.delete),
-               url(r'^insert-photo', photo.insert)
+               #================================================================
+               # place hooks
+               #================================================================
+               url(r'^insert-place', place.insert),
+               url(r'^update-place', place.update),
+               url(r'^delete-place', place.delete)
                ) 

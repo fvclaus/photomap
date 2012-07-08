@@ -1,49 +1,97 @@
+# -*- coding: utf8 -*-
 '''
 Created on Jun 29, 2012
-
 @author: fredo
 '''
 
-from django.test import TestCase
+from simpletestcase import SimpleTestCase
 from django.test.client import Client
 from config import TEST_PASSWORD, TEST_USER
+from map.model.photo import Photo
+import config
 import json
 import logging 
+import os
 
-class Photo(TestCase):
-    fixtures = ['simple-test']
-    
-    logger = logging.getLogger(__name__)
-    
-    def setUp(self):
-        self.c = Client()
-        self.c.login(username = TEST_USER, password = TEST_PASSWORD)
-        self.logger = Photo.logger
+class PhotoControllerTest(SimpleTestCase):
         
+    model = Photo
     
     def test_delete(self):
         #=======================================================================
+        # define url for requests
+        #=======================================================================
+        self.url = "/delete-photo"
+        #=======================================================================
         # delete something that exists
         #=======================================================================
-        response = self.c.post("/delete-photo", {"id" : 2})
-        self.assertEqual(response["Content-Type"], "text/json")
-        content = json.loads(response.content)
-        self.logger.debug("received %s" % (content))
-        self.assertTrue(content["success"])
+        path = Photo.objects.get(pk = 2).photo.path
+        self.assertDeletes({"id" : 2})
+        self.assertFalse(os.path.exists(path))
         #=======================================================================
         # delete something that does not exist
         #=======================================================================
-        response = self.c.post("/delete-photo", {"id":9999})
-        content = json.loads(response.content)
-        self.assertFalse(content["success"])
-        self.assertNotEqual(content["error"], "")
+        self.assertError({"id":9999})
         #=======================================================================
         # use wrong paramater
         #=======================================================================
-        response = self.c.post("/delete-photo", {"wrong" : "abc"})
-        content = json.loads(response.content)
-        self.assertFalse(content["success"])
-        self.assertNotEqual(content["error"], "")
+        self.assertError({"wrong" : "abc"})
+        
+        
         
     def test_insert(self):
-        pass
+        self.url = "/insert-photo"
+        #=======================================================================
+        # insert something valid without description
+        #=======================================================================
+        photo = open(config.TEST_PHOTO, "rb")
+        data = {"place": 1,
+                "title": "Chuck Norris",
+                "photo" : photo}
+        (photo, content) = self.assertCreates(data)
+        self.assertEqual(photo.title, data["title"])
+        #=======================================================================
+        # insert something valid with description
+        #=======================================================================
+        photo = open(config.TEST_PHOTO, "rb")
+        data["photo"] = photo
+        data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters <javascript></javascript>"
+        self.assertCreates(data)
+        #=======================================================================
+        # insert somthing that is not valid
+        #=======================================================================
+        del data["photo"]
+        self.assertError(data)
+        #=======================================================================
+        # delete some more
+        #=======================================================================
+        del data["title"]
+        self.assertError(data)
+        
+    def test_update(self):
+        self.url = "/update-photo"
+        #=======================================================================
+        # test something valid without description
+        #=======================================================================
+        data = {"id" : 2,
+                "title" : "EO changed"}
+        (photo, content) = self.assertUpdates(data)
+        self.assertEqual(photo.title, data["title"])
+        #=======================================================================
+        # with description
+        #=======================================================================
+        data["description"] = "The description changed"
+        (photo, content) = self.assertUpdates(data)
+        self.assertEqual(photo.description, data["description"])
+        #=======================================================================
+        # with order
+        #=======================================================================
+        data["order"] = 3
+        (photo, content) = self.assertUpdates(data)
+        self.assertEqual(photo.order, data["order"])
+        #=======================================================================
+        # wrong id test
+        #=======================================================================
+        data["id"] = "does not exist"
+        self.assertError(data)
+        

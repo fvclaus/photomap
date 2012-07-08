@@ -25,3 +25,4 @@ photomap-legacy/public/stylesheets/main.css
 *.project
 CACHE/
 .sass-cache
+.settings

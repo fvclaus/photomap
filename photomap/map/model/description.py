@@ -8,8 +8,8 @@ from django.db import models
 from map import appsettings
 
 class Description(models.Model):
-    title = models.CharField(max_length=200)
-    description = models.TextField()
+    title = models.CharField(max_length = 200)
+    description = models.TextField(blank = True, null = True)
     date = models.DateTimeField(auto_now = True)
     
     class Meta:
