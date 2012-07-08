@@ -212,23 +212,23 @@ transition {
   text-indent: -9000px;
 }
 .mp-description-wrapper {
-  position: absolute;
+  height: 100%;
+  width: 100%;
   overflow: auto;
   text-align: center;
   padding-top: 1%;
-  height: 75%;
   font-size: 100%;
 }
 #mp-photo-description {
-  display: none;
-}
-.mp-description-name {
   position: absolute;
+  background: #333;
+  color: #f4f4f4;
+  opacity: 0.7;
 }
+.mp-description-name,
 .mp-status-image {
   float: right;
   color: #fff;
-  position: absolute;
   right: 1%;
 }
 .mp-userpanel {

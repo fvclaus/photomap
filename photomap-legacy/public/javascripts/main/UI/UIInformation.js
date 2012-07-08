@@ -10,15 +10,7 @@ UIInformation = function(){
     this.$description = 
 	$(".mp-description-wrapper")
 	.height(this.$wrapper.height())
-	.width(this.$wrapper.width())
-	.jScrollPane( {
-	    verticalDragMinHeight	: 5,
-	    verticalDragMaxHeight	: 100,
-	    animateScroll		: true,
-	    showArrows  : true,
-	    horizontalGutter : 0,
-	    verticalGutter : 0
-	});
+	.width(this.$wrapper.width());
     
     // title and image count
     this.$title = this.$album.find(".mp-album-title-wrapper").find('p.mp-label.mp-font').show();
@@ -69,28 +61,23 @@ UIInformation.prototype = {
 	
     },
     _setDescription : function (desc) {
-	var api = this.$description.data("jsp")
-	api.getContentPane()
-	    .empty()
-	    .append($("<p style='padding:0px;margin:0px 0px;margin-top:5px;'/>").html(desc));
-	api.reinitialise();
-	this.$wrapper.show();
-	this.$description.show();
+	var api = this.$description;
+	api.empty().append($("<p style='padding:0px;margin:0px 0px;margin-top:5px;'/>").html(desc));
+	api.css('height','100%').css('width','100%');
     },
     
     resizeRepositionDescription : function () {
 	$map = this.$wrapper.parent();
 	mapOffset = $map.offset();
-	mapOffset.top = mapOffset.top + 20;
-	mapOffset.left = mapOffset.left + 20;
-	topOffset = 0.5 * (0.25 * $map.height());
+	topOffset = mapOffset.top + (0.5 * (0.25 * $map.height()));
+	leftOffset = mapOffset.left + (0.5 * (0.25 * $map.width()));
 	descriptionWidth = 0.75 * $map.width();
 	descriptionHeight = 0.75 * $map.height();
 	this.$wrapper
 	    .width(descriptionWidth)
 	    .height(descriptionHeight)
-	    .css('margin',topOffset + 'px auto');
-	    //.offset(mapOffset);
+	    .offset({top: topOffset, left: leftOffset});
+	    //.css('margin',topOffset + 'px ' + leftOffset + 'px');
 	    
     },
 
