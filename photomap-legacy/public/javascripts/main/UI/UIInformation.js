@@ -7,6 +7,7 @@ UIInformation = function(){
     this.$album = $("#mp-album");
     this.$titleWrapper = $(".mp-album-title-wrapper");
     this.$close = $(".mp-description-overlay-close");
+    this.$infoButton = $(".mp-option-information").show();
 
     this.$description = $(".mp-description-wrapper").jScrollPane();
     
@@ -101,10 +102,22 @@ UIInformation.prototype = {
 	this.$wrapper.fadeOut(500);
     },
     
+    toggleDescription: function(){
+	if (this.$wrapper.is(":visible")){
+	    this.$wrapper.fadeOut(500);
+	}
+	else {
+	    this.$wrapper.fadeIn(500);
+	}
+    },
+    
     bindListener: function(){
 	instance = this;
 	this.$close.bind('click',function(){
 	    instance.closeDescription();
+	});
+	this.$infoButton.bind('click',function(){
+	    instance.toggleDescription();
 	});
     },
 
