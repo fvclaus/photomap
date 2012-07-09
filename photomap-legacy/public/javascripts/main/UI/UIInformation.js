@@ -4,6 +4,7 @@ UIInformation = function(){
     
     this.$wrapper = $("#mp-photo-description");
     this.$controls = $(".mp-controls");
+    this.$bottomPanel = $(".mp-bottom-panel");
     this.$album = $("#mp-album");
     this.$titleWrapper = null;
     this.$close = $(".mp-description-overlay-close");
@@ -117,10 +118,19 @@ UIInformation.prototype = {
     
     showTooltips : function(){
 	this.$controls.find("img[title]").tooltip({
-	    effect: 'slide', 
+	    effect: 'slide',
+	    direction: 'right',
+	    bounce: true,
 	    position: 'bottom left',
 	    opacity: 0.7,
-	    offset: [0,10],
+	    offset: [0,20],
+	    predelay: 500,
+	    });
+	this.$bottomPanel.find("a[title]").tooltip({
+	    effect: 'slide', 
+	    position: 'top left',
+	    opacity: 0.7,
+	    offset: [60,50],
 	    predelay: 500,
 	    });
     },
