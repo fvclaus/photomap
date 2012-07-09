@@ -5,7 +5,7 @@ Main = function(){
     this.clientServer = new ClientServer();
     // instance of Menu
     this.ui= new UI();
-
+    
 };
 
 Main.prototype = {

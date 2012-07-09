@@ -16,7 +16,7 @@
 			<div class="mp-gallery-outer">
 				<div class="mp-gallery">
 					<% for (thumb in this.thumbAddress) { %>
-					<img class="overlay-description" src="<%= this.thumbAddress[thumb] %>" rel="#mp-photo-description"></img>
+					<img class="overlay-description" src="<%= this.thumbAddress[thumb] %>"></img>
 					<% }; %>
 				</div>
 			</div>
@@ -112,14 +112,18 @@
 					</div>
 					<img class="mp-description-overlay-close" src="images/close.png"></img>
 					<div class="mp-font mp-description-title">Beschreibung:</div>
-					<div class="mp-font mp-description-wrapper"></div>
+					<div class="mp-font mp-description-wrapper">
+						<div class="force-scroll">
+							<p></p>
+						</div>
+					</div>
 				</div>
 			</section>
 			
 			<section class="mp-album" id="mp-album">
 				<div class="mp-album-wrapper" id="mp-album-wrapper">
 				</div>
-				<div class="mp-album-overlay" id="mp-album-overlay">
+				<div class="mp-slideshow" id="mp-slideshow">
 					<div class="mp-album-nav">
 						<img class="mp-album-nav-prev" src="images/album-arrow-left.png"></img>
 						<img class="mp-album-nav-next" src="images/album-arrow-right.png"></img>
@@ -129,14 +133,14 @@
 						<img class="mp-album-zoom" src="images/magnify.png"></img>
 						<img></img>
 					</div>
-					<img class="mp-album-overlay-close" src="images/close.png"></img>
+					<img class="mp-slideshow-close" src="images/close.png"></img>
 				</div>
 			</section>
 			
 			<footer class="mp-footer" id="mp-footer">
 				<section class="mp-bottom-panel">
 					<a href="#" title="Details zu den kreativen Köpfen hinter PhotoMap">Impressum</a> |
-					<a href="#" title="Erläuterungen zur Nutzung von persönlichen Daten auf PhotoMap">Datenschutzerklärung</a> |
+					<a href="#" title="Erläuterungen zur Nutzung von persönlichen Daten auf PhotoMap">Datenschutz</a> |
 					<a href="#" title="Details zum Urheberrecht">Copyright</a> |
 					<a href="#" title="Für Support, Fragen, Anmerkungen und Kritik..">Kontakt</a> |
 					<a href="#" title="Hilfe zu PhotoMap und FAQ">Hilfe</a>

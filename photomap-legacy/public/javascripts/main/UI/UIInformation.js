@@ -16,9 +16,6 @@ UIInformation = function(){
     //this.$title = null;
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     
-    // resize description div
-    this.resizeRepositionDescription();
-    
     //show tooltip
     this.showTooltips();
     
@@ -69,13 +66,13 @@ UIInformation.prototype = {
     _setDescription : function (desc) {
 	api = this.$description.data('jsp');
 	api.getContentPane()
+	    .find("p")
 	    .empty()
-	    .append($("<p style='padding:0px;margin:0px 0px;margin-top:5px;'/>").html(desc));
+	    .html(desc);
 	if (this.$wrapper.is(":hidden")){
 	    this.$wrapper.show();
 	};
 	api.reinitialise();
-	this.resizeRepositionDescription();
     },
     
     resizeRepositionDescription : function () {
@@ -99,7 +96,6 @@ UIInformation.prototype = {
 	    left: leftOffset + descriptionWidth - (0.5 * imgWidth)
 	}
 	this.$close.offset(closeButtonOffset);
-	
     },
     
     closeDescription : function(){
@@ -113,7 +109,6 @@ UIInformation.prototype = {
 	else {
 	    this.$wrapper.fadeIn(500);
 	}
-	this.resizeRepositionDescription();
     },
     
     showTooltips : function(){

@@ -133,7 +133,6 @@ UIAlbum.prototype =  {
 	    
 	    // starts little slideshow in gallery div
 	    instance.gallery.startSlider();
-	    $(".overlay-description[rel]").overlay().load();
 	    return false;
 	});
 	//draw border on visited elements

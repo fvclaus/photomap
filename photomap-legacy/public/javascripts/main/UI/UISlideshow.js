@@ -2,10 +2,10 @@
 UISlideshow = function(gallery){
     this.gallery = gallery; 
     
-    this.$slideshow = $('#mp-album-overlay').hide();
+    this.$slideshow = $('#mp-slideshow').hide();
     this.$next = this.$slideshow.find('img.mp-album-nav-next');
     this.$prev = this.$slideshow.find('img.mp-album-nav-prev');
-    this.$close = this.$slideshow.find('img.mp-album-overlay-close');
+    this.$close = this.$slideshow.find('img.mp-slideshow-close');
     this.$image = this.$slideshow.find("div.mp-album-image > img[class!='mp-album-zoom']");
     this.$loading = this.$slideshow.find('img.mp-image-loading-small');
     this.$zoom = this.$slideshow.find("img.mp-album-zoom");
@@ -89,6 +89,10 @@ UISlideshow.prototype = {
     closeSlideshow : function(){
 	if (!main.getUIState().isSlideshow())
 	    return;
+	    
+	$(".mp-slideshow").hide();
+	$(".mp-album-wrapper").show();
+	
 	main.getUIState().setSlideshow(false);
 	main.getUIState().setSlideshowLoaded(false);
 	this.$slideshow.fadeOut("slow");
@@ -120,6 +124,9 @@ UISlideshow.prototype = {
 
     _startSlider: function() {
 	var instance = this;
+	
+	$(".mp-album-wrapper").hide();
+	$(".mp-slideshow").show();
 
 	//disable UI interaction
 	this.gallery.disableUI();
