@@ -18,6 +18,9 @@ UIInformation = function(){
     // resize description div
     this.resizeRepositionDescription();
     
+    //show tooltip
+    this.showTooltips();
+    
     this.bindListener();
     
 };
@@ -98,11 +101,11 @@ UIInformation.prototype = {
 	
     },
     
-    closeDescription: function(){
+    closeDescription : function(){
 	this.$wrapper.fadeOut(500);
     },
     
-    toggleDescription: function(){
+    toggleDescription : function(){
 	if (this.$wrapper.is(":visible")){
 	    this.$wrapper.fadeOut(500);
 	}
@@ -112,7 +115,17 @@ UIInformation.prototype = {
 	this.resizeRepositionDescription();
     },
     
-    bindListener: function(){
+    showTooltips : function(){
+	this.$controls.find("img[title]").tooltip({
+	    effect: 'slide', 
+	    position: 'bottom left',
+	    opacity: 0.7,
+	    offset: [0,10],
+	    predelay: 500,
+	    });
+    },
+    
+    bindListener : function(){
 	instance = this;
 	this.$close.bind('click',function(){
 	    instance.closeDescription();
