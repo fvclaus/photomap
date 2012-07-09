@@ -11,8 +11,8 @@ from album import Album
 class Place(Description):
      
    
-    lat = models.DecimalField(decimal_places = 26, max_digits = 30)
-    lon = models.DecimalField(decimal_places = 26, max_digits = 30)
+    lat = models.DecimalField(decimal_places = 98, max_digits = 100)
+    lon = models.DecimalField(decimal_places = 98, max_digits = 100)
     album = models.ForeignKey(Album)
     
     def __unicode__(self):

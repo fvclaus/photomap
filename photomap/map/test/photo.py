@@ -92,6 +92,6 @@ class PhotoControllerTest(SimpleTestCase):
         #=======================================================================
         # wrong id test
         #=======================================================================
-        data["id"] = "does not exist"
+        data["id"] = 999 # does not exist
         self.assertError(data)
         
