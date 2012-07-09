@@ -12,9 +12,9 @@
 		<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Rokkitt:400,700" />
 
 		
-		<script id="exhibitionTmpl" type="text/html">
-			<div class="mp-exhibition-outer">
-				<div class="mp-exhibition">
+		<script id="galleryTmpl" type="text/html">
+			<div class="mp-gallery-outer">
+				<div class="mp-gallery">
 					<% for (thumb in this.thumbAddress) { %>
 					<img class="overlay-description" src="<%= this.thumbAddress[thumb] %>" rel="#mp-photo-description"></img>
 					<% }; %>
@@ -118,13 +118,6 @@
 			
 			<section class="mp-album" id="mp-album">
 				<div class="mp-album-wrapper" id="mp-album-wrapper">
-					<div class="mp-album-title-wrapper" id="mp-album-title-wrapper">
-						<div class="mp-album-title">
-							<p class="mp-label mp-font mp-album-title-name"></p>
-						</div>
-					</div>
-					<div class="mp-exhibition-wrapper" id="mp-exhibition-wrapper">
-					</div>
 				</div>
 				<div class="mp-album-overlay" id="mp-album-overlay">
 					<div class="mp-album-nav">

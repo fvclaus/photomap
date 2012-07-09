@@ -5,14 +5,14 @@ UIInformation = function(){
     this.$wrapper = $("#mp-photo-description");
     this.$controls = $(".mp-controls");
     this.$album = $("#mp-album");
-    this.$titleWrapper = $(".mp-album-title-wrapper");
+    this.$titleWrapper = null;
     this.$close = $(".mp-description-overlay-close");
     this.$infoButton = $(".mp-option-information").show();
 
     this.$description = $(".mp-description-wrapper").jScrollPane();
     
     // title and image count
-    this.$title = this.$album.find(".mp-album-title-wrapper").find('p.mp-label.mp-font').show();
+    this.$title = null;
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     
     // resize description div
@@ -45,21 +45,21 @@ UIInformation.prototype = {
     // sets the current title
     _setTitle			: function( title ) {
 	this.titleLbl	= title;
-	this.$title.text( title );
+	//this.$title.text( title );
 
 	//calculate font size once for both image count and image name
 	if (!main.getUIState().getFontSize()){
-	    desiredWidth = this.$titleWrapper.width();
-	    desiredHeight = this.$titleWrapper.height();
-	    size = main.getUI().getTools().calculateFontSize(title,desiredWidth,desiredHeight);
-	    main.getUIState().setFontSize(size);
-	    this.$title.css("font-size",size+"px");
+	    //desiredWidth = this.$titleWrapper.width();
+	    //desiredHeight = this.$titleWrapper.height();
+	    //size = main.getUI().getTools().calculateFontSize(title,desiredWidth,desiredHeight);
+	    //main.getUIState().setFontSize(size);
+	    //this.$title.css("font-size",size+"px");
 	    this.$imageNumber.css("font-size",size+"px");
 	}
 
 	//center text
-	left  = this.$controls.width()/2 - this.$title.width()/2;
-	this.$title.css("left",left);
+	//left  = this.$controls.width()/2 - this.$title.width()/2;
+	//this.$title.css("left",left);
 	
     },
     _setDescription : function (desc) {
@@ -109,6 +109,7 @@ UIInformation.prototype = {
 	else {
 	    this.$wrapper.fadeIn(500);
 	}
+	this.resizeRepositionDescription();
     },
     
     bindListener: function(){

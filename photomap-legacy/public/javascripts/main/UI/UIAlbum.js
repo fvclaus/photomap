@@ -4,7 +4,6 @@ UIAlbum = function (gallery) {
 
     //reserve  4px as buffer
     this.$album	= $('#mp-album-wrapper');
-    this.$exhibition = $('#mp-exhibition-wrapper');
     this.$album.width(this.$album.width() - 4);
     this.albumPadding = this.$album.css("padding-left");
     this.albumWidth = this.$album.width();
@@ -16,17 +15,17 @@ UIAlbum = function (gallery) {
 UIAlbum.prototype =  {
 
     searchImages : function(){
-	this.$elements = this.$exhibition.find('div.mp-exhibition > img');
+	this.$elements = this.$album.find('div.mp-gallery > img');
     },
 
     getEl : function(){
-	return this.$exhibition;
+	return this.$album;
     },
     
     getDimensions : function(){
-	var position =  this.$exhibition.position();
-	position.width = this.$exhibition.width();
-	position.height = this.$exhibition.height();
+	var position =  this.$album.position();
+	position.width = this.$album.width();
+	position.height = this.$album.height();
 	return position;
     },
 
@@ -49,17 +48,17 @@ UIAlbum.prototype =  {
 		    instance.gallery.hideLoading();
 		    instance.gallery.enableUI();
 		    // create wrapping anchors for images
-		    instance.$exhibition.append(
-			$.jqote( '#exhibitionTmpl', {thumbAddress: tmplPhotosData} )
+		    instance.$album.append(
+			$.jqote( '#galleryTmpl', {thumbAddress: tmplPhotosData} )
 		    );
 		    //search all anchors
 		    instance.searchImages();
 		    // make wrapping anchors sortable
 		    // write height and width in album image wrapper
-		    instance.$exhibition
-			.find("div.mp-exhibition")
-			.width(instance.$exhibition.width())
-			.height(instance.$exhibition.height())
+		    instance.$album
+			.find("div.mp-gallery")
+			.width(instance.$album.width())
+			.height(instance.$album.height())
 			.sortable({
 			    items : "img",
 			    update : function(event,ui){
@@ -80,7 +79,7 @@ UIAlbum.prototype =  {
 			    }
 			});
 		    // create scrollpane 
-		    instance.$exhibition
+		    instance.$album
 			.css("padding-left",instance.albumPadding)
 			.width(instance.albumWidth)
 			.jScrollPane({
