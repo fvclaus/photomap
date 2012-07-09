@@ -122,15 +122,17 @@ UIInformation.prototype = {
 	    direction: 'right',
 	    bounce: true,
 	    position: 'bottom left',
-	    opacity: 0.7,
+	    opacity: 0.9,
 	    offset: [0,20],
 	    predelay: 500,
 	    });
 	this.$bottomPanel.find("a[title]").tooltip({
-	    effect: 'slide', 
+	    effect: 'slide',
+	    direction: 'right',
+	    bounce: true, 
 	    position: 'top left',
-	    opacity: 0.7,
-	    offset: [60,50],
+	    opacity: 0.9,
+	    offset: [0,20],
 	    predelay: 500,
 	    });
     },
