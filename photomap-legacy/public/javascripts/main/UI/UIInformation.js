@@ -6,14 +6,14 @@ UIInformation = function(){
     this.$controls = $(".mp-controls");
     this.$bottomPanel = $(".mp-bottom-panel");
     this.$album = $("#mp-album");
-    this.$titleWrapper = null;
+    //this.$titleWrapper = null;
     this.$close = $(".mp-description-overlay-close");
     this.$infoButton = $(".mp-option-information").show();
 
     this.$description = $(".mp-description-wrapper").jScrollPane();
     
     // title and image count
-    this.$title = null;
+    //this.$title = null;
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     
     // resize description div

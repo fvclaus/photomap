@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jul 09 11:59:14 CEST 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jul 09 15:12:00 CEST 2012'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -2805,21 +2805,6 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
           name = 'UIInformation' visibility = 'public' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
           <UML:Classifier.feature>
-            <UML:Attribute xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000BA8'
-              name = '$title' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
-              changeability = 'changeable' targetScope = 'instance'>
-              <UML:StructuralFeature.multiplicity>
-                <UML:Multiplicity xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000BA9'>
-                  <UML:Multiplicity.range>
-                    <UML:MultiplicityRange xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000BAA'
-                      lower = '1' upper = '1'/>
-                  </UML:Multiplicity.range>
-                </UML:Multiplicity>
-              </UML:StructuralFeature.multiplicity>
-              <UML:StructuralFeature.type>
-                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087C'/>
-              </UML:StructuralFeature.type>
-            </UML:Attribute>
             <UML:Attribute xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000BAB'
               name = '$description' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
               changeability = 'changeable' targetScope = 'instance'>
@@ -2974,6 +2959,30 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
                 <UML:Multiplicity xmi.id = '127-0-1-1--3d49a181:1386b2b2aeb:-8000:0000000000000D19'>
                   <UML:Multiplicity.range>
                     <UML:MultiplicityRange xmi.id = '127-0-1-1--3d49a181:1386b2b2aeb:-8000:0000000000000D1A'
+                      lower = '1' upper = '1'/>
+                  </UML:Multiplicity.range>
+                </UML:Multiplicity>
+              </UML:StructuralFeature.multiplicity>
+              <UML:StructuralFeature.type>
+                <UML:DataType href = 'http://argouml.org/profiles/uml14/default-uml14.xmi#-84-17--56-5-43645a83:11466542d86:-8000:000000000000087C'/>
+              </UML:StructuralFeature.type>
+            </UML:Attribute>
+            <UML:Operation xmi.id = '127-0-1-1--3d49a181:1386b2b2aeb:-8000:0000000000000D1C'
+              name = 'showTooltips' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              isQuery = 'false' concurrency = 'sequential' isRoot = 'false' isLeaf = 'false'
+              isAbstract = 'false'>
+              <UML:BehavioralFeature.parameter>
+                <UML:Parameter xmi.id = '127-0-1-1--3d49a181:1386b2b2aeb:-8000:0000000000000D1D'
+                  name = 'return' isSpecification = 'false' kind = 'return'/>
+              </UML:BehavioralFeature.parameter>
+            </UML:Operation>
+            <UML:Attribute xmi.id = '127-0-1-1--3d49a181:1386b2b2aeb:-8000:0000000000000D1E'
+              name = '$bottomPanel' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
+              changeability = 'changeable' targetScope = 'instance'>
+              <UML:StructuralFeature.multiplicity>
+                <UML:Multiplicity xmi.id = '127-0-1-1--3d49a181:1386b2b2aeb:-8000:0000000000000D1F'>
+                  <UML:Multiplicity.range>
+                    <UML:MultiplicityRange xmi.id = '127-0-1-1--3d49a181:1386b2b2aeb:-8000:0000000000000D20'
                       lower = '1' upper = '1'/>
                   </UML:Multiplicity.range>
                 </UML:Multiplicity>
@@ -5284,7 +5293,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
     </group>
   </group>
   <group name="Fig9"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[808, 40, 184, 280]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[440, 8, 184, 280]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="127-0-1-1-3f8f7c05:135293a5646:-8000:0000000000000A97"
        fill="1"
        fillcolor="white"
@@ -5295,8 +5304,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
     </private>
     
     <rectangle name="Fig9.0"
-      x="808"
-      y="40"
+      x="440"
+      y="8"
       width="184"
       height="280"
       fill="1"
@@ -5305,8 +5314,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <text name="Fig9.1"
-      x="809"
-      y="41"
+      x="441"
+      y="9"
       width="182"
       height="22"
       fill="0"
@@ -5321,7 +5330,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       justification="Center"
     >UIInput</text>
     <group name="Fig9.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[809, 41, 182, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[441, 9, 182, 0]"
          href="127-0-1-1-3f8f7c05:135293a5646:-8000:0000000000000A97"
          fill="0"
          fillcolor="white"
@@ -5333,8 +5342,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       </private>
       
       <rectangle name="Fig9.2.0"
-        x="809"
-        y="41"
+        x="441"
+        y="9"
         width="182"
         height="0"
         fill="0"
@@ -5344,8 +5353,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       />
     </group>
     <rectangle name="Fig9.3"
-      x="808"
-      y="63"
+      x="440"
+      y="31"
       width="184"
       height="1"
       fill="1"
@@ -5354,7 +5363,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig9.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[809, 64, 182, 63]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[441, 32, 182, 63]"
          href="127-0-1-1-3f8f7c05:135293a5646:-8000:0000000000000A97"
          fill="0"
          fillcolor="white"
@@ -5365,8 +5374,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       </private>
       
       <rectangle name="Fig9.4.0"
-        x="809"
-        y="64"
+        x="441"
+        y="32"
         width="182"
         height="63"
         fill="0"
@@ -5375,8 +5384,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         strokecolor="black"
       />
       <text name="Fig9.4.1"
-        x="809"
-        y="64"
+        x="441"
+        y="32"
         width="182"
         height="16"
         fill="0"
@@ -5391,8 +5400,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >_onLoads : Array</text>
       <text name="Fig9.4.2"
-        x="809"
-        y="80"
+        x="441"
+        y="48"
         width="182"
         height="16"
         fill="0"
@@ -5407,8 +5416,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >_onForms : Array</text>
       <text name="Fig9.4.3"
-        x="809"
-        y="96"
+        x="441"
+        y="64"
         width="182"
         height="22"
         fill="0"
@@ -5424,8 +5433,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       >_onAjaxs : Array</text>
     </group>
     <rectangle name="Fig9.5"
-      x="808"
-      y="127"
+      x="440"
+      y="95"
       width="184"
       height="1"
       fill="1"
@@ -5434,7 +5443,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig9.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[809, 128, 182, 191]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[441, 96, 182, 191]"
          href="127-0-1-1-3f8f7c05:135293a5646:-8000:0000000000000A97"
          fill="0"
          fillcolor="white"
@@ -5445,8 +5454,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       </private>
       
       <rectangle name="Fig9.6.0"
-        x="809"
-        y="128"
+        x="441"
+        y="96"
         width="182"
         height="191"
         fill="0"
@@ -5455,8 +5464,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         strokecolor="black"
       />
       <text name="Fig9.6.1"
-        x="809"
-        y="128"
+        x="441"
+        y="96"
         width="182"
         height="16"
         fill="0"
@@ -5471,8 +5480,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >get()</text>
       <text name="Fig9.6.2"
-        x="809"
-        y="144"
+        x="441"
+        y="112"
         width="182"
         height="16"
         fill="0"
@@ -5487,8 +5496,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >iFrame()</text>
       <text name="Fig9.6.3"
-        x="809"
-        y="160"
+        x="441"
+        y="128"
         width="182"
         height="16"
         fill="0"
@@ -5503,8 +5512,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >onLoad()</text>
       <text name="Fig9.6.4"
-        x="809"
-        y="176"
+        x="441"
+        y="144"
         width="182"
         height="16"
         fill="0"
@@ -5519,8 +5528,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >onForm()</text>
       <text name="Fig9.6.5"
-        x="809"
-        y="192"
+        x="441"
+        y="160"
         width="182"
         height="16"
         fill="0"
@@ -5535,8 +5544,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >onAjax()</text>
       <text name="Fig9.6.6"
-        x="809"
-        y="208"
+        x="441"
+        y="176"
         width="182"
         height="16"
         fill="0"
@@ -5551,8 +5560,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >_intercept()</text>
       <text name="Fig9.6.7"
-        x="809"
-        y="224"
+        x="441"
+        y="192"
         width="182"
         height="16"
         fill="0"
@@ -5567,8 +5576,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >_initialise()</text>
       <text name="Fig9.6.8"
-        x="809"
-        y="240"
+        x="441"
+        y="208"
         width="182"
         height="16"
         fill="0"
@@ -5583,8 +5592,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >_onLoad()</text>
       <text name="Fig9.6.9"
-        x="809"
-        y="256"
+        x="441"
+        y="224"
         width="182"
         height="16"
         fill="0"
@@ -5599,8 +5608,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >_onAjax()</text>
       <text name="Fig9.6.10"
-        x="809"
-        y="272"
+        x="441"
+        y="240"
         width="182"
         height="16"
         fill="0"
@@ -5615,8 +5624,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >_onForm()</text>
       <text name="Fig9.6.11"
-        x="809"
-        y="288"
+        x="441"
+        y="256"
         width="182"
         height="22"
         fill="0"
@@ -8057,7 +8066,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
     </group>
   </group>
   <group name="Fig28"
-       description="org.argouml.uml.diagram.static_structure.ui.FigClass[472, 0, 256, 280]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
+       description="org.argouml.uml.diagram.static_structure.ui.FigClass[728, 48, 264, 315]pathVisible=false;stereotypeView=0;operationsVisible=true;attributesVisible=true;"
        href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B9B"
        fill="1"
        fillcolor="white"
@@ -8068,19 +8077,19 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
     </private>
     
     <rectangle name="Fig28.0"
-      x="472"
-      y="0"
-      width="256"
-      height="280"
+      x="728"
+      y="48"
+      width="264"
+      height="315"
       fill="1"
       fillcolor="white"
       stroke="1"
       strokecolor="black"
     />
     <text name="Fig28.1"
-      x="473"
-      y="1"
-      width="254"
+      x="729"
+      y="49"
+      width="262"
       height="22"
       fill="0"
       fillcolor="white"
@@ -8094,7 +8103,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       justification="Center"
     >UIInformation</text>
     <group name="Fig28.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[473, 1, 254, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 49, 254, 0]"
          href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B9B"
          fill="0"
          fillcolor="white"
@@ -8106,8 +8115,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       </private>
       
       <rectangle name="Fig28.2.0"
-        x="473"
-        y="1"
+        x="729"
+        y="49"
         width="254"
         height="0"
         fill="0"
@@ -8117,9 +8126,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       />
     </group>
     <rectangle name="Fig28.3"
-      x="472"
-      y="23"
-      width="256"
+      x="728"
+      y="71"
+      width="264"
       height="1"
       fill="1"
       fillcolor="black"
@@ -8127,7 +8136,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig28.4"
-         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[473, 24, 254, 120]"
+         description="org.argouml.uml.diagram.ui.FigAttributesCompartment[729, 72, 262, 128]"
          href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B9B"
          fill="0"
          fillcolor="white"
@@ -8138,35 +8147,19 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       </private>
       
       <rectangle name="Fig28.4.0"
-        x="473"
-        y="24"
-        width="254"
-        height="120"
+        x="729"
+        y="72"
+        width="262"
+        height="128"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
       <text name="Fig28.4.1"
-        x="473"
-        y="24"
-        width="254"
-        height="16"
-        fill="0"
-        fillcolor="white"
-        stroke="0"
-        strokecolor="black"
-        textcolor="black"
-        font="Dialog"
-        italic="false"
-        bold="false"
-        textsize="12"
-        justification="Left"
-      >$title : Integer</text>
-      <text name="Fig28.4.2"
-        x="473"
-        y="40"
-        width="254"
+        x="729"
+        y="72"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8179,10 +8172,10 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         textsize="12"
         justification="Left"
       >$description : Integer</text>
-      <text name="Fig28.4.3"
-        x="473"
-        y="56"
-        width="254"
+      <text name="Fig28.4.2"
+        x="729"
+        y="88"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8195,10 +8188,10 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         textsize="12"
         justification="Left"
       >$wrapper : Integer</text>
-      <text name="Fig28.4.4"
-        x="473"
-        y="72"
-        width="254"
+      <text name="Fig28.4.3"
+        x="729"
+        y="104"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8211,10 +8204,10 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         textsize="12"
         justification="Left"
       >$controls : Integer</text>
-      <text name="Fig28.4.5"
-        x="473"
-        y="88"
-        width="254"
+      <text name="Fig28.4.4"
+        x="729"
+        y="120"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8227,10 +8220,10 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         textsize="12"
         justification="Left"
       >$imageNumber : Integer</text>
-      <text name="Fig28.4.6"
-        x="473"
-        y="104"
-        width="254"
+      <text name="Fig28.4.5"
+        x="729"
+        y="136"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8243,11 +8236,11 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         textsize="12"
         justification="Left"
       >$close : Integer</text>
-      <text name="Fig28.4.7"
-        x="473"
-        y="120"
-        width="254"
-        height="22"
+      <text name="Fig28.4.6"
+        x="729"
+        y="152"
+        width="262"
+        height="16"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -8259,11 +8252,27 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         textsize="12"
         justification="Left"
       >$album : Integer</text>
+      <text name="Fig28.4.7"
+        x="729"
+        y="168"
+        width="262"
+        height="22"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Dialog"
+        italic="false"
+        bold="false"
+        textsize="12"
+        justification="Left"
+      >$bottomPanel : Integer</text>
     </group>
     <rectangle name="Fig28.5"
-      x="472"
-      y="143"
-      width="256"
+      x="728"
+      y="200"
+      width="264"
       height="1"
       fill="1"
       fillcolor="black"
@@ -8271,7 +8280,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       strokecolor="black"
     />
     <group name="Fig28.6"
-         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[473, 144, 254, 136]"
+         description="org.argouml.uml.diagram.ui.FigOperationsCompartment[729, 201, 262, 160]"
          href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B9B"
          fill="0"
          fillcolor="white"
@@ -8282,19 +8291,19 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       </private>
       
       <rectangle name="Fig28.6.0"
-        x="473"
-        y="144"
-        width="254"
-        height="136"
+        x="729"
+        y="201"
+        width="262"
+        height="160"
         fill="0"
         fillcolor="white"
         stroke="0"
         strokecolor="black"
       />
       <text name="Fig28.6.1"
-        x="473"
-        y="144"
-        width="254"
+        x="729"
+        y="201"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8308,9 +8317,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >setInfo()</text>
       <text name="Fig28.6.2"
-        x="473"
-        y="160"
-        width="254"
+        x="729"
+        y="217"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8324,9 +8333,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >setTitle()</text>
       <text name="Fig28.6.3"
-        x="473"
-        y="176"
-        width="254"
+        x="729"
+        y="233"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8340,9 +8349,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >setDescription()</text>
       <text name="Fig28.6.4"
-        x="473"
-        y="192"
-        width="254"
+        x="729"
+        y="249"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8356,9 +8365,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >hideImageNumber()</text>
       <text name="Fig28.6.5"
-        x="473"
-        y="208"
-        width="254"
+        x="729"
+        y="265"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8372,9 +8381,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >showImageNumber()</text>
       <text name="Fig28.6.6"
-        x="473"
-        y="224"
-        width="254"
+        x="729"
+        y="281"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8388,9 +8397,9 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >setImageNumber()</text>
       <text name="Fig28.6.7"
-        x="473"
-        y="240"
-        width="254"
+        x="729"
+        y="297"
+        width="262"
         height="16"
         fill="0"
         fillcolor="white"
@@ -8404,10 +8413,10 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         justification="Left"
       >resizeRepositionDescription()</text>
       <text name="Fig28.6.8"
-        x="473"
-        y="256"
-        width="254"
-        height="22"
+        x="729"
+        y="313"
+        width="262"
+        height="16"
         fill="0"
         fillcolor="white"
         stroke="0"
@@ -8419,6 +8428,22 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         textsize="12"
         justification="Left"
       >closeDescription()</text>
+      <text name="Fig28.6.9"
+        x="729"
+        y="329"
+        width="262"
+        height="22"
+        fill="0"
+        fillcolor="white"
+        stroke="0"
+        strokecolor="black"
+        textcolor="black"
+        font="Dialog"
+        italic="false"
+        bold="false"
+        textsize="12"
+        justification="Left"
+      >showTooltips()</text>
     </group>
   </group>
   <group name="Fig29"
@@ -9564,10 +9589,10 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="608"
-              y="320" />
-      <lineto x="608"
-              y="279" />
+      <moveto x="655"
+              y="362" />
+      <lineto x="728"
+              y="362" />
     </path>
   </group>
   <group name="Fig38"
@@ -9956,10 +9981,10 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       stroke="1"
       strokecolor="black"
     >
-      <moveto x="655"
+      <moveto x="623"
               y="320" />
-      <lineto x="808"
-              y="319" />
+      <lineto x="623"
+              y="287" />
     </path>
   </group>
   <group name="Fig42"
