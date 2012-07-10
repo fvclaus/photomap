@@ -1,0 +1,154 @@
+{% extends "base.html" %}
+
+{% block title %}Photo Map{% endblock %}
+
+
+{% block css %}		
+	<link rel="stylesheet" type="text/css" href="static/stylesheets-plain/jquery.jscrollpane.css" />		
+	<link rel="stylesheet" type="text/css" href="static/fancybox/jquery.fancybox-1.3.4.css" />
+{% endblock %}
+
+{% block js %}
+	<script id="galleryTmpl" type="text/html">
+		<div class="mp-gallery-outer">
+			<div class="mp-gallery">
+				<% for (thumb in this.thumbAddress) { %>
+				<img class="overlay-description" src="<%= this.thumbAddress[thumb] %>"></img>
+				<% }; %>
+			</div>
+		</div>
+	</script>
+	
+	<script id="galleryFullscreenTmpl" type="text/html">
+		<div id="mp-image-overlay" class="mp-image-overlay">
+			<img class="mp-loading"></img>
+			<img class="mp-image-zoom" src="static/images/zoom.png" ></img>
+			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
+			<div class="mp-image-overlay-desc">
+				<div class="mp-image-nav">
+					<img class="mp-image-nav-prev" src="static/images/image-arrow-left.png" ></img>
+					<img class="mp-image-nav-next" src="static/images/image-arrow-right.png" ></img>
+					<img id="mp-image-overlay-close" class="static/mp-image-overlay-close" src="static/images/close.png" ></img>
+				</div>
+				<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
+			</div>
+		</div>
+	</script>
+		
+	<script type="text/javascript" src="static/javascripts/main/Extensions.js" ></script>
+	
+	
+	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
+	
+	<script type="text/javascript" src="static/javascripts/jquery.jscrollpane.min.js" ></script>
+	<script type="text/javascript" src="static/javascripts/jquery.tmpl.min.js" ></script>
+	<script type="text/javascript" src="static/javascripts/jquery.mousewheel.min.js" ></script>
+	<script type="text/javascript" src="static/javascripts/tzoom.min.js" ></script>
+	<script type="text/javascript" src="static/javascripts/jquery.cookie.js" ></script>
+	<script type="text/javascript" src="static/javascripts/jquery.json.js" ></script>
+	<script type="text/javascript" src="static/javascripts/ie.js" ></script>
+	
+	<script type="text/javascript" src="static/javascripts/date.js" ></script>
+
+	
+	<script type="text/javascript" src="static/javascripts/jquery.jqote2.js" ></script>
+	
+	<script type="text/javascript" src="static/javascripts/main/UI/UIFullscreen.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UISlideshow.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UIAlbum.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UIState.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UIInput.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UIControls.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UIInformation.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UIPanel.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UITools.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UIGallery.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UI.js" ></script>
+	
+	<script type="text/javascript" src="static/javascripts/main/ClientState.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/ClientServer.js" ></script>
+	
+	<script type="text/javascript" src="static/javascripts/main/Map.js" ></script>
+	
+	<script type="text/javascript" src="static/javascripts/main/Marker.js" ></script>	
+	<script type="text/javascript" src="static/javascripts/main/Photo.js" ></script>	
+	<script type="text/javascript" src="static/javascripts/main/Place.js" ></script>	
+	<script type="text/javascript" src="static/javascripts/main/Main.js" ></script>	
+
+{% endblock %}
+
+
+
+{% block content %}
+		
+		<div class="mp-container" id="mp-container">
+			
+			<header class="mp-header" id="mp-header">
+				<section class="mp-userpanel">
+					<div class="mp-logo">LOGO</div>
+					<div class="mp-controls-wrapper">
+						<div class="mp-controls">
+							<a href="/logout">
+								<img class="mp-controls mp-option-logout" src="static/images/logout.png" title="Logout"></img>
+							</a>
+							<img class="mp-controls mp-option-center" src="static/images/center.png" title="Karte auf ausgewählten Platz zentrieren."></img>
+							<img class="mp-controls mp-option-delete" src="static/images/delete.png" title="Löschen"></img>
+							<img class="mp-controls mp-option-modify" src="static/images/modify.png" title="Bearbeiten"></img>
+							<img class="mp-controls mp-option-add" src="static/images/add.png" title="Bild hinzufügen"></img>
+							<img class="mp-controls mp-option-information" src="static/images/information.png" title="Information zu ausgewähltem Objekt anzeigen."></img>
+						<div></div>
+						</div>
+					</div>
+				</section>
+			</header>
+			
+			<section class="mp-map" id="mp-map">
+				<div class="mp-map-container">
+					<div class="mp-map-wrapper" id="map"></div>
+				</div>
+				<div id="mp-photo-description">
+					<div class="mp-status-image mp-font"></div>
+					<div>
+						<p class="mp-label mp-font mp-description-name"></p>
+					</div>
+					<img class="mp-description-overlay-close" src="static/images/close.png"></img>
+					<div class="mp-font mp-description-title">Beschreibung:</div>
+					<div class="mp-font mp-description-wrapper">
+						<div class="force-scroll">
+							<p></p>
+						</div>
+					</div>
+				</div>
+			</section>
+			
+			<section class="mp-album" id="mp-album">
+				<div class="mp-album-wrapper" id="mp-album-wrapper">
+				</div>
+				<div class="mp-slideshow" id="mp-slideshow">
+					<div class="mp-album-nav">
+						<img class="mp-album-nav-prev" src="static/images/album-arrow-left.png"></img>
+						<img class="mp-album-nav-next" src="static/images/album-arrow-right.png"></img>
+					</div>
+					<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
+					<div class="mp-album-image">
+						<img class="mp-album-zoom" src="static/images/magnify.png"></img>
+						<img></img>
+					</div>
+					<img class="mp-slideshow-close" src="static/images/close.png"></img>
+				</div>
+			</section>
+			
+			<footer class="mp-footer" id="mp-footer">
+				<section class="mp-bottom-panel">
+					<a href="#" title="Details zu den kreativen Köpfen hinter PhotoMap">Impressum</a> |
+					<a href="#" title="Erläuterungen zur Nutzung von persönlichen Daten auf PhotoMap">Datenschutz</a> |
+					<a href="#" title="Details zum Urheberrecht">Copyright</a> |
+					<a href="#" title="Für Support, Fragen, Anmerkungen und Kritik..">Kontakt</a> |
+					<a href="#" title="Hilfe zu PhotoMap und FAQ">Hilfe</a>
+				</section>
+			</footer>
+		</div>
+		
+		<script type="text/javascript" src="static/javascripts/main/Init.js" ></script>
+		
+{% endblock %}

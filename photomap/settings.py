@@ -62,7 +62,7 @@ LOGGING = {
             'level' : 'ERROR',
             'propagate': False,
         },
-        'map': {
+        'pm': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,

@@ -120,16 +120,16 @@ Map.prototype = {
     // restricts maximum zoom level for fitbounds function :
     // taken from : http://boogleoogle.blogspot.com/2010/04/maximum-zoom-level-when-using-fitbounds.html
     _controlZoom		: function() {
-	var instance	= this;
-	zoomChangeListener =  google.maps.event.addListener( this.map, 'zoom_changed', function() {
-	    zoomChangeBoundsListener = google.maps.event.addListener( instance.map, 'bounds_changed', function(event) {
-		if (this.getZoom() > 15) // don't allow a zoom factor > 15
-		    this.setZoom(15);
-		google.maps.event.removeListener(zoomChangeBoundsListener);
-	    });
-	    // remove this event listener since we will want to be able to zoom in after the markers are displayed on the map.
-	    google.maps.event.removeListener(zoomChangeListener);
-	});
+	// var instance	= this;
+	// zoomChangeListener =  google.maps.event.addListener( this.map, 'zoom_changed', function() {
+	//     zoomChangeBoundsListener = google.maps.event.addListener( instance.map, 'bounds_changed', function(event) {
+	// 	if (this.getZoom() > 15) // don't allow a zoom factor > 15
+	// 	    this.setZoom(15);
+	// 	google.maps.event.removeListener(zoomChangeBoundsListener);
+	//     });
+	//     // remove this event listener since we will want to be able to zoom in after the markers are displayed on the map.
+	//     google.maps.event.removeListener(zoomChangeListener);
+	// });
     },
     // takes an array of markers and resizes + pans the map so all places markers are visible
     // does not show/hide marker 

@@ -6,7 +6,7 @@ Place = function(data) {
     
     this.marker		= new Marker({
 	lat		: parseFloat(data.lat), 
-	lng		: parseFloat(data.lng),
+	lng		: parseFloat(data.lon),
 	title	: this.name
     });
 
@@ -66,16 +66,16 @@ Place.prototype = {
     },
 
     showVisitedIcon : function(){
-	this.marker.set({icon : "images/camera-visited.png"});
+	this.marker.set({icon: "static/images/camera-visited.png"});
     },
     showSelectedIcon : function(){
-	this.marker.set({icon:"images/camera-current.png"});
+	this.marker.set({icon: "static/images/camera-current.png"});
     },
     showUnselectedIcon : function(){
 	this.marker.set({icon: this.marker.mapicon});
     },
     showDisabledIcon : function(){
-	this.marker.set({icon: "images/camera-disabled.png"});
+	this.marker.set({icon: "static/images/camera-disabled.png"});
     },
     center : function(){
 	var map = main.getMap().getInstance();

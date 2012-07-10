@@ -26,7 +26,7 @@ ClientServer.prototype = {
 	_getPlaces			: function( callback ) {
 	    var instance = this;
 	    // get the places and its info from the XML file
-	    $.getJSON('album', function( data ) {
+	    $.getJSON('get-album', function( data ) {
 		// the album name
 		instance.name = data.name;
 		// the album description

@@ -11,7 +11,8 @@ from django.contrib import admin
 from django.contrib import admin
 
 from pm.controller import photo, place
-from pm.controller.authentication import login
+from pm.controller import authentication 
+from pm.controller import album
 
 #admin.site.register(model.album.Album)
 #admin.site.register(model.photo.Photo)
@@ -23,7 +24,13 @@ urlpatterns = patterns("",
                        #========================================================
                        # main
                        #========================================================
-                       url(r'^login', login),
+                       url(r'^login', authentication.login),
+                       url(r'^view-album', album.view),
+                       url(r'^get-album', album.get),
+                       #========================================================
+                       # legacy
+                       #========================================================
+                       url(r'^album', album.redirect_to_get),
                        #========================================================
                        # 3rd party apps
                        #========================================================
