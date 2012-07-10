@@ -29,6 +29,7 @@ ClientServer.prototype = {
 	    $.getJSON('get-album', function( data ) {
 		// the album name
 		instance.name = data.title;
+		instance.id = data.id;
 		// the album description
 		instance.desc = data.description;
 

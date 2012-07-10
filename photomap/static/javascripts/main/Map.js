@@ -84,18 +84,20 @@ Map.prototype = {
 		    if (!data){
 			alert ("could not get id for newly inserted place");
 		    }
-		    console.log("received id %d",data["place-id"]);
-		    place.id = data["place-id"]
+		    console.log("received id %d",data["id"]);
+		    place.id = data["id"]
 		});
 		
 		input.onLoad(function(){
-		    $("input[name=place-lat]").val(lat);
-		    $("input[name=place-lng]").val(lng);
+		    $("input[name=lat]").val(lat);
+		    $("input[name=lon]").val(lng);
+		    // was machen eigentlich die album daten im clientserver ??
+		    $("input[name=album]").val(main.getClientServer().id);
 
 		    input.onForm(function(){
 			//get place name + description
-			var name = $("[name=place-name]").val();
-			var desc = $("[name=place-desc]").val();
+			var name = $("[name=title]").val();
+			var desc = $("[name=description]").val();
 			//create new place and show marker
 			place = new Place({
 			    lat: lat,

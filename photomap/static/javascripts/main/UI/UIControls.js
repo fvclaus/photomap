@@ -45,7 +45,7 @@ UIControls.prototype = {
 	    if (state.isSlideshow()) {
 		if(confirm("Do you really want to delete photo "+photo.name)){
 		    url = "/delete-photo",
-		    data = {"photo-id":photo.id};
+		    data = {"id":photo.id};
 		    //deletes photo from gallery and moves or hides slider
 		    main.getUI().getTools().deletePhoto(photo);
 		}
@@ -56,7 +56,7 @@ UIControls.prototype = {
 	    else{
 		if(confirm("Do you really want to delete place "+place.name)){
 		    url = "/delete-place";
-		    data = {"place-id":place.id};
+		    data = {"id":place.id};
 		    place._delete();
 		    main.getUI().getControls().hideControls();
 		    main.getUI().getInformation().setInfo();
@@ -112,13 +112,14 @@ UIControls.prototype = {
 	    //edit current place
 	    else {
 		//prefill with name and update on submit
-		main.getUI.getInput()
+
+		main.getUI().getInput()
 		    .onLoad(function(){
 			$("input[name=id]").val(place.id);
 			var $name = $("input[name=title]").val(place.name);
 			var $desc = $("textarea[name=description]").val(place.desc);
 
-			main.getUI.getInput().onForm(function(){
+			main.getUI().getInput().onForm(function(){
 			    //reflect changes locally
 			    place.name = $name.val();
 			    place.desc = $desc.val();

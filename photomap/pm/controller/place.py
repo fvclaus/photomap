@@ -43,7 +43,7 @@ def update(request):
         else:
             return error(str(form.errors))
     else:
-        return HttpResponseBadRequest()
+        return render_to_response("update-place.html")
             
 
 
