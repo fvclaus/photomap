@@ -132,7 +132,7 @@ UIControls.prototype = {
 	this.$add.bind("click.MapPhotoAlbum",function(event){
 	    place = main.getUIState().getCurrentPlace();
 	    // reset load function 
-	    main.getUI().getInput().iFrame("/insert-photo?placeId="+place.id);
+	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
 	});
 	this.$center.bind("click.MapPhotoAlbum",function(event){
 	    var place = main.getUIState().getCurrentPlace();

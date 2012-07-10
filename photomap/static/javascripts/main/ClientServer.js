@@ -28,9 +28,9 @@ ClientServer.prototype = {
 	    // get the places and its info from the XML file
 	    $.getJSON('get-album', function( data ) {
 		// the album name
-		instance.name = data.name;
+		instance.name = data.title;
 		// the album description
-		instance.desc = data.desc;
+		instance.desc = data.description;
 
 		$.each( data.places, function( key, placeinfo ) {
 		    var place = new Place( placeinfo )

@@ -1,22 +1,28 @@
-<script type="text/javascript" src="/javascripts/jquery.all.min.js"></script>
-<link rel="stylesheet" type="text/css" href="/stylesheets/main.css" />
-<script type="text/javascript" src="/javascripts/insert-photo.js"></script>
+<!--<script type="text/javascript" src="static/javascripts/jquery.all.min.js"></script>-->
+{% load compress %}
+{% compress css file %}
+<link rel="stylesheet" type="text/x-stylus" href="static/stylesheets/main.styl" />
+{% endcompress %}
+<!--<script type="text/javascript" src="/javascripts/insert-photo.js"></script>-->
 <div>insert
 	<form class="jquery-validator mp-dialog" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
-		<input type="hidden" name="photo-album" required="required" />
+	
+		
+		<input type="hidden" name="place" required="required" value="{{place}}"/>
 		<div>
-			<label for="photo-name">name</label>
-			<input type="text" name="photo-name" required="required" />
+			<label for="title">name</label>
+			<input type="text" name="title" required="required" />
 		</div>
 		<div>
-			<label for="photo-desc">description</label>
-			<textarea name="photo-desc"></textarea>
+			<label for="description">description</label>
+			<textarea name="description"></textarea>
 		</div>
 		<div>
-			<label for="photo-img">img</label>
-			<input type="file" name="photo-img" required="required" />
+			<label for="photo">img</label>
+			<input type="file" name="photo" required="required" />
 		</div>
-		<p class="mp-invisible">#{placeId}</p>
+
+	
 		<input type="submit" value="submit" name="submit" />
 	</form>
 	<script></script>

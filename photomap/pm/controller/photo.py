@@ -5,6 +5,7 @@ Created on Jun 30, 2012
 '''
 
 from django.http import HttpResponse, HttpResponseBadRequest
+from django.shortcuts import render_to_response
 from pm.model.photo import Photo
 
 from message import success, error 
@@ -17,14 +18,20 @@ logger = logging.getLogger(__name__)
 # TODO: maybe this can be abstracted by using middleware that checks for the existence of an error string and renders the error message
 def insert(request):
     if request.method == "POST":
-        form = PhotoInsertForm(request.POST, request.FILES)
+        form = PhotoInsertForm(request.POST, request.FILES, auto_id = False)
         if form.is_valid():
             photo = form.save()
             return success(id = photo.pk)
         else:
             return error(str(form.errors))
-    else:
-        return HttpResponseBadRequest()
+    if request.method == "GET":
+        form = PhotoInsertForm(auto_id = False)
+        place = None
+        try:
+            place = request.GET["place"]
+        except:
+            pass
+        return render_to_response("insert-photo.html", {"form":form, "place":place})
     
 def update(request):
     if request.method == "POST":

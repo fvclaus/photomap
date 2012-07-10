@@ -1,8 +1,8 @@
 // place stores several pictures and is itself stored in the map
 Place = function(data) {
-    this.name = data.name; // will be used for the Map Marker title (mouseover on the map)
+    this.name = data.title; // will be used for the Map Marker title (mouseover on the map)
     this.id = data.id;
-    this.desc = data.desc;
+    this.desc = data.description;
     
     this.marker		= new Marker({
 	lat		: parseFloat(data.lat), 
