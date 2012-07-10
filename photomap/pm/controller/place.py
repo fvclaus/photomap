@@ -6,9 +6,9 @@ Created on Jul 8, 2012
 
 from django.http import HttpResponseBadRequest
 from message import success, error
-from map.form.place import InsertPlaceForm, UpdatePlaceForm
-from map.model.place import Place
-from map.model.photo import Photo
+from pm.form.place import InsertPlaceForm, UpdatePlaceForm
+from pm.model.place import Place
+from pm.model.photo import Photo
 import logging
 import os
 

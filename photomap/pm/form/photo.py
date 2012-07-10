@@ -5,7 +5,7 @@ Created on Jul 3, 2012
 '''
 
 from django import forms
-from map.model.photo import Photo
+from pm.model.photo import Photo
 
 class PhotoInsertForm(forms.ModelForm):
     class Meta:

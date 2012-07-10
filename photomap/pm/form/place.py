@@ -5,7 +5,7 @@ Created on Jul 3, 2012
 '''
 
 from django import forms
-from map.model.place import Place
+from pm.model.place import Place
 
 class InsertPlaceForm(forms.ModelForm):
     class Meta:

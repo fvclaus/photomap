@@ -8,8 +8,8 @@ from simpletestcase import SimpleTestCase
 from django.test.client import Client
 from decimal import Decimal
 import json
-from map.model.place import Place
-from map.model.photo import Photo
+from pm.model.place import Place
+from pm.model.photo import Photo
 import os
 
 class PlaceControllerTest(SimpleTestCase):

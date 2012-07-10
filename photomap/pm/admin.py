@@ -5,7 +5,7 @@ Created on Jun 22, 2012
 '''
 from django.contrib import admin
 
-from map import model
+from pm import model
 
 admin.site.register(model.album.Album)
 admin.site.register(model.photo.Photo)

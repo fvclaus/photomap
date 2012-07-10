@@ -10,7 +10,8 @@ from django.contrib import admin
 
 from django.contrib import admin
 
-from map.controller import photo, place
+from pm.controller import photo, place
+from pm.controller.authentication import login
 
 #admin.site.register(model.album.Album)
 #admin.site.register(model.photo.Photo)
@@ -19,18 +20,29 @@ from map.controller import photo, place
 admin.autodiscover()
 
 urlpatterns = patterns("",
-#               (r'^$', direct_to_template, {"template": "index.tpl"}),
-               url(r'^admin/', include(admin.site.urls)),
-               #================================================================
-               # photo hooks
-               #================================================================
-               url(r'^insert-photo', photo.insert),
-               url(r'^update-photo', photo.update),
-               url(r'^delete-photo', photo.delete),
-               #================================================================
-               # place hooks
-               #================================================================
-               url(r'^insert-place', place.insert),
-               url(r'^update-place', place.update),
-               url(r'^delete-place', place.delete)
-               ) 
+                       #========================================================
+                       # main
+                       #========================================================
+                       url(r'^login', login),
+                       #========================================================
+                       # 3rd party apps
+                       #========================================================
+                       url(r'^admin/', include(admin.site.urls)),
+                       
+        #               (r'^$', direct_to_template, {"template": "index.tpl"}),
+                       
+                            
+                       
+                       #================================================================
+                       # photo hooks
+                       #================================================================
+                       url(r'^insert-photo', photo.insert),
+                       url(r'^update-photo', photo.update),
+                       url(r'^delete-photo', photo.delete),
+                       #================================================================
+                       # place hooks
+                       #================================================================
+                       url(r'^insert-place', place.insert),
+                       url(r'^update-place', place.update),
+                       url(r'^delete-place', place.delete)
+                       ) 

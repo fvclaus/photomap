@@ -6,7 +6,7 @@
 #------------------------------------------------------------------------------ 
 
 
-from map import loadmodels
+from pm import loadmodels
 
 # only imports the module, not the definitions of the model
 loadmodels()

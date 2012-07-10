@@ -5,7 +5,7 @@ Created on Jun 22, 2012
 '''
 
 from django.db import models
-from map import appsettings
+from pm import appsettings
 
 class Description(models.Model):
     title = models.CharField(max_length = 200)

@@ -5,10 +5,10 @@ Created on Jun 30, 2012
 '''
 
 from django.http import HttpResponse, HttpResponseBadRequest
-from map.model.photo import Photo
+from pm.model.photo import Photo
 
 from message import success, error 
-from map.form.photo import PhotoInsertForm, PhotoUpdateForm
+from pm.form.photo import PhotoInsertForm, PhotoUpdateForm
 
 import logging
 import os

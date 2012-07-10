@@ -187,7 +187,7 @@ TEMPLATE_DIRS = (
 #pip install django_compressor
 INSTALLED_APPS = (
     "compressor",
-    "map",
+    "pm",
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',

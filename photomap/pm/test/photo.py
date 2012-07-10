@@ -7,7 +7,7 @@ Created on Jun 29, 2012
 from simpletestcase import SimpleTestCase
 from django.test.client import Client
 from config import TEST_PASSWORD, TEST_USER
-from map.model.photo import Photo
+from pm.model.photo import Photo
 import config
 import json
 import logging 
