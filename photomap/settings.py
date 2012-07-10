@@ -15,6 +15,8 @@ UPLOAD_PATH = os.path.join("upload", "%Y", "%m", "%d")
 PHOTO_PATH = os.path.join(STATIC_PATH, "photo")
 TEST_PATH = os.path.join(PROJECT_PATH, "test")
 
+CSS_PATH = os.path.join(STATIC_PATH, "stylesheets")
+
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
 MANAGERS = ADMINS
 
@@ -165,14 +167,18 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+# stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
 COMPRESS_PRECOMPILERS = (
-                         ("text/x-sass", "sass {infile} {outfile}"),
+                         ("text/x-stylus", "stylus < {infile} > {outfile} --include " + CSS_PATH),
                          )
+
+#COMPRESS_ROOT = "static/"
+COMPRESS_URL = "static/"
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+#    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
