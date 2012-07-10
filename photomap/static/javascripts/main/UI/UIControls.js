@@ -91,10 +91,10 @@ UIControls.prototype = {
 		main.getUI().getInput()
 		    .onLoad(function(){
 			//prefill with values from selected picture
-			$("input[name=photo-id]").val(photo.id);
-			$("input[name=photo-order]").val(photo.order);
-			var $name = $("input[name=photo-name]").val(photo.name);
-			var $desc = $("textarea[name=photo-desc]").val(photo.desc);
+			$("input[name=id]").val(photo.id);
+			$("input[name=order]").val(photo.order);
+			var $name = $("input[name=title]").val(photo.name);
+			var $desc = $("textarea[name=description]").val(photo.desc);
 
 			//reflect changes locally when form is valid and ready to be send
 			main.getUI().getInput().onForm(function(){
@@ -114,9 +114,9 @@ UIControls.prototype = {
 		//prefill with name and update on submit
 		main.getUI.getInput()
 		    .onLoad(function(){
-			$("input[name=place-id]").val(place.id);
-			var $name = $("input[name=place-name]").val(place.name);
-			var $desc = $("textarea[name=place-desc]").val(place.desc);
+			$("input[name=id]").val(place.id);
+			var $name = $("input[name=title]").val(place.name);
+			var $desc = $("textarea[name=description]").val(place.desc);
 
 			main.getUI.getInput().onForm(function(){
 			    //reflect changes locally

@@ -5,6 +5,7 @@ Created on Jul 8, 2012
 '''
 
 from django.http import HttpResponseBadRequest
+from django.shortcuts import render_to_response
 from message import success, error
 from pm.form.place import InsertPlaceForm, UpdatePlaceForm
 from pm.model.place import Place
@@ -23,7 +24,7 @@ def insert(request):
         else:
             return error(str(form.errors))
     else:
-        return HttpResponseBadRequest()
+        return render_to_response("insert-place.html")
 
 def update(request):
     if request.method == "POST":

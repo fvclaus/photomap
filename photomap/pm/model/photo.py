@@ -23,6 +23,7 @@ class Photo(Description):
     
     def toserializable(self):
         return {"thumb": self.getphotourl(),
+                "id" : self.pk,
                 "photo": self.getphotourl(),
                 "title": self.title,
                 "description": self.description,
