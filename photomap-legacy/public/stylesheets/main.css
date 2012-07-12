@@ -58,7 +58,7 @@ transition {
   position: absolute;
   display: none;
 }
-.mp-album-overlay {
+.mp-slideshow {
   position: absolute;
   padding-left: 1%;
   background: #f4f4f4;
@@ -75,22 +75,7 @@ transition {
   height: 100%;
   padding-left: 2%;
 }
-.mp-album-title-wrapper {
-  background: #333;
-  border-bottom: 5px solid #fff;
-  width: 100%;
-  height: 4%;
-}
-.mp-album-title-wrapper .mp-font,
-.mp-album-title-wrapper .mp-label {
-  text-align: left;
-  margin-left: 5px;
-}
-.mp-exhibition-wrapper {
-  width: 100%;
-  height: 96%;
-}
-.mp-exhibition img {
+.mp-gallery img {
   display: block;
   float: left;
   padding: 2px;
@@ -99,15 +84,15 @@ transition {
   width: 19%;
   height: 20%;
 }
-.mp-exhibition img transition,
-.mp-exhibition img.current {
+.mp-gallery img transition,
+.mp-gallery img.current {
   background: #306d12;
 }
-.mp-exhibition img.visited {
+.mp-gallery img.visited {
   background: #d60000;
 }
-.mp-exhibition img imghover,
-.mp-exhibition img.current img {
+.mp-gallery img imghover,
+.mp-gallery img.current img {
   opacity: 0.8;
 }
 .mp-album-image {
@@ -121,7 +106,7 @@ transition {
   max-height: 95%;
   max-width: 95%;
 }
-.mp-album-overlay-close {
+.mp-slideshow-close {
   position: absolute;
   width: 5%;
   height: auto;
@@ -211,6 +196,12 @@ transition {
   margin: -24px 0 0 -24px;
   text-indent: -9000px;
 }
+#mp-photo-description {
+  border: 2px solid #000;
+  position: absolute;
+  background: #f4f4f4;
+  opacity: 0.8;
+}
 .mp-description-wrapper {
   width: 100%;
   height: 92%;
@@ -218,11 +209,12 @@ transition {
   text-align: center;
   font-size: 100%;
 }
-#mp-photo-description {
-  border: 2px solid #000;
-  position: absolute;
-  background: #f4f4f4;
-  opacity: 0.8;
+.mp-description-title {
+  width: 100%;
+  height: 8%;
+  background: #333;
+  color: #fff;
+  font-weight: bold;
 }
 .mp-status-image {
   float: right;
@@ -234,21 +226,14 @@ transition {
   height: 40px;
   width: 40px;
 }
-.mp-description-title {
-  width: 100%;
-  height: 8%;
-  background: #333;
-  color: #fff;
-  font-weight: bold;
-}
 .mp-userpanel {
   width: 100%;
   height: 100%;
 }
 .mp-controls-wrapper {
-  width: 79%;
+  width: 78%;
   height: 100%;
-  padding-left: 1%;
+  padding: 0 1%;
   float: left;
   text-align: center;
 }
@@ -258,14 +243,19 @@ transition {
 }
 .mp-controls img {
   cursor: pointer;
+  margin: 0 5px;
+}
+.mp-controls .mp-option-logout {
+  margin: 0 -5px 0 5px;
 }
 .mp-bottom-panel {
   background: #333;
   border-top: 5px solid #fff;
   border-bottom: 5px solid #fff;
   height: 100%;
-  width: 100%;
-  text-align: center;
+  width: 98%;
+  padding: 0 1%;
+  text-align: right;
 }
 .mp-bottom-panel a {
   text-decoration: none;
@@ -341,11 +331,21 @@ html {
 .mp-footer {
   height: 3%;
   width: 100%;
-  float: left;
+  clear: both;
 }
 .mp-header {
   background: #333;
   border-bottom: 5px solid #fff;
   width: 100%;
   height: 5%;
+}
+.tooltip {
+  display: none;
+  background: transparent url("../images/black-tooltip.png") no-repeat;
+  font-size: 9px;
+  text-align: center;
+  height: 53px;
+  width: 120px;
+  padding: 10px 5px 5px 5px;
+  color: #eee;
 }
