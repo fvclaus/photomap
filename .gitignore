@@ -21,7 +21,6 @@ photomap-legacy/public/stylesheets/main.css
 *.lof
 *.*~
 *.acn
-*.css
 *.project
 CACHE/
 .sass-cache
