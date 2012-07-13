@@ -99,11 +99,12 @@ Map.prototype = {
 			var name = $("[name=title]").val();
 			var desc = $("[name=description]").val();
 			//create new place and show marker
+			//new place accepts only lon, because it handles responses from server
 			place = new Place({
 			    lat: lat,
-			    lng: lng,
-			    "name" : name,
-			    "desc" : desc
+			    lon: lng,
+			    "title" : name,
+			    "description" : desc
 			});
 			place.marker.show();
 			input._close();
