@@ -99,7 +99,7 @@ UIControls.prototype = {
 			//reflect changes locally when form is valid and ready to be send
 			main.getUI().getInput().onForm(function(){
 			    photo.name = $name.val();
-			    photo = $desc.val();
+			    photo.desc = $desc.val();
 			    main.getUI().getInformation().setInfo({
 				name : $name.val(),
 				desc : $desc.val()
@@ -123,7 +123,7 @@ UIControls.prototype = {
 			    //reflect changes locally
 			    place.name = $name.val();
 			    place.desc = $desc.val();
-			    menu.setInfo(place);
+			    main.getUI().getInformation().setInfo(place);
 			})
 		    })
 		    .get("/update-place");
