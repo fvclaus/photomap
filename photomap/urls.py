@@ -8,7 +8,7 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 
-from django.contrib import admin
+
 
 from pm.controller import photo, place
 from pm.controller import authentication 

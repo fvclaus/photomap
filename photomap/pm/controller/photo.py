@@ -21,9 +21,11 @@ def insert(request):
         form = PhotoInsertForm(request.POST, request.FILES, auto_id = False)
         if form.is_valid():
             photo = form.save()
-            return success(id = photo.pk)
+            # just closes iframe
+            return render_to_response("insert-photo-success.html")
         else:
-            return error(str(form.errors))
+            # closes iframe and displays error message
+            return render_to_response("insert-photo-error.html", {form : form})
     if request.method == "GET":
         form = PhotoInsertForm(auto_id = False)
         place = None
