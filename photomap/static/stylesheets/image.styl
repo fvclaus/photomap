@@ -7,21 +7,21 @@
   display none
   z-index 999
 
-#mp-image-overlay-close
+.mp-image-overlay-close
   right 4%
-  left auto
   float none
 
 .mp-image-overlay-close, .mp-image-nav img
   position absolute
   width 3%
   height auto
-  left 1%
   cursor pointer
   z-index 10
-  &.mp-image-nav-next
-    left auto
+  
+ .mp-image-nav-next
     right 1%
+ .mp-image-nav-prev
+  	 left 1%
 
 
 .mp-image-overlay
@@ -29,7 +29,7 @@
   z-index 1000
   top 0px
   left 0px
-  background transparent url(static/images/black.png) repeat top left
+  background transparent url(../../images/black.png) repeat top left
   width 100%
   height 100%
   text-align center
@@ -45,10 +45,10 @@
   top 0px
   left 0px
   width 100%
-  background transparent url(static/images/black.png) repeat top left
+  background transparent url(../../images/black.png) repeat top left
 
 .mp-loading
-  background transparent url(static/images/ajax-loader.gif) no-repeat center center
+  background transparent url(../../images/ajax-loader.gif) no-repeat center center
   width 48px
   height 48px
   position absolute

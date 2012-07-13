@@ -45,12 +45,13 @@ UIFullscreen.prototype = {
 	    instance.$wrapper = 
 		$("<div/>")
 		.addClass("mp-image-overlay-wrapper") 
-		.css("width",img.css("width"))
-		.css("height",img.css("height"))
 		.css("margin-left",img.css("margin-left"))
 		.css("margin-top",img.css("margin-top"))
 		.css("overflow","hidden")
-		.css("cursor","auto");
+		.css("cursor","auto")
+	    	.width(img.width)
+		.height(img.height);
+
 	    innerWrapper = $("<div/>")
 		.css("width",img.css("width"))
 		.css("height",img.css("height"));
