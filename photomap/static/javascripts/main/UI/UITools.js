@@ -19,6 +19,7 @@ UITools.prototype = {
 
     deletePhoto : function(photo){
 	place = main.getUIState().getCurrentPlace();
+	currentPhoto = main.getUIState().getCurrentPhoto();
 
 	if (photo == null) return;
 	place.photos = place.photos.filter(function(element,index){
@@ -26,8 +27,8 @@ UITools.prototype = {
 	});
 	//remove from place.photos array + gallery.photos and remove a in gallery box
 	main.getUIState().setPhotos(place.photos);
-	$("a[href='"+photo.thumb+"']").remove();
-	if (photo === this.currentPhoto){
+	$("div.mp-gallery > img[src='"+photo.thumb+"']").remove();
+	if (photo === currentPhoto){
 	    main.getUI().getGallery().navigateSlider(this,"right");
 	}
     },

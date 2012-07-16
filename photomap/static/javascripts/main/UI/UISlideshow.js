@@ -187,6 +187,7 @@ UISlideshow.prototype = {
 	photos = state.getPhotos();
 	
 	
+	
 	if( dir === 'right' ) {
 	    if( currentPhotoIndex + 1 < photos.length )
 		state.setCurrentPhotoIndex(++currentPhotoIndex);
@@ -196,7 +197,7 @@ UISlideshow.prototype = {
 	    else {
 		state.setCurrentPhotoIndex(0);
 		state.setCurrentPhoto(null);
-		instance.closeSlideshow();
+		this.closeSlideshow();
 		return;
 	    }
 	}
@@ -208,7 +209,7 @@ UISlideshow.prototype = {
 	    else {
 		state.setCurrentPhotoIndex(0);
 		state.setCurrentPhoto(null);
-		instance.closeSlideshow();
+		this.closeSlideshow();
 		return;
 	    }
 	}
