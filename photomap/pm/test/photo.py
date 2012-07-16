@@ -25,8 +25,8 @@ class PhotoControllerTest(SimpleTestCase):
         #=======================================================================
         # delete something that exists
         #=======================================================================
-        path = Photo.objects.get(pk = 2).photo.path
-        self.assertDeletes({"id" : 2})
+        path = Photo.objects.get(pk = 1).photo.path
+        self.assertDeletes({"id" : 1})
         self.assertFalse(os.path.exists(path))
         #=======================================================================
         # delete something that does not exist
@@ -48,7 +48,7 @@ class PhotoControllerTest(SimpleTestCase):
         data = {"place": 1,
                 "title": "Chuck Norris",
                 "photo" : photo}
-        (photo, content) = self.assertCreates(data)
+        (photo, content) = self.assertCreates(data, check = self.assertPhotoCreateSuccess)
         self.assertEqual(photo.title, data["title"])
         #=======================================================================
         # insert something valid with description
@@ -56,24 +56,24 @@ class PhotoControllerTest(SimpleTestCase):
         photo = open(config.TEST_PHOTO, "rb")
         data["photo"] = photo
         data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters <javascript></javascript>"
-        self.assertCreates(data)
+        self.assertCreates(data, check = self.assertPhotoCreateSuccess)
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
         del data["photo"]
-        self.assertError(data)
+        self.assertPhotoCreateError(data)
         #=======================================================================
         # delete some more
         #=======================================================================
         del data["title"]
-        self.assertError(data)
+        self.assertPhotoCreateError(data)
         
     def test_update(self):
         self.url = "/update-photo"
         #=======================================================================
         # test something valid without description
         #=======================================================================
-        data = {"id" : 2,
+        data = {"id" : 1,
                 "title" : "EO changed"}
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.title, data["title"])
@@ -95,3 +95,18 @@ class PhotoControllerTest(SimpleTestCase):
         data["id"] = 999 # does not exist
         self.assertError(data)
         
+    # hack around the fact that create photo will never return json
+    def assertPhotoCreateSuccess(self, data):
+        response = self.c.post(self.url, data)
+        self.assertTrue("text/html" in response["Content-Type"])
+        self.assertFalse("error" in response.content)
+        photos = Photo.objects.all()
+        photo = photos[len(photos) - 1]
+        return {"id" : photo.pk}
+        
+    def assertPhotoCreateError(self, data):
+        length = len(Photo.objects.all())
+        response = self.c.post(self.url, data)
+        self.assertTrue("text/html" in response["Content-Type"])
+        self.assertTrue("error" in response.content)
+        self.assertEqual(length, len(Photo.objects.all()))

@@ -13,7 +13,8 @@ STATIC_PATH = os.path.join(PROJECT_PATH, "static")
 
 UPLOAD_PATH = os.path.join("upload", "%Y", "%m", "%d")
 PHOTO_PATH = os.path.join(STATIC_PATH, "photo")
-TEST_PATH = os.path.join(PROJECT_PATH, "test")
+RES_PATH = os.path.join(PROJECT_PATH, "res")
+TEST_PATH = os.path.join(RES_PATH, "test")
 
 CSS_PATH = os.path.join(STATIC_PATH, "stylesheets")
 
