@@ -8,7 +8,8 @@ from django.db import models
 from pm import appsettings
 
 class Description(models.Model):
-    title = models.CharField(max_length = 200)
+    # might be a little excessive
+    title = models.TextField()
     description = models.TextField(blank = True, null = True)
     date = models.DateTimeField(auto_now = True)
     

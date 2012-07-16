@@ -13,8 +13,8 @@ import os
 
 class Photo(Description):
   
-    thumb = models.ImageField(upload_to = settings.PHOTO_PATH, null = True, blank = True)
-    photo = models.ImageField(upload_to = settings.PHOTO_PATH)
+    thumb = models.ImageField(upload_to = settings.PHOTO_PATH, null = True, blank = True, max_length = 500)
+    photo = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)
     place = models.ForeignKey(Place)
     order = models.IntegerField(null = True, blank = True)
     
