@@ -41,12 +41,14 @@ class SimpleTestCase(TestCase):
         self.assertEqual(len(content.keys()), 2)
         return content
     
-    def assertCreates(self, data, model = None):
+    def assertCreates(self, data, model = None, check = None):
         if not model:
             model = self.getmodel()
     
         length = len(model.objects.all())
-        content = self.assertSuccess(data)
+        if check is None:
+            check = self.assertSuccess
+        content = check(data)
         self.assertEqual(len(model.objects.all()), length + 1)
         instance = model.objects.all()[length]
         self.assertEqual(instance.pk, content["id"])
