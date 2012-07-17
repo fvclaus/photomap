@@ -19,6 +19,7 @@ TEST_PATH = os.path.join(RES_PATH, "test")
 CSS_PATH = os.path.join(STATIC_PATH, "stylesheets")
 
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
+LATEX_PATH = os.path.join(RES_PATH, "latex") 
 MANAGERS = ADMINS
 
 LOGGING = {
