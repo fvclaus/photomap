@@ -17,16 +17,16 @@ Map	= function() {
 	},
 	panControl					: true,
 	panControlOptions			: {
-	    position	: google.maps.ControlPosition.TOP_RIGHT
+	    position	: google.maps.ControlPosition.TOP_CENTER
 	},
 	zoomControl					: true,
 	zoomControlOptions			: {
 	    style		: google.maps.ZoomControlStyle.SMALL,
-	    position	: google.maps.ControlPosition.TOP_RIGHT
+	    position	: google.maps.ControlPosition.TOP_CENTER
 	},
 	streetViewControl			: true,
 	streetViewControlOptions	: {
-	    position	: google.maps.ControlPosition.TOP_RIGHT
+	    position	: google.maps.ControlPosition.TOP_CENTER
 	}
     }
     //user is guest

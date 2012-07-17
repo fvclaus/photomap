@@ -80,9 +80,9 @@ UIInformation.prototype = {
 	$map = $(".mp-map");
 	mapOffset = $map.offset();
 	topOffset = mapOffset.top + (0.5 * (0.25 * $map.height()));
-	leftOffset = mapOffset.left + (0.5 * (0.25 * $map.width()));
-	descriptionWidth = 0.75 * $map.width();
-	descriptionHeight = 0.75 * $map.height();
+	leftOffset = mapOffset.left + (0.5 * (0.125 * $map.width()));
+	descriptionWidth = 0.375 * $map.width();
+	descriptionHeight = 0.75 *$map.height();
 	this.$wrapper
 	    .width(descriptionWidth)
 	    .height(descriptionHeight)
