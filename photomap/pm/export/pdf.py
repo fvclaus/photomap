@@ -35,9 +35,9 @@ class LatexExport():
         self.index = self.replace(self.index, [("!photo-path!", settings.PHOTO_PATH + os.path.sep),
                                          ("!album-title!", album.title)])
         self.content = ""
-        self.photocount = 1
+        self.total = 1
         
-        places = Place.objects.all().filter(album = album)[:3]
+        places = Place.objects.all().filter(album = album)
     
         for place in places:
             self.addplace(place)
@@ -49,10 +49,15 @@ class LatexExport():
         
         self.index = self.index.replace("!content!", self.content)
         
+        for line in self.index.split():
+            print line
+            line.encode("euc-jp")
+        
         open(os.path.join(settings.LATEX_PATH, "out.tex"), "wb").write(self.index.encode("euc-jp"))
-        pdf, info = convert(self.index, 'LaTeX', 'PDF', 5)
+        
+#        pdf, info = convert(self.index, 'LaTeX', 'PDF', 5)
        
-        open(os.path.join(settings.LATEX_PATH, "out.pdf"), "wb").write(pdf)
+#        open(os.path.join(settings.LATEX_PATH, "out.pdf"), "wb").write(pdf)
         print self.index
             
     
@@ -61,18 +66,25 @@ class LatexExport():
         placelatex = self.replace(placelatex, [("!place-title!", place.title),
                                                ("!place-description!", place.description)])
         self.content += placelatex
+        self.placetotal = 0
         
     def addphoto(self, photo):
         photolatex = self.PHOTO_TEMPLATE
         position = "right"
-        if self.photocount % 2 == 1:
+        if self.total % 2 == 1:
             position = "left" 
         description = photo.description.replace("\n", " ")
         photolatex = self.replace(photolatex, [("!position!", position),
                                                ("!photo-filename!", os.path.split(photo.photo.path)[1]),
                                                ("!photo-title!", photo.title),
                                                ("!photo-description!", description)])
-        self.photocount += 1
+        self.total += 1
+        self.placetotal += 1
+        # avoid too many floats error
+        # thrown at 36 with morefloats package
+        if self.placetotal > 35:
+            photolatex += "\clearpage"
+            self.placetotal = 0
         self.content += photolatex
     
     def replace(self, target, rules):
@@ -80,13 +92,15 @@ class LatexExport():
             content = rule[1]
             if self.LATEX_ESCAPE.search(rule[0]):
                 content = escape_latex(rule[1])
-                content = self.replace(content, [("ä", "\"a"),
-                                                 ("Ä", "\"A"),
-                                                 ("ö", "\"o"),
-                                                 ("Ö", "\"ö"),
-                                                 ("ü", "\"u"),
-                                                 ("Ü", "\"U"),
-                                                 ("ß", "ss")])
+                content = self.replace(content, [("ä", "\"ae"),
+                                                 ("Ä", "\"Ae"),
+                                                 ("ö", "\"oe"),
+                                                 ("Ö", "\"Oe"),
+                                                 ("ü", "\"ue"),
+                                                 ("Ü", "\"Ue"),
+                                                 ("ß", "ss"),
+                                                 ("€", " Euro"),
+                                                 ("m²", " Quadratmeter")])
             target = target.replace(rule[0], content)
         return target
     
