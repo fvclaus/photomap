@@ -2,14 +2,14 @@ UIPanel = function (){
 
     this.tools = new UITools();
 
-    this.$userpanel = $('.mp-userpanel');
+    this.$topPanel = $('.mp-top-panel');
     this.$bottomPanel = this.resizeBottomPanelLinks($('.mp-bottom-panel'));
 };
 
 UIPanel.prototype = {
 	
     getControlsBarHeight : function(){
-	return this.$userpanel.height();
+	return this.$topPanel.height();
     },
     
     resizeBottomPanelLinks : function(bottomPanel){
