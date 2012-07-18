@@ -12,9 +12,9 @@ UIPanel = function (){
 UIPanel.prototype = {
     
     init : function(){
-	this.repositionBottomPanel();
 	this.resizeBottomPanelLinks(this.$bottomPanel);
 	this.resizePageTitle(this.$title);
+	this.repositionBottomPanel();
     },
 	
     getControlsBarHeight : function(){
@@ -39,8 +39,10 @@ UIPanel.prototype = {
     },
     
     repositionBottomPanel : function(){
-	var position = this.$topPanel.position();
+	var position = {'top': 17, 'left': 17,};
+	console.log(position);
 	position.top += $(".mp-container").height() - this.$footer.height();
+	console.log(position);
 	this.$footer.css('top',position.top).css('left',position.left);
     },
 };
