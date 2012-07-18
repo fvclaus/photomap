@@ -25,6 +25,10 @@ UIInformation = function(){
 
 UIInformation.prototype = {
     
+    init : function(){
+	this.resizeRepositionDescription();
+    },
+    
     setInfo : function(info){
 	if (info == null){
 	    info = {

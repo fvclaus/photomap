@@ -21,7 +21,3 @@ $mpContainer
 var main = new Main();
 main.init();
 
-// reposition description overlay
-var information = main.getUI().getInformation();
-information.resizeRepositionDescription();
-
