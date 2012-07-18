@@ -127,11 +127,11 @@ UIInformation.prototype = {
 	    });
 	this.$bottomPanel.find("a[title]").tooltip({
 	    effect: 'slide',
-	    direction: 'right',
+	    //direction: 'right',
 	    bounce: true, 
-	    position: 'top left',
+	    position: 'top center',
 	    opacity: 0.9,
-	    offset: [0,20],
+	    //offset: [0,20],
 	    predelay: 500,
 	    });
     },
