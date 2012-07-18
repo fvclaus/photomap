@@ -5,14 +5,14 @@ UI = function (){
 	this.controls = new UIControls(this.panel.getControlsBarHeight());
 	this.gallery = new UIGallery();
 	this.input = new UIInput();
-	this.textbox = new UITextbox();
+	this.contentbox = new UIContentbox();
 }
 
 UI.prototype = {
 
 	init : function(){
 		this.gallery.init();
-		this.textbox.init();
+		this.contentbox.init();
 		this.panel.init();
 	},
 	getAlbum : function(){

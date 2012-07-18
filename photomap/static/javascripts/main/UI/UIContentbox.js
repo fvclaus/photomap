@@ -1,11 +1,11 @@
-UITextbox = function(){
+UIContentbox = function(){
   
   this.$container = $("div.mp-content-container");
   this.$login = this.$container.find("#mp-login");
   this.$register = this.$container.find("#mp-register");
 };
 
-UITextbox.prototype = {
+UIContentbox.prototype = {
   
   init : function(){
     this.repositionLoginRegistrationForms();
