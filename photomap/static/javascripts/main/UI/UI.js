@@ -11,6 +11,7 @@ UI.prototype = {
 
 	init : function(){
 		this.gallery.init();
+		this.panel.init();
 	},
 	getAlbum : function(){
 		return this.gallery.getAlbum();
