@@ -1,4 +1,4 @@
-\documentclass{article}
+\documentclass[12pt]{scrartcl}
 
 \usepackage[T1]{fontenc}
 \usepackage[ngerman]{babel}
@@ -6,151 +6,73 @@
 % font
 \usepackage{arev}
 
-\usepackage[utf8]{inputenc}
+%\usepackage[utf8]{inputenc}
+\usepackage{CJK}
 
 % include photo path
 \usepackage{graphicx}
-\graphicspath{{/home/fredo/javascript/multi-level-photo2/public/photos/}}
+\graphicspath{{!photo-path!}}
+
+\usepackage{sidecap,caption}
+\usepackage{floatrow}
 \usepackage{calc}
+\usepackage{fancybox}
+\usepackage{morefloats}
+
+% keeps floats above the next section
+\usepackage[section]{placeins}
+
+\floatsetup[figure]{
+%					style = boxed,
+					framestyle = none,
+					framearound = object,
+					framefit = no,
+					floatwidth = 0.45\textwidth,
+					capposition = beside,
+					capbesideframe=yes,
+					capbesidewidth = 0.5\textwidth,
+					}
+\captionsetup[figure]{
+					font = {large,bf},
+					footfont = {normalsize,md}
+					}
+
 
 \usepackage{floatflt}
 \usepackage[verbose]{wrapfig}
-\usepackage{picins}
-\usepackage[margin=0.6in]{geometry}
 
-\usepackage{setspace}
+\usepackage[margin=0.6in]{geometry}
 
 
 \begin{document}
+\begin{CJK*}[dnp]{JIS}{min}
 
-\section{Kyoto Gaidai}
-	
-	Meine Schule. Eigentlich ist es eine Uni, aber das Fremdsprachenprogramm hat schon einen extrem schulischen Charakter.
-%
-	\piccaption{Raum 937 Grammar 11.10.2011}
-	\parpic[sr]{\includegraphics[width=0.45\textwidth]{24ceac0c6c1600a19eb003fe9b35311a.jpg}}
-	\paragraph{}
-	\doublespacing
-	\textbf{Raum 937 Grammar 11.10.2011}
-	\singlespacing
-	Grammatik ist noch eine ultra langweilige Stunde, in der wir nur die Grammatik aus Basic Japanese wiederholen. Die Lehrerin ist ziemlich gut, aber des rettet die Stunde wie gesagt auch nicht. Grundsätzlich ist die japanische Grammatik im Vergleich zur deutschen relativ einfach gestrickt. Es gibt keine Geschlechter, keine Fälle und nur 3 Zeiten. Leider lösst sich Japanisch nur in den seltensten Fällen wörtlich übersetzen, weshalb man sehr oft umdenken muss.Grammatik ist noch eine ultra langweilige Stunde, in der wir nur die Grammatik aus Basic Japanese wiederholen. Die Lehrerin ist ziemlich gut, aber des rettet die Stunde wie gesagt auch nicht. Grundsätzlich ist die japanische Grammatik im Vergleich zur deutschen relativ einfach gestrickt. Es gibt keine Geschlechter, keine Fälle und nur 3 Zeiten. Leider lösst sich Japanisch nur in den seltensten Fällen wörtlich übersetzen, weshalb man sehr oft umdenken muss.
-	\picskip{0}
-%	
-	\piccaption{Oktoberfest 22.10.2011}
-	\parpic[sl]{\includegraphics[width=0.45\textwidth]{7531cc179e7bea5af99b0e9a2cda81c1.JPG}}
-	\paragraph{}
-	\doublespacing
-	\textbf{Oktoberfest 22.10.2011}
-	\singlespacing
-	Ich hatte dann noch mit einem ein ganz lustig Gespräch, das ging ungefähr so: Hallo, ich bin der Yokohama und ich bin ein bayerischer Japaner. Weiß ich auch net was ich dazu noch sagen soll. Da fliegt man um die halbe Welt um dann ein deutsches Oktoberfest mit deutschen Bier und deutschsprachiger Blaskapelle zu finden. Absurd ^^
-	\picskip{0}
-%
-	\piccaption{Raum 938 Basic Japanese 07.10.11}
-	\parpic[sr]{\includegraphics[width=0.45\textwidth]{abdf242b150d1bdcd69d46243d1dd8b3.jpg}}
-	\paragraph{}
-	\doublespacing
-	\textbf{Raum 938 Basic Japanese 07.10.11}
-	\singlespacing
-	Dennis und Lorena (studiert BWL Uni Mannheim) mit mir in Basic Japanese I. In meiner Klasse sind insgesamt 9 Austauschstudenten. Generell ist der Unterricht sehr verschult, so ungefähr wie im Gymnasium.
-	\picskip{0}
-%
-	\piccaption{Raum 938 Basic Japanese 07.10.11}	
-	\parpic[sl]{\includegraphics[width=0.45\textwidth]{55ca7054409c6ca5ee61ccf902d29b44.jpg}}
-	\paragraph{}
-	\doublespacing
-	\textbf{Raum 938 Basic Japanese 04.10.11}
-	\singlespacing
-	Viele Lehrer sind echt lahm. Uchida (Bild) ist da gottseidank eine Ausnahme. Basic Japanese ist täglich 2 Blöcke. Zwischen den Blöcken kauft er uns oft im Conbini (kleiner Supermarkt 24/7) Trinken oder Essen und fügt das dann in die Grammatik ein.
-	\picskip{0}
-%	
+\begin{titlepage}
+\rule{0mm}{1mm}
+\begin{center}
 
+  \setlength{\unitlength}{1cm}
+  \begin{picture}(12,4)
+    \put(0,1.8){\parbox{12cm}{\centering\huge\bf
+    \setlength{\baselineskip}{25pt}!album-title!}}
+  \end{picture}
+  \vskip 30mm%
+   {\LARGE Frederik Claus}%
+   
+\end{center}\par
+  \vfil\null
+\end{titlepage}%
+
+\pagenumbering{roman}
+\setcounter{page}{1}
+
+\tableofcontents
+
+\cleardoublepage
+
+\pagenumbering{arabic}
+
+!content!
+
+\end{CJK*}
 \end{document}
-
-%\begin{figure}[htb]
-%  \centering
-%  \begin{minipage}[c]{0.38\textwidth}
-%    \centering
-%    \input{benchmarks/sor-v.tab}
-%  \end{minipage}
-%  \begin{minipage}[c]{0.58\textwidth}
-%    \includegraphics[width=\textwidth]{benchmarks/sor-v}
-%  \end{minipage}
-%  \figcaption{SOR;\@\vnus{} version, compiled by \rotan{}.}\label{fig:sor-v}
-%\end{figure}
-
-%\section{Kyoto Gaidai}
-%	
-%	Meine Schule. Eigentlich ist es eine Uni, aber das Fremdsprachenprogramm hat schon einen extrem schulischen Charakter.
-%	\paragraph{}
-%	\doublespacing
-%	\textbf{\underline{Raum 937 Grammar 11.10.2011}}
-%	\singlespacing
-%
-%	
-%
-%	\begin{wrapfigure}{L}{0.45\textwidth}
-%%		\centering
-%		\includegraphics[width=0.43\textwidth]{24ceac0c6c1600a19eb003fe9b35311a.jpg}
-%		\caption{Raum 937 Grammar 11.10.2011}
-%	\end{wrapfigure}
-%	Grammatik ist noch eine ultra langweilige Stunde, in der wir nur die Grammatik aus Basic Japanese wiederholen. Die Lehrerin ist ziemlich gut, aber des rettet die Stunde wie gesagt auch nicht. Grundsätzlich ist die japanische Grammatik im Vergleich zur deutschen relativ einfach gestrickt. Es gibt keine Geschlechter, keine Fälle und nur 3 Zeiten. Leider lösst sich Japanisch nur in den seltensten Fällen wörtlich übersetzen, weshalb man sehr oft umdenken muss.
-%	
-%	\paragraph{}
-%	\doublespacing
-%	\textbf{\underline{Oktoberfest 22.10.2011}}
-%	\singlespacing
-%
-%	
-%
-%	\begin{wrapfigure}{R}{0.45\textwidth}
-%%		\centering
-%		\includegraphics[width=0.43\textwidth]{7531cc179e7bea5af99b0e9a2cda81c1.JPG}
-%		\caption{Oktoberfest 22.10.2011}
-%	\end{wrapfigure}
-%	Ich hatte dann noch mit einem ein ganz lustig Gespräch, das ging ungefähr so:
-%Hallo, ich bin der Yokohama und ich bin ein bayerischer Japaner.
-%Weiß ich auch net was ich dazu noch sagen soll. Da fliegt man um die halbe Welt um dann ein deutsches Oktoberfest mit deutschen Bier und eutschsprachiger Blaskapelle zu finden. Absurd ^^
-%
-%
-%	\paragraph{}
-%	\doublespacing
-%	\textbf{\underline{Raum 938 Basic Japanese 07.10.11}}
-%	\singlespacing
-%
-%
-%	
-%	\begin{wrapfigure}{L}{0.45\textwidth}
-%		\centering
-%		\includegraphics[width=0.43\textwidth]{abdf242b150d1bdcd69d46243d1dd8b3.jpg}
-%		\caption{Raum 938 Basic Japanese 07.10.11}
-%	\end{wrapfigure}
-%	
-%	Dennis und Lorena (studiert BWL Uni Mannheim) mit mir in Basic Japanese I. In meiner Klasse sind insgesamt 9 Austauschstudenten. Generell ist der Unterricht sehr verschult, so ungefähr wie im Gymnasium. 
-%
-%	\paragraph{}
-%	\doublespacing
-%	\textbf{\underline{Raum 938 Basic Japanese 04.10.11}}
-%	\singlespacing
-%
-%
-%
-%	\begin{wrapfigure}{R}{0.45\textwidth}
-%%		\centering
-%		\includegraphics[width=0.43\textwidth]{55ca7054409c6ca5ee61ccf902d29b44.jpg}
-%		\caption{Raum 938 Basic Japanese 07.10.11}
-%	\end{wrapfigure}
-%	
-%	Viele Lehrer sind echt lahm. Uchida (Bild) ist da gottseidank eine Ausnahme. Basic Japanese ist täglich 2 Blöcke. Zwischen den Blöcken kauft er uns oft im Conbini (kleiner Supermarkt 24/7) Trinken oder Essen und fügt das dann in die Grammatik ein.
-%	
-%	\paragraph{}
-%	\doublespacing
-%%	\textbf{\underline{Yves, Anelia and Graeme.}} if no description
-%	\singlespacing
-%
-%
-%	\paragraph{} % if no description available
-%	\begin{wrapfigure}{L}{0.45\textwidth}
-%%		\centering
-%		\includegraphics[width=0.43\textwidth]{166bf88ac5b1522eec42327dc90f1759.jpg}
-%		\caption{Raum 938 Basic Japanese 07.10.11}
-%	\end{wrapfigure}
