@@ -56,20 +56,22 @@ Map	= function() {
     }
     // mode : fullscreen || normal
     this.mode			= 'normal';	
-    this._create();		
+    this._create();
+    this.placeListener();
 };
 
 Map.prototype = {
     // initialize the google.maps.Map instance.
     _create				: function() {
-	var instance 	= this;
+
 	this.map 		= new google.maps.Map( this.$mapEl[0], this.mapOptions );
-	this.places = new Array();
 	this.maptype = google.maps.MapTypeId.ROADMAP;
 	this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
 	this.ROADMAP = google.maps.MapTypeId.ROADMAP;
-	var input = main.getUI().getInput();
-
+    },
+    placeListener : function(){
+	var instance 	= this;
+	this.places = new Array();
 	if (main.getClientState().isAdmin()){
 	    //create new place with description and select it 
 	    google.maps.event.addListener(this.map,"click",function(event){

@@ -13,9 +13,7 @@
 	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
 	
-	<script type="text/javascript" src="static/javascripts/jquery.jscrollpane.min.js" ></script>
 	<script type="text/javascript" src="static/javascripts/jquery.mousewheel.min.js" ></script>
-	<script type="text/javascript" src="static/javascripts/tzoom.min.js" ></script>
 	<script type="text/javascript" src="static/javascripts/jquery.cookie.js" ></script>
 	<script type="text/javascript" src="static/javascripts/jquery.json.js" ></script>
 	<script type="text/javascript" src="static/javascripts/ie.js" ></script>
@@ -27,11 +25,9 @@
 	<script type="text/javascript" src="static/javascripts/main/UI/UIState.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UIInput.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UIControls.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/UI/UIInformation.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UIPanel.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UITools.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UIContentbox.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/UI/UIGallery.js" ></script>
 	
 	<script type="text/javascript" src="static/javascripts/main/UI/general/UI.js" ></script>
 	
@@ -47,14 +43,7 @@
 {% endblock %}
 
 {% block content %}
-		<!--
-		<div class="mp-login">
-			<form action="" method="post">
-				{{form.as_p}}
-				<input type="submit" value="login"/>
-			</form>	
-		</div>
-		-->
+
 	
 	<div class="mp-container" id="mp-container">
 			
@@ -80,6 +69,7 @@
 		
 		<div class="mp-content-container" id="mp-content-container">
 			<section class="mp-login" id="mp-login">
+				<h2 class="mp-font">Login</h2>
 				<form action="" method="post">
 					<p>
 						<label for="mp-login-email">Email:</label>
@@ -96,6 +86,7 @@
 			</section>
 			
 			<section class="mp-register" id="mp-register">
+				<h2 class="mp-font">Registration</h2>
 				<form action="" method="post">
 					<p>
 						<label for="mp-register-name">Vorname<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup>:</label>
@@ -139,3 +130,17 @@
 	<script type="text/javascript" src="static/javascripts/main/Init.js" ></script>
 	
 {% endblock %}
+	
+<!--
+{% block contenti %}
+	
+		<div class="mp-login-old">
+			<form action="" method="post">
+				{{form.as_p}}
+				<input type="submit" value="login"/>
+			</form>	
+		</div>
+	
+	
+{% endblock %}
+-->

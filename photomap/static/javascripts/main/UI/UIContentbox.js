@@ -8,16 +8,22 @@ UIContentbox = function(){
 UIContentbox.prototype = {
   
   init : function(){
-    this.repositionLoginRegistrationForms();
+    this.resizeRepositionLoginRegistrationForms();
     this.repositionContentbox();
   },
   
-  repositionLoginRegistrationForms : function(){
+  resizeRepositionLoginRegistrationForms : function(){
+    // resizing
+    loginheight = this.$container.height();
+    registerheight = loginheight;
+    this.$login.height(loginheight);
+    this.$register.height(registerheight);
+    // repositioning
     height = this.$container.height();
-    loginMarginTop = ( height - this.$login.height() ) * 0.5;
-    registerMarginTop = ( height - this.$register.height() ) * 0.5;
-    this.$login.css('margin-top',loginMarginTop);
-    this.$register.css('margin-top',registerMarginTop);
+    loginMarginTop = height * 0.25;
+    registerMarginTop = height * 0.25;
+    this.$login.find("form").css('margin-top',loginMarginTop);
+    this.$register.find("form").css('margin-top',registerMarginTop);
   },
   
   repositionContentbox : function(){

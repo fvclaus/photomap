@@ -4,6 +4,7 @@ UI = function (){
 	this.controls = new UIControls(this.panel.getControlsBarHeight());
 	this.input = new UIInput();
 	this.contentbox = new UIContentbox();
+	this.state = new UIState(this);
 }
 
 UI.prototype = {
@@ -20,5 +21,11 @@ UI.prototype = {
 	},
 	getInput : function(){
 		return this.input;
+	},
+	getState: function(){
+		return this.state;
+	},
+	getInformation: function(){
+		return null;
 	},
 };

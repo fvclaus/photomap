@@ -81,9 +81,11 @@ ClientServer.prototype = {
 		marker.show();
 	    });
 	    map.fit(markersinfo);
+	    if (main.getUI().getInformation()) {
 	    information = main.getUI().getInformation();
 	    information.setInfo(this);
 	    information.albumName = this.name;
 	    information.albumDesc = this.desc;
+	    }
 	}
 };
