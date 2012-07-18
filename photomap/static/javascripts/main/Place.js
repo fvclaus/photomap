@@ -81,6 +81,9 @@ Place.prototype = {
 	var map = main.getMap().getInstance();
 	map.setZoom(13);
 	map.panTo(this.marker.MapMarker.getPosition());
+	x = ( $("#mp-map").width() * 0.25 );
+	y = 0;
+	map.panBy(x,y);
 	
     },
     _showGallery		: function() {
