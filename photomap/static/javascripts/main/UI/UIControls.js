@@ -7,12 +7,16 @@ UIControls = function(maxHeight) {
     this.$modify = this.$controls.find(".mp-option-modify").hide();
     this.$add = this.$controls.find(".mp-option-add").hide();
     this.$logout = this.$controls.find(".mp-option-logout").show();
-    this.$center = this.$controls.find(".mp-option-center").hide();
+    this.$center = $(".mp-option-center").hide();
     this.bindListener();
 
 };
 
 UIControls.prototype = {
+    
+    init : function(){
+	this.repositionCenterControl();
+    },
 
     hideControls : function(){
 	var instance = this;
@@ -29,6 +33,17 @@ UIControls.prototype = {
 	    this.$add.show();
 	}
 	this.$center.show();
+    },
+    
+    repositionCenterControl : function(){
+	$centerElement = this.$center.show();
+	console.log($centerElement);
+	position = $("#mp-map").position();
+	position.top += $("#mp-header").height() * 0.5
+	position.left += 5;
+	console.log(position);
+	$centerElement.css('top',position.top).css('left',position.left);
+	$centerElement.hide()
     },
 
     bindListener : function(){	
