@@ -17,6 +17,7 @@ class Album(Description):
     lat = models.DecimalField(decimal_places = 26, max_digits = 30)
     lon = models.DecimalField(decimal_places = 26, max_digits = 30)
     user = models.ForeignKey(User)
+    country = models.CharField(max_length = 200)
     
     def toserializable(self):
         # avoid circual import
@@ -31,6 +32,7 @@ class Album(Description):
         data = {"lat" : self.lat,
                 "lon" : self.lon,
                 "title" : self.title,
+                "country" : self.country,
                 "description" : self.description,
                 "id" : self.pk,
                 "places": places_dump}
