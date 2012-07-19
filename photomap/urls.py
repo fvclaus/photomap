@@ -27,6 +27,15 @@ urlpatterns = patterns("",
                        url(r'^login', authentication.login),
                        url(r'^view-album', album.view),
                        url(r'^get-album', album.get),
+                       url(r'^impressum', direct_to_template, {"template": "impressum.html"}),
+                       url(r'^privacy', direct_to_template, {"template": "privacy.html"}),
+                       url(r'^copyright', direct_to_template, {"template": "copyright"}),
+                       url(r'^contact', direct_to_template, {"template": "contact.html"}),
+                       url(r'^help', direct_to_template, {"template": "help.html"}),
+                       url(r'^about-us', direct_to_template, {"template": "about-us.html"}),
+                       url(r'^dashboard', dashboard.view),
+     
+                       
                        #========================================================
                        # legacy
                        #========================================================
