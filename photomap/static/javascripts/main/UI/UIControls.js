@@ -5,9 +5,10 @@ UIControls = function(maxHeight) {
 
     this.$delete = this.$controls.find(".mp-option-delete").hide();
     this.$modify = this.$controls.find(".mp-option-modify").hide();
-    this.$add = this.$controls.find(".mp-option-add").hide();
     this.$logout = this.$controls.find(".mp-option-logout").show();
     this.$center = $(".mp-option-center").hide();
+    this.$add = $(".mp-option-add");
+    
     this.bindListener();
 
 };
@@ -17,12 +18,16 @@ UIControls.prototype = {
     init : function(){
 	this.repositionCenterControl();
     },
+    
+    setAddControl : function(){
+	this.$add = $(".mp-option-add");
+    },
 
     hideControls : function(){
 	var instance = this;
 	instance.$delete.hide();
 	instance.$modify.hide()
-	instance.$add.hide();
+	instance.$add.parent().hide();
 	instance.$center.hide();
     },
 
@@ -30,20 +35,30 @@ UIControls.prototype = {
 	if(main.getClientState().isAdmin()){
     	    this.$delete.show();
 	    this.$modify.show();
-	    this.$add.show();
+	    this.$add.parent().show();
 	}
 	this.$center.show();
     },
     
     repositionCenterControl : function(){
 	$centerElement = this.$center.show();
-	console.log($centerElement);
 	position = $("#mp-map").position();
 	position.top += $("#mp-header").height() * 0.5
 	position.left += 5;
-	console.log(position);
 	$centerElement.css('top',position.top).css('left',position.left);
 	$centerElement.hide()
+    },
+    
+    resizeRepositionAddControl : function(){
+	// bugfix for empty places
+	heightWrapper = $(".mp-album-wrapper").height() * 0.2; 
+	$(".mp-option-add-wrapper").css('height',heightWrapper)
+	
+	// resize & reposition add control
+	height = this.$add.parent().height() * 0.45;
+	marginTop = ( this.$add.parent().height() - height ) * 0.5;
+	marginLeft = ( this.$add.parent().width() - height ) * 0.5;
+	this.$add.css('height',height).css('width',height).css('margin-top',marginTop).css('margin-left',marginLeft);
     },
 
     bindListener : function(){	

@@ -15,7 +15,7 @@ UIAlbum = function (gallery) {
 UIAlbum.prototype =  {
 
     searchImages : function(){
-	this.$elements = this.$album.find('div.mp-gallery > img');
+	this.$elements = this.$album.find('div.mp-gallery > img').not(".mp-option-add");
     },
 
     getEl : function(){
@@ -37,6 +37,16 @@ UIAlbum.prototype =  {
 	var loaded = 0;
 	this.gallery.disableUI();
 	this.gallery.showLoading();
+	
+	// bugfix for empty places
+	if (photos.length == 0){
+	    instance.$album.append(
+		$.jqote( '#galleryTmpl', {} )
+	    );
+	    main.ui.controls.setAddControl();
+	    main.ui.controls.resizeRepositionAddControl();
+	    main.ui.controls.bindListener();
+	}
 
 	
 	for( var i = 0, len = photos.length; i < len; ++i ) {
@@ -67,7 +77,7 @@ UIAlbum.prototype =  {
 
 				main.getUIState().getPhotos().forEach(function(photo,index,photos){
 				    //find position of image el
-				    photo.order = instance.$5elements.index(photo.$anchorEl);
+				    photo.order = instance.$elements.index(photo.$anchorEl);
 				    //make a deep copy
 				    jsonPhoto = $.extend(true,{},photo);
 				    delete jsonPhoto.$anchorEl;
@@ -87,15 +97,16 @@ UIAlbum.prototype =  {
 			    verticalDragMaxHeight	: 40,
 			    animateScroll		: true	
 			});
-		    //hack to remove horizontal scrollbars with always show up
+		    //hack to remove horizontal scrollbars which always show up
 		    $(".jspHorizontalBar").remove();
 		    
 		    instance.gallery.getSlideshow()
 			.scale(instance.$album.width());
 
 		    instance.bindListener();
-
-
+		    main.ui.controls.setAddControl();
+		    main.ui.controls.resizeRepositionAddControl();
+		    main.ui.controls.bindListener();
 		}
 	    }).attr( 'src', photos[i].thumb );
 	}
@@ -104,6 +115,8 @@ UIAlbum.prototype =  {
 	    this.gallery.hideLoading();
 	    this.gallery.enableUI();
 	}
+	
+	
 
     },
 
