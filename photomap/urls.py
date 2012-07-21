@@ -33,7 +33,7 @@ urlpatterns = patterns("",
                        url(r'^contact', direct_to_template, {"template": "contact.html"}),
                        url(r'^help', direct_to_template, {"template": "help.html"}),
                        url(r'^about-us', direct_to_template, {"template": "about-us.html"}),
-                       url(r'^dashboard', dashboard.view),
+                       
      
                        
                        #========================================================
