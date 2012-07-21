@@ -15,7 +15,7 @@ UIAlbum = function (gallery) {
 UIAlbum.prototype =  {
 
     searchImages : function(){
-	this.$elements = this.$album.find('div.mp-gallery > img').not(".mp-option-add");
+	this.$elements = this.$album.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-photo-controls");
     },
 
     getEl : function(){
@@ -38,7 +38,7 @@ UIAlbum.prototype =  {
 	this.gallery.disableUI();
 	this.gallery.showLoading();
 	
-	// bugfix for empty places
+	// bugfix for empty places (to show empty "add"-tile)
 	if (photos.length == 0){
 	    instance.$album.append(
 		$.jqote( '#galleryTmpl', {} )
@@ -122,25 +122,33 @@ UIAlbum.prototype =  {
 
     bindListener : function(){
 	var instance = this;
+	state = main.getUIState();
 	//bind events on anchors
 	instance.$elements.bind( 'mouseenter.Gallery', function( event ) {
-	    
-	    $(this)
+	    var $el = $(this);
+	    $el
 		.addClass('current')
 		.removeClass("visited")
 		.siblings('img').removeClass('current');
+	    
+	    photo = (state.getPhotos())[$el.index()];
+	    state.setCurrentPhotoIndex($el.index());
+	    state.setCurrentPhoto(photo);
+	    
+	    main.ui.controls.showPhotoControls($el,photo);
 
 	}).bind( 'mouseleave.Gallery', function( event ) {
 	    var $el		= $(this);
 	    //add visited border if necessary
 	    (main.getUIState().getPhotos())[$el.index()].checkBorder();
 	    $el.removeClass('current');
+	    
+	    //main.ui.controls.hidePhotoControls();
 
 	}).bind( 'click.Gallery', function( event ) {
 	    var $el					= $(this);
 	    
 	    $el.removeClass('current');
-	    state = main.getUIState();
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto((state.getPhotos())[$el.index()]);
 	    

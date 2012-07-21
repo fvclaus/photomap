@@ -3,10 +3,10 @@ UIControls = function(maxHeight) {
     this.$controls = $('.mp-controls');
     this.$controls.height(maxHeight);
 
-    this.$delete = this.$controls.find(".mp-option-delete").hide();
-    this.$modify = this.$controls.find(".mp-option-modify").hide();
+    this.$delete = $(".mp-option-delete");
+    this.$modify = $(".mp-option-modify");
     this.$logout = this.$controls.find(".mp-option-logout").show();
-    this.$center = $(".mp-option-center").hide();
+    this.$center = $(".mp-option-center");
     this.$add = $(".mp-option-add");
     
     this.bindListener();
@@ -60,6 +60,34 @@ UIControls.prototype = {
 	marginLeft = ( this.$add.parent().width() - height ) * 0.5;
 	this.$add.css('height',height).css('width',height).css('margin-top',marginTop).css('margin-left',marginLeft);
     },
+    
+    showPhotoControls : function(element,photo){
+	
+	$(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
+	offset = element.offset();
+	offset.top += element.height() + 4;
+	offset.left += 1;
+	console.log(position);
+	size = {
+	    x: element.width() + 4,
+	    y: element.height() * 0.2,
+	};
+	console.log(size);
+	$wrapper = $(".mp-photo-controls-wrapper");
+	$wrapper.width(size.x);
+	$wrapper.height(size.y);
+	$wrapper.offset(offset);
+	$wrapper.find(".mp-photo-controls").height($wrapper.height());
+	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.15);
+	
+	this.bindListener();
+    },
+    
+    hidePhotoControls : function(){
+	
+	$(".mp-photo-controls-wrapper").detach();
+	
+    },
 
     bindListener : function(){	
 
@@ -67,12 +95,13 @@ UIControls.prototype = {
 	this.$delete.bind("click.MapPhotoAlbum",function(event){
 	    // hide current place's markers and clean photos from gallery
 	    state = main.getUIState();	
+	    photo = state.getCurrentPhoto();
 	    place = state.getCurrentPlace();
-	    photo = state.getCurrentPhoto(); 
+	    // album = state.getCurrentAlbum();
 	    var url,data;
 	    
 	    
-	    if (state.isSlideshow()) {
+	    if (instance.$delete.hasClass(".mp-element-photo")) {
 		if(confirm("Do you really want to delete photo "+photo.name)){
 		    url = "/delete-photo",
 		    data = {"id":photo.id};
@@ -83,17 +112,27 @@ UIControls.prototype = {
 		    return;
 	    }
 
-	    else{
+	    else if (instance.$delete.hasClass(".mp-element-place")){
 		if(confirm("Do you really want to delete place "+place.name)){
 		    url = "/delete-place";
 		    data = {"id":place.id};
 		    place._delete();
-		    main.getUI().getControls().hideControls();
 		    main.getUI().getInformation().setInfo();
 		}
 		else
 		    return;
 	    }
+	    /*
+	    else if (instance.$delete.hasClass(".mp-element-place")) {
+		if(confirm("Do you really want to delete place "+place.name)){
+		    url = "/delete-album";
+		    data = {"id":album.id};
+		    album._delete();
+		    main.getUI().getInformation().setInfo();
+		}
+		else
+		    return;
+	    }*/
 	    //call to delete marker or photo in backend
 	    $.ajax({
 		type : "post",
