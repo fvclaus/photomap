@@ -4,15 +4,20 @@ Created on Jul 10, 2012
 @author: fredo
 '''
 
-from django.http import HttpResponseRedirect, HttpResponse 
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest 
 from django.shortcuts import render_to_response
 from message import success, error
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
+
+from pm.form.album import AlbumInsertForm, AlbumUpdateForm
+
 import json
 import logging
 import decimal
+
+import os
 
 
 logger = logging.getLogger(__name__)
@@ -35,13 +40,56 @@ def get(request):
         logger.debug("get-album: user authenticated")
         albums = Album.objects.all().filter(user = user)
         if len(albums) == 0:
-            error("you don't have an album")
+            error("you don't have any albums")
         album = albums[0]
         
         data = album.toserializable()
         logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
-        
+
+def insert(request):
+    if request.method == "POST":
+        form = AlbumInsertForm(request.POST, auto_id = False)
+        if form.is_valid():
+            form.save()
+            return render_to_response("insert-album-success.html")
+        else:
+            return render_to_response("insert-album-error.html", {form : form})
+   
+def update(request):
+    if request.method == "POST":
+        form = AlbumUpdateForm(request.POST)
+        if form.is_valid():
+            album = None
+            try:
+                album = Album.objects.get(pk = form.cleaned_data["id"])
+            except Album.DoesNotExist:
+                return error("album does not exist")
+            form = AlbumUpdateForm(request.POST, instance = album)
+            form.save()
+            return success()
+        else:
+            return error(str(form.errors))
+    else:
+        return render_to_response("update-album.html")  
+
+def delete(request):
+    if request.method == "POST":
+        logger.debug("inside delete post")
+        try:
+            id = request.POST["id"]
+            album = Album.objects.get(pk = id)
+            try:
+                os.remove(album.photo.path)
+            except OSError:
+                pass
+            album.delete()
+            return success()
+        except (KeyError, Photo.DoesNotExist), e:
+            return error(str(e))
+    else:
+        logger.debug("form not available yet")
+        return HttpResponseBadRequest()     
         
 def redirect_to_get(request):
     return HttpResponseRedirect("/get-album")
