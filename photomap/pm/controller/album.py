@@ -47,6 +47,8 @@ def get(request):
         logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
 
+#TODO solve issue if geo data will be handled within frontend or within the controller unit
+
 def insert(request):
     if request.method == "POST":
         form = AlbumInsertForm(request.POST, auto_id = False)
