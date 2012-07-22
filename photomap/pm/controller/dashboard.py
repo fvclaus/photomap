@@ -29,14 +29,13 @@ def get(request):
         user = request.user
         if not user.is_authenticated():
             error("not authenticated")
-            
+        
         logger.debug("dashboard: user authenticated")
         albums = Album.objects.all().filter(user = user) &  Invitation.objects.all().filter(user = request.user)
         if len(albums) == 0:
             error("you don't have any albums")
-        album = albums[0]
         
-        data = album.toserializable()
+        data = albums.toserializable()
         logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
      
