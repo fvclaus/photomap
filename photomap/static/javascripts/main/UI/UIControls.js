@@ -19,8 +19,10 @@ UIControls.prototype = {
 	this.repositionCenterControl();
     },
     
-    setAddControl : function(){
+    setPhotoControls : function(){
 	this.$add = $(".mp-option-add");
+	this.$delete = $(".mp-option-delete");
+	this.$modify = $(".mp-option-modify");
     },
 
     hideControls : function(){
@@ -80,6 +82,8 @@ UIControls.prototype = {
 	$wrapper.find(".mp-photo-controls").height($wrapper.height() * 0.7);
 	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.1);
 	
+	// add inserted controls to "controls"-class and set bindListener to enable controls
+	this.setPhotoControls();
 	this.bindListener();
     },
     
@@ -89,7 +93,7 @@ UIControls.prototype = {
 	
     },
 
-    bindListener : function(){	
+    bindListener : function(){
 
 	var instance = this;
 	this.$delete.bind("click.MapPhotoAlbum",function(event){

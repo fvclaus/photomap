@@ -43,7 +43,7 @@ UIAlbum.prototype =  {
 	    instance.$album.append(
 		$.jqote( '#galleryTmpl', {} )
 	    );
-	    main.ui.controls.setAddControl();
+	    main.ui.controls.setPhotoControls();
 	    main.ui.controls.resizeRepositionAddControl();
 	    main.ui.controls.bindListener();
 	}
@@ -107,7 +107,7 @@ UIAlbum.prototype =  {
 			.scale(instance.$album.width());
 
 		    instance.bindListener();
-		    main.ui.controls.setAddControl();
+		    main.ui.controls.setPhotoControls();
 		    main.ui.controls.resizeRepositionAddControl();
 		    main.ui.controls.bindListener();
 		}
