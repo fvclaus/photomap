@@ -61,6 +61,7 @@
 	<script type="text/javascript" src="static/javascripts/main/UI/UIPanel.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UITools.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UIGallery.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/UITest.js" ></script>
 	
 	<script type="text/javascript" src="static/javascripts/main/UI/viewalbum/UI.js" ></script>
 	
@@ -141,6 +142,11 @@
 				</div>
 			</section>
 			
+			<!-- helpers for selenium ide. remove from production system -->
+			<div class="mp-invisible">			
+				<button class="mp-show-place"/></button>
+				<p id="test-photo-path">{{testphotopath}}</p>
+			</div>
 			<footer class="mp-footer" id="mp-footer">
 				<section class="mp-bottom-panel">
 					<a href="/impressum" title="Details zu den kreativen Köpfen hinter PhotoMap">Impressum</a> |

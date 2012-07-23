@@ -8,8 +8,12 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="../frontend+">login</a></td></tr>
-<tr><td><a href="click-information">click-information</a></td></tr>
+<tr><td><a href="setUp">setUp</a></td></tr>
+<tr><td><a href="login">login</a></td></tr>
+<tr><td><a href="hide-album-information">hide-album-information</a></td></tr>
+<tr><td><a href="show-place">show-place</a></td></tr>
+<tr><td><a href="add-photo">add-photo</a></td></tr>
+<tr><td><a href="update-place">update-place</a></td></tr>
 </tbody></table>
 </body>
 </html>
