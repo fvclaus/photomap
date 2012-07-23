@@ -12,8 +12,9 @@
 		<div class="mp-gallery-outer">
 			<div class="mp-gallery">
 				<% for (thumb in this.thumbAddress) { %>
-				<img class="overlay-description" src="<%= this.thumbAddress[thumb] %>"></img>
+				<img class="overlay-description sortable" src="<%= this.thumbAddress[thumb] %>"></img>
 				<% }; %>
+				<span class="mp-option-add-wrapper"><img class="mp-option-add" src="static/images/add.png" title="Bild hinzufügen"></img></span>
 			</div>
 		</div>
 	</script>
@@ -31,6 +32,20 @@
 				</div>
 				<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
 			</div>
+		</div>
+	</script>
+	
+	<script id="photoControlsTmpl" type="text/html">
+		<div class="mp-photo-controls-wrapper">
+			<img class="mp-photo-controls mp-option-delete mp-element-photo" src="static/images/delete.png" title="Löschen"></img>
+			<img class="mp-photo-controls mp-option-modify mp-element-photo" src="static/images/modify.png" title="Bearbeiten"></img>
+		</div>
+	</script>
+	
+	<script id="placeControlsTmpl" type="text/html">
+		<div class="place-controls-wrapper">
+			<img class="mp-place-controls mp-option-delete mp-element-place" src="static/images/delete.png" title="Löschen"></img>
+			<img class="mp-place-controls mp-option-modify mp-element-place" src="static/images/modify.png" title="Bearbeiten"></img>
 		</div>
 	</script>
 		
@@ -95,10 +110,7 @@
 							<a href="/logout">
 								<img class="mp-controls mp-option-logout" src="static/images/logout.png" title="Logout"></img>
 							</a>
-							<img class="mp-controls mp-option-center" src="static/images/center.png" title="Karte auf ausgewählten Platz zentrieren."></img>
-							<img class="mp-controls mp-option-delete" src="static/images/delete.png" title="Löschen"></img>
-							<img class="mp-controls mp-option-modify" src="static/images/modify.png" title="Bearbeiten"></img>
-							<img class="mp-controls mp-option-add" src="static/images/add.png" title="Bild hinzufügen"></img>
+							<img class="mp-controls mp-option-information" src="static/images/information.png" title="Information zu ausgewähltem Objekt anzeigen."></img>
 							<img class="mp-controls mp-option-information" src="static/images/information.png" title="Information zu ausgewähltem Objekt anzeigen."></img>
 						<div></div>
 						</div>
@@ -109,6 +121,7 @@
 			<section class="mp-map" id="mp-map">
 				<div class="mp-map-container">
 					<div class="mp-map-wrapper" id="map"></div>
+					<img class="mp-option-center" src="static/images/center.png" title="Karte auf ausgewählten Platz zentrieren."></img>
 				</div>
 				<div id="mp-photo-description">
 					<div class="mp-status-image mp-font"></div>

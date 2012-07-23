@@ -3,22 +3,33 @@ UIControls = function(maxHeight) {
     this.$controls = $('.mp-controls');
     this.$controls.height(maxHeight);
 
-    this.$delete = this.$controls.find(".mp-option-delete").hide();
-    this.$modify = this.$controls.find(".mp-option-modify").hide();
-    this.$add = this.$controls.find(".mp-option-add").hide();
+    this.$delete = $(".mp-option-delete");
+    this.$modify = $(".mp-option-modify");
     this.$logout = this.$controls.find(".mp-option-logout").show();
-    this.$center = this.$controls.find(".mp-option-center").hide();
+    this.$center = $(".mp-option-center");
+    this.$add = $(".mp-option-add");
+    
     this.bindListener();
 
 };
 
 UIControls.prototype = {
+    
+    init : function(){
+	this.plantCenterControl();
+    },
+    
+    setPhotoControls : function(){
+	this.$add = $(".mp-option-add");
+	this.$delete = $(".mp-option-delete");
+	this.$modify = $(".mp-option-modify");
+    },
 
     hideControls : function(){
 	var instance = this;
 	instance.$delete.hide();
 	instance.$modify.hide()
-	instance.$add.hide();
+	instance.$add.parent().hide();
 	instance.$center.hide();
     },
 
@@ -26,23 +37,74 @@ UIControls.prototype = {
 	if(main.getClientState().isAdmin()){
     	    this.$delete.show();
 	    this.$modify.show();
-	    this.$add.show();
+	    this.$add.parent().show();
 	}
 	this.$center.show();
     },
+    
+    plantCenterControl : function(){
+	$centerElement = this.$center.show();
+	position = $("#mp-map").position();
+	position.top += $("#mp-header").height() * 0.5
+	position.left += 5;
+	$centerElement.css('top',position.top).css('left',position.left);
+	$centerElement.hide()
+    },
+    
+    plantAddControl : function(){
+	// bugfix for empty places
+	heightWrapper = $(".mp-album-wrapper").height() * 0.2; 
+	$(".mp-option-add-wrapper").css('height',heightWrapper)
+	
+	// resize & reposition add control
+	height = this.$add.parent().height() * 0.45;
+	marginTop = ( this.$add.parent().height() - height ) * 0.5;
+	marginLeft = ( this.$add.parent().width() - height ) * 0.5;
+	this.$add.css('height',height).css('width',height).css('margin-top',marginTop).css('margin-left',marginLeft);
+    },
+    
+    showPhotoControls : function(element,photo){
+	
+	$(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
+	offset = element.offset();
+	offset.top += element.height() + 4;
+	offset.left += 1;
+	console.log(position);
+	size = {
+	    x: element.width() + 4,
+	    y: element.height() * 0.2,
+	};
+	console.log(size);
+	$wrapper = $(".mp-photo-controls-wrapper");
+	$wrapper.width(size.x);
+	$wrapper.height(size.y);
+	$wrapper.offset(offset);
+	$wrapper.find(".mp-photo-controls").height($wrapper.height() * 0.7);
+	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.15);
+	
+	// add inserted controls to "controls"-class and set bindListener to enable controls
+	this.setPhotoControls();
+	this.bindListener();
+    },
+    
+    hidePhotoControls : function(){
+	
+	$(".mp-photo-controls-wrapper").detach();
+	
+    },
 
-    bindListener : function(){	
+    bindListener : function(){
 
 	var instance = this;
 	this.$delete.bind("click.MapPhotoAlbum",function(event){
 	    // hide current place's markers and clean photos from gallery
 	    state = main.getUIState();	
+	    photo = state.getCurrentPhoto();
 	    place = state.getCurrentPlace();
-	    photo = state.getCurrentPhoto(); 
 	    var url,data;
 	    
-	    
-	    if (state.isSlideshow()) {
+	    // delete current photo
+	    if ($(this).hasClass("mp-element-photo")) {
 		if(confirm("Do you really want to delete photo "+photo.name)){
 		    url = "/delete-photo",
 		    data = {"id":photo.id};
@@ -53,17 +115,19 @@ UIControls.prototype = {
 		    return;
 	    }
 
-	    else{
+	    // delete current place
+	    else if ($(this).hasClass("mp-element-place")){
 		if(confirm("Do you really want to delete place "+place.name)){
 		    url = "/delete-place";
 		    data = {"id":place.id};
 		    place._delete();
-		    main.getUI().getControls().hideControls();
 		    main.getUI().getInformation().setInfo();
 		}
 		else
 		    return;
 	    }
+	    else { alert("hasnoClass")}
+	    
 	    //call to delete marker or photo in backend
 	    $.ajax({
 		type : "post",
@@ -85,8 +149,9 @@ UIControls.prototype = {
 	    var state = main.getUIState();	
 	    var place = state.getCurrentPlace();
 	    var photo = state.getCurrentPhoto();
-	    //slider is activated edit current picture
-	    if (state.isSlideshow()) {
+	    
+	    // edit current photo
+	    if ($(this).hasClass("mp-element-photo")) {
 
 		main.getUI().getInput()
 		    .onLoad(function(){
@@ -110,7 +175,7 @@ UIControls.prototype = {
 	    }
 
 	    //edit current place
-	    else {
+	    else if ($(this).hasClass("mp-element-photo")){
 		//prefill with name and update on submit
 
 		main.getUI().getInput()
@@ -129,12 +194,14 @@ UIControls.prototype = {
 		    .get("/update-place");
 	    }
 	});
+	
 	//commit in iframe because of img upload
 	this.$add.bind("click.MapPhotoAlbum",function(event){
 	    place = main.getUIState().getCurrentPlace();
 	    // reset load function 
 	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
 	});
+	
 	this.$center.bind("click.MapPhotoAlbum",function(event){
 	    var place = main.getUIState().getCurrentPlace();
 	    if (place){
