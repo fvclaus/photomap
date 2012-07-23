@@ -16,7 +16,7 @@ UIControls = function(maxHeight) {
 UIControls.prototype = {
     
     init : function(){
-	this.repositionCenterControl();
+	this.plantCenterControl();
     },
     
     setPhotoControls : function(){
@@ -42,7 +42,7 @@ UIControls.prototype = {
 	this.$center.show();
     },
     
-    repositionCenterControl : function(){
+    plantCenterControl : function(){
 	$centerElement = this.$center.show();
 	position = $("#mp-map").position();
 	position.top += $("#mp-header").height() * 0.5
@@ -51,7 +51,7 @@ UIControls.prototype = {
 	$centerElement.hide()
     },
     
-    resizeRepositionAddControl : function(){
+    plantAddControl : function(){
 	// bugfix for empty places
 	heightWrapper = $(".mp-album-wrapper").height() * 0.2; 
 	$(".mp-option-add-wrapper").css('height',heightWrapper)
@@ -91,16 +91,6 @@ UIControls.prototype = {
 	
 	$(".mp-photo-controls-wrapper").detach();
 	
-    },
-    
-    resizeRepositionPlaceControls : function(){
-	
-	place = main.ui.getState().getCurrentPlace();
-	
-	console.log(place);
-	console.log(place.height());
-	console.log(place.width());
-	console.log(place.offset());
     },
 
     bindListener : function(){

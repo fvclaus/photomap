@@ -44,7 +44,7 @@ UIAlbum.prototype =  {
 		$.jqote( '#galleryTmpl', {} )
 	    );
 	    main.ui.controls.setPhotoControls();
-	    main.ui.controls.resizeRepositionAddControl();
+	    main.ui.controls.plantAddControl();
 	    main.ui.controls.bindListener();
 	}
 
@@ -108,7 +108,7 @@ UIAlbum.prototype =  {
 
 		    instance.bindListener();
 		    main.ui.controls.setPhotoControls();
-		    main.ui.controls.resizeRepositionAddControl();
+		    main.ui.controls.plantAddControl();
 		    main.ui.controls.bindListener();
 		}
 	    }).attr( 'src', photos[i].thumb );
