@@ -77,8 +77,8 @@ UIControls.prototype = {
 	$wrapper.width(size.x);
 	$wrapper.height(size.y);
 	$wrapper.offset(offset);
-	$wrapper.find(".mp-photo-controls").height($wrapper.height());
-	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.15);
+	$wrapper.find(".mp-photo-controls").height($wrapper.height() * 0.7);
+	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.1);
 	
 	this.bindListener();
     },

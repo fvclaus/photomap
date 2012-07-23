@@ -69,8 +69,11 @@ UIAlbum.prototype =  {
 			.find("div.mp-gallery")
 			.width(instance.$album.width())
 			.height(instance.$album.height())
+		    // Drag n Drop for Photos
+		    instance.$album
+			.find("div.mp-gallery")
 			.sortable({
-			    items : "img",
+			    items : "img.sortable",
 			    update : function(event,ui){
 				instance.searchImages();
 				var jsonPhotos = new Array();
