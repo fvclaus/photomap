@@ -101,11 +101,10 @@ UIControls.prototype = {
 	    state = main.getUIState();	
 	    photo = state.getCurrentPhoto();
 	    place = state.getCurrentPlace();
-	    // album = state.getCurrentAlbum();
 	    var url,data;
 	    
-	    
-	    if (instance.$delete.hasClass(".mp-element-photo")) {
+	    // switching delete-option between different classes
+	    if ($(this).hasClass("mp-element-photo")) {
 		if(confirm("Do you really want to delete photo "+photo.name)){
 		    url = "/delete-photo",
 		    data = {"id":photo.id};
@@ -116,7 +115,7 @@ UIControls.prototype = {
 		    return;
 	    }
 
-	    else if (instance.$delete.hasClass(".mp-element-place")){
+	    else if ($(this).hasClass("mp-element-place")){
 		if(confirm("Do you really want to delete place "+place.name)){
 		    url = "/delete-place";
 		    data = {"id":place.id};
@@ -126,17 +125,8 @@ UIControls.prototype = {
 		else
 		    return;
 	    }
-	    /*
-	    else if (instance.$delete.hasClass(".mp-element-place")) {
-		if(confirm("Do you really want to delete place "+place.name)){
-		    url = "/delete-album";
-		    data = {"id":album.id};
-		    album._delete();
-		    main.getUI().getInformation().setInfo();
-		}
-		else
-		    return;
-	    }*/
+	    else { alert("hasnoClass")}
+	    
 	    //call to delete marker or photo in backend
 	    $.ajax({
 		type : "post",
@@ -158,8 +148,9 @@ UIControls.prototype = {
 	    var state = main.getUIState();	
 	    var place = state.getCurrentPlace();
 	    var photo = state.getCurrentPhoto();
-	    //slider is activated edit current picture
-	    if (state.isSlideshow()) {
+	    
+	    // switching modify-option between different classes
+	    if ($(this).hasClass("mp-element-photo")) {
 
 		main.getUI().getInput()
 		    .onLoad(function(){
@@ -183,7 +174,7 @@ UIControls.prototype = {
 	    }
 
 	    //edit current place
-	    else {
+	    else if ($(this).hasClass("mp-element-photo")){
 		//prefill with name and update on submit
 
 		main.getUI().getInput()
@@ -202,12 +193,14 @@ UIControls.prototype = {
 		    .get("/update-place");
 	    }
 	});
+	
 	//commit in iframe because of img upload
 	this.$add.bind("click.MapPhotoAlbum",function(event){
 	    place = main.getUIState().getCurrentPlace();
 	    // reset load function 
 	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
 	});
+	
 	this.$center.bind("click.MapPhotoAlbum",function(event){
 	    var place = main.getUIState().getCurrentPlace();
 	    if (place){
