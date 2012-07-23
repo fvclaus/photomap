@@ -80,7 +80,7 @@ UIControls.prototype = {
 	$wrapper.height(size.y);
 	$wrapper.offset(offset);
 	$wrapper.find(".mp-photo-controls").height($wrapper.height() * 0.7);
-	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.1);
+	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.15);
 	
 	// add inserted controls to "controls"-class and set bindListener to enable controls
 	this.setPhotoControls();
@@ -91,6 +91,16 @@ UIControls.prototype = {
 	
 	$(".mp-photo-controls-wrapper").detach();
 	
+    },
+    
+    resizeRepositionPlaceControls : function(){
+	
+	place = main.ui.getState().getCurrentPlace();
+	
+	console.log(place);
+	console.log(place.height());
+	console.log(place.width());
+	console.log(place.offset());
     },
 
     bindListener : function(){
@@ -103,7 +113,7 @@ UIControls.prototype = {
 	    place = state.getCurrentPlace();
 	    var url,data;
 	    
-	    // switching delete-option between different classes
+	    // delete current photo
 	    if ($(this).hasClass("mp-element-photo")) {
 		if(confirm("Do you really want to delete photo "+photo.name)){
 		    url = "/delete-photo",
@@ -115,6 +125,7 @@ UIControls.prototype = {
 		    return;
 	    }
 
+	    // delete current place
 	    else if ($(this).hasClass("mp-element-place")){
 		if(confirm("Do you really want to delete place "+place.name)){
 		    url = "/delete-place";
@@ -149,7 +160,7 @@ UIControls.prototype = {
 	    var place = state.getCurrentPlace();
 	    var photo = state.getCurrentPhoto();
 	    
-	    // switching modify-option between different classes
+	    // edit current photo
 	    if ($(this).hasClass("mp-element-photo")) {
 
 		main.getUI().getInput()
