@@ -7,6 +7,7 @@ Created on Jul 10, 2012
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest 
 from django.shortcuts import render_to_response
 from message import success, error
+from pm.test import config
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
@@ -27,7 +28,7 @@ def view(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
     if request.method == "GET":
-        return render_to_response("view-album.html")
+        return render_to_response("view-album.html",{"testphotopath": config.TEST_PHOTO})
 
 def get(request):
     logger.debug("get-album: entered view function")

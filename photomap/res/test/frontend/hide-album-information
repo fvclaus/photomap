@@ -12,21 +12,15 @@
 <tr><td rowspan="1" colspan="3">click-information</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/view-album</td>
-	<td></td>
-</tr>
-<tr>
 	<td>click</td>
-	<td>css=img.mp-option-information</td>
+	<td>${albumDescriptionToggle}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForNotVisible</td>
-	<td>css=div.mp-description-wrapper</td>
+	<td>${description}</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

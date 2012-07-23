@@ -4,33 +4,44 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:8000/login" />
-<title>login</title>
+<title>update-place</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">login</td></tr>
+<tr><td rowspan="1" colspan="3">update-place</td></tr>
 </thead><tbody>
 <tr>
-	<td>open</td>
-	<td>/login</td>
+	<td>click</td>
+	<td>${update}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>${inputForm}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
-	<td>css=input[name=&quot;user&quot;]</td>
-	<td>admin</td>
+	<td>${descriptionInput}</td>
+	<td>${lipsum}</td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>css=input[name=&quot;password&quot;]</td>
-	<td>admin</td>
-</tr>
-<tr>
-	<td>clickAndWait</td>
-	<td>css=input[value=&quot;login&quot;]</td>
+	<td>click</td>
+	<td>${submit}</td>
 	<td></td>
 </tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>${inputForm}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>${descriptionText}</td>
+	<td>${lipsum}</td>
+</tr>
+
 </tbody></table>
 </body>
 </html>
