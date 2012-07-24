@@ -13,6 +13,7 @@
 	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
 	
+	<script type="text/javascript" src="static/js/jquery.jscrollpane.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.mousewheel.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.cookie.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.json.js" ></script>
@@ -62,6 +63,12 @@
 				</div>
 			</section>
 		</header>
+			
+			<section class="mp-map" id="mp-map">
+				<div class="mp-map-container">
+					<div class="mp-map-wrapper" id="map"></div>
+				</div>
+			</section>
 		
 		<section class="mp-map" id="mp-map">
 			<div class="mp-map-container">
@@ -69,7 +76,7 @@
 			</div>
 		</section>
 		
-		<div class="mp-content-container" id="mp-content-container">
+		<section class="mp-content-container" id="mp-content-container">
 			<section class="mp-login" id="mp-login">
 				<h2 class="mp-font">Login</h2>
 				<form action="" method="post">
@@ -115,7 +122,7 @@
 					</p>
 				</form>
 			</section>
-		</div>
+		</section>
 		
 		<footer class="mp-footer" id="mp-footer">
 				<section class="mp-user">
@@ -135,8 +142,6 @@
 		</footer>
 	</div>
 	
-	<script type="text/javascript" src="static/js/main/Init.js" ></script>
-	
 {% endblock %}
 	
 -->
@@ -148,7 +153,6 @@
 				<input type="submit" value="login"/>
 			</form>	
 		</div>
-	
 	
 {% endblock %}
 

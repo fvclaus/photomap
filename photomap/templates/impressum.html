@@ -13,6 +13,7 @@
 	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
 	
+	<script type="text/javascript" src="static/js/jquery.jscrollpane.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.mousewheel.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.cookie.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.json.js" ></script>
@@ -64,7 +65,13 @@
 				</section>
 			</header>
 			
-			<section class="mp-textbox-wrapper" id="mp-textbox">
+			<section class="mp-map" id="mp-map">
+				<div class="mp-map-container">
+					<div class="mp-map-wrapper" id="map"></div>
+				</div>
+			</section>
+			
+			<section class="mp-content-container" id="mp-textbox">
 				<h2>Impressum</h2>
 				<article class="mp-textbox" id="main">
 					<p>Angaben gemäß § 5 TMG</p>
@@ -75,9 +82,9 @@
 					</address>
 					<h3>Vertreten durch:</h3>
 					<p>
-						<a href="/team#frederik-claus">Legolas aka Frederic Claus</a> <br />
-						<a href="/team#philipp-banhardt">Gambit aka Philipp Banhardt</a> <br />
-						<a href="/team#marc-leon-roemer">Harry Potter aka Marc-Leon Römer</a> <br />
+						<a href="/team#frederik-claus">Frederic Claus</a> <br />
+						<a href="/team#philipp-banhardt">Philipp Banhardt</a> <br />
+						<a href="/team#marc-leon-roemer">Marc-Leon Römer</a> <br />
 					</p>
 					<h3>Kontakt:</h3>
 					<p>
@@ -142,7 +149,5 @@
 				</section>
 			</footer>
 		</div>
-		
-		<script type="text/javascript" src="static/js/main/Init.js" ></script>
 		
 {% endblock %}
