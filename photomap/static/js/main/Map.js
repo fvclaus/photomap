@@ -13,20 +13,20 @@ Map	= function() {
 	mapTypeControl				: true,
 	mapTypeControlOptions		: {
 	    style		: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-	    position	: google.maps.ControlPosition.TOP_LEFT
+	    position	: google.maps.ControlPosition.TOP_CENTER
 	},
 	panControl					: true,
 	panControlOptions			: {
-	    position	: google.maps.ControlPosition.TOP_CENTER
+	    position	: google.maps.ControlPosition.TOP_LEFT
 	},
 	zoomControl					: true,
 	zoomControlOptions			: {
 	    style		: google.maps.ZoomControlStyle.SMALL,
-	    position	: google.maps.ControlPosition.TOP_CENTER
+	    position	: google.maps.ControlPosition.TOP_LEFT
 	},
 	streetViewControl			: true,
 	streetViewControlOptions	: {
-	    position	: google.maps.ControlPosition.TOP_CENTER
+	    position	: google.maps.ControlPosition.TOP_LEFT
 	}
     }
     //user is guest

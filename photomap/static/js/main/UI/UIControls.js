@@ -5,7 +5,7 @@ UIControls = function(maxHeight) {
 
     this.$delete = $(".mp-option-delete");
     this.$modify = $(".mp-option-modify");
-    this.$logout = this.$controls.find(".mp-option-logout").show();
+    this.$logout = $(".mp-option-logout");
     this.$center = $(".mp-option-center");
     this.$add = $(".mp-option-add");
     
@@ -17,6 +17,7 @@ UIControls.prototype = {
     
     init : function(){
 	this.plantCenterControl();
+	this.resizeLogoutControl();
     },
     
     setPhotoControls : function(){
@@ -92,6 +93,13 @@ UIControls.prototype = {
 	
 	$(".mp-photo-controls-wrapper").detach();
 	
+    },
+    
+    resizeLogoutControl : function(){
+	
+	height = main.ui.panel.getFooterHeight();
+	
+	this.$logout.height(height);
     },
 
     bindListener : function(){

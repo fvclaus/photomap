@@ -12,22 +12,20 @@ UIPanel = function (){
 UIPanel.prototype = {
     
     init : function(){
-	this.resizeBottomPanelLinks(this.$bottomPanel);
+	this.resizeFooterFont(this.$footer);
 	this.resizePageTitle(this.$title);
-	this.plantBottomPanel();
     },
 	
-    getControlsBarHeight : function(){
-	return this.$topPanel.height();
+    getFooterHeight : function(){
+	return this.$footer.height();
     },
     
-    
-    resizeBottomPanelLinks : function(bottomPanel){
-	    text = bottomPanel.text();
-	    width = bottomPanel.width();
-	    height = bottomPanel.height();
+    resizeFooterFont : function(footer){
+	    text = footer.text();
+	    width = footer.width();
+	    height = footer.height();
 	    size = this.tools.calculateFontSize(text,width,height);
-	    bottomPanel.css("fontSize",size + "px");
+	    footer.css("fontSize",size + "px");
     },
     
     resizePageTitle : function(titlebox){
@@ -37,11 +35,5 @@ UIPanel.prototype = {
 	size = this.tools.calculateFontSize(text,width,height);
 	titlebox.css("fontSize",size + "px");
     },
-    
-    plantBottomPanel : function(){
-	// repositioning
-	var position = {'top': 17, 'left': 17,};
-	position.top += $(".mp-container").height() - this.$footer.height();
-	this.$footer.css('top',position.top).css('left',position.left);
-    },
+
 };

@@ -1,7 +1,7 @@
 UI = function (){
 	this.tools = new UITools();
 	this.panel = new UIPanel();
-	this.controls = new UIControls(this.panel.getControlsBarHeight());
+	this.controls = new UIControls();
 	this.input = new UIInput();
 	this.state = new UIState(this);
 }
@@ -10,6 +10,7 @@ UI.prototype = {
 
 	init : function(){
 		this.panel.init();
+		this.controls.init();
 	},
 	getTools : function(){
 		return this.tools;

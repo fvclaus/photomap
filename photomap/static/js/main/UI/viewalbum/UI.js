@@ -2,7 +2,7 @@ UI = function (){
 	this.tools = new UITools();
 	this.information = new UIInformation();
 	this.panel = new UIPanel();
-	this.controls = new UIControls(this.panel.getControlsBarHeight());
+	this.controls = new UIControls();
 	this.gallery = new UIGallery();
 	this.input = new UIInput();
 }
