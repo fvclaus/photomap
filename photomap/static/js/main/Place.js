@@ -10,40 +10,7 @@ Place = function(data) {
 	title	: this.name
     });
 
-    var instance = this;
-    // click event for place (its marker)
-    // in the eventcallback this will be the gmap
-    // use instance as closurefunction to access the place object
-    google.maps.event.addListener( this.marker.MapMarker, 'click', function() {
 
-	if (main.getUIState().isAlbumLoading())
-	    return;
-
-	var map = main.getMap();
-	var oldPlace = main.getUIState().getCurrentPlace();
-
-	//close slideshow if open
-	main.getUI().getSlideshow().closeSlideshow();
-
-	// clear gallery photos + slider and map.place
-	instance._clear();
-	main.getUIState().setCurrentPlace(instance);
-
-	// set title in mp-controls bar
-	information = main.getUI().getInformation();
-	information.setInfo(instance);
-	information.hideImageNumber();
-	main.getUI().getControls().showControls();
-	
-	//change icon of new place
-	instance.checkIconStatus();
-	// change icon of old place
-	if (oldPlace)
-	    oldPlace.checkIconStatus();
-
-	instance._showGallery();
-
-    });
     this.photos = new Array();
     if (data.photos){
 	for( var i = 0, len = data.photos.length; i < len; ++i ) {
@@ -52,6 +19,7 @@ Place = function(data) {
     }
 
     this.checkIconStatus();
+    this.bindListener();
     
 };
 
@@ -106,5 +74,50 @@ Place.prototype = {
 	    this.showVisitedIcon();
 	else
 	    this.showUnselectedIcon();
-    }
+    },
+    bindListener : function(){
+
+	var instance = this;
+	// click event for place (its marker)
+	// in the eventcallback this will be the gmap
+	// use instance as closurefunction to access the place object
+	google.maps.event.addListener( this.marker.MapMarker, 'click', function() {
+
+	    if (main.getUIState().isAlbumLoading())
+		return;
+
+	    var map = main.getMap();
+	    var oldPlace = main.getUIState().getCurrentPlace();
+
+	    //close slideshow if open
+	    main.getUI().getSlideshow().closeSlideshow();
+
+	    // clear gallery photos + slider and map.place
+	    instance._clear();
+	    main.getUIState().setCurrentPlace(instance);
+
+	    // set title in mp-controls bar
+	    information = main.getUI().getInformation();
+	    information.setInfo(instance);
+	    information.hideImageNumber();
+	    main.getUI().getControls().showControls();
+	    
+	    //change icon of new place
+	    instance.checkIconStatus();
+	    // change icon of old place
+	    if (oldPlace)
+		oldPlace.checkIconStatus();
+
+	    instance._showGallery();
+
+	});
+
+	google.maps.event.addListener(this.marker.MapMarker, "mouseover", function(event){
+	    projection = main.getMap().getOverlay().getProjection();
+	    pixel = projection.fromLatLngToContainerPixel(instance.marker.getPosition());
+	    main.getUI().getControls().showModifyControls({top:pixel.x,left:pixel.y},0,5);
+	});
+
+	
+    },
 };

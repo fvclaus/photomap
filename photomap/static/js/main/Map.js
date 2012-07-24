@@ -54,10 +54,15 @@ Map	= function() {
 	    }
 	];
     }
+
+
+
     // mode : fullscreen || normal
     this.mode			= 'normal';	
     this._create();
-    this.placeListener();
+    this.bindListener();
+    
+    
 };
 
 Map.prototype = {
@@ -68,10 +73,16 @@ Map.prototype = {
 	this.maptype = google.maps.MapTypeId.ROADMAP;
 	this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
 	this.ROADMAP = google.maps.MapTypeId.ROADMAP;
+
+	//define overlay to retrieve pixel position on mouseover event
+	this.overlay = new google.maps.OverlayView();
+	this.overlay.draw = function() {};
+	this.overlay.setMap(this.map);
     },
-    placeListener : function(){
+    bindListener : function(){
 	var instance 	= this;
 	this.places = new Array();
+
 	if (main.getClientState().isAdmin()){
 	    //create new place with description and select it 
 	    google.maps.event.addListener(this.map,"click",function(event){
@@ -122,26 +133,11 @@ Map.prototype = {
     getInstance			: function() {
 	return this.map;
     },
-    // restricts maximum zoom level for fitbounds function :
-    // taken from : http://boogleoogle.blogspot.com/2010/04/maximum-zoom-level-when-using-fitbounds.html
-    _controlZoom		: function() {
-	// var instance	= this;
-	// zoomChangeListener =  google.maps.event.addListener( this.map, 'zoom_changed', function() {
-	//     zoomChangeBoundsListener = google.maps.event.addListener( instance.map, 'bounds_changed', function(event) {
-	// 	if (this.getZoom() > 15) // don't allow a zoom factor > 15
-	// 	    this.setZoom(15);
-	// 	google.maps.event.removeListener(zoomChangeBoundsListener);
-	//     });
-	//     // remove this event listener since we will want to be able to zoom in after the markers are displayed on the map.
-	//     google.maps.event.removeListener(zoomChangeListener);
-	// });
-    },
     // takes an array of markers and resizes + pans the map so all places markers are visible
     // does not show/hide marker 
     fit : function( markersinfo ) {
 	var markersinfo 	= markersinfo || this.markersinfo;
 	this.markersinfo	= markersinfo;
-	this._controlZoom();
 	var LatLngList = new Array();
 
 	for( var i = 0, len = markersinfo.length; i < len; ++i ) {
@@ -158,5 +154,8 @@ Map.prototype = {
 	}
 	// fit these bounds to the map
 	this.map.fitBounds( bounds );
+    },
+    getOverlay : function(){
+	return this.overlay;
     }
 };

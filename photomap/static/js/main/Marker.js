@@ -39,6 +39,9 @@ Marker.prototype = {
 	    this.MapMarker.setIcon(options.icon);
 	if( typeof options.zindex != 'undefined' )
 	    this.MapMarker.setZIndex(options.zindex);
+    },
+    getPosition  : function(){
+	return this.MapMarker.getPosition();
     }
 };
 

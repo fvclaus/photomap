@@ -20,7 +20,8 @@ UIControls = function(maxHeight) {
 UIControls.prototype = {
     
     init : function(){
-	this.plantCenterControl();
+	this.placeCenterControl();
+	this.bindListener();
     },
     
     // setPhotoControls : function(){
@@ -45,14 +46,17 @@ UIControls.prototype = {
 	this.$center.show();
     },
     
-    plantCenterControl : function(){
+    placeCenterControl : function(){
 	//reposition
-	$centerElement = this.$center.show();
+	this.$center.show();
 	position = $("#mp-map").position();
 	position.top += $("#mp-header").height() * 0.5
 	position.left += 5;
-	$centerElement.css('top',position.top).css('left',position.left);
-	$centerElement.hide()
+	this.$center.css({
+	    'top' : position.top,
+	    'left' : position.left
+	})
+	    .hide();
     },
     
     /*
@@ -77,35 +81,69 @@ UIControls.prototype = {
       variablen die jquery elemente halten sollten immer mit $ starten
       also lieber $el anstatt element
     */
-    showPhotoControls : function($el,photo){
+    showPhotoControls : function($el){
 	
 	// $(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
 	// wofür ist das +4 und -1?
 	offset = $el.offset();
-	offset.top += $el.height() + 4;
-	offset.left += 1;
-
-	console.log(position);
-	size = {
-	    x: $el.width() + 4,
-	    y: $el.height() * 0.2,
-	};
-	console.log(size);
 	
-	// höhe und breite muss man nur einmal setzten
-	this.$photoControls
-	    .width(size.x)
-	    .height(size.y)
-	    .offset(offset)
-	    .show()
-	    .find(".mp-photo-controls")
-	    .height(this.$photoControls.height() * 0.7)
-	    .width(this.$photoControls.width() * 0.15);
+	this.showModifyControls($el.offset(),$el.width(),$el.height());
+	// offset = $el.offset();
+	// offset.top += $el.height() + 4;
+	// offset.left += 1;
+
+	// console.log(position);
+	// size = {
+	//     x: $el.width() + 4,
+	//     y: $el.height() * 0.2,
+	// };
+	// console.log(size);
+	
+	// // höhe und breite muss man nur einmal setzten
+	// this.$photoControls
+	//     .width(size.x)
+	//     .height(size.y)
+	//     .offset(offset)
+	//     .show()
+	//     .find(".mp-photo-controls")
+	//     .height(this.$photoControls.height() * 0.7)
+	//     .width(this.$photoControls.width() * 0.15);
 	
 	// add inserted controls to "controls"-class and set bindListener to enable controls
 	// this.setPhotoControls();
 	// this.bindListener();
     },
+
+    showModifyControls : function(offset,width,height){
+	// $(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
+	// wofür ist das +4 und -1?
+
+	// offset.top += height + 4;
+	// offset.left += 1;
+
+	console.log(position);
+	size = {
+	    x: width + 4,
+	    y: height * 0.2,
+	};
+	console.log(size);
+	
+	// höhe und breite muss man nur einmal setzten
+	this.$photoControls
+	    // .width(size.x)
+	    // .height(size.y)
+	    .offset(offset)
+	    .css("z-index",999999)
+	    .show("show")
+	    .find(".mp-photo-controls")
+	    .height(this.$photoControls.height() * 0.8)
+	    .width(this.$photoControls.width() * 0.45);
+	
+	// add inserted controls to "controls"-class and set bindListener to enable controls
+	// this.setPhotoControls();
+	// this.bindListener();
+    },
+
     
     hidePhotoControls : function(){
 	

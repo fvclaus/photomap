@@ -54,7 +54,7 @@
 <tr>
 	<td>store</td>
 	<td>css=input[type=&quot;submit&quot;]</td>
-	<td>submitInput</td>
+	<td>submit</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -63,8 +63,13 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=img.mp-option-modify</td>
-	<td>update</td>
+	<td>css=button.mp-update-place</td>
+	<td>updatePlace</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-update-photo</td>
+	<td>updatePhoto</td>
 </tr>
 </tbody></table>
 </body>
