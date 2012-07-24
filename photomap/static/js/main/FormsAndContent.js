@@ -1,14 +1,14 @@
 var repositionContent = function(){
-    $container = $("div.mp-content-container");
+    $container = $(".mp-content-container");
     
     position = $(".mp-map").position();
-    height = position.top + (( $(".mp-map").height() - $(".mp-footer").height() - $container.height() ) * 0.5);
+    height = position.top;
     width = ( $(".mp-map").width() - $container.width() ) * 0.5;
     $container.css('top',height).css('left',width);
 };
   
 var plantLoginForms = function(){
-    $container = $("div.mp-content-container");
+    $container = $(".mp-content-container");
     $login = $container.find("#mp-login");
     $register = $container.find("#mp-register");
     
@@ -26,9 +26,31 @@ var plantLoginForms = function(){
     $register.find("form").css('margin-top',registerMarginTop);
 };
 
+function initScrollPane() {
+    $(".mp-content-container").jScrollPane();
+};
+
+function hideMapControls() {
+    main.getMap().getInstance().setOptions({
+      panControl: false,
+      zoomControl: false,
+      streetViewControl: false,
+      mapTypeControlOptions: {
+	position: google.maps.ControlPosition.TOP_LEFT,
+      },
+    });
+};
+
 $(document).ready(function(){
   
+    hideMapControls();
+  
     repositionContent();
-    plantLoginForms();
     
+    if ($("body").find("#mp-login").attr("class") == "mp-login"){
+      alert("hi");
+      plantLoginForms();
+    };
+    
+    initScrollPane();
 });

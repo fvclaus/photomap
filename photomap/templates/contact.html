@@ -13,6 +13,7 @@
 	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
 	
+	<script type="text/javascript" src="static/js/jquery.jscrollpane.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.mousewheel.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.cookie.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.json.js" ></script>
@@ -62,7 +63,13 @@
 				</section>
 			</header>
 			
-			<section class="mp-textbox-wrapper" id="mp-textbox">
+			<section class="mp-map" id="mp-map">
+				<div class="mp-map-container">
+					<div class="mp-map-wrapper" id="map"></div>
+				</div>
+			</section>
+			
+			<section class="mp-content-container" id="mp-textbox">
 				<h2>Kontakt</h2>
 				<article class="mp-textbox">
 					Sollten Sie Probleme, Anregungen oder Fragen, welche nicht auf der <a href="/help">Hilfe-Seite</a>,
@@ -100,7 +107,5 @@
 				</section>
 			</footer>
 		</div>
-		
-		<script type="text/javascript" src="static/js/main/Init.js" ></script>
 		
 {% endblock %}

@@ -13,6 +13,7 @@
 	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
 	
+	<script type="text/javascript" src="static/js/jquery.jscrollpane.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.mousewheel.min.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.cookie.js" ></script>
 	<script type="text/javascript" src="static/js/jquery.json.js" ></script>
@@ -62,24 +63,29 @@
 				</section>
 			</header>
 			
-			<section class="mp-textbox-wrapper" id="mp-textbox">
+			<section class="mp-map" id="mp-map">
+				<div class="mp-map-container">
+					<div class="mp-map-wrapper" id="map"></div>
+				</div>
+			</section>
+			
+			<section class="mp-content-container" id="mp-content-container">
 				<h2>Über uns</h2>
 				<article class="mp-textbox" id="project-introduction">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consete</article>
-				<section class="mp-textbox-interior-wrapper" id="contributors">
+				<section class="mp-content-interior-wrapper" id="contributors">
 					<article class="mp-textbox" id="frederik-claus">
+						<h3>Legolas aka Frederik Claus</h3>
 						<img class="mp-introduction-picture" src="" title="Frederik Claus"></img>
 						<p class="mp-introduction-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea reb</p>
 					</article>
 					<article class="mp-textbox" id="philipp-banhardt">
+						<h3>Gambit aka Philipp Banhardt</h3>
 						<img class="mp-introduction-picture" src="" title="Philipp Banhardt"></img>
 						<p class="mp-introduction-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea reb</p>
 					</article>
 					<article class="mp-textbox" id="marc-leon-roemer">
+						<h3>Harry Potter aka Marc-Leon Römer</h3>
 						<img class="mp-introduction-picture" src="" title="Marc-Leon Römer"></img>
-						<p class="mp-introduction-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea reb</p>
-					</article>
-					<article class="mp-textbox" id="lisa-LASTNAME">
-						<img class="mp-introduction-picture" src="" title="Lisa LASTNAME"></img>
 						<p class="mp-introduction-text">Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumyeirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diamvoluptua. At vero eos et accusam et justo duo dolores et ea reb</p>
 					</article>
 				</section>
@@ -102,7 +108,5 @@
 				</section>
 			</footer>
 		</div>
-		
-		<script type="text/javascript" src="static/js/main/Init.js" ></script>
 		
 {% endblock %}
