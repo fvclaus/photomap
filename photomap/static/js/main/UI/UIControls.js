@@ -2,12 +2,18 @@ UIControls = function(maxHeight) {
 
     this.$controls = $('.mp-controls');
     this.$controls.height(maxHeight);
+    
+    //currently photo only
+    this.$photoControls = $(".mp-photo-controls-wrapper");
+    this.$photoControls.hide();
+    this.$delete = $("img.mp-option-delete");
+    this.$update = $("img.mp-option-modify");
 
     this.$delete = $(".mp-option-delete");
     this.$modify = $(".mp-option-modify");
     this.$logout = $(".mp-option-logout");
     this.$center = $(".mp-option-center");
-    this.$add = $(".mp-option-add");
+
     
     this.bindListener();
 
@@ -20,25 +26,24 @@ UIControls.prototype = {
 	this.resizeLogoutControl();
     },
     
-    setPhotoControls : function(){
-	this.$add = $(".mp-option-add");
-	this.$delete = $(".mp-option-delete");
-	this.$modify = $(".mp-option-modify");
-    },
+    // setPhotoControls : function(){
+    // 	this.$add = $(".mp-option-add");
+    // 	this.$delete = $(".mp-option-delete");
+    // 	this.$modify = $(".mp-option-modify");
+    // },
 
     hideControls : function(){
-	var instance = this;
-	instance.$delete.hide();
-	instance.$modify.hide()
-	instance.$add.parent().hide();
-	instance.$center.hide();
+	// instance.$delete.hide();
+	// instance.$update.hide()
+	this.$insert.parent().hide();
+	this.$center.hide();
     },
 
     showControls : function(){
 	if(main.getClientState().isAdmin()){
-    	    this.$delete.show();
-	    this.$modify.show();
-	    this.$add.parent().show();
+    	    // this.$delete.show();
+	    // this.$modify.show();
+	    // this.$insert.parent().show();
 	}
 	this.$center.show();
     },
@@ -53,45 +58,62 @@ UIControls.prototype = {
 	$centerElement.hide()
     },
     
+    /*
+      ich hab das mal mit css only gelöst
+      das bild kann man ja noch auf einen größeren (gimp) hintergrund packen, dann wird das auch nicht so stark vergrößert.
+    */
     plantAddControl : function(){
-	// bugfix for empty places
-	heightWrapper = $(".mp-album-wrapper").height() * 0.2; 
-	$(".mp-option-add-wrapper").css('height',heightWrapper)
+	// // bugfix for empty places
+	// heightWrapper = $(".mp-album-wrapper").height() * 0.2; 
+	// $(".mp-option-add-wrapper").css('height',heightWrapper)
 	
-	// resize & reposition add control
-	height = this.$add.parent().height() * 0.45;
-	marginTop = ( this.$add.parent().height() - height ) * 0.5;
-	marginLeft = ( this.$add.parent().width() - height ) * 0.5;
-	this.$add.css('height',height).css('width',height).css('margin-top',marginTop).css('margin-left',marginLeft);
+	// // resize & reposition add control
+	// height = this.$insert.parent().height() * 0.45;
+	// marginTop = ( this.$insert.parent().height() - height ) * 0.5;
+	// marginLeft = ( this.$insert.parent().width() - height ) * 0.5;
+	// this.$insert.css('height',height).css('width',height).css('margin-top',marginTop).css('margin-left',marginLeft);
     },
     
-    showPhotoControls : function(element,photo){
+    /*
+      ansatz mit jedes mal neuerstellen ist zu ineffizient
+      die listener werden auch jedes mal neugebunden
+      variablen die jquery elemente halten sollten immer mit $ starten
+      also lieber $el anstatt element
+    */
+    showPhotoControls : function($el,photo){
 	
-	$(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
-	offset = element.offset();
-	offset.top += element.height() + 4;
+	// $(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
+	// wofür ist das +4 und -1?
+	offset = $el.offset();
+	offset.top += $el.height() + 4;
 	offset.left += 1;
+
 	console.log(position);
 	size = {
-	    x: element.width() + 4,
-	    y: element.height() * 0.2,
+	    x: $el.width() + 4,
+	    y: $el.height() * 0.2,
 	};
 	console.log(size);
-	$wrapper = $(".mp-photo-controls-wrapper");
-	$wrapper.width(size.x);
-	$wrapper.height(size.y);
-	$wrapper.offset(offset);
-	$wrapper.find(".mp-photo-controls").height($wrapper.height() * 0.7);
-	$wrapper.find(".mp-photo-controls").width($wrapper.width() * 0.15);
+	
+	// höhe und breite muss man nur einmal setzten
+	this.$photoControls
+	    .width(size.x)
+	    .height(size.y)
+	    .offset(offset)
+	    .show()
+	    .find(".mp-photo-controls")
+	    .height(this.$photoControls.height() * 0.7)
+	    .width(this.$photoControls.width() * 0.15);
 	
 	// add inserted controls to "controls"-class and set bindListener to enable controls
-	this.setPhotoControls();
-	this.bindListener();
+	// this.setPhotoControls();
+	// this.bindListener();
     },
     
     hidePhotoControls : function(){
 	
-	$(".mp-photo-controls-wrapper").detach();
+	// $(".mp-photo-controls-wrapper").detach();
+	this.$photoControls.hide();
 	
     },
     
@@ -100,6 +122,19 @@ UIControls.prototype = {
 	height = main.ui.panel.getFooterHeight();
 	
 	this.$logout.height(height);
+    },
+
+    bindInsertPhotoListener : function(){
+
+	this.$insert = $(".mp-option-add");
+	//commit in iframe because of img upload
+	this.$insert
+	    .remove("click.PhotoMap")
+	    .bind("click.PhotoMap",function(event){
+	    place = main.getUIState().getCurrentPlace();
+	    // reset load function 
+	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
+	});
     },
 
     bindListener : function(){
@@ -154,7 +189,7 @@ UIControls.prototype = {
 	    });
 	});
 
-	this.$modify.bind("click.MapPhotoAlbum",function(event){
+	this.$update.bind("click.MapPhotoAlbum",function(event){
 	    var state = main.getUIState();	
 	    var place = state.getCurrentPlace();
 	    var photo = state.getCurrentPhoto();
@@ -204,12 +239,7 @@ UIControls.prototype = {
 	    }
 	});
 	
-	//commit in iframe because of img upload
-	this.$add.bind("click.MapPhotoAlbum",function(event){
-	    place = main.getUIState().getCurrentPlace();
-	    // reset load function 
-	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
-	});
+
 	
 	this.$center.bind("click.MapPhotoAlbum",function(event){
 	    var place = main.getUIState().getCurrentPlace();

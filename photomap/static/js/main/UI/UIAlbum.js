@@ -107,9 +107,10 @@ UIAlbum.prototype =  {
 			.scale(instance.$album.width());
 
 		    instance.bindListener();
-		    main.ui.controls.setPhotoControls();
-		    main.ui.controls.plantAddControl();
-		    main.ui.controls.bindListener();
+		    // niemals setXXX definieren ohne parameter
+		    // main.getUI().getControls().setPhotoControls();
+		    // main.getUI().getControls().plantAddControl();
+		    main.getUI().getControls().bindInsertPhotoListener();
 		}
 	    }).attr( 'src', photos[i].thumb );
 	}
