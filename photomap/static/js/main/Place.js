@@ -115,7 +115,7 @@ Place.prototype = {
 	google.maps.event.addListener(this.marker.MapMarker, "mouseover", function(event){
 	    projection = main.getMap().getOverlay().getProjection();
 	    pixel = projection.fromLatLngToContainerPixel(instance.marker.getPosition());
-	    main.getUI().getControls().showModifyControls({top:pixel.x,left:pixel.y},0,5);
+	    main.getUI().getControls().showModifyControls({top:pixel.y,left:pixel.x},0,0);
 	});
 
 	
