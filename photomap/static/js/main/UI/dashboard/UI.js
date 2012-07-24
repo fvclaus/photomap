@@ -3,14 +3,12 @@ UI = function (){
 	this.panel = new UIPanel();
 	this.controls = new UIControls(this.panel.getControlsBarHeight());
 	this.input = new UIInput();
-	this.contentbox = new UIContentbox();
 	this.state = new UIState(this);
 }
 
 UI.prototype = {
 
 	init : function(){
-		this.contentbox.init();
 		this.panel.init();
 	},
 	getTools : function(){

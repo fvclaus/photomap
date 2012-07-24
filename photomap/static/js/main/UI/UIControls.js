@@ -43,6 +43,7 @@ UIControls.prototype = {
     },
     
     plantCenterControl : function(){
+	//reposition
 	$centerElement = this.$center.show();
 	position = $("#mp-map").position();
 	position.top += $("#mp-header").height() * 0.5

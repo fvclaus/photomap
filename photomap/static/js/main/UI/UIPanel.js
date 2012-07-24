@@ -39,6 +39,7 @@ UIPanel.prototype = {
     },
     
     plantBottomPanel : function(){
+	// repositioning
 	var position = {'top': 17, 'left': 17,};
 	position.top += $(".mp-container").height() - this.$footer.height();
 	this.$footer.css('top',position.top).css('left',position.left);
