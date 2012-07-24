@@ -47,8 +47,8 @@ UIControls.prototype = {
 	//reposition
 	$centerElement = this.$center.show();
 	position = $("#mp-map").position();
-	position.top += $("#mp-header").height() * 0.5
-	position.left += 5;
+	position.top += $("#mp-header").height() * 2.75;
+	position.left += $("#mp-header").height() * 0.375;
 	$centerElement.css('top',position.top).css('left',position.left);
 	$centerElement.hide()
     },
