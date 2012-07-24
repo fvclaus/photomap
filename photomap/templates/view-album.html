@@ -14,7 +14,7 @@
 				<% for (thumb in this.thumbAddress) { %>
 				<img class="overlay-description sortable" src="<%= this.thumbAddress[thumb] %>"></img>
 				<% }; %>
-				<span class="mp-option-add-wrapper"><img class="mp-option-add" src="static/images/add.png" title="Bild hinzufügen"></img></span>
+				<img class="mp-option-add" src="static/images/add.png" title="Bild hinzufügen"></img>
 			</div>
 		</div>
 	</script>
@@ -36,10 +36,7 @@
 	</script>
 	
 	<script id="photoControlsTmpl" type="text/html">
-		<div class="mp-photo-controls-wrapper">
-			<img class="mp-photo-controls mp-option-delete mp-element-photo" src="static/images/delete.png" title="Löschen"></img>
-			<img class="mp-photo-controls mp-option-modify mp-element-photo" src="static/images/modify.png" title="Bearbeiten"></img>
-		</div>
+		
 	</script>
 	
 	<script id="placeControlsTmpl" type="text/html">
@@ -153,11 +150,17 @@
 					</div>
 					<img class="mp-slideshow-close" src="static/images/close.png"></img>
 				</div>
+				<div class="mp-photo-controls-wrapper">
+					<img class="mp-photo-controls mp-option-delete mp-element-photo" src="static/images/delete.png" title="Löschen"></img>
+					<img class="mp-photo-controls mp-option-modify mp-element-photo" src="static/images/modify.png" title="Bearbeiten"></img>
+				</div>
 			</section>
 			
 			<!-- helpers for selenium ide. remove from production system -->
 			<div class="mp-invisible">			
 				<button class="mp-show-place"/></button>
+				<button class="mp-update-place" /></button>
+				<button class="mp-update-photo" /></button>
 				<p id="test-photo-path">{{testphotopath}}</p>
 			</div>
 			<footer class="mp-footer" id="mp-footer">
