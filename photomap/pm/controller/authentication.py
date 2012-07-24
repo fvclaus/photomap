@@ -5,7 +5,7 @@ Created on Jul 10, 2012
 '''
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 
 from pm.form.authentication import LoginForm
 
@@ -25,3 +25,7 @@ def login(request):
             return HttpResponseRedirect("/view-album")
         else:
             return render_to_response("login.html", {"form" : form})
+        
+def logout(request):
+    auth_logout(request)
+    return HttpResponseRedirect("/")

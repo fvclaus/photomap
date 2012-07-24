@@ -6,6 +6,7 @@ Created on Jun 22, 2012
 
 from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
+from django.shortcuts import redirect
 from django.contrib import admin
 
 
@@ -31,10 +32,13 @@ urlpatterns = patterns("",
                        
                        url(r'^impressum', direct_to_template, {"template": "impressum.html"}),
                        url(r'^privacy', direct_to_template, {"template": "privacy.html"}),
-                       url(r'^copyright', direct_to_template, {"template": "copyright"}),
+                       url(r'^copyright', direct_to_template, {"template": "copyright.html"}),
                        url(r'^contact', direct_to_template, {"template": "contact.html"}),
                        url(r'^help', direct_to_template, {"template": "help.html"}),
                        url(r'^about-us', direct_to_template, {"template": "about-us.html"}),
+                       
+                       url(r'^logout', authentication.logout),
+                       url(r'^$', direct_to_template,{"template": "index.html"}),
                        
                        url(r'^get-dashboard', dashboard.get),
                        url(r'^view-dashboard', dashboard.view),
