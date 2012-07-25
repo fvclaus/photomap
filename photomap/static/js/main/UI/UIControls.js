@@ -2,6 +2,8 @@ UIControls = function(maxHeight) {
 
     this.$controls = $('.mp-controls');
     this.$controls.height(maxHeight);
+
+
     
     //currently photo only
     this.$photoControls = $(".mp-photo-controls-wrapper");
@@ -24,13 +26,12 @@ UIControls.prototype = {
     init : function(){
 	this.placeCenterControl();
 	this.bindListener();
+
+	height = main.getUI().getPanel().getFooterHeight();
+	this.$logout.height(height);
+
     },
     
-    // setPhotoControls : function(){
-    // 	this.$add = $(".mp-option-add");
-    // 	this.$delete = $(".mp-option-delete");
-    // 	this.$modify = $(".mp-option-modify");
-    // },
 
     hideControls : function(){
 	// instance.$delete.hide();
@@ -62,105 +63,61 @@ UIControls.prototype = {
 	    .hide();
     },
     
+    
     /*
-      ich hab das mal mit css only gelöst
-      das bild kann man ja noch auf einen größeren (gimp) hintergrund packen, dann wird das auch nicht so stark vergrößert.
+      displays modify control under a photo
+      @param $el: the photo element under which controls are placed
     */
-    plantAddControl : function(){
-	// // bugfix for empty places
-	// heightWrapper = $(".mp-album-wrapper").height() * 0.2; 
-	// $(".mp-option-add-wrapper").css('height',heightWrapper)
-	
-	// // resize & reposition add control
-	// height = this.$insert.parent().height() * 0.45;
-	// marginTop = ( this.$insert.parent().height() - height ) * 0.5;
-	// marginLeft = ( this.$insert.parent().width() - height ) * 0.5;
-	// this.$insert.css('height',height).css('width',height).css('margin-top',marginTop).css('margin-left',marginLeft);
+    showPhotoControls : function($el){
+	center = $el.offset();
+	tools = main.getUI().getTools();
+	center.left += tools.getRealWidth($el)/2;
+	center.top += tools.getRealHeight($el);
+
+
+	this.showModifyControls(center);
+	this.setModifyPhoto(true);
+
     },
     
     /*
-      ansatz mit jedes mal neuerstellen ist zu ineffizient
-      die listener werden auch jedes mal neugebunden
-      variablen die jquery elemente halten sollten immer mit $ starten
-      also lieber $el anstatt element
+      modify controls are instantiated once and are used for places and photos
+      @param center: the bottom center of the element that is currently worked on
     */
-    showPhotoControls : function($el){
-	
-	// $(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
-	// wofür ist das +4 und -1?
-	offset = $el.offset();
-	
-	this.showModifyControls($el.offset(),$el.width(),$el.height());
-	// offset = $el.offset();
-	// offset.top += $el.height() + 4;
-	// offset.left += 1;
 
-	// console.log(position);
-	// size = {
-	//     x: $el.width() + 4,
-	//     y: $el.height() * 0.2,
-	// };
-	// console.log(size);
-	
-	// // höhe und breite muss man nur einmal setzten
-	// this.$photoControls
-	//     .width(size.x)
-	//     .height(size.y)
-	//     .offset(offset)
-	//     .show()
-	//     .find(".mp-photo-controls")
-	//     .height(this.$photoControls.height() * 0.7)
-	//     .width(this.$photoControls.width() * 0.15);
-	
-	// add inserted controls to "controls"-class and set bindListener to enable controls
-	// this.setPhotoControls();
-	// this.bindListener();
-    },
+    showModifyControls : function(center){
+	// calculate the offset
+	tools = main.getUI().getTools();
+	center.left  -= tools.getRealWidth(this.$photoControls)/2;
 
-    showModifyControls : function(offset,width,height){
-	// $(".mp-gallery").append($.jqote( '#photoControlsTmpl', {} ));
-	// wofür ist das +4 und -1?
-
-	// offset.top += height + 4;
-	// offset.left += 1;
-
-	console.log(position);
-	size = {
-	    x: width + 4,
-	    y: height * 0.2,
-	};
-	console.log(size);
 	
 	// höhe und breite muss man nur einmal setzten
 	this.$photoControls
 	    // .width(size.x)
 	    // .height(size.y)
-	    .offset(offset)
+	    .offset(center)
 	    .css("z-index",999999)
 	    .show("show")
 	    .find(".mp-photo-controls")
 	    .height(this.$photoControls.height() * 0.8)
 	    .width(this.$photoControls.width() * 0.45);
 	
-	// add inserted controls to "controls"-class and set bindListener to enable controls
-	// this.setPhotoControls();
-	// this.bindListener();
     },
 
+    setModifyPlace : function(modifyPlace){
+	this.isModifyPlace = modifyPlace;
+	this.isModifyPhoto = !modifyPlace;
+    },
     
+    setModifyPhoto : function(modifyPhoto){
+	this.isModifyPhoto = modifyPhoto;
+	this.isModifyPlace = !modifyPhoto;
+    },
+
     hidePhotoControls : function(){
-	
-	// $(".mp-photo-controls-wrapper").detach();
 	this.$photoControls.hide();
-	
     },
     
-    resizeLogoutControl : function(){
-	
-	height = main.ui.panel.getFooterHeight();
-	
-	this.$logout.height(height);
-    },
 
     bindInsertPhotoListener : function(){
 
@@ -186,7 +143,7 @@ UIControls.prototype = {
 	    var url,data;
 	    
 	    // delete current photo
-	    if ($(this).hasClass("mp-element-photo")) {
+	    if (instance.isModifyPhoto) {
 		if(confirm("Do you really want to delete photo "+photo.name)){
 		    url = "/delete-photo",
 		    data = {"id":photo.id};
@@ -198,7 +155,7 @@ UIControls.prototype = {
 	    }
 
 	    // delete current place
-	    else if ($(this).hasClass("mp-element-place")){
+	    else if(instance.isModifyPlace){
 		if(confirm("Do you really want to delete place "+place.name)){
 		    url = "/delete-place";
 		    data = {"id":place.id};
@@ -208,7 +165,7 @@ UIControls.prototype = {
 		else
 		    return;
 	    }
-	    else { alert("hasnoClass")}
+
 	    
 	    //call to delete marker or photo in backend
 	    $.ajax({
@@ -233,7 +190,7 @@ UIControls.prototype = {
 	    var photo = state.getCurrentPhoto();
 	    
 	    // edit current photo
-	    if ($(this).hasClass("mp-element-photo")) {
+	    if (instance.isModifyPhoto) {
 
 		main.getUI().getInput()
 		    .onLoad(function(){
@@ -257,7 +214,7 @@ UIControls.prototype = {
 	    }
 
 	    //edit current place
-	    else if ($(this).hasClass("mp-element-photo")){
+	    else if (instance.isModifyPlace){
 		//prefill with name and update on submit
 
 		main.getUI().getInput()

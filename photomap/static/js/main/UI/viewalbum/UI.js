@@ -39,4 +39,7 @@ UI.prototype = {
 	getInput : function(){
 		return this.input;
 	},
+    getPanel : function(){
+	return this.panel;
+    }
 };

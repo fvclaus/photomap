@@ -107,9 +107,7 @@ UIAlbum.prototype =  {
 			.scale(instance.$album.width());
 
 		    instance.bindListener();
-		    // niemals setXXX definieren ohne parameter
-		    // main.getUI().getControls().setPhotoControls();
-		    // main.getUI().getControls().plantAddControl();
+
 		    main.getUI().getControls().bindInsertPhotoListener();
 		}
 	    }).attr( 'src', photos[i].thumb );
@@ -139,7 +137,7 @@ UIAlbum.prototype =  {
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto(photo);
 	    
-	    main.ui.controls.showPhotoControls($el,photo);
+	    main.getUI().getControls().showPhotoControls($el,photo);
 
 	}).bind( 'mouseleave.Gallery', function( event ) {
 	    var $el		= $(this);

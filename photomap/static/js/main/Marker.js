@@ -13,8 +13,9 @@ Marker.prototype = {
 	this.lng			= data.lng;
 	// title
 	this.title			= data.title;
+	tools = main.getUI().getTools();
 	// custom icons for the map markers
-	this.mapicon		= 'static/images/camera-roadmap.png';
+	this.mapicon		= new google.maps.MarkerImage("static/images/camera-roadmap.png");
 	// this.mapicon		= 'images/camera2.png';
 	console.dir(data);
 	this.MapMarker 		= new google.maps.Marker({
@@ -36,12 +37,15 @@ Marker.prototype = {
     },
     set	: function( options ) {
 	if( typeof options.icon != 'undefined' )
-	    this.MapMarker.setIcon(options.icon);
+	    this.MapMarker.setIcon(new google.maps.MarkerImage("static/images/camera-roadmap.png"));
 	if( typeof options.zindex != 'undefined' )
 	    this.MapMarker.setZIndex(options.zindex);
     },
     getPosition  : function(){
 	return this.MapMarker.getPosition();
+    },
+    getSize : function(){
+	return this.MapMarker.getIcon().size;
     }
 };
 

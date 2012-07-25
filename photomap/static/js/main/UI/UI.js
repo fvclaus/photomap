@@ -8,23 +8,26 @@ UI = function (){
 
 UI.prototype = {
 
-	init : function(){
-		this.panel.init();
-		this.controls.init();
-	},
-	getTools : function(){
-		return this.tools;
-	},
-	getControls : function(){
-		return this.controls;
-	},
-	getInput : function(){
-		return this.input;
-	},
-	getState: function(){
-		return this.state;
-	},
-	getInformation: function(){
-		return null;
-	},
+    init : function(){
+	this.panel.init();
+	this.controls.init();
+    },
+    getTools : function(){
+	return this.tools;
+    },
+    getControls : function(){
+	return this.controls;
+    },
+    getInput : function(){
+	return this.input;
+    },
+    getState: function(){
+	return this.state;
+    },
+    getInformation: function(){
+	return null;
+    },
+    getPanel : function(){
+	return this.panel;
+    },
 };

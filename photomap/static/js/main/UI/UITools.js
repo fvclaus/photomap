@@ -17,6 +17,40 @@ UITools.prototype = {
 	return size-1;
     },
 
+    getRealHeight : function($el){
+	return $el.height() + this.getCss2Int($el,
+					      ["border-bottom-width",
+					       "border-top-width",
+					       "margin-bottom",
+					       "margin-top"]);
+    },
+
+    getRealWidth : function($el){
+	return $el.width() + this.getCss2Int($el,
+					     ["border-left-width",
+					      "border-right-width",
+					      "margin-left",
+					      "margin-right"]);
+    },
+
+    getCss2Int : function($el,attributes){
+	if (typeof(attributes) == "object"){
+	    var total = 0;
+	    attributes.forEach(function(attribute){
+		value =  parseInt($el.css(attribute));
+		if (value){
+		    total += value;
+		}
+	    });
+	    return total;
+	}
+	else{
+	    return parseInt($el.css(attributes));
+	}
+    },
+
+		
+
     deletePhoto : function(photo){
 	place = main.getUIState().getCurrentPlace();
 	currentPhoto = main.getUIState().getCurrentPhoto();
@@ -33,5 +67,10 @@ UITools.prototype = {
 	}
     },
 
-    
+    getAbsoluteUrl : function(url){
+	a = document.createElement("a");
+	a.href = url;
+	return a.href;
+    }
+	
 };

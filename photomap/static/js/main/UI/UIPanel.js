@@ -1,7 +1,5 @@
 UIPanel = function (){
 
-    this.tools = new UITools();
-
     this.$topPanel = $('.mp-top-panel');
     this.$bottomPanel = $('.mp-bottom-panel');
     this.$footer = $("#mp-footer");
@@ -12,28 +10,35 @@ UIPanel = function (){
 UIPanel.prototype = {
     
     init : function(){
-	this.resizeFooterFont(this.$footer);
-	this.resizePageTitle(this.$title);
+	this.resizeFooterFont();
+	this.resizePageTitle();
     },
 	
     getFooterHeight : function(){
 	return this.$footer.height();
     },
     
-    resizeFooterFont : function(footer){
-	    text = footer.text();
-	    width = footer.width();
-	    height = footer.height();
-	    size = this.tools.calculateFontSize(text,width,height);
-	    footer.css("fontSize",size + "px");
+    resizeFooterFont : function(){
+	text = this.$footer.text();
+	width = this.$footer.width();
+	height = this.$footer.height();
+	tools = main.getUI().getTools();
+	size = tools.calculateFontSize(text,width,height);
+	this.$footer.css("fontSize",size + "px");
     },
     
-    resizePageTitle : function(titlebox){
-	text = titlebox.text();
-	width = titlebox.width() * 0.7;
-	height = titlebox.height() * 0.7;
-	size = this.tools.calculateFontSize(text,width,height);
-	titlebox.css("fontSize",size + "px");
+    resizePageTitle : function(){
+	text = this.$title.text();
+	width = this.$title.width() * 0.7;
+	height = this.$title.height() * 0.7;
+	tools = main.getUI().getTools();
+	size = tools.calculateFontSize(text,width,height);
+	this.$title.css("fontSize",size + "px");
     },
+
+    getHeight : function(){
+	tools = main.getUI().getTools();
+	return tools.getRealHeight(this.$header);
+    }
 
 };

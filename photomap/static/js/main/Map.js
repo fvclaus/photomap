@@ -157,5 +157,15 @@ Map.prototype = {
     },
     getOverlay : function(){
 	return this.overlay;
+    },
+    getZoom : function(){
+	return this.map.getZoom();
+    },
+    getProjection : function(){
+	return this.map.getProjection();
+    },
+    getBounds : function(){
+	return this.map.getBounds();
     }
+
 };
