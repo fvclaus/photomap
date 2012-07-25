@@ -7,7 +7,7 @@ var repositionContent = function(){
     $container.css('top',height).css('left',width);
 };
   
-var plantLoginForms = function(){
+var placeLoginForms = function(){
     $container = $(".mp-content-container");
     $login = $container.find("#mp-login");
     $register = $container.find("#mp-register");
@@ -49,7 +49,7 @@ $(document).ready(function(){
     
     if ($("body").find("#mp-login").attr("class") == "mp-login"){
       alert("hi");
-      plantLoginForms();
+      placeLoginForms();
     };
     
     initScrollPane();

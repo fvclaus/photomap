@@ -26,7 +26,7 @@ UIInformation = function(){
 UIInformation.prototype = {
     
     init : function(){
-	this.plantDescription();
+	this.placeDescription();
     },
     
     setInfo : function(info){
@@ -79,7 +79,7 @@ UIInformation.prototype = {
 	api.reinitialise();
     },
     
-    plantDescription : function () {
+    placeDescription : function () {
 	// resizing and repositioning description wrapper
 	$map = $(".mp-map");
 	mapOffset = $map.offset();

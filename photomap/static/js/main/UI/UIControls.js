@@ -54,12 +54,12 @@ UIControls.prototype = {
 	this.$center.show();
 	position = $("#mp-map").position();
 
-	position.top += $("#mp-header").height() * 0.5
-	position.left += 5;
+	position.top += $("#mp-header").height() * 2.25;
+	position.left += $("#mp-header").height() * 0.35;
 	this.$center.css({
 	    'top' : position.top,
 	    'left' : position.left
-	})
+	    })
 	    .hide();
     },
     

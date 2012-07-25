@@ -44,7 +44,7 @@ UIAlbum.prototype =  {
 		$.jqote( '#galleryTmpl', {} )
 	    );
 	    main.ui.controls.setPhotoControls();
-	    main.ui.controls.plantAddControl();
+	    main.ui.controls.placeAddControl();
 	    main.ui.controls.bindListener();
 	}
 
