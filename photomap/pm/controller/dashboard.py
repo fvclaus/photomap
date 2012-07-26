@@ -38,9 +38,6 @@ def get(request):
         data = albums.toserializable()
         logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
-     
-def redirect_to_get(request):
-    return HttpResponseRedirect("/dashboard")
         
         
 class DecimalEncoder(json.JSONEncoder):

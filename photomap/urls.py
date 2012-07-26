@@ -45,7 +45,6 @@ urlpatterns = patterns("",
                        # legacy
                        #========================================================
                        url(r'^album', album.redirect_to_get),
-                       url(r'^dashboard', dashboard.redirect_to_get),
                        #========================================================
                        # 3rd party apps
                        #========================================================
