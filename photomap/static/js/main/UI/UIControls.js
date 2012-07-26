@@ -1,7 +1,4 @@
 UIControls = function(maxHeight) {
-
-    this.$controls = $('.mp-controls');
-    this.$controls.height(maxHeight);
     
     //currently photo only
     this.$photoControls = $(".mp-photo-controls-wrapper");

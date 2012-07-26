@@ -5,6 +5,7 @@ UI = function (){
 	this.controls = new UIControls();
 	this.gallery = new UIGallery();
 	this.input = new UIInput();
+	this.cursor = new UICursor();
 }
 
 UI.prototype = {
@@ -14,6 +15,10 @@ UI.prototype = {
 		this.information.init();
 		this.panel.init();
 		this.controls.init();
+		this.cursor.init();
+	},
+	getCursor : function(){
+		return this.cursor;
 	},
 	getAlbum : function(){
 		return this.gallery.getAlbum();

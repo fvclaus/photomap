@@ -109,6 +109,7 @@ UIAlbum.prototype =  {
 		    instance.bindListener();
 
 		    main.getUI().getControls().bindInsertPhotoListener();
+		    
 		}
 	    }).attr( 'src', photos[i].thumb );
 	}
@@ -117,8 +118,6 @@ UIAlbum.prototype =  {
 	    this.gallery.hideLoading();
 	    this.gallery.enableUI();
 	}
-	
-	
 
     },
 
@@ -150,6 +149,11 @@ UIAlbum.prototype =  {
 	    
 	    main.getUI().getControls().hidePhotoControls(true);
 
+	}).bind( 'mousedown.Gallery', function(event){
+	    var $el = $(this);
+	   // set Cursor for DragnDrop on images (grabber)
+	    main.ui.cursor.setCursor($el,main.ui.getCursor().cursor.grab); 
+	    
 	}).bind( 'click.Gallery', function( event ) {
 	    var $el					= $(this);
 	    
@@ -162,6 +166,11 @@ UIAlbum.prototype =  {
 	    // starts little slideshow in gallery div
 	    instance.gallery.startSlider();
 	    return false;
+	}).bind( 'mouseup.Gallery', function(event){
+	    var $el = $(this);
+	   // reset Cursor for images (pointer)
+	    main.ui.cursor.setCursor($el,main.ui.getCursor().cursor.pointer); 
+	    
 	});
 	//draw border on visited elements
 	main.getUIState().getPhotos().forEach(function(photo){

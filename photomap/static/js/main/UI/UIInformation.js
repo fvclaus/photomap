@@ -3,7 +3,6 @@ UIInformation = function(){
     //root action bar
     
     this.$wrapper = $("#mp-photo-description");
-    this.$controls = $(".mp-controls");
     this.$bottomPanel = $(".mp-bottom-panel");
     this.$album = $("#mp-album");
     //this.$titleWrapper = null;
@@ -17,7 +16,7 @@ UIInformation = function(){
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     
     //show tooltip
-    this.showTooltips();
+    //this.showTooltips();
     
     this.bindListener();
     
@@ -115,7 +114,7 @@ UIInformation.prototype = {
 	}
     },
     
-    showTooltips : function(){
+    /*showTooltips : function(){
 	this.$controls.find("img[title]").tooltip({
 	    effect: 'slide',
 	    direction: 'right',
@@ -134,7 +133,7 @@ UIInformation.prototype = {
 	    //offset: [0,20],
 	    predelay: 500,
 	    });
-    },
+    },*/
     
     bindListener : function(){
 	instance = this;

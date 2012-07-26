@@ -4,6 +4,7 @@ UI = function (){
 	this.controls = new UIControls();
 	this.input = new UIInput();
 	this.state = new UIState(this);
+	this.cursor = new UICursor();
 }
 
 UI.prototype = {
@@ -11,6 +12,10 @@ UI.prototype = {
     init : function(){
 	this.panel.init();
 	this.controls.init();
+	this.cursor.init();
+    },
+    getCursor : function(){
+	    return this.cursor;
     },
     getTools : function(){
 	return this.tools;

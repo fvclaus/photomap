@@ -166,6 +166,6 @@ Map.prototype = {
     },
     getBounds : function(){
 	return this.map.getBounds();
-    }
-
+    },
+    
 };

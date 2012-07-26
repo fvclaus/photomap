@@ -178,6 +178,9 @@ UISlideshow.prototype = {
 	}
 	this.$loading.show();
 	main.getUI().getInformation().setInfo(main.getUIState().getCurrentPhoto());
+	
+	// set cursor for fullscreen control
+	main.ui.cursor.setCursor($(".mp-album-zoom"),main.ui.getCursor().cursor.pointer)
     },
     _navigateSlider					: function( instance, dir ) {
 	//navigate to next photo or close if no photos left

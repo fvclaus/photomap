@@ -12,9 +12,9 @@
 		<div class="mp-gallery-outer">
 			<div class="mp-gallery">
 				<% for (thumb in this.thumbAddress) { %>
-				<img class="overlay-description sortable" src="<%= this.thumbAddress[thumb] %>"></img>
+				<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
 				<% }; %>
-				<img class="mp-option-add" src="static/images/add.png" title="Bild hinzufügen"></img>
+				<img class="mp-option-add mp-control" src="static/images/add.png" title="Bild hinzufügen"></img>
 			</div>
 		</div>
 	</script>
@@ -26,26 +26,15 @@
 			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
 			<div class="mp-image-overlay-desc">
 				<div class="mp-image-nav">
-					<img class="mp-image-nav-prev" src="static/images/image-arrow-left.png" ></img>
-					<img class="mp-image-nav-next" src="static/images/image-arrow-right.png" ></img>
-					<img class="mp-image-overlay-close" src="static/images/close.png" ></img>
+					<img class="mp-image-nav-prev mp-control" src="static/images/image-arrow-left.png" ></img>
+					<img class="mp-image-nav-next mp-control" src="static/images/image-arrow-right.png" ></img>
+					<img class="mp-image-overlay-close mp-control" src="static/images/close.png" ></img>
 				</div>
 				<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
 			</div>
 		</div>
 	</script>
 	
-	<script id="photoControlsTmpl" type="text/html">
-		
-	</script>
-	
-	<script id="placeControlsTmpl" type="text/html">
-		<div class="place-controls-wrapper">
-			<img class="mp-place-controls mp-option-delete mp-element-place" src="static/images/delete.png" title="Löschen"></img>
-			<img class="mp-place-controls mp-option-modify mp-element-place" src="static/images/modify.png" title="Bearbeiten"></img>
-		</div>
-	</script>
-		
 	<script type="text/javascript" src="static/js/main/Extensions.js" ></script>
 	
 	
@@ -72,6 +61,7 @@
 	<script type="text/javascript" src="static/js/main/UI/UIInformation.js" ></script>
 	<script type="text/javascript" src="static/js/main/UI/UIPanel.js" ></script>
 	<script type="text/javascript" src="static/js/main/UI/UITools.js" ></script>
+	<script type="text/javascript" src="static/js/main/UI/UICursor.js" ></script>
 	<script type="text/javascript" src="static/js/main/UI/UIGallery.js" ></script>
 	<script type="text/javascript" src="static/js/main/UI/UITest.js" ></script>
 	
@@ -96,16 +86,13 @@
 		<div class="mp-container" id="mp-container">
 			
 			<header class="mp-header" id="mp-header">
-				<section class="mp-logo">LOGO</section>
-				<section class="mp-page-title">
+				<section class="mp-logo"><a href=#">LOGO</a></section>
+				<section class="mp-page-title mp-control">
 					<h1>Placeholder</h1>
 				</section>
 				<section class="mp-top-panel">
 					<div class="mp-searchfield">SEARCHFIELD</div>
 					<div class="mp-controls-wrapper">
-						<div class="mp-controls">
-						<div></div>
-						</div>
 					</div>
 				</section>
 			</header>
@@ -126,7 +113,7 @@
 					<div>
 						<p class="mp-label mp-font mp-description-name"></p>
 					</div>
-					<img class="mp-description-overlay-close" src="static/images/close.png"></img>
+					<img class="mp-description-overlay-close mp-control" src="static/images/close.png"></img>
 					<div class="mp-font mp-description-title">Beschreibung:</div>
 					<div class="mp-font mp-description-wrapper">
 						<div class="force-scroll">
@@ -141,15 +128,15 @@
 				</div>
 				<div class="mp-slideshow" id="mp-slideshow">
 					<div class="mp-album-nav">
-						<img class="mp-album-nav-prev" src="static/images/album-arrow-left.png"></img>
-						<img class="mp-album-nav-next" src="static/images/album-arrow-right.png"></img>
+						<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
+						<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
 					</div>
 					<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
 					<div class="mp-album-image">
 						<img class="mp-album-zoom" src="static/images/magnify.png"></img>
 						<img></img>
 					</div>
-					<img class="mp-slideshow-close" src="static/images/close.png"></img>
+					<img class="mp-slideshow-close mp-control" src="static/images/close.png"></img>
 				</div>
 				
 			</section>
