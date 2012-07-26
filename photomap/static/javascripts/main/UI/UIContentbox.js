@@ -8,11 +8,18 @@ UIContentbox = function(){
 UIContentbox.prototype = {
   
   init : function(){
-    this.resizeRepositionLoginRegistrationForms();
-    this.repositionContentbox();
+    this.plantLoginForms();
+    this.reposition();
   },
   
-  resizeRepositionLoginRegistrationForms : function(){
+  reposition : function(){
+    position = $(".mp-map").position();
+    height = position.top + (( $(".mp-map").height() - $(".mp-footer").height() - this.$container.height() ) * 0.5);
+    width = ( $(".mp-map").width() - this.$container.width() ) * 0.5;
+    this.$container.css('top',height).css('left',width);
+  },
+  
+  plantLoginForms : function(){
     // resizing
     loginheight = this.$container.height();
     registerheight = loginheight;
@@ -24,12 +31,5 @@ UIContentbox.prototype = {
     registerMarginTop = height * 0.25;
     this.$login.find("form").css('margin-top',loginMarginTop);
     this.$register.find("form").css('margin-top',registerMarginTop);
-  },
-  
-  repositionContentbox : function(){
-    position = $(".mp-map").position();
-    height = position.top + (( $(".mp-map").height() - $(".mp-footer").height() - this.$container.height() ) * 0.5);
-    width = ( $(".mp-map").width() - this.$container.width() ) * 0.5;
-    this.$container.css('top',height).css('left',width);
   },
 };

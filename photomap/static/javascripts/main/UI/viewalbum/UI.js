@@ -13,6 +13,7 @@ UI.prototype = {
 		this.gallery.init();
 		this.information.init();
 		this.panel.init();
+		this.controls.init();
 	},
 	getAlbum : function(){
 		return this.gallery.getAlbum();

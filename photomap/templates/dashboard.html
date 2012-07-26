@@ -8,8 +8,15 @@
 {% endblock %}
 
 {% block js %}
-	<script type="text/javascript" src="static/javascripts/main/Extensions.js" ></script>
+
+	<script id="albumControlsTmpl" type="text/html">
+		<div class="album-controls-wrapper">
+			<img class="mp-album-controls mp-option-delete mp-element-album" src="static/images/delete.png" title="Löschen"></img>
+			<img class="mp-album-controls mp-option-modify mp-element-album" src="static/images/modify.png" title="Bearbeiten"></img>
+		</div>
+	</script>
 	
+	<script type="text/javascript" src="static/javascripts/main/Extensions.js" ></script>
 	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
 	
@@ -29,7 +36,7 @@
 	<script type="text/javascript" src="static/javascripts/main/UI/UITools.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/UI/UIContentbox.js" ></script>
 	
-	<script type="text/javascript" src="static/javascripts/main/UI/general/UI.js" ></script>
+	<script type="text/javascript" src="static/javascripts/main/UI/dashboard/UI.js" ></script>
 	
 	<script type="text/javascript" src="static/javascripts/main/ClientState.js" ></script>
 	<script type="text/javascript" src="static/javascripts/main/ClientServer.js" ></script>

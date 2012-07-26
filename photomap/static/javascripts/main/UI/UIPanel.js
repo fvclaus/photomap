@@ -14,7 +14,7 @@ UIPanel.prototype = {
     init : function(){
 	this.resizeBottomPanelLinks(this.$bottomPanel);
 	this.resizePageTitle(this.$title);
-	this.repositionBottomPanel();
+	this.plantBottomPanel();
     },
 	
     getControlsBarHeight : function(){
@@ -38,7 +38,7 @@ UIPanel.prototype = {
 	titlebox.css("fontSize",size + "px");
     },
     
-    repositionBottomPanel : function(){
+    plantBottomPanel : function(){
 	var position = {'top': 17, 'left': 17,};
 	position.top += $(".mp-container").height() - this.$footer.height();
 	this.$footer.css('top',position.top).css('left',position.left);
