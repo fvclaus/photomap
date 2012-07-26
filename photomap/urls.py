@@ -52,8 +52,12 @@ urlpatterns = patterns("",
                        
         #               (r'^$', direct_to_template, {"template": "index.tpl"}),
                        
-                            
-                       
+                       #================================================================
+                       # photo hooks
+                       #================================================================
+                       url(r'^insert-album', album.insert),
+                       url(r'^update-album', album.update),
+                       url(r'^delete-album', album.delete),
                        #================================================================
                        # photo hooks
                        #================================================================
