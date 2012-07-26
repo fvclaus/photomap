@@ -6,6 +6,7 @@ Created on Jul 10, 2012
 
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest 
 from django.shortcuts import render_to_response
+from django.db.models import Max
 from message import success, error
 from pm.model.album import Album
 from pm.model.place import Place
@@ -36,16 +37,18 @@ def get(request):
         user = request.user
         if not user.is_authenticated():
             error("not authenticated")
-            
+               
         logger.debug("get-album: user authenticated")
-        albums = Album.objects.all().filter(user = user)
-        if len(albums) == 0:
-            error("you don't have any albums")
-        album = albums[0]
         
-        data = album.toserializable()
-        logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
-        return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
+    if (request.GET["id"]):
+        album = Album.objects.get().filter(user = user, pk = request.GET["id"] )
+     
+    else:
+        album = Album.objects.get(pk = Album.objects.aggregate(Max('id')))
+        
+    data = album.toserializable()
+    logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
+    return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
 
 #TODO solve issue if geo data will be handled within frontend or within the controller unit
 
