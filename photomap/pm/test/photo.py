@@ -25,9 +25,9 @@ class PhotoControllerTest(SimpleTestCase):
         #=======================================================================
         # delete something that exists
         #=======================================================================
-        path = Photo.objects.get(pk = 1).photo.path
+        photo = Photo.objects.get(pk = 1)
         self.assertDeletes({"id" : 1})
-        self.assertFalse(os.path.exists(path))
+        self.assertPhotoDeleted(photo)
         #=======================================================================
         # delete something that does not exist
         #=======================================================================
@@ -55,7 +55,7 @@ class PhotoControllerTest(SimpleTestCase):
         #=======================================================================
         photo = open(config.TEST_PHOTO, "rb")
         data["photo"] = photo
-        data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters <javascript></javascript>"
+        data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
         self.assertCreates(data, check = self.assertPhotoCreateSuccess)
         #=======================================================================
         # insert somthing that is not valid

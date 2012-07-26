@@ -24,6 +24,7 @@ class PlaceControllerTest(SimpleTestCase):
         #=======================================================================
         # without description
         #=======================================================================
+
         data = {"album" : 1,
                 "lat": Decimal(-48.01230012),
                 "lon": Decimal(8.0123123),
@@ -80,8 +81,7 @@ class PlaceControllerTest(SimpleTestCase):
         self.assertDeletes({"id": place.pk})
 #        assert on delete cascade
         for photo in photos:
-            self.assertRaises(Photo.DoesNotExist, Photo.objects.get, {"pk": photo.pk})
-            self.assertFalse(os.path.exists(photo.photo.path))
+            self.assertPhotoDeleted(photo)
         #=======================================================================
         # not valid
         #=======================================================================
