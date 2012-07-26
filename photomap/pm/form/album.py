@@ -15,4 +15,4 @@ class AlbumUpdateForm(forms.ModelForm):
     id = forms.IntegerField()
     class Meta:
         model = Album
-        exclude = ("country", "user")
+        exclude = ("country", "user","lat","lon")

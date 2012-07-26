@@ -19,7 +19,7 @@ class Album(Description):
     lat = models.DecimalField(decimal_places = 26, max_digits = 30)
     lon = models.DecimalField(decimal_places = 26, max_digits = 30)
     user = models.ForeignKey(User)
-    country = OSM.reversegeocode(self, lat, lon)
+    country = models.CharField(max_length = 2)
     
     def toserializable(self):
         # avoid circual import
