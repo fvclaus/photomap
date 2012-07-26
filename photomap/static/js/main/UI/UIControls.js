@@ -2,12 +2,15 @@ UIControls = function(maxHeight) {
 
     this.$controls = $('.mp-controls');
     this.$controls.height(maxHeight);
-
-
     
     //currently photo only
     this.$photoControls = $(".mp-photo-controls-wrapper");
     this.$photoControls.hide();
+    // icons of photo controls are not scaled yet
+    this.$photoControls.isScaled = false;
+    // tells the hide function whether or not the mouse entered the window
+    this.$photoControls.isEntered = false;
+
     this.$delete = $("img.mp-option-delete");
     this.$update = $("img.mp-option-modify");
 
@@ -74,7 +77,11 @@ UIControls.prototype = {
 	center.left += tools.getRealWidth($el)/2;
 	center.top += tools.getRealHeight($el);
 
-
+	// clear any present timeout, as it will hide the controls while the mouspointer never left
+	if(this.hidePhotoControlsTimeoutId){
+	    window.clearTimeout(this.hidePhotoControlsTimeoutId);
+	    this.hidePhotoControlsTimeoutId = null;
+	}
 	this.showModifyControls(center);
 	this.setModifyPhoto(true);
 
@@ -82,25 +89,30 @@ UIControls.prototype = {
     
     /*
       modify controls are instantiated once and are used for places and photos
-      @param center: the bottom center of the element that is currently worked on
+      @param center: the bottom center of the element where the controls should be displayed
     */
 
     showModifyControls : function(center){
 	// calculate the offset
 	tools = main.getUI().getTools();
+	// center the controls below the center
 	center.left  -= tools.getRealWidth(this.$photoControls)/2;
 
-	
-	// höhe und breite muss man nur einmal setzten
+	// offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
 	this.$photoControls
-	    // .width(size.x)
-	    // .height(size.y)
-	    .offset(center)
-	    .css("z-index",999999)
-	    .show("show")
-	    .find(".mp-photo-controls")
-	    .height(this.$photoControls.height() * 0.8)
-	    .width(this.$photoControls.width() * 0.45);
+	    .css({
+		top: center.top,
+		left: center.left
+	    })
+	    .show();
+
+	// don't resize the icons all the time to save performance
+	if (!this.$photoControls.isScaled){
+	    this.$photoControls
+		.find(".mp-photo-controls")
+		.height(this.$photoControls.height() * 0.8)
+		.width(this.$photoControls.width() * 0.45);
+	}
 	
     },
 
@@ -114,8 +126,25 @@ UIControls.prototype = {
 	this.isModifyPlace = !modifyPhoto;
     },
 
-    hidePhotoControls : function(){
-	this.$photoControls.hide();
+    /*
+      hides the modfiy controls
+      @param timeout: boolean, if the controls should be hidden after a predefined timout, when the controls are not entered
+    */
+    hidePhotoControls : function(timeout){
+	var instance = this;
+	hide = function(){
+	    if(instance.$photoControls.isEntered){
+		return;
+	    }
+	    instance.$photoControls.hide();
+	};
+
+	if(timeout){
+	    this.hidePhotoControlsTimeoutId = window.setTimeout(hide,1000);
+	}
+	else{
+	    this.$photoControls.hide();
+	}
     },
     
 
@@ -234,7 +263,15 @@ UIControls.prototype = {
 	    }
 	});
 	
-
+	this.$photoControls
+	    .bind("mouseleave",function(){
+		instance.$photoControls.hide();
+		instance.$photoControls.isEntered = false;
+	    })
+	    .bind("mouseenter",function(){
+		instance.$photoControls.isEntered = true;
+	    });
+	
 	
 	this.$center.bind("click.MapPhotoAlbum",function(event){
 	    var place = main.getUIState().getCurrentPlace();

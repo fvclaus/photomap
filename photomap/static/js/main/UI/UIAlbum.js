@@ -137,7 +137,10 @@ UIAlbum.prototype =  {
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto(photo);
 	    
-	    main.getUI().getControls().showPhotoControls($el,photo);
+	    controls = main.getUI().getControls();
+	    controls.setModifyPhoto(true);
+	    controls.showPhotoControls($el,photo);
+
 
 	}).bind( 'mouseleave.Gallery', function( event ) {
 	    var $el		= $(this);
@@ -145,7 +148,7 @@ UIAlbum.prototype =  {
 	    (main.getUIState().getPhotos())[$el.index()].checkBorder();
 	    $el.removeClass('current');
 	    
-	    //main.ui.controls.hidePhotoControls();
+	    main.getUI().getControls().hidePhotoControls(true);
 
 	}).bind( 'click.Gallery', function( event ) {
 	    var $el					= $(this);
@@ -153,6 +156,8 @@ UIAlbum.prototype =  {
 	    $el.removeClass('current');
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto((state.getPhotos())[$el.index()]);
+
+	    main.getUI().getControls().hidePhotoControls(false);
 	    
 	    // starts little slideshow in gallery div
 	    instance.gallery.startSlider();

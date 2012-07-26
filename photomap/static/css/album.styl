@@ -87,9 +87,12 @@ $album-width = 49%
   display none
   
 .mp-photo-controls-wrapper
-	background-image url(../../images/controls-box.png)
+	z-index 1000 //100 less than fancybox
 	width 10%
 	height 8%
+	&.mp-photo-controls
+		height 80%
+		width 45%
 	
 .mp-photo-controls-background
 	position absolute

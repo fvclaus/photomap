@@ -100,8 +100,9 @@ Place.prototype = {
 	    information = main.getUI().getInformation();
 	    information.setInfo(instance);
 	    information.hideImageNumber();
-	    main.getUI().getControls().showControls();
+	    // main.getUI().getControls().showControls();
 	    
+	    main.getUI().getControls().hidePhotoControls(false);
 	    //change icon of new place
 	    instance.checkIconStatus();
 	    // change icon of old place
@@ -126,7 +127,12 @@ Place.prototype = {
 
 	    controls =  main.getUI().getControls();
 	    controls.setModifyPlace(true);
+	    main.getUI().getState().setCurrentPlace(instance);
 	    controls.showModifyControls({top:pixel.y,left:pixel.x});
+	});
+
+	google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
+	    main.getUI().getControls().hidePhotoControls(true);
 	});
 
 	
