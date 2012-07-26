@@ -35,7 +35,11 @@ def get(request):
         if len(albums) == 0:
             error("you don't have any albums")
         
-        data = albums.toserializable()
+        data = []
+        
+        for album in albums:
+            data.append(album.toserializable())
+            
         logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
         
