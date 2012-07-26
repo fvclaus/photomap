@@ -37,11 +37,14 @@ urlpatterns = patterns("",
                        url(r'^help', direct_to_template, {"template": "help.html"}),
                        url(r'^about-us', direct_to_template, {"template": "about-us.html"}),
                        
+
                        url(r'^logout', authentication.logout),
                        url(r'^$', direct_to_template,{"template": "index.html"}),
                        
-                       url(r'^get-dashboard', dashboard.get),
-                       url(r'^view-dashboard', dashboard.view),
+                    
+                       url(r'^get-all-albums', dashboard.get),
+                       url(r'^view-all-albums', dashboard.view),
+
                        
      
                        
@@ -49,7 +52,6 @@ urlpatterns = patterns("",
                        # legacy
                        #========================================================
                        url(r'^album', album.redirect_to_get),
-                       url(r'^dashboard', dashboard.redirect_to_get),
                        #========================================================
                        # 3rd party apps
                        #========================================================
@@ -57,8 +59,12 @@ urlpatterns = patterns("",
                        
         #               (r'^$', direct_to_template, {"template": "index.tpl"}),
                        
-                            
-                       
+                       #================================================================
+                       # photo hooks
+                       #================================================================
+                       url(r'^insert-album', album.insert),
+                       url(r'^update-album', album.update),
+                       url(r'^delete-album', album.delete),
                        #================================================================
                        # photo hooks
                        #================================================================

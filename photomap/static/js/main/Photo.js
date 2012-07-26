@@ -19,6 +19,9 @@ Photo.prototype = {
 	this.visited = bool;
 	main.getClientState().addPhoto(this.id);
 	this.checkBorder();
-    }
+    },
+    triggerClick : function(){
+	$("img[src='"+this.source+"']").trigger("click");
+    },
 };
 

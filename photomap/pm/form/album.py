@@ -9,10 +9,10 @@ from pm.model.album import Album
 class AlbumInsertForm(forms.ModelForm):
     class Meta:
         model = Album
-        exclude = ("country", "lat", "lon", "user")
+        exclude = ("country", "user")
         
 class AlbumUpdateForm(forms.ModelForm):
     id = forms.IntegerField()
     class Meta:
         model = Album
-        exclude = ("country", "lat", "lon", "user")
+        exclude = ("country", "user","lat","lon")
