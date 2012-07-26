@@ -36,8 +36,8 @@ urlpatterns = patterns("",
                        url(r'^help', direct_to_template, {"template": "help.html"}),
                        url(r'^about-us', direct_to_template, {"template": "about-us.html"}),
                        
-                       url(r'^get-dashboard', dashboard.get),
-                       url(r'^view-dashboard', dashboard.view),
+                       url(r'^get-all-albums', dashboard.get),
+                       url(r'^view-all-albums', dashboard.view),
                        
      
                        
