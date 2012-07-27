@@ -13,6 +13,8 @@ from pm.form.photo import PhotoInsertForm, PhotoUpdateForm
 
 import logging
 import os
+from django.forms.models import model_to_dict
+
 logger = logging.getLogger(__name__)
 
 # TODO: maybe this can be abstracted by using middleware that checks for the existence of an error string and renders the error message

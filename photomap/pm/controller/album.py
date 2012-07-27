@@ -57,10 +57,10 @@ def insert(request):
     if request.method == "POST":
         form = AlbumInsertForm(request.POST, auto_id = False)
         if form.is_valid():
-            form.save()
-            return render_to_response("insert-album-success.html")
+            album = form.save()
+            return success(id = album.pk)
         else:
-            return render_to_response("insert-album-error.html", {form : form})
+            return error("input is not valid")
    
 def update(request):
     if request.method == "POST":
@@ -85,13 +85,9 @@ def delete(request):
         try:
             id = request.POST["id"]
             album = Album.objects.get(pk = id)
-            try:
-                os.remove(album.photo.path)
-            except OSError:
-                pass
             album.delete()
             return success()
-        except (KeyError, Photo.DoesNotExist), e:
+        except (KeyError, Album.DoesNotExist), e:
             return error(str(e))
     else:
         logger.debug("form not available yet")

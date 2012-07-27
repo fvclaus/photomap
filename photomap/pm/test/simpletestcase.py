@@ -91,7 +91,7 @@ class SimpleTestCase(TestCase):
     def assertDoesNotExist(self,instance,model = None):
         if not model:
             model = self.model
-        self.assertRaises(model.DoesNotExist, model.objects.get,{"pk": instance.pk})
+        self.assertRaises(model.DoesNotExist, model.objects.get, pk = instance.pk)
         
     def assertPhotoDeleted(self,photo):
         self.assertDoesNotExist(photo,model = Photo)

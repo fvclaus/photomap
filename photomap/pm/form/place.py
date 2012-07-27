@@ -10,9 +10,10 @@ from pm.model.place import Place
 class InsertPlaceForm(forms.ModelForm):
     class Meta:
         model = Place
+        exclude = ("date")
         
 class UpdatePlaceForm(forms.ModelForm):
     id = forms.IntegerField()
     class Meta:
         model = Place
-        exclude = ("album", "lat", "lon")
+        exclude = ("album", "lat", "lon","date")
