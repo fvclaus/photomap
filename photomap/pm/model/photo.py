@@ -10,6 +10,7 @@ from django.conf import settings
 from place import Place
 import json
 import os
+from django.db.models.signals import post_delete
 
 class Photo(Description):
   
@@ -34,3 +35,13 @@ class Photo(Description):
     
     class Meta(Description.Meta):
         pass
+
+
+def deletephoto(sender,**kwargs):
+    instance = kwargs["instance"]
+    try:
+        os.remove(instance.photo.path)
+    except:
+        pass
+
+post_delete.connect(deletephoto)

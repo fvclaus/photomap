@@ -77,12 +77,12 @@ class AlbumControllerTest(SimpleTestCase):
         # insert somthing that is not valid
         #=======================================================================
         del data["lat"]
-        self.assertPhotoCreateError(data)
+        self.assertError(data)
         #=======================================================================
         # delete some more
         #=======================================================================
         del data["lon"]
-        self.assertPhotoCreateError(data)
+        self.assertError(data)
         
     def test_update(self):
         self.url = "/update-album"

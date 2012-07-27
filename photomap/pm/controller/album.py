@@ -64,6 +64,7 @@ def insert(request):
             logger.debug("user "+str(request.user))
             album.user = request.user
             album.country = reversegecode(album.lat,album.lon)
+            album.save()
             return success(id = album.pk)
         else:
             return error(str(form.errors))
@@ -86,6 +87,7 @@ def update(request):
     else:
         return render_to_response("update-album.html")  
 
+@login_required
 def delete(request):
     if request.method == "POST":
         logger.debug("inside delete post")

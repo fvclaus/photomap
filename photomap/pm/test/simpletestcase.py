@@ -18,7 +18,7 @@ import os
 class SimpleTestCase(TestCase):
     """ loads the simple-test fixtues, appends a logger and logs the client in """
     
-    fixtures = ['simple-test']
+    fixtures = ["user",'simple-test']
     
     logger = logging.getLogger(__name__)
     
@@ -26,7 +26,7 @@ class SimpleTestCase(TestCase):
     
     def setUp(self):
         self.c = Client()
-        self.c.login(username = TEST_USER, password = TEST_PASSWORD)
+        self.assertTrue(self.c.login(username = TEST_USER, password = TEST_PASSWORD))
         self.logger = SimpleTestCase.logger
         
     def assertSuccess(self, data):
