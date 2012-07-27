@@ -11,6 +11,7 @@ import json
 from pm.model.place import Place
 from pm.model.photo import Photo
 import os
+from data import GPS_MANNHEIM_SCHLOSS
 
 class PlaceControllerTest(SimpleTestCase):
     
@@ -24,9 +25,10 @@ class PlaceControllerTest(SimpleTestCase):
         #=======================================================================
         # without description
         #=======================================================================
+
         data = {"album" : 1,
-                "lat": Decimal(-48.01230012),
-                "lon": Decimal(8.0123123),
+                "lat": GPS_MANNHEIM_SCHLOSS["lat"],
+                "lon": GPS_MANNHEIM_SCHLOSS["lon"],
                 "title": "Next to EO", }
         (place, content) = self.assertCreates(data)
         self.assertEqual(place.title, data["title"])
@@ -80,8 +82,7 @@ class PlaceControllerTest(SimpleTestCase):
         self.assertDeletes({"id": place.pk})
 #        assert on delete cascade
         for photo in photos:
-            self.assertRaises(Photo.DoesNotExist, Photo.objects.get, {"pk": photo.pk})
-            self.assertFalse(os.path.exists(photo.photo.path))
+            self.assertPhotoDeleted(photo)
         #=======================================================================
         # not valid
         #=======================================================================

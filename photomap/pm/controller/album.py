@@ -8,11 +8,13 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render_to_response
 from django.db.models import Max
 from message import success, error
-from pm.test import config
+from pm.test import data
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 
+from django.contrib.auth.decorators import login_required
+from pm.osm import reversegecode
 from pm.form.album import AlbumInsertForm, AlbumUpdateForm
 
 import json
@@ -29,39 +31,51 @@ def view(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
     if request.method == "GET":
-        return render_to_response("view-album.html",{"testphotopath": config.TEST_PHOTO})
+        return render_to_response("view-album.html",{"testphotopath": data.TEST_PHOTO})
 
 def get(request):
     logger.debug("get-album: entered view function")
     if request.method == "GET":
-        logger.debug("get-album: entered GET")
-        user = request.user
-        if not user.is_authenticated():
-            error("not authenticated")
-               
-        logger.debug("get-album: user authenticated")
-        
-    if (request.GET["id"]):
-        album = Album.objects.get().filter(user = user, pk = request.GET["id"] )
-     
+        try:
+            user = request.user
+            id = request.GET["id"]
+            if not id:
+                albums = Album.objects.all().filter(user = user)
+                album = albums[len(albums)-1]
+            else:
+                album = Album.objects.get(pk = request.GET["id"] )
+                
+            data = album.toserializable()
+            if album.user == user:
+                data["isOwner"] = True
+            else:
+                data["isOwner"] = False
+                
+            logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
+            return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
+        except (KeyError, Album.DoesNotExist),e:
+            return error(str(e))
+    
     else:
-        album = Album.objects.get(pk = Album.objects.aggregate(Max('id')))
-        
-    data = album.toserializable()
-    logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
-    return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
+        return HttpResponseBadRequest()
 
 #TODO solve issue if geo data will be handled within frontend or within the controller unit
 
+@login_required
 def insert(request):
     if request.method == "POST":
         form = AlbumInsertForm(request.POST, auto_id = False)
         if form.is_valid():
-            form.save()
-            return render_to_response("insert-album-success.html")
+            album = form.save(commit = False)
+            logger.debug("user "+str(request.user))
+            album.user = request.user
+            album.country = reversegecode(album.lat,album.lon)
+            album.save()
+            return success(id = album.pk)
         else:
-            return render_to_response("insert-album-error.html", {form : form})
-   
+            return error(str(form.errors))
+
+@login_required
 def update(request):
     if request.method == "POST":
         form = AlbumUpdateForm(request.POST)
@@ -79,19 +93,16 @@ def update(request):
     else:
         return render_to_response("update-album.html")  
 
+@login_required
 def delete(request):
     if request.method == "POST":
         logger.debug("inside delete post")
         try:
             id = request.POST["id"]
             album = Album.objects.get(pk = id)
-            try:
-                os.remove(album.photo.path)
-            except OSError:
-                pass
             album.delete()
             return success()
-        except (KeyError, Photo.DoesNotExist), e:
+        except (KeyError, Album.DoesNotExist), e:
             return error(str(e))
     else:
         logger.debug("form not available yet")

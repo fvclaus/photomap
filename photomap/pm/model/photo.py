@@ -10,6 +10,7 @@ from django.conf import settings
 from place import Place
 import json
 import os
+from django.db.models.signals import post_delete
 
 class Photo(Description):
   
@@ -27,10 +28,21 @@ class Photo(Description):
                 "photo": self.getphotourl(),
                 "title": self.title,
                 "description": self.description,
-                "order": self.order}
+                "order": self.order,
+                "date" : self.date.isoformat()}
     
     def __unicode__(self):
         return "%s in %s" % (self.title, self.place.title)
     
     class Meta(Description.Meta):
         pass
+
+
+def deletephoto(sender,**kwargs):
+    instance = kwargs["instance"]
+    try:
+        os.remove(instance.photo.path)
+    except:
+        pass
+
+post_delete.connect(deletephoto)
