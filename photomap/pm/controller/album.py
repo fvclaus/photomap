@@ -36,22 +36,28 @@ def view(request):
 def get(request):
     logger.debug("get-album: entered view function")
     if request.method == "GET":
-        logger.debug("get-album: entered GET")
-        user = request.user
-        if not user.is_authenticated():
-            error("not authenticated")
-               
-        logger.debug("get-album: user authenticated")
-        
-    if (request.GET["id"]):
-        album = Album.objects.get().filter(user = user, pk = request.GET["id"] )
-     
+        try:
+            user = request.user
+            id = request.GET["id"]
+            if not id:
+                albums = Album.objects.all().filter(user = user)
+                album = albums[len(albums)-1]
+            else:
+                album = Album.objects.get(pk = request.GET["id"] )
+                
+            data = album.toserializable()
+            if album.user == user:
+                data["isOwner"] = True
+            else:
+                data["isOwner"] = False
+                
+            logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
+            return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
+        except (KeyError, Album.DoesNotExist),e:
+            return error(str(e))
+    
     else:
-        album = Album.objects.get(pk = Album.objects.aggregate(Max('id')))
-        
-    data = album.toserializable()
-    logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
-    return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
+        return HttpResponseBadRequest()
 
 #TODO solve issue if geo data will be handled within frontend or within the controller unit
 

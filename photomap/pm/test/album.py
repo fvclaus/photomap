@@ -105,4 +105,22 @@ class AlbumControllerTest(SimpleTestCase):
         data["id"] = 999 # does not exist
         self.assertError(data)
         
+    def test_get(self):
+        self.url = "/get-album"
+        data = {"id" : 1}
+        album = self.json(data,method = "GET")
+        self.assertAlbumComplete(album)
+        self.assertTrue(album["places"])
+        places = album["places"]
+        for place in places:
+            self.assertPlaceComplete(place)
+            photos = place["photos"]
+            
+            for photo in photos:
+                self.assertPhotoComplete(photo)
+                
+        #=======================================================================
+        # something invalid
+        #=======================================================================
+        self.assertError({"id" : 9999},method = "GET")
    

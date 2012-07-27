@@ -35,6 +35,7 @@ class Album(Description):
                 "title" : self.title,
                 "country" : self.country,
                 "description" : self.description,
+                "date" : self.date.isoformat(),
                 "id" : self.pk,
                 "places": places_dump}
         return data

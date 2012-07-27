@@ -28,7 +28,8 @@ class Photo(Description):
                 "photo": self.getphotourl(),
                 "title": self.title,
                 "description": self.description,
-                "order": self.order}
+                "order": self.order,
+                "date" : self.date.isoformat()}
     
     def __unicode__(self):
         return "%s in %s" % (self.title, self.place.title)
