@@ -50,14 +50,6 @@ UICursor.prototype = {
     
     // ajax and loading cursors missing.. also cursor on controls and certain other parts..
     
-    instance = this;
-    $('body').ajaxStart(function(){
-      instance.setCursor($('body'),instance.cursor.wait);
-    });
-    $('body').ajaxStop(function(){
-      instance.setCursor($('body'),instance.cursor.default);
-    });
-    
   },
   
 };
