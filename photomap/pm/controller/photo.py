@@ -10,12 +10,15 @@ from pm.model.photo import Photo
 
 from message import success, error 
 from pm.form.photo import PhotoInsertForm, PhotoUpdateForm
+from django.contrib.auth.decorators import login_required
 
 import logging
 import os
+from django.forms.models import model_to_dict
+
 logger = logging.getLogger(__name__)
 
-# TODO: maybe this can be abstracted by using middleware that checks for the existence of an error string and renders the error message
+@login_required
 def insert(request):
     if request.method == "POST":
         form = PhotoInsertForm(request.POST, request.FILES, auto_id = False)
@@ -34,7 +37,8 @@ def insert(request):
         except:
             pass
         return render_to_response("insert-photo.html", {"form":form, "place":place})
-    
+
+@login_required
 def update(request):
     if request.method == "POST":
         form = PhotoUpdateForm(request.POST)
@@ -51,17 +55,14 @@ def update(request):
             return error(str(form.errors))
     else:
         return render_to_response("update-photo.html")
-    
+
+@login_required
 def delete(request):
     if request.method == "POST":
         logger.debug("inside delete post")
         try:
             id = request.POST["id"]
             photo = Photo.objects.get(pk = id)
-            try:
-                os.remove(photo.photo.path)
-            except OSError:
-                pass
             photo.delete()
             return success()
         except (KeyError, Photo.DoesNotExist), e:

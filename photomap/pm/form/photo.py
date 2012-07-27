@@ -10,10 +10,10 @@ from pm.model.photo import Photo
 class PhotoInsertForm(forms.ModelForm):
     class Meta:
         model = Photo
-        exclude = ("thumb", "order",)
+        exclude = ("thumb", "order","date")
         
 class PhotoUpdateForm(forms.ModelForm):
     id = forms.IntegerField()
     class Meta:
         model = Photo
-        exclude = ("photo", "place" , "thumb",)
+        exclude = ("photo", "place" , "thumb","date")

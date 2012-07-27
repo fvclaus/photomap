@@ -1,5 +1,0 @@
-Manifest-Version: 1.0
-Bundle-ManifestVersion: 2
-Bundle-Name: photomap
-Bundle-SymbolicName: photomap
-Bundle-Version: 1.0.0.qualifier
