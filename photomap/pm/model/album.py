@@ -20,24 +20,28 @@ class Album(Description):
     user = models.ForeignKey(User)
     country = models.CharField(max_length = 2)
     
-    def toserializable(self):
-        # avoid circual import
+    def toserializable(self,includeplaces = True):
+        # avoid circular import
         from pm.model.place import Place
-        places = Place.objects.all().filter(album = self)
-        logger.debug("toserializable(): %s", places)
-        places_dump = []
         
-        for place in places:
-            places_dump.append(place.toserializable())
-
+        
         data = {"lat" : self.lat,
                 "lon" : self.lon,
                 "title" : self.title,
                 "country" : self.country,
                 "description" : self.description,
                 "date" : self.date.isoformat(),
-                "id" : self.pk,
-                "places": places_dump}
+                "id" : self.pk}
+        
+        if includeplaces:
+            places_dump = []
+            places = Place.objects.all().filter(album = self)
+            logger.debug("toserializable(): %s", places)
+            
+            for place in places:
+                places_dump.append(place.toserializable())
+                data["places"] = places_dump
+                
         return data
     
     def __unicode__(self):

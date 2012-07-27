@@ -12,33 +12,27 @@ from pm.model.invitation import Invitation
 import json
 import logging
 import decimal
-
+from django.contrib.auth.decorators import login_required
 
 logger = logging.getLogger(__name__)
 
+@login_required
 def view(request):
-    if not request.user.is_authenticated():
-        return HttpResponseRedirect('/login')
     if request.method == "GET":
         return render_to_response("dashboard.html")
 
+@login_required
 def get(request):
     logger.debug("dashboard: entered view function")
     if request.method == "GET":
-        logger.debug("dashboard: entered GET")
         user = request.user
-        if not user.is_authenticated():
-            error("not authenticated")
-        
-        logger.debug("dashboard: user authenticated")
-        albums = Album.objects.all().filter(user = user) &  Invitation.objects.all().filter(user = request.user)
-        if len(albums) == 0:
-            error("you don't have any albums")
-        
+        albums = Album.objects.all().filter(user = user) 
         data = []
         
         for album in albums:
-            data.append(album.toserializable())
+            albumflat = album.toserializable(includeplaces = False)
+            albumflat["isOwner"] = True
+            data.append(albumflat)
             
         logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")

@@ -125,7 +125,7 @@ class SimpleTestCase(TestCase):
         else:
             return self.model
         
-    def json(self, data , url = None,method = "POST"):
+    def json(self, data = {} , url = None,method = "POST"):
         """ makes a post request to url or self.url returns the content jsonified""" 
         if not url:
             if not self.url:
