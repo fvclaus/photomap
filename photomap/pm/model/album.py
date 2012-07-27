@@ -8,7 +8,6 @@ from django.db import models
 from description import Description
 from django.contrib.auth.models import User
 
-from pm.osm import OSM
 
 import logging
 
@@ -16,8 +15,8 @@ logger = logging.getLogger(__name__)
 
 class Album(Description):
    
-    lat = models.DecimalField(decimal_places = 26, max_digits = 30)
-    lon = models.DecimalField(decimal_places = 26, max_digits = 30)
+    lat = models.DecimalField(decimal_places = 140, max_digits = 150)
+    lon = models.DecimalField(decimal_places = 140, max_digits = 150)
     user = models.ForeignKey(User)
     country = models.CharField(max_length = 2)
     

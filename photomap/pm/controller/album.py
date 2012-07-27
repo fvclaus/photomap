@@ -8,11 +8,13 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render_to_response
 from django.db.models import Max
 from message import success, error
-from pm.test import config
+from pm.test import data
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 
+from django.contrib.auth.decorators import login_required
+from pm.osm import reversegecode
 from pm.form.album import AlbumInsertForm, AlbumUpdateForm
 
 import json
@@ -29,7 +31,7 @@ def view(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
     if request.method == "GET":
-        return render_to_response("view-album.html",{"testphotopath": config.TEST_PHOTO})
+        return render_to_response("view-album.html",{"testphotopath": data.TEST_PHOTO})
 
 def get(request):
     logger.debug("get-album: entered view function")
@@ -53,15 +55,20 @@ def get(request):
 
 #TODO solve issue if geo data will be handled within frontend or within the controller unit
 
+@login_required
 def insert(request):
     if request.method == "POST":
         form = AlbumInsertForm(request.POST, auto_id = False)
         if form.is_valid():
-            album = form.save()
+            album = form.save(commit = False)
+            logger.debug("user "+str(request.user))
+            album.user = request.user
+            album.country = reversegecode(album.lat,album.lon)
             return success(id = album.pk)
         else:
-            return error("input is not valid")
-   
+            return error(str(form.errors))
+
+@login_required
 def update(request):
     if request.method == "POST":
         form = AlbumUpdateForm(request.POST)

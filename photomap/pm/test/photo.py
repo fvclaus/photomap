@@ -6,9 +6,9 @@ Created on Jun 29, 2012
 
 from simpletestcase import SimpleTestCase
 from django.test.client import Client
-from config import TEST_PASSWORD, TEST_USER
+from data import TEST_PASSWORD, TEST_USER,TEST_PHOTO
 from pm.model.photo import Photo
-import config
+
 import json
 import logging 
 import os
@@ -26,6 +26,7 @@ class PhotoControllerTest(SimpleTestCase):
         # delete something that exists
         #=======================================================================
         photo = Photo.objects.get(pk = 1)
+        photo = (photo.pk,photo.photo.path)
         self.assertDeletes({"id" : 1})
         self.assertPhotoDeleted(photo)
         #=======================================================================
@@ -44,7 +45,7 @@ class PhotoControllerTest(SimpleTestCase):
         #=======================================================================
         # insert something valid without description
         #=======================================================================
-        photo = open(config.TEST_PHOTO, "rb")
+        photo = open(TEST_PHOTO, "rb")
         data = {"place": 1,
                 "title": "Chuck Norris",
                 "photo" : photo}
@@ -53,7 +54,7 @@ class PhotoControllerTest(SimpleTestCase):
         #=======================================================================
         # insert something valid with description
         #=======================================================================
-        photo = open(config.TEST_PHOTO, "rb")
+        photo = open(TEST_PHOTO, "rb")
         data["photo"] = photo
         data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
         self.assertCreates(data, check = self.assertPhotoCreateSuccess)

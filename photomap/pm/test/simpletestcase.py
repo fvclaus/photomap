@@ -6,7 +6,7 @@ Created on Jul 8, 2012
 
 from django.test import TestCase
 from django.test.client import Client
-from config import TEST_PASSWORD, TEST_USER
+from data import TEST_PASSWORD, TEST_USER
 
 import logging
 import json
@@ -88,14 +88,14 @@ class SimpleTestCase(TestCase):
         self.assertRaises(model.DoesNotExist, model.objects.get, pk = data["id"])
         return content
     
-    def assertDoesNotExist(self,instance,model = None):
+    def assertDoesNotExist(self,pk,model = None):
         if not model:
             model = self.model
-        self.assertRaises(model.DoesNotExist, model.objects.get, pk = instance.pk)
+        self.assertRaises(model.DoesNotExist, model.objects.get, pk = pk)
         
     def assertPhotoDeleted(self,photo):
-        self.assertDoesNotExist(photo,model = Photo)
-        self.assertFalse(os.path.exists(photo.photo.path))
+        self.assertDoesNotExist(photo[0],model = Photo)
+        self.assertFalse(os.path.exists(photo[1]))
         
     def getmodel(self):
         if not self.model:

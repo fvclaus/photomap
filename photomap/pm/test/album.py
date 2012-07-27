@@ -7,12 +7,12 @@ Created on 22.07.2012
 
 from simpletestcase import SimpleTestCase
 from django.test.client import Client
-from config import TEST_PASSWORD, TEST_USER
+from data import TEST_PASSWORD, TEST_USER
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
+from data import GPS_MANNHEIM_SCHLOSS
 
-import config
 import json
 import logging 
 import os
@@ -31,11 +31,11 @@ class AlbumControllerTest(SimpleTestCase):
         # delete something that exists
         #=======================================================================
         album = Album.objects.get(pk = 1)
-        places = Place.objects.all().filter(album = album)
+        places = [place.pk for place in Place.objects.all().filter(album = album)]
         photos = []
         
         for place in places:
-            photos.append(Photo.objects.all().filter(place = place))
+            photos.extend([(photo.pk,photo.photo.path) for photo in Photo.objects.all().filter(place = place)])
             
         self.assertDeletes({"id" : 1})
         
@@ -61,10 +61,9 @@ class AlbumControllerTest(SimpleTestCase):
         #=======================================================================
         # insert something valid without description
         #=======================================================================
-        photo = open(config.TEST_PHOTO, "rb")
         data = {"title": "Mannheim",
-                "lat": Decimal(-48.01230012),
-                "lon": Decimal(8.0123123)}
+                "lat": GPS_MANNHEIM_SCHLOSS["lat"],
+                "lon": GPS_MANNHEIM_SCHLOSS["lon"]}
         (album, content) = self.assertCreates(data)
         self.assertEqual(album.title, data["title"])
         self.assertEqual(album.country,"de")
