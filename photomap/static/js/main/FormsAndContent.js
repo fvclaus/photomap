@@ -43,12 +43,17 @@ function hideMapControls() {
 
 $(document).ready(function(){
   
+    $(window).resize(function(){
+      repositionContent();
+      initScrollPane();
+    });
+      
+  
     hideMapControls();
   
     repositionContent();
     
     if ($("body").find("#mp-login").attr("class") == "mp-login"){
-      alert("hi");
       placeLoginForms();
     };
     
