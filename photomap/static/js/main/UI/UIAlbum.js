@@ -3,7 +3,7 @@ UIAlbum = function (gallery) {
     this.gallery = gallery;
 
     //reserve  4px as buffer
-    this.$album	= $('#mp-album-wrapper');
+    this.$album	= $('#mp-gallery-wrapper');
     this.$album.width(this.$album.width() - 4);
     this.albumPadding = this.$album.css("padding-left");
     this.albumWidth = this.$album.width();
