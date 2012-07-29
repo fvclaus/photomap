@@ -41,6 +41,10 @@ function hideMapControls() {
     });
 };
 
+function setZoom(number) {
+    main.getMap().getInstance().setZoom(number);
+  };
+
 $(document).ready(function(){
   
     $(window).resize(function(){
@@ -50,6 +54,7 @@ $(document).ready(function(){
       
   
     hideMapControls();
+    setZoom(20);
   
     repositionContent();
     

@@ -13,7 +13,7 @@ UIControls = function(maxHeight) {
 
     this.$delete = $(".mp-option-delete");
     this.$modify = $(".mp-option-modify");
-    this.$ut = $(".mp-option-ut");
+    this.$logout = $(".mp-option-logout");
     this.$center = $(".mp-option-center");
 
     
@@ -28,7 +28,7 @@ UIControls.prototype = {
 	this.bindListener();
 
 	height = main.getUI().getPanel().getFooterHeight();
-	this.$ut.height(height);
+	this.$logout.height(height);
 
     },
     
