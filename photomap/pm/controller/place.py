@@ -12,9 +12,11 @@ from pm.model.place import Place
 from pm.model.photo import Photo
 import logging
 import os
+from django.contrib.auth.decorators import login_required
 
 logger = logging.getLogger(__name__)
 
+@login_required
 def insert(request):
     if request.method == "POST":
         form = InsertPlaceForm(request.POST)
@@ -26,6 +28,7 @@ def insert(request):
     else:
         return render_to_response("insert-place.html")
 
+@login_required
 def update(request):
     if request.method == "POST":
         form = UpdatePlaceForm(request.POST)
@@ -46,15 +49,13 @@ def update(request):
         return render_to_response("update-place.html")
             
 
-
+@login_required
 def delete(request):
     if request.method == "POST":
         try:
             place = Place.objects.get(pk = request.POST["id"])
-            photos = Photo.objects.all().filter(place = place)
             place.delete()    
-            for photo in photos:
-                os.remove(photo.photo.path)
+
             return success()
         except (OSError, Place.DoesNotExist), e:
             return error(str(e))

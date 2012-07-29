@@ -2,43 +2,49 @@
 
 {% block title %}Impressum{% endblock %}
 
-{% block css %}		
-	<link rel="stylesheet" type="text/css" href="static/stylesheets-plain/jquery.jscrollpane.css" />		
+{% block css %}
+	<link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
 	<link rel="stylesheet" type="text/css" href="static/fancybox/jquery.fancybox-1.3.4.css" />
 {% endblock %}
 
 {% block js %}
-	<script type="text/javascript" src="static/javascripts/main/Extensions.js" ></script>
+	<script type="text/javascript" src="static/js/main/Extensions.js" ></script>
+	
 	
 	<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false" ></script>
 	
-	<script type="text/javascript" src="static/javascripts/jquery.jscrollpane.min.js" ></script>
-	<script type="text/javascript" src="static/javascripts/jquery.mousewheel.min.js" ></script>
-	<script type="text/javascript" src="static/javascripts/tzoom.min.js" ></script>
-	<script type="text/javascript" src="static/javascripts/jquery.cookie.js" ></script>
-	<script type="text/javascript" src="static/javascripts/jquery.json.js" ></script>
-	<script type="text/javascript" src="static/javascripts/ie.js" ></script>
+	<script type="text/javascript" src="static/js/jquery.jscrollpane.min.js" ></script>
+	<script type="text/javascript" src="static/js/jquery.mousewheel.min.js" ></script>
+	<script type="text/javascript" src="static/js/jquery.cookie.js" ></script>
+	<script type="text/javascript" src="static/js/jquery.json.js" ></script>
+	<script type="text/javascript" src="static/js/ie.js" ></script>
 	
-	<script type="text/javascript" src="static/javascripts/date.js" ></script>
-
-	<script type="text/javascript" src="static/javascripts/jquery.jqote2.js" ></script>
-
-	<script type="text/javascript" src="static/javascripts/main/UI/UIState.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/UI/UIInput.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/UI/UIControls.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/UI/UIPanel.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/UI/UITools.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/UI/UI.js" ></script>
+	<script type="text/javascript" src="static/js/date.js" ></script>
 	
-	<script type="text/javascript" src="static/javascripts/main/ClientState.js" ></script>
-	<script type="text/javascript" src="static/javascripts/main/ClientServer.js" ></script>
+	<script type="text/javascript" src="static/js/jquery.jqote2.js" ></script>
 	
-	<script type="text/javascript" src="static/javascripts/main/Map.js" ></script>
+	<script type="text/javascript" src="static/js/main/FormsAndContent.js" ></script>
 	
-	<script type="text/javascript" src="static/javascripts/main/Marker.js" ></script>	
-	<script type="text/javascript" src="static/javascripts/main/Photo.js" ></script>	
-	<script type="text/javascript" src="static/javascripts/main/Place.js" ></script>	
-	<script type="text/javascript" src="static/javascripts/main/Main.js" ></script>	
+	<script type="text/javascript" src="static/js/main/UI/UIState.js" ></script>
+	<script type="text/javascript" src="static/js/main/UI/UIInput.js" ></script>
+	<script type="text/javascript" src="static/js/main/UI/UIControls.js" ></script>
+	<script type="text/javascript" src="static/js/main/UI/UIPanel.js" ></script>
+	<script type="text/javascript" src="static/js/main/UI/UITools.js" ></script>
+	<script type="text/javascript" src="static/js/main/UI/UICursor.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/UI/UI.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/UI/UI.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/ClientState.js" ></script>
+	<script type="text/javascript" src="static/js/main/ClientServer.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/Map.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/Marker.js" ></script>	
+	<script type="text/javascript" src="static/js/main/Photo.js" ></script>	
+	<script type="text/javascript" src="static/js/main/Place.js" ></script>	
+	<script type="text/javascript" src="static/js/main/Main.js" ></script>	
 {% endblock %}
 
 {% block content %}
@@ -46,25 +52,24 @@
 		<div class="mp-container" id="mp-container">
 			
 			<header class="mp-header" id="mp-header">
-				<section class="mp-userpanel">
-					<div class="mp-logo">LOGO</div>
+				<section class="mp-logo"><a href="/"></a></section>
+				<section class="mp-page-title mp-control">
+					<h1>Impressum</h1>
+				</section>
+				<section class="mp-top-panel">
+					<div class="mp-searchfield"></div>
 					<div class="mp-controls-wrapper">
-						<div class="mp-controls">
-							<a href="/logout">
-								<img class="mp-controls mp-option-logout" src="static/images/logout.png" title="Logout"></img>
-							</a>
-							<img class="mp-controls mp-option-center" src="static/images/center.png" title="Karte auf ausgewählten Platz zentrieren."></img>
-							<img class="mp-controls mp-option-delete" src="static/images/delete.png" title="Löschen"></img>
-							<img class="mp-controls mp-option-modify" src="static/images/modify.png" title="Bearbeiten"></img>
-							<img class="mp-controls mp-option-add" src="static/images/add.png" title="Bild hinzufügen"></img>
-							<img class="mp-controls mp-option-information" src="static/images/information.png" title="Information zu ausgewähltem Objekt anzeigen."></img>
-						<div></div>
-						</div>
 					</div>
 				</section>
 			</header>
 			
-			<section class="mp-textbox-wrapper" id="mp-textbox">
+			<section class="mp-map" id="mp-map">
+				<div class="mp-map-container">
+					<div class="mp-map-wrapper" id="map"></div>
+				</div>
+			</section>
+			
+			<section class="mp-content-container" id="mp-textbox">
 				<h2>Impressum</h2>
 				<article class="mp-textbox" id="main">
 					<p>Angaben gemäß § 5 TMG</p>
@@ -75,10 +80,9 @@
 					</address>
 					<h3>Vertreten durch:</h3>
 					<p>
-						<a href="/about-us#frederik-claus">Frederik Claus</a> <br />
-						<a href="/about-us#philipp-banhardt">Philipp Banhardt</a> <br />
-						<a href="/about-us#marc-leon-roemer">Marc-Leon Römer</a> <br />
-						<a href="/about-us#lisa-LASTNAME">Lisa LASTNAME</a>
+						<a href="/team#frederik-claus">Frederic Claus</a> <br />
+						<a href="/team#philipp-banhardt">Philipp Banhardt</a> <br />
+						<a href="/team#marc-leon-roemer">Marc-Leon Römer</a> <br />
 					</p>
 					<h3>Kontakt:</h3>
 					<p>
@@ -91,11 +95,6 @@
 						ausdrücklich widersprochen. Die Betreiber der Seiten behalten sich ausdrücklich rechtliche Schritte 
 						im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor.
 					</aside>
-					<p>
-						Umsatzsteuer-Identifikationsnummer gem. § 27a UStG:  <br />
-						Wirtschafts-Identifikationsnummer: <br />
-						ist alles wohl eher nicht nötig - habs nur der vollständigkeit mal rein
-					</p>
 				</article>
 				<article class="mp-textbox" id="liability">
 					<h3>Haftung für Inhalte:</h3>
@@ -127,17 +126,21 @@
 			</section>
 			
 			<footer class="mp-footer" id="mp-footer">
-				<section class="mp-bottom-panel">
+				<section class="mp-user">
+					<span>
+						<a href="/logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
+					</span>
+					<span>Nutzer: Testnutzer</span>
+				</section>
+				<section class="mp-internal-links">
 					<a class="mp-active-subpage" href="/impressum" title="Details zu den kreativen Köpfen hinter PhotoMap">Impressum</a> |
 					<a href="/privacy" title="Erläuterungen zur Nutzung von persönlichen Daten auf PhotoMap">Datenschutz</a> |
 					<a href="/copyright" title="Details zum Urheberrecht">Copyright</a> |
 					<a href="/contact" title="Für Support, Fragen, Anmerkungen und Kritik..">Kontakt</a> |
 					<a href="/help" title="Hilfe zu PhotoMap und FAQ">Hilfe</a> |
-					<a href="/about-us" title="Vorstellung des Projekts und der Verantwortlichen">Über uns</a>
+					<a href="/team" title="Vorstellung des Projekts und der Verantwortlichen">Team</a>
 				</section>
 			</footer>
 		</div>
-		
-		<script type="text/javascript" src="static/javascripts/main/Init.js" ></script>
 		
 {% endblock %}

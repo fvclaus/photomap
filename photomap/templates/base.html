@@ -2,7 +2,7 @@
 <html lang="de" >
 	<head>
 	
-		<title>{% block title %}Photo Map{% endblock %}</title>
+		<title>PhotoMap | {% block title %}{% endblock %}</title>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 		<link rel="shortcut icon" href="static/images/icon.png" />
@@ -23,7 +23,7 @@
 		
 		{% load compress %}
 		{% compress css file %}
-			<link rel="stylesheet" type="text/x-stylus" href="static/stylesheets/main.styl" />
+			<link rel="stylesheet" type="text/x-stylus" href="static/css/main.styl" />
 		{% endcompress %}
 		
 		
@@ -36,8 +36,8 @@
 		<!-- end styles -->
 				
 		<!-- js -->
-		<script type="text/javascript" src="static/javascripts/noconsole.js" ></script>
-		<script type="text/javascript" src="static/javascripts/jquery.all.min.js" ></script>
+		<script type="text/javascript" src="static/js/noconsole.js" ></script>
+		<script type="text/javascript" src="static/js/jquery.all.min.js" ></script>
 		{% block js %}
 		{% endblock %}	
 		
@@ -47,5 +47,6 @@
 	{% block content %}
 	{% endblock %}	
 	
+	<script type="text/javascript" src="static/js/main/Init.js" ></script>
 	</body>
 </html>

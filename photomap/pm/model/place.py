@@ -30,7 +30,8 @@ class Place(Description):
                 "title": self.title,
                 "description": self.description,
                 "id": self.pk,
-                "photos": photos_dump }
+                "photos": photos_dump,
+                "date" : self.date.isoformat() }
         return data
     
     def __unicode__(self):

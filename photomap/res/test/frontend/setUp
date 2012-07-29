@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head profile="http://selenium-ide.openqa.org/profiles/test-case">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<link rel="selenium.base" href="http://localhost:8000/login" />
+<title>click-information</title>
+</head>
+<body>
+<table cellpadding="1" cellspacing="1" border="1">
+<thead>
+<tr><td rowspan="1" colspan="3">click-information</td></tr>
+</thead><tbody>
+<tr>
+	<td>store</td>
+	<td>css=img.mp-option-information</td>
+	<td>albumDescriptionToggle</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=div#mp-photo-description</td>
+	<td>description</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-show-place</td>
+	<td>showPlace</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=img.mp-option-add</td>
+	<td>addPhoto</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=input[name=&quot;title&quot;]</td>
+	<td>titleInput</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=textarea[name=&quot;description&quot;]</td>
+	<td>descriptionInput</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</td>
+	<td>lipsumPlace</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
+	<td>lipsumPhoto</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=input[name=&quot;photo&quot;]</td>
+	<td>photoInput</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
+	<td>submit</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=form.mp-dialog</td>
+	<td>inputForm</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-update-place</td>
+	<td>updatePlace</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-update-photo</td>
+	<td>updatePhoto</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=div.mp-description-wrapper</td>
+	<td>descriptionText</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-show-photo</td>
+	<td>showPhoto</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=img.mp-slideshow-close</td>
+	<td>closeSlideshow</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=div.mp-album-image</td>
+	<td>slideshow</td>
+</tr>
+</tbody></table>
+</body>
+</html>
