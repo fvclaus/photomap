@@ -43,8 +43,8 @@ UIAlbum.prototype =  {
 	    instance.$album.append(
 		$.jqote( '#galleryTmpl', {} )
 	    );
-	    main.ui.controls.setPhotoControls();
-	    main.ui.controls.placeAddControl();
+	    
+	    main.getUI().getControls().bindInsertPhotoListener();
 	    main.ui.controls.bindListener();
 	}
 

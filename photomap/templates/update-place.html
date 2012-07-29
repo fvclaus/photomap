@@ -2,13 +2,14 @@
 	<form class="jquery-validator mp-dialog" name="update-album" action="/update-place" method="post">
 		<input type="hidden" name="id" value="" />
 		<div>
-			<label for="title">name</label> 
+			<label for="title">Name <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
 			<input type="text" name="title" required="required" />
 		</div>	
 		<div>
-			<label for="description">description</label>
+			<label for="description">Beschreibung</label>
 			<textarea type="text" name="description" cols="50" rows="5"></textarea>
 		</div>
-		<input type="submit" value="submit" name="submit" />
+		<br /><br />
+		<input type="submit" value="Ändern" name="submit" />
 	</form>
 </div>
