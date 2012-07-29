@@ -4,6 +4,7 @@ photomap-legacy/*.sqlite
 photomap/static/photo
 photomap-legacy/public/stylesheets/main.css
 .metadata/
+debug/*
 *.*#
 *.dump
 *.pyc
