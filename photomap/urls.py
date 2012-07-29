@@ -39,11 +39,11 @@ urlpatterns = patterns("",
                        
 
                        url(r'^logout', authentication.logout),
-                       url(r'^$', direct_to_template,{"template": "index.html"}),
+                       url(r'^$', direct_to_template, {"template": "index.html"}),
                        
                     
                        url(r'^get-all-albums', dashboard.get),
-                       url(r'^view-all-albums', dashboard.view),
+                       url(r'^dashboard', dashboard.view),
 
                        
      
