@@ -41,14 +41,24 @@ function hideMapControls() {
     });
 };
 
+function setZoom(number) {
+    main.getMap().getInstance().setZoom(number);
+  };
+
 $(document).ready(function(){
   
+    $(window).resize(function(){
+      repositionContent();
+      initScrollPane();
+    });
+      
+  
     hideMapControls();
+    setZoom(20);
   
     repositionContent();
     
     if ($("body").find("#mp-login").attr("class") == "mp-login"){
-      alert("hi");
       placeLoginForms();
     };
     
