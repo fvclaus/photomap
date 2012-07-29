@@ -31,19 +31,22 @@ def view(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
     if request.method == "GET":
-        return render_to_response("view-album.html",{"testphotopath": data.TEST_PHOTO})
+        return render_to_response("view-album.html", {"testphotopath": data.TEST_PHOTO})
 
 def get(request):
     logger.debug("get-album: entered view function")
     if request.method == "GET":
         try:
             user = request.user
-            id = request.GET["id"]
+            try:
+                id = request.GET["id"]
+            except KeyError:
+                id = None
             if not id:
-                albums = Album.objects.all().filter(user = user)
-                album = albums[len(albums)-1]
+                albums = Album.objects.all()
+                album = albums[len(albums) - 1]
             else:
-                album = Album.objects.get(pk = request.GET["id"] )
+                album = Album.objects.get(pk = request.GET["id"])
                 
             data = album.toserializable()
             if album.user == user:
@@ -53,7 +56,7 @@ def get(request):
                 
             logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
             return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
-        except (KeyError, Album.DoesNotExist),e:
+        except (KeyError, Album.DoesNotExist), e:
             return error(str(e))
     
     else:
@@ -67,9 +70,9 @@ def insert(request):
         form = AlbumInsertForm(request.POST, auto_id = False)
         if form.is_valid():
             album = form.save(commit = False)
-            logger.debug("user "+str(request.user))
+            logger.debug("user " + str(request.user))
             album.user = request.user
-            album.country = reversegecode(album.lat,album.lon)
+            album.country = reversegecode(album.lat, album.lon)
             album.save()
             return success(id = album.pk)
         else:
