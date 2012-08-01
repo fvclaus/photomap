@@ -44,7 +44,10 @@ UI.prototype = {
 	getInput : function(){
 		return this.input;
 	},
-    getPanel : function(){
-	return this.panel;
-    }
+	getPanel : function(){
+		return this.panel;
+	},
+	getCursor : function(){
+		return this.cursor;
+	},
 };

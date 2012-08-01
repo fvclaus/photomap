@@ -45,7 +45,7 @@ UIAlbum.prototype =  {
 	    );
 	    
 	    main.getUI().getControls().bindInsertPhotoListener();
-	    main.ui.controls.bindListener();
+	    main.getUI().getControls().bindListener();
 	}
 
 	
@@ -152,7 +152,7 @@ UIAlbum.prototype =  {
 	}).bind( 'mousedown.Gallery', function(event){
 	    var $el = $(this);
 	   // set Cursor for DragnDrop on images (grabber)
-	    main.ui.cursor.setCursor($el,main.ui.getCursor().cursor.grab); 
+	    main.getUI().getCursor().setCursor($el,main.ui.getCursor().cursor.grab); 
 	    
 	}).bind( 'click.Gallery', function( event ) {
 	    var $el					= $(this);
@@ -169,7 +169,7 @@ UIAlbum.prototype =  {
 	}).bind( 'mouseup.Gallery', function(event){
 	    var $el = $(this);
 	   // reset Cursor for images (pointer)
-	    main.ui.cursor.setCursor($el,main.ui.getCursor().cursor.pointer); 
+	    main.getUI().getCursor().setCursor($el,main.ui.getCursor().cursor.pointer); 
 	    
 	});
 	//draw border on visited elements

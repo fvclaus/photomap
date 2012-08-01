@@ -3,7 +3,7 @@ var repositionContent = function(){
     
     position = $(".mp-map").position();
     height = position.top;
-    width = ( $(".mp-map").width() - $container.width() ) * 0.5;
+    width = ( $(".mp-map").width() - $container.width() ) * 0.4;
     $container.css('top',height).css('left',width);
 };
   
@@ -43,7 +43,23 @@ function hideMapControls() {
 
 function setZoom(number) {
     main.getMap().getInstance().setZoom(number);
-  };
+};
+  
+function toggleFAQAnswers($question){
+    $answer = $question.next();
+    $answers = $(".mp-faq-answer");
+    // hide all other answers
+    $answers.not($answer).slideUp(150);
+	
+    if ($answer.is(":visible")){
+	$answer.slideUp(150);
+    }
+    else{
+	$answer.slideDown(300);
+    }
+};
+    
+    
 
 $(document).ready(function(){
   
@@ -60,6 +76,14 @@ $(document).ready(function(){
     
     if ($("body").find("#mp-login").attr("class") == "mp-login"){
       placeLoginForms();
+    };
+    
+    if ($("body").find("#mp-faq").attr("class") == "mp-faq-wrapper"){
+	
+	var $question = $(".mp-faq-question").bind('click', function(){
+	    trigger = $(this);
+	    toggleFAQAnswers($question);
+	});
     };
     
     initScrollPane();

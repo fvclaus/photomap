@@ -35,4 +35,7 @@ UI.prototype = {
     getPanel : function(){
 	return this.panel;
     },
+    getCursor : function(){
+	return this.cursor;
+    },
 };
