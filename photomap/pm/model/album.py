@@ -20,18 +20,21 @@ class Album(Description):
     user = models.ForeignKey(User)
     country = models.CharField(max_length = 2)
     
-    def toserializable(self,includeplaces = True):
+    def toserializable(self,includeplaces = True, guest = False):
         # avoid circular import
         from pm.model.place import Place
         
-        
-        data = {"lat" : self.lat,
-                "lon" : self.lon,
-                "title" : self.title,
-                "country" : self.country,
-                "description" : self.description,
-                "date" : self.date.isoformat(),
-                "id" : self.pk}
+        if not guest:
+            data = {"lat": self.lat,
+                    "lon": self.lon,
+                    "title": self.title,
+                    "country": self.country,
+                    "description": self.description,
+                    "date": self.date.isoformat(),
+                    "id": self.pk}
+        else:
+            data = {"lat" : self.lat,
+                    "lon" : self.lon}
         
         if includeplaces:
             places_dump = []

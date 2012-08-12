@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block mode %}
+content="non-interactive"
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript" src="static/js/main/non-interactive.js" ></script>
+	
+	
+	<script type="text/javascript" src="static/js/main/UI/UI.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/ClientState.js" ></script>
+	<script type="text/javascript" src="static/js/main/ClientServer.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/Main.js" ></script>
+	
+{% endblock %}
+
+{% block content %}
+	<div class="mp-container" id="mp-container">
+		<section class="mp-map" id="mp-map">
+			<div class="mp-map-container">
+				<div class="mp-map-wrapper" id="map"></div>
+			</div>
+		</section>
+		<section class="mp-non-interactive-content" id="mp-non-interactive-content">
+			{% block non_interactive_content %}
+			{% endblock %}
+		</section>
+	</div>
+{% endblock %}
