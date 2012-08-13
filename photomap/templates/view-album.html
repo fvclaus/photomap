@@ -4,32 +4,7 @@
 
 
 {% block js %}
-	<script id="galleryTmpl" type="text/html">
-		<div class="mp-gallery-outer">
-			<div class="mp-gallery">
-				<% for (thumb in this.thumbAddress) { %>
-				<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
-				<% }; %>
-				<img class="mp-option-add mp-control" src="static/images/add.png" title="Bild hinzufügen"></img>
-			</div>
-		</div>
-	</script>
 	
-	<script id="galleryFullscreenTmpl" type="text/html">
-		<div id="mp-image-overlay" class="mp-image-overlay">
-			<img class="mp-loading"></img>
-			<img class="mp-image-zoom" src="static/images/zoom.png" ></img>
-			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
-			<div class="mp-image-overlay-desc">
-				<div class="mp-image-nav">
-					<img class="mp-image-nav-prev mp-control" src="static/images/image-arrow-left.png" ></img>
-					<img class="mp-image-nav-next mp-control" src="static/images/image-arrow-right.png" ></img>
-					<img class="mp-image-overlay-close mp-control" src="static/images/close.png" ></img>
-				</div>
-				<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
-			</div>
-		</div>
-	</script>
 	
 
 	
@@ -114,6 +89,33 @@
 				<button class="mp-delete-photo" /></button>
 				<p id="test-photo-path">{{testphotopath}}</p>
 			</div>
+			
+			<script id="galleryTmpl" type="text/html">
+			<div class="mp-gallery-outer">
+				<div class="mp-gallery">
+					<% for (thumb in this.thumbAddress) { %>
+					<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+					<% }; %>
+					<img class="mp-option-add mp-control" src="static/images/add.png" title="Bild hinzufügen"></img>
+				</div>
+			</div>
+			</script>
+	
+			<script id="galleryFullscreenTmpl" type="text/html">
+				<div id="mp-image-overlay" class="mp-image-overlay">
+					<img class="mp-loading"></img>
+					<img class="mp-image-zoom" src="static/images/zoom.png" ></img>
+					<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
+					<div class="mp-image-overlay-desc">
+						<div class="mp-image-nav">
+							<img class="mp-image-nav-prev mp-control" src="static/images/image-arrow-left.png" ></img>
+							<img class="mp-image-nav-next mp-control" src="static/images/image-arrow-right.png" ></img>
+							<img class="mp-image-overlay-close mp-control" src="static/images/close.png" ></img>
+						</div>
+						<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
+					</div>
+				</div>
+			</script>
 			
 			
 		</div>

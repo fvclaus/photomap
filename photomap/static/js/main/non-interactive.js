@@ -2,14 +2,14 @@ var $container;
 
 function repositionContent(){    
     position = $(".mp-map").position();
-    height = position.top;
-    width = ( $(".mp-map").width() - $container.width() ) * 0.5;
-    $container.css('top',height).css('left',width);
+    top = position.top;
+    left = ( $(".mp-map").width() - $container.width() ) * 0.5;
+    $container.css({'top':top,'left':left,"position":"absolute"});
 };
 
 
 function initScrollPane() {
-    $(".mp-content-container").jScrollPane();
+    $container.jScrollPane();
 };
 
 function hideMapControls() {

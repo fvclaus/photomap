@@ -18,7 +18,7 @@ def login(request):
     if request.method == "POST":
         loginform = LoginForm(request.POST)
         if loginform.is_valid():
-            user = authenticate(email = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
+            user = authenticate(username = loginform.cleaned_data["username"], password = loginform.cleaned_data["password"])
             if user == None:
                 loginform.errors["email"] = "Please recheck the username"
                 loginform.errors["password"] = "Please recheck the password"
