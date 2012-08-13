@@ -27,7 +27,7 @@ def get(request):
     if request.method == "GET":
         user = request.user
         
-        if not user.is_authenticated():
+        if  user.is_authenticated():
             albums = Album.objects.all().filter(user = user) 
         else:
 #            last 30 albums

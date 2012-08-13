@@ -37,6 +37,5 @@ $(document).ready(function(){
     hideMapControls();
     setZoom(20);
     repositionContent();
-    $(window).trigger("content-ready");
 });
 
