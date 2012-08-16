@@ -62,7 +62,6 @@ def get(request):
     else:
         return HttpResponseBadRequest()
 
-#TODO solve issue if geo data will be handled within frontend or within the controller unit
 
 @login_required
 def insert(request):

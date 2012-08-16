@@ -5,7 +5,7 @@ UITools.prototype = {
 
     calculateFontSize : function(title,desiredWidth,desiredHeight){
 	size = 1;
-	$fontEl = $("<div class='mp-invisible mp-font'/>")
+	$fontEl = $("<div class=' mp-font'/>")
 	    .text(title)
 	    .appendTo($("body"))
 	    .css("font-size",size+"px");

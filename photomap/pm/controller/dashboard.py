@@ -21,17 +21,25 @@ def view(request):
     if request.method == "GET":
         return render_to_response("dashboard.html")
 
-@login_required
+
 def get(request):
     logger.debug("dashboard: entered view function")
     if request.method == "GET":
         user = request.user
-        albums = Album.objects.all().filter(user = user) 
+        
+        if  user.is_authenticated():
+            albums = Album.objects.all().filter(user = user) 
+        else:
+#            last 30 albums
+            albums = Album.objects.all().order_by("-pk")[:30]
         data = []
         
         for album in albums:
-            albumflat = album.toserializable(includeplaces = False)
-            albumflat["isOwner"] = True
+            if user.is_authenticated():
+                albumflat = album.toserializable(includeplaces = False)
+                albumflat["isOwner"] = True
+            else:
+                albumflat = album.toserializable(includeplaces = False, guest = True)
             data.append(albumflat)
             
         logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
