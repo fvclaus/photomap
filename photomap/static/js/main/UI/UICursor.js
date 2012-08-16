@@ -37,6 +37,10 @@ UICursor.prototype = {
     $link = $("a");
     this.setCursor($link,this.cursor.pointer);
     
+    // on faq entries
+    $question = $(".mp-faq-question");
+    this.setCursor($question,this.cursor.pointer);
+    
     // on album pics
     // defined in main.styl .mp-control
     // DragnDrop defined in UIAlbum.js after loading the pics and on "mousedown"- and "mouseup"-event (-> change: pointer ->grabber ->pointer again)
