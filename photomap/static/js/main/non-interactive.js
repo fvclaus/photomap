@@ -28,7 +28,7 @@ function setZoom(number) {
 };
 
 $(document).ready(function(){
-    $container = $(".mp-non-interactive-content");  
+    $container = $("#mp-non-interactive-content");  
     $(window).resize(function(){
       repositionContent();
       initScrollPane();
