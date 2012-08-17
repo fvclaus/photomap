@@ -11,6 +11,15 @@ UIState = function(){
 };
 
 UIState.prototype = {
+    
+    isInteractive : function(){
+	if ($("meta[property=mp:map]").attr("content") == "interactive") {
+	    return true;
+	}
+	else {
+	    return false;
+	}
+    },
     setCurrentPhotoIndex : function(index){
 	this.current = index;
     },

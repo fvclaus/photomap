@@ -5,12 +5,12 @@ UITools.prototype = {
 
     calculateFontSize : function(title,desiredWidth,desiredHeight){
 	size = 1;
-	$fontEl = $("<div class=' mp-font'/>")
+	$fontEl = $("<div class='mp-font'></div>")
 	    .text(title)
 	    .appendTo($("body"))
-	    .css("font-size",size+"px");
+	    .css("fontSize",size+"px");
 	do{
-	    $fontEl.css("font-size",(size++)+("px"));
+	    $fontEl.css("fontSize",(size++)+("px"));
 	}
 	while($fontEl.width() < desiredWidth && $fontEl.height() < desiredHeight);
 	$fontEl.remove();

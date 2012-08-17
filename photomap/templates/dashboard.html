@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-interactive.html" %}
 
 {% block title %}Dashboard{% endblock %}
 
@@ -8,43 +8,29 @@
 {% endblock %}
 
 {% block js %}
+	
+	<script type="text/javascript" src="static/js/main/UI/UI.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/ClientState.js" ></script>
+	<script type="text/javascript" src="static/js/main/ClientServer.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/Main.js" ></script>
+{% endblock %}
 
+{% block content %}
+
+	<section class="mp-map" id="mp-map">
+		<div class="mp-map-container">
+			<div class="mp-map-wrapper" id="map"></div>
+		</div>
+	</section>
+		
 	<script id="albumControlsTmpl" type="text/html">
 		<div class="album-controls-wrapper">
 			<img class="mp-album-controls mp-option-delete mp-element-album" src="static/images/delete.png" title="Löschen"></img>
 			<img class="mp-album-controls mp-option-modify mp-element-album" src="static/images/modify.png" title="Bearbeiten"></img>
 		</div>
 	</script>
-	
-	<script type="text/javascript" src="static/js/main/UI/UI.js" ></script>
-	
-	<script type="text/javascript" src="static/js/main/ClientState.js" ></script>
-	<script type="text/javascript" src="static/js/main/ClientServer.js" ></script>
-{% endblock %}
 
-{% block content %}
-		
-		<div class="mp-container" id="mp-container">
-			
-			<header class="mp-header" id="mp-header">
-				<section class="mp-logo"><a href="/"></a></section>
-				<section class="mp-page-title mp-control">
-					<h1>Dashboard</h1>
-				</section>
-				<section class="mp-top-panel">
-					<div class="mp-searchfield"></div>
-					<div class="mp-controls-wrapper">
-					</div>
-				</section>
-			</header>
-			
-			<section class="mp-map" id="mp-map">
-				<div class="mp-map-container">
-					<div class="mp-map-wrapper" id="map"></div>
-				</div>
-			</section>
-			
-		</div>
-		
 {% endblock %}
 

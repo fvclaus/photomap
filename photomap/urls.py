@@ -35,7 +35,7 @@ urlpatterns = patterns("",
                        url(r'^copyright', direct_to_template, {"template": "copyright.html"}),
                        url(r'^contact', direct_to_template, {"template": "contact.html"}),
                        url(r'^help', direct_to_template, {"template": "help.html"}),
-                       url(r'^about-us', direct_to_template, {"template": "about-us.html"}),
+                       url(r'^team', direct_to_template, {"template": "team.html"}),
                        
 
                        url(r'^logout', authentication.logout),

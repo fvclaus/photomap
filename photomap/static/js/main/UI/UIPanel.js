@@ -4,7 +4,7 @@ UIPanel = function (){
     this.$bottomPanel = $('.mp-bottom-panel');
     this.$footer = $("#mp-footer");
     this.$header = $("#mp-header");
-    this.$title = this.$header.find(".mp-page-title");
+    this.$title = this.$header.find(".mp-page-title h1");
 };
 
 UIPanel.prototype = {
@@ -19,8 +19,8 @@ UIPanel.prototype = {
     },
     
     resizeFooterFont : function(){
-	text = this.$footer.text();
-	width = this.$footer.width();
+	text = this.$footer.find(".mp-internal-links a").first().text();
+	width = 5000;
 	height = this.$footer.height();
 	tools = main.getUI().getTools();
 	size = tools.calculateFontSize(text,width,height);
@@ -29,7 +29,7 @@ UIPanel.prototype = {
     
     resizePageTitle : function(){
 	text = this.$title.text();
-	width = this.$title.width() * 0.7;
+	width = 5000;
 	height = this.$title.height() * 0.7;
 	tools = main.getUI().getTools();
 	size = tools.calculateFontSize(text,width,height);

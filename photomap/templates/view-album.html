@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-interactive.html" %}
 
 {% block title %}Albumsansicht{% endblock %}
 
@@ -29,93 +29,88 @@
 
 
 {% block content %}
-		
-		<div class="mp-container" id="mp-container">
-			
-			<div class="mp-photo-controls-wrapper">
-					<img class="mp-photo-controls-background" src="static/images/controls-box.png"></img>
-					<img class="mp-photo-controls mp-option-delete mp-element-photo" src="static/images/delete.png" title="Löschen"></img>
-					<img class="mp-photo-controls mp-option-modify mp-element-photo" src="static/images/modify.png" title="Bearbeiten"></img>
-			</div>
-			
-			<section class="mp-map" id="mp-map">
-				<div class="mp-map-container">
-					<div class="mp-map-wrapper" id="map"></div>
-					<img class="mp-option-center" src="static/images/center.png" title="Karte auf ausgewählten Platz zentrieren."></img>
-				</div>
-				<div id="mp-photo-description">
-					<div class="mp-status-image mp-font"></div>
-					<div>
-						<p class="mp-label mp-font mp-description-name"></p>
-					</div>
-					<img class="mp-description-overlay-close mp-control" src="static/images/close.png"></img>
-					<div class="mp-font mp-description-title">Beschreibung:</div>
-					<div class="mp-font mp-description-wrapper">
-						<div class="force-scroll">
-							<p></p>
-						</div>
-					</div>
-				</div>
-			</section>
-			
-			<section class="mp-album" id="mp-album">
-				<div class="mp-gallery-title-bar">PLACE|PHOTO</div>
-				<div class="mp-album-wrapper" id="mp-album-wrapper">
-				</div>
-				<div class="mp-slideshow" id="mp-slideshow">
-					<div class="mp-album-nav">
-						<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
-						<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
-					</div>
-					<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
-					<div class="mp-album-image">
-						<img class="mp-album-zoom" src="static/images/magnify.png"></img>
-						<img></img>
-					</div>
-					<img class="mp-slideshow-close mp-control" src="static/images/close.png"></img>
-				</div>
-				
-			</section>
-			
-			<!-- helpers for selenium ide. remove from production system -->
-			<div class="mp-invisible">			
-				<button class="mp-show-place"/></button>
-				<button class="mp-show-photo"/></button>
-				<button class="mp-update-place" /></button>
-				<button class="mp-update-photo" /></button>
-				<button class="mp-delete-place" /></button>
-				<button class="mp-delete-photo" /></button>
-				<p id="test-photo-path">{{testphotopath}}</p>
-			</div>
-			
-			<script id="galleryTmpl" type="text/html">
-			<div class="mp-gallery-outer">
-				<div class="mp-gallery">
-					<% for (thumb in this.thumbAddress) { %>
-					<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
-					<% }; %>
-					<img class="mp-option-add mp-control" src="static/images/add.png" title="Bild hinzufügen"></img>
-				</div>
-			</div>
-			</script>
+
+	<div class="mp-photo-controls-wrapper">
+			<img class="mp-photo-controls-background" src="static/images/controls-box.png"></img>
+			<img class="mp-photo-controls mp-option-delete mp-element-photo" src="static/images/delete.png" title="Löschen"></img>
+			<img class="mp-photo-controls mp-option-modify mp-element-photo" src="static/images/modify.png" title="Bearbeiten"></img>
+	</div>
 	
-			<script id="galleryFullscreenTmpl" type="text/html">
-				<div id="mp-image-overlay" class="mp-image-overlay">
-					<img class="mp-loading"></img>
-					<img class="mp-image-zoom" src="static/images/zoom.png" ></img>
-					<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
-					<div class="mp-image-overlay-desc">
-						<div class="mp-image-nav">
-							<img class="mp-image-nav-prev mp-control" src="static/images/image-arrow-left.png" ></img>
-							<img class="mp-image-nav-next mp-control" src="static/images/image-arrow-right.png" ></img>
-							<img class="mp-image-overlay-close mp-control" src="static/images/close.png" ></img>
-						</div>
-						<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
-					</div>
+	<section class="mp-map" id="mp-map">
+		<div class="mp-map-container">
+			<div class="mp-map-wrapper" id="map"></div>
+			<img class="mp-option-center" src="static/images/center.png" title="Karte auf ausgewählten Platz zentrieren."></img>
+		</div>
+		<div id="mp-photo-description">
+			<div class="mp-status-image mp-font"></div>
+			<div>
+				<p class="mp-label mp-font mp-description-name"></p>
+			</div>
+			<img class="mp-description-overlay-close mp-control" src="static/images/close.png"></img>
+			<div class="mp-font mp-description-title">Beschreibung:</div>
+			<div class="mp-font mp-description-wrapper">
+				<div class="force-scroll">
+					<p></p>
 				</div>
-			</script>
-			
-			
+			</div>
+		</div>
+	</section>
+	
+	<section class="mp-album" id="mp-album">
+		<div class="mp-gallery-title-bar">PLACE|PHOTO</div>
+		<div class="mp-album-wrapper" id="mp-album-wrapper">
+		</div>
+		<div class="mp-slideshow" id="mp-slideshow">
+			<div class="mp-album-nav">
+				<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
+				<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
+			</div>
+			<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
+			<div class="mp-album-image">
+				<img class="mp-album-zoom" src="static/images/magnify.png"></img>
+				<img></img>
+			</div>
+			<img class="mp-slideshow-close mp-control" src="static/images/close.png"></img>
 		</div>
 		
+	</section>
+	
+	<!-- helpers for selenium ide. remove from production system -->
+	<div class="mp-invisible">			
+		<button class="mp-show-place"/></button>
+		<button class="mp-show-photo"/></button>
+		<button class="mp-update-place" /></button>
+		<button class="mp-update-photo" /></button>
+		<button class="mp-delete-place" /></button>
+		<button class="mp-delete-photo" /></button>
+		<p id="test-photo-path">{{testphotopath}}</p>
+	</div>
+	
+	<script id="galleryTmpl" type="text/html">
+	<div class="mp-gallery-outer">
+		<div class="mp-gallery">
+			<% for (thumb in this.thumbAddress) { %>
+			<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+			<% }; %>
+			<img class="mp-option-add mp-control" src="static/images/add.png" title="Bild hinzufügen"></img>
+		</div>
+	</div>
+	</script>
+
+	<script id="galleryFullscreenTmpl" type="text/html">
+		<div id="mp-image-overlay" class="mp-image-overlay">
+			<img class="mp-loading"></img>
+			<img class="mp-image-zoom" src="static/images/zoom.png" ></img>
+			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
+			<div class="mp-image-overlay-desc">
+				<div class="mp-image-nav">
+					<img class="mp-image-nav-prev mp-control" src="static/images/image-arrow-left.png" ></img>
+					<img class="mp-image-nav-next mp-control" src="static/images/image-arrow-right.png" ></img>
+					<img class="mp-image-overlay-close mp-control" src="static/images/close.png" ></img>
+				</div>
+				<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
+			</div>
+		</div>
+	</script>
+
 {% endblock %}

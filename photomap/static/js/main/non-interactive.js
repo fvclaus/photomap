@@ -4,7 +4,7 @@ function repositionContent(){
     position = $(".mp-map").position();
     top = position.top;
     left = ( $(".mp-map").width() - $container.width() ) * 0.5;
-    $container.css({'top':top,'left':left,"position":"absolute"});
+    $container.css({'top':top,'left':left,});
 };
 
 
@@ -37,5 +37,6 @@ $(document).ready(function(){
     hideMapControls();
     setZoom(20);
     repositionContent();
+    initScrollPane();
 });
 

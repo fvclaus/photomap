@@ -15,8 +15,9 @@
 var $mpContainer = $('#mp-container');
 //http://stevenbenner.com/2010/04/calculate-page-size-and-view-port-position-in-javascript/
 $mpContainer
-    .width($(window).width()-17)
-    .height($(window).height()-17);
+    .width($(window).width()-30)
+    .height($(window).height()-25)
+    .css('margin-left', -3);
 
 var main = new Main();
 main.init();
