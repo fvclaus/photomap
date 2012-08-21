@@ -1,3 +1,4 @@
+// Album is itself stored on the Map and contains several places (which are stored on the map too)
 Album = function(data){
     this.title = data.title;
     this.id = data.id;

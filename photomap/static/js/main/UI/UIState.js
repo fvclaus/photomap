@@ -7,18 +7,27 @@ UIState = function(){
     this.albumLoading = false;
     this.fontSize = null;
     this.fullscreen = null;
-
 };
 
 UIState.prototype = {
     
-    isInteractive : function(){
-	if ($("meta[property=mp:map]").attr("content") == "interactive") {
-	    return true;
+    setModeInteractive : function(mode){
+	this.interactive = true;
+	if (mode == "dashboard"){
+	    this.dashboard = true;
 	}
 	else {
-	    return false;
+	    this.dashboard = false;
 	}
+    },
+    setModeNonInteractive : function(){
+	this.interactive = false;
+    },
+    isInteractive : function(){
+	return this.interactive;
+    },
+    isDashboard : function(){
+	return this.dashboard;
     },
     setCurrentPhotoIndex : function(index){
 	this.current = index;

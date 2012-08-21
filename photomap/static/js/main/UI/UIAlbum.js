@@ -4,7 +4,6 @@ UIAlbum = function (gallery) {
 
     //reserve  4px as buffer
     this.$album	= $('#mp-album-wrapper');
-    this.$album.width(this.$album.width() - 4);
     this.albumPadding = this.$album.css("padding-left");
     this.albumWidth = this.$album.width();
 
@@ -26,6 +25,7 @@ UIAlbum.prototype =  {
 	var position =  this.$album.position();
 	position.width = this.$album.width();
 	position.height = this.$album.height();
+	console.log("width = " + position.width + " height = " + position.height);
 	return position;
     },
 
@@ -103,8 +103,8 @@ UIAlbum.prototype =  {
 		    //hack to remove horizontal scrollbars which always show up
 		    $(".jspHorizontalBar").remove();
 		    
-		    instance.gallery.getSlideshow()
-			.scale(instance.$album.width());
+		    //instance.gallery.getSlideshow()
+			//.scale(instance.$album.width());
 
 		    instance.bindListener();
 

@@ -38,5 +38,8 @@ $(document).ready(function(){
     setZoom(20);
     repositionContent();
     initScrollPane();
+    
+    // setting albumview (just on view-album = true) to false on non-interactive pages
+    main.getUI().getState().resetAlbumView();
 });
 

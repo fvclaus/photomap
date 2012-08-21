@@ -43,6 +43,8 @@ UIInformation.prototype = {
 	    info.albumName = this.albumName;
 	    title = info.albumName + " >> " + info.name;
 	}
+	alert(this.albumName);
+	this.setAlbumTitel(this.albumName);
 	this._setTitle(title);
 	this._setDescription(info.desc);
     },
@@ -66,6 +68,9 @@ UIInformation.prototype = {
 	//this.$title.css("left",left);
 	
     },
+    setAlbumTitel : function(title){
+	$(".mp-page-title h1").text(title);
+    },
     _setDescription : function (desc) {
 	api = this.$description.data('jsp');
 	api.getContentPane()
@@ -83,7 +88,7 @@ UIInformation.prototype = {
 	$map = $(".mp-map");
 	mapOffset = $map.offset();
 	topOffset = mapOffset.top + (0.5 * (0.25 * $map.height()));
-	leftOffset = mapOffset.left + (0.5 * (0.125 * $map.width()));
+	leftOffset = mapOffset.left + (0.65 * (0.125 * $map.width()));
 	descriptionWidth = 0.375 * $map.width();
 	descriptionHeight = 0.75 *$map.height();
 	this.$wrapper

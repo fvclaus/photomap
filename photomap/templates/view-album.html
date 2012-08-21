@@ -2,6 +2,8 @@
 
 {% block title %}Albumsansicht{% endblock %}
 
+{% block name %}Albumsansicht{% endblock %}
+
 
 {% block js %}
 	
@@ -23,6 +25,7 @@
 	<script type="text/javascript" src="static/js/main/ClientServer.js" ></script>
 	
 	<script type="text/javascript" src="static/js/main/Main.js" ></script>
+	<script type="text/javascript" src="static/js/main/interactive/view-album.js" ></script>
 
 {% endblock %}
 
@@ -60,19 +63,19 @@
 		<div class="mp-gallery-title-bar">PLACE|PHOTO</div>
 		<div class="mp-album-wrapper" id="mp-album-wrapper">
 		</div>
+		<div class="mp-slideshow-background"></div>
 		<div class="mp-slideshow" id="mp-slideshow">
-			<div class="mp-album-nav">
-				<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
-				<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
+				<div class="mp-album-nav">
+					<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
+					<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
+				</div>
+				<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
+				<div class="mp-album-image">
+					<img class="mp-album-zoom" src="static/images/magnify.png"></img>
+					<img class="mp-current-image"></img>
+				</div>
+				<img class="mp-slideshow-close mp-control" src="static/images/close.png"></img>
 			</div>
-			<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
-			<div class="mp-album-image">
-				<img class="mp-album-zoom" src="static/images/magnify.png"></img>
-				<img></img>
-			</div>
-			<img class="mp-slideshow-close mp-control" src="static/images/close.png"></img>
-		</div>
-		
 	</section>
 	
 	<!-- helpers for selenium ide. remove from production system -->

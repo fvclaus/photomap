@@ -10,6 +10,7 @@ UISlideshow = function(gallery){
     this.$loading = this.$slideshow.find('img.mp-image-loading-small');
     this.$zoom = this.$slideshow.find("img.mp-album-zoom");
     this.$wrapper = this.$slideshow.find("div.mp-album-image");
+    this.$background = $(".mp-slideshow-background").hide();
 
     this.bindListener();
     
@@ -72,18 +73,26 @@ UISlideshow.prototype = {
 	var position = main.getUI().getAlbum().getDimensions();
 	// write height and width in overlay image wrapper and overlay
 	// css only sizing and pos failed for some reason
-	
+	console.log("newwidth = " + position.width + " newheight = " + position.height);
+	console.log(position.width == 462);
 	this.$slideshow
 	    .css("left",position.left)
 	    .css("top",position.top)
 	    .width(position.width)
 	    .height(position.height)
 	    .show();
+	this.$background
+	    .css("left",position.left)
+	    .css("top",position.top)
+	    .width(position.width)
+	    .height(position.height)
+	    .show()
 	this.$wrapper
 	    .width(this.$slideshow.width() -(this.$next.width() + this.$prev.width()))
 	    .height(this.$slideshow.height())
 	    .css("left",this.$prev.width());
 	this.$slideshow.hide();
+	this.$background.hide();
     },
 
     closeSlideshow : function(){
@@ -91,7 +100,7 @@ UISlideshow.prototype = {
 	    return;
 	    
 	$(".mp-slideshow").hide();
-	$(".mp-album-wrapper").show();
+	$(".mp-slideshow-background").hide();
 	
 	main.getUIState().setSlideshow(false);
 	main.getUIState().setSlideshowLoaded(false);
@@ -125,7 +134,7 @@ UISlideshow.prototype = {
     _startSlider: function() {
 	var instance = this;
 	
-	$(".mp-album-wrapper").hide();
+	$(".mp-slideshow-background").show();
 	$(".mp-slideshow").show();
 
 	//disable UI interaction
