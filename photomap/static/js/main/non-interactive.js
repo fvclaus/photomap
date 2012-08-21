@@ -39,6 +39,8 @@ $(document).ready(function(){
     repositionContent();
     initScrollPane();
     
-    main.getUI().getState().setModeNonInteractive();
+    ui = main.getUI();    
+    ui.getCursor().setMapCursor(ui.getCursor().cursor.grab)
+    ui.getState().setModeNonInteractive();
 });
 

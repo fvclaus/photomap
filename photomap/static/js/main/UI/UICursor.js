@@ -16,7 +16,6 @@ UICursor = function(){
 UICursor.prototype = {
   
   init : function(){
-    
     this.cursors();
   },
   
@@ -24,14 +23,18 @@ UICursor.prototype = {
     $element.css('cursor',style);
   },
   
+  setMapCursor : function(style){
+    map = main.getMap().getInstance();
+    map.setOptions({ 
+      draggableCursor: style,
+      draggingCursor: this.cursor.grab,
+    });
+  },
+  
   cursors : function() {
     
     // on map
-    map = main.getMap().getInstance();
-    map.setOptions({ 
-      draggableCursor: this.cursor.cross,
-      draggingCursor: this.cursor.grab,
-    });
+    this.setMapCursor(this.cursor.cross);
     
     // on links
     $link = $("a");
