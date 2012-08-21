@@ -43,7 +43,6 @@ UIInformation.prototype = {
 	    info.albumName = this.albumName;
 	    title = info.albumName + " >> " + info.name;
 	}
-	alert(this.albumName);
 	this.setAlbumTitel(this.albumName);
 	this._setTitle(title);
 	this._setDescription(info.desc);

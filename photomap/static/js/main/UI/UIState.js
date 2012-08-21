@@ -8,7 +8,6 @@ UIState = function(){
     this.fontSize = null;
     this.fullscreen = null;
     this.interactive = false;
-    this.dashboard = false;
 };
 
 UIState.prototype = {
