@@ -1,7 +1,7 @@
 function placeMapControls() {
     main.getMap().getInstance().setOptions({
       mapTypeControlOptions: {
-	position: google.maps.ControlPosition.TOP_LEFT,
+	position: google.maps.ControlPosition.TOP_CENTER,
       },
     });
 };
@@ -10,5 +10,6 @@ $(document).ready(function(){
 
   placeMapControls();
   
-  main.getUI().getState().resetAlbumView();
+  page = "dashboard";
+  main.getUI().getState().setModeInteractive(page);
 });

@@ -12,4 +12,7 @@ $(document).ready(function(){
   
   $(".mp-slideshow-background").position($(".mp-album-wrapper").position());
   $(".mp-slideshow").position($(".mp-album-wrapper").position());
+  
+  page = "albumview";
+  main.getUI().getState().setModeInteractive(page);
 });

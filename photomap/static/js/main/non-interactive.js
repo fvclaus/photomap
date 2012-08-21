@@ -39,7 +39,6 @@ $(document).ready(function(){
     repositionContent();
     initScrollPane();
     
-    // setting albumview (just on view-album = true) to false on non-interactive pages
-    main.getUI().getState().resetAlbumView();
+    main.getUI().getState().setModeNonInteractive();
 });
 
