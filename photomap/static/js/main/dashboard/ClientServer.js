@@ -16,24 +16,25 @@ ClientServer.prototype = {
 
 	_getAlbums			: function( callback ) {
 	    var instance = this;
-	    // get the places and its info from the XML file
+	    // get the albums and their info
 	    $.getJSON('get-all-albums', function( data ) {
-		// the album name
-		instance.name = data.title;
-		instance.id = data.id;
-		// the album description
-		instance.desc = data.description;
+		
+		$.each( data, function( key, albuminfo ) {
+		    var album = new Album( albuminfo )
+		    instance.albums.push( album );
+		});
 		
 		if( callback ) callback.call();
+		
 	    });
 	    
 	},
 	_showAlbums			: function() {
 	    var map 			= main.getMap();
 	    markersinfo		= [];
-	    map.places = this.albums;	    
+	    map.albums = this.albums;	    
 
-	    map.places.forEach(function(album){
+	    map.albums.forEach(function(album){
 		
 		marker	= album.marker;
 		markersinfo.push({
