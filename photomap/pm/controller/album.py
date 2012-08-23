@@ -58,6 +58,7 @@ def get(request):
             return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
         except (KeyError, Album.DoesNotExist), e:
             return error(str(e))
+
     
     else:
         return HttpResponseBadRequest()
@@ -76,6 +77,8 @@ def insert(request):
             return success(id = album.pk)
         else:
             return error(str(form.errors))
+    else:
+        return render_to_response("insert-album.html")
 
 @login_required
 def update(request):
