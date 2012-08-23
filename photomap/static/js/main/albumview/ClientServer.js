@@ -10,8 +10,6 @@ ClientServer.prototype = {
 	    this._getPlaces( function() {
 		instance._showPlaces();
 	    });
-
-	  
 	},
    	 savePhotos : function(photos){
 	$.ajax({

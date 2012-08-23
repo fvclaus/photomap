@@ -16,7 +16,14 @@ Album = function(data){
 
 Album.prototype = {
     bindListener: function(){
+	instance = this;
+	console.log("id " + this.id);
 	google.maps.event.addListener(this.marker.MapMarker, "click", function(){
+	    console.log(instance.id);
+	    /*window.location.href="/view-album"
+	    main.getClientServer()._getPlaces( function(this.id) {
+		instance._showPlaces();
+	    });*/
 	});
     },
 

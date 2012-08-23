@@ -82,9 +82,9 @@ Place.prototype = {
 	// in the eventcallback this will be the gmap
 	// use instance as closurefunction to access the place object
 	google.maps.event.addListener( this.marker.MapMarker, 'click', function() {
-
-	    if (main.getUIState().isAlbumLoading())
+	    if (main.getUIState().isAlbumLoading()) {
 		return;
+	    }
 
 	    var map = main.getMap();
 	    var oldPlace = main.getUIState().getCurrentPlace();
