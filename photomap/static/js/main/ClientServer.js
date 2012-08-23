@@ -20,6 +20,9 @@ ClientServer.prototype = {
 	    $.getJSON('get-all-albums', function( data ) {
 		
 		$.each( data, function( key, albuminfo ) {
+		    /*console.log("key " + key + " - info " + albuminfo);
+		    console.log("id " + albuminfo.id);
+		    console.log("title " + albuminfo.title);*/
 		    var album = new Album( albuminfo )
 		    instance.albums.push( album );
 		});
@@ -35,7 +38,7 @@ ClientServer.prototype = {
 	    map.albums = this.albums;	    
 
 	    map.albums.forEach(function(album){
-		
+		console.dir(album);
 		marker	= album.marker;
 		markersinfo.push({
 		    lat	: marker.lat,
@@ -44,11 +47,5 @@ ClientServer.prototype = {
 		marker.show();
 	    });
 	    map.fit(markersinfo);
-	    if (main.getUI().getInformation()) {
-	    information = main.getUI().getInformation();
-	    information.setInfo(this);
-	    information.albumName = this.name;
-	    information.albumDesc = this.desc;
-	    }
 	}
 };

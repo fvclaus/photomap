@@ -21,20 +21,36 @@ ClientServer.prototype = {
 	});
   	  },
 
-	_getPlaces			: function( callback ) {
+	_getPlaces			: function(callback ) {
 	    var instance = this;
 	    // get the places and its info from the XML file
-	    $.getJSON('get-album', function( data ) {
+	    url = 'get-album?id=' + helperFunctions.getParameterByName('id');
+	    $.getJSON(url, function( data ) {
 		// the album name
 		instance.name = data.title;
 		instance.id = data.id;
 		// the album description
 		instance.desc = data.description;
-
+		
+		if (data.places == undefined) {
+		    var map = main.getMap().getInstance();
+		    lat = data.lat;
+		    lon = data.lon;
+		    lowerLatLng = new google.maps.LatLng(lat - .1,lon - .1);
+		    upperLatLng = new google.maps.LatLng(lat + .1,lon + .1);
+		    bounds = new google.maps.LatLngBounds(lowerLatLng,upperLatLng);
+		    map.fitBounds(bounds);
+		    x = ( $("#mp-map").width() * 0.25 );
+		    y = 0;
+		    map.panBy(x,y);
+		    return;
+		}
+		
 		$.each( data.places, function( key, placeinfo ) {
 		    var place = new Place( placeinfo )
 		    instance.places.push( place );
 		});
+		
 		if( callback ) callback.call();
 	    });
 	    

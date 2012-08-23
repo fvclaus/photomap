@@ -48,6 +48,7 @@ Place.prototype = {
     center : function(){
 	var map = main.getMap().getInstance();
 	map.setZoom(13);
+	console.log("position " + this.marker.MapMarker.getPosition());
 	map.panTo(this.marker.MapMarker.getPosition());
 	x = ( $("#mp-map").width() * 0.25 );
 	y = 0;
@@ -82,6 +83,10 @@ Place.prototype = {
 	// in the eventcallback this will be the gmap
 	// use instance as closurefunction to access the place object
 	google.maps.event.addListener( this.marker.MapMarker, 'click', function() {
+	    
+	    console.log(instance.id);
+	    console.log(instance);
+	    
 	    if (main.getUIState().isAlbumLoading()) {
 		return;
 	    }

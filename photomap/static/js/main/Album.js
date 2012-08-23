@@ -1,4 +1,4 @@
-// Album is itself stored on the Map and contains several places (which are stored on the map too)
+// Album is itself stored on the Map
 Album = function(data){
     this.title = data.title;
     this.id = data.id;
@@ -16,17 +16,21 @@ Album = function(data){
 
 Album.prototype = {
     bindListener: function(){
-	instance = this;
-	console.log("id " + this.id);
+	var instance = this;
 	google.maps.event.addListener(this.marker.MapMarker, "click", function(){
-	    console.log(instance.id);
-	    /*window.location.href="/view-album"
-	    main.getClientServer()._getPlaces( function(this.id) {
-		instance._showPlaces();
-	    });*/
+	    url = '/view-album?id=' + instance.id;
+	    window.location.href=url;
 	});
     },
-
+    triggerClick : function(){
+	var map = main.getMap();
+	google.maps.event.trigger(this.marker.MapMarker,"click");
+    },
+    center : function(){
+	var map = main.getMap().getInstance();
+	map.setZoom(13);
+	map.panTo(this.marker.MapMarker.getPosition());
+    },
     showVisitedIcon : function(){
 	this.marker.set({icon: "static/images/camera-visited.png"});
     },

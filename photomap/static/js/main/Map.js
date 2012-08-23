@@ -166,6 +166,8 @@ Map.prototype = {
 			    });
 			    album.marker.show();
 			    input._close();
+			    //redraws place
+			    album.triggerClick();
 			});
 		    });
     
@@ -197,6 +199,7 @@ Map.prototype = {
 	    bounds.extend( LatLngList[i] );
 	}
 	// fit these bounds to the map
+	console.log("bounds " + bounds);
 	this.map.fitBounds( bounds );
     },
     getOverlay : function(){

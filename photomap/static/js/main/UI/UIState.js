@@ -1,6 +1,8 @@
 UIState = function(){
     this.currentPhotoIndex = null;
     this.currentPhoto = null;
+    this.currentPlace = null;
+    this.currentAlbum = null;
     this.photos = null;
     this.slideshow = false;	
     this.slideshowLoaded = false;
@@ -57,6 +59,12 @@ UIState.prototype = {
     },
     getCurrentPlace : function(){
 	return this.currentPlace;
+    },
+    setCurrentAlbum : function(album){
+	this.currentAlbum = album;
+    },
+    getCurrentAlbum : function(){
+	return this.currentAlbum;
     },
     setSlideshow : function(slideshow){
 	this.slideshow = slideshow;
