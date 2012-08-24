@@ -20,6 +20,8 @@ def login(request):
         return render_to_response("login.html", data)
     if request.method == "POST":
         loginform = LoginForm(request.POST)
+        registerform = RegisterForm()
+        data = {"login" : loginform, "register" : registerform}
         if loginform.is_valid():
             user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
             if user == None:
