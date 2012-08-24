@@ -8,5 +8,5 @@ def userdata(request):
     if request.user.is_authenticated():
         useremail = request.user.email
     else:
-        useremail = None
+        useremail = "Nicht angemeldet"
     return {'useremail': useremail}

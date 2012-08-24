@@ -171,7 +171,6 @@ TEMPLATE_LOADERS = (
 
 TEMPLATE_CONTEXT_PROCESSORS = (
                                'django.contrib.auth.context_processors.auth',
-                               'pm.util.context_processors.userdata'
                                )
 
 # stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
