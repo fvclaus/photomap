@@ -21,13 +21,13 @@ def login(request):
     if request.method == "POST":
         loginform = LoginForm(request.POST)
         if loginform.is_valid():
-            user = authenticate(username = loginform.cleaned_data["username"], password = loginform.cleaned_data["password"])
+            user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
             if user == None:
                 loginform.errors["email"] = "Please recheck the username"
                 loginform.errors["password"] = "Please recheck the password"
                 render_to_response("login.html", data)
             auth_login(request, user)
-            return HttpResponseRedirect("/view-album")
+            return HttpResponseRedirect("/dashboard")
         else:
             return render_to_response("login.html", data)
         

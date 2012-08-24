@@ -6,6 +6,8 @@ Created on 21.07.2012
 
 from django.http import HttpResponseRedirect, HttpResponse 
 from django.shortcuts import render_to_response
+from django.template import RequestContext
+
 from message import success, error
 from pm.model.album import Album
 from pm.model.invitation import Invitation
@@ -19,7 +21,8 @@ logger = logging.getLogger(__name__)
 @login_required
 def view(request):
     if request.method == "GET":
-        return render_to_response("dashboard.html")
+        return render_to_response("dashboard.html",
+                                  context_instance = RequestContext(request))
 
 
 def get(request):
