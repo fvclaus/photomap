@@ -13,7 +13,6 @@ Main.prototype = {
 	this.map = new Map();
 	this.ui.init();
 	this.clientServer.init();
-
     },
     getUIState : function(){
 	return this.ui.getState();

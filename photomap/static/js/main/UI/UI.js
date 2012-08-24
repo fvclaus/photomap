@@ -15,7 +15,7 @@ UI.prototype = {
 	this.cursor.init();
     },
     getCursor : function(){
-	    return this.cursor;
+	return this.cursor;
     },
     getTools : function(){
 	return this.tools;

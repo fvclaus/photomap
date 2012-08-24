@@ -84,9 +84,6 @@ Place.prototype = {
 	// use instance as closurefunction to access the place object
 	google.maps.event.addListener( this.marker.MapMarker, 'click', function() {
 	    
-	    console.log(instance.id);
-	    console.log(instance);
-	    
 	    if (main.getUIState().isAlbumLoading()) {
 		return;
 	    }
@@ -107,7 +104,7 @@ Place.prototype = {
 	    information.setPlaceTitle();
 	    information.setPlaceDescription();
 	    
-	    main.getUI().getControls().hidePhotoControls(false);
+	    main.getUI().getControls().hideControls(false);
 	    //change icon of new place
 	    instance.checkIconStatus();
 	    // change icon of old place
@@ -132,12 +129,12 @@ Place.prototype = {
 
 	    controls =  main.getUI().getControls();
 	    controls.setModifyPlace(true);
-	    main.getUI().getState().setCurrentPlace(instance);
-	    controls.showModifyControls({top:pixel.y,left:pixel.x});
+	    main.getUIState().setCurrentPlace(instance);
+	    controls.showControls({top:pixel.y,left:pixel.x});
 	});
 
 	google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
-	    main.getUI().getControls().hidePhotoControls(true);
+	    main.getUI().getControls().hideControls(true);
 	});
 
 	

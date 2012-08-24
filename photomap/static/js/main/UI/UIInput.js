@@ -58,7 +58,7 @@ UIInput.prototype = {
 		    instance._close();
 		},
 		error : function(error){
-		    instance.close();
+		    instance._close();
 		    alert(error.toString());
 		}
 	    });

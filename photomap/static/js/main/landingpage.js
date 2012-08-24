@@ -1,3 +1,3 @@
 $(document).ready(function(){
- $(".mp-controls-wrapper").hide();
+ $(".mp-panel-controls-wrapper").hide();
 });

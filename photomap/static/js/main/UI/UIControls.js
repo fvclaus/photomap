@@ -1,23 +1,18 @@
 UIControls = function(maxHeight) {
     
     //currently photo only
-    this.$photoControls = $(".mp-photo-controls-wrapper");
-    this.$photoControls.hide();
+    this.$controls = $(".mp-controls-wrapper");
+    this.$controls.hide();
     // icons of photo controls are not scaled yet
-    this.$photoControls.isScaled = false;
+    this.$controls.isScaled = false;
     // tells the hide function whether or not the mouse entered the window
-    this.$photoControls.isEntered = false;
+    this.$controls.isEntered = false;
 
     this.$delete = $("img.mp-option-delete");
     this.$update = $("img.mp-option-modify");
 
-    this.$delete = $(".mp-option-delete");
-    this.$modify = $(".mp-option-modify");
     this.$logout = $(".mp-option-logout");
     this.$center = $(".mp-option-center");
-
-    
-    this.bindListener();
 
 };
 
@@ -25,30 +20,13 @@ UIControls.prototype = {
     
     init : function(){
 	this.placeCenterControl();
+
 	this.bindListener();
 
 	height = main.getUI().getPanel().getFooterHeight();
 	this.$logout.height(height);
 
     },
-    
-
-    hideControls : function(){
-	// instance.$delete.hide();
-	// instance.$update.hide()
-	this.$insert.parent().hide();
-	this.$center.hide();
-    },
-
-    showControls : function(){
-	if(main.getClientState().isAdmin()){
-    	    // this.$delete.show();
-	    // this.$modify.show();
-	    // this.$insert.parent().show();
-	}
-	this.$center.show();
-    },
-    
     placeCenterControl : function(){
 	//reposition
 	this.$center.show();
@@ -63,7 +41,6 @@ UIControls.prototype = {
 	    .hide();
     },
     
-    
     /*
       displays modify control under a photo
       @param $el: the photo element under which controls are placed
@@ -75,11 +52,11 @@ UIControls.prototype = {
 	center.top += tools.getRealHeight($el);
 
 	// clear any present timeout, as it will hide the controls while the mouspointer never left
-	if(this.hidePhotoControlsTimeoutId){
-	    window.clearTimeout(this.hidePhotoControlsTimeoutId);
-	    this.hidePhotoControlsTimeoutId = null;
+	if(this.hideControlsTimeoutId){
+	    window.clearTimeout(this.hideControlsTimeoutId);
+	    this.hideControlsTimeoutId = null;
 	}
-	this.showModifyControls(center);
+	this.showControls(center);
 	this.setModifyPhoto(true);
 
     },
@@ -89,14 +66,14 @@ UIControls.prototype = {
       @param center: the bottom center of the element where the controls should be displayed
     */
 
-    showModifyControls : function(center){
+    showControls : function(center){
 	// calculate the offset
 	tools = main.getUI().getTools();
 	// center the controls below the center
-	center.left  -= tools.getRealWidth(this.$photoControls)/2;
+	center.left  -= tools.getRealWidth(this.$controls)/2;
 
 	// offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
-	this.$photoControls
+	this.$controls
 	    .css({
 		top: center.top,
 		left: center.left
@@ -104,43 +81,51 @@ UIControls.prototype = {
 	    .show();
 
 	// don't resize the icons all the time to save performance
-	if (!this.$photoControls.isScaled){
-	    this.$photoControls
-		.find(".mp-photo-controls")
-		.height(this.$photoControls.height() * 0.8)
-		.width(this.$photoControls.width() * 0.45);
+	if (!this.$controls.isScaled){
+	    this.$controls
+		.find(".mp-controls-options")
+		.height(this.$controls.height() * 0.8)
+		.width(this.$controls.width() * 0.45);
 	}
 	
     },
+    
+    setModifyAlbum : function(active){
+	this.isModifyAlbum = active;
+	this.isModifyPlace = !active;
+	this.isModifyPhoto = !active;
+    },
 
-    setModifyPlace : function(modifyPlace){
-	this.isModifyPlace = modifyPlace;
-	this.isModifyPhoto = !modifyPlace;
+    setModifyPlace : function(active){
+	this.isModifyPlace = active;
+	this.isModifyAlbum = !active;
+	this.isModifyPhoto = !active;
     },
     
-    setModifyPhoto : function(modifyPhoto){
-	this.isModifyPhoto = modifyPhoto;
-	this.isModifyPlace = !modifyPhoto;
+    setModifyPhoto : function(active){
+	this.isModifyPhoto = active;
+	this.isModifyPlace = !active;
+	this.isModifyAlbum = !active;
     },
 
     /*
       hides the modfiy controls
       @param timeout: boolean, if the controls should be hidden after a predefined timout, when the controls are not entered
     */
-    hidePhotoControls : function(timeout){
+    hideControls : function(timeout){
 	var instance = this;
 	hide = function(){
-	    if(instance.$photoControls.isEntered){
+	    if(instance.$controls.isEntered){
 		return;
 	    }
-	    instance.$photoControls.hide();
+	    instance.$controls.hide();
 	};
 
 	if(timeout){
-	    this.hidePhotoControlsTimeoutId = window.setTimeout(hide,1000);
+	    this.hideControlsTimeoutId = window.setTimeout(hide,1000);
 	}
 	else{
-	    this.$photoControls.hide();
+	    this.$controls.hide();
 	}
     },
     
@@ -161,16 +146,17 @@ UIControls.prototype = {
     bindListener : function(){
 
 	var instance = this;
-	this.$delete.bind("click.MapPhotoAlbum",function(event){
+	this.$delete.unbind("click").bind("click",function(event){
 	    // hide current place's markers and clean photos from gallery
 	    state = main.getUIState();	
 	    photo = state.getCurrentPhoto();
 	    place = state.getCurrentPlace();
+	    album = state.getCurrentAlbum();
 	    var url,data;
 	    
 	    // delete current photo
 	    if (instance.isModifyPhoto) {
-		if(confirm("Do you really want to delete photo "+photo.name)){
+		if(confirm("Do you really want to delete photo " + photo.name)){
 		    url = "/delete-photo",
 		    data = {"id":photo.id};
 		    //deletes photo from gallery and moves or hides slider
@@ -182,11 +168,22 @@ UIControls.prototype = {
 
 	    // delete current place
 	    else if(instance.isModifyPlace){
-		if(confirm("Do you really want to delete place "+place.name)){
+		if(confirm("Do you really want to delete place " + place.name)){
 		    url = "/delete-place";
 		    data = {"id":place.id};
+		    main.getUI().getInformation().hidePlaceTitle();
 		    place._delete();
-		    main.getUI().getInformation().setInfo();
+		}
+		else
+		    return;
+	    }
+
+	    // delete current album
+	    else if(instance.isModifyAlbum){
+		if(confirm("Do you really want to delete Album " + album.name)){
+		    url = "/delete-album";
+		    data = {"id":album.id};
+		    album._delete();
 		}
 		else
 		    return;
@@ -210,10 +207,11 @@ UIControls.prototype = {
 	    });
 	});
 
-	this.$update.bind("click.MapPhotoAlbum",function(event){
+	this.$update.unbind("click").bind("click",function(event){
 	    var state = main.getUIState();	
 	    var place = state.getCurrentPlace();
 	    var photo = state.getCurrentPhoto();
+	    var album = state.getCurrentAlbum();
 	    
 	    // edit current photo
 	    if (instance.isModifyPhoto) {
@@ -225,6 +223,12 @@ UIControls.prototype = {
 			$("input[name=order]").val(photo.order);
 			var $name = $("input[name=title]").val(photo.name);
 			var $desc = $("textarea[name=description]").val(photo.desc);
+
+			main.getUI().getInput().onForm(function(){
+			    //reflect changes locally
+			    photo.name = $name.val();
+			    photo.desc = $desc.val();
+			});
 		    })
 		    .get("/update-photo");
 	    }
@@ -244,19 +248,38 @@ UIControls.prototype = {
 			    place.name = $name.val();
 			    place.desc = $desc.val();
 			    main.getUI().getInformation().updatePlace(place);
-			})
+			});
 		    })
 		    .get("/update-place");
 	    }
+	    
+	    //edit current album
+	    else if (instance.isModifyAlbum){
+		//prefill with name and update on submit
+
+		main.getUI().getInput()
+		    .onLoad(function(){
+			$("input[name=id]").val(album.id);
+			var $name = $("input[name=title]").val(album.name);
+			var $desc = $("textarea[name=description]").val(album.desc);
+
+			main.getUI().getInput().onForm(function(){
+			    //reflect changes locally
+			    album.name = $name.val();
+			    album.desc = $desc.val();
+			});
+		    })
+		    .get("/update-album");
+	    }
 	});
 	
-	this.$photoControls
+	this.$controls
 	    .bind("mouseleave",function(){
-		instance.$photoControls.hide();
-		instance.$photoControls.isEntered = false;
+		instance.$controls.hide();
+		instance.$controls.isEntered = false;
 	    })
 	    .bind("mouseenter",function(){
-		instance.$photoControls.isEntered = true;
+		instance.$controls.isEntered = true;
 	    });
 	
 	

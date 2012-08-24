@@ -148,6 +148,7 @@ UIFullscreen.prototype = {
     bindListener	: function() {
 	var instance	= this;
 	$("div.mp-image-nav")
+	    .unbind(".Gallery")
 	    .find("img.mp-image-nav-next")
 	    .bind("click.Gallery",function(event){
 		instance.$close.trigger("click");
@@ -161,7 +162,7 @@ UIFullscreen.prototype = {
 		instance.gallery.navigateSlider(instance,"left");	
 		instance.zoom();
 	    });
-	this.$close.bind('click.Gallery', function() {
+	this.$close.unbind("click.Gallery").bind('click.Gallery', function() {
 	    //remove since it will be recreated with every call to gallery.zoom()
 	    main.getUIState().setFullscreen(false);
 	    instance.$fullscreen.fadeOut("slow").remove();

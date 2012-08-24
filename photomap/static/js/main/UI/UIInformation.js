@@ -37,6 +37,14 @@ UIInformation.prototype = {
     hidePhotoTitle : function(){
 	$(".mp-photo-title").hide();
     },
+    hidePlaceTitle : function(){
+	if (main.getUIState().getCurrentPlace() == main.getUIState().getCurrentLoadedPlace()){
+	    $(".mp-place-title").empty();
+	}
+	else{
+	    return;
+	}
+    },
     placeDescription : function () {
 	// resizing and repositioning description wrapper
 	$map = $(".mp-map");
@@ -95,13 +103,16 @@ UIInformation.prototype = {
 	    this.setPlaceTitle(placeinfo.name);
 	    this.setPlaceDescription(placeinfo.desc);
 	}
+	else{
+	    return;
+	}
     },
     bindListener : function(){
 	var instance = this;
 	this.$close.bind('click',function(){
 	    instance.closeDescription();
 	});
-	this.$infoButton.bind('click',function(){
+	this.$infoButton.unbind('click').bind('click',function(){
 	    $button = $(this);
 	    if ($button.hasClass("mp-page-title")){
 		instance.setAlbumDescription();

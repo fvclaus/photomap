@@ -5,3 +5,13 @@ content="interactive"
 {% endblock %}
 
 <!-- no javascript here -->
+
+{% block content %}
+	<div class="mp-controls-wrapper">
+			<img class="mp-controls-background" src="static/images/controls-box.png"></img>
+			<img class="mp-controls-options mp-option-delete mp-element-photo" src="static/images/delete.png" title="Löschen"></img>
+			<img class="mp-controls-options mp-option-modify mp-element-photo" src="static/images/modify.png" title="Bearbeiten"></img>
+	</div>
+	{% block content_interactive %}
+	{% endblock %}
+{% endblock %}

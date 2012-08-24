@@ -14,7 +14,7 @@ UIAlbum = function (gallery) {
 UIAlbum.prototype =  {
 
     searchImages : function(){
-	this.$elements = this.$album.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-photo-controls");
+	this.$elements = this.$album.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-controls-options");
     },
 
     getEl : function(){
@@ -125,7 +125,9 @@ UIAlbum.prototype =  {
 	var instance = this;
 	state = main.getUIState();
 	//bind events on anchors
-	instance.$elements.bind( 'mouseenter.Gallery', function( event ) {
+	instance.$elements
+	.unbind('.Gallery')
+	.bind( 'mouseenter.Gallery', function( event ) {
 	    var $el = $(this);
 	    $el
 		.addClass('current')
@@ -147,7 +149,7 @@ UIAlbum.prototype =  {
 	    (main.getUIState().getPhotos())[$el.index()].checkBorder();
 	    $el.removeClass('current');
 	    
-	    main.getUI().getControls().hidePhotoControls(true);
+	    main.getUI().getControls().hideControls(true);
 
 	}).bind( 'mousedown.Gallery', function(event){
 	    var $el = $(this);
@@ -161,7 +163,7 @@ UIAlbum.prototype =  {
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto((state.getPhotos())[$el.index()]);
 
-	    main.getUI().getControls().hidePhotoControls(false);
+	    main.getUI().getControls().hideControls(false);
 	    
 	    // starts little slideshow in gallery div
 	    instance.gallery.startSlider();

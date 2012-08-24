@@ -20,6 +20,8 @@ function placeLoginForms(){
 $(document).ready(function(){
 
     placeLoginForms();
+    
+    $(".mp-panel-controls-wrapper").hide();
 
 });    
 
