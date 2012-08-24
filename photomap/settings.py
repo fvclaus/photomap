@@ -169,6 +169,10 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+                               'django.contrib.auth.context_processors.auth',
+                               )
+
 # stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
 COMPRESS_PRECOMPILERS = (
                          ("text/x-stylus", "stylus < {infile} > {outfile} --include " + CSS_PATH),
@@ -183,6 +187,11 @@ MIDDLEWARE_CLASSES = (
 #    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+)
+
+AUTHENTICATION_BACKENDS = (
+    "pm.controller.authentication.EmailBackend",
+    "django.contrib.auth.backends.ModelBackend",
 )
 
 ROOT_URLCONF = 'urls'

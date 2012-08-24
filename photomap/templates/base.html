@@ -93,12 +93,14 @@
 			{% endblock %}	
 			
 			<footer class="mp-footer" id="mp-footer">
-				<section class="mp-user">
-					<span>
-						<a href="/logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
-					</span>
-					<span>Testnutzer</span>
-				</section>
+				{% if user.is_authenticated %}
+					<section class="mp-user">
+						<span>
+							<a href="/logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
+						</span>
+						<span>{{user.email}}</span>
+					</section>
+				{% endif %}
 				<section class="mp-internal-links">
 					<a href="/impressum" title="Details zu den kreativen Köpfen hinter PhotoMap">Impressum</a> |
 					<a href="/privacy" title="Erläuterungen zur Nutzung von persönlichen Daten auf PhotoMap">Datenschutz</a> |
