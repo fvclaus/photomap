@@ -57,8 +57,14 @@ UIState.prototype = {
     setCurrentPlace : function(place){
 	this.currentPlace = place;
     },
+    setCurrentLoadedPlace : function(place){
+	this.currentLoadedPlace = place;
+    },
     getCurrentPlace : function(){
 	return this.currentPlace;
+    },
+    getCurrentLoadedPlace : function(){
+	return this.currentLoadedPlace;
     },
     setCurrentAlbum : function(album){
 	this.currentAlbum = album;

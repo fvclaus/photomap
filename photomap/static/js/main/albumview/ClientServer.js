@@ -28,12 +28,8 @@ ClientServer.prototype = {
 	    $.getJSON(url, function( album ) {
 		
 		// define album new, so that property names are congruent with the property names of Place and Photo
-		album = {
-		    'id': album.id,
-		    'name': album.title,
-		    'desc': album.description,
-		    'places': album.places,
-		};
+		album.name = album.title;
+		album.desc = album.description;
 		// set current album in UIState to have access on it for information, etc.
 		main.getUIState().setCurrentAlbum(album);
 		// set album title in title-bar
@@ -108,11 +104,5 @@ ClientServer.prototype = {
 		marker.show();
 	    });
 	    map.fit(markersinfo);
-	    if (main.getUI().getInformation()) {
-	    information = main.getUI().getInformation();
-	    information.setInfo(this);
-	    information.albumName = this.name;
-	    information.albumDesc = this.desc;
-	    }
 	}
 };

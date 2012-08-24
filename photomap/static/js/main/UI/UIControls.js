@@ -225,16 +225,6 @@ UIControls.prototype = {
 			$("input[name=order]").val(photo.order);
 			var $name = $("input[name=title]").val(photo.name);
 			var $desc = $("textarea[name=description]").val(photo.desc);
-
-			//reflect changes locally when form is valid and ready to be send
-			main.getUI().getInput().onForm(function(){
-			    photo.name = $name.val();
-			    photo.desc = $desc.val();
-			    main.getUI().getInformation().setInfo({
-				name : $name.val(),
-				desc : $desc.val()
-			    });
-			})
 		    })
 		    .get("/update-photo");
 	    }
@@ -253,7 +243,7 @@ UIControls.prototype = {
 			    //reflect changes locally
 			    place.name = $name.val();
 			    place.desc = $desc.val();
-			    main.getUI().getInformation().setInfo(place);
+			    main.getUI().getInformation().updatePlace(place);
 			})
 		    })
 		    .get("/update-place");

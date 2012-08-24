@@ -111,6 +111,7 @@ UISlideshow.prototype = {
 
 	information = main.getUI().getInformation();
 	information.hidePhotoTitle();
+	information.hideDescription();
 
     },
 
@@ -186,8 +187,10 @@ UISlideshow.prototype = {
 	}
 	this.$loading.show();
 	
-	// sets Photo title in album title bar
-	main.getUI().getInformation().setPhotoTitle();
+	// sets Photo title in album title bar and set+shows Photo description
+	information = main.getUI().getInformation();
+	information.setPhotoTitle();
+	information.setPhotoDescription();
 	
 	// set cursor for fullscreen control
 	main.getUI().getCursor().setCursor($(".mp-album-zoom"),main.ui.getCursor().cursor.pointer)

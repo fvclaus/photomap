@@ -1,18 +1,14 @@
 UIInformation = function(){
 	
-    //root action bar
-    
     this.$wrapper = $("#mp-photo-description");
     this.$bottomPanel = $(".mp-bottom-panel");
     this.$album = $("#mp-album");
-    //this.$titleWrapper = null;
     this.$close = $(".mp-description-overlay-close");
-    this.$infoButton = $(".mp-option-information").show();
+    this.$infoButton = $(".mp-option-information");
 
     this.$description = $(".mp-description-wrapper").jScrollPane();
     
-    // title and image count
-    //this.$title = null;
+    // image count
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     
     this.bindListener();
@@ -23,44 +19,6 @@ UIInformation.prototype = {
     
     init : function(){
 	this.placeDescription();
-    },
-    setInfo : function(info){
-	if (info == null){
-	    info = {
-		name : this.albumName,
-		desc : this.albumDesc
-	    };
-	    title = info.name;
-	}
-	else if (this.albumName == null) {
-	    title = info.name;
-	}
-	else {
-	    info.albumName = this.albumName;
-	    title = info.albumName + " >> " + info.name;
-	}
-	this._setTitle(title);
-	this._setDescription(info.desc);
-    },
-    // sets the current title
-    _setTitle			: function( title ) {
-	this.titleLbl	= title;
-	//this.$title.text( title );
-
-	//calculate font size once for both image count and image name
-	if (!main.getUIState().getFontSize()){
-	    //desiredWidth = this.$titleWrapper.width();
-	    //desiredHeight = this.$titleWrapper.height();
-	    //size = main.getUI().getTools().calculateFontSize(title,desiredWidth,desiredHeight);
-	    //main.getUIState().setFontSize(size);
-	    //this.$title.css("font-size",size+"px");
-	    this.$imageNumber.css("font-size",size+"px");
-	}
-
-	//center text
-	//left  = this.$controls.width()/2 - this.$title.width()/2;
-	//this.$title.css("left",left);
-	
     },
     setAlbumTitle : function(title){
 	$(".mp-page-title h1").text(title);
@@ -73,24 +31,12 @@ UIInformation.prototype = {
 	title = main.getUIState().getCurrentPhoto().name;
 	$(".mp-photo-title")
 	    .show()
-	    .find(".mp-information")
+	    .find(".mp-option-information")
 	    .text(title);
     },
     hidePhotoTitle : function(){
 	$(".mp-photo-title").hide();
     },
-    _setDescription : function (desc) {
-	api = this.$description.data('jsp');
-	api.getContentPane()
-	    .find("p")
-	    .empty()
-	    .html(desc);
-	if (this.$wrapper.is(":hidden")){
-	    this.$wrapper.show();
-	};
-	api.reinitialise();
-    },
-    
     placeDescription : function () {
 	// resizing and repositioning description wrapper
 	$map = $(".mp-map");
@@ -112,56 +58,65 @@ UIInformation.prototype = {
 	    left: leftOffset + descriptionWidth - (0.5 * imgWidth)
 	}
 	this.$close.offset(closeButtonOffset);
+	// hide description box for now
+	this.$wrapper.hide();
     },
-    
+    _setDescription : function (desc) {
+	api = this.$description.data('jsp');
+	api.getContentPane()
+	    .find("p")
+	    .empty()
+	    .html(desc);
+	if (this.$wrapper.is(":hidden")){
+	    this.$wrapper.show();
+	};
+	api.reinitialise();
+    },
+    setPlaceDescription : function(){
+	info = main.getUIState().getCurrentLoadedPlace().desc;
+	this._setDescription(info);
+    },
+    setPhotoDescription : function(){
+	info = main.getUIState().getCurrentPhoto().desc;
+	this._setDescription(info);
+    },
+    setAlbumDescription : function(){
+	info = main.getUIState().getCurrentAlbum().desc;
+	this._setDescription(info);
+    },
     closeDescription : function(){
 	this.$wrapper.fadeOut(500);
     },
-    
-    toggleDescription : function(){
-	if (this.$wrapper.is(":visible")){
-	    this.$wrapper.fadeOut(500);
-	}
-	else {
-	    this.$wrapper.fadeIn(500);
+    hideDescription : function(){
+	this.$wrapper.hide();
+    },
+    updatePlace : function(placeinfo){
+	if (main.getUIState().getCurrentPlace() == main.getUIState().getCurrentLoadedPlace()){
+	    this.setPlaceTitle(placeinfo.name);
+	    this.setPlaceDescription(placeinfo.desc);
 	}
     },
-    
-    /*showTooltips : function(){
-	this.$controls.find("img[title]").tooltip({
-	    effect: 'slide',
-	    direction: 'right',
-	    bounce: true,
-	    position: 'bottom left',
-	    opacity: 0.9,
-	    offset: [0,20],
-	    predelay: 500,
-	    });
-	this.$bottomPanel.find("a[title]").tooltip({
-	    effect: 'slide',
-	    //direction: 'right',
-	    bounce: true, 
-	    position: 'top center',
-	    opacity: 0.9,
-	    //offset: [0,20],
-	    predelay: 500,
-	    });
-    },*/
-    
     bindListener : function(){
-	instance = this;
+	var instance = this;
 	this.$close.bind('click',function(){
 	    instance.closeDescription();
 	});
 	this.$infoButton.bind('click',function(){
-	    instance.toggleDescription();
+	    $button = $(this);
+	    if ($button.hasClass("mp-page-title")){
+		instance.setAlbumDescription();
+	    }
+	    if ($button.hasClass("mp-place-title")){
+		instance.setPlaceDescription();
+	    }
+	    if ($button.parent().hasClass("mp-photo-title")){
+		instance.setPhotoDescription();
+	    }
 	});
     },
-
     hideImageNumber : function(){
 	this.$imageNumber.hide();
     },
-    
     showImageNumber : function(){
 	this.$imageNumber.show();
     },

@@ -45,7 +45,7 @@ UICursor.prototype = {
     this.setCursor($question,this.cursor.pointer);
     
     //on information triggers
-    $information = $(".mp-information");
+    $information = $(".mp-option-information");
     this.setCursor($information,this.cursor.info)
     
     // on album pics

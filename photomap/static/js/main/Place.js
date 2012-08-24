@@ -100,10 +100,12 @@ Place.prototype = {
 	    // clear gallery photos + slider and map.place
 	    instance._clear();
 	    main.getUIState().setCurrentPlace(instance);
+	    main.getUIState().setCurrentLoadedPlace(instance);
 
-	    // set title in mp-controls bar
+	    // set and show title and description
 	    information = main.getUI().getInformation();
 	    information.setPlaceTitle();
+	    information.setPlaceDescription();
 	    
 	    main.getUI().getControls().hidePhotoControls(false);
 	    //change icon of new place

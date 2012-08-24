@@ -83,7 +83,6 @@ UIGallery.prototype 		= {
     _updateText : function(){
 	if (this.currentPhoto){
 	    information = main.getUI().getInformation();
-	    information.setInfo(this.currentPhoto);
 	    information.showImageNumber();
 	    currentIndex = this.photos.indexOf(this.currentPhoto) + 1;
 	    information.setImageNumber(currentIndex+"/"+this.photos.length);
