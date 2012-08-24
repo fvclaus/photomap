@@ -189,6 +189,11 @@ MIDDLEWARE_CLASSES = (
     'django.contrib.messages.middleware.MessageMiddleware',
 )
 
+AUTHENTICATION_BACKENDS = (
+    "pm.controller.authentication.EmailBackend",
+    "django.contrib.auth.backends.ModelBackend",
+)
+
 ROOT_URLCONF = 'urls'
 
 TEMPLATE_DIRS = (

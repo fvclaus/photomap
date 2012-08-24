@@ -7,7 +7,7 @@ Created on Jul 10, 2012
 from django import forms
 
 class LoginForm(forms.Form):
-    username = forms.CharField()
+    email = forms.CharField()
     password = forms.CharField(widget = forms.PasswordInput)
 
 class RegisterForm(forms.Form):
