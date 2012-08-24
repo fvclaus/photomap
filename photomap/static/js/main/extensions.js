@@ -9,7 +9,7 @@ var arrayExtension = {
 	    return -1;
 	},
 };
-var helperFunctions = {
+var urlDecoder = {
     getParameterByName : function (name){
       name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
       var regexS = "[\\?&]" + name + "=([^&#]*)";

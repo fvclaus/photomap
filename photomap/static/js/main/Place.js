@@ -103,9 +103,7 @@ Place.prototype = {
 
 	    // set title in mp-controls bar
 	    information = main.getUI().getInformation();
-	    information.setInfo(instance);
-	    information.hideImageNumber();
-	    // main.getUI().getControls().showControls();
+	    information.setPlaceTitle();
 	    
 	    main.getUI().getControls().hidePhotoControls(false);
 	    //change icon of new place

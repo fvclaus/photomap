@@ -19,6 +19,7 @@ ClientServer.prototype = {
 	    // get the albums and their info
 	    $.getJSON('get-all-albums', function( albums ) {
 		
+		// in case there are no albums yet show world map
 		if (albums == undefined){
 		    map = main.getMap().getInstance();
 		    lowerlatlng = new google.maps.LatLng(-50,-90);

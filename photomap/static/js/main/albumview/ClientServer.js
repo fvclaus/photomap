@@ -24,18 +24,31 @@ ClientServer.prototype = {
 	_getPlaces			: function(callback ) {
 	    var instance = this;
 	    // get the places and its info from the XML file
-	    url = 'get-album?id=' + helperFunctions.getParameterByName('id');
-	    $.getJSON(url, function( data ) {
-		// the album name
-		instance.name = data.title;
-		instance.id = data.id;
-		// the album description
-		instance.desc = data.description;
+	    url = 'get-album?id=' + urlDecoder.getParameterByName('id');
+	    $.getJSON(url, function( album ) {
 		
-		if (data.places == undefined) {
+		// define album new, so that property names are congruent with the property names of Place and Photo
+		album = {
+		    'id': album.id,
+		    'name': album.title,
+		    'desc': album.description,
+		    'places': album.places,
+		};
+		// set current album in UIState to have access on it for information, etc.
+		main.getUIState().setCurrentAlbum(album);
+		// set album title in title-bar
+		main.getUI().getInformation().setAlbumTitle(album.name);
+		
+		// the album name, description and id as ClientServer Property
+		instance.name = album.name;
+		instance.id = album.id;
+		instance.desc = album.desc;
+		
+		// in case there are no places yet show map around album marker
+		if (album.places == undefined) {
 		    var map = main.getMap().getInstance();
-		    lat = data.lat;
-		    lon = data.lon;
+		    lat = album.lat;
+		    lon = album.lon;
 		    lowerLatLng = new google.maps.LatLng(lat - .1,lon - .1);
 		    upperLatLng = new google.maps.LatLng(lat + .1,lon + .1);
 		    bounds = new google.maps.LatLngBounds(lowerLatLng,upperLatLng);
@@ -46,7 +59,7 @@ ClientServer.prototype = {
 		    return;
 		}
 		
-		$.each( data.places, function( key, placeinfo ) {
+		$.each( album.places, function( key, placeinfo ) {
 		    var place = new Place( placeinfo )
 		    instance.places.push( place );
 		});

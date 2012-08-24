@@ -110,8 +110,7 @@ UISlideshow.prototype = {
 	main.getUIState().setCurrentPhoto(null);
 
 	information = main.getUI().getInformation();
-	information.setInfo(main.getUIState().getCurrentPlace());
-	information.hideImageNumber();
+	information.hidePhotoTitle();
 
     },
 
@@ -186,7 +185,9 @@ UISlideshow.prototype = {
 	    this.$image.fadeOut("slow",updateImage);
 	}
 	this.$loading.show();
-	main.getUI().getInformation().setInfo(main.getUIState().getCurrentPhoto());
+	
+	// sets Photo title in album title bar
+	main.getUI().getInformation().setPhotoTitle();
 	
 	// set cursor for fullscreen control
 	main.getUI().getCursor().setCursor($(".mp-album-zoom"),main.ui.getCursor().cursor.pointer)

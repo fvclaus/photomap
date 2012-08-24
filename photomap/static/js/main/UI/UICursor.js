@@ -7,7 +7,7 @@ UICursor = function(){
       grab: 'move',
       wait: 'wait',
       text: 'text',
-      help: 'help',
+      info: 'help',
       stop: 'not-allowed',
       progress: 'progress',
     };
@@ -43,6 +43,10 @@ UICursor.prototype = {
     // on faq entries
     $question = $(".mp-faq-question");
     this.setCursor($question,this.cursor.pointer);
+    
+    //on information triggers
+    $information = $(".mp-information");
+    this.setCursor($information,this.cursor.info)
     
     // on album pics
     // defined in main.styl .mp-control

@@ -165,6 +165,7 @@ UIAlbum.prototype =  {
 	    
 	    // starts little slideshow in gallery div
 	    instance.gallery.startSlider();
+	    
 	    return false;
 	}).bind( 'mouseup.Gallery', function(event){
 	    var $el = $(this);

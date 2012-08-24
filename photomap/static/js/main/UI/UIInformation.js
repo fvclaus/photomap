@@ -15,9 +15,6 @@ UIInformation = function(){
     //this.$title = null;
     this.$imageNumber = this.$wrapper.find(".mp-status-image");
     
-    //show tooltip
-    //this.showTooltips();
-    
     this.bindListener();
     
 };
@@ -27,7 +24,6 @@ UIInformation.prototype = {
     init : function(){
 	this.placeDescription();
     },
-    
     setInfo : function(info){
 	if (info == null){
 	    info = {
@@ -43,7 +39,6 @@ UIInformation.prototype = {
 	    info.albumName = this.albumName;
 	    title = info.albumName + " >> " + info.name;
 	}
-	this.setAlbumTitel(this.albumName);
 	this._setTitle(title);
 	this._setDescription(info.desc);
     },
@@ -67,8 +62,22 @@ UIInformation.prototype = {
 	//this.$title.css("left",left);
 	
     },
-    setAlbumTitel : function(title){
+    setAlbumTitle : function(title){
 	$(".mp-page-title h1").text(title);
+    },
+    setPlaceTitle : function(){
+	title = main.getUIState().getCurrentPlace().name;
+	$(".mp-place-title").text(title);
+    },
+    setPhotoTitle : function(){
+	title = main.getUIState().getCurrentPhoto().name;
+	$(".mp-photo-title")
+	    .show()
+	    .find(".mp-information")
+	    .text(title);
+    },
+    hidePhotoTitle : function(){
+	$(".mp-photo-title").hide();
     },
     _setDescription : function (desc) {
 	api = this.$description.data('jsp');
