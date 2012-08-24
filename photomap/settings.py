@@ -169,6 +169,11 @@ TEMPLATE_LOADERS = (
 #     'django.template.loaders.eggs.Loader',
 )
 
+TEMPLATE_CONTEXT_PROCESSORS = (
+                               'django.contrib.auth.context_processors.auth',
+                               'pm.util.context_processors.userdata'
+                               )
+
 # stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
 COMPRESS_PRECOMPILERS = (
                          ("text/x-stylus", "stylus < {infile} > {outfile} --include " + CSS_PATH),

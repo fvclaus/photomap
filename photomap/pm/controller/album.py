@@ -6,14 +6,16 @@ Created on Jul 10, 2012
 
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest 
 from django.shortcuts import render_to_response
-from django.db.models import Max
+from django.contrib.auth.decorators import login_required
+from django.template import RequestContext
+
 from message import success, error
 from pm.test import data
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 
-from django.contrib.auth.decorators import login_required
+
 from pm.osm import reversegecode
 from pm.form.album import AlbumInsertForm, AlbumUpdateForm
 
@@ -31,7 +33,9 @@ def view(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
     if request.method == "GET":
-        return render_to_response("view-album.html", {"testphotopath": data.TEST_PHOTO})
+        return render_to_response("view-album.html", 
+                                  {"testphotopath": data.TEST_PHOTO},
+                                  context_instance = RequestContext(request))
 
 def get(request):
     logger.debug("get-album: entered view function")
