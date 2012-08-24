@@ -147,6 +147,8 @@ Map.prototype = {
 			}
 			console.log("received id %d",data["id"]);
 			album.id = data["id"];
+			//redirect to new albumview
+			album.triggerClick();
 		    });
 		    
 		    input.onLoad(function(){
@@ -166,8 +168,6 @@ Map.prototype = {
 			    });
 			    album.marker.show();
 			    input._close();
-			    //redraws place
-			    album.triggerClick();
 			});
 		    });
     

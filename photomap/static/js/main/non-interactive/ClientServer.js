@@ -12,9 +12,20 @@ ClientServer.prototype = {
     _getAlbums: function(callback){
 	var instance = this;
 	$.getJSON("get-all-albums",function(albums) {
+	    
+	    if (albums == undefined){
+		map = main.getMap().getInstance();
+		lowerlatlng = new google.maps.LatLng(-50,-90);
+		upperlatlng = new google.maps.LatLng(50,90);
+		bounds = new google.maps.LatLngBounds(lowerlatlng,upperlatlng);
+		map.fitBounds(bounds);
+		return;
+	    }
+		
 	    albums.forEach(function(data){
 		instance.albums.push(new Album(data));
 	    });
+	    
 	    if (callback) callback.call();
 	});
     },

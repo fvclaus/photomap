@@ -17,12 +17,18 @@ ClientServer.prototype = {
 	_getAlbums			: function( callback ) {
 	    var instance = this;
 	    // get the albums and their info
-	    $.getJSON('get-all-albums', function( data ) {
+	    $.getJSON('get-all-albums', function( albums ) {
 		
-		$.each( data, function( key, albuminfo ) {
-		    /*console.log("key " + key + " - info " + albuminfo);
-		    console.log("id " + albuminfo.id);
-		    console.log("title " + albuminfo.title);*/
+		if (albums == undefined){
+		    map = main.getMap().getInstance();
+		    lowerlatlng = new google.maps.LatLng(-50,-90);
+		    upperlatlng = new google.maps.LatLng(50,90);
+		    bounds = new google.maps.LatLngBounds(lowerlatlng,upperlatlng);
+		    map.fitBounds(bounds);
+		    return;
+		}
+		
+		$.each( albums, function( key, albuminfo ) {
 		    var album = new Album( albuminfo )
 		    instance.albums.push( album );
 		});
