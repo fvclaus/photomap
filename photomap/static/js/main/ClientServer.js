@@ -34,6 +34,8 @@ ClientServer.prototype = {
 		    instance.albums.push( album );
 		});
 		
+		main.getUIState().setAlbums(instance.albums);
+
 		if( callback ) callback.call();
 		
 	    });

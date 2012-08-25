@@ -1,4 +1,9 @@
-// place stores several pictures and is itself stored in the map
+/*
+  Place.js
+  @author: Frederik Claus
+  @summary: Place stores several pictures and is itself stored in the map
+*/
+
 Place = function(data) {
     this.name = data.title; // will be used for the Map Marker title (mouseover on the map)
     this.id = data.id;

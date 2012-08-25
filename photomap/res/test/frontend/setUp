@@ -44,12 +44,12 @@
 <tr>
 	<td>store</td>
 	<td>Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&quot;</td>
-	<td>lipsumPlace</td>
+	<td>lipsum1</td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</td>
-	<td>lipsumPhoto</td>
+	<td>lipsum2</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -95,6 +95,41 @@
 	<td>store</td>
 	<td>css=div.mp-album-image</td>
 	<td>slideshow</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-insert-album</td>
+	<td>insertAlbum</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-insert-place</td>
+	<td>insertPlace</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-delete-photo</td>
+	<td>deletePhoto</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-delete-place</td>
+	<td>deletePlace</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=img.mp-description-overlay-close</td>
+	<td>closeDescription</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-update-album</td>
+	<td>updateAlbum</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-delete-album</td>
+	<td>deleteAlbum</td>
 </tr>
 </tbody></table>
 </body>

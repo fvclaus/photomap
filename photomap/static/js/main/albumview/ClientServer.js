@@ -54,13 +54,13 @@ ClientServer.prototype = {
 		    map.panBy(x,y);
 		    return;
 		}
-
-		main.getUIState().setPlaces(album.places);
 		
 		$.each( album.places, function( key, placeinfo ) {
 		    var place = new Place( placeinfo )
 		    instance.places.push( place );
 		});
+		// add to UIState
+		main.getUIState().setPlaces(instance.places);
 		
 		if( callback ) callback.call();
 	    });

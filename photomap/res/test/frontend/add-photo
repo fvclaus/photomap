@@ -24,12 +24,12 @@
 <tr>
 	<td>type</td>
 	<td>${titleInput}</td>
-	<td>Us in front of the Big Ben</td>
+	<td>Random title for random picture</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>${descriptionInput}</td>
-	<td>${lipsum}</td>
+	<td>${lipsum1}</td>
 </tr>
 <tr>
 	<td>storeText</td>

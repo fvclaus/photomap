@@ -192,6 +192,10 @@ UIControls.prototype = {
 		else
 		    return;
 	    }
+	    else{
+		alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
+		return;
+	    }
 
 	    
 	    //call to delete marker or photo in backend

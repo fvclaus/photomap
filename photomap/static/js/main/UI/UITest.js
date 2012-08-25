@@ -49,7 +49,7 @@ function bindListener(){
     });
     $("button.mp-delete-place").click(function(){
 	selectPlace();
-	main.getUI().getControls.$delete.trigger("click");
+	main.getUI().getControls().$delete.trigger("click");
     });
     $("button.mp-delete-photo").click(function(){
 	selectPhoto();
@@ -61,13 +61,22 @@ function bindListener(){
 	};
 	google.maps.event.trigger(main.getMap().getInstance(),"click",event);
     });
+    $("button.mp-update-album").click(function(){
+	selectAlbum();
+	main.getUI().getControls().$update.trigger("click");
+    });
+    $("button.mp-delete-album").click(function(){
+	selectAlbum();
+	main.getUI().getControls().$delete.trigger("click");
+    });
 }    
 
 /*
-  returns the first place
+  @author: Frederik Claus
+  @summary: selects and returns the first place
 */
 function selectPlace(){
-    places = main.getMap().places;
+    places = main.getUIState().getPlaces();
     if(places.length == 0){
 	alert ("Need places for test!");
 	return null;
@@ -80,7 +89,8 @@ function selectPlace(){
 }
 
 /*
-  returns the last photo of getPlace()
+  @author: Frederik Claus
+  @summary: select and returns the last photo of getPlace()
 */
 function selectPhoto(){
     photos = selectPlace().photos;
@@ -89,4 +99,15 @@ function selectPhoto(){
     main.getUI().getControls().setModifyPhoto(true);
     return photo;
 }
-	
+
+/*
+  @author: Frederik Claus
+  @summary: selects and returns the last album
+*/
+function selectAlbum(){
+    albums = main.getUIState().getAlbums();
+    album = albums[albums.length -1]; 
+    main.getUI().getState().setCurrentAlbum(album);
+    main.getUI().getControls().setModifyAlbum(true);
+    return album;
+}

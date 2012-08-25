@@ -3,8 +3,9 @@ UIState = function(){
     this.currentPhoto = null;
     this.currentPlace = null;
     this.currentAlbum = null;
-    this.photos = null;
-    this.places = null;
+    this.photos = new Array();
+    this.places = new Array();
+    this.albums = new Array();
     this.slideshow = false;	
     this.slideshowLoaded = false;
     this.albumLoading = false;
@@ -71,11 +72,25 @@ UIState.prototype = {
 	this.places = places;
     },
     addPlace : function(place){
-	this.places.append(place);
+	this.places.push(place);
     },
     removePlace : function(place){
 	this.places = this.places.filter(function(element,index){
 	    return element !== place;
+	});
+    },
+    setAlbums : function(albums){
+	this.albums = albums;
+    },
+    getAlbums : function(){
+	return this.albums;
+    },
+    addAlbum : function(album){
+	this.albums.push(album);
+    },
+    removeAlbum : function(album){
+	this.albums = this.albums.filter(function(element,index){
+	    return element !== album;
 	});
     },
     getCurrentLoadedPlace : function(){

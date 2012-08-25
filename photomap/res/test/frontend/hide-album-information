@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>${albumDescriptionToggle}</td>
+	<td>${closeDescription}</td>
 	<td></td>
 </tr>
 <tr>
