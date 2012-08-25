@@ -85,6 +85,7 @@ UIAlbum.prototype =  {
 				    jsonPhoto = $.extend(true,{},photo);
 				    delete jsonPhoto.$anchorEl;
 				    jsonPhotos.push(jsonPhoto);
+				    console.log("jsonPhotos " + jsonPhotos);
 				    if (index == photos.length-1){
 					main.getClientServer().savePhotos(jsonPhotos);
 				    }
