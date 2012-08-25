@@ -1,5 +1,36 @@
-$(document).ready(function(){
+/*
+  UITest.js
+  @author: Frederik Claus
+  @summary: adds listener to test buttons to initate actions which are otherwise complicated or impossible to trigger
+*/
 
+var latLngAlbum,latLngPlace;
+
+$(document).ready(function(){
+    var map = main.getMap().getInstance();
+
+    // calculate random bounds and add listener. remove google maps listener afterwards
+    var listener = google.maps.event.addListener(map,"center_changed",function(){
+
+	latLngAlbum = new google.maps.LatLng(Math.random()*42,Math.random()*42);
+	center = map.getCenter();
+	latLngPlace = new google.maps.LatLng(center.lat() - Math.random(), center.lng() + Math.random());
+	
+	bindListener();
+	google.maps.event.removeListener(listener);
+	
+    });
+
+});
+
+function bindListener(){
+
+    $("button.mp-insert-place").click(function(){
+	event = {
+	    latLng : latLngPlace
+	};
+	google.maps.event.trigger(main.getMap().getInstance(), "click",event);
+    });
     $("button.mp-show-place").click(function(){
 	place = selectPlace();
 	place.triggerClick();
@@ -24,7 +55,13 @@ $(document).ready(function(){
 	selectPhoto();
 	main.getUI().getControls().$delete.trigger("click");
     });
-});
+    $("button.mp-insert-album").click(function(){
+	event = {
+	    latLng : latLngAlbum
+	};
+	google.maps.event.trigger(main.getMap().getInstance(),"click",event);
+    });
+}    
 
 /*
   returns the first place

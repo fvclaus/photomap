@@ -23,7 +23,7 @@ ClientServer.prototype = {
 
 	_getPlaces			: function(callback ) {
 	    var instance = this;
-	    // get the places and its info from the XML file
+
 	    url = 'get-album?id=' + urlDecoder.getParameterByName('id');
 	    $.getJSON(url, function( album ) {
 		
@@ -54,6 +54,8 @@ ClientServer.prototype = {
 		    map.panBy(x,y);
 		    return;
 		}
+
+		main.getUIState().setPlaces(album.places);
 		
 		$.each( album.places, function( key, placeinfo ) {
 		    var place = new Place( placeinfo )

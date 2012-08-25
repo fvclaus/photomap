@@ -125,6 +125,7 @@ Map.prototype = {
 			    });
 			    place.marker.show();
 			    input._close();
+			    main.getUIState().addPlace(place);
 			    //redraws place
 			    place.triggerClick();
 			});

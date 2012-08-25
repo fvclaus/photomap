@@ -4,6 +4,7 @@ UIState = function(){
     this.currentPlace = null;
     this.currentAlbum = null;
     this.photos = null;
+    this.places = null;
     this.slideshow = false;	
     this.slideshowLoaded = false;
     this.albumLoading = false;
@@ -62,6 +63,20 @@ UIState.prototype = {
     },
     getCurrentPlace : function(){
 	return this.currentPlace;
+    },
+    getPlaces : function(){
+	return this.places;
+    },
+    setPlaces : function(places){
+	this.places = places;
+    },
+    addPlace : function(place){
+	this.places.append(place);
+    },
+    removePlace : function(place){
+	this.places = this.places.filter(function(element,index){
+	    return element !== place;
+	});
     },
     getCurrentLoadedPlace : function(){
 	return this.currentLoadedPlace;

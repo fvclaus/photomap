@@ -42,7 +42,8 @@ UIControls.prototype = {
     },
     
     /*
-      displays modify control under a photo
+      @author: Frederik Claus
+      @summary: displays modify control under a photo
       @param $el: the photo element under which controls are placed
     */
     showPhotoControls : function($el){
@@ -62,7 +63,8 @@ UIControls.prototype = {
     },
     
     /*
-      modify controls are instantiated once and are used for places and photos
+      @author: Frederik Claus
+      @summary: modify controls are instantiated once and are used for places and photos
       @param center: the bottom center of the element where the controls should be displayed
     */
 
@@ -109,7 +111,8 @@ UIControls.prototype = {
     },
 
     /*
-      hides the modfiy controls
+      @author: Frederik Claus
+      @summary: hides the modfiy controls
       @param timeout: boolean, if the controls should be hidden after a predefined timout, when the controls are not entered
     */
     hideControls : function(timeout){
@@ -171,6 +174,7 @@ UIControls.prototype = {
 		if(confirm("Do you really want to delete place " + place.name)){
 		    url = "/delete-place";
 		    data = {"id":place.id};
+		    main.getUIState().removePlace(place);
 		    main.getUI().getInformation().hidePlaceTitle();
 		    place._delete();
 		}
