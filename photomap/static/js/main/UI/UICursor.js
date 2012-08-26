@@ -40,9 +40,11 @@ UICursor.prototype = {
     $link = $("a");
     this.setCursor($link,this.cursor.pointer);
     
-    // on faq entries
+    // on faq and tutorial entries
     $question = $(".mp-faq-question");
     this.setCursor($question,this.cursor.pointer);
+    $topic = $(".mp-tutorial-list-topic");
+    this.setCursor($topic,this.cursor.pointer);
     
     //on information triggers
     $information = $(".mp-option-information");

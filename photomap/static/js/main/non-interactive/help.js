@@ -11,12 +11,29 @@ function toggleFAQAnswers($question){
 	$answer.slideDown(300);
     }
 };
+function toggleTutorialDesc($topic){
+    $desc = $topic.next("p");
+    $descriptions = $(".mp-tutorial-list-desc");
+    // hide all other answers
+    $descriptions.not($desc).slideUp(150);
+	
+    if ($desc.is(":visible")){
+	$desc.slideUp(150);
+    }
+    else{
+	$desc.slideDown(300);
+    }
+};
 
 $(document).ready(function(){
 
     var $question = $(".mp-faq-question").bind('click', function(){
 	trigger = $(this);
-	toggleFAQAnswers($question);
+	toggleFAQAnswers(trigger);
+    });
+    var $topic = $(".mp-tutorial-list-topic").bind('click', function(){
+	trigger = $(this);
+	toggleTutorialDesc(trigger);
     });
 
 });    
