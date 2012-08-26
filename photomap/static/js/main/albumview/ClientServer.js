@@ -12,13 +12,27 @@ ClientServer.prototype = {
 	    });
 	},
    	 savePhotos : function(photos){
-	$.ajax({
-	    url : "/update-photos",
-	    type : "post",
-	    data : {
-		"photos" : JSON.stringify(photos)
-	    }
-	});
+	     /*
+	    $.ajax({
+		url : "/update-photos",
+		type : "post",
+		data : {
+		    "photos" : JSON.stringify(photos)
+		}
+	    });
+	    */
+	    photos.forEach(function(photo){
+		// post request for each photo with updated order
+		$.ajax({
+		    url : "/update-photo",
+		    type : "post",
+		    data : {
+			'id': photo.id,
+			'title': photo.name,
+			'order': photo.order,
+		    }
+		});
+	    });
   	  },
 
 	_getPlaces			: function(callback ) {

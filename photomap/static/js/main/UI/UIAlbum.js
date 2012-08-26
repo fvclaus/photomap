@@ -79,6 +79,7 @@ UIAlbum.prototype =  {
 				var jsonPhotos = new Array();
 
 				main.getUIState().getPhotos().forEach(function(photo,index,photos){
+				    /*
 				    //find position of image el
 				    photo.order = instance.$elements.index(photo.$anchorEl);
 				    //make a deep copy
@@ -86,6 +87,17 @@ UIAlbum.prototype =  {
 				    delete jsonPhoto.$anchorEl;
 				    jsonPhotos.push(jsonPhoto);
 				    console.log("jsonPhotos " + jsonPhotos);
+				    if (index == photos.length-1){
+					main.getClientServer().savePhotos(jsonPhotos);
+				    }*/
+				    // get html tag for current photo
+				    currentPhoto = $('img[src="' + photo.source + '"]');
+				    // find index of current photo in mp-gallery
+				    photo.order = instance.$elements.index(currentPhoto);
+				    // make a deep copy
+				    jsonPhoto = $.extend(true,{},photo);
+				    jsonPhotos.push(jsonPhoto);
+				    // when all photos with new order are in jsonPhotos, save the order
 				    if (index == photos.length-1){
 					main.getClientServer().savePhotos(jsonPhotos);
 				    }
