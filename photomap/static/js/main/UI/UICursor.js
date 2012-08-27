@@ -50,6 +50,9 @@ UICursor.prototype = {
     $information = $(".mp-option-information");
     this.setCursor($information,this.cursor.info)
     
+    $toggleGallery = $(".mp-option-toggle-gallery");
+    this.setCursor($toggleGallery,this.cursor.pointer);
+    
     // on album pics
     // defined in main.styl .mp-control
     // DragnDrop defined in UIAlbum.js after loading the pics and on "mousedown"- and "mouseup"-event (-> change: pointer ->grabber ->pointer again)

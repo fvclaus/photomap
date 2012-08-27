@@ -31,6 +31,8 @@ UIAlbum.prototype =  {
 
     show : function( photos ) {
 	var instance = this;
+	// show gallery in case it's hidden
+	$("#mp-album").show();
 	main.getUIState().setPhotos(photos);
 	main.getUIState().setAlbumLoading(true);
 	var tmplPhotosData = new Array();

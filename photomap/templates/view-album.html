@@ -32,7 +32,10 @@
 
 {% endblock %}
 
-{% block controls %}<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Dashboard</a>  {% endblock %}
+{% block controls %}
+	<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Dashboard</a> 
+	<span class="mp-option-toggle-gallery mp-controls" title="Verstecken/Anzeigen Gallerie">Gallerie <span class="mp-gallery-hidden">anzeigen</span><span class="mp-gallery-visible">verstecken</span></span>
+{% endblock %}
 
 {% block content_interactive %}
 	
