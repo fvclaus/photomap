@@ -1,11 +1,6 @@
 
 UIGallery = function() {
     
-    /*  $(window).bind('resize.Gallery', function() {
-	if( instance.$galleryFullscreenImage )
-	instance.fullscreen._resizeImage( instance.$galleryFullscreenImage );
-	}); */
-    
     this.album = new UIAlbum(this);
     this.slideshow = new UISlideshow(this);
     this.fullscreen = new UIFullscreen(this);
@@ -13,7 +8,7 @@ UIGallery = function() {
     
 };
 
-UIGallery.prototype 		= {
+UIGallery.prototype = {
     
     init : function(){
 	this.slideshow.init();
@@ -55,7 +50,6 @@ UIGallery.prototype 		= {
 
     
     hide : function() {
-	//close slideshow if open
 	this.slideshow.closeSlideshow();
 	this.album.getEl().empty();
 	this.album.getEl().removeData('jsp');
@@ -79,7 +73,6 @@ UIGallery.prototype 		= {
 	this.loading = false;
     },
     
-    
     _updateText : function(){
 	if (this.currentPhoto){
 	    information = main.getUI().getInformation();
@@ -88,10 +81,5 @@ UIGallery.prototype 		= {
 	    information.setImageNumber(currentIndex+"/"+this.photos.length);
 	}
     },
-    
-    
-    
-    
-
 };
 

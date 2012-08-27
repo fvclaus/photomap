@@ -67,6 +67,7 @@ gradient
 @import "image"
 @import "description"
 @import "panel"
+@import "noninteractive"
 
 /* end imports */
 
@@ -80,16 +81,34 @@ body
 html
   height 100%  
 
-.mp-container
-  background #f4f4f4
-  border $border-light
-  //min-height 100%
-  margin 0 auto
-  box-shadow($box-shadow-lighter-grey)
+.mp-footer
+  height 3%
+  width 100%
+  border-top $border-light
+  clear both
+  background $background-color-darker
+  letter-spacing 2px
 
+.mp-container
+  border $border-light
+  margin 0 auto
+  background #f4f4f4
+  box-shadow($box-shadow-lighter-grey)
+  
+.mp-header
+  width 100%
+  height 12%
+  border-bottom $border-light
+  background-image linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
+  background-image -o-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
+  background-image -moz-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
+  background-image -webkit-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
+  background-image -ms-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
+
+/* general classes */
 .mp-invisible
-  visibility hidden
   position absolute
+  visibility hidden
   whitespace nowrap
 
 .mp-font 
@@ -97,84 +116,20 @@ html
   font-size 120%
   text-align center
 
-.mp-map
-  width 100%
-  height $height-main
-  //min-height $height-main
-  background red // $background-color-light
-  float left
-  
-.mp-map-container
-  width 100%
-  height 100%
-  background $background-color-light
-  
-.mp-map-wrapper
-  width 100%
-  height 100%
-
-
 .mp-label
+  max-width 50%
+  margin auto
   font-weight 700
   text-shadow 1px 1px 1px #000
   text-align center
-  margin auto
   white-space nowrap
   overflow hidden
   text-overflow ellipsis
   color white
-  max-width 50%
 
 .disabled
   opacity 0.3
 
-.mp-footer
-  height 3%
-  width 100%
-  clear both
-  background $background-color-darker
-  letter-spacing 2px
-  border-top $border-light
-  
-.mp-header
-  background-image linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -o-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -moz-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -webkit-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -ms-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  border-bottom $border-light
-  width 100%
-  height 12%
-  
-.tooltip
-  z-index 100
-  display none
-  background transparent url(../../images/black-tooltip.png) no-repeat
-  font-size 9px
-  text-align center
-  height 53px
-  width 120px
-  padding 10px 5px 5px 5px
-  color #eee
-  
-.mp-non-interactive-content
-  opacity 0.8
-  background-color $background-color-light
-  position absolute
-  width 70%
-  height 75%
-  padding 3%
-  border 2px solid $background-color-darker
-  border-radius 5px
-  //overflow hidden
-  text-align center
-  a
-    text-decoration none
-    color black
-  a:hover
-    color $background-color-darker
-    text-decoration underline
-    
 .mp-control
   cursor pointer
   
@@ -183,14 +138,7 @@ html
   -moz-transform: rotate(-15deg);
   -webkit-transform: rotate(-15deg);
 
-.mp-news
-  padding 1%
-  border 1px solid black
-  font-style italic
-  footer
-    font-size 90%
-    color #4F4F4F
-
+/* general html tag styles */
 aside
   width 80%
   padding 5px
@@ -204,32 +152,40 @@ aside
     margin-top 5px
     font-size 100%
     
-.mp-faq-entry
-  border 1px dashed black
-  padding 5px
-  .mp-faq-question
-    padding 0
-    margin 0
-  .mp-faq-answer
-    display none
+/* styling of the html tags of map */
+.mp-map
+  width 100%
+  height $height-main
+  float left
+  background $background-color-light
+  float left
+  
+.mp-map-container
+  width 100%
+  height 100%
+  background $background-color-light
+  
+.mp-map-wrapper
+  width 100%
+  height 100%
+  
+/* styling of controls */
+.mp-controls-wrapper
+  width 10%
+  height 8%
+  margin 0 2px
+  z-index 1000 //100 less than fancybox
+  position absolute
+  .mp-controls-options
+    height 80%
+    width 45%
+    position relative
+    top 20%
+    float right
+    cursor pointer
     
-.mp-tutorial-wrapper
-  padding-top 10px
-  border-top 4px solid $background-color-dark
-  margin-top 30px
-.mp-tutorial-entry
-  border 1px dashed black
-  padding 5px
-  margin 1px 0
-  .mp-tutorial-description
-    font-size 95%
-    h5
-      font-size 105%
-    li
-      margin 3px
-      list-style-type none
-      border 1px dashed black
-  .mp-tutorial-list-topic
-    font-weight bold
-  .mp-tutorial-list-desc
-    display none
+.mp-controls-background
+  width 100%
+  height 100%
+  z-index -1
+  position absolute

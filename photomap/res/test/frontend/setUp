@@ -18,7 +18,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=div#mp-photo-description</td>
+	<td>css=div#mp-description</td>
 	<td>description</td>
 </tr>
 <tr>

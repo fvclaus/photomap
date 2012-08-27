@@ -72,7 +72,6 @@ UISlideshow.prototype = {
     position : function(){
 	var position = main.getUI().getAlbum().getDimensions();
 	// write height and width in overlay image wrapper and overlay
-	// css only sizing and pos failed for some reason
 	this.$slideshow
 	    .css("left",position.left)
 	    .css("top",position.top)

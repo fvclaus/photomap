@@ -4,6 +4,10 @@
 
 {% block name %}Login und Registrierung{% endblock %}
 
+{% block extrajs %}
+	<script type="text/javascript" src="static/js/main/non-interactive/login.js" ></script>
+{% endblock %}
+
 {% block non_interactive_content %}
 
 	<section class="mp-login" id="mp-login">
@@ -25,9 +29,6 @@
 			</p>
 		</form>
 	</section>
-
-	<script type="text/javascript" src="static/js/main/non-interactive/login.js" ></script>
-	
 {% endblock %}
 	
 

@@ -15,14 +15,13 @@ Place = function(data) {
 	title	: this.name
     });
 
-
     this.photos = new Array();
     if (data.photos){
 	for( var i = 0, len = data.photos.length; i < len; ++i ) {
 	    this.photos.push( new Photo( data.photos[i],i ) );
 	}
     }
-
+    
     this.checkIconStatus();
     this.bindListener();
     
@@ -60,7 +59,7 @@ Place.prototype = {
 	map.panBy(x,y);
 	
     },
-    _showGallery		: function() {
+    _showGallery : function() {
 	main.getUI().getAlbum().show( this.photos );
     },
     _clear  : function(){

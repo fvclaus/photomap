@@ -4,23 +4,14 @@ ClientServer = function() {
 };
 
 ClientServer.prototype = {
-	init				: function() {
-	    var instance 	= this;
+	init : function() {
+	    var instance = this;
 	    // make an AJAX call to get the places from the XML file, and display them on the Map
 	    this._getPlaces( function() {
 		instance._showPlaces();
 	    });
 	},
-   	 savePhotos : function(photos){
-	     /*
-	    $.ajax({
-		url : "/update-photos",
-		type : "post",
-		data : {
-		    "photos" : JSON.stringify(photos)
-		}
-	    });
-	    */
+	savePhotoOrder : function(photos){
 	    photos.forEach(function(photo){
 		// post request for each photo with updated order
 		$.ajax({
@@ -34,7 +25,23 @@ ClientServer.prototype = {
 		});
 	    });
   	  },
-
+	deleteObject : function(url,data){
+	    // post request to delete album/place/photo - data is the id of the object
+	    $.ajax({
+		type : "post",
+		dataType : "json",
+		"url" : url,
+		"data" : data,
+		success : function(data){
+		    if (data.error){
+			alert(data.error);
+		    }
+		},
+		error : function(err){
+		    alert(err.toString());
+		}
+	    });
+	},
 	_getPlaces			: function(callback ) {
 	    var instance = this;
 	    tools = main.getUI().getTools();
@@ -80,9 +87,9 @@ ClientServer.prototype = {
 	    });
 	    
 	},
-	_showPlaces			: function() {
-	    var map 			= main.getMap();
-	    markersinfo		= [];
+	_showPlaces : function() {
+	    var map = main.getMap();
+	    markersinfo = [];
 	    map.places = this.places;	    
 
 	    map.places.forEach(function(place){

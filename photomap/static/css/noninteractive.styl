@@ -1,0 +1,81 @@
+/* general styles on non-interactive pages */
+
+.mp-non-interactive-content
+  width 70%
+  height 75%
+  padding 3%
+  border 2px solid $background-color-darker
+  position absolute
+  background-color $background-color-light
+  opacity 0.8
+  border-radius 5px
+  //overflow hidden
+  text-align center
+  a
+    text-decoration none
+    color black
+    letter-spacing 0.25em
+  a:hover
+    color $background-color-darker
+    text-decoration underline
+  h2,
+  h3
+    text-decoration underline
+
+/* styling for login page */
+.mp-register
+  width 45%
+  padding 2%
+  border-left 5px solid $background-color-darker
+  float left
+  & input
+    float right
+  
+.mp-login
+  width 46%
+  padding 2%
+  float left
+  & input
+    float right
+    
+/* styling for help page */
+
+.mp-faq-entry
+  padding 5px
+  border 1px dashed black
+  .mp-faq-question
+    padding 0
+    margin 0
+  .mp-faq-answer
+    display none
+    
+.mp-tutorial-wrapper
+  padding-top 10px
+  border-top 4px solid $background-color-dark
+  margin-top 30px
+.mp-tutorial-entry
+  padding 5px
+  border 1px dashed black
+  margin 1px 0
+  .mp-tutorial-description
+    font-size 95%
+    h5
+      font-size 105%
+    li
+      border 1px dashed black
+      margin 3px
+      list-style-type none
+  .mp-tutorial-list-topic
+    font-weight bold
+  .mp-tutorial-list-desc
+    display none
+    
+/* styling for landing page */
+
+.mp-news
+  padding 1%
+  border 1px solid black
+  font-style italic
+  footer
+    font-size 90%
+    color #4F4F4F

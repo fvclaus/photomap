@@ -7,9 +7,6 @@
 
 {% block js %}
 	
-	
-
-	
 	<script type="text/javascript" src="static/js/main/UI/UIFullscreen.js" ></script>
 	<script type="text/javascript" src="static/js/main/UI/UISlideshow.js" ></script>
 	<script type="text/javascript" src="static/js/main/UI/UIAlbum.js" ></script>
@@ -33,7 +30,7 @@
 {% endblock %}
 
 {% block controls %}
-	<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Dashboard</a> 
+	<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Zum Dashboard</a> 
 	<span class="mp-option-toggle-gallery mp-controls" title="Verstecken/Anzeigen Gallerie">Gallerie <span class="mp-gallery-hidden">anzeigen</span><span class="mp-gallery-visible">verstecken</span></span>
 {% endblock %}
 
@@ -67,31 +64,20 @@
 		</div>
 		<div class="mp-slideshow-background"></div>
 		<div class="mp-slideshow" id="mp-slideshow">
-				<div class="mp-album-nav">
-					<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
-					<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
-				</div>
-				<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
-				<div class="mp-album-image">
-					<img class="mp-album-zoom" src="static/images/magnify.png"></img>
-					<img class="mp-current-image"></img>
-				</div>
-				<img class="mp-slideshow-close mp-control" src="static/images/close.png"></img>
+			<div class="mp-album-nav">
+				<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
+				<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
 			</div>
+			<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
+			<div class="mp-album-image">
+				<img class="mp-album-zoom" src="static/images/magnify.png"></img>
+				<img class="mp-current-image"></img>
+			</div>
+			<img class="mp-slideshow-close mp-control" src="static/images/close.png"></img>
+		</div>
 	</section>
 	
-	<!-- helpers for selenium ide. remove from production system -->
-	<div class="mp-invisible">
-		<button class="mp-insert-place"></button>
-		<button class="mp-show-place"></button>
-		<button class="mp-show-photo"></button>
-		<button class="mp-update-place"></button>
-		<button class="mp-update-photo"></button>
-		<button class="mp-delete-place"></button>
-		<button class="mp-delete-photo"></button>
-		<p id="test-photo-path">{{testphotopath}}</p>
-	</div>
-	
+	<!-- jqote2 templates for gallery and fullscreen -->
 	<script id="galleryTmpl" type="text/html">
 	<div class="mp-gallery-outer">
 		<div class="mp-gallery">
@@ -118,5 +104,18 @@
 			</div>
 		</div>
 	</script>
+	
+	<!-- helpers for selenium ide. remove from production system -->
+	<div class="mp-invisible">
+		<button class="mp-insert-place"></button>
+		<button class="mp-show-place"></button>
+		<button class="mp-show-photo"></button>
+		<button class="mp-update-place"></button>
+		<button class="mp-update-photo"></button>
+		<button class="mp-delete-place"></button>
+		<button class="mp-delete-photo"></button>
+		<p id="test-photo-path">{{testphotopath}}</p>
+	</div>
+	
 
 {% endblock %}

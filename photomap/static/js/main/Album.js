@@ -10,8 +10,8 @@ Album = function(data){
 	title: this.title
     });
 
-    this.bindListener();
     this.checkIconStatus();
+    this.bindListener();
 };
 
 Album.prototype = {

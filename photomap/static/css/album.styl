@@ -1,17 +1,42 @@
-/* img album and slideshow */
 $album-width = 49%
+
+/* main album styling */
+.mp-album
+  width 45%
+  height 75%
+  border $border-dark
+  margin 0.5% 0 0 51%
+  z-index 5
+  position absolute
+  overflow hidden
+  background $background-color-light url(../../images/bgalbum.png) no-repeat center center
+  opacity 0.8
+  
+.mp-gallery-title-bar
+  width 100%
+  height 5%
+  border-bottom $border-dark
+  background $background-color-darker
+  color white
+  text-align center
+
+.mp-image-loading-small
+  width 5%
+  height auto
+  position absolute
+  display none
+  
+/* slideshow and fullscreen styling */
 .mp-album-zoom
   width 10%
   height auto
   position absolute
   display none
-
-//sized and positioned with js
 .mp-slideshow
   width 100%
   height 100%
-  position absolute
   padding 0 0 0 1%
+  position absolute
 .mp-slideshow-background
   width 100%
   height 100%
@@ -21,39 +46,49 @@ $album-width = 49%
 .mp-current-image
     border 2px solid #FFFFFF
 
- 
-.mp-album
-  z-index 5
-  position absolute
-  overflow hidden
-  width 45%
-  //no idea where these weird values come from - maybe should be changed later - for now works though
-  height 75% //$height-main - 10%
-  border $border-dark
-  margin 0.5% 0 0 51%
-  opacity 0.8
-  background $background-color-light url(../../images/bgalbum.png) no-repeat center center
+.mp-album-image
+  display block
+  text-align center
+  vertical-align middle
+  position relative
+  img
+    max-width 95%
+    max-height 95%
+    border($box-shadow-light-grey)
+    vertical-align middle
 
+.mp-slideshow-close
+  width 5%
+  height auto
+  z-index 100
+  position absolute
+  top 0%
+  right 0%
+
+.mp-album-nav img
+  width 5%
+  height auto
+  margin-top -2.5%
+  z-index 10
+  position absolute
+  top 50%
+  &.mp-album-nav-next
+    left auto
+    right 0%
+
+/* gallery styling */
 .mp-album-wrapper
   width 99%
   height 93%
   padding 1% 0 0 1%
-  
-.mp-gallery-title-bar
-  width 100%
-  height 5%
-  background $background-color-darker
-  color white
-  text-align center
-  border-bottom $border-dark
 
 .mp-gallery img
+  width 30%
+  height 30%
+  padding 2px
   display block
   float left
-  padding 2px
   background $background-color-light
-  width 30% //trial and error with debugger
-  height 30%
   transition
   &.current
     background $current-color
@@ -61,56 +96,3 @@ $album-width = 49%
     background $visited-color
   imghover, &.current img
     opacity 0.8
-
-// display was table-cell before -> incompatible with oper
-// div around slideshow image and zoom
-.mp-album-image
-  display block
-  text-align center
-  vertical-align middle
-  position relative
-  img
-    vertical-align middle
-    max-height 95%
-    max-width 95%
-    border($box-shadow-light-grey)
-
-.mp-slideshow-close
-  position absolute
-  width 5%
-  height auto
-  top 0%
-  right 0%
-  z-index 100
-
-.mp-album-nav img
-  position absolute
-  width 5%
-  height auto
-  top 50%
-  margin-top -2.5%
-  z-index 10
-  &.mp-album-nav-next
-    left auto
-    right 0%
-
-.mp-image-loading-small
-  width 5%
-  height auto
-  position absolute
-  display none
-  
-.mp-controls-wrapper
-	z-index 1000 //100 less than fancybox
-	width 10%
-	height 8%
-	&.mp-controls-options
-		height 80%
-		width 45%
-	
-.mp-controls-background
-	position absolute
-	z-index -1
-	width 100%
-	height 100%
-	

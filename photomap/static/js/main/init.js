@@ -20,5 +20,6 @@ $mpContainer
     .css('margin-left', -3);
 
 var main = new Main();
+// initialise js-classes
 main.init();
 

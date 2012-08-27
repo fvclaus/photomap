@@ -1,8 +1,7 @@
 UIAlbum = function (gallery) {
 
     this.gallery = gallery;
-
-    //reserve  4px as buffer
+    
     this.$album	= $('#mp-album-wrapper');
     this.albumPadding = this.$album.css("padding-left");
     this.albumWidth = this.$album.width();
@@ -81,17 +80,6 @@ UIAlbum.prototype =  {
 				var jsonPhotos = new Array();
 
 				main.getUIState().getPhotos().forEach(function(photo,index,photos){
-				    /*
-				    //find position of image el
-				    photo.order = instance.$elements.index(photo.$anchorEl);
-				    //make a deep copy
-				    jsonPhoto = $.extend(true,{},photo);
-				    delete jsonPhoto.$anchorEl;
-				    jsonPhotos.push(jsonPhoto);
-				    console.log("jsonPhotos " + jsonPhotos);
-				    if (index == photos.length-1){
-					main.getClientServer().savePhotos(jsonPhotos);
-				    }*/
 				    // get html tag for current photo
 				    currentPhoto = $('img[src="' + photo.source + '"]');
 				    // find index of current photo in mp-gallery
@@ -101,7 +89,7 @@ UIAlbum.prototype =  {
 				    jsonPhotos.push(jsonPhoto);
 				    // when all photos with new order are in jsonPhotos, save the order
 				    if (index == photos.length-1){
-					main.getClientServer().savePhotos(jsonPhotos);
+					main.getClientServer().savePhotoOrder(jsonPhotos);
 				    }
 				});
 			    }

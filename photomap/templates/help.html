@@ -4,6 +4,10 @@
 
 {% block name %}Hilfe und Support{% endblock %}
 
+{% block extrajs %}
+	<script type="text/javascript" src="static/js/main/non-interactive/help.js" ></script>
+{% endblock %}
+
 {% block non_interactive_content %}
 	
 	<h2>Hilfe</h2>
@@ -94,7 +98,8 @@
 							<p class="mp-tutorial-list-topic">Photo hinzufügen</p>
 							<p class="mp-tutorial-list-desc">Sie können Photos hinzufügen, indem Sie auf das Hinzufügen-Symbol (ein Plus) in der Gallerie klicken.
 							In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und Beschreibung des Photos angeben können und 
-							das gewünschte Photo auf ihrem Computer auswählen können.</p>
+							das gewünschte Photo auf ihrem Computer auswählen können. <strong>Momentan werden die hochgeladenen Photos noch nicht sofort in der Gallerie 
+							angezeigt. Dafür muss die Seite noch neugeladen werden!</strong></p>
 						</li>
 						<li>
 							<p class="mp-tutorial-list-topic">Photo löschen/bearbeiten</p>
@@ -116,7 +121,7 @@
 						<li>
 							<p class="mp-tutorial-list-topic">Drag'n'Drop</p>
 							<p class="mp-tutorial-list-desc">
-								Sie können die Bilder neu anordnen in dem Sie innerhalb der Gallerie ein Photo an die gewünschte Stelle ziehen. 
+								Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein Photo an die gewünschte Stelle ziehen. 
 							</p>
 						</li>
 					</ul>
@@ -128,7 +133,4 @@
 	<p>
 		<img class="mp-construction" src="static/images/construction.png" title="Diese Seite ist noch in der Entwicklings-Phase">
 	</p>
-	
-	<script type="text/javascript" src="static/js/main/non-interactive/help.js" ></script>
-	
 {% endblock %}

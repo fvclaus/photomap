@@ -9,24 +9,24 @@ Map	= function() {
     });
     // the map options
     this.mapOptions 	= {
-	mapTypeId					: google.maps.MapTypeId.ROADMAP,
-	mapTypeControl				: true,
-	mapTypeControlOptions		: {
-	    style		: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-	    position	: google.maps.ControlPosition.TOP_CENTER
+	mapTypeId : google.maps.MapTypeId.ROADMAP,
+	mapTypeControl : true,
+	mapTypeControlOptions : {
+	    style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+	    position : google.maps.ControlPosition.TOP_CENTER
 	},
-	panControl					: true,
-	panControlOptions			: {
-	    position	: google.maps.ControlPosition.TOP_LEFT
+	panControl : true,
+	panControlOptions : {
+	    position : google.maps.ControlPosition.TOP_LEFT
 	},
-	zoomControl					: true,
-	zoomControlOptions			: {
-	    style		: google.maps.ZoomControlStyle.SMALL,
-	    position	: google.maps.ControlPosition.TOP_LEFT
+	zoomControl : true,
+	zoomControlOptions : {
+	    style : google.maps.ZoomControlStyle.SMALL,
+	    position : google.maps.ControlPosition.TOP_LEFT
 	},
-	streetViewControl			: true,
-	streetViewControlOptions	: {
-	    position	: google.maps.ControlPosition.TOP_LEFT
+	streetViewControl : true,
+	streetViewControlOptions : {
+	    position : google.maps.ControlPosition.TOP_LEFT
 	}
     }
     //user is guest
@@ -58,7 +58,7 @@ Map	= function() {
 
 
     // mode : fullscreen || normal
-    this.mode			= 'normal';	
+    this.mode = 'normal';
     this._create();
     
     
@@ -66,9 +66,9 @@ Map	= function() {
 
 Map.prototype = {
     // initialize the google.maps.Map instance.
-    _create				: function() {
+    _create : function() {
 
-	this.map 		= new google.maps.Map( this.$mapEl[0], this.mapOptions );
+	this.map = new google.maps.Map( this.$mapEl[0], this.mapOptions );
 	this.maptype = google.maps.MapTypeId.ROADMAP;
 	this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
 	this.ROADMAP = google.maps.MapTypeId.ROADMAP;
@@ -79,6 +79,7 @@ Map.prototype = {
 	this.overlay.setMap(this.map);
     },
     activateBindListener : function(){
+	// not on every page is the listener needed/wanted
 	this.bindListener();
     },
     bindListener : function(){
@@ -179,18 +180,18 @@ Map.prototype = {
 	    });
 	}
     },
-    getInstance			: function() {
+    getInstance : function() {
 	return this.map;
     },
     // takes an array of markers and resizes + pans the map so all places markers are visible
     // does not show/hide marker 
     fit : function( markersinfo ) {
-	var markersinfo 	= markersinfo || this.markersinfo;
-	this.markersinfo	= markersinfo;
+	var markersinfo = markersinfo || this.markersinfo;
+	this.markersinfo = markersinfo;
 	var LatLngList = new Array();
 
 	for( var i = 0, len = markersinfo.length; i < len; ++i ) {
-	    var minfo	= markersinfo[i];
+	    var minfo = markersinfo[i];
 	    LatLngList.push( new google.maps.LatLng ( minfo.lat , minfo.lng ) );
 	}
 	// create a new viewpoint bound
@@ -202,7 +203,6 @@ Map.prototype = {
 	    bounds.extend( LatLngList[i] );
 	}
 	// fit these bounds to the map
-	console.log("bounds " + bounds);
 	this.map.fitBounds( bounds );
     },
     getOverlay : function(){

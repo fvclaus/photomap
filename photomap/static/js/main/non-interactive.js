@@ -12,6 +12,7 @@ function initScrollPane() {
     $container.jScrollPane();
 };
 
+
 function hideMapControls() {
     main.getMap().getInstance().setOptions({
       panControl: false,
@@ -30,18 +31,27 @@ function setZoom(number) {
 
 $(document).ready(function(){
     $container = $("#mp-non-interactive-content");  
+    ui = main.getUI();
+    // set page mode to non-interactive
+    ui.getState().setModeNonInteractive();
+    // change cursor on map from cross to grabber - besides moving the map is non-interactive
+    ui.getCursor().setMapCursor(ui.getCursor().cursor.grab)
+    
+    hideMapControls();
+    repositionContent();
+    initScrollPane();
+    
+    // if window is resized content container needs to be repositioned
     $(window).resize(function(){
       repositionContent();
       initScrollPane();
     });
     
-    hideMapControls();
-    setZoom(20);
-    repositionContent();
-    initScrollPane();
-    
-    ui = main.getUI();    
-    ui.getCursor().setMapCursor(ui.getCursor().cursor.grab)
-    ui.getState().setModeNonInteractive();
+    // if there is a part of the content specified in the uri (by id) then scroll to that part
+    hash = window.location.hash;
+    if (hash){
+	api = $container.jScrollPane().data('jsp');
+	api.scrollToElement(hash,true,true);
+    }
 });
 

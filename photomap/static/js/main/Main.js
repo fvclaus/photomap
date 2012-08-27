@@ -11,8 +11,9 @@ Main = function(){
 Main.prototype = {
     init : function(){
 	this.map = new Map();
-	this.ui.init();
 	this.clientServer.init();
+	// initialise UI
+	this.ui.init();
     },
     getUIState : function(){
 	return this.ui.getState();

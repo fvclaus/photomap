@@ -120,7 +120,7 @@ UIState.prototype = {
     isAlbumLoading : function(bool){
 	return this.albumLoaded;
     },
-
+    // not used right now, but maybe worth being used!
     setFontSize : function(size){
 	this.fontSize = size;
     },

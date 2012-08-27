@@ -4,17 +4,14 @@ ClientServer = function() {
 };
 
 ClientServer.prototype = {
-	init				: function() {
-	    var instance 	= this;
+	init : function() {
+	    var instance = this;
 	    // make an AJAX call to get the places from the XML file, and display them on the Map
 	    this._getAlbums( function() {
 		instance._showAlbums();
-	    });
-
-	  
+	    });	  
 	},
-
-	_getAlbums			: function( callback ) {
+	_getAlbums : function( callback ) {
 	    var instance = this;
 	    // get the albums and their info
 	    $.getJSON('get-all-albums', function( albums ) {
@@ -39,11 +36,10 @@ ClientServer.prototype = {
 		if( callback ) callback.call();
 		
 	    });
-	    
 	},
-	_showAlbums			: function() {
-	    var map 			= main.getMap();
-	    markersinfo		= [];
+	_showAlbums : function() {
+	    var map = main.getMap();
+	    markersinfo = [];
 	    map.albums = this.albums;	    
 
 	    map.albums.forEach(function(album){
@@ -56,5 +52,22 @@ ClientServer.prototype = {
 		marker.show();
 	    });
 	    map.fit(markersinfo);
-	}
+	},
+	deleteObject : function(url,data){
+	    // post request to delete album/place/photo - data is the id of the object
+	    $.ajax({
+		type : "post",
+		dataType : "json",
+		"url" : url,
+		"data" : data,
+		success : function(data){
+		    if (data.error){
+			alert(data.error);
+		    }
+		},
+		error : function(err){
+		    alert(err.toString());
+		}
+	    });
+	},
 };

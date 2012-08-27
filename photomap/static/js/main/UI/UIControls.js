@@ -1,6 +1,5 @@
 UIControls = function(maxHeight) {
     
-    //currently photo only
     this.$controls = $(".mp-controls-wrapper");
     this.$controls.hide();
     // icons of photo controls are not scaled yet
@@ -25,7 +24,6 @@ UIControls.prototype = {
 
 	height = main.getUI().getPanel().getFooterHeight();
 	this.$logout.height(height);
-
     },
     placeCenterControl : function(){
 	//reposition
@@ -64,7 +62,7 @@ UIControls.prototype = {
     
     /*
       @author: Frederik Claus
-      @summary: modify controls are instantiated once and are used for places and photos
+      @summary: controls are instantiated once and are used for albums, places and photos
       @param center: the bottom center of the element where the controls should be displayed
     */
 
@@ -132,7 +130,6 @@ UIControls.prototype = {
 	}
     },
     
-
     bindInsertPhotoListener : function(){
 
 	this.$insert = $(".mp-option-add");
@@ -147,72 +144,62 @@ UIControls.prototype = {
     },
 
     bindListener : function(){
-
+    // problem: when new markers are added the listeners get somehow get bound again 
+    // so that the same listener lies on the same control multiple times
+    // temporary solution: unbind all listeners first then bind them
 	var instance = this;
-	this.$delete.unbind("click").bind("click",function(event){
-	    // hide current place's markers and clean photos from gallery
-	    state = main.getUIState();	
-	    photo = state.getCurrentPhoto();
-	    place = state.getCurrentPlace();
-	    album = state.getCurrentAlbum();
-	    var url,data;
-	    
-	    // delete current photo
-	    if (instance.isModifyPhoto) {
-		if(confirm("Do you really want to delete photo " + photo.name)){
-		    url = "/delete-photo",
-		    data = {"id":photo.id};
-		    //deletes photo from gallery and moves or hides slider
-		    main.getUI().getTools().deletePhoto(photo);
-		}
-		else 
-		    return;
-	    }
-
-	    // delete current place
-	    else if(instance.isModifyPlace){
-		if(confirm("Do you really want to delete place " + place.name)){
-		    url = "/delete-place";
-		    data = {"id":place.id};
-		    main.getUIState().removePlace(place);
-		    main.getUI().getInformation().hidePlaceTitle();
-		    place._delete();
-		}
-		else
-		    return;
-	    }
-
-	    // delete current album
-	    else if(instance.isModifyAlbum){
-		if(confirm("Do you really want to delete Album " + album.name)){
-		    url = "/delete-album";
-		    data = {"id":album.id};
-		    album._delete();
-		}
-		else
-		    return;
-	    }
-	    else{
-		alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
-		return;
-	    }
-
-	    
-	    //call to delete marker or photo in backend
-	    $.ajax({
-		type : "post",
-		dataType : "json",
-		"url" : url,
-		"data" : data,
-		success : function(data){
-		    if (data.error){
-			alert(data.error);
+	this.$delete
+	    .unbind("click")
+	    .bind("click",function(event){
+		// hide current place's markers and clean photos from gallery
+		state = main.getUIState();	
+		photo = state.getCurrentPhoto();
+		place = state.getCurrentPlace();
+		album = state.getCurrentAlbum();
+		var url,data;
+		
+		// delete current photo
+		if (instance.isModifyPhoto) {
+		    if(confirm("Do you really want to delete photo " + photo.name)){
+			url = "/delete-photo",
+			data = {"id":photo.id};
+			//deletes photo from gallery and moves or hides slider
+			main.getUI().getTools().deletePhoto(photo);
 		    }
-		},
-		error : function(err){
-		    alert(err.toString());
+		    else 
+			return;
 		}
-	    });
+    
+		// delete current place
+		else if(instance.isModifyPlace){
+		    if(confirm("Do you really want to delete place " + place.name)){
+			url = "/delete-place";
+			data = {"id":place.id};
+			main.getUIState().removePlace(place);
+			main.getUI().getInformation().hidePlaceTitle();
+			place._delete();
+		    }
+		    else
+			return;
+		}
+    
+		// delete current album
+		else if(instance.isModifyAlbum){
+		    if(confirm("Do you really want to delete Album " + album.name)){
+			url = "/delete-album";
+			data = {"id":album.id};
+			album._delete();
+		    }
+		    else
+			return;
+		}
+		else{
+		    alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
+		    return;
+		}
+		
+		// call to delete marker or photo in backend
+		main.getClientServer().deleteObject(url,data);
 	});
 
 	this.$update.unbind("click").bind("click",function(event){
@@ -289,7 +276,6 @@ UIControls.prototype = {
 	    .bind("mouseenter",function(){
 		instance.$controls.isEntered = true;
 	    });
-	
 	
 	this.$center.bind("click.MapPhotoAlbum",function(event){
 	    var place = main.getUIState().getCurrentPlace();

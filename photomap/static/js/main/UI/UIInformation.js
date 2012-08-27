@@ -5,10 +5,7 @@ UIInformation = function(){
     this.$album = $("#mp-album");
     this.$close = $(".mp-description-overlay-close");
     this.$infoButton = $(".mp-option-information");
-
     this.$description = $(".mp-description-wrapper").jScrollPane();
-    
-    // image count
     this.$imageNumber = this.$wrapper.find(".mp-image-number");
     
     this.bindListener();

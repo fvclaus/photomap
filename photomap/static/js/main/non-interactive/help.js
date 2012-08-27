@@ -27,11 +27,11 @@ function toggleTutorialDesc($topic){
 
 $(document).ready(function(){
 
-    var $question = $(".mp-faq-question").bind('click', function(){
+    $(".mp-faq-question").bind('click', function(){
 	trigger = $(this);
 	toggleFAQAnswers(trigger);
     });
-    var $topic = $(".mp-tutorial-list-topic").bind('click', function(){
+    $(".mp-tutorial-list-topic").bind('click', function(){
 	trigger = $(this);
 	toggleTutorialDesc(trigger);
     });

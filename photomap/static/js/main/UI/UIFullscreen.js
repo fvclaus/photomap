@@ -87,79 +87,79 @@ UIFullscreen.prototype = {
     },
 
     // adjust height and weight properties of image so that it fits current window size
-    _resizeImage					: function( $image ) {
-	var widthMargin		= 50,
-	heightMargin 	= 2 * this.$name.height(),
+    _resizeImage : function( $image ) {
+	var widthMargin = 50,
+	heightMargin = 2 * this.$name.height(),
 	
-	windowH      	= $(window).height() - heightMargin,
-	windowW      	= $(window).width() - widthMargin,
-	theImage     	= new Image();
+	windowH = $(window).height() - heightMargin,
+	windowW = $(window).width() - widthMargin,
+	theImage = new Image();
 	
-	theImage.src     	= $image.attr("src");
+	theImage.src = $image.attr("src");
 	
-	var imgwidth     	= theImage.width,
-	imgheight    	= theImage.height;
+	var imgwidth = theImage.width,
+	imgheight = theImage.height;
 
 	if((imgwidth > windowW) || (imgheight > windowH)) {
 
 	    if(imgwidth > imgheight) {
-		var newwidth 	= windowW,
-		ratio 		= imgwidth / windowW,
-		newheight 	= imgheight / ratio;
+		var newwidth = windowW,
+		ratio = imgwidth / windowW,
+		newheight = imgheight / ratio;
 		
 		theImage.height = newheight;
-		theImage.width	= newwidth;
+		theImage.width = newwidth;
 		
 		if(newheight > windowH) {
-		    var newnewheight 	= windowH,
-		    newratio 		= newheight/windowH,
-		    newnewwidth 	= newwidth/newratio;
-		    theImage.width 		= newnewwidth;
-		    theImage.height		= newnewheight;
+		    var newnewheight = windowH,
+		    newratio = newheight/windowH,
+		    newnewwidth = newwidth/newratio;
+		    theImage.width = newnewwidth;
+		    theImage.height = newnewheight;
 		}
 	    }
 	    else {
-		var newheight 	= windowH,
-		ratio 		= imgheight / windowH,
-		newwidth 	= imgwidth / ratio;
+		var newheight = windowH,
+		ratio = imgheight / windowH,
+		newwidth = imgwidth / ratio;
 		theImage.height = newheight;
-		theImage.width	= newwidth;
+		theImage.width = newwidth;
 		
 		if(newwidth > windowW) {
-		    var newnewwidth 	= windowW,
-		    newratio 		= newwidth/windowW,
-		    newnewheight 	= newheight/newratio;
-		    theImage.height 	= newnewheight;
-		    theImage.width		= newnewwidth;
+		    var newnewwidth = windowW,
+		    newratio = newwidth/windowW,
+		    newnewheight = newheight/newratio;
+		    theImage.height = newnewheight;
+		    theImage.width = newnewwidth;
 		}
 	    }
 	}
 	
 	$image.css({
-	    'width'			: theImage.width + 'px',
-	    'height'		: theImage.height + 'px',
-	    'margin-left'	: -theImage.width / 2 + 'px',
-	    'margin-top'	: -theImage.height / 2 + this.$name.height() / 2 + 'px'
+	    'width' : theImage.width + 'px',
+	    'height' : theImage.height + 'px',
+	    'margin-left' : -theImage.width / 2 + 'px',
+	    'margin-top' : -theImage.height / 2 + this.$name.height() / 2 + 'px'
 	});	
 	
     },
 
     // bind hide functionality to close button
-    bindListener	: function() {
-	var instance	= this;
+    bindListener : function() {
+	var instance = this;
 	$("div.mp-image-nav")
 	    .unbind(".Gallery")
 	    .find("img.mp-image-nav-next")
 	    .bind("click.Gallery",function(event){
 		instance.$close.trigger("click");
-		instance.gallery.navigateSlider(instance,"right");	
+		instance.gallery.navigateSlider(instance,"right");
 		instance.zoom();
 	    })
 	    .end()
 	    .find("img.mp-image-nav-prev")
 	    .bind("click.Gallery",function(event){
 		instance.$close.trigger("click");
-		instance.gallery.navigateSlider(instance,"left");	
+		instance.gallery.navigateSlider(instance,"left");
 		instance.zoom();
 	    });
 	this.$close.unbind("click.Gallery").bind('click.Gallery', function() {
