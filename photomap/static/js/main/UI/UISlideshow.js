@@ -73,8 +73,6 @@ UISlideshow.prototype = {
 	var position = main.getUI().getAlbum().getDimensions();
 	// write height and width in overlay image wrapper and overlay
 	// css only sizing and pos failed for some reason
-	console.log("newwidth = " + position.width + " newheight = " + position.height);
-	console.log(position.width == 462);
 	this.$slideshow
 	    .css("left",position.left)
 	    .css("top",position.top)
@@ -112,6 +110,7 @@ UISlideshow.prototype = {
 	information = main.getUI().getInformation();
 	information.hidePhotoTitle();
 	information.hideDescription();
+	information.hideImageNumber();
 
     },
 
@@ -191,7 +190,10 @@ UISlideshow.prototype = {
 	information = main.getUI().getInformation();
 	information.setPhotoTitle();
 	information.setPhotoDescription();
-	
+	// sets image number in description box
+	photos = main.getUI().getAlbum().$elements;
+	state = main.getUIState();
+	information.setImageNumber(state.getCurrentPhotoIndex() + 1,photos.length);
 	// set cursor for fullscreen control
 	main.getUI().getCursor().setCursor($(".mp-album-zoom"),main.ui.getCursor().cursor.pointer)
     },

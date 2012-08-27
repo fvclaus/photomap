@@ -1,6 +1,6 @@
 UIInformation = function(){
 	
-    this.$wrapper = $("#mp-photo-description");
+    this.$wrapper = $("#mp-description");
     this.$bottomPanel = $(".mp-bottom-panel");
     this.$album = $("#mp-album");
     this.$close = $(".mp-description-overlay-close");
@@ -9,7 +9,7 @@ UIInformation = function(){
     this.$description = $(".mp-description-wrapper").jScrollPane();
     
     // image count
-    this.$imageNumber = this.$wrapper.find(".mp-status-image");
+    this.$imageNumber = this.$wrapper.find(".mp-image-number");
     
     this.bindListener();
     
@@ -116,22 +116,28 @@ UIInformation.prototype = {
 	    $button = $(this);
 	    if ($button.hasClass("mp-page-title")){
 		instance.setAlbumDescription();
+		instance.hideImageNumber();
 	    }
 	    if ($button.hasClass("mp-place-title")){
 		instance.setPlaceDescription();
+		instance.hideImageNumber();
 	    }
 	    if ($button.parent().hasClass("mp-photo-title")){
 		instance.setPhotoDescription();
+		instance.showImageNumber();
 	    }
 	});
     },
     hideImageNumber : function(){
 	this.$imageNumber.hide();
+	this.$imageNumber.next().css("margin-left",0);
     },
     showImageNumber : function(){
 	this.$imageNumber.show();
+	margin = - this.$imageNumber.width();
+	this.$imageNumber.next().css("margin-left",margin);
     },
-    setImageNumber : function(text) {
-	this.$imageNumber.html(text);
+    setImageNumber : function(index,total) {
+	this.$imageNumber.text(" Bild " + index + "/" + total);
     },
 };
