@@ -30,7 +30,10 @@ UICursor.prototype = {
       draggingCursor: this.cursor.grab,
     });
   },
-  
+  setInfoCursor : function(style){
+    $information = $(".mp-option-information");
+    this.setCursor($information,style);
+  },
   cursors : function() {
     
     // on map
@@ -46,10 +49,7 @@ UICursor.prototype = {
     $topic = $(".mp-tutorial-list-topic");
     this.setCursor($topic,this.cursor.pointer);
     
-    //on information triggers
-    $information = $(".mp-option-information");
-    this.setCursor($information,this.cursor.info)
-    
+    // on toggle gallery button
     $toggleGallery = $(".mp-option-toggle-gallery");
     this.setCursor($toggleGallery,this.cursor.pointer);
     

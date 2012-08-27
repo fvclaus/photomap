@@ -7,9 +7,13 @@ function placeMapControls() {
 };
 
 $(document).ready(function(){
-
-  placeMapControls();
-  
+  // set page in interactive mode as dashboard
   page = "dashboard";
   main.getUI().getState().setModeInteractive(page);
+  
+  placeMapControls();
+  
+  // activate map listener
+  main.getMap().activateBindListener();
+  
 });

@@ -60,7 +60,6 @@ Map	= function() {
     // mode : fullscreen || normal
     this.mode			= 'normal';	
     this._create();
-    this.bindListener();
     
     
 };
@@ -78,6 +77,9 @@ Map.prototype = {
 	this.overlay = new google.maps.OverlayView();
 	this.overlay.draw = function() {};
 	this.overlay.setMap(this.map);
+    },
+    activateBindListener : function(){
+	this.bindListener();
     },
     bindListener : function(){
 	var instance 	= this;

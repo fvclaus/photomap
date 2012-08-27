@@ -27,6 +27,7 @@ function setZoom(number) {
     main.getMap().getInstance().setZoom(number);
 };
 
+
 $(document).ready(function(){
     $container = $("#mp-non-interactive-content");  
     $(window).resize(function(){

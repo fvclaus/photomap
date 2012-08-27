@@ -21,16 +21,21 @@ function toggleGallery() {
 };
 
 $(document).ready(function(){
-
+  // set page in interactive mode as albumview
+  page = "albumview";
+  main.getUIState().setModeInteractive(page);
+  
+  cursor = main.getUI().getCursor();
+  cursor.setInfoCursor(cursor.cursor.info);
+  
   placeMapControls();
-  $("#mp-album").hide();
+  // activate map listener
+  main.getMap().activateBindListener();
   
   $(".mp-slideshow-background").position($(".mp-album-wrapper").position());
   $(".mp-slideshow").position($(".mp-album-wrapper").position());
-  
-  page = "albumview";
-  main.getUI().getState().setModeInteractive(page);
-  
+  $("#mp-album").hide();
+
   $(".mp-option-toggle-gallery").bind("click",function(){
     toggleGallery();
   });
