@@ -21,7 +21,11 @@ content="non-interactive"
 	
 {% endblock %}
 
-{% block controls %}<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Zum Dashboard</a>  {% endblock %}
+{% block controls %}
+	{% if user.is_authenticated %}
+		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Zum Dashboard</a>  
+	{% endif %}
+{% endblock %}
 
 {% block content %}
 		<section class="mp-map" id="mp-map">

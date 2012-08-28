@@ -17,9 +17,7 @@ function placeLoginForms(){
     $register.find("form").css('margin-top',registerMarginTop);
 };
 
-$(document).ready(function(){
-    $(".mp-panel-controls-wrapper").hide();
-    
+$(document).ready(function(){    
     placeLoginForms();
 });    
 
