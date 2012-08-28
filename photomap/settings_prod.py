@@ -19,13 +19,13 @@ TEMPLATE_DEBUG = False
 COMPRESS_ENABLED = True
 
 
-#temp_app = tuple()
-#
-#for app in INSTALLED_APPS:
-#    if not app == "django.contrib.admin":
-#        temp_app += (app,)
-#
-#INSTALLED_APPS = temp_app
+temp_app = tuple()
+
+for app in INSTALLED_APPS:
+    if not app == "django.contrib.admin":
+        temp_app += (app,)
+
+INSTALLED_APPS = temp_app
 
 DATABASES = {
         'default': {
