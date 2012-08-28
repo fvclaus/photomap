@@ -13,7 +13,7 @@ from pm.util.s3 import getbucket
 from pm.controller.authentication import is_authorized
 
 from message import success, error 
-from pm.form.photo import PhotoInsertPRODForm,PhotoInsertDEBUGForm, PhotoUpdateForm
+from pm.form.photo import PhotoInsertPRODForm,PhotoInsertDEBUGForm, PhotoUpdateForm, PhotoCheckPRODForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
@@ -28,8 +28,12 @@ logger = logging.getLogger(__name__)
 @login_required
 def insert(request):
     if request.method == "POST":
-        form = PhotoInsertDEBUGForm(request.POST, request.FILES, auto_id = False)
         
+        if settings.DEBUG:
+            form = PhotoInsertDEBUGForm(request.POST, request.FILES, auto_id = False)
+        else:
+            form = PhotoCheckPRODForm(request.POST,request.FILES, auto_id = False)
+            
         if form.is_valid():
             place = form.cleaned_data["place"]
             

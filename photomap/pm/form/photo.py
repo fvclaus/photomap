@@ -12,11 +12,15 @@ class PhotoInsertDEBUGForm(forms.ModelForm):
     @author: Frederik Claus
     @summary: Form to insert data before processing
     """
+    class Meta:
+        model = Photo
+        exclude = ( "order","date")
+
+class PhotoCheckPRODForm(forms.ModelForm):
     photo = forms.ImageField()
     class Meta:
         model = Photo
-        exclude = ("thumb", "order","date","photo")
-        
+        exclude = ("order","date","photo")
 
 class PhotoInsertPRODForm(forms.ModelForm):
     """
@@ -25,7 +29,7 @@ class PhotoInsertPRODForm(forms.ModelForm):
     """
     class Meta:
         model = Photo
-        exclude = ("thumb", "order","date")
+        exclude = ("order","date")
         
 class PhotoUpdateForm(forms.ModelForm):
     id = forms.IntegerField()

@@ -76,7 +76,10 @@ def insert(request):
             album = form.save(commit = False)
             logger.debug("user " + str(request.user))
             album.user = request.user
-            album.country = reversegecode(album.lat, album.lon)
+            try:
+                album.country = reversegecode(album.lat, album.lon)
+            except:
+                return error("osm is temporarily not available. please try again later")
             album.save()
             return success(id = album.pk)
         else:
