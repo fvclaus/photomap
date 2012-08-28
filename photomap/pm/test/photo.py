@@ -12,6 +12,7 @@ from pm.model.photo import Photo
 import json
 import logging 
 import os
+from copy import deepcopy
 
 class PhotoControllerTest(SimpleTestCase):
         
@@ -26,13 +27,17 @@ class PhotoControllerTest(SimpleTestCase):
         # delete something that exists
         #=======================================================================
         photo = Photo.objects.get(pk = 1)
-        photo = (photo.pk,photo.photo.path)
+        photo = (photo.pk,photo.getphotourl())
         self.assertDeletes({"id" : 1})
         self.assertPhotoDeleted(photo)
         #=======================================================================
         # delete something that does not exist
         #=======================================================================
         self.assertError({"id":9999})
+        #=======================================================================
+        # something that does not belong to you
+        #=======================================================================
+        self.assertError({"id":2})
         #=======================================================================
         # use wrong paramater
         #=======================================================================
@@ -45,29 +50,45 @@ class PhotoControllerTest(SimpleTestCase):
         #=======================================================================
         # insert something valid without description
         #=======================================================================
-        photo = open(TEST_PHOTO, "rb")
         data = {"place": 1,
-                "title": "Chuck Norris",
-                "photo" : photo}
+                "title": "Chuck Norris"}
+        self._openphoto(data)
         (photo, content) = self.assertCreates(data, check = self.assertPhotoCreateSuccess)
         self.assertEqual(photo.title, data["title"])
         #=======================================================================
         # insert something valid with description
         #=======================================================================
-        photo = open(TEST_PHOTO, "rb")
-        data["photo"] = photo
+        self._openphoto(data)
         data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
         self.assertCreates(data, check = self.assertPhotoCreateSuccess)
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
-        del data["photo"]
-        self.assertPhotoCreateError(data)
+        data2 = deepcopy(data)
+        self._openphoto(data2)
+        del data2["photo"]
+        self.assertPhotoCreateError(data2)
         #=======================================================================
         # delete some more
         #=======================================================================
-        del data["title"]
-        self.assertPhotoCreateError(data)
+        data3 = deepcopy(data)
+        self._openphoto(data3)
+        del data3["title"]
+        self.assertPhotoCreateError(data3)
+        #=======================================================================
+        # delete something else
+        #=======================================================================
+        data4 = deepcopy(data)
+        self._openphoto(data4)
+        del data4["place"]
+        self.assertPhotoCreateError(data4)
+        #=======================================================================
+        # insert into somebody elses place
+        #=======================================================================
+        data5 = deepcopy(data)
+        self._openphoto(data5)
+        data5["place"] = 2
+        self.assertPhotoCreateError(data5)
         
     def test_update(self):
         self.url = "/update-photo"
@@ -91,6 +112,11 @@ class PhotoControllerTest(SimpleTestCase):
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.order, data["order"])
         #=======================================================================
+        # somebody elses photo
+        #=======================================================================
+        data["id"] = 2
+        self.assertError(data)
+        #=======================================================================
         # wrong id test
         #=======================================================================
         data["id"] = 999 # does not exist
@@ -111,3 +137,7 @@ class PhotoControllerTest(SimpleTestCase):
         self.assertTrue("text/html" in response["Content-Type"])
         self.assertTrue("error" in response.content)
         self.assertEqual(length, len(Photo.objects.all()))
+    
+    def _openphoto(self,data):
+        photo = open(TEST_PHOTO,"rb")
+        data["photo"] = photo

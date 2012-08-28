@@ -11,6 +11,8 @@ from django.contrib.auth.backends import ModelBackend
 from django.core.validators import email_re
 
 from pm.form.authentication import LoginForm,RegisterForm
+from pm.model.place import Place
+from pm.model.photo import Photo
 
 def login(request):
     if request.method == "GET":
@@ -47,4 +49,17 @@ class EmailBackend(ModelBackend):
             except User.DoesNotExist:
                 return None
         return None
-    
+
+def is_authorized(instance,user):
+    if isinstance(instance,Place):
+        if instance.album.user == user:
+            return True
+        else:
+            return False
+    elif isinstance(instance,Photo):
+        if instance.place.album.user == user:
+            return True
+        else:
+            return False
+    else:
+        return False

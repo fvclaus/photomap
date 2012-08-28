@@ -12,6 +12,7 @@ from pm.model.place import Place
 from pm.model.photo import Photo
 import os
 from data import GPS_MANNHEIM_SCHLOSS
+from copy import deepcopy
 
 class PlaceControllerTest(SimpleTestCase):
     
@@ -39,15 +40,23 @@ class PlaceControllerTest(SimpleTestCase):
         (place, content) = self.assertCreates(data)
         self.assertEqual(place.description, data["description"])
         #=======================================================================
+        # into somebody elses album
+        #=======================================================================
+        data["album"] = 2
+        self.assertError(data)
+        data["album"] = 1
+        #=======================================================================
         # something invalid
         #=======================================================================
-        del data["lat"]
-        self.assertError(data)
+        data2 = deepcopy(data)
+        del data2["lat"]
+        self.assertError(data2)
         #=======================================================================
         # something else invalid
         #=======================================================================
-        del data["lon"]
-        self.assertError(data)
+        data3 = deepcopy(data)
+        del data3["lon"]
+        self.assertError(data3)
     
         
     def test_update(self):
@@ -66,6 +75,11 @@ class PlaceControllerTest(SimpleTestCase):
         (place, content) = self.assertUpdates(data)
         self.assertEqual(place.description, data["description"])
         #=======================================================================
+        # something that doesnt belong to you
+        #=======================================================================
+        data["id"] = 2
+        self.assertError(data)
+        #=======================================================================
         # something invalid
         #=======================================================================
         data["id"] = 9999
@@ -83,6 +97,10 @@ class PlaceControllerTest(SimpleTestCase):
 #        assert on delete cascade
         for photo in photos:
             self.assertPhotoDeleted(photo)
+        #=======================================================================
+        # not yours
+        #=======================================================================
+        self.assertError({"id":1})
         #=======================================================================
         # not valid
         #=======================================================================

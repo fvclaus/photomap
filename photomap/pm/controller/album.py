@@ -47,10 +47,10 @@ def get(request):
             except KeyError:
                 id = None
             if not id:
-                albums = Album.objects.all()
+                albums = Album.objects.all(user = request.user)
                 album = albums[len(albums) - 1]
             else:
-                album = Album.objects.get(pk = request.GET["id"])
+                album = Album.objects.get(user = request.user,pk = request.GET["id"])
                 
             data = album.toserializable()
             if album.user == user:
@@ -91,7 +91,7 @@ def update(request):
         if form.is_valid():
             album = None
             try:
-                album = Album.objects.get(pk = form.cleaned_data["id"])
+                album = Album.objects.get(user = request.user,pk = form.cleaned_data["id"])
             except Album.DoesNotExist:
                 return error("album does not exist")
             form = AlbumUpdateForm(request.POST, instance = album)
@@ -108,7 +108,7 @@ def delete(request):
         logger.debug("inside delete post")
         try:
             id = request.POST["id"]
-            album = Album.objects.get(pk = id)
+            album = Album.objects.get(user = request.user,pk = id)
             album.delete()
             return success()
         except (KeyError, Album.DoesNotExist), e:
