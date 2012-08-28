@@ -11,16 +11,27 @@ from place import Place
 import json
 import os
 from django.db.models.signals import post_delete
+from django.conf import settings
+from django.contrib.sites.models import Site
+import sys
+from pm.util.s3 import getbucket,build_url
 
 class Photo(Description):
   
-    thumb = models.ImageField(upload_to = settings.PHOTO_PATH, null = True, blank = True, max_length = 500)
-    photo = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)
     place = models.ForeignKey(Place)
     order = models.IntegerField(null = True, blank = True)
+    photo = models.TextField()
+    
+    
+    if settings.DEBUG:
+        photo = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)
+
     
     def getphotourl(self):
-        return os.path.relpath(self.photo.path, settings.PROJECT_PATH)
+        if settings.DEBUG:
+            return os.path.relpath(self.photo.path, settings.PROJECT_PATH)
+        else:
+            return build_url(self.photo)
     
     def toserializable(self):
         return {"thumb": self.getphotourl(),
@@ -40,9 +51,19 @@ class Photo(Description):
 
 def deletephoto(sender,**kwargs):
     instance = kwargs["instance"]
-    try:
-        os.remove(instance.photo.path)
-    except:
-        pass
+    if settings.DEBUG:
+        try:
+            os.remove(instance.photo.path)
+        except:
+            pass
+    else:
+        try:
+            key = instance.photo
+            bucket = getbucket()
+            bucket.delete_key(key)
+        except:
+            pass
+    
+            
 
-post_delete.connect(deletephoto)
+post_delete.connect(deletephoto,sender = Photo)

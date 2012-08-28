@@ -14,6 +14,7 @@ from datetime import datetime
 from time import mktime
 from pm.model.photo import Photo
 import os
+from urllib import urlopen
 
 class SimpleTestCase(TestCase):
     """ loads the simple-test fixtues, appends a logger and logs the client in """
@@ -95,7 +96,9 @@ class SimpleTestCase(TestCase):
         
     def assertPhotoDeleted(self,photo):
         self.assertDoesNotExist(photo[0],model = Photo)
-        self.assertFalse(os.path.exists(photo[1]))
+        url = urlopen(photo[1])
+#        s3 error for access denied
+        self.assertEqual(url.getcode(),403)
     
     def assertAlbumComplete(self,album): 
         self.assertDescriptionComplete(album)
@@ -125,20 +128,30 @@ class SimpleTestCase(TestCase):
         else:
             return self.model
         
-    def json(self, data = {} , url = None,method = "POST"):
-        """ makes a post request to url or self.url returns the content jsonified""" 
+    def json(self, data = {} , url = None,method = "POST",loggedin = True):
+        """ 
+            @author: Frederik Claus
+            @summary: makes a post request to url or self.url returns the content jsonified
+        """ 
+        if loggedin:
+            client = self.c
+        else:
+            client = Client()
         if not url:
             if not self.url:
                 raise RuntimeError("self.url is not defined and url was not in parameters")
             url = self.url
         if method == "POST":
-            response = self.c.post(url, data)
+            response = client.post(url, data)
         elif method == "GET":
-            response = self.c.get(url,data)
+            response = client.get(url,data)
             
         self.assertEqual(response["Content-Type"], "text/json")
         return json.loads(response.content)
     
     def getunixtime(self):
         return mktime(datetime.now().timetuple()) 
+    
+    def getloggedoutclient(self):
+        return Client()
         

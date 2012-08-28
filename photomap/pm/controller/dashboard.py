@@ -43,6 +43,7 @@ def get(request):
                 albumflat["isOwner"] = True
             else:
                 albumflat = album.toserializable(includeplaces = False, guest = True)
+                albumflat["isOwner"] = False
             data.append(albumflat)
             
         logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))

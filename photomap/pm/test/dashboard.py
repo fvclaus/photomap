@@ -20,3 +20,13 @@ class DashboardControllerTest(SimpleTestCase):
         # send some crap
         #=======================================================================
         albums2 = self.json({"id" : 2},method = "GET")
+        #=======================================================================
+        # not logged in
+        #=======================================================================
+        albums3 = self.json(method="GET",loggedin = False)
+        for album in albums3:
+            self.assertTrue(album["lat"])
+            self.assertTrue(album["lon"])
+            self.assertFalse(album["isOwner"])
+            self.assertTrue(album["country"])
+            self.assertRaises(KeyError, album.__getitem__,"photos")

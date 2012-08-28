@@ -16,6 +16,7 @@ from data import GPS_MANNHEIM_SCHLOSS
 import json
 import logging 
 import os
+from copy import deepcopy
 from decimal import Decimal
 
 class AlbumControllerTest(SimpleTestCase):
@@ -35,7 +36,7 @@ class AlbumControllerTest(SimpleTestCase):
         photos = []
         
         for place in places:
-            photos.extend([(photo.pk,photo.photo.path) for photo in Photo.objects.all().filter(place = place)])
+            photos.extend([(photo.pk,photo.getphotourl()) for photo in Photo.objects.all().filter(place = place)])
             
         self.assertDeletes({"id" : 1})
         
@@ -49,6 +50,10 @@ class AlbumControllerTest(SimpleTestCase):
         # delete something that does not exist
         #=======================================================================
         self.assertError({"id":9999})
+        #=======================================================================
+        # delete something that does not belong to you
+        #=======================================================================
+        self.assertError({"id":2})
         #=======================================================================
         # use wrong paramater
         #=======================================================================
@@ -76,13 +81,15 @@ class AlbumControllerTest(SimpleTestCase):
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
-        del data["lat"]
-        self.assertError(data)
+        data2 = deepcopy(data)
+        del data2["lat"]
+        self.assertError(data2)
         #=======================================================================
         # delete some more
         #=======================================================================
-        del data["lon"]
-        self.assertError(data)
+        data3 = deepcopy(data)
+        del data3["lon"]
+        self.assertError(data3)
         
     def test_update(self):
         self.url = "/update-album"
@@ -104,6 +111,16 @@ class AlbumControllerTest(SimpleTestCase):
         #=======================================================================
         data["id"] = 999 # does not exist
         self.assertError(data)
+        #=======================================================================
+        # no id test
+        #=======================================================================
+        del data["id"]
+        self.assertError(data)
+        #=======================================================================
+        # update something that does not belong to you
+        #=======================================================================
+        data["id"] = 2
+        self.assertError(data)
         
     def test_get(self):
         self.url = "/get-album"
@@ -123,4 +140,8 @@ class AlbumControllerTest(SimpleTestCase):
         # something invalid
         #=======================================================================
         self.assertError({"id" : 9999},method = "GET")
+        #=======================================================================
+        # does not belong to you
+        #=======================================================================
+        self.assertError({"id" : 2},method = "GET")
    

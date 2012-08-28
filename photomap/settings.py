@@ -95,6 +95,8 @@ else:
         }
     }
 
+AWS_ACCESS_KEY_ID = "AKIAIC6WYCFDZIOOIWZA"
+AWS_SECRET_ACCESS_KEY = "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"
 # Local time zone for this installation. Choices can be found here:
 # http://en.wikipedia.org/wiki/List_of_tz_zones_by_name
 # although not all choices may be available on all operating systems.

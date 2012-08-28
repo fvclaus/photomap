@@ -7,7 +7,22 @@ Created on Jul 3, 2012
 from django import forms
 from pm.model.photo import Photo
 
-class PhotoInsertForm(forms.ModelForm):
+class PhotoInsertDEBUGForm(forms.ModelForm):
+    """
+    @author: Frederik Claus
+    @summary: Form to insert data before processing
+    """
+    photo = forms.ImageField()
+    class Meta:
+        model = Photo
+        exclude = ("thumb", "order","date","photo")
+        
+
+class PhotoInsertPRODForm(forms.ModelForm):
+    """
+    @author: Frederik Claus
+    @summary: Form to insert data into db after processing
+    """
     class Meta:
         model = Photo
         exclude = ("thumb", "order","date")

@@ -34,7 +34,8 @@ class Album(Description):
                     "id": self.pk}
         else:
             data = {"lat" : self.lat,
-                    "lon" : self.lon}
+                    "lon" : self.lon,
+                    "country": self.country}
         
         if includeplaces:
             places_dump = []
