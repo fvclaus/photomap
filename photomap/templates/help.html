@@ -1,8 +1,12 @@
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "Hilfe und Support" as page_name %}
+
 {% extends "base-non-interactive.html" %}
 
-{% block title %}Hilfe{% endblock %}
+{% block title %}{{ page_name }}{% endblock %}
 
-{% block name %}Hilfe und Support{% endblock %}
+{% block name %}{{ page_name }}{% endblock %}
 
 {% block extrajs %}
 	<script type="text/javascript" src="static/js/main/non-interactive/help.js" ></script>
@@ -10,119 +14,81 @@
 
 {% block non_interactive_content %}
 	
-	<h2>Hilfe</h2>
-	<p>
-		Momentan steht Ihnen leider noch keine sehr umfangreiche Hilfe-Seite zur Verfügung. Wir arbeiten jedoch daran. Ein Basis-Tutorial, 
-		das die wichtigsten Funktionen umfasst, gibt es bereits. 
-		Wenn Sie noch nicht beantwortete Fragen haben, schreiben Sie uns doch gerne eine email an <strong>s.u.p.p.0.r.t.lghp.projekt@gmail.com</strong>!
+	<p>{% trans "help-intro-paragraph" %} <strong>s.u.p.p.0.r.t.lghp.projekt@gmail.com</strong>!
 	</p>
 	<section id ="mp-faq" class="mp-faq-wrapper">
-		<h3>FAQ</h3>
+		<h3>{% trans "help-faq-title" %}</h3>
 		<article class="mp-faq-entry">
-			<h4 class="mp-faq-question">Warum Klarnamen?</h4>
-			<p class="mp-faq-answer">
-				Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. Das ganze Projekt 
-				soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr ganz persönliches digitales Online-
-				Poesie-Album. Nur die Personen denen Sie Zugang zu einem ihrer Alben gestatten können das 
-				Album und Ihren Namen auch tatsächlich sehen. Und unserer Meinung nach ist es viel 
-				ansprechender den Namen eines Freundes zusehen als ein mehr oder minder abstraktes Pseudonym. 
-				Altmodisch? Keineswegs! Für ein Poesie-Album ist dies nicht nur praktischer, sondern auch schöner.
-			</p>
+			<h4 class="mp-faq-question">{% trans "help-faq-question1" %}</h4>
+			<p class="mp-faq-answer">{% trans "help-faq-answer1" %}</p>
 		</article>
 	</section>
 	<section id="mp-tutorial" class="mp-tutorial-wrapper">
-		<h3>Tutorial</h3>
+		<h3>{% trans "help-tutorial-title" %}</h3>
 		<article class="mp-tutorial-entry">
-			<h4 class="mp-tutorial-topic">Dashboard</h4>
+			<h4 class="mp-tutorial-topic">{% trans "help-tutorial topic: Dashboard" %}</h4>
 			<div class="mp-tutorial-description">
-				<p>Im Dashboard werden alle Ihre Alben auf der Karte angezeigt.</p>
+				<p>{% trans "help-tutorial topic: Dashboard -> description" %}</p>
 				<div>
-					<h5>Alben</h5>
+					<h5>{% trans "help-tutorial topic: Dashboard, subtopic: Alben" %}</h5>
 					<ul>
 						<li>
-							<p class="mp-tutorial-list-topic">Album hinzufügen</p>
-							<p class="mp-tutorial-list-desc">Sie können Alben hinzufügen, indem Sie auf einen beliebigen Punkt der Karte klicken.
-							In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und Beschreibung des Albums angeben können. 
-							Nach dem Senden wird an dem ausgewählten Punkt ein neues Album erstellt, welches durch einen Marker 
-							auf der Karte gekennzeichnet ist.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Dashboard, subtopic: Alben, function: Add" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description" %}</p>
 						</li>
 						<li>
-							<p class="mp-tutorial-list-topic">Album löschen/bearbeiten</p>
-							<p class="mp-tutorial-list-desc">Wenn Sie mit der Maus über einen Album-Marker fahren, öffnet sich ein kleines Fenster mit zwei 
-							Symbolen. Durch Anklicken des entsprechenden Symbols wird ein Dialog zum bearbeiten/löschen 
-							aufgerufen.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> description" %}</p>
 						</li>
 						<li>
-							<p class="mp-tutorial-list-topic">Album auswählen</p>
-							<p class="mp-tutorial-list-desc">Indem Sie auf einen Album-Marker klicken, wählen Sie ein bestimmtes Album aus. Daraufhin werden 
-							Sie auf die Albumsansicht des entsprechenden Albums weitergeleitet.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Dashboard, subtopic: Alben, function: Select" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> description" %}</p>
 						</li>
 					</ul>
 				</div>
 			</div>
 		</article>
 		<article class="mp-tutorial-entry">
-			<h4 class="mp-tutorial-topic">Albumsansicht</h4>
+			<h4 class="mp-tutorial-topic">{% trans "help-tutorial topic: Albumview" %}</h4>
 			<div class="mp-tutorial-description">
-				<p>
-					In der Albumsansicht können Sie einzelne Plätze zu ihrem Album hinzufügen. Anschließend können Sie, für diese 
-					Plätze, Bilder hochladen, welche man in der Gallerie (Kasten auf der rechten Seite) anschauen kann. Zudem gibt 
-					es noch die Möglichkeiten die Bilder in einer kleinen Slideshow innerhalb der Gallerie oder sogar als Vollbild 
-					anschauen zu können.
-				</p>
+				<p>{% trans "help-tutorial topic: Albumview -> description" %}</p>
 				<div>
-					<h5>Plätze</h5>
+					<h5>{% trans "help-tutorial topic: Albumview, subtopic: Places" %}</h5>
 					<ul>
 						<li>
-							<p class="mp-tutorial-list-topic">Platz hinzufügen</p>
-							<p class="mp-tutorial-list-desc">Sie können Plätze hinzufügen, indem Sie auf einen beliebigen Punkt der Karte klicken.
-							In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und Beschreibung des Platzes angeben können. 
-							Nach dem Senden wird an dem ausgewählten Punkt ein neuer Platz erstellt, welcher durch einen Marker 
-							auf der Karte gekennzeichnet ist.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Places, function:Add" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Places, function: Add -> description" %}</p>
 						</li>
 						<li>
-							<p class="mp-tutorial-list-topic">Platz löschen/bearbeiten</p>
-							<p class="mp-tutorial-list-desc">Wenn Sie mit der Maus über einen Platz-Marker fahren, öffnet sich ein kleines Fenster mit zwei 
-							Symbolen. Durch Anklicken des entsprechenden Symbols wird ein Dialog zum bearbeiten/löschen 
-							aufgerufen.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> description" %}</p>
 						</li>
 						<li> 
-							<p class="mp-tutorial-list-topic">Platz auswählen</p>
-							<p class="mp-tutorial-list-desc">Indem Sie auf einen Platz-Marker klicken, wählen Sie einen bestimmten Platz aus. Daraufhin werden 
-							die Bilder des Platzes in der Gallerie auf der rechten Seite angezeigt.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Places, function: Select" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Places, function: Select -> description" %}</p>
 						</li>
 					</ul>
-					<h5>Gallerie</h5>
+					<h5>{% trans "help-tutorial topic: Albumview, subtopic: Gallery" %}</h5>
 					<ul>
 						<li>
-							<p class="mp-tutorial-list-topic">Photo hinzufügen</p>
-							<p class="mp-tutorial-list-desc">Sie können Photos hinzufügen, indem Sie auf das Hinzufügen-Symbol (ein Plus) in der Gallerie klicken.
-							In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und Beschreibung des Photos angeben können und 
-							das gewünschte Photo auf ihrem Computer auswählen können. <strong>Momentan werden die hochgeladenen Photos noch nicht sofort in der Gallerie 
-							angezeigt. Dafür muss die Seite noch neugeladen werden!</strong></p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Add" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> description" %}</p>
 						</li>
 						<li>
-							<p class="mp-tutorial-list-topic">Photo löschen/bearbeiten</p>
-							<p class="mp-tutorial-list-desc">Wenn Sie mit der Maus über einen Photo fahren, öffnet sich ein kleines Fenster mit zwei 
-							Symbolen. Durch Anklicken des entsprechenden Symbols wird ein Dialog zum bearbeiten/löschen 
-							aufgerufen.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -> description" %}</p>
 						</li>
 						<li>
-							<p class="mp-tutorial-list-topic">Slideshow starten</p>
-							<p class="mp-tutorial-list-desc">Indem Sie auf ein Photo in der Gallerie klicken, wird eine Slideshow mit diesem Photo als Start innerhalb 
-							der Gallerie geöffnet. Sie können durch Anklicken der Pfeile die Bilder wechseln.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> description" %}</p>
 						</li>
 						<li>
-							<p class="mp-tutorial-list-topic">Fullscreen</p>
-							<p class="mp-tutorial-list-desc">Indem Sie auf die Lupe in der Mitte jedes Photos in der Slideshow klicken, wird das Photo im Fullscreen
-							angezeigt. Auch hier können Sie über die Pfeile die Bilder wechseln. Ausserdem können Sie in die 
-							Bilder hineinzoomen.</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> description" %}</p>
 						</li>
 						<li>
-							<p class="mp-tutorial-list-topic">Drag'n'Drop</p>
-							<p class="mp-tutorial-list-desc">
-								Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein Photo an die gewünschte Stelle ziehen. 
-							</p>
+							<p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop" %}</p>
+							<p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> description" %}</p>
 						</li>
 					</ul>
 				</div>

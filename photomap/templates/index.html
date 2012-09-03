@@ -1,6 +1,12 @@
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "Willkommen" as page_name %}
+
 {% extends "base-non-interactive.html" %}
 
-{% block title %}Welcome{% endblock %}
+{% block title %}{{ page_name }}{% endblock %}
+
+{% block name %}{{ page_name }}{% endblock %}
 
 {% block extrajs %}
 	<script type="text/javascript" src="static/js/main/non-interactive/landingpage.js" ></script>
@@ -9,13 +15,26 @@
 {% block non_interactive_content %}
 
 	<article class="mp-welcome-note">
+		<h2>{% trans "welcome-title" %}</h2>
+		<p>{% trans "welcome-paragraph1" %}</p>
+		<p>{% trans "welcome-paragraph2" %}</p>
+		<p>{% trans "welcome-paragraph3" %}</p>
+		<p>
+			{% trans "welcome-paragraph4" %} <strong>s.u.p.p.0.r.t.lghp.projekt@gmail.com</strong>!
+		</p>
+	
+	</article>
+	<p><input class="mp-option-to-login" type="button" value="Zum Login oder Registrierung" /></p>
+	<hr />
+	<!--
+	<article class="mp-welcome-note">
 		<h2>Herzlichen Willkommen</h2>
 		<p>
 			Bitte beachten Sie dass die Seite immer noch in Entwicklung ist! Verzeihen Sie bitte darum 
 			das noch etwas unausgegorene Design und den beschränkten Funktionsumfang. Die Basis-Funktionen
 			sind jedoch schon verfügbar und können von Ihnen genutzt werden. Fühlen Sie sich also frei dazu,
 			sich anzumelden und das Projekt schon einmal auszutesten! 
-		</p>
+		</p>s
 		<p>
 			Warum veröffentlichen wir die App schon jetzt? Nun es sind Sommerferien in Deutschland und viele
 			Familien, Studenten und Paare fahren in den Urlaub und schießen jede Menge an tollen Fotos. Und
@@ -54,6 +73,7 @@
 		</footer>
 		</article>
 	</section>
+	-->
 	<br /><br /><br /><br />
 	<p>
 		<img class="mp-construction" src="static/images/construction.png" title="Diese Seite ist noch in der Entwicklings-Phase">

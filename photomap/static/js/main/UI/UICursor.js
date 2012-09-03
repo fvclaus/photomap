@@ -46,7 +46,7 @@ UICursor.prototype = {
     // on faq and tutorial entries
     $question = $(".mp-faq-question");
     this.setCursor($question,this.cursor.pointer);
-    $topic = $(".mp-tutorial-list-topic");
+    $topic = $(".mp-tutorial-subtopic");
     this.setCursor($topic,this.cursor.pointer);
     
     // on toggle gallery button

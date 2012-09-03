@@ -1,7 +1,12 @@
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "Projekt und Team" as page_name %}
+
 {% extends "base-non-interactive.html" %}
 
-{% block title %}Projekt und Team{% endblock %}
+{% block title %{{ page_name }}{% endblock %}
 
+{% block name %}{{ page_name }}{% endblock %}
 
 {% block non_interactive_content %}
 	

@@ -1,0 +1,634 @@
+# German text strings for Photomap-Project.
+# Copyright (C) 2012
+# This file is distributed under the same license as the PACKAGE package.
+# Author: Marc-Leon Römer <marcleonroemer@gmail.com>, 2012.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-03 21:53+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: templates/base-interactive.html:12
+msgid "control-title delete"
+msgstr "Löschen"
+
+#: templates/base-interactive.html:13
+msgid "control-title modify"
+msgstr "Bearbeiten"
+
+#: templates/base-non-interactive.html:3 templates/view-album.html:3
+msgid "link-title-dashboard"
+msgstr "Zum Dashboard"
+
+#: templates/base.html:102
+msgid "link-title-impressum"
+msgstr "Zum Impressum von NAME DES PROJEKTS"
+
+#: templates/base.html:102 templates/impressum.html:3
+msgid "Impressum"
+msgstr "Impressum"
+
+#: templates/base.html:103
+msgid "link-title-privacy"
+msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
+
+#: templates/base.html:103 templates/privacy.html:3
+msgid "Datenschutz"
+msgstr "Datenschutz"
+
+#: templates/base.html:104
+msgid "link-title-copyright"
+msgstr "Details zum Urheberrecht"
+
+#: templates/base.html:104 templates/copyright.html:3
+msgid "Urheberrecht"
+msgstr "Copyright"
+
+#: templates/base.html:105
+msgid "link-title-contact"
+msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
+
+#: templates/base.html:105 templates/contact.html:3
+#: templates/impressum.html:31
+msgid "Kontakt"
+msgstr "Kontakt"
+
+#: templates/base.html:106
+msgid "link-title-help"
+msgstr "Hilfe zu den Funktionen und FAQ"
+
+#: templates/base.html:106
+msgid "Hilfe"
+msgstr "Hilfe"
+
+#: templates/base.html:107
+msgid "link-title-team"
+msgstr "Vorstellung des Projekts und der Verantwortlichen"
+
+#: templates/base.html:107
+msgid "Team"
+msgstr "Team"
+
+#: templates/base.html:119
+msgid "link-title-login"
+msgstr "Zu Login/Registrierung"
+
+#: templates/contact.html:14
+msgid "contact-intro-article1-line1"
+msgstr "Sollten Sie Probleme, Anregungen oder Fragen, welche nicht auf der"
+
+#: templates/contact.html:14
+msgid "contact-linkto-help"
+msgstr "Hilfe-Seite"
+
+#: templates/contact.html:15
+msgid "contact-intro-article1-line2"
+msgstr ""
+"beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail unter"
+
+#: templates/contact.html:19
+msgid "contact-intro-article1-line3"
+msgstr ""
+"Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen. (Bald "
+"verfügbar)"
+
+#: templates/contact.html:20
+msgid "contact-intro-article1-line4"
+msgstr "Bitte beachten Sie die hierfür gültigen"
+
+#: templates/contact.html:20
+msgid "contact-linkto-privacy"
+msgstr "Datenschutzgrundsätze"
+
+#: templates/copyright.html:14
+msgid "copyright-article1-paragraph1"
+msgstr ""
+"Sowohl die durch die Seitenbetreiber, als auch die durch Nutzer der Seite "
+"erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen "
+"Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art "
+"der Verwertung außerhalb der Grenzen des Urheberrechtes bedürfen der "
+"schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers. Downloads "
+"und Kopien dieser Seite sind nur für den privaten, nicht kommerziellen "
+"Gebrauch gestattet."
+
+#: templates/copyright.html:15
+msgid "copyright-article1-paragraph2"
+msgstr ""
+"Soweit die Inhalte auf dieser Seite nicht vom Betreiber erstellt wurden, "
+"werden die Urheberrechte Dritter beachtet. Insbesondere werden Inhalte "
+"Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine "
+"Urheberrechtsverletzung aufmerksam werden, bitten wir um einen "
+"entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir "
+"derartige Inhalte umgehend entfernen."
+
+#: templates/help.html:3
+msgid "Hilfe und Support"
+msgstr "Hilfe und Support"
+
+#: templates/help.html:17
+msgid "help-intro-paragraph"
+msgstr ""
+"Momentan steht Ihnen leider noch keine sehr umfangreiche Hilfe-Seite zur "
+"Verfügung. Wir arbeiten jedoch daran. Ein Basis-Tutorial, das die "
+"wichtigsten Funktionen umfasst, gibt es bereits. Wenn Sie noch nicht "
+"beantwortete Fragen haben, schreiben Sie uns doch gerne eine Email an"
+
+#: templates/help.html:20
+msgid "help-faq-title"
+msgstr "FAQ"
+
+#: templates/help.html:22
+msgid "help-faq-question1"
+msgstr "Warum Klarnamen?"
+
+#: templates/help.html:23
+msgid "help-faq-answer1"
+msgstr ""
+"Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
+"Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
+"ganz persönliches digitales Online-Poesie-Album. Nur die Personen denen Sie "
+"Zugang zu einem ihrer Alben gestatten können das Album und Ihren Namen auch "
+"tatsächlich sehen. Und unserer Meinung nach ist es viel ansprechender den "
+"Namen eines Freundes zusehen als ein mehr oder minder abstraktes Pseudonym. "
+"Altmodisch? Keineswegs! Für ein Poesie-Album ist dies nicht nur praktischer, "
+"sondern auch schöner."
+
+#: templates/help.html:27
+msgid "help-tutorial-title"
+msgstr "Tutorial"
+
+#: templates/help.html:29
+msgid "help-tutorial topic: Dashboard"
+msgstr "Dashboard"
+
+#: templates/help.html:31
+msgid "help-tutorial topic: Dashboard -> description"
+msgstr "Im Dashboard werden alle Ihre Alben auf der Karte angezeigt."
+
+#: templates/help.html:33
+msgid "help-tutorial topic: Dashboard, subtopic: Alben"
+msgstr "Alben"
+
+#: templates/help.html:36
+msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
+msgstr "Album hinzufügen"
+
+#: templates/help.html:37
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
+msgstr ""
+"Sie können Alben hinzufügen, indem Sie auf einen beliebigen Punkt der Karte "
+"klicken. In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und "
+"Beschreibung des Albums angeben können. Nach dem Senden wird an dem "
+"ausgewählten Punkt ein neues Album erstellt, welches durch einen Marker auf "
+"der Karte gekennzeichnet ist."
+
+#: templates/help.html:40
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
+msgstr "Album löschen/bearbeiten"
+
+#: templates/help.html:41
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
+"description"
+msgstr ""
+"Wenn Sie mit der Maus über einen Album-Marker fahren, öffnet sich ein "
+"kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
+"Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
+
+#: templates/help.html:44
+msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
+msgstr "Album auswählen"
+
+#: templates/help.html:45
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
+"description"
+msgstr ""
+"Indem Sie auf einen Album-Marker klicken, wählen Sie ein bestimmtes Album "
+"aus. Daraufhin werden Sie auf die Albumsansicht des entsprechenden Albums "
+"weitergeleitet."
+
+#: templates/help.html:52
+msgid "help-tutorial topic: Albumview"
+msgstr "Albumsansicht"
+
+#: templates/help.html:54
+msgid "help-tutorial topic: Albumview -> description"
+msgstr ""
+"In der Albumsansicht können Sie einzelne Plätze zu ihrem Album hinzufügen. "
+"Anschließend können Sie, für diese Plätze, Bilder hochladen, welche man in "
+"der Gallerie (Kasten auf der rechten Seite) anschauen kann. Zudem gibt es "
+"noch die Möglichkeiten die Bilder in einer kleinen Slideshow innerhalb der "
+"Gallerie oder sogar als Vollbild anschauen zu können."
+
+#: templates/help.html:56
+msgid "help-tutorial topic: Albumview, subtopic: Places"
+msgstr "Plätze"
+
+#: templates/help.html:59
+msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
+msgstr "Platz hinzufügen"
+
+#: templates/help.html:60
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
+"description"
+msgstr ""
+"Sie können Plätze hinzufügen, indem Sie auf einen beliebigen Punkt der Karte "
+"klicken. In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und "
+"Beschreibung des Platzes angeben können. Nach dem Senden wird an dem "
+"ausgewählten Punkt ein neuer Platz erstellt, welcher durch einen Marker auf "
+"der Karte gekennzeichnet ist."
+
+#: templates/help.html:63
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
+msgstr "Platz löschen/bearbeiten"
+
+#: templates/help.html:64
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
+"description"
+msgstr ""
+"Wenn Sie mit der Maus über einen Platz-Marker fahren, öffnet sich ein "
+"kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
+"Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
+
+#: templates/help.html:67
+msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
+msgstr "Platz auswählen"
+
+#: templates/help.html:68
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
+"description"
+msgstr ""
+"Indem Sie auf einen Platz-Marker klicken, wählen Sie einen bestimmten Platz "
+"aus. Daraufhin werden die Bilder des Platzes in der Gallerie auf der rechten "
+"Seite angezeigt."
+
+#: templates/help.html:71
+msgid "help-tutorial topic: Albumview, subtopic: Gallery"
+msgstr "Gallerie"
+
+#: templates/help.html:74
+msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
+msgstr "Photo hinzufügen"
+
+#: templates/help.html:75
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
+"description"
+msgstr ""
+"Sie können Photos hinzufügen, indem Sie auf das Hinzufügen-Symbol (ein Plus) "
+"in der Gallerie klicken. In diesem Fall öffnet sich ein Dialog, in dem Sie "
+"Titel und Beschreibung des Photos angeben können und das gewünschte Photo "
+"auf ihrem Computer auswählen können."
+
+#: templates/help.html:78
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
+msgstr "Photo löschen/bearbeiten"
+
+#: templates/help.html:79
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
+"> description"
+msgstr ""
+"Wenn Sie mit der Maus über einen Photo fahren, öffnet sich ein kleines "
+"Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden Symbols wird "
+"ein Dialog zum bearbeiten/löschen aufgerufen."
+
+#: templates/help.html:82
+msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
+msgstr "Slideshow starten"
+
+#: templates/help.html:83
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
+"description"
+msgstr ""
+"Indem Sie auf ein Photo in der Gallerie klicken, wird eine Slideshow mit "
+"diesem Photo als Start innerhalb der Gallerie geöffnet. Sie können durch "
+"Anklicken der Pfeile die Bilder wechseln."
+
+#: templates/help.html:86
+msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
+msgstr "Vollbild"
+
+#: templates/help.html:87
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
+"description"
+msgstr ""
+"Indem Sie auf die Lupe in der Mitte jedes Photos in der Slideshow klicken, "
+"wird das Photo im Fullscreen angezeigt. Auch hier können Sie über die Pfeile "
+"die Bilder wechseln. Ausserdem können Sie in die Bilder hineinzoomen."
+
+#: templates/help.html:90
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
+msgstr "Drag'n'Drop"
+
+#: templates/help.html:91
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
+"description"
+msgstr ""
+"Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
+"Photo an die gewünschte Stelle ziehen."
+
+#: templates/impressum.html:14
+msgid "impressum Angaben gemäß § 5 TMG"
+msgstr "Angaben gemäß § 5 TMG"
+
+#: templates/impressum.html:22
+msgid "impressum Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
+msgstr "Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
+
+#: templates/impressum.html:23
+msgid "impressum Anschrift wie oben"
+msgstr "Anschrift wie oben"
+
+#: templates/impressum.html:25
+msgid "impressum Vertreten durch"
+msgstr "Vertreten durch"
+
+#: templates/impressum.html:33
+msgid "Telefon"
+msgstr "Telefon"
+
+#: templates/impressum.html:33
+msgid "Handy"
+msgstr "Handy"
+
+#: templates/impressum.html:34
+msgid "Email-Adresse"
+msgstr "Email-Adresse"
+
+#: templates/impressum.html:37
+msgid "impressum-sidenote Missbrauch von Kontaktdaten"
+msgstr "Missbrauch von Kontaktdaten"
+
+#: templates/impressum.html:38
+msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
+msgstr ""
+"Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich "
+"angeforderter Werbung und Informationsmaterialien, sowie anderweitigem Missbrauch wird hiermit ausdrücklich widersprochen. Die Betreiber "
+"der Seiten behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten Zusendung von Werbeinformationen, etwa durch "
+"Spam-Mails, vor."
+
+#: templates/impressum.html:42
+msgid "impressum-liability Haftung für Inhalte"
+msgstr "Haftung für Inhalte"
+
+#: templates/impressum.html:43
+msgid "impressum-liability Haftung für Inhalte -> description"
+msgstr ""
+"Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können "
+"wir jedoch keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den "
+"allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte oder "
+"gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen. "
+"Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine "
+"diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von "
+"entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend entfernen."
+
+#: templates/impressum.html:44
+msgid "impressum-liability Haftung für Links"
+msgstr "Haftung für Links"
+
+#: templates/impressum.html:45
+msgid "impressum-liability Haftung für Links -> description"
+msgstr ""
+"Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte wir keinen Einfluss haben. Deshalb können wir für diese "
+"fremden Inhalte auch keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder Betreiber der "
+"Seiten verantwortlich. Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße überprüft. Rechtswidrige "
+"Inhalte waren zum Zeitpunkt der Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist jedoch ohne "
+"konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend "
+"entfernen."
+
+#: templates/index.html:3
+msgid "Willkommen"
+msgstr "Willkommen"
+
+#: templates/index.html:18
+msgid "welcome-title"
+msgstr "Herzlich Willkommen"
+
+#: templates/index.html:19
+msgid "welcome-paragraph1"
+msgstr ""
+"Bitte beachten Sie dass die Seite immer noch in Entwicklung ist! Verzeihen Sie bitte darum das noch etwas unausgegorene Design und den "
+"beschränkten Funktionsumfang. Die Basis-Funktionen sind jedoch schon verfügbar und können von Ihnen genutzt werden. Fühlen Sie sich also "
+"frei dazu, sich anzumelden und das Projekt schon einmal auszutesten!"
+
+#: templates/index.html:20
+msgid "welcome-paragraph2"
+msgstr ""
+"Während Sie ihre ersten Bilderalben anlegen und Reisen mit anderen teilen, werden wir an diesem digitalen Poesie-Album weiterarbeiten und "
+"regelmäßige Updates veröffentlichen. Dabei werden wir natürlich versuchen den bereits registrierten Nutzern möglichst wenige "
+"Komplikationen, wie zB. grundlegende Änderungen, zu bereiten. Da auch wir ein bisschen Urlaub brauchen bzw. immer noch in der Prüfungszeit "
+"stecken werden die nächsten Versionsupdates jedoch noch bis September warten müssen."
+
+#: templates/index.html:21
+msgid "welcome-paragraph3"
+msgstr ""
+"Viel Spaß und Freude bei der Gestaltung eures ersten Online Poesiealbums und beim teilen eurer Reisen und Erlebnisse mit anderen, wünscht "
+"euch das LGHP-Team!"
+
+#: templates/index.html:22
+msgid "welcome-paragraph4"
+msgstr "PS: Sollten Sie Fragen oder Anregungen haben schreiben Sie uns doch bitte eine email an"
+
+#: templates/insert-album.html:6
+msgid "insert-dialogue-title insert-album"
+msgstr "Hinzufügen eines Albums"
+
+#: templates/insert-album.html:10 templates/insert-photo.html:18
+#: templates/insert-place.html:10 templates/update-album.html:11
+#: templates/update-photo.html:12 templates/update-place.html:11
+msgid "insert-dialogue name"
+msgstr "Name"
+
+#: templates/insert-album.html:14 templates/insert-photo.html:22
+#: templates/insert-place.html:14 templates/update-album.html:15
+#: templates/update-photo.html:16 templates/update-place.html:15
+msgid "insert-dialogue description"
+msgstr "Beschreibung"
+
+#: templates/insert-photo.html:12
+msgid "insert-dialogue-title insert-photo"
+msgstr "Hinzufügen eines neuen Photos"
+
+#: templates/insert-photo.html:26
+msgid "insert-dialogue select photo to upload"
+msgstr "Photo zum Hochladen auswählen"
+
+#: templates/insert-place.html:6
+msgid "insert-dialogue-title insert-place"
+msgstr "Hinzufügen eines Platzes"
+
+#: templates/login.html:3
+msgid "Login und Registrierung"
+msgstr "Login und Registrierung"
+
+#: templates/privacy.html:14
+msgid "privacy-topic Datenschutzerklärung"
+msgstr "Datenschutzerklärung"
+
+#: templates/privacy.html:15
+msgid "privacy-topic Datenschutzerklärung -> description"
+msgstr ""
+"Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst und halten uns an die Regeln der Datenschutzgesetze. Die nachfolgende Erklärung "
+"gibt Ihnen einen Überblick darüber, welche Art von Daten zu welchem Zweck erhoben werden und in welchem Umfang diese Daten Dritten "
+"zugänglich gemacht werden."
+
+#: templates/privacy.html:16
+msgid "privacy-topic Datenverarbeitung bei diesem Projekt"
+msgstr "Datenverarbeitung bei diesem Projekt"
+
+#: templates/privacy.html:17
+msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> description"
+msgstr ""
+"Für die Nutzung des Projekts werden Sie bei der Registrierung gebeten, als persönliche Daten Ihre email-Adresse und Ihren vollen "
+"Namen - Nachname ist optional - anzugeben. Diese Daten werden in der Datenbank unter Ihrer automatisch generierten User-ID gespeichert."
+
+#: templates/privacy.html:19
+msgid "privacy-subtopic Nutzung der email-Adresse"
+msgstr "Nutzung der email-Adresse"
+
+#: templates/privacy.html:20
+msgid "privacy-subtopic Nutzung der email-Adresse -> description"
+msgstr ""
+"Die email-Adresse wird nur für das einloggen, also das Bestätigen Ihrer Identität, benötigt. Sie ist in keiner Weise auf der Website "
+"ersichtlich - weder für Sie noch für andere."
+
+#: templates/privacy.html:23
+msgid "privacy-subtopic Nutzung des Namens"
+msgstr "Nutzung des vollen Namens"
+
+#: templates/privacy.html:24
+msgid "privacy-subtopic Nutzung des Namens -> description"
+msgstr ""
+"Ihr Name wird als Benutzername verwendet und ist damit für Sie persönlich unten auf der Seite, neben dem Logout-Button sichtbar. "
+"Ansonsten wird er noch nicht verwendet. (Später bei kommenden Features wie Kommentaren und News-Feeds zu den von Ihnen abbonierten Alben "
+"wird der Ihr Name bei registrierten Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, bei Informationen die Ihnen zugehörig "
+"sind angezeigt."
+
+#: templates/privacy.html:26
+msgid "privacy-sidenote Pseudonyme"
+msgstr "Notiz zu Pseudonymen"
+
+#: templates/privacy.html:27
+msgid "privacy-sidenote Pseudonyme -> description"
+msgstr ""
+"Wir kontrollieren die von Ihnen gewählten Namen nicht, d.h. Sie können auch Pseudonyme verwenden. Bedenken Sie jedoch das dies jediglich " 
+"ein Online-Poesie-Album ist. Nur die Personen denen Sie Zugang zu einem ihrer Alben gestatten können das Album und ihren Namen auch "
+"tatsächlich sehen. Ein Photo-Album ist doch sehr viel persönlicher und ansprechender, wenn man einen richtigen Namen dabei hat anstatt "
+"eines abstrakten Pseudonyms."
+
+#: templates/privacy.html:32
+msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee"
+msgstr "Wir gewährleisten, dass die von Ihnen angegebenen Daten in keiner anderen, als der hier aufgeführten, Weise von uns genutzt werden."
+
+#: templates/privacy.html:35
+msgid "privacy-topic Webanalyse und Cookies"
+msgstr "Webanalyse und Cookies"
+
+#: templates/privacy.html:37
+msgid "privacy-topic Webanalyse und Cookies -> description"
+msgstr ""
+"Diese Seite verwendet Cookies, welche allerdings nur für ihre Sitzungs-ID benötigt werden. Für nähere Informationen zu Cookies verweisen "
+"wir Sie auf den"
+
+#: templates/privacy.html:38
+msgid "link-title Wikipedia-Eintrag zu Cookies"
+msgstr "Wikipedia-Eintrag zu Cookies"
+
+#: templates/privacy.html:38
+msgid "privacy-topic Webanalyse und Cookies -> link to wiki"
+msgstr "Wikipedia-Artikel zu HTTP-Cookies"
+
+#: templates/privacy.html:41
+msgid "privacy-topic Emails und Kontaktformulare"
+msgstr "Emails und Kontaktformulare"
+
+#: templates/privacy.html:42
+msgid "privacy-topic Emails und Kontaktformulare -> description"
+msgstr ""
+"Die von Ihnen an uns gesendeten Nachrichten werden zu Dokumentation und Weiterverarbeitung bei uns gespeichert. Dies beinhaltet sämtliche "
+"von Ihnen angegebenen und für die Verarbeitung notwendigen Daten; dazu gehören beispielweise alle Daten die in den Pflichtfeldern des "
+"Kontaktformulars angegeben wurden. Die Daten im Kontaktformular werden in keiner Weise überprüft, die Verwendung von Pseudonymen ist somit "
+"möglich, allerdings nicht empfehlenswerte da es die Verarbeitung erschwert und wir Ihnen dadurch eventuell nicht so präzise weiterhelfen "
+"können, wie wir es gerne würden. Nach Abschluss des Dialogs mit Ihnen werden die Daten wieder gelöscht, es sei denn es wurde mit Ihnen "
+"ausgemacht die Daten zu speichern."
+
+#: templates/privacy.html:43
+msgid "privacy-topic Auskunftsrecht"
+msgstr "Auskunftsrecht"
+
+#: templates/privacy.html:45
+msgid "privacy-topic Auskunftsrecht -> description"
+msgstr ""
+"Wir würden Ihnen gern Auskunft über die bei uns gespeicherten persönlichen Daten geben. Wir wissen allerdings auch nicht mehr als Sie. "
+"Dieses wenige Wissen teilen wir Ihnen im Rahmen der gesetzlichen Auskunftsansprüche allerdings gern nochmals mit."
+
+#: templates/privacy.html:46
+msgid "privacy-topic Auskunftsrecht -> invitation to ask"
+msgstr "Wenn Sie weitere Fragen zur Behandlung Ihrer Daten haben, dann schicken Sie uns einfach eine Nachricht per email oder über das"
+
+#: templates/privacy.html:46
+msgid "Kontaktformular"
+msgstr "Kontaktformular"
+
+#: templates/team.html:3
+msgid "Projekt und Team"
+msgstr "Projekt und Team"
+
+#: templates/update-album.html:6
+msgid "insert-dialogue-title update-album"
+msgstr "Bearbeiten eines Albums"
+
+#: templates/update-photo.html:6
+msgid "insert-dialogue-title update-photo"
+msgstr "Bearbeiten eines Photos"
+
+#: templates/update-place.html:6
+msgid "insert-dialogue-title update-place"
+msgstr "Bearbeiten eines Platzes"
+
+#: templates/view-album.html:35
+msgid "control-title toggle gallery"
+msgstr "Anzeigen/Verstecken der Gallerie"
+
+#: templates/view-album.html:35
+msgid "Gallerie"
+msgstr "Gallerie"
+
+#: templates/view-album.html:35
+msgid "show"
+msgstr "anzeigen"
+
+#: templates/view-album.html:35
+msgid "hide"
+msgstr "verstecken"
+
+#: templates/view-album.html:49
+msgid "Beschreibung"
+msgstr "Beschreibung"
+
+#: templates/view-album.html:88
+msgid "control-title add-photo"
+msgstr "Photo hinzufügen"

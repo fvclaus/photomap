@@ -1,3 +1,6 @@
+<!-- for the translation with django -->
+{% load i18n %}
+
 <!--<script type="text/javascript" src="static/js/jquery.all.min.js"></script>-->
 {% load compress %}
 {% compress css file %}
@@ -5,20 +8,22 @@
 {% endcompress %}
 <!--<script type="text/javascript" src="/js/insert-photo.js"></script>-->
 <div class="insert">
+	
+	<h2>{% trans "insert-dialogue-title insert-photo" %}</h2>
+	
 	<form class="jquery-validator mp-dialog" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
 	
-		
 		<input type="hidden" name="place" required="required" value="{{place}}"/>
 		<div>
-			<label for="title">Name <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
+			<label for="title">{% trans "insert-dialogue name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
 			<input type="text" name="title" required="required" />
 		</div>
 		<div>
-			<label for="description">Beschreibung</label>
+			<label for="description">{% trans "insert-dialogue description" %}</label>
 			<textarea name="description"></textarea>
 		</div>
 		<div>
-			<label for="photo">Photo auswählen<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
+			<label for="photo">{% trans "insert-dialogue select photo to upload" %}<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
 			<input type="file" name="photo" required="required" />
 		</div>
 

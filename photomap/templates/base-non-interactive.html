@@ -1,3 +1,7 @@
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "link-title-dashboard" as dashboard_link %}
+
 {% extends "base.html" %}
 
 {% block mode %}
@@ -23,7 +27,7 @@ content="non-interactive"
 
 {% block controls %}
 	{% if user.is_authenticated %}
-		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Zum Dashboard</a>  
+		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title={{ dashboard_link }}>{{ dashboard_link }}</a>  
 	{% endif %}
 {% endblock %}
 

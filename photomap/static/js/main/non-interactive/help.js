@@ -13,7 +13,7 @@ function toggleFAQAnswers($question){
 };
 function toggleTutorialDesc($topic){
     $desc = $topic.next("p");
-    $descriptions = $(".mp-tutorial-list-desc");
+    $descriptions = $(".mp-tutorial-subtopic-desc");
     // hide all other answers
     $descriptions.not($desc).slideUp(150);
 	
@@ -31,7 +31,7 @@ $(document).ready(function(){
 	trigger = $(this);
 	toggleFAQAnswers(trigger);
     });
-    $(".mp-tutorial-list-topic").bind('click', function(){
+    $(".mp-tutorial-subtopic").bind('click', function(){
 	trigger = $(this);
 	toggleTutorialDesc(trigger);
     });

@@ -1,3 +1,6 @@
+<!-- for the translation with django -->
+{% load i18n %}
+
 <!DOCTYPE html>
 <html lang="de" >
 	<head>
@@ -96,12 +99,12 @@
 			
 			<footer class="mp-footer" id="mp-footer">
 				<section class="mp-internal-links">
-					<a href="/impressum" title="Details zu den kreativen Köpfen hinter dem Projekt">Impressum</a> |
-					<a href="/privacy" title="Erläuterungen zur Nutzung von persönlichen Daten beim Projekt">Datenschutz</a> |
-					<a href="/copyright" title="Details zum Urheberrecht">Copyright</a> |
-					<a href="/contact" title="Für Support, Fragen, Anmerkungen und Kritik..">Kontakt</a> |
-					<a href="/help" title="Hilfe zu den Funktionen und FAQ">Hilfe</a> |
-					<a href="/team" title="Vorstellung des Projekts und der Verantwortlichen">Team</a>
+					<a href="/impressum" title={% trans "link-title-impressum" %}>{% trans "Impressum" %}</a> |
+					<a href="/privacy" title={% trans "link-title-privacy" %}>{% trans "Datenschutz" %}</a> |
+					<a href="/copyright" title={% trans "link-title-copyright" %}>{% trans "Urheberrecht" %}</a> |
+					<a href="/contact" title={% trans "link-title-contact" %}>{% trans "Kontakt" %}</a> |
+					<a href="/help" title={% trans "link-title-help" %}>{% trans "Hilfe" %}</a> |
+					<a href="/team" title={% trans "link-title-team" %}>{% trans "Team" %}</a>
 				</section>
 				{% if user.is_authenticated %}
 					<section class="mp-user">
@@ -113,7 +116,7 @@
 				{% else %}
 					<section class="mp-login-link">
 						<span>
-							<a href="/login" title ="Zu Login/Registrierung">Login/Registrierung</a>
+							<a href="/login" title ={% trans "link-title-login" %}>Login/Registrierung</a>
 						</span>
 					</section>
 				{% endif %}

@@ -1,9 +1,10 @@
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "link-title-dashboard" as dashboard_link %}
+
 {% extends "base-interactive.html" %}
 
-{% block title %}Albumsansicht{% endblock %}
-
-{% block name %}Albumsansicht{% endblock %}
-
+{% block title %}{{ page_name }}{% endblock %}
 
 {% block js %}
 	
@@ -30,8 +31,8 @@
 {% endblock %}
 
 {% block controls %}
-	<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title="Zum Dashboard">Zum Dashboard</a> 
-	<span class="mp-option-toggle-gallery mp-controls" title="Verstecken/Anzeigen Gallerie">Gallerie <span class="mp-gallery-hidden">anzeigen</span><span class="mp-gallery-visible">verstecken</span></span>
+	<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title={{ dashboard_link }}>{{ dashboard_link }}</a> 
+	<span class="mp-option-toggle-gallery mp-controls" title={% trans "control-title toggle gallery"%}>{% trans "Gallerie" %} <span class="mp-gallery-hidden">{% trans "show" %}</span><span class="mp-gallery-visible">{% trans "hide" %}</span></span>
 {% endblock %}
 
 {% block content_interactive %}
@@ -45,7 +46,7 @@
 			<img class="mp-description-overlay-close mp-control" src="static/images/close.png"></img>
 			<div class="mp-font mp-description-title">
 				<span class="mp-font mp-image-number"></span>
-				<span>Beschreibung:</span>
+				<span>{% trans "Beschreibung" %}</span>
 			</div>
 			<div class="mp-font mp-description-wrapper">
 				<div class="force-scroll">
@@ -84,7 +85,7 @@
 			<% for (thumb in this.thumbAddress) { %>
 			<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
 			<% }; %>
-			<img class="mp-option-add mp-control" src="static/images/add.png" title="Bild hinzufügen"></img>
+			<img class="mp-option-add mp-control" src="static/images/add.png" title={% trans "control-title add-photo" %}></img>
 		</div>
 	</div>
 	</script>

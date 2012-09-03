@@ -1,79 +1,49 @@
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "Datenschutz" as page_name %}
+
 {% extends "base-non-interactive.html" %}
 
-{% block title %}Datenschutz{% endblock %}
+{% block title %}{{ page_name }}{% endblock %}
 
-{% block name %}Datenschutz{% endblock %}
+{% block name %}{{ page_name }}{% endblock %}
 
 {% block non_interactive_content %}
 
-	<h2>Datenschutzbestimmungen beim Projekt</h2>
 	<article class="mp-textbox" id="privacy">
-		<h3>Datenschutzerklärung</h3>
+		<h3>{% trans "privacy-topic Datenschutzerklärung" %}</h3>
+		<p>{% trans "privacy-topic Datenschutzerklärung -> description" %}</p>
+		<h3>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt" %}</h3>
+		<p>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> description" %}</p>
 		<p>
-			Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst und halten uns an die Regeln der 
-			Datenschutzgesetze. Die nachfolgende Erklärung gibt Ihnen einen Überblick darüber, welche Art 
-			von Daten zu welchem Zweck erhoben werden und in welchem Umfang diese Daten Dritten 
-			zugänglich gemacht werden. 
-		</p>
-		<h3>Datenverarbeitung bei diesem Projekt</h3>
-		<p>
-			Für die Nutzung des Projekts werden Sie bei der Registrierung gebeten, als persönliche Daten 
-			Ihre email-Adresse und Ihren vollen Namen (Nachname ist optional) anzugeben. Diese Daten werden in 
-			der Datenbank unter Ihrer automatisch generierten User-ID gespeichert.
-		</p>
-		<p>
-			<strong>Nutzung der email-Adresse:</strong>
-			Die email-Adresse wird nur für das einloggen, also das Bestätigen Ihrer Identität, benötigt.
-			Sie ist in keiner Weise auf der Website ersichtlich (weder für Sie noch für andere).
+			<strong>{% trans "privacy-subtopic Nutzung der email-Adresse" %}</strong>
+			{% trans "privacy-subtopic Nutzung der email-Adresse -> description" %}
 		</p>
 		<div>
-			<strong>Nutzung des Namens:</strong>
-			Ihr Name wird als Benutzername verwendet und ist damit für Sie persönlich unten auf der Seite, neben dem 
-			Logout-Button sichtbar. Ansonsten wird er noch nicht verwendet. (Später bei kommenden Features wie 
-			Kommentaren und News-Feeds zu den von Ihnen abbonierten Alben wird der Ihr Name bei registrierten 
-			Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, bei Informationen die Ihnen zugehörig sind 
-			angezeigt.
+			<strong>{% trans "privacy-subtopic Nutzung des Namens" %}</strong>
+			{% trans "privacy-subtopic Nutzung des Namens -> description" %}
 			<aside>
-				<h3>Notiz zu Pseudonymen</h3>
-				Wir kontrollieren die von Ihnen gewählten Namen nicht, d.h. Sie können auch Pseudonyme 
-				verwenden. Bedenken Sie jedoch das dies jediglich ein Online-Poesie-Album ist. Nur 
-				die Personen denen Sie Zugang zu einem ihrer Alben gestatten können das Album und ihren 
-				Namen auch tatsächlich sehen. Ein Photo-Album ist doch sehr viel persönlicher und ansprechender, 
-				wenn man einen richtigen Namen dabei hat anstatt eines abstrakten Pseudonyms.
+				<h3>{% trans "privacy-sidenote Pseudonyme" %}</h3>
+				{% trans "privacy-sidenote Pseudonyme -> description" %}.
 			</aside>
 		</div>
 		<p>
 			<strong>
-			Wir gewährleisten, dass die von Ihnen angegebenen Daten in keiner anderen, als der hier aufgeführten, 
-			Weise von uns genutzt werden.
+				{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee" %}
 			</strong>
 		</p>
-		<h3>Webanalyse und Cookies</h3>
+		<h3>{% trans "privacy-topic Webanalyse und Cookies" %}</h3>
 		<p>
-			Diese Seite verwendet Cookies, welche allerdings nur für ihre Sitzungs-ID benötigt werden.
-			Für nähere Informationen zu Cookies verweisen wir Sie auf den <a href="http://de.wikipedia.org/wiki/HTTP-Cookie"
-			title="Wikipedia-Eintrag zu Cookies">Wikipedia-Artikel zu HTTP-Cookies</a>.
+			{% trans "privacy-topic Webanalyse und Cookies -> description" %} <a href="http://de.wikipedia.org/wiki/HTTP-Cookie"
+			title={% trans "link-title Wikipedia-Eintrag zu Cookies" %}>{% trans "privacy-topic Webanalyse und Cookies -> link to wiki" %}</a>.
 		</p>
 		
-		<h3 id="mp-emails">Emails und Kontaktformulare</h3>
+		<h3 id="mp-emails">{% trans "privacy-topic Emails und Kontaktformulare" %}</h3>
+		<p>{% trans "privacy-topic Emails und Kontaktformulare -> description" %}</p>
+		<h3>{% trans "privacy-topic Auskunftsrecht" %}</h3>
 		<p>
-			Die von Ihnen an uns gesendeten Nachrichten werden zu Dokumentation und Weiterverarbeitung bei
-			uns gespeichert. Dies beinhaltet sämtliche von Ihnen angegebenen und für die Verarbeitung 
-			notwendigen Daten; dazu gehören beispielweise alle Daten die in den Pflichtfeldern des Kontaktformulars 
-			angegeben wurden. Die Daten im Kontaktformular werden in keiner Weise überprüft, die 
-			Verwendung von Pseudonymen ist somit möglich, allerdings nicht empfehlenswerte da es die 
-			Verarbeitung erschwert und wir Ihnen dadurch eventuell nicht so präzise weiterhelfen können, 
-			wie wir es gerne würden.
-			Nach Abschluss des Dialogs mit Ihnen werden die Daten wieder gelöscht, es sei denn es wurde mit 
-			Ihnen ausgemacht die Daten zu speichern.
-		</p>
-		<h3>Auskunftsrecht</h3>
-		<p>
-			Wir würden Ihnen gern Auskunft über die bei uns gespeicherten persönlichen Daten geben. Wir 
-			wissen allerdings auch nicht mehr als Sie. Dieses wenige Wissen teilen wir Ihnen im Rahmen 
-			der gesetzlichen Auskunftsansprüche allerdings gern nochmals mit. <br />
-			Wenn Sie weitere Fragen zur Behandlung Ihrer Daten haben, dann schicken Sie uns einfach eine 
-			Nachricht per email oder über das <a href="/contact">Kontaktformular</a>.
+			{% trans "privacy-topic Auskunftsrecht -> description" %}<br />
+			{% trans "privacy-topic Auskunftsrecht -> invitation to ask" %} <a href="/contact">{% trans "Kontaktformular" %}</a>.
 		</p>
 		<br /><br /><br /><br />
 		<p>

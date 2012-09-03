@@ -1,20 +1,23 @@
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "Kontakt" as page_name %}
+
 {% extends "base-non-interactive.html" %}
 
-{% block title %}Kontakt{% endblock %}
+{% block title %}{{ page_name }}{% endblock %}
 
-{% block name %}Kontakt{% endblock %}
+{% block name %}{{ page_name }}{% endblock %}
 
 {% block non_interactive_content %}
 
-	<h2>Kontakt</h2>
 	<article class="mp-textbox">
-		Sollten Sie Probleme, Anregungen oder Fragen, welche nicht auf der <a href="/help">Hilfe-Seite</a>,
-		beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail unter 
+		{% trans "contact-intro-article1-line1" %} <a href="/help">{% trans "contact-linkto-help" %}</a>,
+		{% trans "contact-intro-article1-line2" %} 
 		<a class="email" href="mailto:s.u.p.p.0.r.t.lghp.projekt@gmail.com?subject=Nachricht%20per%20Mail%20über%20Kontaktseite">
 			<strong>s.u.p.p.0.r.t.lghp.projekt@gmail.com</strong>
 		</a>.
-		Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen. (Bald verfügbar)<br />
-		Bitte beachten Sie die hierfür gültigen <a href="/privacy#mp-emails">Datenschutzgrundsätze</a>.
+		{% trans "contact-intro-article1-line3" %}<br />
+		{% trans "contact-intro-article1-line4" %} <a href="/privacy#mp-emails">{% trans "contact-linkto-privacy" %}</a>.
 	</article>
 	<!--
 	<form class="mp-contactform">

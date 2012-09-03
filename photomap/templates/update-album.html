@@ -1,12 +1,18 @@
+<!-- for the translation with django -->
+{% load i18n %}
+
 <div class="insert">
+	
+	<h2>{% trans "insert-dialogue-title update-album" %}</h2>
+	
 	<form class="jquery-validator mp-dialog" name="update-album" action="/update-album" method="post">
 		<input type="hidden" name="id" value="" />
 		<div>
-			<label for="title">Name <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
+			<label for="title">{% trans "insert-dialogue name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
 			<input type="text" name="title" required="required" />
 		</div>	
 		<div>
-			<label for="description">Beschreibung</label>
+			<label for="description">{% trans "insert-dialogue description" %}</label>
 			<textarea type="text" name="description" cols="50" rows="5"></textarea>
 		</div>
 		<input type="submit" value="Änderungen bestätigen" name="submit" />

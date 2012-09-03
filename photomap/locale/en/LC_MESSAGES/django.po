@@ -1,0 +1,520 @@
+# English text strings for Photomap-Project.
+# Copyright (C) 2012
+# This file is distributed under the same license as the PACKAGE package.
+# Author: Marc-Leon Römer <marcleonroemer@gmail.com>, 2012.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2012-09-03 21:51+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: templates/base-interactive.html:12
+msgid "control-title delete"
+msgstr ""
+
+#: templates/base-interactive.html:13
+msgid "control-title modify"
+msgstr ""
+
+#: templates/base-non-interactive.html:3 templates/view-album.html:3
+msgid "link-title-dashboard"
+msgstr ""
+
+#: templates/base.html:102
+msgid "link-title-impressum"
+msgstr ""
+
+#: templates/base.html:102 templates/impressum.html:3
+msgid "Impressum"
+msgstr ""
+
+#: templates/base.html:103
+msgid "link-title-privacy"
+msgstr ""
+
+#: templates/base.html:103 templates/privacy.html:3
+msgid "Datenschutz"
+msgstr ""
+
+#: templates/base.html:104
+msgid "link-title-copyright"
+msgstr ""
+
+#: templates/base.html:104 templates/copyright.html:3
+msgid "Urheberrecht"
+msgstr ""
+
+#: templates/base.html:105
+msgid "link-title-contact"
+msgstr ""
+
+#: templates/base.html:105 templates/contact.html:3
+#: templates/impressum.html:31
+msgid "Kontakt"
+msgstr ""
+
+#: templates/base.html:106
+msgid "link-title-help"
+msgstr ""
+
+#: templates/base.html:106
+msgid "Hilfe"
+msgstr ""
+
+#: templates/base.html:107
+msgid "link-title-team"
+msgstr ""
+
+#: templates/base.html:107
+msgid "Team"
+msgstr ""
+
+#: templates/base.html:119
+msgid "link-title-login"
+msgstr ""
+
+#: templates/contact.html:14
+msgid "contact-intro-article1-line1"
+msgstr ""
+
+#: templates/contact.html:14
+msgid "contact-linkto-help"
+msgstr ""
+
+#: templates/contact.html:15
+msgid "contact-intro-article1-line2"
+msgstr ""
+
+#: templates/contact.html:19
+msgid "contact-intro-article1-line3"
+msgstr ""
+
+#: templates/contact.html:20
+msgid "contact-intro-article1-line4"
+msgstr ""
+
+#: templates/contact.html:20
+msgid "contact-linkto-privacy"
+msgstr ""
+
+#: templates/copyright.html:14
+msgid "copyright-article1-paragraph1"
+msgstr ""
+
+#: templates/copyright.html:15
+msgid "copyright-article1-paragraph2"
+msgstr ""
+
+#: templates/help.html:3
+msgid "Hilfe und Support"
+msgstr ""
+
+#: templates/help.html:17
+msgid "help-intro-paragraph"
+msgstr ""
+
+#: templates/help.html:20
+msgid "help-faq-title"
+msgstr ""
+
+#: templates/help.html:22
+msgid "help-faq-question1"
+msgstr ""
+
+#: templates/help.html:23
+msgid "help-faq-answer1"
+msgstr ""
+
+#: templates/help.html:27
+msgid "help-tutorial-title"
+msgstr ""
+
+#: templates/help.html:29
+msgid "help-tutorial topic: Dashboard"
+msgstr ""
+
+#: templates/help.html:31
+msgid "help-tutorial topic: Dashboard -> description"
+msgstr ""
+
+#: templates/help.html:33
+msgid "help-tutorial topic: Dashboard, subtopic: Alben"
+msgstr ""
+
+#: templates/help.html:36
+msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
+msgstr ""
+
+#: templates/help.html:37
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
+msgstr ""
+
+#: templates/help.html:40
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
+msgstr ""
+
+#: templates/help.html:41
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
+"description"
+msgstr ""
+
+#: templates/help.html:44
+msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
+msgstr ""
+
+#: templates/help.html:45
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
+"description"
+msgstr ""
+
+#: templates/help.html:52
+msgid "help-tutorial topic: Albumview"
+msgstr ""
+
+#: templates/help.html:54
+msgid "help-tutorial topic: Albumview -> description"
+msgstr ""
+
+#: templates/help.html:56
+msgid "help-tutorial topic: Albumview, subtopic: Places"
+msgstr ""
+
+#: templates/help.html:59
+msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
+msgstr ""
+
+#: templates/help.html:60
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
+"description"
+msgstr ""
+
+#: templates/help.html:63
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
+msgstr ""
+
+#: templates/help.html:64
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
+"description"
+msgstr ""
+
+#: templates/help.html:67
+msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
+msgstr ""
+
+#: templates/help.html:68
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
+"description"
+msgstr ""
+
+#: templates/help.html:71
+msgid "help-tutorial topic: Albumview, subtopic: Gallery"
+msgstr ""
+
+#: templates/help.html:74
+msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
+msgstr ""
+
+#: templates/help.html:75
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
+"description"
+msgstr ""
+
+#: templates/help.html:78
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
+msgstr ""
+
+#: templates/help.html:79
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
+"> description"
+msgstr ""
+
+#: templates/help.html:82
+msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
+msgstr ""
+
+#: templates/help.html:83
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
+"description"
+msgstr ""
+
+#: templates/help.html:86
+msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
+msgstr ""
+
+#: templates/help.html:87
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
+"description"
+msgstr ""
+
+#: templates/help.html:90
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
+msgstr ""
+
+#: templates/help.html:91
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
+"description"
+msgstr ""
+
+#: templates/impressum.html:14
+msgid "impressum Angaben gemäß § 5 TMG"
+msgstr ""
+
+#: templates/impressum.html:22
+msgid "impressum Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
+msgstr ""
+
+#: templates/impressum.html:23
+msgid "impressum Anschrift wie oben"
+msgstr ""
+
+#: templates/impressum.html:25
+msgid "impressum Vertreten durch"
+msgstr ""
+
+#: templates/impressum.html:33
+msgid "Telefon"
+msgstr ""
+
+#: templates/impressum.html:33
+msgid "Handy"
+msgstr ""
+
+#: templates/impressum.html:34
+msgid "Email-Adresse"
+msgstr ""
+
+#: templates/impressum.html:37
+msgid "impressum-sidenote Missbrauch von Kontaktdaten"
+msgstr ""
+
+#: templates/impressum.html:38
+msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
+msgstr ""
+
+#: templates/impressum.html:42
+msgid "impressum-liability Haftung für Inhalte"
+msgstr ""
+
+#: templates/impressum.html:43
+msgid "impressum-liability Haftung für Inhalte -> description"
+msgstr ""
+
+#: templates/impressum.html:44
+msgid "impressum-liability Haftung für Links"
+msgstr ""
+
+#: templates/impressum.html:45
+msgid "impressum-liability Haftung für Links -> description"
+msgstr ""
+
+#: templates/index.html:3
+msgid "Willkommen"
+msgstr ""
+
+#: templates/index.html:18
+msgid "welcome-title"
+msgstr ""
+
+#: templates/index.html:19
+msgid "welcome-paragraph1"
+msgstr ""
+
+#: templates/index.html:20
+msgid "welcome-paragraph2"
+msgstr ""
+
+#: templates/index.html:21
+msgid "welcome-paragraph3"
+msgstr ""
+
+#: templates/index.html:22
+msgid "welcome-paragraph4"
+msgstr ""
+
+#: templates/index.html:24
+msgid "welcome-paragraph5"
+msgstr ""
+
+#: templates/insert-album.html:6
+msgid "insert-dialogue-title insert-album"
+msgstr ""
+
+#: templates/insert-album.html:10 templates/insert-photo.html:18
+#: templates/insert-place.html:10 templates/update-album.html:11
+#: templates/update-photo.html:12 templates/update-place.html:11
+msgid "insert-dialogue name"
+msgstr ""
+
+#: templates/insert-album.html:14 templates/insert-photo.html:22
+#: templates/insert-place.html:14 templates/update-album.html:15
+#: templates/update-photo.html:16 templates/update-place.html:15
+msgid "insert-dialogue description"
+msgstr ""
+
+#: templates/insert-photo.html:12
+msgid "insert-dialogue-title insert-photo"
+msgstr ""
+
+#: templates/insert-photo.html:26
+msgid "insert-dialogue select photo to upload"
+msgstr ""
+
+#: templates/insert-place.html:6
+msgid "insert-dialogue-title insert-place"
+msgstr ""
+
+#: templates/login.html:3
+msgid "Login und Registrierung"
+msgstr ""
+
+#: templates/privacy.html:11
+msgid "privacy-topic  -> description"
+msgstr ""
+
+#: templates/privacy.html:14
+msgid "privacy-topic Datenschutzerklärung"
+msgstr ""
+
+#: templates/privacy.html:15
+msgid "privacy-topic Datenschutzerklärung -> description"
+msgstr ""
+
+#: templates/privacy.html:16
+msgid "privacy-topic Datenverarbeitung bei diesem Projekt"
+msgstr ""
+
+#: templates/privacy.html:17
+msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> description"
+msgstr ""
+
+#: templates/privacy.html:19
+msgid "privacy-subtopic Nutzung der email-Adresse"
+msgstr ""
+
+#: templates/privacy.html:20
+msgid "privacy-subtopic Nutzung der email-Adresse -> description"
+msgstr ""
+
+#: templates/privacy.html:23
+msgid "privacy-subtopic Nutzung des Namens"
+msgstr ""
+
+#: templates/privacy.html:24
+msgid "privacy-subtopic Nutzung des Namens -> description"
+msgstr ""
+
+#: templates/privacy.html:26
+msgid "privacy-sidenote Pseudonyme"
+msgstr ""
+
+#: templates/privacy.html:27
+msgid "privacy-sidenote Pseudonyme -> description"
+msgstr ""
+
+#: templates/privacy.html:32
+msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee"
+msgstr ""
+
+#: templates/privacy.html:35
+msgid "privacy-topic Webanalyse und Cookies"
+msgstr ""
+
+#: templates/privacy.html:37
+msgid "privacy-topic Webanalyse und Cookies -> description"
+msgstr ""
+
+#: templates/privacy.html:38
+msgid "link-title Wikipedia-Eintrag zu Cookies"
+msgstr ""
+
+#: templates/privacy.html:38
+msgid "privacy-topic Webanalyse und Cookies -> link to wiki"
+msgstr ""
+
+#: templates/privacy.html:41
+msgid "privacy-topic Emails und Kontaktformulare"
+msgstr ""
+
+#: templates/privacy.html:42
+msgid "privacy-topic Emails und Kontaktformulare -> description"
+msgstr ""
+
+#: templates/privacy.html:43
+msgid "privacy-topic Auskunftsrecht"
+msgstr ""
+
+#: templates/privacy.html:45
+msgid "privacy-topic Auskunftsrecht -> description"
+msgstr ""
+
+#: templates/privacy.html:46
+msgid "privacy-topic Auskunftsrecht -> invitation to ask"
+msgstr ""
+
+#: templates/privacy.html:46
+msgid "Kontaktformular"
+msgstr ""
+
+#: templates/team.html:3
+msgid "Projekt und Team"
+msgstr ""
+
+#: templates/update-album.html:6
+msgid "insert-dialogue-title update-album"
+msgstr ""
+
+#: templates/update-photo.html:6
+msgid "insert-dialogue-title update-photo"
+msgstr ""
+
+#: templates/update-place.html:6
+msgid "insert-dialogue-title update-place"
+msgstr ""
+
+#: templates/view-album.html:35
+msgid "control-title toggle gallery"
+msgstr ""
+
+#: templates/view-album.html:35
+msgid "Gallery"
+msgstr ""
+
+#: templates/view-album.html:35
+msgid "show"
+msgstr ""
+
+#: templates/view-album.html:35
+msgid "hide"
+msgstr ""
+
+#: templates/view-album.html:49
+msgid "description"
+msgstr ""
+
+#: templates/view-album.html:88
+msgid "control-title add-photo"
+msgstr ""
