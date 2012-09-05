@@ -8,7 +8,7 @@ Created on Jul 29, 2012
 # IMPORTANT
 #===============================================================================
 """
-use django-admin.py COMMAND --settings=settings_prod.py --insecure instead of anything else
+use django-admin.py COMMAND --settings=settings_prod --insecure instead of anything else
 --insecure enables static file serving
 """
 
