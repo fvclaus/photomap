@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-04 11:29+0200\n"
+"POT-Creation-Date: 2012-09-05 10:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,15 +18,15 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:12
+#: templates/base-interactive.html:15
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:13
+#: templates/base-interactive.html:16
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base-non-interactive.html:3 templates/view-album.html:3
+#: templates/base-non-interactive.html:5 templates/view-album.html:5
 msgid "link-title-dashboard"
 msgstr "Zum Dashboard"
 
@@ -34,7 +34,7 @@ msgstr "Zum Dashboard"
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:102 templates/impressum.html:3
+#: templates/base.html:102 templates/impressum.html:5
 msgid "Impressum"
 msgstr "Impressum"
 
@@ -42,7 +42,7 @@ msgstr "Impressum"
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:103 templates/privacy.html:3
+#: templates/base.html:103 templates/privacy.html:5
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
@@ -50,7 +50,7 @@ msgstr "Datenschutz"
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:104 templates/copyright.html:3
+#: templates/base.html:104 templates/copyright.html:5
 msgid "Urheberrecht"
 msgstr "Copyright"
 
@@ -58,7 +58,7 @@ msgstr "Copyright"
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:105 templates/contact.html:3
+#: templates/base.html:105 templates/contact.html:5
 #: templates/impressum.html:31
 msgid "Kontakt"
 msgstr "Kontakt"
@@ -129,7 +129,7 @@ msgstr ""
 "entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir "
 "derartige Inhalte umgehend entfernen."
 
-#: templates/help.html:3
+#: templates/help.html:5
 msgid "Hilfe und Support"
 msgstr "Hilfe und Support"
 
@@ -431,7 +431,7 @@ msgstr ""
 "Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend "
 "entfernen."
 
-#: templates/index.html:3
+#: templates/index.html:5
 msgid "Willkommen"
 msgstr "Willkommen"
 
@@ -500,7 +500,7 @@ msgstr "Photo zum Hochladen auswählen"
 msgid "insert-dialogue-title insert-place"
 msgstr "Hinzufügen eines Platzes"
 
-#: templates/login.html:3
+#: templates/login.html:5
 msgid "Login und Registrierung"
 msgstr "Login und Registrierung"
 
@@ -523,10 +523,10 @@ msgstr "Datenverarbeitung bei diesem Projekt"
 #: templates/privacy.html:17
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> description"
 msgstr ""
-"Um ein eigenes Photoalbum zu bekommen, werden Sie bei der Registrierung gebeten, als "
-"persönliche Daten Ihre email-Adresse und Ihren vollen Namen - Nachname ist "
-"optional - anzugeben. Diese Daten werden in der Datenbank unter Ihrer "
-"automatisch generierten User-ID gespeichert. "
+"Um ein eigenes Photoalbum zu bekommen, werden Sie bei der Registrierung "
+"gebeten, als persönliche Daten Ihre email-Adresse und Ihren vollen Namen - "
+"Nachname ist optional - anzugeben. Diese Daten werden in der Datenbank unter "
+"Ihrer automatisch generierten User-ID gespeichert. "
 
 #: templates/privacy.html:19
 msgid "privacy-subtopic Nutzung der email-Adresse"
@@ -536,8 +536,8 @@ msgstr "Nutzung der email-Adresse"
 msgid "privacy-subtopic Nutzung der email-Adresse -> description"
 msgstr ""
 "Die email-Adresse wird nur für das einloggen, also das Bestätigen Ihrer "
-"Identität, benötigt. Sie wird unten links auf der Seite angezeigt, wenn "
-"Sie angemeldet sind, ist aber nur für Sie sichtbar."
+"Identität, benötigt. Sie wird unten links auf der Seite angezeigt, wenn Sie "
+"angemeldet sind, ist aber nur für Sie sichtbar."
 
 #: templates/privacy.html:23
 msgid "privacy-subtopic Nutzung des Namens"
@@ -546,11 +546,11 @@ msgstr "Nutzung des vollen Namens"
 #: templates/privacy.html:24
 msgid "privacy-subtopic Nutzung des Namens -> description"
 msgstr ""
-"Ihr Name wird als Benutzername verwendet und ist momentan noch nicht von"
-"großer Bedeutung. (Später bei kommenden Features wie Kommentaren und "
-"News-Feeds zu den von Ihnen abbonierten Alben wird der Ihr Name bei "
-"registrierten Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, "
-"bei Informationen die Ihnen zugehörig sind angezeigt."
+"Ihr Name wird als Benutzername verwendet und ist momentan noch nicht "
+"vongroßer Bedeutung. (Später bei kommenden Features wie Kommentaren und News-"
+"Feeds zu den von Ihnen abbonierten Alben wird der Ihr Name bei registrierten "
+"Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, bei "
+"Informationen die Ihnen zugehörig sind angezeigt."
 
 #: templates/privacy.html:26
 msgid "privacy-sidenote Pseudonyme"
@@ -571,10 +571,10 @@ msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee"
 msgstr ""
 "Wir gewährleisten, dass die von Ihnen angegebenen Daten in keiner anderen, "
 "als der hier aufgeführten, Weise von uns genutzt werden. Wir nutzen Ihre "
-"Daten nicht für persönliche oder kommerzielle Zwecke und wir geben uns "
-"viel Mühe Ihre Privatssphäre zu schützen. Jedoch haben wir keinen Einfluss "
-"auf Ihr Handeln; seien Sie also bitte achtsam mit ihren Daten, vor allem "
-"wenn sie Alben mit anderen Leuten teilen."
+"Daten nicht für persönliche oder kommerzielle Zwecke und wir geben uns viel "
+"Mühe Ihre Privatssphäre zu schützen. Jedoch haben wir keinen Einfluss auf "
+"Ihr Handeln; seien Sie also bitte achtsam mit ihren Daten, vor allem wenn "
+"sie Alben mit anderen Leuten teilen."
 
 #: templates/privacy.html:35
 msgid "privacy-topic Webanalyse und Cookies"
@@ -639,7 +639,7 @@ msgstr ""
 msgid "Kontaktformular"
 msgstr "Kontaktformular"
 
-#: templates/team.html:3
+#: templates/team.html:5
 msgid "Projekt und Team"
 msgstr "Projekt und Team"
 
@@ -659,7 +659,7 @@ msgstr "Bearbeiten eines Platzes"
 msgid "control-title toggle gallery"
 msgstr "Anzeigen/Verstecken der Gallerie"
 
-#: templates/view-album.html:3
+#: templates/view-album.html:35
 msgid "Show Gallery"
 msgstr "Gallerie anzeigen"
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-04 11:29+0200\n"
+"POT-Creation-Date: 2012-09-05 10:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,15 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base-interactive.html:12
+#: templates/base-interactive.html:15
 msgid "control-title delete"
 msgstr "Delete"
 
-#: templates/base-interactive.html:13
+#: templates/base-interactive.html:16
 msgid "control-title modify"
 msgstr "Edit"
 
-#: templates/base-non-interactive.html:3 templates/view-album.html:3
+#: templates/base-non-interactive.html:5 templates/view-album.html:5
 msgid "link-title-dashboard"
 msgstr "To Dashboard"
 
@@ -33,7 +33,7 @@ msgstr "To Dashboard"
 msgid "link-title-impressum"
 msgstr "View Legal Terms of NAME OF PROJECT"
 
-#: templates/base.html:102 templates/impressum.html:3
+#: templates/base.html:102 templates/impressum.html:5
 msgid "Impressum"
 msgstr "Legal Terms"
 
@@ -41,7 +41,7 @@ msgstr "Legal Terms"
 msgid "link-title-privacy"
 msgstr "View Data Use Policy"
 
-#: templates/base.html:103 templates/privacy.html:3
+#: templates/base.html:103 templates/privacy.html:5
 msgid "Datenschutz"
 msgstr "Data Use Policy"
 
@@ -49,7 +49,7 @@ msgstr "Data Use Policy"
 msgid "link-title-copyright"
 msgstr "View Copyright Statement"
 
-#: templates/base.html:104 templates/copyright.html:3
+#: templates/base.html:104 templates/copyright.html:5
 msgid "Urheberrecht"
 msgstr "Copyright"
 
@@ -57,7 +57,7 @@ msgstr "Copyright"
 msgid "link-title-contact"
 msgstr "Contact, Support, Ask a Question"
 
-#: templates/base.html:105 templates/contact.html:3
+#: templates/base.html:105 templates/contact.html:5
 #: templates/impressum.html:31
 msgid "Kontakt"
 msgstr "Contact"
@@ -123,7 +123,7 @@ msgstr ""
 "a copyright infringement, please report it to us. We'll delete this content "
 "immediately or workout a solution with the copyright owner."
 
-#: templates/help.html:3
+#: templates/help.html:5
 msgid "Hilfe und Support"
 msgstr "Help and Support"
 
@@ -411,7 +411,7 @@ msgstr ""
 "gain knowledge of an infringement we'll make sure to remove the links to the "
 "website immediately."
 
-#: templates/index.html:3
+#: templates/index.html:5
 msgid "Willkommen"
 msgstr "Welcome"
 
@@ -422,24 +422,24 @@ msgstr "Welcome to NAME OF THE PROJECT"
 #: templates/index.html:19
 msgid "welcome-paragraph1"
 msgstr ""
-"The web application is still in development. Therefor please excuse "
-"the half-baked design and the limited functionality. You can already use "
-"the basic functions; so feel free to sign up and try it out."
+"The web application is still in development. Therefor please excuse the half-"
+"baked design and the limited functionality. You can already use the basic "
+"functions; so feel free to sign up and try it out."
 
 #: templates/index.html:20
 msgid "welcome-paragraph2"
 msgstr ""
 "While you are making your first albums and uploading the first pics, we'll "
-"continue working on the project and regularly publishing updates. We'll "
-"try to give registered users as less troubles with the updates as possible. "
+"continue working on the project and regularly publishing updates. We'll try "
+"to give registered users as less troubles with the updates as possible. "
 "Please consider that we are just students and have a lot to study next to "
 "this project ;). This is why some updates may take some time."
 
 #: templates/index.html:21
 msgid "welcome-paragraph3"
 msgstr ""
-"Lots of fun and joy with the creation of your very own online photo-book "
-"and with sharing your experiences and travels wishes you the LGHP-Team."
+"Lots of fun and joy with the creation of your very own online photo-book and "
+"with sharing your experiences and travels wishes you the LGHP-Team."
 
 #: templates/index.html:23
 msgid "welcome-paragraph4"
@@ -475,7 +475,7 @@ msgstr "Select photo to uplaod"
 msgid "insert-dialogue-title insert-place"
 msgstr "Add new place"
 
-#: templates/login.html:3
+#: templates/login.html:5
 msgid "Login und Registrierung"
 msgstr "Login and Registration"
 
@@ -486,10 +486,10 @@ msgstr "Statement of privacy"
 #: templates/privacy.html:15
 msgid "privacy-topic Datenschutzerklärung -> description"
 msgstr ""
-"We take your privacy and the protection of data seriously and we comply "
-"with the laws governing data protection and data security. The following "
-"paragraphs will give you an overview on how and which data is saved by "
-"us and for what purpose."
+"We take your privacy and the protection of data seriously and we comply with "
+"the laws governing data protection and data security. The following "
+"paragraphs will give you an overview on how and which data is saved by us "
+"and for what purpose."
 
 #: templates/privacy.html:16
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt"
@@ -499,9 +499,9 @@ msgstr "Data usage by this web-application"
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> description"
 msgstr ""
 "To get your own photo-book you'll be asked to give your email-address and "
-"your full name during the registration.  (Last name is optional) "
-"This information is saved in our database under your personal automatically "
-"given user-id."
+"your full name during the registration.  (Last name is optional) This "
+"information is saved in our database under your personal automatically given "
+"user-id."
 
 #: templates/privacy.html:19
 msgid "privacy-subtopic Nutzung der email-Adresse"
@@ -510,8 +510,8 @@ msgstr "Usage of the email-address"
 #: templates/privacy.html:20
 msgid "privacy-subtopic Nutzung der email-Adresse -> description"
 msgstr ""
-"The email-address is used to login to your photo-book. After logging in "
-"it's visible on the bottom left corner of the page, but just for you."
+"The email-address is used to login to your photo-book. After logging in it's "
+"visible on the bottom left corner of the page, but just for you."
 
 #: templates/privacy.html:23
 msgid "privacy-subtopic Nutzung des Namens"
@@ -520,11 +520,11 @@ msgstr "Usage of the full name"
 #: templates/privacy.html:24
 msgid "privacy-subtopic Nutzung des Namens -> description"
 msgstr ""
-"Your full name is used as username, but right now there is no specific "
-"use of it. Later on we'll give you the possibility to comment the albums "
-"of other people and to view albums of friends in your Dashboard. Then the "
-"username will gain importance as it'll be shown next to your comments and "
-"in the newsfeed other people will have on the albums you shared with them."
+"Your full name is used as username, but right now there is no specific use "
+"of it. Later on we'll give you the possibility to comment the albums of "
+"other people and to view albums of friends in your Dashboard. Then the "
+"username will gain importance as it'll be shown next to your comments and in "
+"the newsfeed other people will have on the albums you shared with them."
 
 #: templates/privacy.html:26
 msgid "privacy-sidenote Pseudonyme"
@@ -534,21 +534,21 @@ msgstr "Note concerning pseudonymes"
 msgid "privacy-sidenote Pseudonyme -> description"
 msgstr ""
 "We don't check the names you choose, so it is possible for you to use "
-"pseudonymes. However please consider that this is your personal online "
-"photo-book. Just people, who you give access to an album of yours, are "
-"able to view your pictures and see your name. We make no use of your name. "
-"In our opinion it is much more appealing to read real names in a photo-book, "
-"than reading fake-aliases."
+"pseudonymes. However please consider that this is your personal online photo-"
+"book. Just people, who you give access to an album of yours, are able to "
+"view your pictures and see your name. We make no use of your name. In our "
+"opinion it is much more appealing to read real names in a photo-book, than "
+"reading fake-aliases."
 
 #: templates/privacy.html:32
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee"
 msgstr ""
-"We guarantee that the information saved by users on the server is used in "
-"no other ways than the mentioned ones. We don't make use of your name or "
-"email-address and we do as much as possible to support your privacy."
-"Yet we have no control over the actions of our users; therefor every user "
-"has him/herself a responsibility to be careful with his/her data, especially "
-"when sharing albums with other people."
+"We guarantee that the information saved by users on the server is used in no "
+"other ways than the mentioned ones. We don't make use of your name or email-"
+"address and we do as much as possible to support your privacy.Yet we have no "
+"control over the actions of our users; therefor every user has him/herself a "
+"responsibility to be careful with his/her data, especially when sharing "
+"albums with other people."
 
 #: templates/privacy.html:35
 msgid "privacy-topic Webanalyse und Cookies"
@@ -557,8 +557,8 @@ msgstr "Webanalysis and Cookies"
 #: templates/privacy.html:37
 msgid "privacy-topic Webanalyse und Cookies -> description"
 msgstr ""
-"This web-application is using cookies, which are used for your session "
-"id. For further information about cookies we'd like to redirect you to the"
+"This web-application is using cookies, which are used for your session id. "
+"For further information about cookies we'd like to redirect you to the"
 
 #: templates/privacy.html:37
 msgid "privacy-topic Webanalyse und Cookies -> link to wiki"
@@ -580,12 +580,12 @@ msgstr "Emails and contact forms"
 msgid "privacy-topic Emails und Kontaktformulare -> description"
 msgstr ""
 "The messages you sent us as email or via the contact form are saved for "
-"documentational purpose and in order for us to process your request. "
-"This includes all the data you send us; e.g. the required fields in the "
-"contact form. The use of pseudonymes is allowed but not recommended; it'll "
-"make processing your request harder and we might not be able to give you "
-"as detailed help as we'd like to. Once your question is answered we'll "
-"delete the message, unless you want us to save it for future reference."
+"documentational purpose and in order for us to process your request. This "
+"includes all the data you send us; e.g. the required fields in the contact "
+"form. The use of pseudonymes is allowed but not recommended; it'll make "
+"processing your request harder and we might not be able to give you as "
+"detailed help as we'd like to. Once your question is answered we'll delete "
+"the message, unless you want us to save it for future reference."
 
 #: templates/privacy.html:43
 msgid "privacy-topic Auskunftsrecht"
@@ -595,8 +595,8 @@ msgstr "Right to information"
 msgid "privacy-topic Auskunftsrecht -> description"
 msgstr ""
 "We're happy to give you all the information about you that is saved in our "
-"database. Yet we don't know more than you told us. Still we'll send all "
-"this information to you compliant to your legal right to information."
+"database. Yet we don't know more than you told us. Still we'll send all this "
+"information to you compliant to your legal right to information."
 
 #: templates/privacy.html:46
 msgid "privacy-topic Auskunftsrecht -> invitation to ask"
@@ -608,7 +608,7 @@ msgstr ""
 msgid "Kontaktformular"
 msgstr "Contact Form"
 
-#: templates/team.html:3
+#: templates/team.html:5
 msgid "Projekt und Team"
 msgstr "Project and Team"
 
@@ -628,7 +628,7 @@ msgstr "Edit current place"
 msgid "control-title toggle gallery"
 msgstr "Toggle visibility of gallery"
 
-#: templates/view-album.html:3
+#: templates/view-album.html:35
 msgid "Show Gallery"
 msgstr "Show gallery"
 

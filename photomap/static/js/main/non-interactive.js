@@ -30,7 +30,7 @@ function setZoom(number) {
 
 
 $(document).ready(function(){
-    $container = $("#mp-non-interactive-content");  
+    $container = $("#mp-non-interactive-content");
     ui = main.getUI();
     // set page mode to non-interactive
     ui.getState().setModeNonInteractive();

@@ -31,11 +31,10 @@
 			{% block css %}
 			{% endblock %}
 		{% endcompress %}
-		<!-- fancybox and jscrollpane style sheets can't be compressed or else they won't work -->
-
-		{% compress css %}
+		<!-- fancybox and jscrollpane style sheets our of compress in development | make sure to put back in before deploying -->
 			<link rel="stylesheet" type="text/css" href="static/fancybox/jquery.fancybox-1.3.4.css" />
 			<link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
+		{% compress css %}
 			
 			<link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
 			<link rel="stylesheet" type="text/css" href="static/css-plain/rokkitt.css" />
@@ -99,12 +98,12 @@
 			
 			<footer class="mp-footer" id="mp-footer">
 				<section class="mp-internal-links">
-					<a href="/impressum" title={% trans "link-title-impressum" %}>{% trans "Impressum" %}</a> |
-					<a href="/privacy" title={% trans "link-title-privacy" %}>{% trans "Datenschutz" %}</a> |
-					<a href="/copyright" title={% trans "link-title-copyright" %}>{% trans "Urheberrecht" %}</a> |
-					<a href="/contact" title={% trans "link-title-contact" %}>{% trans "Kontakt" %}</a> |
-					<a href="/help" title={% trans "link-title-help" %}>{% trans "Hilfe" %}</a> |
-					<a href="/team" title={% trans "link-title-team" %}>{% trans "Team" %}</a>
+					<a href="/impressum" title='{% trans "link-title-impressum" %}'>{% trans "Impressum" %}</a> |
+					<a href="/privacy" title='{% trans "link-title-privacy" %}'>{% trans "Datenschutz" %}</a> |
+					<a href="/copyright" title='{% trans "link-title-copyright" %}'>{% trans "Urheberrecht" %}</a> |
+					<a href="/contact" title='{% trans "link-title-contact" %}'>{% trans "Kontakt" %}</a> |
+					<a href="/help" title='{% trans "link-title-help" %}'>{% trans "Hilfe" %}</a> |
+					<a href="/team" title='{% trans "link-title-team" %}'>{% trans "Team" %}</a>
 				</section>
 				{% if user.is_authenticated %}
 					<section class="mp-user">
@@ -116,7 +115,7 @@
 				{% else %}
 					<section class="mp-login-link">
 						<span>
-							<a href="/login" title ={% trans "link-title-login" %}>Login/Registrierung</a>
+							<a href="/login" title ='{% trans "link-title-login" %}'>Login/Registrierung</a>
 						</span>
 					</section>
 				{% endif %}

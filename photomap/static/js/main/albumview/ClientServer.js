@@ -127,5 +127,10 @@ ClientServer.prototype = {
 		marker.show();
 	    });
 	    map.fit(markersinfo);
-	}
+	},
+	reloadAlbum : function(place){
+	    this._getPlaces();
+	    this._showPlaces();
+	    place.triggerClick();
+	},
 };

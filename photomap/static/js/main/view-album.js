@@ -20,6 +20,19 @@ function toggleGallery() {
     }
 };
 
+function AddEvent(html_element, event_name, event_function) {       
+   if(html_element.attachEvent) //Internet Explorer
+      html_element.attachEvent("on" + event_name, function() {event_function.call(html_element);}); 
+   else if(html_element.addEventListener) //Firefox & company
+      html_element.addEventListener(event_name, event_function, false); //don't need the 'call' trick because in FF everything already works in the right way          
+};
+
+function AddEvent2() {
+  var event = jQuery.Event("iframe_close");
+  // to trigger this event: 
+  jQuery("body").trigger( e );
+};
+
 $(document).ready(function(){
   // set page in interactive mode as albumview
   page = "albumview";
