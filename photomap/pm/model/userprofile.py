@@ -10,6 +10,9 @@ from django.conf import settings
 from django.db.models.signals import post_save
 from pm import appsettings
 
+# hack to make username not unique
+User._meta.get_field('username')._unique = False
+
 class UserProfile(models.Model):
     """
     @author: Frederik Claus
@@ -40,4 +43,5 @@ def create_user_profile(sender, instance, created, **kwargs):
         UserProfile.objects.create(user=instance)
 
 post_save.connect(create_user_profile, sender=User)
-    
+
+
