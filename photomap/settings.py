@@ -13,6 +13,9 @@ STATIC_PATH = os.path.join(PROJECT_PATH, "static")
 
 UPLOAD_PATH = os.path.join("upload", "%Y", "%m", "%d")
 PHOTO_PATH = os.path.join(STATIC_PATH, "photo")
+PROFILE_PICTURE_PATH = os.path.join(STATIC_PATH,"profile-picture")
+IMAGES_PATH = os.path.join(STATIC_PATH,"images")
+DEFAULT_PROFILE_PICTURE = os.path.join(IMAGES_PATH,"default-profile-picture.png")
 RES_PATH = os.path.join(PROJECT_PATH, "res")
 TEST_PATH = os.path.join(RES_PATH, "test")
 
@@ -195,6 +198,9 @@ AUTHENTICATION_BACKENDS = (
     "pm.controller.authentication.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
+
+# TODO: this does not work
+AUTH_PROFILE_MODULE = 'pm.Userprofile'
 
 ROOT_URLCONF = 'urls'
 

@@ -9,6 +9,10 @@ from album import Album
 from pm import appsettings
 
 class Invitation(models.Model):
+    """
+    @author: Frederik Claus
+    @summary: Used to share a certain album with user with existing account
+    """
     album = models.ForeignKey(Album)
     user = models.ForeignKey(User)
     

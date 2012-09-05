@@ -2,6 +2,7 @@ upload/
 photomap/*.sql
 photomap-legacy/*.sqlite
 photomap/static/photo
+photomap/static/profile-picture
 photomap-legacy/public/stylesheets/main.css
 .metadata/
 debug/*
