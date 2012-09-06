@@ -2,7 +2,6 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "link-title-dashboard" as dashboard_link %}
 
 {% block mode %}
 content="non-interactive"
@@ -27,7 +26,8 @@ content="non-interactive"
 
 {% block controls %}
 	{% if user.is_authenticated %}
-		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title={{ dashboard_link }}>{{ dashboard_link }}</a>  
+		{% trans "link-title-dashboard" as dashboardLink %}
+		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title='{{ dashboardLink }}'>{{ dashboardLink }}</a>  
 	{% endif %}
 {% endblock %}
 

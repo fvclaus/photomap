@@ -128,7 +128,9 @@ ClientServer.prototype = {
 	    });
 	    map.fit(markersinfo);
 	},
-	reloadAlbum : function(place){
+	reloadAlbum : function(){
+	    place = main.getUIState().getCurrentLoadedPlace();
+	    console.log(place);
 	    this._getPlaces();
 	    this._showPlaces();
 	    place.triggerClick();

@@ -2,11 +2,11 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "Datenschutz" as page_name %}
+{% trans "Datenschutz" %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{% trans "Datenschutz" %}{% endblock %}
 
-{% block name %}{{ page_name }}{% endblock %}
+{% block name %}{% trans "Richtlinien zum Datenschutz" %}{% endblock %}
 
 {% block non_interactive_content %}
 

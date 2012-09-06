@@ -2,11 +2,10 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "Hilfe und Support" as page_name %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{% trans "Hilfe" %}{% endblock %}
 
-{% block name %}{{ page_name }}{% endblock %}
+{% block name %}{% trans "Hilfe und Support" %}{% endblock %}
 
 {% block extrajs %}
 	<script type="text/javascript" src="static/js/main/non-interactive/help.js" ></script>

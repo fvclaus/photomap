@@ -2,11 +2,10 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "Impressum" as page_name %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{% trans "Impressum" %}{% endblock %}
 
-{% block name %}{{ page_name }}{% endblock %}
+{% block name %}{% trans "Impressum" %}{% endblock %}
 
 {% block non_interactive_content %}
 

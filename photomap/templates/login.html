@@ -2,11 +2,10 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "Login und Registrierung" as page_name %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{% trans "Login und Registrierung" %}{% endblock %}
 
-{% block name %}{{ page_name }}{% endblock %}
+{% block name %}{% trans "Login und Registrierung" %}{% endblock %}
 
 {% block extrajs %}
 	<script type="text/javascript" src="static/js/main/non-interactive/login.js" ></script>

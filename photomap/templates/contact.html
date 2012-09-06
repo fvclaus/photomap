@@ -2,11 +2,10 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "Kontakt" as page_name %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{% trans "Kontakt" %}{% endblock %}
 
-{% block name %}{{ page_name }}{% endblock %}
+{% block name %}{% trans "Kontakt" %}{% endblock %}
 
 {% block non_interactive_content %}
 

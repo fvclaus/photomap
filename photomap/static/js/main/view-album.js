@@ -30,7 +30,7 @@ function AddEvent(html_element, event_name, event_function) {
 function AddEvent2() {
   var event = jQuery.Event("iframe_close");
   // to trigger this event: 
-  jQuery("body").trigger( e );
+  jQuery("body").trigger(event);
 };
 
 $(document).ready(function(){
@@ -51,5 +51,8 @@ $(document).ready(function(){
 
   $(".mp-option-toggle-gallery").bind("click",function(){
     toggleGallery();
+  });
+  $("body").bind('iframe_close',function(){
+    main.getClientServer().reloadAlbum();
   });
 });

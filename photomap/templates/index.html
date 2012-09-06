@@ -2,11 +2,10 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "Willkommen" as page_name %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{% trans "Willkommen" %}{% endblock %}
 
-{% block name %}{{ page_name }}{% endblock %}
+{% block name %}{% trans "Willkommen" %}{% endblock %}
 
 {% block extrajs %}
 	<script type="text/javascript" src="static/js/main/non-interactive/landingpage.js" ></script>

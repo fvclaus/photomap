@@ -2,16 +2,17 @@
 
 <!-- for the translation with django -->
 {% load i18n %}
-{% trans "Urheberrecht" as page_name %}
 
-{% block title %}{{ page_name }}{% endblock %}
+{% block title %}{% trans "Urheberrecht" %}{% endblock %}
 
-{% block name %}{{ page_name }}{% endblock %}
+{% block name %}{% trans "Urheberrechtserklärung" %}{% endblock %}
 
 {% block non_interactive_content %}
 
 	<article class="mp-textbox" id="copyright">
+		<h3>{% trans "Urheberrecht bei internen Inhalten" %}</h3>
 		<p>{% trans "copyright-article1-paragraph1" %}</p>
+		<h3>{% trans "Urheberrecht Dritter" %}</h3>
 		<p>{% trans "copyright-article1-paragraph2" %}</p>
 	</article>
 	<br /><br /><br /><br />

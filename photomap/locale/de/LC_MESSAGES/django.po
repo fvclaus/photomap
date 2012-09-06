@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-05 10:02+0200\n"
+"POT-Creation-Date: 2012-09-05 11:33+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,90 +26,100 @@ msgstr "Löschen"
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base-non-interactive.html:5 templates/view-album.html:5
+#: templates/base-non-interactive.html:29 templates/view-album.html:33
 msgid "link-title-dashboard"
 msgstr "Zum Dashboard"
 
-#: templates/base.html:102
+#: templates/base.html:101
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:102 templates/impressum.html:5
+#: templates/base.html:101 templates/impressum.html:6
+#: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
 
-#: templates/base.html:103
+#: templates/base.html:102
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:103 templates/privacy.html:5
+#: templates/base.html:102 templates/privacy.html:5
+#: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:104
+#: templates/base.html:103
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:104 templates/copyright.html:5
+#: templates/base.html:103 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:105
+#: templates/base.html:104
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:105 templates/contact.html:5
-#: templates/impressum.html:31
+#: templates/base.html:104 templates/contact.html:6
+#: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:106
+#: templates/base.html:105
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:106
+#: templates/base.html:105 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:107
+#: templates/base.html:106
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:107
+#: templates/base.html:106
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:119
+#: templates/base.html:118
 msgid "link-title-login"
 msgstr "Login/Registrierung"
 
-#: templates/contact.html:14
+#: templates/contact.html:13
 msgid "contact-intro-article1-line1"
 msgstr "Sollten Sie Probleme, Anregungen oder Fragen, welche nicht auf der"
 
-#: templates/contact.html:14
+#: templates/contact.html:13
 msgid "contact-linkto-help"
 msgstr "Hilfe-Seite"
 
-#: templates/contact.html:15
+#: templates/contact.html:14
 msgid "contact-intro-article1-line2"
 msgstr ""
 ", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail "
 "unter"
 
-#: templates/contact.html:19
+#: templates/contact.html:18
 msgid "contact-intro-article1-line3"
 msgstr ""
 "Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen. (Bald "
 "verfügbar!)"
 
-#: templates/contact.html:20
+#: templates/contact.html:19
 msgid "contact-intro-article1-line4"
 msgstr "Bitte beachten Sie die hierfür gültigen"
 
-#: templates/contact.html:20
+#: templates/contact.html:19
 msgid "contact-linkto-privacy"
 msgstr "Datenschutzgrundsätze"
+
+#: templates/copyright.html:8
+msgid "Urheberrechtserklärung"
+msgstr "Urheberrechtserklärung"
+
+#: templates/copyright.html:13
+msgid "Urheberrecht bei internen Inhalten"
+msgstr "Urheberrecht bei internen Inhalten"
 
 #: templates/copyright.html:14
 msgid "copyright-article1-paragraph1"
@@ -120,6 +130,10 @@ msgstr ""
 "Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors."
 
 #: templates/copyright.html:15
+msgid "Urheberrecht Dritter"
+msgstr "Urheberrecht Dritter"
+
+#: templates/copyright.html:16
 msgid "copyright-article1-paragraph2"
 msgstr ""
 "Soweit die Inhalte auf dieser Seite nicht von den Betreibern erstellt "
@@ -129,11 +143,11 @@ msgstr ""
 "entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir "
 "derartige Inhalte umgehend entfernen."
 
-#: templates/help.html:5
+#: templates/help.html:8
 msgid "Hilfe und Support"
 msgstr "Hilfe und Support"
 
-#: templates/help.html:18
+#: templates/help.html:17
 msgid "help-intro-paragraph"
 msgstr ""
 "Momentan steht Ihnen leider noch keine sehr umfangreiche Hilfe-Seite zur "
@@ -142,15 +156,15 @@ msgstr ""
 "beantwortete Fragen haben, schreiben Sie uns doch gerne eine Email; wir "
 "werden bald mit Ihnen in Kontakt treten."
 
-#: templates/help.html:21
+#: templates/help.html:20
 msgid "help-faq-title"
 msgstr "FAQ"
 
-#: templates/help.html:23
+#: templates/help.html:22
 msgid "help-faq-question1"
 msgstr "Warum Klarnamen?"
 
-#: templates/help.html:24
+#: templates/help.html:23
 msgid "help-faq-answer1"
 msgstr ""
 "Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
@@ -162,27 +176,27 @@ msgstr ""
 "abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
 "nicht nur praktischer, sondern auch schöner."
 
-#: templates/help.html:28
+#: templates/help.html:27
 msgid "help-tutorial-title"
 msgstr "Tutorial"
 
-#: templates/help.html:30
+#: templates/help.html:29
 msgid "help-tutorial topic: Dashboard"
 msgstr "Dashboard"
 
-#: templates/help.html:32
+#: templates/help.html:31
 msgid "help-tutorial topic: Dashboard -> description"
 msgstr "Im Dashboard werden alle Ihre Alben auf der Karte angezeigt."
 
-#: templates/help.html:34
+#: templates/help.html:33
 msgid "help-tutorial topic: Dashboard, subtopic: Alben"
 msgstr "Alben"
 
-#: templates/help.html:37
+#: templates/help.html:36
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
 msgstr "Album hinzufügen"
 
-#: templates/help.html:38
+#: templates/help.html:37
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
 msgstr ""
@@ -192,12 +206,12 @@ msgstr ""
 "ausgewählten Punkt ein neues Album erstellt, welches durch einen Marker auf "
 "der Karte gekennzeichnet ist."
 
-#: templates/help.html:41
+#: templates/help.html:40
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
 msgstr "Album löschen/bearbeiten"
 
-#: templates/help.html:42
+#: templates/help.html:41
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
 "description"
@@ -206,11 +220,11 @@ msgstr ""
 "kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
 "Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:45
+#: templates/help.html:44
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
 msgstr "Album auswählen/Öffnen der Albumsansicht"
 
-#: templates/help.html:46
+#: templates/help.html:45
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
 "description"
@@ -219,11 +233,11 @@ msgstr ""
 "aus. Daraufhin werden Sie auf die Albumsansicht des entsprechenden Albums "
 "weitergeleitet, in welcher Sie die Plätze und Bilder des Albums sehen können."
 
-#: templates/help.html:53
+#: templates/help.html:52
 msgid "help-tutorial topic: Albumview"
 msgstr "Albumsansicht"
 
-#: templates/help.html:55
+#: templates/help.html:54
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
 "In der Albumsansicht können Sie einzelne Plätze zu ihrem Album hinzufügen. "
@@ -232,15 +246,15 @@ msgstr ""
 "noch die Möglichkeiten die Bilder in einer kleinen Slideshow innerhalb der "
 "Gallerie oder sogar als Vollbild anschauen zu können."
 
-#: templates/help.html:57
+#: templates/help.html:56
 msgid "help-tutorial topic: Albumview, subtopic: Places"
 msgstr "Plätze"
 
-#: templates/help.html:60
+#: templates/help.html:59
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
 msgstr "Platz hinzufügen"
 
-#: templates/help.html:61
+#: templates/help.html:60
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
@@ -251,12 +265,12 @@ msgstr ""
 "ausgewählten Punkt ein neuer Platz erstellt, welcher durch einen Marker auf "
 "der Karte gekennzeichnet ist."
 
-#: templates/help.html:64
+#: templates/help.html:63
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
 msgstr "Platz löschen/bearbeiten"
 
-#: templates/help.html:65
+#: templates/help.html:64
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
@@ -265,11 +279,11 @@ msgstr ""
 "kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
 "Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:68
+#: templates/help.html:67
 msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
 msgstr "Platz auswählen/Öffnen der Gallerie"
 
-#: templates/help.html:69
+#: templates/help.html:68
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
@@ -278,15 +292,15 @@ msgstr ""
 "aus. Daraufhin werden die Bilder des Platzes in der Gallerie auf der rechten "
 "Seite angezeigt."
 
-#: templates/help.html:72
+#: templates/help.html:71
 msgid "help-tutorial topic: Albumview, subtopic: Gallery"
 msgstr "Gallerie"
 
-#: templates/help.html:75
+#: templates/help.html:74
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
 msgstr "Photo hinzufügen"
 
-#: templates/help.html:76
+#: templates/help.html:75
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
@@ -297,12 +311,12 @@ msgstr ""
 "auf ihrem Computer auswählen können. Die Bilder werden dann dem ausgewählten "
 "Platz hinzugefügt."
 
-#: templates/help.html:79
+#: templates/help.html:78
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
 msgstr "Photo löschen/bearbeiten"
 
-#: templates/help.html:80
+#: templates/help.html:79
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
@@ -311,11 +325,11 @@ msgstr ""
 "Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden Symbols wird "
 "ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:83
+#: templates/help.html:82
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
 msgstr "Photo auswählen/Slideshow starten"
 
-#: templates/help.html:84
+#: templates/help.html:83
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
@@ -324,11 +338,11 @@ msgstr ""
 "diesem Photo als Start innerhalb der Gallerie geöffnet. Sie können durch "
 "Anklicken der Pfeile die Bilder wechseln."
 
-#: templates/help.html:87
+#: templates/help.html:86
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
 msgstr "Bild im Vollbild-Modus ansehen"
 
-#: templates/help.html:88
+#: templates/help.html:87
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
@@ -337,12 +351,12 @@ msgstr ""
 "wird das Photo im Fullscreen angezeigt. Auch hier können Sie über die Pfeile "
 "die Bilder wechseln. Ausserdem können Sie in die Bilder hineinzoomen."
 
-#: templates/help.html:91
+#: templates/help.html:90
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
 msgstr "Drag'n'Drop der Photos"
 
-#: templates/help.html:92
+#: templates/help.html:91
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
@@ -350,39 +364,39 @@ msgstr ""
 "Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
 "Photo an die gewünschte Stelle ziehen."
 
-#: templates/impressum.html:14
+#: templates/impressum.html:13
 msgid "impressum Angaben gemäß § 5 TMG"
 msgstr "Angaben gemäß § 5 TMG"
 
-#: templates/impressum.html:22
+#: templates/impressum.html:21
 msgid "impressum Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
 msgstr "Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
 
-#: templates/impressum.html:23
+#: templates/impressum.html:22
 msgid "impressum Anschrift wie oben"
 msgstr "Anschrift wie oben"
 
-#: templates/impressum.html:25
+#: templates/impressum.html:24
 msgid "impressum Vertreten durch"
 msgstr "Vertreten durch"
 
-#: templates/impressum.html:33
+#: templates/impressum.html:32
 msgid "Telefon"
 msgstr "Telefon"
 
-#: templates/impressum.html:33
+#: templates/impressum.html:32
 msgid "Handy"
 msgstr "Handy"
 
-#: templates/impressum.html:34
+#: templates/impressum.html:33
 msgid "Email-Adresse"
 msgstr "Email-Adresse"
 
-#: templates/impressum.html:37
+#: templates/impressum.html:36
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Missbrauch von Kontaktdaten"
 
-#: templates/impressum.html:38
+#: templates/impressum.html:37
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
@@ -392,11 +406,11 @@ msgstr ""
 "behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
 "Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
 
-#: templates/impressum.html:42
+#: templates/impressum.html:41
 msgid "impressum-liability Haftung für Inhalte"
 msgstr "Haftung für Inhalte"
 
-#: templates/impressum.html:43
+#: templates/impressum.html:42
 msgid "impressum-liability Haftung für Inhalte -> description"
 msgstr ""
 "Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die "
@@ -413,11 +427,11 @@ msgstr ""
 "entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend "
 "entfernen."
 
-#: templates/impressum.html:44
+#: templates/impressum.html:43
 msgid "impressum-liability Haftung für Links"
 msgstr "Haftung für Links"
 
-#: templates/impressum.html:45
+#: templates/impressum.html:44
 msgid "impressum-liability Haftung für Links -> description"
 msgstr ""
 "Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte "
@@ -431,15 +445,15 @@ msgstr ""
 "Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend "
 "entfernen."
 
-#: templates/index.html:5
+#: templates/index.html:6 templates/index.html.py:8
 msgid "Willkommen"
 msgstr "Willkommen"
 
-#: templates/index.html:18
+#: templates/index.html:17
 msgid "welcome-title"
 msgstr "Herzlich Willkommen"
 
-#: templates/index.html:19
+#: templates/index.html:18
 msgid "welcome-paragraph1"
 msgstr ""
 "Bitte beachten Sie dass die Seite immer noch in Entwicklung ist! Verzeihen "
@@ -448,7 +462,7 @@ msgstr ""
 "von Ihnen genutzt werden. Fühlen Sie sich also frei dazu, sich anzumelden "
 "und das Projekt schon einmal auszutesten!"
 
-#: templates/index.html:20
+#: templates/index.html:19
 msgid "welcome-paragraph2"
 msgstr ""
 "Während Sie ihre ersten Bilderalben anlegen und Reisen mit anderen teilen, "
@@ -459,14 +473,14 @@ msgstr ""
 "noch in der Prüfungszeit stecken werden die nächsten Versionsupdates jedoch "
 "noch bis September warten müssen."
 
-#: templates/index.html:21
+#: templates/index.html:20
 msgid "welcome-paragraph3"
 msgstr ""
 "Viel Spaß und Freude bei der Gestaltung eures ersten Online Poesiealbums und "
 "beim teilen eurer Reisen und Erlebnisse mit anderen, wünscht euch das LGHP-"
 "Team!"
 
-#: templates/index.html:23
+#: templates/index.html:22
 msgid "welcome-paragraph4"
 msgstr ""
 "PS: Sollten Sie Fragen oder Anregungen haben schreiben Sie uns doch bitte "
@@ -500,9 +514,13 @@ msgstr "Photo zum Hochladen auswählen"
 msgid "insert-dialogue-title insert-place"
 msgstr "Hinzufügen eines Platzes"
 
-#: templates/login.html:5
+#: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
 msgstr "Login und Registrierung"
+
+#: templates/privacy.html:9
+msgid "Richtlinien zum Datenschutz"
+msgstr "Richtlinien zum Datenschutz"
 
 #: templates/privacy.html:14
 msgid "privacy-topic Datenschutzerklärung"
@@ -639,7 +657,7 @@ msgstr ""
 msgid "Kontaktformular"
 msgstr "Kontaktformular"
 
-#: templates/team.html:5
+#: templates/team.html:8
 msgid "Projekt und Team"
 msgstr "Projekt und Team"
 
@@ -654,6 +672,10 @@ msgstr "Bearbeiten eines Photos"
 #: templates/update-place.html:6
 msgid "insert-dialogue-title update-place"
 msgstr "Bearbeiten eines Platzes"
+
+#: templates/view-album.html:6
+msgid "Albumsansicht"
+msgstr "Albumsansicht"
 
 #: templates/view-album.html:35
 msgid "control-title toggle gallery"
