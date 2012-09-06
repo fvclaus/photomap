@@ -199,7 +199,7 @@ UIControls.prototype = {
 		}
 		
 		// call to delete marker or photo in backend
-		main.getClientServer().deleteObject(url,data);
+		main.getUI().getTools().deleteObject(url,data);
 	});
 
 	this.$update.unbind("click").bind("click",function(event){

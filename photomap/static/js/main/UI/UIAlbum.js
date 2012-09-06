@@ -5,6 +5,8 @@ UIAlbum = function (gallery) {
     this.$album	= $('#mp-album-wrapper');
     this.albumPadding = this.$album.css("padding-left");
     this.albumWidth = this.$album.width();
+    
+    this.visible = false;
 
     this.$elements = null;
 
@@ -15,11 +17,9 @@ UIAlbum.prototype =  {
     searchImages : function(){
 	this.$elements = this.$album.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-controls-options");
     },
-
     getEl : function(){
 	return this.$album;
     },
-    
     getDimensions : function(){
 	var position =  this.$album.position();
 	position.width = this.$album.width();
@@ -27,11 +27,20 @@ UIAlbum.prototype =  {
 	console.log("width = " + position.width + " height = " + position.height);
 	return position;
     },
-
+    _setVisibility : function(visible){
+	this.visible = visible;
+    },
+    isVisible : function(){
+	return this.visible;
+    },
     show : function( photos ) {
 	var instance = this;
 	// show gallery in case it's hidden
 	$("#mp-album").show();
+	
+	// visibility to true for exposé
+	this._setVisibility(true);
+	
 	main.getUIState().setPhotos(photos);
 	main.getUIState().setAlbumLoading(true);
 	var tmplPhotosData = new Array();

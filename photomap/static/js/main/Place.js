@@ -102,11 +102,6 @@ Place.prototype = {
 	    instance._clear();
 	    main.getUIState().setCurrentPlace(instance);
 	    main.getUIState().setCurrentLoadedPlace(instance);
-
-	    // set and show title and description
-	    information = main.getUI().getInformation();
-	    information.setPlaceTitle();
-	    information.setPlaceDescription();
 	    
 	    main.getUI().getControls().hideControls(false);
 	    //change icon of new place
@@ -116,6 +111,11 @@ Place.prototype = {
 		oldPlace.checkIconStatus();
 
 	    instance._showGallery();
+
+	    // set and show title and description
+	    information = main.getUI().getInformation();
+	    information.setPlaceTitle();
+	    information.setPlaceDescription();
 
 	});
 

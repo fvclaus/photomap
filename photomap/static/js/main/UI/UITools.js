@@ -83,5 +83,23 @@ UITools.prototype = {
       else
 	return decodeURIComponent(results[1].replace(/\+/g, " "));
     },
+    
+    deleteObject : function(url,data){
+	    // post request to delete album/place/photo - data is the id of the object
+	    $.ajax({
+		type : "post",
+		dataType : "json",
+		"url" : url,
+		"data" : data,
+		success : function(data){
+		    if (data.error){
+			alert(data.error);
+		    }
+		},
+		error : function(err){
+		    alert(err.toString());
+		}
+	    });
+	},
 	
 };

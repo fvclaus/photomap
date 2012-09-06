@@ -74,17 +74,21 @@ function bindListener(){
 /*
   @author: Frederik Claus
   @summary: selects and returns the first place
+  @edited: by Marc Leon Römer - now selects last place if this place exists
+  * else the wrong place will get updated in test suite -> assert text won't work
 */
 function selectPlace(){
     places = main.getUIState().getPlaces();
+    place = places[places.length - 1];
     if(places.length == 0){
 	alert ("Need places for test!");
 	return null;
     }
     else{
-	main.getUI().getState().setCurrentPlace(places[0]);
+	//main.getUI().getState().setCurrentPlace(places[0]);
 	main.getUI().getControls().setModifyPlace(true);
-	return places[0];
+	//return places[0];
+	return place;
     }
 }
 

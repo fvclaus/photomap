@@ -8,6 +8,8 @@ UIInformation = function(){
     this.$description = $(".mp-description-wrapper").jScrollPane();
     this.$imageNumber = this.$wrapper.find(".mp-image-number");
     
+    this.visible = false;
+    
     this.bindListener();
     
 };
@@ -16,6 +18,12 @@ UIInformation.prototype = {
     
     init : function(){
 	this.placeDescription();
+    },
+    _setVisibility : function(visible){
+	this.visible = visible;
+    },
+    isVisible : function(){
+	return this.visible;
     },
     setAlbumTitle : function(title){
 	$(".mp-page-title h1").text(title);
@@ -74,6 +82,9 @@ UIInformation.prototype = {
 	    .html(desc);
 	if (this.$wrapper.is(":hidden")){
 	    this.$wrapper.show();
+	    // trigger event to expose description
+	    this._setVisibility(true);
+	    mpEvents.trigger("body",mpEvents.toggleExpose);
 	};
 	api.reinitialise();
     },
@@ -91,9 +102,15 @@ UIInformation.prototype = {
     },
     closeDescription : function(){
 	this.$wrapper.fadeOut(500);
+	// trigger event to hide expose mask
+	this._setVisibility(false);
+	mpEvents.trigger("body",mpEvents.toggleExpose);
     },
     hideDescription : function(){
 	this.$wrapper.hide();
+	// trigger event to hide expose mask
+	this._setVisibility(false);
+	mpEvents.trigger("body",mpEvents.toggleExpose);
     },
     updatePlace : function(placeinfo){
 	if (main.getUIState().getCurrentPlace() == main.getUIState().getCurrentLoadedPlace()){

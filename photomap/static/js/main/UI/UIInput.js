@@ -4,6 +4,9 @@ UIInput = function(){
 };
 UIInput.prototype = {
     get : function(url){
+	// close mask if open
+	$.mask.close();
+	
 	var instance = this;
 	var margin = main.getUI().getPanel().getHeaderOffset().top;
 	$.fancybox({
@@ -12,16 +15,25 @@ UIInput.prototype = {
 	    onClosed : instance._initialise,
 	    margin: 30,
 	    overlayColor: '#FFF',
+	    speedOut: 0,
 	});
 	return this;
     },
     iFrame : function(url){
+	// close mask if open
+	$.mask.close();
+	
 	var instance = this;
 	$.fancybox({
 	    href : url,
 	    type : "iframe",
+	    onClosed : function(){
+		mpEvents.trigger("body",mpEvents.iframeClose);
+		mpEvents.trigger("body",mpEvents.toggleExpose);
+	    },
 	    margin: 50,
 	    overlayColor: '#FFF',
+	    speedOut: 0,
 	})
 	return this;
     },
