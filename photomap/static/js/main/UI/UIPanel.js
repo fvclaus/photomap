@@ -17,7 +17,9 @@ UIPanel.prototype = {
     getFooterHeight : function(){
 	return this.$footer.height();
     },
-    
+    getHeaderOffset: function(){
+	return this.$header.offset();
+    },
     resizeFooterFont : function(){
 	text = this.$footer.find(".mp-internal-links a").first().text();
 	width = 5000;
@@ -26,7 +28,6 @@ UIPanel.prototype = {
 	size = tools.calculateFontSize(text,width,height);
 	this.$footer.css("fontSize",size + "px");
     },
-    
     resizePageTitle : function(){
 	text = this.$title.text();
 	width = 5000;

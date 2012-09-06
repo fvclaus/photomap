@@ -7,27 +7,28 @@
 <link rel="stylesheet" type="text/x-stylus" href="static/css/main.styl" />
 {% endcompress %}
 <!--<script type="text/javascript" src="/js/insert-photo.js"></script>-->
+
 <div class="insert">
 	
-	<h2>{% trans "insert-dialogue-title insert-photo" %}</h2>
+	<h2 class="mp-input-title">{% trans "insert-dialogue-title insert-photo" %}</h2>
 	
 	<form class="jquery-validator mp-dialog" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
 	
 		<input type="hidden" name="place" required="required" value="{{place}}"/>
 		<div>
-			<label for="title">{% trans "insert-dialogue name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
-			<input type="text" name="title" required="required" />
+			<label for="title">{% trans "insert-dialogue name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
+			<input class="mp-input-name" type="text" name="title" required="required" size="40"/>
 		</div>
 		<div>
-			<label for="description">{% trans "insert-dialogue description" %}</label>
-			<textarea name="description"></textarea>
+			<label for="description">{% trans "insert-dialogue description" %}</label><br />
+			<textarea type="text" name="description" cols="50" rows="5"></textarea>
 		</div>
 		<div>
 			<label for="photo">{% trans "insert-dialogue select photo to upload" %}<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
-			<input type="file" name="photo" required="required" />
+			<input type="file" name="photo" required="required" size="40"/>
 		</div>
 
-		<input type="submit" value="Hinzufügen" name="submit" />
+		<input class="mp-button" type="submit" value="Hinzufügen" name="submit" />
 	</form>
 	<script></script>
 </div>

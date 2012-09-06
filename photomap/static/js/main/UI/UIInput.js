@@ -5,10 +5,13 @@ UIInput = function(){
 UIInput.prototype = {
     get : function(url){
 	var instance = this;
+	var margin = main.getUI().getPanel().getHeaderOffset().top;
 	$.fancybox({
 	    href : url,
 	    onComplete : instance._intercept,
-	    onClosed : instance._initialise
+	    onClosed : instance._initialise,
+	    margin: 30,
+	    overlayColor: '#FFF',
 	});
 	return this;
     },
@@ -16,7 +19,9 @@ UIInput.prototype = {
 	var instance = this;
 	$.fancybox({
 	    href : url,
-	    type : "iframe"
+	    type : "iframe",
+	    margin: 50,
+	    overlayColor: '#FFF',
 	})
 	return this;
     },
