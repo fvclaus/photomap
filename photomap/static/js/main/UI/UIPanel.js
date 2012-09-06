@@ -11,7 +11,6 @@ UIPanel.prototype = {
     
     init : function(){
 	this.resizeFooterFont();
-	this.resizePageTitle();
     },
     getFooterHeight : function(){
 	return this.$footer.height();
@@ -27,15 +26,6 @@ UIPanel.prototype = {
 	size = tools.calculateFontSize(text,width,height);
 	this.$footer.css("fontSize",size + "px");
     },
-    resizePageTitle : function(){
-	text = this.$title.text();
-	width = 5000;
-	height = this.$title.height();
-	tools = main.getUI().getTools();
-	size = tools.calculateFontSize(text,width,height);
-	this.$title.css("fontSize",size + "px");
-    },
-
     getHeight : function(){
 	tools = main.getUI().getTools();
 	return tools.getRealHeight(this.$header);

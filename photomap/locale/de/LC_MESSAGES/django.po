@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-05 11:33+0200\n"
+"POT-Creation-Date: 2012-09-06 20:36+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,58 +30,58 @@ msgstr "Bearbeiten"
 msgid "link-title-dashboard"
 msgstr "Zum Dashboard"
 
-#: templates/base.html:101
+#: templates/base.html:102
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:101 templates/impressum.html:6
+#: templates/base.html:102 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
 
-#: templates/base.html:102
+#: templates/base.html:103
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:102 templates/privacy.html:5
+#: templates/base.html:103 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:103
+#: templates/base.html:104
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:103 templates/copyright.html:6
+#: templates/base.html:104 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:104
+#: templates/base.html:105
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:104 templates/contact.html:6
+#: templates/base.html:105 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:105
+#: templates/base.html:106
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:105 templates/help.html:6
+#: templates/base.html:106 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:106
+#: templates/base.html:107
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:106
+#: templates/base.html:107
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:118
+#: templates/base.html:119
 msgid "link-title-login"
 msgstr "Login/Registrierung"
 
@@ -233,8 +233,8 @@ msgstr ""
 "aus. Daraufhin werden Sie auf die Albumsansicht des entsprechenden Albums "
 "weitergeleitet, in welcher Sie die Plätze und Bilder des Albums sehen können."
 
-#: templates/help.html:52
-msgid "help-tutorial topic: Albumview"
+#: templates/help.html:52 templates/view-album.html:6
+msgid "Albumsansicht"
 msgstr "Albumsansicht"
 
 #: templates/help.html:54
@@ -247,8 +247,8 @@ msgstr ""
 "Gallerie oder sogar als Vollbild anschauen zu können."
 
 #: templates/help.html:56
-msgid "help-tutorial topic: Albumview, subtopic: Places"
-msgstr "Plätze"
+msgid "Plätze"
+msgstr ""
 
 #: templates/help.html:59
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
@@ -293,8 +293,9 @@ msgstr ""
 "Seite angezeigt."
 
 #: templates/help.html:71
-msgid "help-tutorial topic: Albumview, subtopic: Gallery"
-msgstr "Gallerie"
+#, fuzzy
+msgid "Gallerie"
+msgstr "Gallerie anzeigen"
 
 #: templates/help.html:74
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
@@ -363,6 +364,31 @@ msgid ""
 msgstr ""
 "Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
 "Photo an die gewünschte Stelle ziehen."
+
+#: templates/help.html:94 templates/view-album.html:49
+msgid "Beschreibung"
+msgstr "Beschreibung"
+
+#: templates/help.html:97
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Description, function: toggle "
+"visibility"
+msgstr "Beschreibung anzeigen/schließen"
+
+#: templates/help.html:98
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Description, function: toggle "
+"visibility -> description"
+msgstr ""
+"Beim Anklicken eines Platzes wird die Beschreibung rechts neben der Gallerie "
+"angezeigt. Gleiches passiert beim Anklicken eines Photos, bzw. in der Slideshow. "
+"Natürlich können Sie sich auch unnabhängig davon die Beschreibungen anzeigen "
+"lassen. Dafür müssen Sie nur auf den Namen des Albums/Platzes/Photos klicken. "
+"Sie werden sehen, dass beim überfahren des Namens mit der Maus, der "
+"Mauszeiger sich in eine Art Fragezeichen ändert; dies zeigt an, dass Sie "
+"mit einem Klick die Beschreibung des Objekts aufrufen können."
+"Sie können die Beschreibung über das 'X' rechts oben in der Beschreibung "
+"wieder schließen."
 
 #: templates/impressum.html:13
 msgid "impressum Angaben gemäß § 5 TMG"
@@ -486,31 +512,31 @@ msgstr ""
 "PS: Sollten Sie Fragen oder Anregungen haben schreiben Sie uns doch bitte "
 "eine email an"
 
-#: templates/insert-album.html:6
+#: templates/insert-album.html:11
 msgid "insert-dialogue-title insert-album"
 msgstr "Hinzufügen eines Albums"
 
-#: templates/insert-album.html:10 templates/insert-photo.html:18
-#: templates/insert-place.html:10 templates/update-album.html:11
-#: templates/update-photo.html:12 templates/update-place.html:11
+#: templates/insert-album.html:15 templates/insert-photo.html:19
+#: templates/insert-place.html:15 templates/update-album.html:16
+#: templates/update-photo.html:17 templates/update-place.html:16
 msgid "insert-dialogue name"
 msgstr "Name"
 
-#: templates/insert-album.html:14 templates/insert-photo.html:22
-#: templates/insert-place.html:14 templates/update-album.html:15
-#: templates/update-photo.html:16 templates/update-place.html:15
+#: templates/insert-album.html:19 templates/insert-photo.html:23
+#: templates/insert-place.html:19 templates/update-album.html:20
+#: templates/update-photo.html:21 templates/update-place.html:20
 msgid "insert-dialogue description"
 msgstr "Beschreibung"
 
-#: templates/insert-photo.html:12
+#: templates/insert-photo.html:13
 msgid "insert-dialogue-title insert-photo"
 msgstr "Hinzufügen eines neuen Photos"
 
-#: templates/insert-photo.html:26
+#: templates/insert-photo.html:27
 msgid "insert-dialogue select photo to upload"
 msgstr "Photo zum Hochladen auswählen"
 
-#: templates/insert-place.html:6
+#: templates/insert-place.html:11
 msgid "insert-dialogue-title insert-place"
 msgstr "Hinzufügen eines Platzes"
 
@@ -661,21 +687,17 @@ msgstr "Kontaktformular"
 msgid "Projekt und Team"
 msgstr "Projekt und Team"
 
-#: templates/update-album.html:6
+#: templates/update-album.html:11
 msgid "insert-dialogue-title update-album"
 msgstr "Bearbeiten eines Albums"
 
-#: templates/update-photo.html:6
+#: templates/update-photo.html:11
 msgid "insert-dialogue-title update-photo"
 msgstr "Bearbeiten eines Photos"
 
-#: templates/update-place.html:6
+#: templates/update-place.html:11
 msgid "insert-dialogue-title update-place"
 msgstr "Bearbeiten eines Platzes"
-
-#: templates/view-album.html:6
-msgid "Albumsansicht"
-msgstr "Albumsansicht"
 
 #: templates/view-album.html:35
 msgid "control-title toggle gallery"
@@ -688,10 +710,6 @@ msgstr "Gallerie anzeigen"
 #: templates/view-album.html:35
 msgid "Hide Gallery"
 msgstr "Gallerie verstecken"
-
-#: templates/view-album.html:49
-msgid "Beschreibung"
-msgstr "Beschreibung"
 
 #: templates/view-album.html:88
 msgid "control-title add-photo"
