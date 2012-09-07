@@ -9,6 +9,7 @@ UIControls = function(maxHeight) {
 
     this.$delete = $("img.mp-option-delete");
     this.$update = $("img.mp-option-modify");
+    this.$export = $("img.mp-option-export");
 
     this.$logout = $(".mp-option-logout");
     this.$center = $(".mp-option-center");
@@ -85,7 +86,7 @@ UIControls.prototype = {
 	    this.$controls
 		.find(".mp-controls-options")
 		.height(this.$controls.height() * 0.8)
-		.width(this.$controls.width() * 0.45);
+		.width(this.$controls.width() * 0.31);
 	}
 	
     },
@@ -140,6 +141,18 @@ UIControls.prototype = {
 	    place = main.getUIState().getCurrentPlace();
 	    // reset load function 
 	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
+	});
+    },
+
+    bindExportListener : function(){
+	var instance = this;
+	this.$export
+	    .unbind("click")
+	    .bind("click",function(event){
+		url = "/URL_OF_ALBUM_EXPORT";
+		id = main.getUIState().getCurrentAlbum().id;
+		//main.getUI().getTools().getExportLink();
+		alert("ajax call not possible - export is not enabled in back end yet - album id would be '" + id + "' and url is now '" + url + "'");
 	});
     },
 

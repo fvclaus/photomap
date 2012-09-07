@@ -15,5 +15,7 @@ $(document).ready(function(){
   
   // activate map listener
   main.getMap().activateBindListener();
+  // activate export listener
+  main.getUI().getControls().bindExportListener();
   
 });

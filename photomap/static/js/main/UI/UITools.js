@@ -85,21 +85,43 @@ UITools.prototype = {
     },
     
     deleteObject : function(url,data){
-	    // post request to delete album/place/photo - data is the id of the object
-	    $.ajax({
-		type : "post",
-		dataType : "json",
-		"url" : url,
-		"data" : data,
-		success : function(data){
-		    if (data.error){
-			alert(data.error);
-		    }
-		},
-		error : function(err){
-		    alert(err.toString());
+	// post request to delete album/place/photo - data is the id of the object
+	$.ajax({
+	    type : "post",
+	    dataType : "json",
+	    "url" : url,
+	    "data" : data,
+	    success : function(data){
+		if (data.error){
+		    alert(data.error);
 		}
-	    });
+	    },
+	    error : function(err){
+		alert(err.toString());
+	    },
+	});
 	},
+	
+    getExportLink : function(url,data){
+	// get request for export link - data is album id
+	$.ajax({
+	    type: "get",
+	    dataType: "json",
+	    "url": url,
+	    "data": data,
+	    success : function(data){
+		if (data.error){
+		    alert(data.error);
+		}
+		else{
+		    // open fancy box with link here!
+		}
+	    },
+	    error : function(err){
+		alert(err.toString());
+	    },
+	});
+    },
+	    
 	
 };

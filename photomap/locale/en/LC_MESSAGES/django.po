@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-06 20:36+0200\n"
+"POT-Creation-Date: 2012-09-07 13:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,6 +137,10 @@ msgstr ""
 "a copyright infringement, please report it to us. We'll delete this content "
 "immediately or workout a solution with the copyright owner."
 
+#: templates/dashboard.html:29
+msgid "control-title export"
+msgstr "Export"
+
 #: templates/help.html:8
 msgid "Hilfe und Support"
 msgstr "Help and Support"
@@ -182,7 +186,7 @@ msgid "help-tutorial topic: Dashboard -> description"
 msgstr "The Map on your dashboard contains all your albums."
 
 #: templates/help.html:33
-msgid "help-tutorial topic: Dashboard, subtopic: Alben"
+msgid "Alben"
 msgstr "Albums"
 
 #: templates/help.html:36
@@ -222,11 +226,34 @@ msgstr ""
 "By clicking on an album marker you select the album and get redirected to "
 "the albumview of this album, in which you'll see all the places and pictures."
 
-#: templates/help.html:52 templates/view-album.html:6
+#: templates/help.html:48
+msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Export"
+msgstr "Export Album"
+
+#: templates/help.html:49
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Export -> "
+"description"
+msgstr ""
+"In NAME OF THE PROJECT we give you the possibility to export albums of "
+"yours. This means we'll provide you with a link, which you can share with "
+"others on social networks or with emails or any other way you like. By "
+"clicking on this link, others can view your album with all the places and "
+"pictures you uploaded, read your descriptions, use Streetview or the satellite "
+"view to checkout places you have been to and witness your experiences."
+"To Export an album you can click on the 'export' option in the controls "
+"box, which opens when moving the mouse over the album-markers. "
+"A window will open with the generated link. You can copy the link by "
+"highlighting it with your mouse and pressing 'Ctrl + C' (Windows) or "
+"'Command + C' (Mac OS X) or by rightclicking on the highlighted link "
+"and choosing the 'Copy' option. After copying the link you can paste "
+"it anywhere to share it with others."
+
+#: templates/help.html:56 templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumview"
 
-#: templates/help.html:54
+#: templates/help.html:58
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
 "In the albumview you can add places; subsequently you can upload pictures "
@@ -234,15 +261,15 @@ msgstr ""
 "You can also view the pictures in a small slideshow inside the gallery or "
 "even in fullscreen."
 
-#: templates/help.html:56
+#: templates/help.html:60
 msgid "Plätze"
-msgstr ""
+msgstr "Places"
 
-#: templates/help.html:59
+#: templates/help.html:63
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
 msgstr "Add Place"
 
-#: templates/help.html:60
+#: templates/help.html:64
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
@@ -251,12 +278,12 @@ msgstr ""
 "you submitted the dialogue in which you can specify name and description, "
 "the places will be saved and shown on the map as little markers."
 
-#: templates/help.html:63
+#: templates/help.html:67
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
 msgstr "Delete/Edit Place"
 
-#: templates/help.html:64
+#: templates/help.html:68
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
@@ -264,11 +291,11 @@ msgstr ""
 "When moving the mouse over a place marker the box in which you can select "
 "delete or edit will be shown below the marker."
 
-#: templates/help.html:67
+#: templates/help.html:71
 msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
 msgstr "Select Place/Open Gallery"
 
-#: templates/help.html:68
+#: templates/help.html:72
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
@@ -276,16 +303,15 @@ msgstr ""
 "To open the gallery and view the pictures that are assigned to a the place, "
 "you can click on the marker."
 
-#: templates/help.html:71
-#, fuzzy
+#: templates/help.html:75
 msgid "Gallerie"
-msgstr "Show gallery"
+msgstr "Gallery"
 
-#: templates/help.html:74
+#: templates/help.html:78
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
 msgstr "Add Photo"
 
-#: templates/help.html:75
+#: templates/help.html:79
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
@@ -294,12 +320,12 @@ msgstr ""
 "you can open a dialogue to add/upload one or more pictures for the selected "
 "place."
 
-#: templates/help.html:78
+#: templates/help.html:82
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
 msgstr "Delete/Edit Photo"
 
-#: templates/help.html:79
+#: templates/help.html:83
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
@@ -307,11 +333,11 @@ msgstr ""
 "Mouseover a picture will open the control-box, in which you can select Edit "
 "or Delete."
 
-#: templates/help.html:82
+#: templates/help.html:86
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
 msgstr "Select Photo/Start Slideshow"
 
-#: templates/help.html:83
+#: templates/help.html:87
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
@@ -320,11 +346,11 @@ msgstr ""
 "selecting a picture that you want the slideshow to start with. (Click on "
 "this picture)"
 
-#: templates/help.html:86
+#: templates/help.html:90
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
 msgstr "View Photo in Fullscreen"
 
-#: templates/help.html:87
+#: templates/help.html:91
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
@@ -334,12 +360,12 @@ msgstr ""
 "this picture. In case the picture is bigger than the screen resolution "
 "allows right now, you can zoom into the pic."
 
-#: templates/help.html:90
+#: templates/help.html:94
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
 msgstr "Drag'n'Drop of Photos"
 
-#: templates/help.html:91
+#: templates/help.html:95
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
@@ -347,17 +373,17 @@ msgstr ""
 "You can reorder the pictures in your gallery by dragging them to the "
 "favorized position and dropping them there."
 
-#: templates/help.html:94 templates/view-album.html:49
+#: templates/help.html:98 templates/view-album.html:49
 msgid "Beschreibung"
 msgstr "Description"
 
-#: templates/help.html:97
+#: templates/help.html:101
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility"
 msgstr "Show/Hide Description"
 
-#: templates/help.html:98
+#: templates/help.html:102
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility -> description"
@@ -366,10 +392,9 @@ msgstr ""
 "side next to the gallery. Same happens with pictures in your gallery, or in "
 "Slideshow. Of course there's another way you can show/hide the description. "
 "By moving over the name of an album/place/photo you'll see the cursor "
-"turning into some kind of question mark. This shows that you can open "
-"the description by clicking on it (the name)."
-"You can easily close the description with the 'X' in the top right corner "
-"of the description."
+"turning into some kind of question mark. This shows that you can open the "
+"description by clicking on it (the name).You can easily close the "
+"description with the 'X' in the top right corner of the description."
 
 #: templates/impressum.html:13
 msgid "impressum Angaben gemäß § 5 TMG"
@@ -502,6 +527,11 @@ msgstr "Name"
 msgid "insert-dialogue description"
 msgstr "Description"
 
+#: templates/insert-album.html:24 templates/insert-photo.html:31
+#: templates/insert-place.html:25
+msgid "Speichern"
+msgstr ""
+
 #: templates/insert-photo.html:13
 msgid "insert-dialogue-title insert-photo"
 msgstr "Add new Photo"
@@ -509,6 +539,10 @@ msgstr "Add new Photo"
 #: templates/insert-photo.html:27
 msgid "insert-dialogue select photo to upload"
 msgstr "Select photo to uplaod"
+
+#: templates/insert-photo.html:32
+msgid "Speichern und weitere hinzufügen"
+msgstr ""
 
 #: templates/insert-place.html:11
 msgid "insert-dialogue-title insert-place"
@@ -658,6 +692,11 @@ msgstr "Project and Team"
 #: templates/update-album.html:11
 msgid "insert-dialogue-title update-album"
 msgstr "Edit current album"
+
+#: templates/update-album.html:23 templates/update-photo.html:24
+#: templates/update-place.html:23
+msgid "Änderungen bestätigen"
+msgstr "Submit changes"
 
 #: templates/update-photo.html:11
 msgid "insert-dialogue-title update-photo"

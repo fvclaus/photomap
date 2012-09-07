@@ -24,7 +24,7 @@ content="non-interactive"
 	
 {% endblock %}
 
-{% block controls %}
+{% block options %}
 	{% if user.is_authenticated %}
 		{% trans "link-title-dashboard" as dashboardLink %}
 		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title='{{ dashboardLink }}'>{{ dashboardLink }}</a>  

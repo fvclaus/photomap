@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-06 20:36+0200\n"
+"POT-Creation-Date: 2012-09-07 13:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,6 +143,10 @@ msgstr ""
 "entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir "
 "derartige Inhalte umgehend entfernen."
 
+#: templates/dashboard.html:29
+msgid "control-title export"
+msgstr "Exportieren"
+
 #: templates/help.html:8
 msgid "Hilfe und Support"
 msgstr "Hilfe und Support"
@@ -189,7 +193,7 @@ msgid "help-tutorial topic: Dashboard -> description"
 msgstr "Im Dashboard werden alle Ihre Alben auf der Karte angezeigt."
 
 #: templates/help.html:33
-msgid "help-tutorial topic: Dashboard, subtopic: Alben"
+msgid "Alben"
 msgstr "Alben"
 
 #: templates/help.html:36
@@ -233,11 +237,36 @@ msgstr ""
 "aus. Daraufhin werden Sie auf die Albumsansicht des entsprechenden Albums "
 "weitergeleitet, in welcher Sie die Plätze und Bilder des Albums sehen können."
 
-#: templates/help.html:52 templates/view-album.html:6
+#: templates/help.html:48
+msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Export"
+msgstr "Album exportieren"
+
+#: templates/help.html:49
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Export -> "
+"description"
+msgstr ""
+"In NAME DES PROJEKTS geben wir Ihnen die Möglichkeit, Ihre Alben zu exportieren. "
+"D.h. wir generieren einen Link, den Sie dann mit anderen per Email, sozialen "
+"Netzwerken oder auf andere Weisen teilen können. Wenn andere diesen Link dann "
+"Anklicken werden Sie auf eine Albumsansicht Ihres Albums weitergeleitet, auf der "
+"Sie all Ihre Plätze und hochgeladenen Photos des Albums anschauen, die "
+"Beschreibungen lesen, Plätze an denen Sie waren mit Streetview und der "
+"Satelliten-Ansicht auskundschaften und ihre Erlebnisse mitverfolgen können."
+"Um diesen Link zu generieren klicken Sie einfach auf die Export Option in "
+"der Controls-Box, welche sich öffnet wenn Sie über ein Album fahren. "
+"In dem sich dann öffnenden Fenster ist der generierte Link; sie können "
+"diesen kopieren, indem sie ihn markieren und dann auf 'Strg + C' (Windows) "
+"oder auf 'Command + C' (Mac OS X) drücken, bzw. indem Sie mit einem Rechtsklick "
+"auf den markierten Link das Menü öffnen und 'Kopieren' auswählen. Wenn Sie "
+"den Link kopiert haben können Sie ihn nach belieben mit anderen teilen indem "
+"Sie ihn an entsprechender Stelle einfügen."
+
+#: templates/help.html:56 templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumsansicht"
 
-#: templates/help.html:54
+#: templates/help.html:58
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
 "In der Albumsansicht können Sie einzelne Plätze zu ihrem Album hinzufügen. "
@@ -246,15 +275,15 @@ msgstr ""
 "noch die Möglichkeiten die Bilder in einer kleinen Slideshow innerhalb der "
 "Gallerie oder sogar als Vollbild anschauen zu können."
 
-#: templates/help.html:56
+#: templates/help.html:60
 msgid "Plätze"
-msgstr ""
+msgstr "Plätze"
 
-#: templates/help.html:59
+#: templates/help.html:63
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
 msgstr "Platz hinzufügen"
 
-#: templates/help.html:60
+#: templates/help.html:64
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
@@ -265,12 +294,12 @@ msgstr ""
 "ausgewählten Punkt ein neuer Platz erstellt, welcher durch einen Marker auf "
 "der Karte gekennzeichnet ist."
 
-#: templates/help.html:63
+#: templates/help.html:67
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
 msgstr "Platz löschen/bearbeiten"
 
-#: templates/help.html:64
+#: templates/help.html:68
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
@@ -279,11 +308,11 @@ msgstr ""
 "kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
 "Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:67
+#: templates/help.html:71
 msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
 msgstr "Platz auswählen/Öffnen der Gallerie"
 
-#: templates/help.html:68
+#: templates/help.html:72
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
@@ -292,16 +321,15 @@ msgstr ""
 "aus. Daraufhin werden die Bilder des Platzes in der Gallerie auf der rechten "
 "Seite angezeigt."
 
-#: templates/help.html:71
-#, fuzzy
+#: templates/help.html:75
 msgid "Gallerie"
-msgstr "Gallerie anzeigen"
+msgstr "Gallerie"
 
-#: templates/help.html:74
+#: templates/help.html:78
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
 msgstr "Photo hinzufügen"
 
-#: templates/help.html:75
+#: templates/help.html:79
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
@@ -312,12 +340,12 @@ msgstr ""
 "auf ihrem Computer auswählen können. Die Bilder werden dann dem ausgewählten "
 "Platz hinzugefügt."
 
-#: templates/help.html:78
+#: templates/help.html:82
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
 msgstr "Photo löschen/bearbeiten"
 
-#: templates/help.html:79
+#: templates/help.html:83
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
@@ -326,11 +354,11 @@ msgstr ""
 "Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden Symbols wird "
 "ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:82
+#: templates/help.html:86
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
 msgstr "Photo auswählen/Slideshow starten"
 
-#: templates/help.html:83
+#: templates/help.html:87
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
@@ -339,11 +367,11 @@ msgstr ""
 "diesem Photo als Start innerhalb der Gallerie geöffnet. Sie können durch "
 "Anklicken der Pfeile die Bilder wechseln."
 
-#: templates/help.html:86
+#: templates/help.html:90
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
 msgstr "Bild im Vollbild-Modus ansehen"
 
-#: templates/help.html:87
+#: templates/help.html:91
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
@@ -352,12 +380,12 @@ msgstr ""
 "wird das Photo im Fullscreen angezeigt. Auch hier können Sie über die Pfeile "
 "die Bilder wechseln. Ausserdem können Sie in die Bilder hineinzoomen."
 
-#: templates/help.html:90
+#: templates/help.html:94
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
 msgstr "Drag'n'Drop der Photos"
 
-#: templates/help.html:91
+#: templates/help.html:95
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
@@ -365,30 +393,30 @@ msgstr ""
 "Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
 "Photo an die gewünschte Stelle ziehen."
 
-#: templates/help.html:94 templates/view-album.html:49
+#: templates/help.html:98 templates/view-album.html:49
 msgid "Beschreibung"
 msgstr "Beschreibung"
 
-#: templates/help.html:97
+#: templates/help.html:101
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility"
 msgstr "Beschreibung anzeigen/schließen"
 
-#: templates/help.html:98
+#: templates/help.html:102
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility -> description"
 msgstr ""
 "Beim Anklicken eines Platzes wird die Beschreibung rechts neben der Gallerie "
-"angezeigt. Gleiches passiert beim Anklicken eines Photos, bzw. in der Slideshow. "
-"Natürlich können Sie sich auch unnabhängig davon die Beschreibungen anzeigen "
-"lassen. Dafür müssen Sie nur auf den Namen des Albums/Platzes/Photos klicken. "
-"Sie werden sehen, dass beim überfahren des Namens mit der Maus, der "
-"Mauszeiger sich in eine Art Fragezeichen ändert; dies zeigt an, dass Sie "
-"mit einem Klick die Beschreibung des Objekts aufrufen können."
-"Sie können die Beschreibung über das 'X' rechts oben in der Beschreibung "
-"wieder schließen."
+"angezeigt. Gleiches passiert beim Anklicken eines Photos, bzw. in der "
+"Slideshow. Natürlich können Sie sich auch unnabhängig davon die "
+"Beschreibungen anzeigen lassen. Dafür müssen Sie nur auf den Namen des "
+"Albums/Platzes/Photos klicken. Sie werden sehen, dass beim überfahren des "
+"Namens mit der Maus, der Mauszeiger sich in eine Art Fragezeichen ändert; "
+"dies zeigt an, dass Sie mit einem Klick die Beschreibung des Objekts "
+"aufrufen können.Sie können die Beschreibung über das 'X' rechts oben in der "
+"Beschreibung wieder schließen."
 
 #: templates/impressum.html:13
 msgid "impressum Angaben gemäß § 5 TMG"
@@ -528,6 +556,11 @@ msgstr "Name"
 msgid "insert-dialogue description"
 msgstr "Beschreibung"
 
+#: templates/insert-album.html:24 templates/insert-photo.html:31
+#: templates/insert-place.html:25
+msgid "Speichern"
+msgstr "Speichern"
+
 #: templates/insert-photo.html:13
 msgid "insert-dialogue-title insert-photo"
 msgstr "Hinzufügen eines neuen Photos"
@@ -535,6 +568,10 @@ msgstr "Hinzufügen eines neuen Photos"
 #: templates/insert-photo.html:27
 msgid "insert-dialogue select photo to upload"
 msgstr "Photo zum Hochladen auswählen"
+
+#: templates/insert-photo.html:32
+msgid "Speichern und weitere hinzufügen"
+msgstr "Speichern und weitere hinzufügen"
 
 #: templates/insert-place.html:11
 msgid "insert-dialogue-title insert-place"
@@ -690,6 +727,11 @@ msgstr "Projekt und Team"
 #: templates/update-album.html:11
 msgid "insert-dialogue-title update-album"
 msgstr "Bearbeiten eines Albums"
+
+#: templates/update-album.html:23 templates/update-photo.html:24
+#: templates/update-place.html:23
+msgid "Änderungen bestätigen"
+msgstr "Änderungen bestätigen"
 
 #: templates/update-photo.html:11
 msgid "insert-dialogue-title update-photo"
