@@ -23,6 +23,8 @@
 	<script type="text/javascript" src="static/js/main/Main.js" ></script>
 	
 	<script type="text/javascript" src="static/js/main/dashboard.js" ></script>
+	
+	<script type="text/javascript" src="static/js/zeroclipboard/jquery.zclip.min.js" ></script>
 {% endblock %}
 
 {% block controls %}
@@ -37,6 +39,21 @@
 		</div>
 	</section>
 	
+	<div id="mp-export">
+		<span class="mp-overlay-trigger" rel="#mp-export"></span>
+		<p>
+			<input id="mp-export-link" name="export-link" value="" size="100"/>
+			<input id="mp-copy-button" name="copy" type="button" value='{% trans "mp-copy-link-title" %}' />
+		</p>
+		<aside>
+			<p>
+				<strong>{% trans "How to Export" %}</strong>
+			</p>
+			<p>
+				{% trans "How to Export -> description" %}
+			</p>
+		</aside>
+	</div>
 	<!-- helpers for selenium ide. remove from production system -->
 	<div class="mp-invisible">
 		<button class="mp-insert-album"></button>

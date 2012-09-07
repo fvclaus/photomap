@@ -143,7 +143,7 @@ UIControls.prototype = {
 	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
 	});
     },
-
+// listener wird nach der vollen implementierung des exports noch aufgeräumt und optimiert!
     bindExportListener : function(){
 	var instance = this;
 	this.$export
@@ -152,10 +152,40 @@ UIControls.prototype = {
 		url = "/URL_OF_ALBUM_EXPORT";
 		id = main.getUIState().getCurrentAlbum().id;
 		//main.getUI().getTools().getExportLink();
-		alert("ajax call not possible - export is not enabled in back end yet - album id would be '" + id + "' and url is now '" + url + "'");
+		//alert("ajax call not possible - export is not enabled in back end yet - album id would be '" + id + "' and url is now '" + url + "'");
+		$(".mp-overlay-trigger")
+		    .overlay({
+			top: '25%',
+			load: true,
+			mask: {
+				color: "white",
+				opacity: 0.7,
+			},
+		    })
+		    .load();
+		$("#exposeMask").css({
+		  'max-height': $('#mp-map').height(),
+		  'max-width': $('#mp-map').width(),
+		  'top': $('#mp-map').offset().top,
+		  'left': $('#mp-map').offset().left,
+		});
+		$("#mp-export-link")
+		    .val("This is the export link? Doesn't look like it.. what happened?")
+		    .focus(function(){$(this).select();})
+		    .focus();
+		instance.copyListener();
 	});
     },
-
+    copyListener : function(){
+	$("#mp-copy-button").zclip('remove').zclip({
+	    path: 'static/js/zeroclipboard/zeroclipboard.swf',
+	    copy: $("#mp-export-link").val(),
+	    /*afterCopy: function(){
+		$(".mp-overlay-trigger").overlay().close();
+	    },*/
+	});
+    },
+    
     bindListener : function(){
     // problem: when new markers are added the listeners get somehow get bound again 
     // so that the same listener lies on the same control multiple times
