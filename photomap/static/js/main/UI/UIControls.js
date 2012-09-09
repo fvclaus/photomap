@@ -81,12 +81,19 @@ UIControls.prototype = {
 	    })
 	    .show();
 
+	// change factor depending on the page (-> number of controls in control-box)
+	if (main.getUIState().isDashboard()) {
+	    factor = 0.31;
+	}
+	else {
+	    factor = 0.45;
+	}
 	// don't resize the icons all the time to save performance
 	if (!this.$controls.isScaled){
 	    this.$controls
 		.find(".mp-controls-options")
 		.height(this.$controls.height() * 0.8)
-		.width(this.$controls.width() * 0.31);
+		.width(this.$controls.width() * factor);
 	}
 	
     },

@@ -1,9 +1,10 @@
-var map,controls,state;
+var map,controls,state,tools;
 
 $(document).ready(function(){
   map = main.getMap();
-  controls = main.getUI().getControls();
   state = main.getUIState();
+  controls = main.getUI().getControls();
+  tools = main.getUI().getTools();
   
   // set page in interactive mode as dashboard
   page = "dashboard";
