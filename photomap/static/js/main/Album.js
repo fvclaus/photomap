@@ -20,11 +20,13 @@ Album.prototype = {
     },
     bindListener: function(){
 	var instance = this;
+	var state = main.getUIState();
+	var controls = main.getUI().getControls();
 	
 	// redirect on albumview of selected album
 	google.maps.event.addListener(this.marker.MapMarker, "click", function(){
 	    
-	    main.getUIState().setCurrentAlbum(instance);
+	    state.setCurrentAlbum(instance);
 	    
 	    url = '/view-album?id=' + instance.id;
 	    window.location.href=url;
@@ -32,7 +34,7 @@ Album.prototype = {
 
 	google.maps.event.addListener(this.marker.MapMarker, "mouseover", function(event){
 	    
-	    main.getUIState().setCurrentAlbum(instance);
+	    state.setCurrentAlbum(instance);
 	    
 	    // gets the relative pixel position
 	    projection = main.getMap().getOverlay().getProjection();
@@ -45,13 +47,12 @@ Album.prototype = {
 	    // add the width of the marker
 	    pixel.x += markerSize.width/2;
 
-	    controls =  main.getUI().getControls();
 	    controls.setModifyAlbum(true);
 	    controls.showControls({top:pixel.y,left:pixel.x});
 	});
 
 	google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
-	    main.getUI().getControls().hideControls(true);
+	    controls.hideControls(true);
 	});
     },
     triggerClick : function(){

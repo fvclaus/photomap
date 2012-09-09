@@ -143,7 +143,6 @@ UIControls.prototype = {
 	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
 	});
     },
-// listener wird nach der vollen implementierung des exports noch aufgeräumt und optimiert!
     bindExportListener : function(){
 	var instance = this;
 	this.$export
@@ -151,32 +150,24 @@ UIControls.prototype = {
 	    .bind("click",function(event){
 		url = "/URL_OF_ALBUM_EXPORT";
 		id = main.getUIState().getCurrentAlbum().id;
-		//main.getUI().getTools().getExportLink();
-		//alert("ajax call not possible - export is not enabled in back end yet - album id would be '" + id + "' and url is now '" + url + "'");
-		$(".mp-overlay-trigger")
-		    .overlay({
-			top: '25%',
-			load: true,
-			mask: {
-				color: "white",
-				opacity: 0.7,
-			},
-		    })
-		    .load();
-		$("#exposeMask").css({
-		  'max-height': $('#mp-map').height(),
-		  'max-width': $('#mp-map').width(),
-		  'top': $('#mp-map').offset().top,
-		  'left': $('#mp-map').offset().left,
-		});
+		//main.getClientServer().getExportLink(url,data);
+		/*-----------------------*/
+		//this all has to be done if the ajax call is successfull
+		//value of the #mp-export-link will be the link
+		tools = main.getUI().getTools();
+		tools.loadOverlay();
+		tools.fitMask($("#exposeMask"));
+		//load link in input field and highlight it
 		$("#mp-export-link")
 		    .val("This is the export link? Doesn't look like it.. what happened?")
 		    .focus(function(){$(this).select();})
 		    .focus();
 		instance.copyListener();
+		/*-----------------------*/
 	});
     },
     copyListener : function(){
+	// copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
 	$("#mp-copy-button").zclip('remove').zclip({
 	    path: 'static/js/zeroclipboard/zeroclipboard.swf',
 	    copy: $("#mp-export-link").val(),
@@ -191,11 +182,15 @@ UIControls.prototype = {
     // so that the same listener lies on the same control multiple times
     // temporary solution: unbind all listeners first then bind them
 	var instance = this;
+	var state = main.getUIState();
+	var information = main.getUI().getInformation();
+	var tools = main.getUI().getTools();
+	var input = main.getUI().getInput();
+	
 	this.$delete
 	    .unbind("click")
 	    .bind("click",function(event){
 		// hide current place's markers and clean photos from gallery
-		state = main.getUIState();	
 		photo = state.getCurrentPhoto();
 		place = state.getCurrentPlace();
 		album = state.getCurrentAlbum();
@@ -207,7 +202,7 @@ UIControls.prototype = {
 			url = "/delete-photo",
 			data = {"id":photo.id};
 			//deletes photo from gallery and moves or hides slider
-			main.getUI().getTools().deletePhoto(photo);
+			tools.deletePhoto(photo);
 		    }
 		    else 
 			return;
@@ -218,8 +213,8 @@ UIControls.prototype = {
 		    if(confirm("Do you really want to delete place " + place.name)){
 			url = "/delete-place";
 			data = {"id":place.id};
-			main.getUIState().removePlace(place);
-			main.getUI().getInformation().hidePlaceTitle();
+			state.removePlace(place);
+			information.hidePlaceTitle();
 			place._delete();
 		    }
 		    else
@@ -242,11 +237,10 @@ UIControls.prototype = {
 		}
 		
 		// call to delete marker or photo in backend
-		main.getUI().getTools().deleteObject(url,data);
+		tools.deleteObject(url,data);
 	});
 
 	this.$update.unbind("click").bind("click",function(event){
-	    var state = main.getUIState();	
 	    var place = state.getCurrentPlace();
 	    var photo = state.getCurrentPhoto();
 	    var album = state.getCurrentAlbum();
@@ -254,7 +248,7 @@ UIControls.prototype = {
 	    // edit current photo
 	    if (instance.isModifyPhoto) {
 
-		main.getUI().getInput()
+		input
 		    .onLoad(function(){
 			//prefill with values from selected picture
 			$("input[name=id]").val(photo.id);
@@ -262,7 +256,7 @@ UIControls.prototype = {
 			var $name = $("input[name=title]").val(photo.name);
 			var $desc = $("textarea[name=description]").val(photo.desc);
 
-			main.getUI().getInput().onForm(function(){
+			input.onForm(function(){
 			    //reflect changes locally
 			    photo.name = $name.val();
 			    photo.desc = $desc.val();
@@ -275,13 +269,13 @@ UIControls.prototype = {
 	    else if (instance.isModifyPlace){
 		//prefill with name and update on submit
 
-		main.getUI().getInput()
+		input
 		    .onLoad(function(){
 			$("input[name=id]").val(place.id);
 			var $name = $("input[name=title]").val(place.name);
 			var $desc = $("textarea[name=description]").val(place.desc);
 
-			main.getUI().getInput().onForm(function(){
+			input.onForm(function(){
 			    //reflect changes locally
 			    place.name = $name.val();
 			    place.desc = $desc.val();
@@ -295,13 +289,13 @@ UIControls.prototype = {
 	    else if (instance.isModifyAlbum){
 		//prefill with name and update on submit
 
-		main.getUI().getInput()
+		input
 		    .onLoad(function(){
 			$("input[name=id]").val(album.id);
 			var $name = $("input[name=title]").val(album.name);
 			var $desc = $("textarea[name=description]").val(album.desc);
 
-			main.getUI().getInput().onForm(function(){
+			input.onForm(function(){
 			    //reflect changes locally
 			    album.name = $name.val();
 			    album.desc = $desc.val();
@@ -321,7 +315,7 @@ UIControls.prototype = {
 	    });
 	
 	this.$center.bind("click.MapPhotoAlbum",function(event){
-	    var place = main.getUIState().getCurrentPlace();
+	    var place = state.getCurrentPlace();
 	    if (place){
 		place.center();
 	    }

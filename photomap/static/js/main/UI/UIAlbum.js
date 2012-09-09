@@ -35,14 +35,18 @@ UIAlbum.prototype =  {
     },
     show : function( photos ) {
 	var instance = this;
+	var state = main.getUIState();
+	var controls = main.getUI().getControls();
+	
 	// show gallery in case it's hidden
 	$("#mp-album").show();
 	
 	// visibility to true for exposé
 	this._setVisibility(true);
 	
-	main.getUIState().setPhotos(photos);
-	main.getUIState().setAlbumLoading(true);
+	state.setPhotos(photos);
+	state.setAlbumLoading(true);
+	
 	var tmplPhotosData = new Array();
 	var loaded = 0;
 	this.gallery.disableUI();
@@ -54,8 +58,8 @@ UIAlbum.prototype =  {
 		$.jqote( '#galleryTmpl', {} )
 	    );
 	    
-	    main.getUI().getControls().bindInsertPhotoListener();
-	    main.getUI().getControls().bindListener();
+	    controls.bindInsertPhotoListener();
+	    controls.bindListener();
 	}
 
 	
@@ -87,8 +91,8 @@ UIAlbum.prototype =  {
 			    update : function(event,ui){
 				instance.searchImages();
 				var jsonPhotos = new Array();
-
-				main.getUIState().getPhotos().forEach(function(photo,index,photos){
+				
+				state.getPhotos().forEach(function(photo,index,photos){
 				    // get html tag for current photo
 				    currentPhoto = $('img[src="' + photo.source + '"]');
 				    // find index of current photo in mp-gallery
@@ -120,7 +124,7 @@ UIAlbum.prototype =  {
 
 		    instance.bindListener();
 
-		    main.getUI().getControls().bindInsertPhotoListener();
+		    controls.bindInsertPhotoListener();
 		    
 		}
 	    }).attr( 'src', photos[i].thumb );
@@ -135,7 +139,10 @@ UIAlbum.prototype =  {
 
     bindListener : function(){
 	var instance = this;
-	state = main.getUIState();
+	var state = main.getUIState();
+	var cursor = main.getUI().getCursor();
+	var controls = main.getUI().getControls();
+	
 	//bind events on anchors
 	instance.$elements
 	.unbind('.Gallery')
@@ -150,7 +157,6 @@ UIAlbum.prototype =  {
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto(photo);
 	    
-	    controls = main.getUI().getControls();
 	    controls.setModifyPhoto(true);
 	    controls.showPhotoControls($el,photo);
 
@@ -161,12 +167,12 @@ UIAlbum.prototype =  {
 	    (main.getUIState().getPhotos())[$el.index()].checkBorder();
 	    $el.removeClass('current');
 	    
-	    main.getUI().getControls().hideControls(true);
+	    controls.hideControls(true);
 
 	}).bind( 'mousedown.Gallery', function(event){
 	    var $el = $(this);
-	   // set Cursor for DragnDrop on images (grabber)
-	    main.getUI().getCursor().setCursor($el,main.ui.getCursor().cursor.grab); 
+	    // set Cursor for DragnDrop on images (grabber)
+	    cursor.setCursor($el,cursor.styles.grab); 
 	    
 	}).bind( 'click.Gallery', function( event ) {
 	    var $el					= $(this);
@@ -184,7 +190,7 @@ UIAlbum.prototype =  {
 	}).bind( 'mouseup.Gallery', function(event){
 	    var $el = $(this);
 	   // reset Cursor for images (pointer)
-	    main.getUI().getCursor().setCursor($el,main.ui.getCursor().cursor.pointer); 
+	    cursor.setCursor($el,cursor.styles.pointer); 
 	    
 	});
 	//draw border on visited elements

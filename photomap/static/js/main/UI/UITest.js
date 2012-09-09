@@ -24,12 +24,14 @@ $(document).ready(function(){
 });
 
 function bindListener(){
+    var controls = main.getUI().getControls();
+    var map = main.getMap();
 
     $("button.mp-insert-place").click(function(){
 	event = {
 	    latLng : latLngPlace
 	};
-	google.maps.event.trigger(main.getMap().getInstance(), "click",event);
+	google.maps.event.trigger(map.getInstance(), "click",event);
     });
     $("button.mp-show-place").click(function(){
 	place = selectPlace();
@@ -41,33 +43,33 @@ function bindListener(){
     });
     $("button.mp-update-place").click(function(){
 	selectPlace();
-	main.getUI().getControls().$update.trigger("click");
+	controls.$update.trigger("click");
     });
     $("button.mp-update-photo").click(function(){
 	selectPhoto();
-	main.getUI().getControls().$update.trigger("click");
+	controls.$update.trigger("click");
     });
     $("button.mp-delete-place").click(function(){
 	selectPlace();
-	main.getUI().getControls().$delete.trigger("click");
+	controls.$delete.trigger("click");
     });
     $("button.mp-delete-photo").click(function(){
 	selectPhoto();
-	main.getUI().getControls().$delete.trigger("click");
+	controls.$delete.trigger("click");
     });
     $("button.mp-insert-album").click(function(){
 	event = {
 	    latLng : latLngAlbum
 	};
-	google.maps.event.trigger(main.getMap().getInstance(),"click",event);
+	google.maps.event.trigger(map.getInstance(),"click",event);
     });
     $("button.mp-update-album").click(function(){
 	selectAlbum();
-	main.getUI().getControls().$update.trigger("click");
+	controls.$update.trigger("click");
     });
     $("button.mp-delete-album").click(function(){
 	selectAlbum();
-	main.getUI().getControls().$delete.trigger("click");
+	controls.$delete.trigger("click");
     });
 }    
 
@@ -78,16 +80,17 @@ function bindListener(){
   * else the wrong place will get updated in test suite -> assert text won't work
 */
 function selectPlace(){
-    places = main.getUIState().getPlaces();
+    state = main.getUIState();
+    places = state.getPlaces();
     place = places[places.length - 1];
     if(places.length == 0){
 	alert ("Need places for test!");
 	return null;
     }
     else{
-	//main.getUI().getState().setCurrentPlace(places[0]);
+	state.setCurrentPlace(place);
+	state.setCurrentLoadedPlace(place);
 	main.getUI().getControls().setModifyPlace(true);
-	//return places[0];
 	return place;
     }
 }
@@ -99,7 +102,7 @@ function selectPlace(){
 function selectPhoto(){
     photos = selectPlace().photos;
     photo = photos[photos.length -1];
-    main.getUI().getState().setCurrentPhoto(photo);
+    main.getUIState().setCurrentPhoto(photo);
     main.getUI().getControls().setModifyPhoto(true);
     return photo;
 }
@@ -111,7 +114,7 @@ function selectPhoto(){
 function selectAlbum(){
     albums = main.getUIState().getAlbums();
     album = albums[albums.length -1]; 
-    main.getUI().getState().setCurrentAlbum(album);
+    main.getUIState().setCurrentAlbum(album);
     main.getUI().getControls().setModifyAlbum(true);
     return album;
 }

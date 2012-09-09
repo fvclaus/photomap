@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-07 20:32+0200\n"
+"POT-Creation-Date: 2012-09-09 18:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -137,27 +137,33 @@ msgstr ""
 "a copyright infringement, please report it to us. We'll delete this content "
 "immediately or workout a solution with the copyright owner."
 
-#: templates/dashboard.html:29
+#: templates/dashboard.html:31
 msgid "control-title export"
 msgstr "Export"
 
-#: templates/dashboard.html:44
+#: templates/dashboard.html:46
+msgid "mp-copy-link-title"
+msgstr "Copy Link"
+
+#: templates/dashboard.html:50
 msgid "How to Export"
 msgstr "How to export the link?"
 
-#: templates/dashboard.html:47
+#: templates/dashboard.html:53
 msgid "How to Export -> description"
 msgstr ""
-"To export this link you have to copy it and then paste it whereever you "
-"want to share it (Social networks, Email, Blogs, ...). "
-"You can copy the link by simply clicking on the 'Copy Link' button. In case " 
-"this doesn't work due to your browser security settings, you can copy the "
-"highlighted link with 'Ctrl + C' (Windows) or 'Command + C' (Mac OS X) "
-"or by rightclicking on the link and choosing 'Copy'."
+"To export this link you have to copy it and then paste it whereever you want "
+"to share it (Social networks, Email, Blogs, ...). You can copy the link by "
+"simply clicking on the 'Copy Link' button. You need to have flash enabled! "
+"So in case it doesn't work due to your browser security settings, you have to "
+"copy the highlighted link by hand. You can do that with 'Ctrl + C' (Windows) "
+"or 'Command + C' (Mac OS X) or by rightclicking on the link and choosing 'Copy'."
 
-#: templates/dashboard.html:49
-msgid "mp-copy-link-title"
-msgstr "Copy Link"
+#: templates/dashboard.html:56
+msgid "How to Export -> attention!"
+msgstr ""
+"Please be aware that copying this link will overwrite whatever is stored in your "
+"clipboard right now. (Whatever you copied last.)"
 
 #: templates/help.html:8
 msgid "Hilfe und Support"
@@ -191,27 +197,27 @@ msgstr ""
 "at all! For a Photo-book real names are much more informative and nice to "
 "look at."
 
-#: templates/help.html:27
+#: templates/help.html:31
 msgid "help-tutorial-title"
 msgstr "Tutorial"
 
-#: templates/help.html:29
+#: templates/help.html:33
 msgid "help-tutorial topic: Dashboard"
 msgstr "Dashboard"
 
-#: templates/help.html:31
+#: templates/help.html:35
 msgid "help-tutorial topic: Dashboard -> description"
 msgstr "The Map on your dashboard contains all your albums."
 
-#: templates/help.html:33
+#: templates/help.html:37
 msgid "Alben"
 msgstr "Albums"
 
-#: templates/help.html:36
+#: templates/help.html:40
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
 msgstr "Add Album"
 
-#: templates/help.html:37
+#: templates/help.html:41
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
 msgstr ""
@@ -219,12 +225,12 @@ msgstr ""
 "you can specify name and description of the album. After submitting your "
 "request the album will be saved and shown on the map as little marker."
 
-#: templates/help.html:40
+#: templates/help.html:44
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
 msgstr "Delete/Edit Album"
 
-#: templates/help.html:41
+#: templates/help.html:45
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
 "description"
@@ -232,11 +238,11 @@ msgstr ""
 "When moving the mouse over an album marker a small box will appear below the "
 "marker. There you can select delete or edit."
 
-#: templates/help.html:44
+#: templates/help.html:48
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
 msgstr "Select Album/Open Albumview"
 
-#: templates/help.html:45
+#: templates/help.html:49
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
 "description"
@@ -244,11 +250,11 @@ msgstr ""
 "By clicking on an album marker you select the album and get redirected to "
 "the albumview of this album, in which you'll see all the places and pictures."
 
-#: templates/help.html:48
+#: templates/help.html:52
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Export"
 msgstr "Export Album"
 
-#: templates/help.html:49
+#: templates/help.html:54
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Export -> "
 "description"
@@ -267,11 +273,21 @@ msgstr ""
 "choosing the 'Copy' option. After copying the link you can paste it anywhere "
 "to share it with others."
 
-#: templates/help.html:56 templates/view-album.html:6
+#: templates/help.html:55
+msgid ""
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Export -> "
+"attention!"
+msgstr ""
+"You need flash for the copy button, so please make sure to have enabled "
+"it in your browser settings. It should be enabled by default, if you "
+"disabled flash due to security reasons you have to copy the link by hand "
+"as described above. "
+
+#: templates/help.html:63 templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumview"
 
-#: templates/help.html:58
+#: templates/help.html:65
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
 "In the albumview you can add places; subsequently you can upload pictures "
@@ -279,15 +295,15 @@ msgstr ""
 "You can also view the pictures in a small slideshow inside the gallery or "
 "even in fullscreen."
 
-#: templates/help.html:60
+#: templates/help.html:67
 msgid "Plätze"
 msgstr "Places"
 
-#: templates/help.html:63
+#: templates/help.html:70
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
 msgstr "Add Place"
 
-#: templates/help.html:64
+#: templates/help.html:71
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
@@ -296,12 +312,12 @@ msgstr ""
 "you submitted the dialogue in which you can specify name and description, "
 "the places will be saved and shown on the map as little markers."
 
-#: templates/help.html:67
+#: templates/help.html:74
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
 msgstr "Delete/Edit Place"
 
-#: templates/help.html:68
+#: templates/help.html:75
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
@@ -309,11 +325,11 @@ msgstr ""
 "When moving the mouse over a place marker the box in which you can select "
 "delete or edit will be shown below the marker."
 
-#: templates/help.html:71
+#: templates/help.html:78
 msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
 msgstr "Select Place/Open Gallery"
 
-#: templates/help.html:72
+#: templates/help.html:79
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
@@ -321,15 +337,15 @@ msgstr ""
 "To open the gallery and view the pictures that are assigned to a the place, "
 "you can click on the marker."
 
-#: templates/help.html:75
+#: templates/help.html:82
 msgid "Gallerie"
 msgstr "Gallery"
 
-#: templates/help.html:78
+#: templates/help.html:85
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
 msgstr "Add Photo"
 
-#: templates/help.html:79
+#: templates/help.html:86
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
@@ -338,12 +354,12 @@ msgstr ""
 "you can open a dialogue to add/upload one or more pictures for the selected "
 "place."
 
-#: templates/help.html:82
+#: templates/help.html:89
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
 msgstr "Delete/Edit Photo"
 
-#: templates/help.html:83
+#: templates/help.html:90
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
@@ -351,11 +367,11 @@ msgstr ""
 "Mouseover a picture will open the control-box, in which you can select Edit "
 "or Delete."
 
-#: templates/help.html:86
+#: templates/help.html:93
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
 msgstr "Select Photo/Start Slideshow"
 
-#: templates/help.html:87
+#: templates/help.html:94
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
@@ -364,11 +380,11 @@ msgstr ""
 "selecting a picture that you want the slideshow to start with. (Click on "
 "this picture)"
 
-#: templates/help.html:90
+#: templates/help.html:97
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
 msgstr "View Photo in Fullscreen"
 
-#: templates/help.html:91
+#: templates/help.html:98
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
@@ -378,12 +394,12 @@ msgstr ""
 "this picture. In case the picture is bigger than the screen resolution "
 "allows right now, you can zoom into the pic."
 
-#: templates/help.html:94
+#: templates/help.html:101
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
 msgstr "Drag'n'Drop of Photos"
 
-#: templates/help.html:95
+#: templates/help.html:102
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
@@ -391,17 +407,17 @@ msgstr ""
 "You can reorder the pictures in your gallery by dragging them to the "
 "favorized position and dropping them there."
 
-#: templates/help.html:98 templates/view-album.html:49
+#: templates/help.html:105 templates/view-album.html:49
 msgid "Beschreibung"
 msgstr "Description"
 
-#: templates/help.html:101
+#: templates/help.html:108
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility"
 msgstr "Show/Hide Description"
 
-#: templates/help.html:102
+#: templates/help.html:109
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility -> description"

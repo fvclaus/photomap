@@ -1,14 +1,8 @@
-function placeMapControls() {
-    main.getMap().getInstance().setOptions({
-      mapTypeControlOptions: {
-	position: google.maps.ControlPosition.TOP_LEFT,
-      },
-    });
-};
+var album,information,tools,map;
 
 function toggleGallery() {
     $gallery = $("#mp-album");
-    var album = main.getUI().getAlbum();
+    
     if ($gallery.is(":visible")){
       $gallery.fadeOut(100);
       $(".mp-gallery-visible").hide()
@@ -27,41 +21,23 @@ function toggleGallery() {
     }
 };
 
-function placeExposeMask(){
-    $("#mp-expose-mask").css({
-      'max-height': $('#mp-map').height(),
-      'max-width': $('#mp-map').width(),
-      'top': $('#mp-map').offset().top,
-      'left': $('#mp-map').offset().left,
-    });
-};
-
-function AddEvent(html_element, event_name, event_function) {       
-   if(html_element.attachEvent) //Internet Explorer
-      html_element.attachEvent("on" + event_name, function() {event_function.call(html_element);}); 
-   else if(html_element.addEventListener) //Firefox & company
-      html_element.addEventListener(event_name, event_function, false); //don't need the 'call' trick because in FF everything already works in the right way          
-};
-
 function exposeListener(){
   $("body").bind('toggleExpose',function(){
-    var album = main.getUI().getAlbum();
-    var information = main.getUI().getInformation();
     // change exposé depending on visibility of gallery and description
     if (information.isVisible() && album.isVisible()){
       if ($.mask.isLoaded() == "full"){
 	  $.mask.close();
       }
-      $("#mp-album, #mp-description").expose({'maskId': 'mp-expose-mask', 'opacity': 0.7, 'closeSpeed': 0});
-      placeExposeMask();
+      $("#mp-album, #mp-description").expose({'opacity': 0.7, 'closeSpeed': 0});
+      tools.fitMask($("#exposeMask"));
     }
     else if (!information.isVisible() && album.isVisible()){
-      $("#mp-album").expose({'maskId': 'mp-expose-mask', 'opacity': 0.7, 'closeSpeed': 0});
-      placeExposeMask();
+      $("#mp-album").expose({'opacity': 0.7, 'closeSpeed': 0});
+      tools.fitMask($("#exposeMask"));
     }
     else if (information.isVisible() && !album.isVisible()){
-      $("#mp-description").expose({'maskId': 'mp-expose-mask', 'opacity': 0.7, 'closeSpeed': 0});
-      placeExposeMask();
+      $("#mp-description").expose({'opacity': 0.7, 'closeSpeed': 0});
+      tools.fitMask($("#exposeMask"));
     }
     else {
       $.mask.close();
@@ -81,20 +57,32 @@ function galleryListener(){
 };
 
 $(document).ready(function(){
+  map = main.getMap();
+  album = main.getUI().getAlbum();
+  information = main.getUI().getInformation();
+  cursor = main.getUI().getCursor();
+  tools = main.getUI().getTools();
+  
   // set page in interactive mode as albumview
   page = "albumview";
   main.getUIState().setModeInteractive(page);
   
-  cursor = main.getUI().getCursor();
-  cursor.setInfoCursor(cursor.cursor.info);
+  cursor.setInfoCursor(cursor.styles.info);
   
-  placeMapControls();
-  // activate map listener and other listeners
-  main.getMap().activateBindListener();
+  //adjust map controls
+  position = google.maps.ControlPosition;
+  map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
+  
+  // activate listeners
+  map.activateBindListener();
   galleryListener();
   iframeListener();
   exposeListener();
   
+  // fit fancybox overlay between header and footer on top of map
+  tools.fitMask($("#fancybox-overlay"));
+  
+  // other lil adjustments
   $(".mp-slideshow-background").position($(".mp-album-wrapper").position());
   $(".mp-slideshow").position($(".mp-album-wrapper").position());
   $("#mp-album").hide();

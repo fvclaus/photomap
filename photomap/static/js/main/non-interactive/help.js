@@ -14,7 +14,7 @@ function toggleFAQAnswers($question){
 function toggleTutorialDesc($topic){
     $desc = $topic.next("p");
     $descriptions = $(".mp-tutorial-subtopic-desc");
-    // hide all other answers
+    // hide all other descriptions
     $descriptions.not($desc).slideUp(150);
 	
     if ($desc.is(":visible")){

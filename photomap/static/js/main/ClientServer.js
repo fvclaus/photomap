@@ -53,4 +53,25 @@ ClientServer.prototype = {
 	    });
 	    map.fit(markersinfo);
 	},
+	
+	getExportLink : function(url,data){
+	    // get request for export link - data is album id
+	    $.ajax({
+		type: "get",
+		dataType: "json",
+		"url": url,
+		"data": data,
+		success : function(data){
+		    if (data.error){
+			alert(data.error);
+		    }
+		    else{
+			// open fancy box with link here!
+		    }
+		},
+		error : function(err){
+		    alert(err.toString());
+		},
+	    });
+	},
 };

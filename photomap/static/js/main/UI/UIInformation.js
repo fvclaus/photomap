@@ -113,7 +113,8 @@ UIInformation.prototype = {
 	mpEvents.trigger("body",mpEvents.toggleExpose);
     },
     updatePlace : function(placeinfo){
-	if (main.getUIState().getCurrentPlace() == main.getUIState().getCurrentLoadedPlace()){
+	state = main.getUIState();
+	if (state.getCurrentPlace() == state.getCurrentLoadedPlace()){
 	    this.setPlaceTitle(placeinfo.name);
 	    this.setPlaceDescription(placeinfo.desc);
 	}

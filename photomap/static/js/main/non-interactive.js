@@ -1,4 +1,4 @@
-var $container;
+var state,cursor,$container;
 
 function repositionContent(){    
     position = $(".mp-map").position();
@@ -7,37 +7,26 @@ function repositionContent(){
     $container.css({'top':top,'left':left,});
 };
 
-
 function initScrollPane() {
     $container.jScrollPane();
 };
 
-
-function hideMapControls() {
-    main.getMap().getInstance().setOptions({
-      panControl: false,
-      zoomControl: false,
-      streetViewControl: false,
-      mapTypeControlOptions: {
-	position: google.maps.ControlPosition.TOP_LEFT,
-      },
-    });
-};
-
-function setZoom(number) {
-    main.getMap().getInstance().setZoom(number);
-};
-
-
 $(document).ready(function(){
+    // have to declare the map variable here, no idea why though :S
+    var map = main.getMap();
+    state = main.getUIState();
+    cursor = main.getUI().getCursor();
     $container = $("#mp-non-interactive-content");
-    ui = main.getUI();
-    // set page mode to non-interactive
-    ui.getState().setModeNonInteractive();
-    // change cursor on map from cross to grabber - besides moving the map is non-interactive
-    ui.getCursor().setMapCursor(ui.getCursor().cursor.grab)
     
-    hideMapControls();
+    // set page mode to non-interactive
+    state.setModeNonInteractive();
+    // change cursor on map from cross to grabber - besides moving the map is non-interactive
+    cursor.setMapCursor(cursor.styles.grab)
+    //adjust map controls
+    position = google.maps.ControlPosition;
+    map.setControls(false,false,false,true);
+    map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
+    
     repositionContent();
     initScrollPane();
     

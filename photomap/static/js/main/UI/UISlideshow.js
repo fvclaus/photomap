@@ -93,20 +93,22 @@ UISlideshow.prototype = {
     },
 
     closeSlideshow : function(){
+	state = main.getUIState();
+	information = main.getUI().getInformation();
+	
 	if (!main.getUIState().isSlideshow())
 	    return;
 	    
 	$(".mp-slideshow").hide();
 	$(".mp-slideshow-background").hide();
 	
-	main.getUIState().setSlideshow(false);
-	main.getUIState().setSlideshowLoaded(false);
+	state.setSlideshow(false);
+	state.setSlideshowLoaded(false);
 	this.$slideshow.fadeOut("slow");
 
-	main.getUIState().setCurrentPhotoIndex(null);
-	main.getUIState().setCurrentPhoto(null);
+	state.setCurrentPhotoIndex(null);
+	state.setCurrentPhoto(null);
 
-	information = main.getUI().getInformation();
 	information.hidePhotoTitle();
 	information.hideDescription();
 	information.hideImageNumber();
@@ -131,13 +133,16 @@ UISlideshow.prototype = {
 
     _startSlider: function() {
 	var instance = this;
+	var state = main.getUIState();
+	var information = main.getUI().getInformation();
+	var cursor = main.getUI().getCursor();
 	
 	$(".mp-slideshow-background").show();
 	$(".mp-slideshow").show();
 
 	//disable UI interaction
 	this.gallery.disableUI();
-	main.getUIState().setSlideshow(true);
+	state.setSlideshow(true);
 	this.$loading.show();
 
 	var once = false;
@@ -146,8 +151,8 @@ UISlideshow.prototype = {
 		once = true
 		$('<img/>').load(function() {
 
-		    if (main.getUIState().getCurrentPhoto()) {
-			main.getUIState().getCurrentPhoto().showBorder(true);
+		    if (state.getCurrentPhoto()) {
+			state.getCurrentPhoto().showBorder(true);
 		    }
 		    instance.$image.load(function(){
 			//center in the middle
@@ -163,14 +168,14 @@ UISlideshow.prototype = {
 			});
 
 			instance.$loading.hide();
-			main.getUIState().setSlideshowLoaded(true);
+			state.setSlideshowLoaded(true);
 
 
 		    });
-	    	    instance.$image.attr( 'src', main.getUIState().getCurrentPhoto().source );
+	    	    instance.$image.attr( 'src', state.getCurrentPhoto().source );
 	    	    instance._bindFullscreenListener();
 		    instance.gallery._updateText();
-		}).attr( 'src', main.getUIState().getCurrentPhoto().source );
+		}).attr( 'src', state.getCurrentPhoto().source );
 	    }
 	    else{
 		return;
@@ -186,15 +191,13 @@ UISlideshow.prototype = {
 	this.$loading.show();
 	
 	// sets Photo title in album title bar and set+shows Photo description
-	information = main.getUI().getInformation();
 	information.setPhotoTitle();
 	information.setPhotoDescription();
 	// sets image number in description box
 	photos = main.getUI().getAlbum().$elements;
-	state = main.getUIState();
 	information.setImageNumber(state.getCurrentPhotoIndex() + 1,photos.length);
 	// set cursor for fullscreen control
-	main.getUI().getCursor().setCursor($(".mp-album-zoom"),main.ui.getCursor().cursor.pointer)
+	cursor.setCursor($(".mp-album-zoom"),cursor.styles.pointer)
     },
     _navigateSlider					: function( instance, dir ) {
 	//navigate to next photo or close if no photos left

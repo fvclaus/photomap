@@ -83,6 +83,10 @@ Place.prototype = {
     bindListener : function(){
 
 	var instance = this;
+	var state = main.getUIState();
+	var ui = main.getUI();
+	var information = ui.getInformation();
+	var controls = ui.getControls();
 	// click event for place (its marker)
 	// in the eventcallback this will be the gmap
 	// use instance as closurefunction to access the place object
@@ -96,14 +100,14 @@ Place.prototype = {
 	    var oldPlace = main.getUIState().getCurrentPlace();
 
 	    //close slideshow if open
-	    main.getUI().getSlideshow().closeSlideshow();
+	    ui.getSlideshow().closeSlideshow();
 
 	    // clear gallery photos + slider and map.place
 	    instance._clear();
-	    main.getUIState().setCurrentPlace(instance);
-	    main.getUIState().setCurrentLoadedPlace(instance);
+	    state.setCurrentPlace(instance);
+	    state.setCurrentLoadedPlace(instance);
 	    
-	    main.getUI().getControls().hideControls(false);
+	    controls.hideControls(false);
 	    //change icon of new place
 	    instance.checkIconStatus();
 	    // change icon of old place
@@ -113,7 +117,6 @@ Place.prototype = {
 	    instance._showGallery();
 
 	    // set and show title and description
-	    information = main.getUI().getInformation();
 	    information.setPlaceTitle();
 	    information.setPlaceDescription();
 
@@ -131,14 +134,13 @@ Place.prototype = {
 	    // add the width of the marker
 	    pixel.x += markerSize.width/2;
 
-	    controls =  main.getUI().getControls();
 	    controls.setModifyPlace(true);
-	    main.getUIState().setCurrentPlace(instance);
+	    state.setCurrentPlace(instance);
 	    controls.showControls({top:pixel.y,left:pixel.x});
 	});
 
 	google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
-	    main.getUI().getControls().hideControls(true);
+	    controls.hideControls(true);
 	});
 
 	

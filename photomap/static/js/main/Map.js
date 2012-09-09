@@ -86,13 +86,14 @@ Map.prototype = {
 	var instance 	= this;
 	this.places = new Array();
 	this.albums = new Array();
+	var state = main.getUIState();
 
 	if (main.getClientState().isAdmin()){
 	
 	    google.maps.event.addListener(this.map,"click",function(event){
 		    
 		//create new place with description and select it 
-		if (!main.getUI().getState().isDashboard()){
+		if (!state.isDashboard()){
 		    
 		    var input = main.getUI().getInput();
 		    var lat = event.latLng.lat();
@@ -128,7 +129,7 @@ Map.prototype = {
 			    });
 			    place.marker.show();
 			    input._close();
-			    main.getUIState().addPlace(place);
+			    state.addPlace(place);
 			    //redraws place
 			    place.triggerClick();
 			});
@@ -217,5 +218,30 @@ Map.prototype = {
     getBounds : function(){
 	return this.map.getBounds();
     },
-    
+    setControls : function(type,pan,zoom,streetview){
+	this.map.setOptions({
+	    mapTypeControl : type,
+	    panControl : pan,
+	    zoomControl : zoom,
+	    streetViewControl : streetview,
+	});
+    },
+    placeControls : function(type,pan,zoom,streetview){
+	// if position == undefined -> no change
+	this.map.setOptions({
+	mapTypeControlOptions : {
+	    position : type,
+	},
+	panControlOptions : {
+	    position : pan,
+	},
+	zoomControlOptions : {
+	    style : google.maps.ZoomControlStyle.SMALL,
+	    position : zoom,
+	},
+	streetViewControlOptions : {
+	    position : streetview,
+	}
+	});
+    },
 };

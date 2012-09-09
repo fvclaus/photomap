@@ -1,21 +1,21 @@
-function placeMapControls() {
-    main.getMap().getInstance().setOptions({
-      mapTypeControlOptions: {
-	position: google.maps.ControlPosition.TOP_CENTER,
-      },
-    });
-};
+var map,controls,state;
 
 $(document).ready(function(){
+  map = main.getMap();
+  controls = main.getUI().getControls();
+  state = main.getUIState();
+  
   // set page in interactive mode as dashboard
   page = "dashboard";
-  main.getUI().getState().setModeInteractive(page);
+  state.setModeInteractive(page);
   
-  placeMapControls();
+  position = google.maps.ControlPosition
+  map.placeControls(position.TOP_CENTER,undefined,undefined,undefined);
   
-  // activate map listener
-  main.getMap().activateBindListener();
-  // activate export listener
-  main.getUI().getControls().bindExportListener();
+  // activate listeners
+  map.activateBindListener();
+  controls.bindExportListener();
   
+  // fit fancybox overlay between header and footer on top of map
+  tools.fitMask($("#fancybox-overlay"));
 });

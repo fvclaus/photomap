@@ -52,15 +52,16 @@ UITools.prototype = {
 		
 
     deletePhoto : function(photo){
-	place = main.getUIState().getCurrentPlace();
-	currentPhoto = main.getUIState().getCurrentPhoto();
+	state = main.getUIState();
+	place = state.getCurrentPlace();
+	currentPhoto = state.getCurrentPhoto();
 
 	if (photo == null) return;
 	place.photos = place.photos.filter(function(element,index){
 	    return element !== photo;
 	});
 	//remove from place.photos array + gallery.photos and remove a in gallery box
-	main.getUIState().setPhotos(place.photos);
+	state.setPhotos(place.photos);
 	$("div.mp-gallery > img[src='"+photo.thumb+"']").remove();
 	if (photo === currentPhoto){
 	    main.getUI().getGallery().navigateSlider(this,"right");
@@ -101,27 +102,27 @@ UITools.prototype = {
 	    },
 	});
 	},
-	
-    getExportLink : function(url,data){
-	// get request for export link - data is album id
-	$.ajax({
-	    type: "get",
-	    dataType: "json",
-	    "url": url,
-	    "data": data,
-	    success : function(data){
-		if (data.error){
-		    alert(data.error);
-		}
-		else{
-		    // open fancy box with link here!
-		}
-	    },
-	    error : function(err){
-		alert(err.toString());
-	    },
+	    
+    fitMask : function($maskID){
+	// fit mask of overlay and expose on top map between header and footer
+	$maskID.css({
+	  'max-height': $('#mp-map').height(),
+	  'max-width': $('#mp-map').width(),
+	  'top': $('#mp-map').offset().top,
+	  'left': $('#mp-map').offset().left,
 	});
     },
-	    
-	
+    
+    loadOverlay : function(){
+	$(".mp-overlay-trigger")
+	    .overlay({
+		top: '25%',
+		load: true,
+		mask: {
+			color: "white",
+			opacity: 0.7,
+		},
+	    })
+	    .load();
+    },
 };

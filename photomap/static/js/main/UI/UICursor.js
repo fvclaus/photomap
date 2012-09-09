@@ -1,7 +1,7 @@
 UICursor = function(){
   
-  this.cursor = {
-      default: 'default',
+  this.styles = {
+      'default': 'default',
       pointer: 'pointer',
       cross: 'crosshair',
       grab: 'move',
@@ -27,7 +27,7 @@ UICursor.prototype = {
     map = main.getMap().getInstance();
     map.setOptions({ 
       draggableCursor: style,
-      draggingCursor: this.cursor.grab,
+      draggingCursor: this.styles.grab,
     });
   },
   setInfoCursor : function(style){
@@ -37,21 +37,21 @@ UICursor.prototype = {
   cursors : function() {
     
     // on map
-    this.setMapCursor(this.cursor.cross);
+    this.setMapCursor(this.styles.cross);
     
     // on links
     $link = $("a");
-    this.setCursor($link,this.cursor.pointer);
+    this.setCursor($link,this.styles.pointer);
     
     // on faq and tutorial entries
     $question = $(".mp-faq-question");
-    this.setCursor($question,this.cursor.pointer);
+    this.setCursor($question,this.styles.pointer);
     $topic = $(".mp-tutorial-subtopic");
-    this.setCursor($topic,this.cursor.pointer);
+    this.setCursor($topic,this.styles.pointer);
     
     // on toggle gallery button
     $toggleGallery = $(".mp-option-toggle-gallery");
-    this.setCursor($toggleGallery,this.cursor.pointer);
+    this.setCursor($toggleGallery,this.styles.pointer);
     
     // on album pics
     // defined in main.styl .mp-control
