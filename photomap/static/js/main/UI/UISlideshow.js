@@ -199,7 +199,7 @@ UISlideshow.prototype = {
 	// set cursor for fullscreen control
 	cursor.setCursor($(".mp-album-zoom"),cursor.styles.pointer)
     },
-    _navigateSlider					: function( instance, dir ) {
+    _navigateSlider : function( instance, dir ) {
 	//navigate to next photo or close if no photos left
 	state = main.getUIState();
 	currentPhotoIndex = state.getCurrentPhotoIndex();

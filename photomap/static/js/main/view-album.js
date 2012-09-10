@@ -42,6 +42,8 @@ function exposeListener(){
     else {
       $.mask.close();
     }
+    // z-index has to be more than mask but less than controls
+    $("#mp-album").css('z-index',1025);
   });
 };
 function iframeListener(){

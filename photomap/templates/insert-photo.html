@@ -1,13 +1,15 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-<!--<script type="text/javascript" src="static/js/jquery.all.min.js"></script>-->
+
 {% load compress %}
 {% compress css file %}
 <link rel="stylesheet" type="text/x-stylus" href="static/css/main.styl" />
 {% endcompress %}
-<!--<script type="text/javascript" src="/js/insert-photo.js"></script>-->
-
+<!--
+<script type="text/javascript" src="static/js/jquery.all.min.js"></script>
+<script type="text/javascript" src="/js/insert-photo.js"></script>
+-->
 <div class="insert">
 	
 	<h2 class="mp-input-title">{% trans "insert-dialogue-title insert-photo" %}</h2>
@@ -28,8 +30,8 @@
 			<input type="file" name="photo" required="required" size="40"/>
 		</div>
 
-		<input class="mp-button" type="submit" value='{% trans "Speichern" %}' name="submit" />
-		<input class="mp-button" type="submit" value='{% trans "Speichern und weitere hinzufügen" %}' name="submit" />
+		<input class="mp-button mp-single-upload" type="submit" value='{% trans "Speichern" %}' name="submit" />
+		<input class="mp-button mp-multiple-upload" type="submit" value='{% trans "Speichern und weitere hinzufügen" %}' name="submit" />
 	</form>
 	<script></script>
 </div>

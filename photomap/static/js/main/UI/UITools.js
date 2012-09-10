@@ -104,17 +104,18 @@ UITools.prototype = {
 	},
 	    
     fitMask : function($maskID){
-	// fit mask of overlay and expose on top map between header and footer
+	// fit mask of overlay/expose/fancybox on top map between header and footer
 	$maskID.css({
 	  'max-height': $('#mp-map').height(),
 	  'max-width': $('#mp-map').width(),
 	  'top': $('#mp-map').offset().top,
 	  'left': $('#mp-map').offset().left,
+	  'z-index': 1000,
 	});
     },
     
-    loadOverlay : function(){
-	$(".mp-overlay-trigger")
+    loadOverlay : function($trigger){
+	$trigger
 	    .overlay({
 		top: '25%',
 		load: true,

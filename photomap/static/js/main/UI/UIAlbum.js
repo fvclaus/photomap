@@ -162,9 +162,9 @@ UIAlbum.prototype =  {
 
 
 	}).bind( 'mouseleave.Gallery', function( event ) {
-	    var $el		= $(this);
+	    var $el = $(this);
 	    //add visited border if necessary
-	    (main.getUIState().getPhotos())[$el.index()].checkBorder();
+	    (state.getPhotos())[$el.index()].checkBorder();
 	    $el.removeClass('current');
 	    
 	    controls.hideControls(true);
@@ -175,7 +175,7 @@ UIAlbum.prototype =  {
 	    cursor.setCursor($el,cursor.styles.grab); 
 	    
 	}).bind( 'click.Gallery', function( event ) {
-	    var $el					= $(this);
+	    var $el = $(this);
 	    
 	    $el.removeClass('current');
 	    state.setCurrentPhotoIndex($el.index());

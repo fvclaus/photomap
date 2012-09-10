@@ -162,7 +162,7 @@ UIControls.prototype = {
 		//this all has to be done if the ajax call is successfull
 		//value of the #mp-export-link will be the link
 		tools = main.getUI().getTools();
-		tools.loadOverlay();
+		tools.loadOverlay($(".mp-export-overlay"));
 		tools.fitMask($("#exposeMask"));
 		//load link in input field and highlight it
 		$("#mp-export-link")
