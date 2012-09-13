@@ -6,10 +6,11 @@
 {% compress css file %}
 <link rel="stylesheet" type="text/x-stylus" href="static/css/main.styl" />
 {% endcompress %}
-<!--
+
 <script type="text/javascript" src="static/js/jquery.all.min.js"></script>
-<script type="text/javascript" src="/js/insert-photo.js"></script>
--->
+
+<script type="text/javascript" src="static/js/insert-photo.js"></script>
+
 <div class="insert">
 	
 	<h2 class="mp-input-title">{% trans "insert-dialogue-title insert-photo" %}</h2>
@@ -17,6 +18,7 @@
 	<form class="jquery-validator mp-dialog" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
 	
 		<input type="hidden" name="place" required="required" value="{{place}}"/>
+		<input type="hidden"  name="repeat" value="false" \>
 		<div>
 			<label for="title">{% trans "insert-dialogue name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
 			<input class="mp-input-name" type="text" name="title" required="required" size="40"/>

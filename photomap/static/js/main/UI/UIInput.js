@@ -34,7 +34,7 @@ UIInput.prototype = {
 	    margin: 50,
 	    overlayColor: '#FFF',
 	    speedOut: 0,
-	})
+	});
 	return this;
     },
     //content has been loaded

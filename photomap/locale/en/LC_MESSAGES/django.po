@@ -572,7 +572,7 @@ msgstr "Add new Photo"
 
 #: templates/insert-photo.html:27
 msgid "insert-dialogue select photo to upload"
-msgstr "Select photo to uplaod"
+msgstr "Select photo to uplaod (only *.png and *.jpg)"
 
 #: templates/insert-photo.html:32
 msgid "Speichern und weitere hinzufügen"

@@ -163,7 +163,7 @@ msgstr ""
 "Blogs, ...). Sie können den Link kopieren, indem Sie auf 'Link kopieren' "
 "klicken. Sie müssen Flash aktiviert haben! Falls das Kopieren also auf Grund "
 "ihrer Sicherheits-Einstellungen im Browser nicht funktioniert, müssen Sie "
-"den markierten Link manuell kopieren. Also mit 'Strg + C' (Windows) bzw. "
+"den markierten Link manuell kopieren. D.h. mit 'Strg + C' (Windows) bzw. "
 "'Command + C' (Mac OS X) oder per 'Kopieren' in dem Menü, welches sich "
 "bei Rechtsklick auf den Link öffnet, kopieren."
 
@@ -604,7 +604,7 @@ msgstr "Hinzufügen eines neuen Photos"
 
 #: templates/insert-photo.html:27
 msgid "insert-dialogue select photo to upload"
-msgstr "Photo zum Hochladen auswählen"
+msgstr "Photo zum Hochladen auswählen (nur *.png und *.jpg)"
 
 #: templates/insert-photo.html:32
 msgid "Speichern und weitere hinzufügen"

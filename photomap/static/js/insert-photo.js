@@ -1,18 +1,15 @@
-var repeat, form, api, data;
-
-$.tools.validator.fn("[type=file]",function(el,value){
-    return /\.(jpg|png)$/i.test(value) ? true : "only jpg or png allowed";
-});
+var frame, repeat, form, api, data;
 
 // switches between multiple upload of photos and single upload depending on clicked button
+// doesn't work due to data upload but we can keep it in case we try it later with ajax and html5
 function uploadSwitcher(){
-    $form = $("form.mp-dialog");
+    $form = frame.$("form.mp-dialog");
     // prevent the usual browser form submission
     $form.submit(function(){
 	return false;
     });
     // bind new submission rule
-    $(".mp-button").bind('click',function(){
+    frame.$(".mp-button").bind('click',function(){
 	
 	// change depending on button
 	if ($(this).attr('class').search('multiple') != -1){
@@ -22,8 +19,10 @@ function uploadSwitcher(){
 	    repeat = false;
 	}
 	data = $form.serialize();
-	data = data + "?repeat=" + repeat;
+	//data = data + "&repeat=" + repeat;
 	console.log(data);
+	console.log($form.attr("method"));
+	console.log($form.attr("action"));
 	//register form validator and grep api
 	api = $form.validator().data("validator");
 	api.onSuccess(function(e,els){
@@ -35,23 +34,35 @@ function uploadSwitcher(){
 		dataType : "json",
 		success : function(data,textStatus){
 		    if (data.error){
-			alert(data.error.toString());
+			console.log(data.error);
+			window.parent.jQuery.fancybox.close();
 			return;
 		    }
-		    instance._onAjax(data);
-		    instance._close();
 		},
 		error : function(error){
-		    instance._close();
-		    alert(error.toString());
+		    console.log(error);
+		    window.parent.jQuery.fancybox.close();
+		    return;
 		}
-	    }); 
+	    });
 	});
+	// validate form (onSuccess -> ajax call)
+	api.checkValidity();
     });
 };
 
-$(document).ready(function(){
-    $("input[name=photo-album]").val($("p.mp-invisible").html());
-    $(".jquery-validator").validator();
+$.tools.validator.fn("[type=file]",function(el,value){
+    return /\.(jpg|png)$/i.test(value) ? true : "only jpg or png allowed";
+});
 
+$(window.parent.frames[0]).ready(function(){
+	frame = window.parent.frames[0];
+	console.log(frame);
+	// enable validator
+	frame.$("form").validator();
+	// change repeat to true when pressing multiple-upload-button
+	frame.$("input.mp-button.mp-multiple-upload").bind('mousedown',function(){
+	    $(this).siblings("input[name='repeat']").val('true');
+	});
+	
 });

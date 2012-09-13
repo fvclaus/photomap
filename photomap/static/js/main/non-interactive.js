@@ -24,7 +24,7 @@ $(document).ready(function(){
     cursor.setMapCursor(cursor.styles.grab)
     //adjust map controls
     position = google.maps.ControlPosition;
-    map.setControls(false,false,false,true);
+    map.setControls(true,false,false,false);
     map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
     
     repositionContent();
