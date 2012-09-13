@@ -133,4 +133,10 @@ UIState.prototype = {
     isFullscreen : function(bool){
 	return this.fullscreen;
     },
+    setGalleryLoaded : function(bool){
+	this.galleryLoaded = bool;
+    },
+    isGalleryLoaded : function(){
+	return this.galleryLoaded;
+    },
 };

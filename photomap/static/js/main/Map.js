@@ -1,6 +1,8 @@
 Map	= function() {		
     // google.maps.Map
     this.map			= null;
+    // google.maps.StreetViewPanorama
+    this.panorama = null;
     // the DOM element
     this.$mapEl			= $('#map');
     this.$mapEl.data({
@@ -72,15 +74,23 @@ Map.prototype = {
 	this.maptype = google.maps.MapTypeId.ROADMAP;
 	this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
 	this.ROADMAP = google.maps.MapTypeId.ROADMAP;
-
+	// get hold of the default google.maps.StreetViewPanorama object
+	this.panorama = this.getInstance().getStreetView();
 	//define overlay to retrieve pixel position on mouseover event
 	this.overlay = new google.maps.OverlayView();
 	this.overlay.draw = function() {};
 	this.overlay.setMap(this.map);
     },
+    getInstance : function() {
+	return this.map;
+    },
+    getPanorama : function() {
+	return this.panorama;
+    },
     activateBindListener : function(){
 	// not on every page is the listener needed/wanted
 	this.bindListener();
+	this.bindPanoramaListener();
     },
     bindListener : function(){
 	var instance 	= this;
@@ -181,8 +191,31 @@ Map.prototype = {
 	    });
 	}
     },
-    getInstance : function() {
-	return this.map;
+    bindPanoramaListener : function(){
+	instance = this;
+	// close description and/or gallery when starting streetview
+	google.maps.event.addListener(this.panorama,'visible_changed',function(){
+	    album = main.getUI().getAlbum();
+	    information = main.getUI().getInformation();
+	    state = main.getUIState();
+	    if ( instance.panorama.getVisible() ) {
+		if ( information.isVisible() ){
+		$("#mp-description").hide();
+		}
+		if ( album.isVisible() ){
+		    $("#mp-album").hide();
+		    state.setGalleryLoaded(true);
+		}
+		else if ( !album.isVisible() ) {
+		    state.setGalleryLoaded(false);
+		}
+	    }
+	    else {
+		if ( state.isGalleryLoaded() ) {
+		    $("#mp-album").fadeIn(500);
+		}
+	    }
+	});
     },
     // takes an array of markers and resizes + pans the map so all places markers are visible
     // does not show/hide marker 
