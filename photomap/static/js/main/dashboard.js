@@ -6,16 +6,22 @@ $(document).ready(function(){
   controls = main.getUI().getControls();
   tools = main.getUI().getTools();
   
-  // set page in interactive mode as dashboard
   page = "dashboard";
-  state.setModeInteractive(page);
+  
+  if ( main.getClientState().isAdmin() ){
+    // set page in interactive mode as dashboard
+    state.setModeInteractive(true,page);
+    
+    // activate listeners
+    map.bindListener();
+    controls.bindExportListener();
+  }
+  else {
+    state.setModeInteractive(false,page);
+  }
   
   position = google.maps.ControlPosition
   map.placeControls(position.TOP_CENTER,undefined,undefined,undefined);
-  
-  // activate listeners
-  map.activateBindListener();
-  controls.bindExportListener();
   
   // fit fancybox overlay between header and footer on top of map
   tools.fitMask($("#fancybox-overlay"));

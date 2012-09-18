@@ -36,8 +36,13 @@ UICursor.prototype = {
   },
   cursors : function() {
     
-    // on map
-    this.setMapCursor(this.styles.cross);
+    // on map: cross if user is admin, else grabber
+    if ( main.getClientState().isAdmin() ) {
+      this.setMapCursor(this.styles.cross);
+    }
+    else {
+      this.setMapCursor(this.styles.grab);
+    }
     
     // on links
     $link = $("a");

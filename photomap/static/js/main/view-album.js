@@ -60,33 +60,37 @@ function galleryListener(){
 
 $(document).ready(function(){
   map = main.getMap();
+  state = main.getUIState();
   album = main.getUI().getAlbum();
   information = main.getUI().getInformation();
   cursor = main.getUI().getCursor();
   tools = main.getUI().getTools();
-  
-  // set page in interactive mode as albumview
   page = "albumview";
-  main.getUIState().setModeInteractive(page);
   
-  cursor.setInfoCursor(cursor.styles.info);
+  if ( main.getClientState().isAdmin() ) {
+    // set page in interactive mode as albumview
+    state.setModeInteractive(true,page);
+  
+    // activate listeners
+    map.bindListener();
+    map.panoramaListener();
+    galleryListener();
+    iframeListener();
+    exposeListener();
+  }
+  else {
+    state.setModeInteractive(false,page);
+  }
   
   //adjust map controls
   position = google.maps.ControlPosition;
   map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
   
-  // activate listeners
-  map.activateBindListener();
-  galleryListener();
-  iframeListener();
-  exposeListener();
+  cursor.setInfoCursor(cursor.styles.info);
   
   // fit fancybox overlay between header and footer on top of map
   tools.fitMask($("#fancybox-overlay"));
   
-  // other lil adjustments
-  $(".mp-slideshow-background").position($(".mp-album-wrapper").position());
-  $(".mp-slideshow").position($(".mp-album-wrapper").position());
   $("#mp-album").hide();
 
 });

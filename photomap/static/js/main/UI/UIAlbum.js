@@ -83,30 +83,33 @@ UIAlbum.prototype =  {
 			.find("div.mp-gallery")
 			.width(instance.$album.width())
 			.height(instance.$album.height())
-		    // Drag n Drop for Photos
-		    instance.$album
-			.find("div.mp-gallery")
-			.sortable({
-			    items : "img.sortable",
-			    update : function(event,ui){
-				instance.searchImages();
-				var jsonPhotos = new Array();
-				
-				state.getPhotos().forEach(function(photo,index,photos){
-				    // get html tag for current photo
-				    currentPhoto = $('img[src="' + photo.source + '"]');
-				    // find index of current photo in mp-gallery
-				    photo.order = instance.$elements.index(currentPhoto);
-				    // make a deep copy
-				    jsonPhoto = $.extend(true,{},photo);
-				    jsonPhotos.push(jsonPhoto);
-				    // when all photos with new order are in jsonPhotos, save the order
-				    if (index == photos.length-1){
-					main.getClientServer().savePhotoOrder(jsonPhotos);
-				    }
-				});
-			    }
-			});
+		    
+		    if ( main.getClientState().isAdmin() ){
+			// Drag n Drop for Photos if user is admin
+			instance.$album
+			    .find("div.mp-gallery")
+			    .sortable({
+				items : "img.sortable",
+				update : function(event,ui){
+				    instance.searchImages();
+				    var jsonPhotos = new Array();
+				    
+				    state.getPhotos().forEach(function(photo,index,photos){
+					// get html tag for current photo
+					currentPhoto = $('img[src="' + photo.source + '"]');
+					// find index of current photo in mp-gallery
+					photo.order = instance.$elements.index(currentPhoto);
+					// make a deep copy
+					jsonPhoto = $.extend(true,{},photo);
+					jsonPhotos.push(jsonPhoto);
+					// when all photos with new order are in jsonPhotos, save the order
+					if (index == photos.length-1){
+					    main.getClientServer().savePhotoOrder(jsonPhotos);
+					}
+				    });
+				}
+			    });
+			}
 		    // create scrollpane 
 		    instance.$album
 			.css("padding-left",instance.albumPadding)
@@ -157,8 +160,10 @@ UIAlbum.prototype =  {
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto(photo);
 	    
-	    controls.setModifyPhoto(true);
-	    controls.showPhotoControls($el,photo);
+	    if ( main.getClientState().isAdmin() ){
+		controls.setModifyPhoto(true);
+		controls.showPhotoControls($el,photo);
+	    }
 
 
 	}).bind( 'mouseleave.Gallery', function( event ) {
@@ -167,7 +172,9 @@ UIAlbum.prototype =  {
 	    (state.getPhotos())[$el.index()].checkBorder();
 	    $el.removeClass('current');
 	    
-	    controls.hideControls(true);
+	    if ( main.getClientState().isAdmin() ){
+		controls.hideControls(true);
+	    }
 
 	}).bind( 'mousedown.Gallery', function(event){
 	    var $el = $(this);

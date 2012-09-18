@@ -66,7 +66,19 @@ ClientServer.prototype = {
 			alert(data.error);
 		    }
 		    else{
-			// open fancy box with link here!
+			// enable when export in back end is working
+			/*
+			tools = main.getUI().getTools();
+			
+			tools.loadOverlay($(".mp-export-overlay"));
+			tools.fitMask($("#exposeMask"));
+			//load link in input field and highlight it
+			$("#mp-export-link")
+			    .val(data.link)
+			    .focus(function(){$(this).select();})
+			    .focus();
+			instance.copyListener();
+			*/
 		    }
 		},
 		error : function(err){

@@ -12,6 +12,7 @@ Album = function(data){
 
     this.checkIconStatus();
     this.bindListener();
+
 };
 
 Album.prototype = {
@@ -32,28 +33,32 @@ Album.prototype = {
 	    window.location.href=url;
 	});
 
-	google.maps.event.addListener(this.marker.MapMarker, "mouseover", function(event){
+	// add controls listener if user is admin
+	if ( main.getClientState().isAdmin() ) {
 	    
-	    state.setCurrentAlbum(instance);
-	    
-	    // gets the relative pixel position
-	    projection = main.getMap().getOverlay().getProjection();
-	    pixel = projection.fromLatLngToContainerPixel(instance.marker.getPosition());
-	    // add the header height to the position
-	    pixel.y += main.getUI().getPanel().getHeight();
-	    // add the height of the marker
-	    markerSize = instance.marker.getSize();
-	    pixel.y += markerSize.height;
-	    // add the width of the marker
-	    pixel.x += markerSize.width/2;
-
-	    controls.setModifyAlbum(true);
-	    controls.showControls({top:pixel.y,left:pixel.x});
-	});
-
-	google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
-	    controls.hideControls(true);
-	});
+	    google.maps.event.addListener(this.marker.MapMarker, "mouseover", function(event){
+		
+		state.setCurrentAlbum(instance);
+		
+		// gets the relative pixel position
+		projection = main.getMap().getOverlay().getProjection();
+		pixel = projection.fromLatLngToContainerPixel(instance.marker.getPosition());
+		// add the header height to the position
+		pixel.y += main.getUI().getPanel().getHeight();
+		// add the height of the marker
+		markerSize = instance.marker.getSize();
+		pixel.y += markerSize.height;
+		// add the width of the marker
+		pixel.x += markerSize.width/2;
+    
+		controls.setModifyAlbum(true);
+		controls.showControls({top:pixel.y,left:pixel.x});
+	    });
+    
+	    google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
+		controls.hideControls(true);
+	    });
+	}
     },
     triggerClick : function(){
 	var map = main.getMap();

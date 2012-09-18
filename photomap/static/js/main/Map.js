@@ -87,11 +87,6 @@ Map.prototype = {
     getPanorama : function() {
 	return this.panorama;
     },
-    activateBindListener : function(){
-	// not on every page is the listener needed/wanted
-	this.bindListener();
-	this.bindPanoramaListener();
-    },
     bindListener : function(){
 	var instance 	= this;
 	this.places = new Array();
@@ -191,7 +186,7 @@ Map.prototype = {
 	    });
 	}
     },
-    bindPanoramaListener : function(){
+    panoramaListener : function(){
 	instance = this;
 	// close description and/or gallery when starting streetview
 	google.maps.event.addListener(this.panorama,'visible_changed',function(){

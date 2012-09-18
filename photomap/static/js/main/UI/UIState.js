@@ -16,23 +16,16 @@ UIState = function(){
 
 UIState.prototype = {
     
-    setModeInteractive : function(mode){
-	this.interactive = true;
-	if (mode == "dashboard"){
-	    this.dashboard = true;
-	}
-	else {
-	    this.dashboard = false;
-	}
-    },
-    setModeNonInteractive : function(){
-	this.interactive = false;
+    setModeInteractive : function(mode,page){
+	this.interactive = mode;
+	this.page = page;
     },
     isInteractive : function(){
 	return this.interactive;
     },
     isDashboard : function(){
-	return this.dashboard;
+	// if albumview -> false
+	return this.page == "dashboard";
     },
     setCurrentPhotoIndex : function(index){
 	this.current = index;

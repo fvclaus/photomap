@@ -19,7 +19,7 @@ $(document).ready(function(){
     $container = $("#mp-non-interactive-content");
     
     // set page mode to non-interactive
-    state.setModeNonInteractive();
+    state.setModeInteractive(false);
     // change cursor on map from cross to grabber - besides moving the map is non-interactive
     cursor.setMapCursor(cursor.styles.grab)
     //adjust map controls

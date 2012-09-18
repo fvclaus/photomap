@@ -20,11 +20,14 @@ UIControls.prototype = {
     
     init : function(){
 	this.placeCenterControl();
-
-	this.bindListener();
-
+	
 	height = main.getUI().getPanel().getFooterHeight();
 	this.$logout.height(height);
+	
+	if ( main.getClientState().isAdmin() ) {
+	    this.bindListener();
+	}
+
     },
     placeCenterControl : function(){
 	//reposition
@@ -157,7 +160,9 @@ UIControls.prototype = {
 	    .bind("click",function(event){
 		url = "/URL_OF_ALBUM_EXPORT";
 		id = main.getUIState().getCurrentAlbum().id;
-		//main.getClientServer().getExportLink(url,data);
+		//main.getClientServer().getExportLink(url,id);
+		
+		// remove when export is working in back end
 		/*-----------------------*/
 		//this all has to be done if the ajax call is successfull
 		//value of the #mp-export-link will be the link
@@ -328,7 +333,5 @@ UIControls.prototype = {
 	    }
 	});
     },
-
-    
 
 };
