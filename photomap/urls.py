@@ -28,6 +28,7 @@ urlpatterns = patterns("",
                        #========================================================
                        url(r'^login', authentication.login),
                        url(r'^view-album', album.view),
+                       url(r'^get-album-share', album.share),
                        url(r'^get-album', album.get),
                        
                        url(r'^impressum', direct_to_template, {"template": "impressum.html"}),

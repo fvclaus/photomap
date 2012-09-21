@@ -29,14 +29,18 @@ import os
 logger = logging.getLogger(__name__)
 
 
+def share(request):
+    return success(url = "http://www.google.de")
+
 def view(request):
     if not request.user.is_authenticated():
         return HttpResponseRedirect('/login')
     if request.method == "GET":
-        return render_to_response("view-album.html", 
+        return render_to_response("view-album.html",
                                   {"testphotopath": data.TEST_PHOTO},
                                   context_instance = RequestContext(request))
 
+@login_required
 def get(request):
     logger.debug("get-album: entered view function")
     if request.method == "GET":
@@ -50,7 +54,7 @@ def get(request):
                 albums = Album.objects.all(user = request.user)
                 album = albums[len(albums) - 1]
             else:
-                album = Album.objects.get(user = request.user,pk = request.GET["id"])
+                album = Album.objects.get(user = request.user, pk = request.GET["id"])
                 
             data = album.toserializable()
             if album.user == user:
@@ -94,7 +98,7 @@ def update(request):
         if form.is_valid():
             album = None
             try:
-                album = Album.objects.get(user = request.user,pk = form.cleaned_data["id"])
+                album = Album.objects.get(user = request.user, pk = form.cleaned_data["id"])
             except Album.DoesNotExist:
                 return error("album does not exist")
             form = AlbumUpdateForm(request.POST, instance = album)
@@ -111,7 +115,7 @@ def delete(request):
         logger.debug("inside delete post")
         try:
             id = request.POST["id"]
-            album = Album.objects.get(user = request.user,pk = id)
+            album = Album.objects.get(user = request.user, pk = id)
             album.delete()
             return success()
         except (KeyError, Album.DoesNotExist), e:
