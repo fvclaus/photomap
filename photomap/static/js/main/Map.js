@@ -31,33 +31,6 @@ Map	= function() {
 	    position : google.maps.ControlPosition.TOP_LEFT
 	}
     }
-    //user is guest
-    if (!main.getClientState().isAdmin()){
-	this.mapOptions.styles = [
-	    {
-		featureType: "road",
-		elementType:"labels",
-		stylers: [
-		    { visibilty: "simplified"}
-		]
-	    },
-	    {
-		featureType : "poi",
-		elementType : "labels",
-		stylers : [
-		    {visibility:"simplified"}
-		]
-	    },
-	    {
-		featureType : "road.highway",
-		stylers :[
-		    {visibility:"off"}
-		]
-	    }
-	];
-    }
-
-
 
     // mode : fullscreen || normal
     this.mode = 'normal';
@@ -89,102 +62,101 @@ Map.prototype = {
     },
     bindListener : function(){
 	var instance 	= this;
+	
+	var state = main.getUIState();
+	
 	this.places = new Array();
 	this.albums = new Array();
-	var state = main.getUIState();
+    
+	google.maps.event.addListener(this.map,"click",function(event){
+		
+	    //create new place with description and select it 
+	    if (!state.isDashboard()){
+		
+		var input = main.getUI().getInput();
+		var lat = event.latLng.lat();
+		var lng = event.latLng.lng();
+		// declare beforehand so accessible in both closures
+		var place;
 
-	if (main.getClientState().isAdmin()){
-	
-	    google.maps.event.addListener(this.map,"click",function(event){
-		    
-		//create new place with description and select it 
-		if (!state.isDashboard()){
-		    
-		    var input = main.getUI().getInput();
-		    var lat = event.latLng.lat();
-		    var lng = event.latLng.lng();
-		    // declare beforehand so accessible in both closures
-		    var place;
-    
-		    input.onAjax(function(data){
-			if (!data){
-			    alert ("could not get id for newly inserted place");
-			}
-			console.log("received id %d",data["id"]);
-			place.id = data["id"];
-		    });
-		    
-		    input.onLoad(function(){
-			$("input[name=lat]").val(lat);
-			$("input[name=lon]").val(lng);
-			// was machen eigentlich die album daten im clientserver ??
-			$("input[name=album]").val(main.getClientServer().id);
-    
-			input.onForm(function(){
-			    //get place name + description
-			    var name = $("[name=title]").val();
-			    var desc = $("[name=description]").val();
-			    //create new place and show marker
-			    //new place accepts only lon, because it handles responses from server
-			    place = new Place({
-				lat: lat,
-				lon: lng,
-				"title" : name,
-				"description" : desc
-			    });
-			    place.marker.show();
-			    input._close();
-			    state.addPlace(place);
-			    //redraws place
-			    place.triggerClick();
+		input.onAjax(function(data){
+		    if (!data){
+			alert ("could not get id for newly inserted place");
+		    }
+		    console.log("received id %d",data["id"]);
+		    place.id = data["id"];
+		});
+		
+		input.onLoad(function(){
+		    $("input[name=lat]").val(lat);
+		    $("input[name=lon]").val(lng);
+		    // was machen eigentlich die album daten im clientserver ??
+		    $("input[name=album]").val(main.getClientServer().id);
+
+		    input.onForm(function(){
+			//get place name + description
+			var name = $("[name=title]").val();
+			var desc = $("[name=description]").val();
+			//create new place and show marker
+			//new place accepts only lon, because it handles responses from server
+			place = new Place({
+			    lat: lat,
+			    lon: lng,
+			    "title" : name,
+			    "description" : desc
 			});
+			place.marker.show();
+			input._close();
+			state.addPlace(place);
+			//redraws place
+			place.triggerClick();
 		    });
-    
-		    input.get("/insert-place");
-		}
-		// create a new album
-		else {
-		    
-		    var input = main.getUI().getInput();
-		    var lat = event.latLng.lat();
-		    var lng = event.latLng.lng();
-		    // declare beforehand so accessible in both closures
-		    var album;
-		    
-		    input.onAjax(function(data){
-			if (!data){
-			    alert ("could not get id for newly inserted album");
-			}
-			console.log("received id %d",data["id"]);
-			album.id = data["id"];
-			//redirect to new albumview
-			album.triggerClick();
-		    });
-		    
-		    input.onLoad(function(){
-			$("input[name=lat]").val(lat);
-			$("input[name=lon]").val(lng);
-    
-			input.onForm(function(){
-			    //get album name + description
-			    var name = $("[name=title]").val();
-			    var desc = $("[name=description]").val();
-			    //create new album and show marker
-			    album = new Album({
-				lat: lat,
-				lon: lng,
-				"title" : name,
-				"description" : desc
-			    });
-			    album.marker.show();
-			    input._close();
+		});
+
+		input.get("/insert-place");
+	    }
+	    // create a new album
+	    else {
+		
+		var input = main.getUI().getInput();
+		var lat = event.latLng.lat();
+		var lng = event.latLng.lng();
+		// declare beforehand so accessible in both closures
+		var album;
+		
+		input.onAjax(function(data){
+		    if (!data){
+			alert ("could not get id for newly inserted album");
+		    }
+		    console.log("received id %d",data["id"]);
+		    album.id = data["id"];
+		    //redirect to new albumview
+		    album.triggerClick();
+		});
+		
+		input.onLoad(function(){
+		    $("input[name=lat]").val(lat);
+		    $("input[name=lon]").val(lng);
+
+		    input.onForm(function(){
+			//get album name + description
+			var name = $("[name=title]").val();
+			var desc = $("[name=description]").val();
+			//create new album and show marker
+			album = new Album({
+			    lat: lat,
+			    lon: lng,
+			    "title" : name,
+			    "description" : desc
 			});
+			album.marker.show();
+			input._close();
 		    });
-    
-		    input.get("/insert-album");
-		}
-	    });
-	}
+		});
+
+		input.get("/insert-album");
+	    }
+	});
     },
     panoramaListener : function(){
 	instance = this;
@@ -270,6 +242,33 @@ Map.prototype = {
 	streetViewControlOptions : {
 	    position : streetview,
 	}
+	});
+    },
+    setGuestStyle: function(){
+	guestStyle = [
+	    {
+		featureType: "road",
+		elementType:"labels",
+		stylers: [
+		    { visibilty: "simplified"}
+		]
+	    },
+	    {
+		featureType : "poi",
+		elementType : "labels",
+		stylers : [
+		    {visibility:"simplified"}
+		]
+	    },
+	    {
+		featureType : "road.highway",
+		stylers :[
+		    {visibility:"off"}
+		]
+	    }
+	];
+	this.map.setOptions({
+	    styles: guestStyle,
 	});
     },
 };

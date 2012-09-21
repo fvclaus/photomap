@@ -28,7 +28,7 @@
 {% endblock %}
 
 {% block controls %}
-<img class="mp-controls-options mp-option-export" src="static/images/export.png" title='{% trans "control-title export" %}' />
+<img class="mp-controls-options mp-option-share" src="static/images/share.png" title='{% trans "control-title share" %}' />
 {% endblock %}
 
 {% block content_interactive %}
@@ -39,21 +39,21 @@
 		</div>
 	</section>
 	
-	<div id="mp-export">
-		<span class="mp-export-overlay" rel="#mp-export"></span>
+	<div id="mp-share">
+		<span class="mp-share-overlay" rel="#mp-share"></span>
 		<p>
-			<input id="mp-export-link" name="export-link" value="" size="100"/>
+			<input id="mp-share-link" name="share-link" value="" size="100"/>
 			<input id="mp-copy-button" name="copy" type="button" value='{% trans "mp-copy-link-title" %}' />
 		</p>
 		<aside>
 			<p>
-				<strong>{% trans "How to Export" %}</strong>
+				<strong>{% trans "How to Share" %}</strong>
 			</p>
 			<p>
-				{% trans "How to Export -> description" %}
+				{% trans "How to Share -> description" %}
 			</p>
 			<p>
-				<strong>{% trans "How to Export -> attention!" %}</strong>
+				<strong>{% trans "How to Share -> attention!" %}</strong>
 			</p>
 		</aside>
 	</div>

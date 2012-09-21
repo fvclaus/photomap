@@ -28,7 +28,9 @@ ClientServer.prototype = {
 	_getPlaces			: function(callback ) {
 	    var instance = this;
 	    tools = main.getUI().getTools();
-	    url = 'get-album?id=' + tools.getUrlParameterByName('id');
+	    id = tools.getUrlParameterByName('id');
+	    secret = tools.getUrlParameterByName('secret');
+	    url = 'get-album?id=' + id + '&secret=' + secret;
 	    $.getJSON(url, function( album ) {
 		
 		// define album new, so that property names are congruent with the property names of Place and Photo
