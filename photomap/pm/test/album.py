@@ -19,6 +19,8 @@ import os
 from copy import deepcopy
 from decimal import Decimal
 
+import re
+
 class AlbumControllerTest(SimpleTestCase):
         
     model = Album
@@ -36,7 +38,7 @@ class AlbumControllerTest(SimpleTestCase):
         photos = []
         
         for place in places:
-            photos.extend([(photo.pk,photo.getphotourl()) for photo in Photo.objects.all().filter(place = place)])
+            photos.extend([(photo.pk, photo.getphotourl()) for photo in Photo.objects.all().filter(place = place)])
             
         self.assertDeletes({"id" : 1})
         
@@ -71,13 +73,13 @@ class AlbumControllerTest(SimpleTestCase):
                 "lon": GPS_MANNHEIM_SCHLOSS["lon"]}
         (album, content) = self.assertCreates(data)
         self.assertEqual(album.title, data["title"])
-        self.assertEqual(album.country,"de")
+        self.assertEqual(album.country, "de")
         #=======================================================================
         # insert something valid with description
         #=======================================================================
         data["description"] = "Some text,text,... Testing some umlauts üäß and other special characters <javascript></javascript>"
-        (album,content) = self.assertCreates(data)
-        self.assertEqual(album.description,data["description"])
+        (album, content) = self.assertCreates(data)
+        self.assertEqual(album.description, data["description"])
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
@@ -125,7 +127,7 @@ class AlbumControllerTest(SimpleTestCase):
     def test_get(self):
         self.url = "/get-album"
         data = {"id" : 1}
-        album = self.json(data,method = "GET")
+        album = self.json(data, method = "GET")
         self.assertAlbumComplete(album)
         self.assertTrue(album["places"])
         places = album["places"]
@@ -139,9 +141,27 @@ class AlbumControllerTest(SimpleTestCase):
         #=======================================================================
         # something invalid
         #=======================================================================
-        self.assertError({"id" : 9999},method = "GET")
+        self.assertError({"id" : 9999}, method = "GET")
         #=======================================================================
         # does not belong to you
         #=======================================================================
-        self.assertError({"id" : 2},method = "GET")
+        self.assertError({"id" : 2}, method = "GET")
+        
+    def test_share(self):
+        self.url = "/get-album-share"
+        response = self.json(method = "GET", data = {"id":1})
+        self.assertTrue(response["success"])
+        self.assertRegexpMatches(response["url"], "\/view-album\?id=\d+&secret=.*")
+        secret = re.search("secret=(?P<secret>.*)", response["url"]).group("secret")
+        self.assertPublicAccess("/get-album?id=%d&secret=%s" % (1, secret))
+        # assert that exactly one token is generated
+        response2 = self.json(method = "GET", data = {"id":1})
+        self.assertEqual(response["url"], response2["url"])
+        #=======================================================================
+        # does not belong to you
+        #=======================================================================
+        self.assertError({"id":2}, method = "GET")
+        self.assertNoPublicAccess("/get-album?id=2")
+        self.assertNoPublicAccess("/get-album?id=2&secret=asdfs823420D")
+        
    

@@ -19,11 +19,11 @@ from urllib import urlopen
 class SimpleTestCase(TestCase):
     """ loads the simple-test fixtues, appends a logger and logs the client in """
     
-    fixtures = ["user",'simple-test']
+    fixtures = ["user", 'simple-test']
     
     logger = logging.getLogger(__name__)
     
-    TIME_DELTA  = 1000
+    TIME_DELTA = 1000
     
     def setUp(self):
         self.c = Client()
@@ -38,9 +38,9 @@ class SimpleTestCase(TestCase):
         self.assertRaises(KeyError, content.__getitem__, "error")
         return content
         
-    def assertError(self, data,method = "POST"):
+    def assertError(self, data, method = "POST"):
         """ makes a request and checks if the json return is defined according to web api specification """
-        content = self.json(data,method = method)
+        content = self.json(data, method = method)
         self.assertTrue(content != None)
         self.assertFalse(content["success"])
         self.assertNotEqual(content["error"], "")
@@ -60,23 +60,35 @@ class SimpleTestCase(TestCase):
         instance = model.objects.all()[length]
         create = mktime(instance.date.timetuple())
         # we are assuming the datestamp of the object is around now
-        self.assertAlmostEqual(now,create,delta = self.TIME_DELTA)
+        self.assertAlmostEqual(now, create, delta = self.TIME_DELTA)
         self.assertEqual(instance.pk, content["id"])
         self.assertTrue(instance != None)
         return (instance, content)
+    
+    def assertPublicAccess(self, url):
+        c = Client()
+        response = c.get(url)
+        self.assertEqual(200, response.status_code)
+        
+    def assertNoPublicAccess(self, url):
+        c = Client()
+        response = c.get(url)
+        content = json.loads(response.content)
+        self.assertFalse(content["success"])
+        
     
     def assertUpdates(self, data, model = None):
         if not model:
             model = self.getmodel()
         
         length = len(model.objects.all())
-        now  = self.getunixtime()
+        now = self.getunixtime()
         content = self.assertSuccess(data)
         
         self.assertEqual(len(model.objects.all()), length)
         instance = model.objects.get(pk = data["id"])
         updated = mktime(instance.date.timetuple())
-        self.assertNotAlmostEqual(now,updated, delta = self.TIME_DELTA, msg = "date is probably included in the form" )
+        self.assertNotAlmostEqual(now, updated, delta = self.TIME_DELTA, msg = "date is probably included in the form")
         return (instance, content)
     
     def assertDeletes(self, data, model = None):
@@ -89,34 +101,34 @@ class SimpleTestCase(TestCase):
         self.assertRaises(model.DoesNotExist, model.objects.get, pk = data["id"])
         return content
     
-    def assertDoesNotExist(self,pk,model = None):
+    def assertDoesNotExist(self, pk, model = None):
         if not model:
             model = self.model
         self.assertRaises(model.DoesNotExist, model.objects.get, pk = pk)
         
-    def assertPhotoDeleted(self,photo):
-        self.assertDoesNotExist(photo[0],model = Photo)
+    def assertPhotoDeleted(self, photo):
+        self.assertDoesNotExist(photo[0], model = Photo)
         url = urlopen(photo[1])
 #        s3 error for access denied
-        self.assertEqual(url.getcode(),403)
+        self.assertEqual(url.getcode(), 403)
     
-    def assertAlbumComplete(self,album): 
+    def assertAlbumComplete(self, album): 
         self.assertDescriptionComplete(album)
-        self.assertNotEqual(album["isOwner"],None)
+        self.assertNotEqual(album["isOwner"], None)
         self.assertTrue(album["lat"])
         self.assertTrue(album["lon"])
         self.assertTrue(album["country"])
         
-    def assertPlaceComplete(self,place):
+    def assertPlaceComplete(self, place):
         self.assertTrue(place["lat"])
         self.assertTrue(place["lon"])
     
-    def assertPhotoComplete(self,photo):
+    def assertPhotoComplete(self, photo):
         self.assertTrue(photo["photo"])
         self.assertTrue(photo["order"])
         self.assertTrue(photo["thumb"])
             
-    def assertDescriptionComplete(self,instance):
+    def assertDescriptionComplete(self, instance):
         self.assertTrue(instance["title"])
         self.assertTrue(instance["id"])
         self.assertTrue(instance["description"])
@@ -128,7 +140,7 @@ class SimpleTestCase(TestCase):
         else:
             return self.model
         
-    def json(self, data = {} , url = None,method = "POST",loggedin = True):
+    def json(self, data = {} , url = None, method = "POST", loggedin = True):
         """ 
             @author: Frederik Claus
             @summary: makes a post request to url or self.url returns the content jsonified
@@ -144,7 +156,7 @@ class SimpleTestCase(TestCase):
         if method == "POST":
             response = client.post(url, data)
         elif method == "GET":
-            response = client.get(url,data)
+            response = client.get(url, data)
             
         self.assertEqual(response["Content-Type"], "text/json")
         return json.loads(response.content)
