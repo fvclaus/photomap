@@ -1,4 +1,0 @@
-# pip install -r requirements.pip
-django
-django_compressor
-boto
