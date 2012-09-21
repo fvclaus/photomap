@@ -13,9 +13,9 @@ STATIC_PATH = os.path.join(PROJECT_PATH, "static")
 
 UPLOAD_PATH = os.path.join("upload", "%Y", "%m", "%d")
 PHOTO_PATH = os.path.join(STATIC_PATH, "photo")
-PROFILE_PICTURE_PATH = os.path.join(STATIC_PATH,"profile-picture")
-IMAGES_PATH = os.path.join(STATIC_PATH,"images")
-DEFAULT_PROFILE_PICTURE = os.path.join(IMAGES_PATH,"default-profile-picture.png")
+PROFILE_PICTURE_PATH = os.path.join(STATIC_PATH, "profile-picture")
+IMAGES_PATH = os.path.join(STATIC_PATH, "images")
+DEFAULT_PROFILE_PICTURE = os.path.join(IMAGES_PATH, "default-profile-picture.png")
 RES_PATH = os.path.join(PROJECT_PATH, "res")
 TEST_PATH = os.path.join(RES_PATH, "test")
 
@@ -188,8 +188,10 @@ COMPRESS_PRECOMPILERS = (
 COMPRESS_URL = "static/"
 
 MIDDLEWARE_CLASSES = (
-    'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
+    'django.middleware.common.CommonMiddleware',
+    
 #    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
