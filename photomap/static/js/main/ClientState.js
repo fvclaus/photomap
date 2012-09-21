@@ -13,8 +13,12 @@ ClientState = function(){
 
 ClientState.prototype = {
     isAdmin : function(){
-	// return this.user === "admin";  
-	return true;
+	// return true if user is owner of current album
+	album = main.getUIState().getCurrentAlbum();
+	return album.isOwner;
+    },
+    isOwner : function(album){ 
+	return album.isOwner;
     },
     _parseValue : function(value){
 	this.value  = value.split(",");

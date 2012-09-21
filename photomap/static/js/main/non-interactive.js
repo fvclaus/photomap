@@ -20,8 +20,6 @@ $(document).ready(function(){
     
     // set page mode to non-interactive
     state.setModeInteractive(false);
-    // change cursor on map from cross to grabber - besides moving the map is non-interactive
-    cursor.setMapCursor(cursor.styles.grab)
     //adjust map controls
     position = google.maps.ControlPosition;
     map.setControls(true,false,false,false);

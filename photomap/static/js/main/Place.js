@@ -123,7 +123,7 @@ Place.prototype = {
 	});
 	
 	// add controls listener if user is admin
-	if ( main.getClientState().isAdmin() ) {
+	if ( state.isInteractive() ) {
 	    
 	    google.maps.event.addListener(this.marker.MapMarker, "mouseover", function(event){
 		// gets the relative pixel position

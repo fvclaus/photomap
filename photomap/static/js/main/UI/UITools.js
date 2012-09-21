@@ -126,4 +126,17 @@ UITools.prototype = {
 	    })
 	    .load();
     },
+    
+    openShareURL : function(){
+	url = "" + main.getUIState().getAlbumShareURL();
+	
+	this.loadOverlay($(".mp-share-overlay"));
+	this.fitMask($("#exposeMask"));
+	//load link in input field and highlight it
+	$("#mp-share-link")
+	    .val(url)
+	    .focus(function(){$(this).select();})
+	    .focus();
+	main.getUI().getControls().copyListener();
+    },
 };

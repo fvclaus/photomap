@@ -132,4 +132,10 @@ UIState.prototype = {
     isGalleryLoaded : function(){
 	return this.galleryLoaded;
     },
+    setAlbumShareURL: function(url){
+	this.currentAlbumShare = url;
+    },
+    getAlbumShareURL: function(){
+	return this.currentAlbumShare;
+    },
 };

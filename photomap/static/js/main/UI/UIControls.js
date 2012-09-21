@@ -9,7 +9,7 @@ UIControls = function(maxHeight) {
 
     this.$delete = $("img.mp-option-delete");
     this.$update = $("img.mp-option-modify");
-    this.$export = $("img.mp-option-export");
+    this.$share = $("img.mp-option-share");
 
     this.$logout = $(".mp-option-logout");
     this.$center = $(".mp-option-center");
@@ -24,7 +24,8 @@ UIControls.prototype = {
 	height = main.getUI().getPanel().getFooterHeight();
 	this.$logout.height(height);
 	
-	if ( main.getClientState().isAdmin() ) {
+	// add bindListener in albumview if user is admin
+	if ( main.getUIState().isInteractive() ) {
 	    this.bindListener();
 	}
 
@@ -153,36 +154,30 @@ UIControls.prototype = {
 	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
 	});
     },
-    bindExportListener : function(){
+    bindShareListener : function(){
 	var instance = this;
-	this.$export
+	this.$share
 	    .unbind("click")
 	    .bind("click",function(event){
-		url = "/URL_OF_ALBUM_EXPORT";
-		id = main.getUIState().getCurrentAlbum().id;
-		//main.getClientServer().getExportLink(url,id);
-		
-		// remove when export is working in back end
-		/*-----------------------*/
-		//this all has to be done if the ajax call is successfull
-		//value of the #mp-export-link will be the link
+		state = main.getUIState();
 		tools = main.getUI().getTools();
-		tools.loadOverlay($(".mp-export-overlay"));
-		tools.fitMask($("#exposeMask"));
-		//load link in input field and highlight it
-		$("#mp-export-link")
-		    .val("This is the export link? Doesn't look like it.. what happened?")
-		    .focus(function(){$(this).select();})
-		    .focus();
-		instance.copyListener();
-		/*-----------------------*/
+		controls = main.getUI().getControls();
+		
+		if ( state.getAlbumShareURL() ){
+		    tools.openShareURL();
+		}
+		else {
+		    url = "/get-album-share";
+		    id = state.getCurrentAlbum().id;
+		    main.getClientServer().getShareLink(url,id);
+		}
 	});
     },
     copyListener : function(){
 	// copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
 	$("#mp-copy-button").zclip('remove').zclip({
 	    path: 'static/js/zeroclipboard/zeroclipboard.swf',
-	    copy: $("#mp-export-link").val(),
+	    copy: $("#mp-share-link").val(),
 	    /*afterCopy: function(){
 		$(".mp-overlay-trigger").overlay().close();
 	    },*/

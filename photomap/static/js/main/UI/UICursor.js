@@ -25,8 +25,18 @@ UICursor.prototype = {
   
   setMapCursor : function(style){
     map = main.getMap().getInstance();
+    if (style){
+      cursor = style;
+    }
+    // if no style is defined -> cross on interactive pages, else grabber
+    else if ( main.getUIState().isInteractive() ) {
+      cursor = this.styles.cross;
+    }
+    else {
+      style = this.styles.grab;
+    }
     map.setOptions({ 
-      draggableCursor: style,
+      draggableCursor: cursor,
       draggingCursor: this.styles.grab,
     });
   },
@@ -35,14 +45,6 @@ UICursor.prototype = {
     this.setCursor($information,style);
   },
   cursors : function() {
-    
-    // on map: cross if user is admin, else grabber
-    if ( main.getClientState().isAdmin() ) {
-      this.setMapCursor(this.styles.cross);
-    }
-    else {
-      this.setMapCursor(this.styles.grab);
-    }
     
     // on links
     $link = $("a");

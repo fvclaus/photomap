@@ -70,7 +70,7 @@ $(document).ready(function(){
   if ( main.getClientState().isAdmin() ) {
     // set page in interactive mode as albumview
     state.setModeInteractive(true,page);
-  
+    
     // activate listeners
     map.bindListener();
     map.panoramaListener();
@@ -80,6 +80,9 @@ $(document).ready(function(){
   }
   else {
     state.setModeInteractive(false,page);
+    
+    // change map styling if user is guest
+    map.setGuestStyle();
   }
   
   //adjust map controls
@@ -87,6 +90,8 @@ $(document).ready(function(){
   map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
   
   cursor.setInfoCursor(cursor.styles.info);
+  cursor.setMapCursor();
+  
   
   // fit fancybox overlay between header and footer on top of map
   tools.fitMask($("#fancybox-overlay"));

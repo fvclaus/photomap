@@ -54,8 +54,9 @@ ClientServer.prototype = {
 	    map.fit(markersinfo);
 	},
 	
-	getExportLink : function(url,data){
-	    // get request for export link - data is album id
+	getShareLink : function(url,id){
+	    data = {'id': id};
+	    // get request for share link - data is album id
 	    $.ajax({
 		type: "get",
 		dataType: "json",
@@ -66,19 +67,8 @@ ClientServer.prototype = {
 			alert(data.error);
 		    }
 		    else{
-			// enable when export in back end is working
-			/*
-			tools = main.getUI().getTools();
-			
-			tools.loadOverlay($(".mp-export-overlay"));
-			tools.fitMask($("#exposeMask"));
-			//load link in input field and highlight it
-			$("#mp-export-link")
-			    .val(data.link)
-			    .focus(function(){$(this).select();})
-			    .focus();
-			instance.copyListener();
-			*/
+			main.getUIState().setAlbumShareURL(data.url);
+			main.getUI().getTools().openShareURL();
 		    }
 		},
 		error : function(err){

@@ -138,21 +138,21 @@ msgstr ""
 "immediately or workout a solution with the copyright owner."
 
 #: templates/dashboard.html:31
-msgid "control-title export"
-msgstr "Export"
+msgid "control-title share"
+msgstr "Share"
 
 #: templates/dashboard.html:46
 msgid "mp-copy-link-title"
 msgstr "Copy Link"
 
 #: templates/dashboard.html:50
-msgid "How to Export"
-msgstr "How to export the link?"
+msgid "How to Share"
+msgstr "How to share the link?"
 
 #: templates/dashboard.html:53
-msgid "How to Export -> description"
+msgid "How to Share -> description"
 msgstr ""
-"To export this link you have to copy it and then paste it whereever you want "
+"To share this link you have to copy it and then paste it whereever you want "
 "to share it (Social networks, Email, Blogs, ...). You can copy the link by "
 "simply clicking on the 'Copy Link' button. You need to have flash enabled! "
 "So in case it doesn't work due to your browser security settings, you have to "
@@ -160,7 +160,7 @@ msgstr ""
 "or 'Command + C' (Mac OS X) or by rightclicking on the link and choosing 'Copy'."
 
 #: templates/dashboard.html:56
-msgid "How to Export -> attention!"
+msgid "How to Share -> attention!"
 msgstr ""
 "Please be aware that copying this link will overwrite whatever is stored in your "
 "clipboard right now. (Whatever you copied last.)"
@@ -251,21 +251,21 @@ msgstr ""
 "the albumview of this album, in which you'll see all the places and pictures."
 
 #: templates/help.html:52
-msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Export"
-msgstr "Export Album"
+msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Share"
+msgstr "Share Album"
 
 #: templates/help.html:54
 msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Export -> "
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "description"
 msgstr ""
-"In NAME OF THE PROJECT we give you the possibility to export albums of "
-"yours. This means we'll provide you with a link, which you can share with "
+"In NAME OF THE PROJECT we give you the possibility to share albums of "
+"yours with others. This means we'll provide you with a link, which you can share with "
 "others on social networks or with emails or any other way you like. By "
 "clicking on this link, others can view your album with all the places and "
 "pictures you uploaded, read your descriptions, use Streetview or the "
 "satellite view to checkout places you have been to and witness your "
-"experiences.To Export an album you can click on the 'export' option in the "
+"experiences. To share an album you can click on the 'Share' option in the "
 "controls box, which opens when moving the mouse over the album-markers. A "
 "window will open with the generated link. You can copy the link by "
 "highlighting it with your mouse and pressing 'Ctrl + C' (Windows) or "
@@ -275,7 +275,7 @@ msgstr ""
 
 #: templates/help.html:55
 msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Export -> "
+"help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "attention!"
 msgstr ""
 "You need flash for the copy button, so please make sure to have enabled "
