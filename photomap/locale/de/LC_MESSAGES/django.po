@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-09 18:55+0200\n"
+"POT-Creation-Date: 2012-09-22 14:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,58 +30,58 @@ msgstr "Bearbeiten"
 msgid "link-title-dashboard"
 msgstr "Zum Dashboard"
 
-#: templates/base.html:102
+#: templates/base.html:101
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:102 templates/impressum.html:6
+#: templates/base.html:101 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
 
-#: templates/base.html:103
+#: templates/base.html:102
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:103 templates/privacy.html:5
+#: templates/base.html:102 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:104
+#: templates/base.html:103
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:104 templates/copyright.html:6
+#: templates/base.html:103 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:105
+#: templates/base.html:104
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:105 templates/contact.html:6
+#: templates/base.html:104 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:106
+#: templates/base.html:105
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:106 templates/help.html:6
+#: templates/base.html:105 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:107
+#: templates/base.html:106
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:107
+#: templates/base.html:106
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:119
+#: templates/base.html:118
 msgid "link-title-login"
 msgstr "Login/Registrierung"
 
@@ -158,14 +158,14 @@ msgstr "Wie teilt man den Link?"
 #: templates/dashboard.html:53
 msgid "How to Share -> description"
 msgstr ""
-"Um das Album mit anderen zu teilen müssen Sie den Link kopieren, dann können Sie "
-"ihn einfügen wo auch immer Sie wollen (Email, Soziale Netzwerke, "
+"Um das Album mit anderen zu teilen müssen Sie den Link kopieren, dann können "
+"Sie ihn einfügen wo auch immer Sie wollen (Email, Soziale Netzwerke, "
 "Blogs, ...). Sie können den Link kopieren, indem Sie auf 'Link kopieren' "
 "klicken. Sie müssen Flash aktiviert haben! Falls das Kopieren also auf Grund "
 "ihrer Sicherheits-Einstellungen im Browser nicht funktioniert, müssen Sie "
 "den markierten Link manuell kopieren. D.h. mit 'Strg + C' (Windows) bzw. "
-"'Command + C' (Mac OS X) oder per 'Kopieren' in dem Menü, welches sich "
-"bei Rechtsklick auf den Link öffnet, kopieren."
+"'Command + C' (Mac OS X) oder per 'Kopieren' in dem Menü, welches sich bei "
+"Rechtsklick auf den Link öffnet, kopieren."
 
 #: templates/dashboard.html:56
 msgid "How to Share -> attention!"
@@ -192,11 +192,11 @@ msgid "help-faq-title"
 msgstr "FAQ"
 
 #: templates/help.html:22
-msgid "help-faq-question1"
+msgid "help-faq topic 'Warum Klarnamen?' question"
 msgstr "Warum Klarnamen?"
 
 #: templates/help.html:23
-msgid "help-faq-answer1"
+msgid "help-faq topic 'Warum Klarnamen?' answer"
 msgstr ""
 "Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
 "Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
@@ -207,27 +207,95 @@ msgstr ""
 "abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
 "nicht nur praktischer, sondern auch schöner."
 
+#: templates/help.html:26
+msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
+msgstr "Was ist ein sicheres Passwort?"
+
+#: templates/help.html:28
+msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
+msgstr ""
+"Ob jemand bei unserer Web-Applikation ein sicheres Passwort benutzen will "
+"oder nicht, bleibt natürlich jedem selbst überlassen. Wir überprüfen Ihre Passwörter "
+"nicht! Dennoch ist es eine gute Angewohnheit für jeden Service den Sie im "
+"Internet nutzen ein einzigartiges sicheres Passwort zu benutzen und wir empfehlen "
+"Ihnen dies auch bei dieser Website zu tun. Doch was ist nun ein sicheres "
+"Passwort? Auch wenn es immer weniger Menschen gibt, die einfache, nicht "
+"sehr sichere Passwörter verwenden, wie zB. 'aragorn01'; gibt es mittlerweile "
+"viele andere, die kurze, komplizierte Passwörter verwenden, wie zB. 'arA-g0Rn.$1'. "
+"Natürlich ist dieses Passwort besser als 'aragorn01', trotzdem ist es vergleichsweise "
+"schwach. Was ein Passwort nämlich wirklich sicher macht ist in erster Linie die "
+"Länge und nicht die Komplexität. 'maschinegartennagelcocktail' ist ein sehr viel sichereres "
+"Passwort als 'c72)lx.2Ihf,O'. Ausserdem ist es wesentlich einfacher zu merken "
+"und schneller zu tippen! Es gibt dazu auch "
+
+#: templates/help.html:29
+msgid "link-title passwort security comic"
+msgstr "Comic zur Veranschaulichung von Passwort-Sicherheit"
+
+#: templates/help.html:29
+msgid "link to password security comic"
+msgstr "ein kleines nettes Comic"
+
+#: templates/help.html:30
+msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
+msgstr ""
+", welches das nochmals veranschaulicht. Falls Sie ein Passwort benutzen wollen, "
+"welches aus 4 oder mehr Wörtern besteht, nehmen Sie bitte zufällige Wörter, die "
+"nichts direkt mit Ihnen zu tun haben. Personen, die Sie kennen bzw. Informationen "
+"zu Ihnen haben, könnten sonst das Passwort einfach erraten. Sie können "
+"natürlich auch Zahlen und Symbole verwenden, um die Sicherheit noch zusätzlich "
+"zu erhöhen; achten Sie dann jedoch darauf, dass Sie sich das Passwort leicht merken "
+"können. Ansonsten ist das Passwort nutzlos oder zumindest sehr unpraktisch. "
+"Ein weiterer Tipp für die Erstellung von guten Passwörtern ist die Anwendung "
+"von Mnemotechniken. Nehmen Sie beispielsweise die Anfangsbuchstaben des "
+"Kinderreim 'Alle meine Entchen', wandeln zB. alle 'i's in '1' um "
+"und verwenden Sie auch die Satzzeichen -> 'AmE,sadS.KuW,S1dH.' Schon haben Sie "
+"ein relativ sicheres Passwort, das einfach zu merken ist; ein Nachteil ist, dass "
+"es relativ lange Zeit dauert dieses Passwort beim Anmelden einzutragen ;), wen "
+"das stört, der sollte sich vielleicht der oben beschriebenen 4-Wörter Alternative "
+"zuwenden. Sie sollten sich allerdings eigene Reime ausdenken, der Kinderreim hier "
+"war nur zur Veranschaulichung, da ihn wohl viele Leute kennen. "
+"Falls Sie ein wenig herum probieren möchten, um zu schauen, wann "
+"ein Passwort wirklich sicher ist, möchten wir Ihnen die beiden nachfolgenden "
+"Seiten empfehlen: "
+
 #: templates/help.html:31
+msgid "link-title steve gibson password haystack reference guide"
+msgstr "Das Password als die Nadel im Heuhaufen - https://www.grc.com/haystack.htm"
+
+#: templates/help.html:31
+msgid "link to steve gibson password haystack reference guide"
+msgstr "1. Steve Gibson Passwort 'Heuhaufen' Ratgeber mit Passwort-Tester"
+
+#: templates/help.html:32
+msgid "link-title howsecureismypassword"
+msgstr "Einfacher Passwort-Test - http://howsecureismypassword.net/"
+
+#: templates/help.html:32
+msgid "link to howsecureismypassword"
+msgstr "2. Einfacher Passwort-Tester mit Feedback"
+
+#: templates/help.html:37
 msgid "help-tutorial-title"
 msgstr "Tutorial"
 
-#: templates/help.html:33
+#: templates/help.html:39
 msgid "help-tutorial topic: Dashboard"
 msgstr "Dashboard"
 
-#: templates/help.html:35
+#: templates/help.html:41
 msgid "help-tutorial topic: Dashboard -> description"
 msgstr "Im Dashboard werden alle Ihre Alben auf der Karte angezeigt."
 
-#: templates/help.html:37
+#: templates/help.html:43
 msgid "Alben"
 msgstr "Alben"
 
-#: templates/help.html:40
+#: templates/help.html:46
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
 msgstr "Album hinzufügen"
 
-#: templates/help.html:41
+#: templates/help.html:47
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
 msgstr ""
@@ -237,12 +305,12 @@ msgstr ""
 "ausgewählten Punkt ein neues Album erstellt, welches durch einen Marker auf "
 "der Karte gekennzeichnet ist."
 
-#: templates/help.html:44
+#: templates/help.html:50
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
 msgstr "Album löschen/bearbeiten"
 
-#: templates/help.html:45
+#: templates/help.html:51
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
 "description"
@@ -251,11 +319,11 @@ msgstr ""
 "kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
 "Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:48
+#: templates/help.html:54
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
 msgstr "Album auswählen/Öffnen der Albumsansicht"
 
-#: templates/help.html:49
+#: templates/help.html:55
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
 "description"
@@ -264,17 +332,17 @@ msgstr ""
 "aus. Daraufhin werden Sie auf die Albumsansicht des entsprechenden Albums "
 "weitergeleitet, in welcher Sie die Plätze und Bilder des Albums sehen können."
 
-#: templates/help.html:52
+#: templates/help.html:58
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Share"
 msgstr "Album teilen"
 
-#: templates/help.html:54
+#: templates/help.html:60
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "description"
 msgstr ""
-"In NAME DES PROJEKTS geben wir Ihnen die Möglichkeit, Ihre Alben mit anderen zu "
-"teilen. D.h. wir generieren einen Link, den Sie dann mit anderen per "
+"In NAME DES PROJEKTS geben wir Ihnen die Möglichkeit, Ihre Alben mit anderen "
+"zu teilen. D.h. wir generieren einen Link, den Sie dann mit anderen per "
 "Email, sozialen Netzwerken oder auf andere Weisen teilen können. Wenn andere "
 "diesen Link dann Anklicken werden Sie auf eine Albumsansicht Ihres Albums "
 "weitergeleitet, auf der Sie all Ihre Plätze und hochgeladenen Photos des "
@@ -289,7 +357,7 @@ msgstr ""
 "auswählen. Wenn Sie den Link kopiert haben können Sie ihn nach belieben mit "
 "anderen teilen indem Sie ihn an entsprechender Stelle einfügen."
 
-#: templates/help.html:55
+#: templates/help.html:61
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "attention!"
@@ -299,11 +367,11 @@ msgstr ""
 "sollten Sie jedoch Flash aus Sicherheitsgründen deaktiviert haben, müssen "
 "Sie den Link manuell, wie oben beschrieben, kopieren."
 
-#: templates/help.html:63 templates/view-album.html:6
+#: templates/help.html:69 templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumsansicht"
 
-#: templates/help.html:65
+#: templates/help.html:71
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
 "In der Albumsansicht können Sie einzelne Plätze zu ihrem Album hinzufügen. "
@@ -312,15 +380,15 @@ msgstr ""
 "noch die Möglichkeiten die Bilder in einer kleinen Slideshow innerhalb der "
 "Gallerie oder sogar als Vollbild anschauen zu können."
 
-#: templates/help.html:67
+#: templates/help.html:73
 msgid "Plätze"
 msgstr "Plätze"
 
-#: templates/help.html:70
+#: templates/help.html:76
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
 msgstr "Platz hinzufügen"
 
-#: templates/help.html:71
+#: templates/help.html:77
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
@@ -331,12 +399,12 @@ msgstr ""
 "ausgewählten Punkt ein neuer Platz erstellt, welcher durch einen Marker auf "
 "der Karte gekennzeichnet ist."
 
-#: templates/help.html:74
+#: templates/help.html:80
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
 msgstr "Platz löschen/bearbeiten"
 
-#: templates/help.html:75
+#: templates/help.html:81
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
@@ -345,11 +413,11 @@ msgstr ""
 "kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
 "Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:78
+#: templates/help.html:84
 msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
 msgstr "Platz auswählen/Öffnen der Gallerie"
 
-#: templates/help.html:79
+#: templates/help.html:85
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
@@ -358,15 +426,15 @@ msgstr ""
 "aus. Daraufhin werden die Bilder des Platzes in der Gallerie auf der rechten "
 "Seite angezeigt."
 
-#: templates/help.html:82
+#: templates/help.html:88
 msgid "Gallerie"
 msgstr "Gallerie"
 
-#: templates/help.html:85
+#: templates/help.html:91
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
 msgstr "Photo hinzufügen"
 
-#: templates/help.html:86
+#: templates/help.html:92
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
@@ -377,12 +445,12 @@ msgstr ""
 "auf ihrem Computer auswählen können. Die Bilder werden dann dem ausgewählten "
 "Platz hinzugefügt."
 
-#: templates/help.html:89
+#: templates/help.html:95
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
 msgstr "Photo löschen/bearbeiten"
 
-#: templates/help.html:90
+#: templates/help.html:96
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
@@ -391,11 +459,11 @@ msgstr ""
 "Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden Symbols wird "
 "ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:93
+#: templates/help.html:99
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
 msgstr "Photo auswählen/Slideshow starten"
 
-#: templates/help.html:94
+#: templates/help.html:100
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
@@ -404,11 +472,11 @@ msgstr ""
 "diesem Photo als Start innerhalb der Gallerie geöffnet. Sie können durch "
 "Anklicken der Pfeile die Bilder wechseln."
 
-#: templates/help.html:97
+#: templates/help.html:103
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
 msgstr "Bild im Vollbild-Modus ansehen"
 
-#: templates/help.html:98
+#: templates/help.html:104
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
@@ -417,12 +485,12 @@ msgstr ""
 "wird das Photo im Fullscreen angezeigt. Auch hier können Sie über die Pfeile "
 "die Bilder wechseln. Ausserdem können Sie in die Bilder hineinzoomen."
 
-#: templates/help.html:101
+#: templates/help.html:107
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
 msgstr "Drag'n'Drop der Photos"
 
-#: templates/help.html:102
+#: templates/help.html:108
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
@@ -430,17 +498,17 @@ msgstr ""
 "Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
 "Photo an die gewünschte Stelle ziehen."
 
-#: templates/help.html:105 templates/view-album.html:49
+#: templates/help.html:111 templates/view-album.html:49
 msgid "Beschreibung"
 msgstr "Beschreibung"
 
-#: templates/help.html:108
+#: templates/help.html:114
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility"
 msgstr "Beschreibung anzeigen/schließen"
 
-#: templates/help.html:109
+#: templates/help.html:115
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility -> description"
@@ -581,32 +649,32 @@ msgstr ""
 msgid "insert-dialogue-title insert-album"
 msgstr "Hinzufügen eines Albums"
 
-#: templates/insert-album.html:15 templates/insert-photo.html:19
+#: templates/insert-album.html:15 templates/insert-photo.html:23
 #: templates/insert-place.html:15 templates/update-album.html:16
 #: templates/update-photo.html:17 templates/update-place.html:16
 msgid "insert-dialogue name"
 msgstr "Name"
 
-#: templates/insert-album.html:19 templates/insert-photo.html:23
+#: templates/insert-album.html:19 templates/insert-photo.html:27
 #: templates/insert-place.html:19 templates/update-album.html:20
 #: templates/update-photo.html:21 templates/update-place.html:20
 msgid "insert-dialogue description"
 msgstr "Beschreibung"
 
-#: templates/insert-album.html:24 templates/insert-photo.html:31
+#: templates/insert-album.html:24 templates/insert-photo.html:35
 #: templates/insert-place.html:25
 msgid "Speichern"
 msgstr "Speichern"
 
-#: templates/insert-photo.html:13
+#: templates/insert-photo.html:16
 msgid "insert-dialogue-title insert-photo"
 msgstr "Hinzufügen eines neuen Photos"
 
-#: templates/insert-photo.html:27
+#: templates/insert-photo.html:31
 msgid "insert-dialogue select photo to upload"
 msgstr "Photo zum Hochladen auswählen (nur *.png und *.jpg)"
 
-#: templates/insert-photo.html:32
+#: templates/insert-photo.html:36
 msgid "Speichern und weitere hinzufügen"
 msgstr "Speichern und weitere hinzufügen"
 

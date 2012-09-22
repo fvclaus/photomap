@@ -128,7 +128,7 @@ UITools.prototype = {
     },
     
     openShareURL : function(){
-	url = "" + main.getUIState().getAlbumShareURL();
+	url = "" + main.getUIState().getAlbumShareURL().url;
 	
 	this.loadOverlay($(".mp-share-overlay"));
 	this.fitMask($("#exposeMask"));

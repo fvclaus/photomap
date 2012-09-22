@@ -119,7 +119,8 @@ Place.prototype = {
 	    // set and show title and description
 	    information.setPlaceTitle();
 	    information.setPlaceDescription();
-
+	    // expose gallery and description
+	    mpEvents.trigger("body",mpEvents.toggleExpose);
 	});
 	
 	// add controls listener if user is admin

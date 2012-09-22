@@ -19,8 +19,18 @@
 	<section id ="mp-faq" class="mp-faq-wrapper">
 		<h3>{% trans "help-faq-title" %}</h3>
 		<article class="mp-faq-entry">
-			<h4 class="mp-faq-question">{% trans "help-faq-question1" %}</h4>
-			<p class="mp-faq-answer">{% trans "help-faq-answer1" %}</p>
+			<p class="mp-faq-question">{% trans "help-faq topic 'Warum Klarnamen?' question" %}</p>
+			<p class="mp-faq-answer">{% trans "help-faq topic 'Warum Klarnamen?' answer" %}</p>
+		</article>
+		<article class="mp-faq-entry">
+			<p class="mp-faq-question">{% trans "help-faq topic 'Was ist ein sicheres Passwort?' question" %}</p>
+			<p class="mp-faq-answer">
+				{% trans "help-faq topic 'Was ist ein sicheres Passwort?' answer part1" %}
+				<a href="http://xkcd.com/936/" title='{% trans "link-title passwort security comic" %}'>{% trans "link to password security comic" %}</a>
+				{% trans "help-faq topic 'Was ist ein sicheres Passwort?' answer part2" %} <br /><br />
+				<a href="https://www.grc.com/haystack.htm" title='{% trans "link-title steve gibson password haystack reference guide" %}'>{% trans "link to steve gibson password haystack reference guide" %}</a> <br />
+				<a href="http://howsecureismypassword.net/" title='{% trans "link-title howsecureismypassword" %}'>{% trans "link to howsecureismypassword" %}</a>
+			</p>
 		</article>
 	</section>
 	<section id="mp-tutorial" class="mp-tutorial-wrapper">

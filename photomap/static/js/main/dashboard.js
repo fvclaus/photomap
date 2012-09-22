@@ -1,5 +1,3 @@
-var map,controls,state,tools;
-
 $(document).ready(function(){
   map = main.getMap();
   state = main.getUIState();

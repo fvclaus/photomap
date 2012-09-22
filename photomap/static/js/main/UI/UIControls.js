@@ -163,7 +163,7 @@ UIControls.prototype = {
 		tools = main.getUI().getTools();
 		controls = main.getUI().getControls();
 		
-		if ( state.getAlbumShareURL() ){
+		if ( state.getAlbumShareURL() && state.getAlbumShareURL().id == state.getCurrentAlbum().id ){
 		    tools.openShareURL();
 		}
 		else {

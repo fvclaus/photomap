@@ -67,7 +67,7 @@ ClientServer.prototype = {
 			alert(data.error);
 		    }
 		    else{
-			main.getUIState().setAlbumShareURL(data.url);
+			main.getUIState().setAlbumShareURL(data.url,id);
 			main.getUI().getTools().openShareURL();
 		    }
 		},

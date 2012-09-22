@@ -1,5 +1,5 @@
 function toggleFAQAnswers($question){
-    $answer = $question.next();
+    $answer = $question.next('p');
     $answers = $(".mp-faq-answer");
     // hide all other answers
     $answers.not($answer).slideUp(150);
@@ -12,7 +12,7 @@ function toggleFAQAnswers($question){
     }
 };
 function toggleTutorialDesc($topic){
-    $desc = $topic.next("p");
+    $desc = $topic.next('p');
     $descriptions = $(".mp-tutorial-subtopic-desc");
     // hide all other descriptions
     $descriptions.not($desc).slideUp(150);

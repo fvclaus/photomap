@@ -84,7 +84,7 @@ UIAlbum.prototype =  {
 			.width(instance.$album.width())
 			.height(instance.$album.height())
 		    
-		    if ( main.getClientState().isAdmin() ){
+		    if ( state.isInteractive() ){
 			// Drag n Drop for Photos if user is admin
 			instance.$album
 			    .find("div.mp-gallery")
@@ -160,11 +160,11 @@ UIAlbum.prototype =  {
 	    state.setCurrentPhotoIndex($el.index());
 	    state.setCurrentPhoto(photo);
 	    
-	    if ( main.getClientState().isAdmin() ){
+	    if ( state.isInteractive() ){
 		controls.setModifyPhoto(true);
 		controls.showPhotoControls($el,photo);
 	    }
-
+	    cursor.setCursor($el,cursor.styles.pointer); 
 
 	}).bind( 'mouseleave.Gallery', function( event ) {
 	    var $el = $(this);
@@ -172,7 +172,7 @@ UIAlbum.prototype =  {
 	    (state.getPhotos())[$el.index()].checkBorder();
 	    $el.removeClass('current');
 	    
-	    if ( main.getClientState().isAdmin() ){
+	    if (state.isInteractive() ){
 		controls.hideControls(true);
 	    }
 
@@ -194,11 +194,6 @@ UIAlbum.prototype =  {
 	    instance.gallery.startSlider();
 	    
 	    return false;
-	}).bind( 'mouseup.Gallery', function(event){
-	    var $el = $(this);
-	   // reset Cursor for images (pointer)
-	    cursor.setCursor($el,cursor.styles.pointer); 
-	    
 	});
 	//draw border on visited elements
 	main.getUIState().getPhotos().forEach(function(photo){
