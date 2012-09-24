@@ -6,11 +6,10 @@ $album-width = 49%
   height 75%
   border $border-dark
   margin 0.5% 0 0 51%
-  z-index 5
+  z-index 1025
   position absolute
   overflow hidden
-  background $background-color-light url(../../images/bgalbum.png) no-repeat center center
-  opacity 0.8
+  background $background-rgba-alpha08-light
   
 .mp-gallery-title-bar
   width 100%
@@ -94,5 +93,3 @@ $album-width = 49%
     background $current-color
   &.visited
     background $visited-color
-  imghover, &.current img
-    opacity 0.8

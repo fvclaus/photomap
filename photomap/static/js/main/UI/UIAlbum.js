@@ -53,7 +53,7 @@ UIAlbum.prototype =  {
 	this.gallery.showLoading();
 	
 	// bugfix for empty places (to show empty "add"-tile)
-	if (photos.length == 0){
+	if (state.isInteractive() && photos.length == 0){
 	    instance.$album.append(
 		$.jqote( '#galleryTmpl', {} )
 	    );
@@ -75,6 +75,10 @@ UIAlbum.prototype =  {
 		    instance.$album.append(
 			$.jqote( '#galleryTmpl', {thumbAddress: tmplPhotosData} )
 		    );
+		    // if user is guest -> remove add-photo-button
+		    if ( !state.isInteractive() ) {
+			$("img.mp-option-add").remove();
+		    }
 		    //search all anchors
 		    instance.searchImages();
 		    // make wrapping anchors sortable

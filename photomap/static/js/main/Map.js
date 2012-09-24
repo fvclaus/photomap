@@ -15,7 +15,7 @@ Map	= function() {
 	mapTypeControl : true,
 	mapTypeControlOptions : {
 	    style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-	    position : google.maps.ControlPosition.TOP_CENTER
+	    position : google.maps.ControlPosition.TOP_LEFT
 	},
 	panControl : true,
 	panControlOptions : {

@@ -11,12 +11,18 @@ $(document).ready(function(){
   
   // activate listeners
   map.bindListener();
-  controls.bindShareListener();
+  controls.bindListener();
+  controls.shareBindListener();
   
-  position = google.maps.ControlPosition
-  map.placeControls(position.TOP_CENTER,undefined,undefined,undefined);
   cursor.setMapCursor();
   
   // fit fancybox overlay between header and footer on top of map
   tools.fitMask($("#fancybox-overlay"));
+});
+
+$(window).load(function(){
+  controls = main.getUI().getControls();
+  
+  // has to be added after all albums are loaded (with markers) -> in $(window).load()
+  controls.markerControlListener('album');
 });

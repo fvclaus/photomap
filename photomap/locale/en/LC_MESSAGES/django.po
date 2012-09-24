@@ -628,7 +628,7 @@ msgstr "Description"
 #: templates/insert-album.html:24 templates/insert-photo.html:35
 #: templates/insert-place.html:25
 msgid "Speichern"
-msgstr ""
+msgstr "Save"
 
 #: templates/insert-photo.html:16
 msgid "insert-dialogue-title insert-photo"
@@ -636,11 +636,11 @@ msgstr "Add new Photo"
 
 #: templates/insert-photo.html:31
 msgid "insert-dialogue select photo to upload"
-msgstr "Select photo to uplaod (only *.png and *.jpg)"
+msgstr "Select photo to upload (only *.png and *.jpg)"
 
 #: templates/insert-photo.html:36
 msgid "Speichern und weitere hinzufügen"
-msgstr ""
+msgstr "Save and add another"
 
 #: templates/insert-place.html:11
 msgid "insert-dialogue-title insert-place"

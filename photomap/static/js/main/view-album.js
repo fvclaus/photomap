@@ -1,28 +1,28 @@
-var album,information,tools,map,cursor,state,page;
-
 function toggleGallery() {
-    $gallery = $("#mp-album");
-    album = main.getUI().getAlbum();
-    
-    if ($gallery.is(":visible")){
-      $gallery.fadeOut(100);
-      $(".mp-gallery-visible").hide()
-      $(".mp-gallery-hidden").show()
-      // trigger event to expose album
-      album._setVisibility(false);
-      mpEvents.trigger("body",mpEvents.toggleExpose);
-    }
-    else {
-      $gallery.fadeIn(500);
-      $(".mp-gallery-hidden").hide()
-      $(".mp-gallery-visible").show()
-      // trigger event to close mask
-      album._setVisibility(true);
-      mpEvents.trigger("body",mpEvents.toggleExpose);
-    }
+  $gallery = $("#mp-album");
+  var album = main.getUI().getAlbum();
+  
+  if ($gallery.is(":visible")){
+    $gallery.fadeOut(100);
+    $(".mp-gallery-visible").hide()
+    $(".mp-gallery-hidden").show()
+    // trigger event to expose album
+    album._setVisibility(false);
+    mpEvents.trigger("body",mpEvents.toggleExpose);
+  }
+  else {
+    $gallery.fadeIn(500);
+    $(".mp-gallery-hidden").hide()
+    $(".mp-gallery-visible").show()
+    // trigger event to close mask
+    album._setVisibility(true);
+    mpEvents.trigger("body",mpEvents.toggleExpose);
+  }
 };
 
 function exposeListener(){
+  var album = main.getUI().getAlbum();
+  
   $("body").bind('toggleExpose',function(){
     // change exposé depending on visibility of gallery and description
     if (information.isVisible() && album.isVisible()){
@@ -45,6 +45,7 @@ function exposeListener(){
     }
     // z-index has to be more than mask but less than controls
     $("#mp-album").css('z-index',1025);
+    $("#mp-description").css('z-index',1025);
   });
 };
 function iframeListener(){
@@ -60,21 +61,16 @@ function galleryListener(){
 };
 
 $(document).ready(function(){
-  map = main.getMap();
-  state = main.getUIState();
-  information = main.getUI().getInformation();
-  cursor = main.getUI().getCursor();
-  tools = main.getUI().getTools();
-  page = "albumview";
+  var map = main.getMap();
+  var information = main.getUI().getInformation();
+  var cursor = main.getUI().getCursor();
+  var tools = main.getUI().getTools();
+
 
   // add listeners, which are for guests and admins
   map.panoramaListener();
   galleryListener();
   exposeListener();
-  
-  //adjust map controls
-  position = google.maps.ControlPosition;
-  map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
   
   cursor.setInfoCursor(cursor.styles.info);
   
@@ -95,15 +91,27 @@ $(document).ready(function(){
  * 
  */
 $(window).load(function(){
+
+  var map = main.getMap();
+  var state = main.getUIState();
+  var controls = main.getUI().getControls();
+  var cursor = main.getUI().getCursor();
+  var page = "albumview";
+  
   if ( main.getClientState().isAdmin() ) {
+    
+    console.log(controls);
+    
     // set page in interactive mode as albumview
     state.setModeInteractive(true,page);
     
     // add admin listeners
     map.bindListener();
     iframeListener();
+    controls.bindListener();
+    controls.markerControlListener('place');
     
-    // change cursor style on map (has to be inside load() cause it depends on state.isInteractive()
+    // change cursor style on map (has to be inside .load() cause it depends on state.isInteractive()
     cursor.setMapCursor();
     
     $(".mp-option-to-dashboard").show();

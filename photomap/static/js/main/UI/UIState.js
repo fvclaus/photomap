@@ -133,9 +133,11 @@ UIState.prototype = {
 	return this.galleryLoaded;
     },
     setAlbumShareURL: function(url,id){
+	host = window.location.host;
+	fullURL = 'http://' + host + url;
 	this.currentAlbumShare = {
 	    'id': id,
-	    'url': url,
+	    'url': fullURL,
 	    };
     },
     getAlbumShareURL: function(){

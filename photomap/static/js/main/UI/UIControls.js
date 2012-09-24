@@ -23,12 +23,6 @@ UIControls.prototype = {
 	
 	height = main.getUI().getPanel().getFooterHeight();
 	this.$logout.height(height);
-	
-	// add bindListener in albumview if user is admin
-	if ( main.getUIState().isInteractive() ) {
-	    this.bindListener();
-	}
-
     },
     placeCenterControl : function(){
 	//reposition
@@ -154,7 +148,7 @@ UIControls.prototype = {
 	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
 	});
     },
-    bindShareListener : function(){
+    shareBindListener : function(){
 	var instance = this;
 	this.$share
 	    .unbind("click")
@@ -326,6 +320,48 @@ UIControls.prototype = {
 	    if (place){
 		place.center();
 	    }
+	});
+    },
+    markerControlListener : function(object){
+	state = main.getUIState();
+	controls = main.getUI().getControls();
+	
+	if (object == "album") {
+	    objects = state.getAlbums();
+	    mouseoverControls = function(album){
+		controls.setModifyAlbum(true);
+		state.setCurrentAlbum(album);
+	    };
+	    
+	}
+	else if (object == "place") {
+	    objects = state.getPlaces();
+	    mouseoverControls = function(place){
+		controls.setModifyPlace(true);
+		state.setCurrentPlace(place);
+	    };
+	}
+	
+	objects.forEach(function(object,index,objects){
+	    google.maps.event.addListener(object.marker.MapMarker, "mouseover", function(event){
+		// gets the relative pixel position
+		projection = main.getMap().getOverlay().getProjection();
+		pixel = projection.fromLatLngToContainerPixel(object.marker.getPosition());
+		// add the header height to the position
+		pixel.y += main.getUI().getPanel().getHeight();
+		// add the height of the marker
+		markerSize = object.marker.getSize();
+		pixel.y += markerSize.height;
+		// add the width of the marker
+		pixel.x += markerSize.width/2;
+	    
+		mouseoverControls(object);
+		controls.showControls({top:pixel.y,left:pixel.x});
+	    });
+	
+	    google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
+		controls.hideControls(true);
+	    });
 	});
     },
 

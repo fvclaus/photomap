@@ -33,7 +33,7 @@ UICursor.prototype = {
       cursor = this.styles.cross;
     }
     else {
-      style = this.styles.grab;
+      cursor = this.styles.grab;
     }
     map.setOptions({ 
       draggableCursor: cursor,
