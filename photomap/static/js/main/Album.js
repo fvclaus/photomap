@@ -43,9 +43,8 @@ Album.prototype = {
 	map.panTo(this.marker.MapMarker.getPosition());
     },
     showVisitedIcon : function(){
-	this.marker.set({icon: "static/images/camera-visited.png"});
+	this.marker.setOption({icon: "static/images/camera-visited.png"});
     },
-
     checkIconStatus : function(){
 	this.showVisitedIcon();
     },

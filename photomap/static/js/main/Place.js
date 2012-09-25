@@ -36,19 +36,6 @@ Place.prototype = {
 	var map = main.getMap();
 	google.maps.event.trigger(this.marker.MapMarker,"click");
     },
-
-    showVisitedIcon : function(){
-	this.marker.set({icon: "static/images/camera-visited.png"});
-    },
-    showSelectedIcon : function(){
-	this.marker.set({icon: "static/images/camera-current.png"});
-    },
-    showUnselectedIcon : function(){
-	this.marker.set({icon: this.marker.mapicon});
-    },
-    showDisabledIcon : function(){
-	this.marker.set({icon: "static/images/camera-disabled.png"});
-    },
     center : function(){
 	var map = main.getMap().getInstance();
 	map.setZoom(13);
@@ -66,6 +53,18 @@ Place.prototype = {
 	// hide galleryAlbum container if present
 	main.getUI().getGallery().hide();
 	// $("div.mp-gallery-outer").remove();
+    },
+    showVisitedIcon : function(){
+	this.marker.setOption({icon: "static/images/camera-visited.png"});
+    },
+    showSelectedIcon : function(){
+	this.marker.setOption({icon: "static/images/camera-current.png"});
+    },
+    showUnselectedIcon : function(){
+	this.marker.setOption({icon: "static/images/camera-roadmap.png"});
+    },
+    showDisabledIcon : function(){
+	this.marker.setOption({icon: "static/images/camera-disabled.png"});
     },
     checkIconStatus : function(){
 	var status = true;
@@ -97,7 +96,7 @@ Place.prototype = {
 	    }
 
 	    var map = main.getMap();
-	    var oldPlace = main.getUIState().getCurrentPlace();
+	    var oldPlace = state.getCurrentLoadedPlace();
 
 	    //close slideshow if open
 	    ui.getSlideshow().closeSlideshow();
@@ -108,12 +107,12 @@ Place.prototype = {
 	    state.setCurrentLoadedPlace(instance);
 	    
 	    controls.hideControls(false);
-	    //change icon of new place
+	    // change icon of new place
 	    instance.checkIconStatus();
 	    // change icon of old place
-	    if (oldPlace)
+	    if (oldPlace){
 		oldPlace.checkIconStatus();
-
+	    }
 	    instance._showGallery();
 
 	    // set and show title and description

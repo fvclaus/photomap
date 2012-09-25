@@ -35,9 +35,9 @@ Marker.prototype = {
     hide	: function() {
 	this.MapMarker.setMap( null );
     },
-    set	: function( options ) {
+    setOption	: function( options ) {
 	if( typeof options.icon != 'undefined' )
-	    this.MapMarker.setIcon(new google.maps.MarkerImage("static/images/camera-roadmap.png"));
+	    this.MapMarker.setIcon(new google.maps.MarkerImage(options.icon));
 	if( typeof options.zindex != 'undefined' )
 	    this.MapMarker.setZIndex(options.zindex);
     },
@@ -46,6 +46,9 @@ Marker.prototype = {
     },
     getSize : function(){
 	return this.MapMarker.getIcon().size;
+    },
+    getMarker : function(){
+	return this.MapMarker;
     }
 };
 

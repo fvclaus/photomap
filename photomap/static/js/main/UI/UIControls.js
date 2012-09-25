@@ -49,7 +49,7 @@ UIControls.prototype = {
 	center.left += tools.getRealWidth($el)/2;
 	center.top += tools.getRealHeight($el);
 
-	// clear any present timeout, as it will hide the controls while the mouspointer never left
+	// clear any present timeout, as it will hide the controls while the mousepointer never left
 	if(this.hideControlsTimeoutId){
 	    window.clearTimeout(this.hideControlsTimeoutId);
 	    this.hideControlsTimeoutId = null;
@@ -359,7 +359,7 @@ UIControls.prototype = {
 		controls.showControls({top:pixel.y,left:pixel.x});
 	    });
 	
-	    google.maps.event.addListener(this.marker.MapMarker, "mouseout", function(){
+	    google.maps.event.addListener(object.marker.MapMarker, "mouseout", function(){
 		controls.hideControls(true);
 	    });
 	});

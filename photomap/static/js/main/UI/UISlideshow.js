@@ -200,7 +200,7 @@ UISlideshow.prototype = {
 	cursor.setCursor($(".mp-album-zoom"),cursor.styles.pointer)
     },
     _navigateSlider : function( instance, dir ) {
-	//navigate to next photo or close if no photos left
+	// navigate to next photo or close if no photos left
 	state = main.getUIState();
 	currentPhotoIndex = state.getCurrentPhotoIndex();
 	currentPhoto = state.getCurrentPhoto();
