@@ -6,11 +6,11 @@
 {% compress css file %}
 <link rel="stylesheet" type="text/x-stylus" href="static/css/main.styl" />
 {% endcompress %}
-
+<!--
 <script type="text/javascript" src="static/js/jquery.all.min.js"></script>
 
 <script type="text/javascript" src="static/js/insert-photo.js"></script>
-
+-->
 <div class="insert">
 	
 	<h2 class="mp-input-title">{% trans "insert-dialogue-title insert-photo" %}</h2>
@@ -28,8 +28,8 @@
 			<textarea type="text" name="description" cols="50" rows="5"></textarea>
 		</div>
 		<div>
-			<label for="photo">{% trans "insert-dialogue select photo to upload" %}<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
-			<input type="file" name="photo" required="required" size="40"/>
+			<label name="file-upload" for="photo">{% trans "insert-dialogue select photo to upload" %}<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
+			<input class="mp-input-drop" type="file" name="photo" required="required" size="40"/>
 		</div>
 
 		<input class="mp-button mp-single-upload" type="submit" value='{% trans "Speichern" %}' name="submit" />

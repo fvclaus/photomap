@@ -88,6 +88,9 @@ UIAlbum.prototype =  {
 			.width(instance.$album.width())
 			.height(instance.$album.height())
 		    
+		    /* ------------------
+		     * disabled for now, enable again when drag'n'drop file-upload is working smoothly
+		     * 
 		    if ( state.isInteractive() ){
 			// Drag n Drop for Photos if user is admin
 			instance.$album
@@ -113,7 +116,9 @@ UIAlbum.prototype =  {
 				    });
 				}
 			    });
-			}
+		    }
+		     * 
+		     */
 		    // create scrollpane 
 		    instance.$album
 			.css("padding-left",instance.albumPadding)

@@ -3,12 +3,14 @@ function toggleGallery() {
   var album = main.getUI().getAlbum();
   
   if ($gallery.is(":visible")){
+    $(".mp-gallery-drop").unbind('drop.UploadDrop');
     $gallery.fadeOut(100);
     $(".mp-gallery-visible").hide()
     $(".mp-gallery-hidden").show()
     // trigger event to expose album
     album._setVisibility(false);
     mpEvents.trigger("body",mpEvents.toggleExpose);
+    
   }
   else {
     $gallery.fadeIn(500);
@@ -17,6 +19,7 @@ function toggleGallery() {
     // trigger event to close mask
     album._setVisibility(true);
     mpEvents.trigger("body",mpEvents.toggleExpose);
+    $(".mp-gallery-drop").bind('drop.UploadDrop',controls.handleGalleryDrop);
   }
 };
 
@@ -60,6 +63,39 @@ function galleryListener(){
   });
 };
 
+function addFiledrop(){
+  $("div.mp-filedrop").filedrop({
+  'url': '/insert-photo',
+  'allowedfiletypes': ['image/jpeg','image/png'],
+  'maxfiles': 1,
+  'error': function(err, file) {
+    switch(err) {
+	case 'BrowserNotSupported':
+	    alert('Your browser does not support html5 drag and drop!');
+	    break;
+	case 'TooManyFiles':
+	    alert('You can just upload one photo at a time!');
+	    break;
+	case 'FileTypeNotAllowed':
+	    alert('The file you want to upload has a not-supported file-type. Supported fily-types are: *.jpeg, *.png!');
+	    break;
+	default:
+	    break;
+    }
+  },
+  'data': {
+    'title': $("input[name='title']").val(),
+    'description': $("input[name='description']").val(),
+  },
+  'uploadStarted': function(i,file,len){
+    $.fancybox.close();
+    if ( state.isMultipleUpload() ) {
+      $(".mp-option-add").trigger('click');
+    }
+  }
+  });
+};
+
 $(document).ready(function(){
   var map = main.getMap();
   var information = main.getUI().getInformation();
@@ -81,7 +117,7 @@ $(document).ready(function(){
   $(".mp-option-to-dashboard").hide();
 
 });
-  
+
 /* 
  * classes are not completely initiated, when DOM is already ready ->
  * therefor when checking something (isAdmin/isInteractive/...) in these classes 
@@ -100,16 +136,16 @@ $(window).load(function(){
   
   if ( main.getClientState().isAdmin() ) {
     
-    console.log(controls);
-    
     // set page in interactive mode as albumview
     state.setModeInteractive(true,page);
     
     // add admin listeners
+    addFiledrop();
     map.bindListener();
     iframeListener();
     controls.bindListener();
     controls.markerControlListener('place');
+    $("#mp-album-wrapper").bind('drop',controls.handleGalleryDrop);;
     
     // change cursor style on map (has to be inside .load() cause it depends on state.isInteractive()
     cursor.setMapCursor();

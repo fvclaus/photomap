@@ -143,4 +143,16 @@ UIState.prototype = {
     getAlbumShareURL: function(){
 	return this.currentAlbumShare;
     },
+    setDropEvent : function(event){
+	this.dropEvent = event;
+    },
+    getDropEvent : function(event){
+	return this.dropEvent;
+    },
+    setMultipleUpload : function(bool){
+	this.multipleUpload = bool;
+    },
+    isMultipleUpload : function(){
+	return this.multipleUpload;
+    },
 };

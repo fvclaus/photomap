@@ -19,37 +19,13 @@ ClientState.prototype = {
     },
     _parseValue : function(value){
 	this.value  = value.split(",");
-	console.log('value');
-	console.log(this.value);
 	var instance = this;
-
-	//legacy parsing ; saved photo + place
-	if (value.match(/photo|place/) ){
-	    this.photos = new Array();
-	    console.log('photos');
-	    console.log(this.photos);
-	    this.value.forEach(function(el){
-		if (el.match(/photo/)){
-		    console.log('legacy before push');
-		    console.log(instance.photos);
-		    instance.photos.push(parseInt(el.split("-")[1]));
-		    console.log('legacy after push');
-		    console.log(instance.photos);
-		}
+	this.photos = new Array();
+	
+	if (value != "") {
+	    this.value.forEach(function(photo){
+		instance.photos.push(parseInt(photo));
 	    });
-	}
-	//new one saves only photo
-	else {
-	    this.photos = new Array();
-	    if (value != "") {
-		this.value.forEach(function(photo){
-		    console.log('new before push');
-		    console.log(instance.photos);
-		    instance.photos.push(parseInt(photo));
-		    console.log('new after push');
-		    console.log(instance.photos);
-		});
-	    }
 	}
     },
     isVisitedPhoto : function(id){
@@ -60,13 +36,11 @@ ClientState.prototype = {
     },
     addPhoto : function(id){
 	if (this.photos.indexOf(id) == -1){
-	    console.log(id);
 	    this.photos.push(id);
 	    this._writeCookie();
 	}
     },
     _writeCookie : function(){
-	console.log(this.photos);
 	this.value = this.photos.join(",");
 	$.cookie("visited",this.value,this._cookieSettings);
     },

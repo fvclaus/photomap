@@ -19,14 +19,14 @@ UIInput.prototype = {
 	});
 	return this;
     },
-    iFrame : function(url){
+    getUpload : function(url,onCompleteHandler){
 	// close mask if open
 	$.mask.close();
 	
 	var instance = this;
 	$.fancybox({
 	    href : url,
-	    type : "iframe",
+	    onComplete : onCompleteHandler,
 	    onClosed : function(){
 		mpEvents.trigger("body",mpEvents.iframeClose);
 		mpEvents.trigger("body",mpEvents.toggleExpose);
