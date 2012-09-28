@@ -6,6 +6,7 @@ Created on Sep 28, 2012
 
 import logging
 import re
+import sys
 from django.shortcuts import render_to_response
 
 class NoSupportMiddleware():
@@ -14,7 +15,14 @@ class NoSupportMiddleware():
     
     def process_request(self, request):
         logger = logging.getLogger(__name__)
-        user_agent = request.META["HTTP_USER_AGENT"]
+        try:
+            user_agent = request.META["HTTP_USER_AGENT"]
+        except:
+            if 'test' in sys.argv:
+                user_agent = "Firefox/15"
+            else:
+                user_agent = None
+                
         logger.debug("User agent is %s" % user_agent)
         match = self.IS_FF.search(user_agent)
     
