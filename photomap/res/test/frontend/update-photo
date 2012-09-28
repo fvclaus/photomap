@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>${inputForm}</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>${descriptionInput}</td>
 	<td>${lipsum2}</td>

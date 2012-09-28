@@ -11,7 +11,6 @@
 <tr><td><a href="setUp">setUp</a></td></tr>
 <tr><td><a href="login">login</a></td></tr>
 <tr><td><a href="insert-album">insert-album</a></td></tr>
-<tr><td><a href="hide-album-information">hide-album-information</a></td></tr>
 <tr><td><a href="insert-place">insert-place</a></td></tr>
 <tr><td><a href="add-photo">add-photo</a></td></tr>
 <tr><td><a href="update-place">update-place</a></td></tr>

@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForVisible</td>
+	<td>${inputForm}</td>
+	<td></td>
+</tr>
+<tr>
 	<td>type</td>
 	<td>${titleInput}</td>
 	<td>Holiday in random country ;)</td>
@@ -31,7 +36,6 @@
 	<td>${submit}</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

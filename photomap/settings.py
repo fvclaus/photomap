@@ -188,6 +188,7 @@ COMPRESS_PRECOMPILERS = (
 COMPRESS_URL = "static/"
 
 MIDDLEWARE_CLASSES = (
+    'pm.middleware.NoSupportMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
