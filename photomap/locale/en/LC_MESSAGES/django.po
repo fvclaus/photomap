@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-22 14:55+0200\n"
+"POT-Creation-Date: 2012-09-29 21:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,7 +29,7 @@ msgstr "Edit"
 msgid "link-title-dashboard"
 msgstr "To Dashboard"
 
-#: templates/base.html:101
+#: templates/base.html:101 templates/not-supported.html:59
 msgid "link-title-impressum"
 msgstr "View Legal Terms of NAME OF PROJECT"
 
@@ -38,7 +38,7 @@ msgstr "View Legal Terms of NAME OF PROJECT"
 msgid "Impressum"
 msgstr "Legal Terms"
 
-#: templates/base.html:102
+#: templates/base.html:102 templates/not-supported.html:60
 msgid "link-title-privacy"
 msgstr "View Data Use Policy"
 
@@ -47,7 +47,7 @@ msgstr "View Data Use Policy"
 msgid "Datenschutz"
 msgstr "Privacy"
 
-#: templates/base.html:103
+#: templates/base.html:103 templates/not-supported.html:61
 msgid "link-title-copyright"
 msgstr "View Copyright Statement"
 
@@ -55,7 +55,7 @@ msgstr "View Copyright Statement"
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:104
+#: templates/base.html:104 templates/not-supported.html:62
 msgid "link-title-contact"
 msgstr "Contact, Support, Ask a Question"
 
@@ -64,7 +64,7 @@ msgstr "Contact, Support, Ask a Question"
 msgid "Kontakt"
 msgstr "Contact"
 
-#: templates/base.html:105
+#: templates/base.html:105 templates/not-supported.html:63
 msgid "link-title-help"
 msgstr "View FAQ, Tutorial and help-page"
 
@@ -72,11 +72,12 @@ msgstr "View FAQ, Tutorial and help-page"
 msgid "Hilfe"
 msgstr "Help"
 
-#: templates/base.html:106
+#: templates/base.html:106 templates/not-supported.html:64
 msgid "link-title-team"
 msgstr "Introduction of the project and core team members"
 
-#: templates/base.html:106
+#: templates/base.html:106 templates/team.html:6 templates/team.html.py:8
+#: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
@@ -88,7 +89,7 @@ msgstr "Login/Register"
 msgid "contact-intro-article1-line1"
 msgstr ""
 "In case you are having troubles, suggestions or questions, which are not "
-"answered on our"
+"answered on our "
 
 #: templates/contact.html:13
 msgid "contact-linkto-help"
@@ -96,15 +97,15 @@ msgstr "help-page"
 
 #: templates/contact.html:14
 msgid "contact-intro-article1-line2"
-msgstr ", please feel free to write us an email to "
+msgstr ", kindly write us an email to "
 
 #: templates/contact.html:18
 msgid "contact-intro-article1-line3"
-msgstr "You can also use the following contact-form. (Soon available!)"
+msgstr "You may also use the following contact-form. (Soon available!)"
 
 #: templates/contact.html:19
 msgid "contact-intro-article1-line4"
-msgstr "Please regard the therefor valid"
+msgstr "Kindly refer to the valid "
 
 #: templates/contact.html:19
 msgid "contact-linkto-privacy"
@@ -118,24 +119,79 @@ msgstr "Statement of copyright"
 msgid "Urheberrecht bei internen Inhalten"
 msgstr "Copyrights of the makers of this website"
 
-#: templates/copyright.html:14
-msgid "copyright-article1-paragraph1"
-msgstr ""
-"Content published by the makers of this web-app is subject to german "
-"copyright law. Duplication, distribution as well as usage beyond the "
-"copyright law require written permission by the particular author."
-
-#: templates/copyright.html:15
-msgid "Urheberrecht Dritter"
-msgstr "Third Party Copyrights"
-
 #: templates/copyright.html:16
-msgid "copyright-article1-paragraph2"
+msgid "Urheberrecht bei internen Inhalten list-item-1"
 msgstr ""
-"Insofar as content is not created by the makers, regard copyrights of a "
-"third party. Third party content is marked as such. In case you still detect "
-"a copyright infringement, please report it to us. We'll delete this content "
-"immediately or workout a solution with the copyright owner."
+"The makers of the website are a team of aspiring members whose profiles you "
+"can find on the 'Team'-page."
+
+#: templates/copyright.html:17
+msgid "Urheberrecht bei internen Inhalten list-item-2"
+msgstr ""
+"The coding behind this website includes all the server-side scripts and the "
+"front end javascript code."
+
+#: templates/copyright.html:18
+msgid "Urheberrecht bei internen Inhalten list-item-3"
+msgstr ""
+"The content published by the makers of this website and the coding behind "
+"are subject to German Copyright Law."
+
+#: templates/copyright.html:19
+msgid "Urheberrecht bei internen Inhalten list-item-4"
+msgstr ""
+"Duplication, distribution, as well as usage beyond the copyright law, "
+"requires written permission by the author."
+
+#: templates/copyright.html:22
+msgid "Urheberrecht der Nutzer"
+msgstr "Copyright of the Users"
+
+#: templates/copyright.html:25
+msgid "Urheberrecht der Nutzer list-item-1"
+msgstr ""
+"Content created and published by the users include- pictures, and text in "
+"titles, descriptions and comments."
+
+#: templates/copyright.html:26
+msgid "Urheberrecht der Nutzer list-item-2"
+msgstr "Such content is protected by copyright."
+
+#: templates/copyright.html:27
+msgid "Urheberrecht der Nutzer list-item-3"
+msgstr ""
+"Duplication, distribution, as well as usage beyond the copyright law, "
+"requires written permission by the author."
+
+#: templates/copyright.html:30
+msgid "Urheberrecht Dritter"
+msgstr "Third Party Copyright"
+
+#: templates/copyright.html:33
+msgid "Urheberrecht Dritter list-item-1"
+msgstr ""
+"Code and content on this website, which is neither created by the makers of "
+"this website nor by the users is a Third Party Content."
+
+#: templates/copyright.html:34
+msgid "Urheberrecht Dritter list-item-2"
+msgstr "Third Party Content has to be marked as such."
+
+#: templates/copyright.html:35
+msgid "Urheberrecht Dritter list-item-3"
+msgstr "Third Party Content is protected by copyright."
+
+#: templates/copyright.html:36
+msgid "Urheberrecht Dritter list-item-4"
+msgstr ""
+"The copyright information of the published Third Party Content has to be "
+"visibly close to the content itself."
+
+#: templates/copyright.html:37
+msgid "Urheberrecht Dritter list-item-5"
+msgstr ""
+"Duplication, distribution, as well as usage beyond the copyright law, "
+"requires written permission by the author."
 
 #: templates/dashboard.html:31
 msgid "control-title share"
@@ -152,19 +208,19 @@ msgstr "How to share the link?"
 #: templates/dashboard.html:53
 msgid "How to Share -> description"
 msgstr ""
-"To share this link you have to copy it and then paste it whereever you want "
-"to share it (Social networks, Email, Blogs, ...). You can copy the link by "
-"simply clicking on the 'Copy Link' button. You need to have flash enabled! "
-"So in case it doesn't work due to your browser security settings, you have "
-"to copy the highlighted link by hand. You can do that with 'Ctrl + "
-"C' (Windows) or 'Command + C' (Mac OS X) or by rightclicking on the link and "
-"choosing 'Copy'."
+"To share this link you need to copy and paste it wherever you would want to "
+"share (Social networks, Email, Blogs,etc). You may copy the link by simply "
+"clicking on the 'Copy Link' button, but for this , you need to have flash "
+"enabled. So in case it doesn't work due to your browser security settings, "
+"you need to copy the highlighted link manually. You can do that with 'Ctrl + "
+"C' (Windows) or 'Command + C' (Mac OS X) or by right clicking on the link "
+"and choosing 'Copy'."
 
 #: templates/dashboard.html:56
 msgid "How to Share -> attention!"
 msgstr ""
-"Please be aware that copying this link will overwrite whatever is stored in "
-"your clipboard right now. (Whatever you copied last.)"
+"Please be aware that copying this link will overwrite whatever is currently "
+"stored on your clipboard. (Whatever information that you copied last.)"
 
 #: templates/help.html:8
 msgid "Hilfe und Support"
@@ -173,10 +229,10 @@ msgstr "Help and Support"
 #: templates/help.html:17
 msgid "help-intro-paragraph"
 msgstr ""
-"At the moment there is no extensive help page available; we're working on it "
-"though. There already is a basic text tutorial for the main functions "
-"available right now. If you have unanswered questions or problems, please "
-"write us an email; we'll contact you soon."
+"At the moment there is no extensive help page available, since we are "
+"currently working on it; although is a basic text tutorial for the main "
+"functions available. If you have unanswered questions or problems, please "
+"write us an email and we will contact you soon."
 
 #: templates/help.html:20
 msgid "help-faq-title"
@@ -189,14 +245,13 @@ msgstr "Why full names?"
 #: templates/help.html:23
 msgid "help-faq topic 'Warum Klarnamen?' answer"
 msgstr ""
-"Some people might feel uncomfortable using their real name in the internet."
-"As it is this project is supposed to be something quite personal. Your "
-"personal digital photo-book, if you will. We guarantee that noone will see "
-"your content and name, unless you explicitely shared the album with this "
-"person. We think it is much more appealing to see the real name of a friend "
-"or family member instead of a more or less strange alias. Old fashioned? Not "
-"at all! For a Photo-book real names are much more informative and nice to "
-"look at."
+"Some users might be uncomfortable using their real name on the internet, and "
+"as such this project is supposed to be quite personal, your personal digital "
+"photo-book, if you will. We guarantee that no user can see your content and "
+"name, unless you explicitly shared the album with this person. We think it "
+"is much more appealing to see the real name of a friend or family member "
+"instead of a more or less strange alias. Old fashioned? Not at all! For a "
+"Photo-book real names are much more informative and nice to look at."
 
 #: templates/help.html:26
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
@@ -206,16 +261,16 @@ msgstr "What is a strong password?"
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
 msgstr ""
 "We're not checking your password, so basically you can choose whatever "
-"password you like. Yet, since it's a good habit, to have a unique strong "
-"password for every online service, anyways, we want to advise you "
-"to take a strong password! Now, what is a strong password?! Even though "
-"the number of people using weak passwords like 'aragorn01' is decreasing,"
-"more and more people start using short complex passwords like 'arA-g0Rn.$1'. "
-"Now this password is certainly harder to guess than 'aragorn01', yet it's not "
-"a really strong password. Even worse: it's hard to remember! The key to have "
-"a strong password is length rather than complexity. 'potatomirroranimalawesome' "
-"is a far stronger password than 'c72)lx.2Ihf,O' and yet it is so much easier "
-"to remember and faster to type, too. There is "
+"password you like. Yet, it's smarter and secure to have a unique strong "
+"password for every online service, further which we advise you to make a "
+"strong password. Now, what is a strong password? Even though the number of "
+"people using weak passwords like 'aragorn01' is decreasing gradually, people "
+"start using short complex passwords like 'arA-g0Rn.$1'. Now this password is "
+"certainly harder to guess than 'aragorn01', yet it is not really a strong "
+"password, even worse, it's hard to remember! The key to having a strong "
+"password is itslength rather than complexity. 'potatomirroranimalawesome' is "
+"a far stronger password than 'c72)lx.2Ihf,O' and it is so much more easier "
+"to remember and faster to type too. There is "
 
 #: templates/help.html:29
 msgid "link-title passwort security comic"
@@ -228,30 +283,33 @@ msgstr "a short comic"
 #: templates/help.html:30
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
 msgstr ""
-"illustrating this. In case you want to use a password consisting of 4 or more "
-"random words, make sure they really are random and not in any ways connected to you; "
-"or else one could just guess your password, without any computer. Of course "
-"you can use numbers and symbols in your password and it indeed makes your "
-"password stronger - as long as it is long enough - but make sure you actually "
-"can remember the password easily. Otherwise it'll be useless or just very uncomfortable "
-"to use. Another way to make strong passwords to use mnemotechniques. Eg. take the "
-"initial letters of the the first lines of the children song 'Kookaburra', "
-"transform all the 'i's into 1 and also take the punctuation -> 'Ks1togt.M,mkotb1h.' "
-"and you get a fairly safe password, which on top of that is easy to remember. The "
-"only problem might be that it takes a while to type, so in case you don't like "
-"that, you should maybe consider taking a 4-word password, as described above. Of course "
-"this was just an example - we used it, cause many people know this rhyme; when creating "
-"your own password you should also create your own rhyme, if you don't want people to guess "
-"it. In case you want to try out, when a password is safe and when not, the following "
+"illustrating this. In case you want to use a password consisting of 4 or "
+"more random words, make sure they really are random and not in any way "
+"connected to you, or else one could just guess your password without any "
+"computer. Of course you may use numbers and symbols in your password and it "
+"indeed makes your password stronger - as long as it is long enough - but "
+"make sure you can easily remember the password for your own convenience. "
+"Another way to make strong passwords is to use mnemotechniques. Eg. take the "
+"initial letters of the first lines of the children’s song 'Kookaburra', "
+"transform all the 'i's into 1 and also take the punctuation -> 'Ks1togt.M,"
+"mkotb1h.' and you get a fairly safe password, on top of which, it is easy to "
+"remember. The only problem might be that it takes a while to type, so in "
+"case you don't like that, you should consider taking a 4-word password as "
+"described above. Of course this was just an example - we used it, because "
+"many people know this rhyme; when creating your own password you should also "
+"create your own rhyme, if you don't want people to guess it. In case you "
+"want to try out when a password is safe and when  it is not, the following "
 "two links might be of help: "
 
 #: templates/help.html:31
 msgid "link-title steve gibson password haystack reference guide"
-msgstr "The password as needle in the haystack - https://www.grc.com/haystack.htm"
+msgstr ""
+"The password as needle in the haystack - https://www.grc.com/haystack.htm"
 
 #: templates/help.html:31
 msgid "link to steve gibson password haystack reference guide"
-msgstr "1. Steve Gibson password 'haystack' reference guide with password-tester"
+msgstr ""
+"1. Steve Gibson password 'haystack' reference guide with password-tester"
 
 #: templates/help.html:32
 msgid "link-title howsecureismypassword"
@@ -285,9 +343,10 @@ msgstr "Add Album"
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
 msgstr ""
-"You can add albums by clicking on the map. A dialogue will open, in which "
-"you can specify name and description of the album. After submitting your "
-"request the album will be saved and shown on the map as little marker."
+"You can add albums by clicking on the map, and when you do, a dialogue will "
+"open, in which you can specify a name and description of the album. After "
+"submitting your request, the album will be saved and shown on the map as a "
+"little marker."
 
 #: templates/help.html:50
 msgid ""
@@ -299,8 +358,8 @@ msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
 "description"
 msgstr ""
-"When moving the mouse over an album marker a small box will appear below the "
-"marker. There you can select delete or edit."
+"When moving the mouse over an album marker, a small box will appear below "
+"the marker. Over there you can select - delete or edit."
 
 #: templates/help.html:54
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
@@ -311,8 +370,9 @@ msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
 "description"
 msgstr ""
-"By clicking on an album marker you select the album and get redirected to "
-"the albumview of this album, in which you'll see all the places and pictures."
+"By clicking on an album marker you can select the album and get redirected "
+"to the album-view of this album, in which you can view all the places and "
+"pictures."
 
 #: templates/help.html:58
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Share"
@@ -323,26 +383,25 @@ msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "description"
 msgstr ""
-"In NAME OF THE PROJECT we give you the possibility to share albums of yours "
-"with others. This means we'll provide you with a link, which you can share "
-"with others on social networks or with emails or any other way you like. By "
+"In NAME OF THE PROJECT we give you the possibility of shareing all albums of "
+"yours. This means we will provide you with a link, which you can share with "
+"others on social networks or via emails or any other way you like. By "
 "clicking on this link, others can view your album with all the places and "
-"pictures you uploaded, read your descriptions, use Streetview or the "
-"satellite view to checkout places you have been to and witness your "
-"experiences. To share an album you can click on the 'Share' option in the "
-"controls box, which opens when moving the mouse over the album-markers. A "
-"window will open with the generated link. You can copy the link by "
-"highlighting it with your mouse and pressing 'Ctrl + C' (Windows) or "
-"'Command + C' (Mac OS X) or by rightclicking on the highlighted link and "
-"choosing the 'Copy' option. After copying the link you can paste it anywhere "
-"to share it with others."
+"pictures you uploaded, read your descriptions, use Street-view or satellite "
+"view to checkout places you have been to and witness your experience. To "
+"Share an album, you may click on the 'share' option in the controls box, "
+"which opens by moving the mouse over the album-markers, a window will open "
+"with the generated link. You can copy the link by highlighting it with your "
+"mouse and pressing 'Ctrl + C' (Windows) or 'Command + C' (Mac OS X) or by "
+"right clicking on the highlighted link and choosing the 'Copy' option. After "
+"copying the link you can paste it anywhere in order to share it with others."
 
 #: templates/help.html:61
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "attention!"
 msgstr ""
-"You need flash for the copy button, so please make sure to have enabled it "
+"You need flash for the copy button. So please make sure to have enabled it "
 "in your browser settings. It should be enabled by default, if you disabled "
 "flash due to security reasons you have to copy the link by hand as described "
 "above. "
@@ -354,10 +413,10 @@ msgstr "Albumview"
 #: templates/help.html:71
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
-"In the albumview you can add places; subsequently you can upload pictures "
+"In the album-view you can add places; subsequently you can upload pictures "
 "for each place, which you can view in the gallery (box on the right side). "
 "You can also view the pictures in a small slideshow inside the gallery or "
-"even in fullscreen."
+"even in a fullscreen mode."
 
 #: templates/help.html:73
 msgid "Plätze"
@@ -372,9 +431,9 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
 msgstr ""
-"Similar to adding albums you can add places by clicking on the map. After "
-"you submitted the dialogue in which you can specify name and description, "
-"the places will be saved and shown on the map as little markers."
+"Similar to adding albums, you can add places by clicking on the map. Once "
+"you submit the dialogue in which you   specify name and description, the "
+"places will be saved and shown on the map as little markers."
 
 #: templates/help.html:80
 msgid ""
@@ -386,7 +445,7 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
 msgstr ""
-"When moving the mouse over a place marker the box in which you can select "
+"When moving the mouse over a place marker, the box in which you may select "
 "delete or edit will be shown below the marker."
 
 #: templates/help.html:84
@@ -398,8 +457,8 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
 msgstr ""
-"To open the gallery and view the pictures that are assigned to a the place, "
-"you can click on the marker."
+"To order to open the gallery to view the pictures that are assigned to a "
+"place, you may click on the marker."
 
 #: templates/help.html:88
 msgid "Gallerie"
@@ -414,9 +473,9 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
 msgstr ""
-"In the gallery you'll find a button with a '+'. By clicking on the button "
-"you can open a dialogue to add/upload one or more pictures for the selected "
-"place."
+"In the gallery you will find a button with a '+'. By clicking on the button "
+"you can open a dialogue box to add/upload one or more pictures for the "
+"selected place."
 
 #: templates/help.html:95
 msgid ""
@@ -428,7 +487,7 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
 msgstr ""
-"Mouseover a picture will open the control-box, in which you can select Edit "
+"Mouse over a picture will open the control-box, in which you can select Edit "
 "or Delete."
 
 #: templates/help.html:99
@@ -440,9 +499,9 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
 msgstr ""
-"You can view the pictures in a little slideshow inside the gallery, by "
-"selecting a picture that you want the slideshow to start with. (Click on "
-"this picture)"
+"By selecting a picture that you want the slideshow to start with, you can "
+"view the pictures in a little slideshow inside the gallery.  (Click on this "
+"picture)"
 
 #: templates/help.html:103
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
@@ -453,10 +512,10 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
 msgstr ""
-"When viewing pictures in the slideshow you'll see a magnifying glass in the "
-"center of the picture. By clicking on it, you'll open the fullscreen view of "
-"this picture. In case the picture is bigger than the screen resolution "
-"allows right now, you can zoom into the pic."
+"When viewing pictures in the slideshow you will see a magnifying glass at "
+"the centre of the picture. By clicking on it, you can further view the "
+"picture in a full-screen mode. In case the picture is bigger than the screen "
+"resolution allows right now, you can zoom into the picture."
 
 #: templates/help.html:107
 msgid ""
@@ -468,10 +527,13 @@ msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
 msgstr ""
-"You can reorder the pictures in your gallery by dragging them to the "
-"favorized position and dropping them there."
+"You can reorder the pictures in your gallery by dragging them to a "
+"favourable position and dropping them there."
 
-#: templates/help.html:111 templates/view-album.html:49
+#: templates/help.html:111 templates/insert-album.html:19
+#: templates/insert-photo.html:27 templates/insert-place.html:19
+#: templates/update-album.html:20 templates/update-photo.html:21
+#: templates/update-place.html:20 templates/view-album.html:49
 msgid "Beschreibung"
 msgstr "Description"
 
@@ -531,99 +593,108 @@ msgstr "Abuse of contact data"
 #: templates/impressum.html:37
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
-"The usage of contact data, published in on this page, by a third party to "
-"send advertisements and information material that is not explicitely asked "
-"for as well as other misuse (like spammails) is herewith expressly "
-"prohibited. The makers of this website reserve the right to take legal "
-"action in case of an abuse of contact data."
+"The usage of contact data published on this page, by a third party to send "
+"advertisements and information material that is not explicitly asked for as "
+"well as other misuse (like spam mails) is herewith prohibited. The makers of "
+"this website reserve the right to take legal action in case of an abuse of "
+"contact data."
 
 #: templates/impressum.html:41
 msgid "impressum-liability Haftung für Inhalte"
-msgstr "Liability for content"
+msgstr "Liability for content published by makers of this website"
 
-#: templates/impressum.html:42
-msgid "impressum-liability Haftung für Inhalte -> description"
+#: templates/impressum.html:44
+msgid "impressum-liability Haftung für Inhalte list-item-1"
+msgstr ""
+"The makers of the website are a team of aspiring members whose profiles you "
+"can find on the „Team“-page."
+
+#: templates/impressum.html:45
+msgid "impressum-liability Haftung für Inhalte list-item-2"
 msgstr ""
 "Content published by the makers of this web-application is carefully checked "
-"before putting it online. Nevertheless we can't guarantee conpleteness and "
-"full integrity and up-to-dateness. Compliant to § 7 Abs.1 TMG we are as "
-"service provider responsible for our contents. But compliant to § 8 to § 10 "
-"TMG we are not obliged to perpetually monitor all contents uploaded and "
-"check them for the possibility of supporting illegal activities.Obligations "
-"to the removing and blocking of usage of information according to the "
-"general law are not touched by this. A liability concerning this matter is "
-"possible after a concrete infringement of the law is known. We will not "
-"hesitate to remove the content and even block or notify the user in this "
-"case."
+"before putting it online. Nevertheless we cannot guarantee the completeness "
+"and full integrity and up-to-datedness."
 
-#: templates/impressum.html:43
+#: templates/impressum.html:46
+msgid "impressum-liability Haftung für Inhalte list-item-3"
+msgstr ""
+"Compliant to § 7 Abs.1 TMG we as service providers, are responsible for our "
+"contents. But compliant to § 8 to § 10 TMG we are not obliged to perpetually "
+"monitoring all content uploads and check them for the possibility of "
+"supporting illegal activities."
+
+#: templates/impressum.html:47
+msgid "impressum-liability Haftung für Inhalte list-item-4"
+msgstr ""
+"Obligation to remove and block the usage of information, according to the "
+"general law are not touched by this. A liability concerning this matter is "
+"possible, provided that a concrete infringement of the law is known."
+
+#: templates/impressum.html:48
+msgid "impressum-liability Haftung für Inhalte list-item-5"
+msgstr ""
+"We will not hesitate to remove the content and even block or notify the user "
+"in this case."
+
+#: templates/impressum.html:51
 msgid "impressum-liability Haftung für Links"
 msgstr "Liability for links to external websites"
 
-#: templates/impressum.html:44
-msgid "impressum-liability Haftung für Links -> description"
+#: templates/impressum.html:54
+msgid "impressum-liability Haftung für Links list-item-1"
 msgstr ""
-"There are links to third party pages, of which we, the makers of this "
-"website, can't control the content, on our website; therefore we can't "
-"saveguard their content. The responsibility of the data published on these "
-"websites is within the diescretion of the owners. Nevertheless we check the "
-"website before publishing a link to it. At the time of publishing no "
-"infringments to the law were obvious to us. Without concrete indications a "
-"perpetual monitoring of the websites contentwise is not possible. In case we "
-"gain knowledge of an infringement we'll make sure to remove the links to the "
-"website immediately."
+"The makers of this website cannot control or safe-guard the content of "
+"websites that are linked on this website."
+
+#: templates/impressum.html:55
+msgid "impressum-liability Haftung für Links list-item-2"
+msgstr ""
+"The responsibility of the data published on this website is within the "
+"discretion of the owners."
+
+#: templates/impressum.html:56
+msgid "impressum-liability Haftung für Links list-item-3"
+msgstr ""
+"Any linked website gets checked by us and we would not link a website, if "
+"there are any infringements to the law obvious to us. Without concrete "
+"indications a perpetual monitoring of the websites’ content is not possible "
+"though."
+
+#: templates/impressum.html:57
+msgid "impressum-liability Haftung für Links list-item-4"
+msgstr ""
+"In case we gain knowledge of an infringement will make sure to remove the "
+"links of the concerned website immediately."
 
 #: templates/index.html:6 templates/index.html.py:8
 msgid "Willkommen"
 msgstr "Welcome"
 
 #: templates/index.html:17
-msgid "welcome-title"
-msgstr "Welcome to NAME OF THE PROJECT"
+msgid "Herzlich Willkommen"
+msgstr "Welcome"
 
 #: templates/index.html:18
-msgid "welcome-paragraph1"
+msgid "welcome-paragraph"
 msgstr ""
-"The web application is still in development. Therefor please excuse the half-"
-"baked design and the limited functionality. You can already use the basic "
-"functions; so feel free to sign up and try it out."
-
-#: templates/index.html:19
-msgid "welcome-paragraph2"
-msgstr ""
-"While you are making your first albums and uploading the first pics, we'll "
-"continue working on the project and regularly publishing updates. We'll try "
-"to give registered users as less troubles with the updates as possible. "
-"Please consider that we are just students and have a lot to study next to "
-"this project ;). This is why some updates may take some time."
-
-#: templates/index.html:20
-msgid "welcome-paragraph3"
-msgstr ""
-"Lots of fun and joy with the creation of your very own online photo-book and "
-"with sharing your experiences and travels wishes you the LGHP-Team."
-
-#: templates/index.html:22
-msgid "welcome-paragraph4"
-msgstr ""
-"PS: In case you have questions, constructive criticism or suggestions you "
-"can write us an email to"
+"Welcome to Photomap. It's basically a digital online-photo-book which you "
+"can use to share all your travel-experiences with family and friends. The "
+"project is still in development. This is why you can't register yet. The "
+"basic funtions work already though. So if you really want to try it out "
+"already, ask a member of the development team, eg. by writing an email to: "
 
 #: templates/insert-album.html:11
 msgid "insert-dialogue-title insert-album"
 msgstr "Add new album"
 
 #: templates/insert-album.html:15 templates/insert-photo.html:23
-#: templates/insert-place.html:15 templates/update-album.html:16
-#: templates/update-photo.html:17 templates/update-place.html:16
-msgid "insert-dialogue name"
+#: templates/insert-place.html:15 templates/team.html:17
+#: templates/team.html.py:31 templates/team.html:45
+#: templates/update-album.html:16 templates/update-photo.html:17
+#: templates/update-place.html:16
+msgid "Name"
 msgstr "Name"
-
-#: templates/insert-album.html:19 templates/insert-photo.html:27
-#: templates/insert-place.html:19 templates/update-album.html:20
-#: templates/update-photo.html:21 templates/update-place.html:20
-msgid "insert-dialogue description"
-msgstr "Description"
 
 #: templates/insert-album.html:24 templates/insert-photo.html:35
 #: templates/insert-place.html:25
@@ -673,8 +744,8 @@ msgstr "Data usage by this web-application"
 #: templates/privacy.html:17
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> description"
 msgstr ""
-"To get your own photo-book you'll be asked to give your email-address and "
-"your full name during the registration.  (Last name is optional) This "
+"To get your own photo-book you' will be asked to give your email-address and "
+"your full name during the registration. (Last name is optional) This "
 "information is saved in our database under your personal automatically given "
 "user-id."
 
@@ -685,8 +756,8 @@ msgstr "Usage of the email-address"
 #: templates/privacy.html:20
 msgid "privacy-subtopic Nutzung der email-Adresse -> description"
 msgstr ""
-"The email-address is used to login to your photo-book. After logging in it's "
-"visible on the bottom left corner of the page, but just for you."
+"The email-address is used for logging into your photo-book. After logging "
+"in, it's visible on the bottom left corner of the page only for you."
 
 #: templates/privacy.html:23
 msgid "privacy-subtopic Nutzung des Namens"
@@ -696,10 +767,10 @@ msgstr "Usage of the full name"
 msgid "privacy-subtopic Nutzung des Namens -> description"
 msgstr ""
 "Your full name is used as username, but right now there is no specific use "
-"of it. Later on we'll give you the possibility to comment the albums of "
+"of it. Later on we'll give you the possibility to comment on the albums of "
 "other people and to view albums of friends in your Dashboard. Then the "
-"username will gain importance as it'll be shown next to your comments and in "
-"the newsfeed other people will have on the albums you shared with them."
+"username will gain importance as it will be shown next to your comments and "
+"in the newsfeed other people will have on the albums you shared with them."
 
 #: templates/privacy.html:26
 msgid "privacy-sidenote Pseudonyme"
@@ -709,83 +780,150 @@ msgstr "Note concerning pseudonymes"
 msgid "privacy-sidenote Pseudonyme -> description"
 msgstr ""
 "We don't check the names you choose, so it is possible for you to use "
-"pseudonymes. However please consider that this is your personal online photo-"
-"book. Just people, who you give access to an album of yours, are able to "
-"view your pictures and see your name. We make no use of your name. In our "
-"opinion it is much more appealing to read real names in a photo-book, than "
+"pseudonyms. However please consider that this is your personal online photo-"
+"book. Only people who you give access to an album of yours, are able to view "
+"your pictures and see your name. We make no use of your name. In our "
+"opinion, it is much more appealing to read real names in a photo-book, than "
 "reading fake-aliases."
 
 #: templates/privacy.html:32
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee"
 msgstr ""
 "We guarantee that the information saved by users on the server is used in no "
-"other ways than the mentioned ones. We don't make use of your name or email-"
-"address and we do as much as possible to support your privacy.Yet we have no "
-"control over the actions of our users; therefor every user has him/herself a "
-"responsibility to be careful with his/her data, especially when sharing "
-"albums with other people."
+"other ways other than the mentioned ones. We don't make use of your name or "
+"email-address and we do as much as possible to support your privacy; yet we "
+"have no control over the actions of our users. Therefore every user has a "
+"responsibility to be careful with their data, especially when sharing albums "
+"with other people."
 
 #: templates/privacy.html:35
-msgid "privacy-topic Webanalyse und Cookies"
-msgstr "Webanalysis and Cookies"
+msgid "privacy-topic Cookies"
+msgstr "Cookies"
 
 #: templates/privacy.html:37
-msgid "privacy-topic Webanalyse und Cookies -> description"
+msgid "privacy-topic Cookies -> cookie-introduction"
+msgstr "This web-application is using following cookies:"
+
+#: templates/privacy.html:39
+msgid "privacy-topic Cookies - sessioncookie"
 msgstr ""
-"This web-application is using cookies, which are used for your session id. "
-"For further information about cookies we'd like to redirect you to the"
+"Session-Cookie: The session-cookie contains your session-ID, which is "
+"created by the server after a successful authentication. It is used for "
+"checking your authorization for several actions such as creating, modifying "
+"and deleting albums, places and photos."
 
-#: templates/privacy.html:37
-msgid "privacy-topic Webanalyse und Cookies -> link to wiki"
+#: templates/privacy.html:40
+msgid "privacy-topic Cookies - 'visited'-cookie"
+msgstr ""
+"‘Visited’-Cookie: The ‘visited’-cookie contains information about the "
+"photos, which the user has already seen and which  he/she  has not. This "
+"information is used in giving the user feedback on which places and albums "
+"the user has completely checked out already, by changing the map-markers "
+"colour."
+
+#: templates/privacy.html:44
+msgid "privacy-topic Cookies -> redirection to wiki"
+msgstr "For further information on cookies, we are re-directing you to the "
+
+#: templates/privacy.html:44
+msgid "privacy-topic Cookies -> link to wiki"
 msgstr "http://en.wikipedia.org/wiki/HTTP_cookie"
 
-#: templates/privacy.html:38
+#: templates/privacy.html:45
 msgid "link-title Wikipedia-Eintrag zu Cookies"
 msgstr "wikipedia entry concerning cookies"
 
-#: templates/privacy.html:38
-msgid "privacy-topic Webanalyse und Cookies -> name of link to wiki"
+#: templates/privacy.html:45
+msgid "privacy-topic Cookies -> name of link to wiki"
 msgstr "wikipedia entry concerning http-cookies"
 
-#: templates/privacy.html:41
+#: templates/privacy.html:48
 msgid "privacy-topic Emails und Kontaktformulare"
 msgstr "Emails and contact forms"
 
-#: templates/privacy.html:42
-msgid "privacy-topic Emails und Kontaktformulare -> description"
+#: templates/privacy.html:51
+msgid "privacy-topic Emails und Kontaktformulare list-item-1"
 msgstr ""
-"The messages you sent us as email or via the contact form are saved for "
-"documentational purpose and in order for us to process your request. This "
-"includes all the data you send us; e.g. the required fields in the contact "
-"form. The use of pseudonymes is allowed but not recommended; it'll make "
-"processing your request harder and we might not be able to give you as "
-"detailed help as we'd like to. Once your question is answered we'll delete "
-"the message, unless you want us to save it for future reference."
+"Users and visitors can send questions or give feedback by using the contact "
+"form or writing an email to ‘s.u.p.p.0.r.t.lghp.projekt@gmail.com’."
 
-#: templates/privacy.html:43
+#: templates/privacy.html:52
+msgid "privacy-topic Emails und Kontaktformulare list-item-2"
+msgstr ""
+"Messages sent to us via the contact form or as email are saved for "
+"documentation purpose, and in order for us to process your request. This "
+"includes all the data you send to us, e.g. the required fields in the "
+"contact form."
+
+#: templates/privacy.html:53
+msgid "privacy-topic Emails und Kontaktformulare list-item-3"
+msgstr ""
+"The use of pseudonyms is allowed but not recommended; it will make "
+"processing your request harder, and we might not be able to give you an in-"
+"depth help as we would like to."
+
+#: templates/privacy.html:54
+msgid "privacy-topic Emails und Kontaktformulare list-item-4"
+msgstr ""
+"Once your question is answered we will delete the message, unless you want "
+"us to save it for future reference."
+
+#: templates/privacy.html:55
+msgid "privacy-topic Emails und Kontaktformulare list-item-5"
+msgstr ""
+"In case we would like to save a message we will contact the writer and ask "
+"for permission."
+
+#: templates/privacy.html:58
 msgid "privacy-topic Auskunftsrecht"
 msgstr "Right to information"
 
-#: templates/privacy.html:45
-msgid "privacy-topic Auskunftsrecht -> description"
+#: templates/privacy.html:60
+msgid "privacy-topic Auskunftsrecht -> paragraph1"
 msgstr ""
-"We're happy to give you all the information about you that is saved in our "
-"database. Yet we don't know more than you told us. Still we'll send all this "
-"information to you compliant to your legal right to information."
+"We would be happy to give you all the information about yourself that is "
+"saved in our database. Yet we wouldn’t know anything  more than the "
+"information that you provide us. If you want to know what information is "
+"saved and how it is saved in our database, just send us your request for the "
+"same, via email or the "
 
-#: templates/privacy.html:46
-msgid "privacy-topic Auskunftsrecht -> invitation to ask"
-msgstr ""
-"If you want to know what information and how it is saved in our database, "
-"just write us your request as email or via the"
-
-#: templates/privacy.html:46
+#: templates/privacy.html:61
 msgid "Kontaktformular"
 msgstr "Contact Form"
 
-#: templates/team.html:8
-msgid "Projekt und Team"
-msgstr "Project and Team"
+#: templates/privacy.html:62
+msgid "privacy-topic Auskunftsrecht -> paragraph2"
+msgstr ""
+"We will send all the available and required information to you, in "
+"complaisance to your legal right to information."
+
+#: templates/team.html:19 templates/team.html.py:33 templates/team.html:47
+msgid "Email"
+msgstr "Email"
+
+#: templates/team.html:21 templates/team.html.py:35 templates/team.html:49
+msgid "Verantwortlich für"
+msgstr "Responsible for"
+
+#: templates/team.html:22 templates/team.html.py:36
+msgid "Back End"
+msgstr "Back End"
+
+#: templates/team.html:22 templates/team.html.py:36 templates/team.html:50
+msgid "Design"
+msgstr "Design"
+
+#: templates/team.html:22 templates/team.html.py:36 templates/team.html:50
+msgid "Ideen"
+msgstr "Ideas"
+
+#: templates/team.html:23 templates/team.html.py:37 templates/team.html:51
+msgid "Motivation am Projekt"
+msgstr "Motivation for the project"
+
+#: templates/team.html:50
+msgid "Front End"
+msgstr "Front End"
 
 #: templates/update-album.html:11
 msgid "insert-dialogue-title update-album"

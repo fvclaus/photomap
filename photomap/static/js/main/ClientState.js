@@ -21,7 +21,7 @@ ClientState.prototype = {
 	var instance = this;
 	oldValue  = value.split(",");
 	this.photos = new Array();
-	
+	// 'visited'-cookie mustn't contain non-numeric values!
 	if (value != "") {
 	    for (i=0; i < oldValue.length; i++){
 		// in case there is a non-numeric value in the cookie

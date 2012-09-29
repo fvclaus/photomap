@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-22 14:55+0200\n"
+"POT-Creation-Date: 2012-09-29 21:03+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "Bearbeiten"
 msgid "link-title-dashboard"
 msgstr "Zum Dashboard"
 
-#: templates/base.html:101
+#: templates/base.html:101 templates/not-supported.html:59
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
@@ -39,7 +39,7 @@ msgstr "Zum Impressum von NAME DES PROJEKTS"
 msgid "Impressum"
 msgstr "Impressum"
 
-#: templates/base.html:102
+#: templates/base.html:102 templates/not-supported.html:60
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
@@ -48,7 +48,7 @@ msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:103
+#: templates/base.html:103 templates/not-supported.html:61
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
@@ -56,7 +56,7 @@ msgstr "Details zum Urheberrecht"
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:104
+#: templates/base.html:104 templates/not-supported.html:62
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
@@ -65,7 +65,7 @@ msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:105
+#: templates/base.html:105 templates/not-supported.html:63
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
@@ -73,11 +73,12 @@ msgstr "Hilfe zu den Funktionen und FAQ"
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:106
+#: templates/base.html:106 templates/not-supported.html:64
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:106
+#: templates/base.html:106 templates/team.html:6 templates/team.html.py:8
+#: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
@@ -119,29 +120,87 @@ msgstr "Urheberrechtserklärung"
 
 #: templates/copyright.html:13
 msgid "Urheberrecht bei internen Inhalten"
-msgstr "Urheberrecht bei internen Inhalten"
+msgstr "Urheberrecht der Entwickler der Website"
 
-#: templates/copyright.html:14
-msgid "copyright-article1-paragraph1"
+#: templates/copyright.html:16
+msgid "Urheberrecht bei internen Inhalten list-item-1"
 msgstr ""
-"Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten "
-"unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, "
-"Verbreitung und jede Art der Verwertung außerhalb der Grenzen des "
-"Urheberrechtes bedürfen der schriftlichen Zustimmung des jeweiligen Autors."
+"Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
+"Erstellung der Website verantwortlich ist. Ihre Profile sind auf der 'Team'-"
+"Seite zu finden."
 
-#: templates/copyright.html:15
+#: templates/copyright.html:17
+msgid "Urheberrecht bei internen Inhalten list-item-2"
+msgstr ""
+"'Code hinter der Website' beinhaltet alle serverseitigen Skripte, sowie den "
+"Javascript-Code im Front End."
+
+#: templates/copyright.html:18
+msgid "Urheberrecht bei internen Inhalten list-item-3"
+msgstr ""
+"Alle Inhalte die von der Entwicklern der Website veröffentlicht werden, "
+"genauso wie der Code hinter der Website sind durch das deutsche Urheberrecht "
+"geschützt."
+
+#: templates/copyright.html:19
+msgid "Urheberrecht bei internen Inhalten list-item-4"
+msgstr ""
+"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
+"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
+"Autors."
+
+#: templates/copyright.html:22
+msgid "Urheberrecht der Nutzer"
+msgstr "Urheberrecht der Nutzer"
+
+#: templates/copyright.html:25
+msgid "Urheberrecht der Nutzer list-item-1"
+msgstr ""
+"Inhalte die von Nutzern der Website geschaffen und veröffentlicht werden, "
+"kann aus Bildern und Texten als Titel, Beschreibung und Kommentaren bestehen."
+
+#: templates/copyright.html:26
+msgid "Urheberrecht der Nutzer list-item-2"
+msgstr "Solche Inhalte sind durch das Urheberrecht geschützt."
+
+#: templates/copyright.html:27
+msgid "Urheberrecht der Nutzer list-item-3"
+msgstr ""
+"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
+"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
+"Autors."
+
+#: templates/copyright.html:30
 msgid "Urheberrecht Dritter"
 msgstr "Urheberrecht Dritter"
 
-#: templates/copyright.html:16
-msgid "copyright-article1-paragraph2"
+#: templates/copyright.html:33
+msgid "Urheberrecht Dritter list-item-1"
 msgstr ""
-"Soweit die Inhalte auf dieser Seite nicht von den Betreibern erstellt "
-"wurden, werden die Urheberrechte Dritter beachtet. Insbesondere werden "
-"Inhalte Dritter als solche gekennzeichnet. Sollten Sie trotzdem auf eine "
-"Urheberrechtsverletzung aufmerksam werden, bitten wir um einen "
-"entsprechenden Hinweis. Bei Bekanntwerden von Rechtsverletzungen werden wir "
-"derartige Inhalte umgehend entfernen."
+"Code und Inhalte die auf dieser Website veröffentlicht bzw. genutzt werden "
+"und weder von den Entwicklern noch von Nutzern erstellt wurde sind Inhalte "
+"Dritter. "
+
+#: templates/copyright.html:34
+msgid "Urheberrecht Dritter list-item-2"
+msgstr "Inhalte Dritter müssen als solche gekennzeichnet werden."
+
+#: templates/copyright.html:35
+msgid "Urheberrecht Dritter list-item-3"
+msgstr "Inhalte Dritter sind durch das Urheberrecht geschützt."
+
+#: templates/copyright.html:36
+msgid "Urheberrecht Dritter list-item-4"
+msgstr ""
+"Die Urheberrechts-Informationen von veröffentlichten oder genutzten Inhalten "
+"Dritter müssen nahe beim Inhalt platziert sein."
+
+#: templates/copyright.html:37
+msgid "Urheberrecht Dritter list-item-5"
+msgstr ""
+"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
+"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
+"Autors."
 
 #: templates/dashboard.html:31
 msgid "control-title share"
@@ -215,18 +274,19 @@ msgstr "Was ist ein sicheres Passwort?"
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
 msgstr ""
 "Ob jemand bei unserer Web-Applikation ein sicheres Passwort benutzen will "
-"oder nicht, bleibt natürlich jedem selbst überlassen. Wir überprüfen Ihre Passwörter "
-"nicht! Dennoch ist es eine gute Angewohnheit für jeden Service den Sie im "
-"Internet nutzen ein einzigartiges sicheres Passwort zu benutzen und wir empfehlen "
-"Ihnen dies auch bei dieser Website zu tun. Doch was ist nun ein sicheres "
-"Passwort? Auch wenn es immer weniger Menschen gibt, die einfache, nicht "
-"sehr sichere Passwörter verwenden, wie zB. 'aragorn01'; gibt es mittlerweile "
-"viele andere, die kurze, komplizierte Passwörter verwenden, wie zB. 'arA-g0Rn.$1'. "
-"Natürlich ist dieses Passwort besser als 'aragorn01', trotzdem ist es vergleichsweise "
-"schwach. Was ein Passwort nämlich wirklich sicher macht ist in erster Linie die "
-"Länge und nicht die Komplexität. 'maschinegartennagelcocktail' ist ein sehr viel sichereres "
-"Passwort als 'c72)lx.2Ihf,O'. Ausserdem ist es wesentlich einfacher zu merken "
-"und schneller zu tippen! Es gibt dazu auch "
+"oder nicht, bleibt natürlich jedem selbst überlassen. Wir überprüfen Ihre "
+"Passwörter nicht! Dennoch ist es eine gute Angewohnheit für jeden Service "
+"den Sie im Internet nutzen ein einzigartiges sicheres Passwort zu benutzen "
+"und wir empfehlen Ihnen dies auch bei dieser Website zu tun. Doch was ist "
+"nun ein sicheres Passwort? Auch wenn es immer weniger Menschen gibt, die "
+"einfache, nicht sehr sichere Passwörter verwenden, wie zB. 'aragorn01'; gibt "
+"es mittlerweile viele andere, die kurze, komplizierte Passwörter verwenden, "
+"wie zB. 'arA-g0Rn.$1'. Natürlich ist dieses Passwort besser als 'aragorn01', "
+"trotzdem ist es vergleichsweise schwach. Was ein Passwort nämlich wirklich "
+"sicher macht ist in erster Linie die Länge und nicht die Komplexität. "
+"'maschinegartennagelcocktail' ist ein sehr viel sichereres Passwort als 'c72)"
+"lx.2Ihf,O'. Ausserdem ist es wesentlich einfacher zu merken und schneller zu "
+"tippen! Es gibt dazu auch "
 
 #: templates/help.html:29
 msgid "link-title passwort security comic"
@@ -239,29 +299,30 @@ msgstr "ein kleines nettes Comic"
 #: templates/help.html:30
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
 msgstr ""
-", welches das nochmals veranschaulicht. Falls Sie ein Passwort benutzen wollen, "
-"welches aus 4 oder mehr Wörtern besteht, nehmen Sie bitte zufällige Wörter, die "
-"nichts direkt mit Ihnen zu tun haben. Personen, die Sie kennen bzw. Informationen "
-"zu Ihnen haben, könnten sonst das Passwort einfach erraten. Sie können "
-"natürlich auch Zahlen und Symbole verwenden, um die Sicherheit noch zusätzlich "
-"zu erhöhen; achten Sie dann jedoch darauf, dass Sie sich das Passwort leicht merken "
-"können. Ansonsten ist das Passwort nutzlos oder zumindest sehr unpraktisch. "
-"Ein weiterer Tipp für die Erstellung von guten Passwörtern ist die Anwendung "
-"von Mnemotechniken. Nehmen Sie beispielsweise die Anfangsbuchstaben des "
-"Kinderreim 'Alle meine Entchen', wandeln zB. alle 'i's in '1' um "
-"und verwenden Sie auch die Satzzeichen -> 'AmE,sadS.KuW,S1dH.' Schon haben Sie "
-"ein relativ sicheres Passwort, das einfach zu merken ist; ein Nachteil ist, dass "
-"es relativ lange Zeit dauert dieses Passwort beim Anmelden einzutragen ;), wen "
-"das stört, der sollte sich vielleicht der oben beschriebenen 4-Wörter Alternative "
-"zuwenden. Sie sollten sich allerdings eigene Reime ausdenken, der Kinderreim hier "
-"war nur zur Veranschaulichung, da ihn wohl viele Leute kennen. "
-"Falls Sie ein wenig herum probieren möchten, um zu schauen, wann "
-"ein Passwort wirklich sicher ist, möchten wir Ihnen die beiden nachfolgenden "
-"Seiten empfehlen: "
+", welches das nochmals veranschaulicht. Falls Sie ein Passwort benutzen "
+"wollen, welches aus 4 oder mehr Wörtern besteht, nehmen Sie bitte zufällige "
+"Wörter, die nichts direkt mit Ihnen zu tun haben. Personen, die Sie kennen "
+"bzw. Informationen zu Ihnen haben, könnten sonst das Passwort einfach "
+"erraten. Sie können natürlich auch Zahlen und Symbole verwenden, um die "
+"Sicherheit noch zusätzlich zu erhöhen; achten Sie dann jedoch darauf, dass "
+"Sie sich das Passwort leicht merken können. Ansonsten ist das Passwort "
+"nutzlos oder zumindest sehr unpraktisch. Ein weiterer Tipp für die "
+"Erstellung von guten Passwörtern ist die Anwendung von Mnemotechniken. "
+"Nehmen Sie beispielsweise die Anfangsbuchstaben des Kinderreim 'Alle meine "
+"Entchen', wandeln zB. alle 'i's in '1' um und verwenden Sie auch die "
+"Satzzeichen -> 'AmE,sadS.KuW,S1dH.' Schon haben Sie ein relativ sicheres "
+"Passwort, das einfach zu merken ist; ein Nachteil ist, dass es relativ lange "
+"Zeit dauert dieses Passwort beim Anmelden einzutragen ;), wen das stört, der "
+"sollte sich vielleicht der oben beschriebenen 4-Wörter Alternative zuwenden. "
+"Sie sollten sich allerdings eigene Reime ausdenken, der Kinderreim hier war "
+"nur zur Veranschaulichung, da ihn wohl viele Leute kennen. Falls Sie ein "
+"wenig herum probieren möchten, um zu schauen, wann ein Passwort wirklich "
+"sicher ist, möchten wir Ihnen die beiden nachfolgenden Seiten empfehlen: "
 
 #: templates/help.html:31
 msgid "link-title steve gibson password haystack reference guide"
-msgstr "Das Password als die Nadel im Heuhaufen - https://www.grc.com/haystack.htm"
+msgstr ""
+"Das Password als die Nadel im Heuhaufen - https://www.grc.com/haystack.htm"
 
 #: templates/help.html:31
 msgid "link to steve gibson password haystack reference guide"
@@ -498,7 +559,10 @@ msgstr ""
 "Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
 "Photo an die gewünschte Stelle ziehen."
 
-#: templates/help.html:111 templates/view-album.html:49
+#: templates/help.html:111 templates/insert-album.html:19
+#: templates/insert-photo.html:27 templates/insert-place.html:19
+#: templates/update-album.html:20 templates/update-photo.html:21
+#: templates/update-place.html:20 templates/view-album.html:49
 msgid "Beschreibung"
 msgstr "Beschreibung"
 
@@ -569,97 +633,103 @@ msgstr ""
 msgid "impressum-liability Haftung für Inhalte"
 msgstr "Haftung für Inhalte"
 
-#: templates/impressum.html:42
-msgid "impressum-liability Haftung für Inhalte -> description"
-msgstr ""
-"Die Inhalte unserer Seiten wurden mit größter Sorgfalt erstellt. Für die "
-"Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch "
-"keine Gewähr übernehmen. Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG "
-"für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen "
-"verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Diensteanbieter jedoch "
-"nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu "
-"überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige "
-"Tätigkeit hinweisen. Verpflichtungen zur Entfernung oder Sperrung der "
-"Nutzung von Informationen nach den allgemeinen Gesetzen bleiben hiervon "
-"unberührt. Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der "
-"Kenntnis einer konkreten Rechtsverletzung möglich. Bei Bekanntwerden von "
-"entsprechenden Rechtsverletzungen werden wir diese Inhalte umgehend "
-"entfernen."
-
-#: templates/impressum.html:43
-msgid "impressum-liability Haftung für Links"
-msgstr "Haftung für Links"
-
 #: templates/impressum.html:44
-msgid "impressum-liability Haftung für Links -> description"
+msgid "impressum-liability Haftung für Inhalte list-item-1"
 msgstr ""
-"Unser Angebot enthält Links zu externen Webseiten Dritter, auf deren Inhalte "
-"wir keinen Einfluss haben. Deshalb können wir für diese fremden Inhalte auch "
-"keine Gewähr übernehmen. Für die Inhalte der verlinkten Seiten ist stets der "
-"jeweilige Anbieter oder Betreiber der Seiten verantwortlich. Die verlinkten "
-"Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche Rechtsverstöße "
-"überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der Verlinkung nicht "
-"erkennbar. Eine permanente inhaltliche Kontrolle der verlinkten Seiten ist "
-"jedoch ohne konkrete Anhaltspunkte einer Rechtsverletzung nicht zumutbar. "
-"Bei Bekanntwerden von Rechtsverletzungen werden wir derartige Links umgehend "
-"entfernen."
+"Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
+"Erstellung der Website verantwortlich ist. Ihre Profile sind auf der 'Team'-"
+"Seite zu finden."
+
+#: templates/impressum.html:45
+msgid "impressum-liability Haftung für Inhalte list-item-2"
+msgstr ""
+"Inhalte, die von den Entwicklern der Website veröffentlicht werden, wurden "
+"vorher mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit "
+"und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen."
+
+#: templates/impressum.html:46
+msgid "impressum-liability Haftung für Inhalte list-item-3"
+msgstr ""
+"Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf "
+"diesen Seiten nach den allgemeinen Gesetzen verantwortlich.  Nach §§ 8 bis "
+"10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte "
+"oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu "
+"forschen, die auf eine rechtswidrige Tätigkeit hinweisen."
+
+#: templates/impressum.html:47
+msgid "impressum-liability Haftung für Inhalte list-item-4"
+msgstr ""
+"Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen "
+"nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche "
+"Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten "
+"Rechtsverletzung möglich."
+
+#: templates/impressum.html:48
+msgid "impressum-liability Haftung für Inhalte list-item-5"
+msgstr ""
+"Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese "
+"Inhalte umgehend entfernen."
+
+#: templates/impressum.html:51
+msgid "impressum-liability Haftung für Links"
+msgstr "Haftung für Links zu externen Websiten"
+
+#: templates/impressum.html:54
+msgid "impressum-liability Haftung für Links list-item-1"
+msgstr ""
+"Die Entwickler dieser Website können keine Gewährleistung für die Inhalte "
+"von Websites Dritter, die auf dieser Website verlinkt sind, übernehmen."
+
+#: templates/impressum.html:55
+msgid "impressum-liability Haftung für Links list-item-2"
+msgstr ""
+"Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder "
+"Betreiber der Seite verantwortlich."
+
+#: templates/impressum.html:56
+msgid "impressum-liability Haftung für Links list-item-3"
+msgstr ""
+"Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche "
+"Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der "
+"Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der "
+"verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer "
+"Rechtsverletzung nicht zumutbar."
+
+#: templates/impressum.html:57
+msgid "impressum-liability Haftung für Links list-item-4"
+msgstr ""
+"Bei Bekanntwerden von Rechtsverletzungen werden wir Links zu der "
+"entsprechenden Website umgehend entfernen."
 
 #: templates/index.html:6 templates/index.html.py:8
 msgid "Willkommen"
 msgstr "Willkommen"
 
 #: templates/index.html:17
-msgid "welcome-title"
+msgid "Herzlich Willkommen"
 msgstr "Herzlich Willkommen"
 
 #: templates/index.html:18
-msgid "welcome-paragraph1"
+msgid "welcome-paragraph"
 msgstr ""
-"Bitte beachten Sie dass die Seite immer noch in Entwicklung ist! Verzeihen "
-"Sie bitte darum das noch etwas unausgegorene Design und den beschränkten "
-"Funktionsumfang. Die Basis-Funktionen sind jedoch schon verfügbar und können "
-"von Ihnen genutzt werden. Fühlen Sie sich also frei dazu, sich anzumelden "
-"und das Projekt schon einmal auszutesten!"
-
-#: templates/index.html:19
-msgid "welcome-paragraph2"
-msgstr ""
-"Während Sie ihre ersten Bilderalben anlegen und Reisen mit anderen teilen, "
-"werden wir an diesem digitalen Poesie-Album weiterarbeiten und regelmäßige "
-"Updates veröffentlichen. Dabei werden wir natürlich versuchen den bereits "
-"registrierten Nutzern möglichst wenige Komplikationen, wie zB. grundlegende "
-"Änderungen, zu bereiten. Da auch wir ein bisschen Urlaub brauchen bzw. immer "
-"noch in der Prüfungszeit stecken werden die nächsten Versionsupdates jedoch "
-"noch bis September warten müssen."
-
-#: templates/index.html:20
-msgid "welcome-paragraph3"
-msgstr ""
-"Viel Spaß und Freude bei der Gestaltung eures ersten Online Poesiealbums und "
-"beim teilen eurer Reisen und Erlebnisse mit anderen, wünscht euch das LGHP-"
-"Team!"
-
-#: templates/index.html:22
-msgid "welcome-paragraph4"
-msgstr ""
-"PS: Sollten Sie Fragen oder Anregungen haben schreiben Sie uns doch bitte "
-"eine email an"
+"Willkommen zu Photomap. Im Prinzip ist dies ein digitales Online-Photo-Album "
+"mit dem Sie all Ihre Reiseerlebnisse mit Freunden und Familie teilen können. "
+"Das Projekt ist noch in Entwicklung. Darum ist es noch nicht möglich sich zu "
+"registrieren. Die Grundfunktionen stehen jedoch bereits, falls Sie also "
+"unbedingt das Projekt schonmal ausprobieren wollen wenden Sie sich an einen "
+"der Entwickler, zB mit einer Email an: "
 
 #: templates/insert-album.html:11
 msgid "insert-dialogue-title insert-album"
 msgstr "Hinzufügen eines Albums"
 
 #: templates/insert-album.html:15 templates/insert-photo.html:23
-#: templates/insert-place.html:15 templates/update-album.html:16
-#: templates/update-photo.html:17 templates/update-place.html:16
-msgid "insert-dialogue name"
+#: templates/insert-place.html:15 templates/team.html:17
+#: templates/team.html.py:31 templates/team.html:45
+#: templates/update-album.html:16 templates/update-photo.html:17
+#: templates/update-place.html:16
+msgid "Name"
 msgstr "Name"
-
-#: templates/insert-album.html:19 templates/insert-photo.html:27
-#: templates/insert-place.html:19 templates/update-album.html:20
-#: templates/update-photo.html:21 templates/update-place.html:20
-msgid "insert-dialogue description"
-msgstr "Beschreibung"
 
 #: templates/insert-album.html:24 templates/insert-photo.html:35
 #: templates/insert-place.html:25
@@ -763,71 +833,135 @@ msgstr ""
 "sie Alben mit anderen Leuten teilen."
 
 #: templates/privacy.html:35
-msgid "privacy-topic Webanalyse und Cookies"
-msgstr "Webanalyse und Cookies"
+msgid "privacy-topic Cookies"
+msgstr "Cookies"
 
 #: templates/privacy.html:37
-msgid "privacy-topic Webanalyse und Cookies -> description"
+msgid "privacy-topic Cookies -> cookie-introduction"
+msgstr "Diese Website verwendet folgende Cookies:"
+
+#: templates/privacy.html:39
+msgid "privacy-topic Cookies - sessioncookie"
 msgstr ""
-"Diese Seite verwendet Cookies, welche allerdings nur für ihre Sitzungs-ID "
-"benötigt werden. Für nähere Informationen zu Cookies verweisen wir Sie auf "
-"den"
+"Sitzungs-Cookie: Der Sitzungs-Cookie enthält Ihre Sitzungs-ID, welche "
+"automatisch vom Server generiert wird, sollten Sie sich erfolgreich "
+"angemeldet haben. Der Cookie wird vor allem benötigt um ihre "
+"Authentifikation zu validieren, besonders bei Aktionen wie dem Erstellen, "
+"Bearbeiten und Löschen von Alben, Plätzen und Bildern."
 
-#: templates/privacy.html:37
-msgid "privacy-topic Webanalyse und Cookies -> link to wiki"
+#: templates/privacy.html:40
+msgid "privacy-topic Cookies - 'visited'-cookie"
+msgstr ""
+"'visited'-Cookie: der 'visited'-Cookie enthält Informationen dazu, welche "
+"Bilder Sie bereits angeschaut haben und welche noch nicht. Das wird benötigt "
+"um Ihnen Feedback zu geben, welche Plätze schon komplett angeschaut haben "
+"und bei welchen Sie evtl. ein Photo übersehen haben oder ein neues "
+"hinzugekommen ist."
+
+#: templates/privacy.html:44
+msgid "privacy-topic Cookies -> redirection to wiki"
+msgstr ""
+"Für weitere Information zu Cookies und der Nutzung derselben würden wir Sie "
+"gerne zu folgendem Artikel weiterleiten: "
+
+#: templates/privacy.html:44
+msgid "privacy-topic Cookies -> link to wiki"
 msgstr "http://de.wikipedia.org/wiki/HTTP-Cookie"
 
-#: templates/privacy.html:38
+#: templates/privacy.html:45
 msgid "link-title Wikipedia-Eintrag zu Cookies"
 msgstr "Wikipedia-Eintrag zu Cookies"
 
-#: templates/privacy.html:38
-msgid "privacy-topic Webanalyse und Cookies -> name of link to wiki"
+#: templates/privacy.html:45
+msgid "privacy-topic Cookies -> name of link to wiki"
 msgstr "Wikipedia-Artikel zu HTTP-Cookies"
 
-#: templates/privacy.html:41
+#: templates/privacy.html:48
 msgid "privacy-topic Emails und Kontaktformulare"
 msgstr "Emails und Kontaktformulare"
 
-#: templates/privacy.html:42
-msgid "privacy-topic Emails und Kontaktformulare -> description"
+#: templates/privacy.html:51
+msgid "privacy-topic Emails und Kontaktformulare list-item-1"
+msgstr ""
+"Nutzer und Besucher können dem Photomap-Team Fragen stellen oder Anregungen "
+"und Kritik anbringen, indem Sie eine Email an 's.u.p.p.0.r.t.lghp."
+"projekt@gmail.com' schreiben oder das Kontaktformular benutzen."
+
+#: templates/privacy.html:52
+msgid "privacy-topic Emails und Kontaktformulare list-item-2"
 msgstr ""
 "Die von Ihnen an uns gesendeten Nachrichten werden zu Dokumentation und "
 "Weiterverarbeitung bei uns gespeichert. Dies beinhaltet sämtliche von Ihnen "
-"angegebenen und für die Verarbeitung notwendigen Daten; dazu gehören "
-"beispielweise alle Daten die in den Pflichtfeldern des Kontaktformulars "
-"angegeben wurden. Die Daten im Kontaktformular werden in keiner Weise "
-"überprüft, die Verwendung von Pseudonymen ist somit möglich, allerdings "
-"nicht empfehlenswerte da es die Verarbeitung erschwert und wir Ihnen dadurch "
-"eventuell nicht so präzise weiterhelfen können, wie wir es gerne würden. "
+"angegebenen und für die Verarbeitung notwendigen Daten."
+
+#: templates/privacy.html:53
+msgid "privacy-topic Emails und Kontaktformulare list-item-3"
+msgstr ""
+"Die Daten im Kontaktformular werden in keiner Weise überprüft, die "
+"Verwendung von Pseudonymen ist somit möglich, allerdings nicht "
+"empfehlenswerte da es die Verarbeitung erschwert und wir Ihnen dadurch "
+"eventuell nicht so präzise weiterhelfen können, wie wir es gerne würden."
+
+#: templates/privacy.html:54
+msgid "privacy-topic Emails und Kontaktformulare list-item-4"
+msgstr ""
 "Nach Abschluss des Dialogs mit Ihnen werden die Daten wieder gelöscht, es "
 "sei denn es wurde mit Ihnen ausgemacht die Daten zu speichern."
 
-#: templates/privacy.html:43
+#: templates/privacy.html:55
+msgid "privacy-topic Emails und Kontaktformulare list-item-5"
+msgstr ""
+"Wenn wir eine Nachricht längerfristig speichern wollen, werden wir das "
+"vorher mit Ihnen besprechen."
+
+#: templates/privacy.html:58
 msgid "privacy-topic Auskunftsrecht"
 msgstr "Auskunftsrecht"
 
-#: templates/privacy.html:45
-msgid "privacy-topic Auskunftsrecht -> description"
+#: templates/privacy.html:60
+msgid "privacy-topic Auskunftsrecht -> paragraph1"
 msgstr ""
-"Wir würden Ihnen gern Auskunft über die bei uns gespeicherten persönlichen "
-"Daten geben. Wir wissen allerdings auch nicht mehr als Sie. Dieses wenige "
-"Wissen teilen wir Ihnen im Rahmen der gesetzlichen Auskunftsansprüche "
-"allerdings gern nochmals mit."
+"Gerne geben wir Ihnen alle Informationen die von Ihnen auf unserem Server "
+"gespeichert wurden. Wenn Sie diese Informationen abrufen wollen, schreiben "
+"Sie uns eine Email oder nutzen Sie das "
 
-#: templates/privacy.html:46
-msgid "privacy-topic Auskunftsrecht -> invitation to ask"
-msgstr ""
-"Wenn Sie weitere Fragen zur Behandlung Ihrer Daten haben, dann schicken Sie "
-"uns einfach eine Nachricht per email oder über das"
-
-#: templates/privacy.html:46
+#: templates/privacy.html:61
 msgid "Kontaktformular"
 msgstr "Kontaktformular"
 
-#: templates/team.html:8
-msgid "Projekt und Team"
-msgstr "Projekt und Team"
+#: templates/privacy.html:62
+msgid "privacy-topic Auskunftsrecht -> paragraph2"
+msgstr ""
+"Wir werden Ihnen im Rahmen der gesetzlichen Auskunftsansprüche in Kürze alle "
+"verfügbaren Information zu schicken."
+
+#: templates/team.html:19 templates/team.html.py:33 templates/team.html:47
+msgid "Email"
+msgstr "Email"
+
+#: templates/team.html:21 templates/team.html.py:35 templates/team.html:49
+msgid "Verantwortlich für"
+msgstr "Verantwortlich für"
+
+#: templates/team.html:22 templates/team.html.py:36
+msgid "Back End"
+msgstr "Back End"
+
+#: templates/team.html:22 templates/team.html.py:36 templates/team.html:50
+msgid "Design"
+msgstr "Design"
+
+#: templates/team.html:22 templates/team.html.py:36 templates/team.html:50
+msgid "Ideen"
+msgstr "Ideen"
+
+#: templates/team.html:23 templates/team.html.py:37 templates/team.html:51
+msgid "Motivation am Projekt"
+msgstr "Motivation am Projekt"
+
+#: templates/team.html:50
+msgid "Front End"
+msgstr "Front End"
 
 #: templates/update-album.html:11
 msgid "insert-dialogue-title update-album"

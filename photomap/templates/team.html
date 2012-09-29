@@ -3,32 +3,56 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block title %}Team{% endblock %}
+{% block title %}{% trans "Team" %}{% endblock %}
 
-{% block name %}{% trans "Projekt und Team" %}{% endblock %}
+{% block name %}{% trans "Team" %}{% endblock %}
 
 {% block non_interactive_content %}
-	
-	<h2>Projekt</h2>
-	<article class="mp-textbox" id="project-introduction">Project-Introduction</article>
-	<h2>Team</h2>
+	<h2>{% trans "Team" %}</h2>
 	<section class="mp-content-interior-wrapper" id="contributors">
-		<article class="mp-textbox" id="frederik-claus">
-			<h3>Legolas aka Frederik Claus</h3>
-			<img class="mp-introduction-picture" src="" title="Frederik Claus" />
-			<p class="mp-introduction-text">Legolas'-Profile</p>
+		<article class="mp-profile" id="frederik-claus">
+			<h3>Frederik Claus</h3>
+			<img class="mp-introduction-picture" src="/static/images/profile.png" title="Frederik Claus" />
+			<ul>
+				<li>{% trans "Name" %}:</li>
+				<li class="mp-profile-text">Frederik Claus</li>
+				<li>{% trans "Email" %}:</li>
+				<li class="mp-profile-text">f.v.claus <em>at</em> googlemail.com</li>
+				<li>{% trans "Verantwortlich für" %}: </li>
+				<li class="mp-profile-text">{% trans "Back End" %}, {% trans "Design" %}, {% trans "Ideen" %}</li>
+				<li>{% trans "Motivation am Projekt" %}: </li>
+				<li class="mp-profile-text"></li>
+			</ul>
 		</article>
-		<article class="mp-textbox" id="philipp-banhardt">
-			<h3>Gambit aka Philipp Banhardt</h3>
-			<img class="mp-introduction-picture" src="" title="Philipp Banhardt" />
-			<p class="mp-introduction-text">Gambits-Profile</p>
+		<article class="mp-profile" id="philipp-banhardt">
+			<h3>Philipp Banhardt</h3>
+			<img class="mp-introduction-picture" src="/static/images/profile.png" title="Philipp Banhardt" />
+			<ul>
+				<li>{% trans "Name" %}:</li>
+				<li class="mp-profile-text">Philipp Banhardt</li>
+				<li>{% trans "Email" %}:</li>
+				<li class="mp-profile-text">philippbanhardt <em>at</em> googlemail.com</li>
+				<li>{% trans "Verantwortlich für" %}: </li>
+				<li class="mp-profile-text">{% trans "Back End" %}, {% trans "Design" %}, {% trans "Ideen" %}</li>
+				<li>{% trans "Motivation am Projekt" %}: </li>
+				<li class="mp-profile-text"></li>
+			</ul>
 		</article>
-		<article class="mp-textbox" id="marc-leon-roemer">
-			<h3>Harry Potter aka Marc-Leon Römer</h3>
-			<img class="mp-introduction-picture" src="" title="Marc-Leon Römer" />
-			<p class="mp-introduction-text">Harry Potters-Profile</p>
+		<article class="mp-profile" id="marc-leon-roemer">
+			<h3>Marc-Leon Römer</h3>
+			<img class="mp-introduction-picture" src="/static/images/profile.png" title="Marc-Leon Römer" />
+			<ul>
+				<li>{% trans "Name" %}:</li>
+				<li class="mp-profile-text">Marc-Leon Römer</li>
+				<li>{% trans "Email" %}:</li>
+				<li class="mp-profile-text">marcleonroemer <em>at</em> gmail.com</li>
+				<li>{% trans "Verantwortlich für" %}: </li>
+				<li class="mp-profile-text">{% trans "Front End" %}, {% trans "Design" %}, {% trans "Ideen" %}</li>
+				<li>{% trans "Motivation am Projekt" %}: </li>
+				<li class="mp-profile-text"></li>
+			</ul>
 		</article>
-		<br /><br /><br />
+		<br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
 		<p>
 			<img class="mp-construction" src="static/images/construction.png" title="Diese Seite ist noch in der Entwicklings-Phase">
 		</p>
