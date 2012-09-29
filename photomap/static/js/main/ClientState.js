@@ -18,38 +18,19 @@ ClientState.prototype = {
 	return album.isOwner;
     },
     _parseValue : function(value){
-	this.value  = value.split(",");
-	console.log('value');
-	console.log(this.value);
 	var instance = this;
-
-	//legacy parsing ; saved photo + place
-	if (value.match(/photo|place/) ){
-	    this.photos = new Array();
-	    console.log('photos');
-	    console.log(this.photos);
-	    this.value.forEach(function(el){
-		if (el.match(/photo/)){
-		    console.log('legacy before push');
-		    console.log(instance.photos);
-		    instance.photos.push(parseInt(el.split("-")[1]));
-		    console.log('legacy after push');
-		    console.log(instance.photos);
+	oldValue  = value.split(",");
+	this.photos = new Array();
+	
+	if (value != "") {
+	    for (i=0; i < oldValue.length; i++){
+		// in case there is a non-numeric value in the cookie
+		if (!isNaN(oldValue[i])){
+		    this.photos.push(parseInt(oldValue[i]));
 		}
-	    });
-	}
-	//new one saves only photo
-	else {
-	    this.photos = new Array();
-	    if (value != "") {
-		this.value.forEach(function(photo){
-		    console.log('new before push');
-		    console.log(instance.photos);
-		    instance.photos.push(parseInt(photo));
-		    console.log('new after push');
-		    console.log(instance.photos);
-		});
 	    }
+	    // rewrite cookie, just in case there was a change
+	    this._writeCookie();
 	}
     },
     isVisitedPhoto : function(id){
