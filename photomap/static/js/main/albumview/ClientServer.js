@@ -120,4 +120,77 @@ ClientServer.prototype = {
 	    this._showPlaces();
 	    place.triggerClick();
 	},
+	handleUpload : function(repeat){
+	    // get input values
+	    $form = ("form.mp-dialog");
+	    inputValues = {
+		'id' : $form.find("input[name='place']").val(),
+		'title' : $form.find("input[name='title']").val(),
+		'desc' : $form.find("input[name='description']").val()
+	    };
+	    // get FormData-Object for Upload
+	    data = this.getUploadData(inputValues,'photo');
+	    // close fanybox and reopen if repeat = true
+	    startHandler = function(){
+		$.fancybox.close();
+		if (repeat) {
+		    $(".mp-option-add").trigger('click');
+		}
+	    };
+	    // give user feedback about progress
+	    progressHandler = function(){
+		
+	    };
+	    // reload place -> to show new photos in gallery
+	    loadHandler = function(){
+		
+	    };
+	    
+	    // send upload
+	    this.sendUpload(data,startHandler,progressHandler,loadHandler);
+	}
+	getUploadData : function(params,fileType){
+	    state = main.getUIState();
+	    data = new FormData();
+	    
+	    data.append('place', params.id);
+	    data.append('title', params.title);
+	    data.append('description', params.desc);
+	    /*
+	     * due to using the FormData() - Object there is no 
+	     * need to read the photo first (Filereader API), save it into 
+	     * memory and encode it manually, in order to send it
+	     * in case a browser we want to support doesn't have FormData
+	     * -> we have to user Filereader as Fallback or add FormData-Object + Prototype
+	     */
+	    data.append(fileType, state.getFileToUpload());
+	    
+	    return data;
+	},
+	sendUpload : function(data,start,progress,done){
+	    request = new XMLHttpRequest();
+	    upload = request.upload;
+	    
+	    // handler called after upload is started
+	    upload.addEventListener('loadstart',start);
+	    // handler for the upload progress
+	    upload.addEventListener('progress',progress);
+	    // handler called after all bytes are sent
+	    upload.addEventListener('load',done);
+	    upload.onreadystatechange = function(e){
+		// readyState == 4 -> data-transfer completed
+		if (request.readyState == 4){
+		    // alert error if upload wasn't successful
+		    if (request.status != 200){
+			text = JSON.parse(request.responseText);
+			error = request.status;
+			alert("The upload didn't work. " + error + " " + text);
+		    }
+		}
+	    };
+	    // define method and url - true is for asynchronous 
+	    request.open('post','/insert-photo',true);
+	    // send formdata to server
+	    request.send(data);
+	},
 };
