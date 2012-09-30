@@ -142,7 +142,7 @@ UITools.prototype = {
     checkFiles : function(files){
 	allowedFileTypes = ['image/png','image/jpeg'];
 	errors = [
-	    'You can upload just one Photo at a time!',
+	    'You may just upload one Photo at a time!',
 	    'File-Type not allowed. Just *.jpeg and *.png are supported.'
 	    ];
 	// return if more than one file is dropped into the gallery
@@ -151,19 +151,22 @@ UITools.prototype = {
 		'success' : false,
 		'error' : errors[0]
 	    };
-	    return result;
 	}
 	// return if the file type is not allowed
-	if (!files[0].type || $.inArray(files[0].type, allowedFileTypes) < 0) {
+	else if (!files[0].type || $.inArray(files[0].type, allowedFileTypes) < 0) {
 	    result = {
 		'success' : false,
 		'error' : errors[1]
 	    };
-	    return result;
+	}
+	// if everything is correct proceed
+	else {
+	    result = {
+		'success' : true
+	    }
 	}
 	
-	// if everything is correct proceed
-	return {'success': true};
+	return result;
 	    
     },
 };

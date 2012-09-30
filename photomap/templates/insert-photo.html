@@ -18,7 +18,6 @@
 	<form class="jquery-validator mp-dialog" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
 	
 		<input type="hidden" name="place" required="required" value="{{place}}"/>
-		<input type="hidden"  name="repeat" value="false" \>
 		<div>
 			<label for="title">{% trans "insert-dialogue name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
 			<input class="mp-input-name" type="text" name="title" required="required" size="40"/>
@@ -29,7 +28,7 @@
 		</div>
 		<div>
 			<label name="file-upload" for="photo">{% trans "insert-dialogue select photo to upload" %}<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
-			<input class="mp-input-drop" type="file" name="photo" required="required" size="40"/>
+			<input id="file-input" class="mp-input-drop" type="file" name="photo" required="required" size="40"/>
 		</div>
 
 		<input class="mp-button mp-single-upload" type="submit" value='{% trans "Speichern" %}' name="submit" />

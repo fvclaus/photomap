@@ -63,39 +63,6 @@ function galleryListener(){
   });
 };
 
-function addFiledrop(){
-  $("div.mp-filedrop").filedrop({
-  'url': '/insert-photo',
-  'allowedfiletypes': ['image/jpeg','image/png'],
-  'maxfiles': 1,
-  'error': function(err, file) {
-    switch(err) {
-	case 'BrowserNotSupported':
-	    alert('Your browser does not support html5 drag and drop!');
-	    break;
-	case 'TooManyFiles':
-	    alert('You can just upload one photo at a time!');
-	    break;
-	case 'FileTypeNotAllowed':
-	    alert('The file you want to upload has a not-supported file-type. Supported fily-types are: *.jpeg, *.png!');
-	    break;
-	default:
-	    break;
-    }
-  },
-  'data': {
-    'title': $("input[name='title']").val(),
-    'description': $("input[name='description']").val(),
-  },
-  'uploadStarted': function(i,file,len){
-    $.fancybox.close();
-    if ( state.isMultipleUpload() ) {
-      $(".mp-option-add").trigger('click');
-    }
-  }
-  });
-};
-
 $(document).ready(function(){
   var map = main.getMap();
   var information = main.getUI().getInformation();
@@ -140,12 +107,11 @@ $(window).load(function(){
     state.setModeInteractive(true,page);
     
     // add admin listeners
-    addFiledrop();
     map.bindListener();
     iframeListener();
     controls.bindListener();
     controls.markerControlListener('place');
-    $("#mp-album-wrapper").bind('drop',controls.handleGalleryDrop);;
+    document.getElementById("mp-album-wrapper").addEventListener('drop.FileIntoGallery',controls.handleGalleryDrop);
     
     // change cursor style on map (has to be inside .load() cause it depends on state.isInteractive()
     cursor.setMapCursor();

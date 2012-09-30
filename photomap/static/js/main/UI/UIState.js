@@ -148,11 +148,5 @@ UIState.prototype = {
     },
     getFileToUpload : function(){
 	return this.fileToUpload;
-    },
-    setMultipleUpload : function(bool){
-	this.multipleUpload = bool;
-    },
-    isMultipleUpload : function(){
-	return this.multipleUpload;
-    },
+    }
 };
