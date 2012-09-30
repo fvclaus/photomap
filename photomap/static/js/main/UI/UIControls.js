@@ -364,56 +364,51 @@ UIControls.prototype = {
 	    });
 	});
     },
-    checkDrop : function(files){
-	allowedFileTypes = ['image/png','image/jpeg'];
-	errors = [
-	    'You can upload just one Photo at a time!',
-	    'File-Type not allowed. Just *.jpeg and *.png are supported.',
-	    'The File APIs (DragnDrop) are not fully supported in this browser.'
-	    ];
-	
-	// check for file api support of the browser
-	if (window.File && window.FileReader && window.FileList && window.Blob) {
-
-	    // return if more than one file is dropped into the gallery
-	    if (files.length > 1){
-		alert(error[0]);
-		return false;
-	    }
-	    // return if the file type is not allowed
-	    if (!files[0].type || $.inArray(files[0].type, allowedFileTypes) < 0) {
-		alert(errors[1]);
-		return false;
-	    }
-	    
-	    // if everything is correct proceed
-	    return true;
-	    
-	}
-	else {
-	  alert(error[2]);
-	  return false;
-	}
-    },
-    handleDrop : function(){
-	return;
-    },
     handleGalleryDrop : function(event){
-	state = main.getUIState();
-	input = main.getUI().getInput();
-	files = event.originalEvent.dataTransfer.files;
-	place = state.getCurrentLoadedPlace();
-	
 	event.stopPropagation();
 	event.preventDefault();
 	
-	if ( main.getUI().getControls().checkDrop(files) ){
-	    // handler for gallery drop
-	    state.setDropEvent(event.originalEvent);
-	    hideInput = function(){$("input[type='file'],label[name='file-upload']").remove();};
-	    input.getUpload("/insert-photo?place=" + place.id,hideInput);
+	state = main.getUIState();
+	input = main.getUI().getInput();
+	place = state.getCurrentLoadedPlace();
+	files = event.dataTransfer.files;
+	checked = main.getUI().getTools().checkFiles(files);
+	
+	// check for file api support of the browser
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+	    
+	    if ( checked.success ){
+		// handler for gallery drop
+		state.setFileToUpload(files[0]);
+		hideInput = function(){$("input[type='file'],label[name='file-upload']").remove();};
+		input.getUpload("/insert-photo?place=" + place.id,hideInput);
+	    }
+	    else {
+		alert(checked.error);
+		return;
+	    }
 	}
 	else {
+	  alert('The File APIs (DragnDrop) are not fully supported in this browser.');
+	  return false;
+	}
+    },
+    handleFileInput : function(event){
+	event.stopPropagation();
+	event.preventDefault();
+	
+	state = main.getUIState();
+	place = state.getCurrentLoadedPlace();
+	files = event.target.files;
+	checked = main.getUI().getTools().checkFiles(files);
+	
+	if ( checked.success ){
+	    state.setFileToUpload(files[0]);
+	    return;
+	}
+	else {
+	    $("input[name='file']").val(null);
+	    alert(checked.error);
 	    return;
 	}
     },

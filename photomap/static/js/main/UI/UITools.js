@@ -139,4 +139,31 @@ UITools.prototype = {
 	    .focus();
 	main.getUI().getControls().copyListener();
     },
+    checkFiles : function(files){
+	allowedFileTypes = ['image/png','image/jpeg'];
+	errors = [
+	    'You can upload just one Photo at a time!',
+	    'File-Type not allowed. Just *.jpeg and *.png are supported.'
+	    ];
+	// return if more than one file is dropped into the gallery
+	if (files.length > 1){
+	    result = {
+		'success' : false,
+		'error' : errors[0]
+	    };
+	    return result;
+	}
+	// return if the file type is not allowed
+	if (!files[0].type || $.inArray(files[0].type, allowedFileTypes) < 0) {
+	    result = {
+		'success' : false,
+		'error' : errors[1]
+	    };
+	    return result;
+	}
+	
+	// if everything is correct proceed
+	return {'success': true};
+	    
+    },
 };

@@ -143,11 +143,11 @@ UIState.prototype = {
     getAlbumShareURL: function(){
 	return this.currentAlbumShare;
     },
-    setDropEvent : function(event){
-	this.dropEvent = event;
+    setFileToUpload : function(file){
+	this.fileToUpload = file;
     },
-    getDropEvent : function(event){
-	return this.dropEvent;
+    getFileToUpload : function(){
+	return this.fileToUpload;
     },
     setMultipleUpload : function(bool){
 	this.multipleUpload = bool;
