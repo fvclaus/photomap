@@ -364,6 +364,11 @@ UIControls.prototype = {
 	    });
 	});
     },
+    handleDragOver : function(event){
+	event.stopPropagation();
+	event.preventDefault();
+	event.originalEvent.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+    },
     handleGalleryDrop : function(event){
 	event.stopPropagation();
 	event.preventDefault();
@@ -371,12 +376,11 @@ UIControls.prototype = {
 	state = main.getUIState();
 	input = main.getUI().getInput();
 	place = state.getCurrentLoadedPlace();
-	files = event.dataTransfer.files;
+	files = event.originalEvent.dataTransfer.files;
 	checked = main.getUI().getTools().checkFiles(files);
 	
 	// check for file api support of the browser
 	if (window.File && window.FileReader && window.FileList && window.Blob) {
-	    
 	    if ( checked.success ){
 		// handler for gallery drop
 		state.setFileToUpload(files[0]);
@@ -394,8 +398,8 @@ UIControls.prototype = {
 	}
     },
     handleFileInput : function(event){
-	event.stopPropagation();
 	event.preventDefault();
+	event.stopPropagation();
 	
 	state = main.getUIState();
 	place = state.getCurrentLoadedPlace();

@@ -3,7 +3,6 @@ function toggleGallery() {
   var album = main.getUI().getAlbum();
   
   if ($gallery.is(":visible")){
-    $(".mp-gallery-drop").unbind('drop.UploadDrop');
     $gallery.fadeOut(100);
     $(".mp-gallery-visible").hide()
     $(".mp-gallery-hidden").show()
@@ -19,7 +18,6 @@ function toggleGallery() {
     // trigger event to close mask
     album._setVisibility(true);
     mpEvents.trigger("body",mpEvents.toggleExpose);
-    $(".mp-gallery-drop").bind('drop.UploadDrop',controls.handleGalleryDrop);
   }
 };
 
@@ -82,7 +80,6 @@ $(document).ready(function(){
   
   $("#mp-album").hide();
   $(".mp-option-to-dashboard").hide();
-
 });
 
 /* 
@@ -111,8 +108,9 @@ $(window).load(function(){
     iframeListener();
     controls.bindListener();
     controls.markerControlListener('place');
-    document.getElementById("mp-album-wrapper").addEventListener('drop.FileIntoGallery',controls.handleGalleryDrop);
-    
+    // setup the dnd listeners
+    $('#mp-album').bind('dragover', controls.handleDragOver);
+    $('#mp-album').bind('drop', controls.handleGalleryDrop);
     // change cursor style on map (has to be inside .load() cause it depends on state.isInteractive()
     cursor.setMapCursor();
     

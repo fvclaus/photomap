@@ -8,7 +8,7 @@ $(document).ready(function(){
     
     // check input file and save it in case it is valid (*.jpeg||*.png)
     if ( $("input#file-input") ) {
-	document.getElementById("file-input").addEventListener('change.FileInput',controls.handleFileInput);
+	$("#file-input").bind('change',controls.handleFileInput);
     }
     $('.mp-single-upload').bind('click',function(){
 	clientServer.handleUpload(false);

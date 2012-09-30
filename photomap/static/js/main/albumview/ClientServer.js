@@ -133,22 +133,26 @@ ClientServer.prototype = {
 	    // close fanybox and reopen if repeat = true
 	    startHandler = function(){
 		$.fancybox.close();
+		//main.getUIState().setFileToUpload(null);
 		if (repeat) {
 		    $(".mp-option-add").trigger('click');
 		}
 	    };
 	    // give user feedback about progress
-	    progressHandler = function(){
-		
+	    progressHandler = function(event){
+		if (event.lengthComputable){
+		    var percentageUploaded = parseInt(100 - (event.loaded / event.total * 100));
+		    console.log('Upload-Status: ' + percentageUploaded + '%');
+		}
 	    };
 	    // reload place -> to show new photos in gallery
 	    loadHandler = function(){
-		
+		alert('Photo-Upload finished');
 	    };
 	    
 	    // send upload
 	    this.sendUpload(data,startHandler,progressHandler,loadHandler);
-	}
+	},
 	getUploadData : function(params,fileType){
 	    state = main.getUIState();
 	    data = new FormData();
@@ -170,6 +174,12 @@ ClientServer.prototype = {
 	sendUpload : function(data,start,progress,done){
 	    request = new XMLHttpRequest();
 	    upload = request.upload;
+	    
+	    // don't proceed if browser doesnt support new XMLHttpRequest Level 2
+	    if (!upload) {
+		alert('Your browser does not support XMLHttpRequest Level 2 upload');
+		return;
+	    }
 	    
 	    // handler called after upload is started
 	    upload.addEventListener('loadstart',start);
