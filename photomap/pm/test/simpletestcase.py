@@ -66,9 +66,16 @@ class SimpleTestCase(TestCase):
         return (instance, content)
     
     def assertPublicAccess(self, url):
-        c = Client()
-        response = c.get(url)
-        self.assertEqual(200, response.status_code)
+        
+        if url.startswith("/"):  
+            c = Client()
+            response = c.get(url)
+            code = response.status_code
+        else:
+            response = urlopen(url)
+            code = response.getcode()
+            
+        self.assertEqual(200, code)
         
     def assertNoPublicAccess(self, url):
         c = Client()

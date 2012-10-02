@@ -20,6 +20,7 @@ from django.conf import settings
 import logging
 import os
 from django.forms.models import model_to_dict
+from message import error,success
 import boto
 import uuid
 
@@ -38,8 +39,9 @@ def insert(request):
             place = form.cleaned_data["place"]
             
             if not is_authorized(place,request.user):
-                form.errors["place"] = "This is not your place!"
-                return render_to_response("insert-photo-error.html",{form:form})
+#                form.errors["place"] = "This is not your place!"
+#                return render_to_response("insert-photo-error.html",{form:form})
+                return error("This is not your place!")
             
             if settings.DEBUG:
                 pass
@@ -51,10 +53,12 @@ def insert(request):
                 
             photo = form.save()
             # just closes iframe
-            return render_to_response("insert-photo-success.html")
+#            return render_to_response("insert-photo-success.html")
+            return success(id = photo.id, url = photo.getphotourl())
         else:
             # closes iframe and displays error message
-            return render_to_response("insert-photo-error.html", {form : form})
+#            return render_to_response("insert-photo-error.html", {form : form})
+            return error(str(form.errors))
         
     if request.method == "GET":
         form = PhotoInsertDEBUGForm(auto_id = False)
