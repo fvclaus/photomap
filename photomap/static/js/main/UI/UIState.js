@@ -42,12 +42,19 @@ UIState.prototype = {
     getCurrentPhoto : function(){
 	return this.currentPhoto;
     },
-
     setPhotos : function(photos){
 	this.photos = photos;
     },
     getPhotos : function(){
 	return this.photos;
+    },
+    addPhoto : function(photo){
+	this.photos.push(photo);
+    },
+    removePhoto : function(photo){
+	this.photos = this.photos.filter(function(element,index){
+	    return element !== photo;
+	});
     },
     setCurrentPlace : function(place){
 	this.currentPlace = place;

@@ -49,25 +49,6 @@ UITools.prototype = {
 	}
     },
 
-		
-
-    deletePhoto : function(photo){
-	state = main.getUIState();
-	place = state.getCurrentPlace();
-	currentPhoto = state.getCurrentPhoto();
-
-	if (photo == null) return;
-	place.photos = place.photos.filter(function(element,index){
-	    return element !== photo;
-	});
-	//remove from place.photos array + gallery.photos and remove a in gallery box
-	state.setPhotos(place.photos);
-	$("div.mp-gallery > img[src='"+photo.thumb+"']").remove();
-	if (photo === currentPhoto){
-	    main.getUI().getGallery().navigateSlider(this,"right");
-	}
-    },
-
     getAbsoluteUrl : function(url){
 	a = document.createElement("a");
 	a.href = url;
@@ -169,4 +150,31 @@ UITools.prototype = {
 	return result;
 	    
     },
+    createRequest : function () {
+	// a lil compatibility with microsoft
+	try {
+	    request = new XMLHttpRequest();
+	} catch (tryNewerMicrosoft) {
+	    try {
+		request = new ActiveXObject("Msxml2.XMLHTTP");
+	    } catch (tryOlderMicrosoft) {
+		try {
+		    request = new ActiveXObject("Microsoft.XMLHTTP");
+		} catch (failed) {
+		    request = false;
+		}
+	    }
+	}
+	
+	if (!request){
+	    alert("Error initializing XMLHttpRequest! Not compatible with this browser. Please upgrade to a newer version.");
+	}
+	
+	return request;
+    },
+    testiii : function(){
+	id = 1;
+	progressBar = $.jqote( '#progressBarTmpl', {'bar': id} );
+	$("#mp-album-wrapper").append(progressBar);
+    }
 };

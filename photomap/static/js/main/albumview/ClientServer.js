@@ -1,6 +1,7 @@
 ClientServer = function() {
 	// array of places
 	this.places = new Array();
+	this.uploadedPhotos = new Array();
 };
 
 ClientServer.prototype = {
@@ -113,23 +114,21 @@ ClientServer.prototype = {
 	    });
 	    map.fit(markersinfo);
 	},
-	reloadAlbum : function(){
-	    place = main.getUIState().getCurrentLoadedPlace();
-	    console.log(place);
-	    this._getPlaces();
-	    this._showPlaces();
-	    place.triggerClick();
-	},
 	handleUpload : function(repeat){
+	    $form = $("form.mp-dialog");
 	    // get input values
-	    $form = ("form.mp-dialog");
 	    inputValues = {
 		'id' : $form.find("input[name='place']").val(),
 		'title' : $form.find("input[name='title']").val(),
-		'desc' : $form.find("input[name='description']").val()
+		'description' : $form.find("textarea[name='description']").val()
 	    };
+	    
+	    // add new photo object and set first values -> finished in responseHandler
+	    var photo = new Photo(inputValues);
+	    
 	    // get FormData-Object for Upload
 	    data = this.getUploadData(inputValues,'photo');
+	    
 	    // close fanybox and reopen if repeat = true
 	    startHandler = function(){
 		$.fancybox.close();
@@ -138,20 +137,57 @@ ClientServer.prototype = {
 		    $(".mp-option-add").trigger('click');
 		}
 	    };
+	    
 	    // give user feedback about progress
+	    //id = $("body").find(".mp-progress-bar-wrapper").length + 1;
+	    //progressBar = $.jqote( '#progressBarTmpl', {bar: id} )
+	    //currentBar = "#mp-progress-bar-" + id;
 	    progressHandler = function(event){
 		if (event.lengthComputable){
 		    var percentageUploaded = parseInt(100 - (event.loaded / event.total * 100));
+		    //$("#mp-album-wrapper").append(progressBar);
+		    //$(currentBar).find(".mp-progress-bar").width(percentageUploaded + '%');
+		    //$(currentBar).find(".mp-progress-info").text(percentageUploaded + '%');
 		    console.log('Upload-Status: ' + percentageUploaded + '%');
 		}
 	    };
-	    // reload place -> to show new photos in gallery
+	    
+	    // set progress bar on 100%
 	    loadHandler = function(){
-		alert('Photo-Upload finished');
+		// progressbar 100% + 'Done!' + FadeOut
+		//$(currentBar).find(".mp-progress-bar").width('100%');
+		//$(currentBar).find(".mp-progress-info").text('100%');
+		//$(currentBar).fadeOut(1000).delay(1000);
+		//window.setTimeout(function(){
+		    //$("#mp-progress-bar-1").remove();
+		    //},1000);
+		console.log('Done')
+	    };
+	    // add photo to UIState and gallery and set listeners
+	    responseHandler = function(response){
+		state = main.getUIState();
+		album = main.getUI().getAlbum();
+		if(response.success){
+		    // add received value to uploadedPhoto-Object and add it to UIState and current place
+		    photo.source = response.url;
+		    photo.thumb = response.url;
+		    photo.id = response.id;
+		    console.log(photo);
+		    state.addPhoto(photo);
+		    $(".mp-gallery img.mp-option-add").before('<img class="overlay-description sortable mp-control" src=' + response.url + '>');
+		    // reinitialising ScrollPane, cause gallery length might have increased
+		    album.getScrollPane().reinitialise()
+		    album.searchImages();
+		    // set bindListener (won't be necessary anymore when upgrading to jQuery 1.7.2 and using .on()
+		    album.bindListener();
+		}
+		else{
+		    alert(response.error);
+		}
 	    };
 	    
 	    // send upload
-	    this.sendUpload(data,startHandler,progressHandler,loadHandler);
+	    this.sendUpload(data,startHandler,progressHandler,loadHandler,responseHandler);
 	},
 	getUploadData : function(params,fileType){
 	    state = main.getUIState();
@@ -159,7 +195,7 @@ ClientServer.prototype = {
 	    
 	    data.append('place', params.id);
 	    data.append('title', params.title);
-	    data.append('description', params.desc);
+	    data.append('description', params.description);
 	    /*
 	     * due to using the FormData() - Object there is no 
 	     * need to read the photo first (Filereader API), save it into 
@@ -171,13 +207,17 @@ ClientServer.prototype = {
 	    
 	    return data;
 	},
-	sendUpload : function(data,start,progress,done){
-	    request = new XMLHttpRequest();
-	    upload = request.upload;
+	sendUpload : function(data,start,progress,load,done){
 	    
+	    // create a request-object which is also compatible to microsoft
+	    request = main.getUI().getTools().createRequest();
+	    if (!request){
+		return;
+	    }
+	    upload = request.upload;
 	    // don't proceed if browser doesnt support new XMLHttpRequest Level 2
-	    if (!upload) {
-		alert('Your browser does not support XMLHttpRequest Level 2 upload');
+	    if (!upload){
+		alert('Your browser does not support XMLHttpRequest Level 2 upload. Please upgrade to a newer version.');
 		return;
 	    }
 	    
@@ -186,12 +226,15 @@ ClientServer.prototype = {
 	    // handler for the upload progress
 	    upload.addEventListener('progress',progress);
 	    // handler called after all bytes are sent
-	    upload.addEventListener('load',done);
-	    upload.onreadystatechange = function(e){
+	    upload.addEventListener('load',load);
+	    request.onreadystatechange = function(e){
 		// readyState == 4 -> data-transfer completed
 		if (request.readyState == 4){
+		    if (request.status == 200){
+			done(JSON.parse(request.responseText));
+		    }
 		    // alert error if upload wasn't successful
-		    if (request.status != 200){
+		    else {
 			text = JSON.parse(request.responseText);
 			error = request.status;
 			alert("The upload didn't work. " + error + " " + text);

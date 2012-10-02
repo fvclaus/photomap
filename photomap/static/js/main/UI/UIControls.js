@@ -202,8 +202,9 @@ UIControls.prototype = {
 		    if(confirm("Do you really want to delete photo " + photo.name)){
 			url = "/delete-photo",
 			data = {"id":photo.id};
-			//deletes photo from gallery and moves or hides slider
-			tools.deletePhoto(photo);
+			state.removePhoto(photo);
+			$("div.mp-gallery > img[src='"+photo.thumb+"']").remove();
+			main.getUI().getAlbum().getScrollPane().reinitialise();
 		    }
 		    else 
 			return;
@@ -367,7 +368,7 @@ UIControls.prototype = {
     handleDragOver : function(event){
 	event.stopPropagation();
 	event.preventDefault();
-	event.originalEvent.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+	event.originalEvent.dataTransfer.dropEffect = 'copy';
     },
     handleGalleryDrop : function(event){
 	event.stopPropagation();
@@ -411,7 +412,7 @@ UIControls.prototype = {
 	    return;
 	}
 	else {
-	    $("input[name='file']").val(null);
+	    $("input[type='file']").val(null);
 	    alert(checked.error);
 	    return;
 	}

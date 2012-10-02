@@ -27,6 +27,9 @@ UIAlbum.prototype =  {
 	console.log("width = " + position.width + " height = " + position.height);
 	return position;
     },
+    getScrollPane : function(){
+	return this.$album.data('jsp');
+    },
     _setVisibility : function(visible){
 	this.visible = visible;
     },

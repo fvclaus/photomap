@@ -51,7 +51,6 @@ function exposeListener(){
 };
 function iframeListener(){
   $("body").bind('iframe_close',function(){
-    main.getClientServer().reloadAlbum();
     mpEvents.trigger("body",mpEvents.toggleExpose);
   });
 };
