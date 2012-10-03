@@ -51,6 +51,7 @@ function exposeListener(){
 };
 function iframeListener(){
   $("body").bind('iframe_close',function(){
+    state.setFileToUpload(null);
     mpEvents.trigger("body",mpEvents.toggleExpose);
   });
 };

@@ -18,14 +18,19 @@ ClientState.prototype = {
 	return album.isOwner;
     },
     _parseValue : function(value){
-	this.value  = value.split(",");
 	var instance = this;
+	oldValue  = value.split(",");
 	this.photos = new Array();
-	
+	// 'visited'-cookie mustn't contain non-numeric values!
 	if (value != "") {
-	    this.value.forEach(function(photo){
-		instance.photos.push(parseInt(photo));
-	    });
+	    for (i=0; i < oldValue.length; i++){
+		// in case there is a non-numeric value in the cookie
+		if (!isNaN(oldValue[i])){
+		    this.photos.push(parseInt(oldValue[i]));
+		}
+	    }
+	    // rewrite cookie, just in case there was a change
+	    this._writeCookie();
 	}
     },
     isVisitedPhoto : function(id){
@@ -36,11 +41,13 @@ ClientState.prototype = {
     },
     addPhoto : function(id){
 	if (this.photos.indexOf(id) == -1){
+	    console.log(id);
 	    this.photos.push(id);
 	    this._writeCookie();
 	}
     },
     _writeCookie : function(){
+	console.log(this.photos);
 	this.value = this.photos.join(",");
 	$.cookie("visited",this.value,this._cookieSettings);
     },

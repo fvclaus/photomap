@@ -129,39 +129,48 @@ ClientServer.prototype = {
 	    // get FormData-Object for Upload
 	    data = this.getUploadData(inputValues,'photo');
 	    
-	    // close fanybox and reopen if repeat = true
+	    // close fancybox and reopen if repeat = true
 	    startHandler = function(){
 		$.fancybox.close();
-		//main.getUIState().setFileToUpload(null);
+		main.getUIState().setFileToUpload(null);
 		if (repeat) {
 		    $(".mp-option-add").trigger('click');
 		}
 	    };
 	    
-	    // give user feedback about progress
-	    //id = $("body").find(".mp-progress-bar-wrapper").length + 1;
-	    //progressBar = $.jqote( '#progressBarTmpl', {bar: id} )
-	    //currentBar = "#mp-progress-bar-" + id;
+	    // give user simple feedback about progress (smoothly change font-color and bg-color of title-bar)
 	    progressHandler = function(event){
 		if (event.lengthComputable){
-		    var percentageUploaded = parseInt(100 - (event.loaded / event.total * 100));
-		    //$("#mp-album-wrapper").append(progressBar);
-		    //$(currentBar).find(".mp-progress-bar").width(percentageUploaded + '%');
-		    //$(currentBar).find(".mp-progress-info").text(percentageUploaded + '%');
+		    var percentageUploaded = Math.round(event.loaded / event.total);
+		    if (percentageUploaded <= 50){
+			factor = (percentageUploaded * 2);
+			rgbBgColor = 255 * factor;
+			rgbFontColor = 255 - rgbBgColor;
+			$(".mp-gallery-title-bar").css({
+			    'background-color': 'rgba('+rgbBgColor+','+rgbBgColor+','+rgbBgColor+',.6)',
+			    'color': 'rgba('+rgbFontColor+','+rgbFontColor+','+rgbFontColor+',1)'
+			});
+		    }
+		    else{
+			factor = ((percentageUploaded - 50) * 2);
+			rgbFontColor = 255 * factor;
+			rgbBgColor = 255 - rgbFontColor;
+			$(".mp-gallery-title-bar").css({
+			    'background-color': 'rgba('+rgbBgColor+','+rgbBgColor+','+rgbBgColor+',.6)',
+			    'color': 'rgba('+rgbFontColor+','+rgbFontColor+','+rgbFontColor+',1)'
+			});
+		    }
 		    console.log('Upload-Status: ' + percentageUploaded + '%');
 		}
 	    };
 	    
-	    // set progress bar on 100%
+	    // resets progress changes (=> normalize title-bar)
 	    loadHandler = function(){
-		// progressbar 100% + 'Done!' + FadeOut
-		//$(currentBar).find(".mp-progress-bar").width('100%');
-		//$(currentBar).find(".mp-progress-info").text('100%');
-		//$(currentBar).fadeOut(1000).delay(1000);
-		//window.setTimeout(function(){
-		    //$("#mp-progress-bar-1").remove();
-		    //},1000);
-		console.log('Done')
+		$(".mp-gallery-title-bar").css({
+		    'background-color': '#333',
+		    'color': '#FFF'
+		});
+		console.log('Done');
 	    };
 	    // add photo to UIState and gallery and set listeners
 	    responseHandler = function(response){
@@ -176,7 +185,12 @@ ClientServer.prototype = {
 		    state.addPhoto(photo);
 		    $(".mp-gallery img.mp-option-add").before('<img class="overlay-description sortable mp-control" src=' + response.url + '>');
 		    // reinitialising ScrollPane, cause gallery length might have increased
-		    album.getScrollPane().reinitialise()
+		    if (album.getScrollPane()){
+			album.getScrollPane().reinitialise();
+		    }
+		    else if (!album.getScrollPane() && state.getPhotos().length > 9){
+			album.setScrollPane();
+		    }
 		    album.searchImages();
 		    // set bindListener (won't be necessary anymore when upgrading to jQuery 1.7.2 and using .on()
 		    album.bindListener();
@@ -196,13 +210,6 @@ ClientServer.prototype = {
 	    data.append('place', params.id);
 	    data.append('title', params.title);
 	    data.append('description', params.description);
-	    /*
-	     * due to using the FormData() - Object there is no 
-	     * need to read the photo first (Filereader API), save it into 
-	     * memory and encode it manually, in order to send it
-	     * in case a browser we want to support doesn't have FormData
-	     * -> we have to user Filereader as Fallback or add FormData-Object + Prototype
-	     */
 	    data.append(fileType, state.getFileToUpload());
 	    
 	    return data;
@@ -228,7 +235,7 @@ ClientServer.prototype = {
 	    // handler called after all bytes are sent
 	    upload.addEventListener('load',load);
 	    request.onreadystatechange = function(e){
-		// readyState == 4 -> data-transfer completed
+		// readyState == 4 -> data-transfer completed and response fully received
 		if (request.readyState == 4){
 		    if (request.status == 200){
 			done(JSON.parse(request.responseText));
