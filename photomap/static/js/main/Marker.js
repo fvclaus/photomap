@@ -1,4 +1,3 @@
- 
 // abstract marker either represents a place or photo
 Marker = function(data) {	
     this._create(data);

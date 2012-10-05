@@ -281,7 +281,7 @@ UIControls.prototype = {
 			    //reflect changes locally
 			    place.title = $title.val();
 			    place.description = $description.val();
-			    main.getUI().getInformation().updatePlace(place);
+			    main.getUI().getInformation().updatePlace();
 			});
 		    })
 		    .get("/update-place");

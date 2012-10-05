@@ -26,24 +26,15 @@ UIInformation.prototype = {
 	return this.visible;
     },
     updateAlbumTitle : function(){
-			title = main.getUIState().getAlbum().name;
+	title = main.getUIState().getAlbum().title;
 	$(".mp-page-title h1").text(title);
     },
-<<<<<<< HEAD
-    setPlaceTitle : function(){
+    updatePlaceTitle : function(){
 	title = main.getUIState().getCurrentPlace().title;
 	$(".mp-place-title").text(title);
     },
-    setPhotoTitle : function(){
-	title = main.getUIState().getCurrentPhoto().title;
-=======
-    updatePlaceTitle : function(){
-	title = main.getUIState().getCurrentPlace().name;
-	$(".mp-place-title").text(title);
-    },
     updatePhotoTitle : function(){
-	title = main.getUIState().getCurrentPhoto().name;
->>>>>>> origin/development
+	title = main.getUIState().getCurrentPhoto().title;
 	$(".mp-photo-title")
 	    .show()
 	    .find(".mp-option-information")
@@ -127,15 +118,10 @@ UIInformation.prototype = {
 	this._setVisibility(false);
 	mpEvents.trigger("body",mpEvents.toggleExpose);
     },
-    updatePlace : function(placeinfo){
-	state = main.getUIState();
-	if (state.getCurrentPlace() == state.getCurrentLoadedPlace()){
-	    this.setPlaceTitle(placeinfo.title);
-	    this.setPlaceDescription(placeinfo.description);
-	}
-	else{
-	    return;
-	}
+    updatePlace : function(){
+	place = main.getUIState().getCurrentLoadedPlace();
+	this.updatePlaceTitle(place.title);
+	this.updatePlaceDescription(place.description);
     },
     bindListener : function(){
 	var instance = this;
@@ -168,7 +154,7 @@ UIInformation.prototype = {
 	this.$imageNumber.next().css("margin-left",margin);
     },
     updateImageNumber : function() {
-			photos = main.getUIState().getPhotos();
-			this.$imageNumber.text(" Bild " + state.getCurrentPhotoIndex() + 1 + "/" + photos.length);
+	photos = main.getUIState().getPhotos();
+	this.$imageNumber.text(" Bild " + state.getCurrentPhotoIndex() + 1 + "/" + photos.length);
     },
 };

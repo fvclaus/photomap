@@ -47,14 +47,7 @@ UITools.prototype = {
 	else{
 	    return parseInt($el.css(attributes));
 	}
-    },
-
-    getAbsoluteUrl : function(url){
-	a = document.createElement("a");
-	a.href = url;
-	return a.href;
-    },
-    
+    },    
     getUrlParameterByName : function (name){
       name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
       var regexS = "[\\?&]" + name + "=([^&#]*)";
@@ -68,11 +61,11 @@ UITools.prototype = {
     
     getUrlId : function(){
 		return getUrlParameterByName("id");
-	},
+    },
 	
-	getUrlSecret : function(){
+    getUrlSecret : function(){
 		return getUrlParameterByName("secret");
-	},
+    },
     
     deleteObject : function(url,data){
 	// post request to delete album/place/photo - data is the id of the object
@@ -179,10 +172,5 @@ UITools.prototype = {
 	}
 	
 	return request;
-    },
-    testiii : function(){
-	id = 1;
-	progressBar = $.jqote( '#progressBarTmpl', {'bar': id} );
-	$("#mp-album-wrapper").append(progressBar);
     }
 };

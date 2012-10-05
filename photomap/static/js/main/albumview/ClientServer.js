@@ -43,9 +43,9 @@ ClientServer.prototype = {
 				main.getUI().getInformation().updateAlbumTitle();
 				
 				// the album name, description and id as ClientServer Property
-				//instance.name = album.name;
+				//instance.name = album.title;
 				//instance.id = album.id;
-				//instance.desc = album.desc;
+				//instance.desc = album.description;
 				
 				// in case there are no places yet show map around album marker
 				if (album.places == undefined) {
