@@ -145,7 +145,7 @@ UIControls.prototype = {
 	    .bind("click.PhotoMap",function(event){
 	    place = main.getUIState().getCurrentPlace();
 	    // reset load function 
-	    main.getUI().getInput().iFrame("/insert-photo?place="+place.id);
+	    main.getUI().getInput().getUpload("/insert-photo?place="+place.id,function(){return;});
 	});
     },
     shareBindListener : function(){
@@ -202,8 +202,9 @@ UIControls.prototype = {
 		    if(confirm("Do you really want to delete photo " + photo.name)){
 			url = "/delete-photo",
 			data = {"id":photo.id};
-			//deletes photo from gallery and moves or hides slider
-			tools.deletePhoto(photo);
+			state.removePhoto(photo);
+			$("div.mp-gallery > img[src='"+photo.thumb+"']").remove();
+			main.getUI().getAlbum().getScrollPane().reinitialise();
 		    }
 		    else 
 			return;
@@ -363,6 +364,58 @@ UIControls.prototype = {
 		controls.hideControls(true);
 	    });
 	});
+    },
+    handleDragOver : function(event){
+	event.stopPropagation();
+	event.preventDefault();
+	event.originalEvent.dataTransfer.dropEffect = 'copy';
+    },
+    handleGalleryDrop : function(event){
+	event.stopPropagation();
+	event.preventDefault();
+	
+	state = main.getUIState();
+	input = main.getUI().getInput();
+	place = state.getCurrentLoadedPlace();
+	files = event.originalEvent.dataTransfer.files;
+	checked = main.getUI().getTools().checkFiles(files);
+	
+	// check for file api support of the browser
+	if (window.File && window.FileReader && window.FileList && window.Blob) {
+	    if ( checked.success ){
+		// handler for gallery drop
+		state.setFileToUpload(files[0]);
+		hideInput = function(){$("input[type='file'],label[name='file-upload']").remove();};
+		input.getUpload("/insert-photo?place=" + place.id,hideInput);
+	    }
+	    else {
+		alert(checked.error);
+		return;
+	    }
+	}
+	else {
+	  alert('The File APIs (DragnDrop) are not fully supported in this browser.');
+	  return false;
+	}
+    },
+    handleFileInput : function(event){
+	event.preventDefault();
+	event.stopPropagation();
+	
+	state = main.getUIState();
+	place = state.getCurrentLoadedPlace();
+	files = event.target.files;
+	checked = main.getUI().getTools().checkFiles(files);
+	
+	if ( checked.success ){
+	    state.setFileToUpload(files[0]);
+	    return;
+	}
+	else {
+	    $("input[type='file']").val(null);
+	    alert(checked.error);
+	    return;
+	}
     },
 
 };

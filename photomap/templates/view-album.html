@@ -78,7 +78,7 @@
 		</div>
 	</section>
 	
-	<!-- jqote2 templates for gallery and fullscreen -->
+	<!-- jqote2 templates for gallery and fullscreen and progress bar-->
 	<script id="galleryTmpl" type="text/html">
 	<div class="mp-gallery-outer">
 		<div class="mp-gallery">
@@ -105,6 +105,12 @@
 			</div>
 		</div>
 	</script>
+	<script id="progressBarTmpl" type="text/html">
+		<div id="mp-progress-bar-<%= this.bar %>" class="mp-progress-bar-wrapper">
+			<span class=".mp-progress-bar-outer"><span class="mp-progress-bar"></span></span><em class="mp-progress-info"></em>
+		</div>
+	</script>
+
 	
 	<!-- helpers for selenium ide. remove from production system -->
 	<div class="mp-invisible">

@@ -1,6 +1,7 @@
 ClientServer = function() {
 	// array of places
 	this.places = new Array();
+	this.uploadedPhotos = new Array();
 };
 
 ClientServer.prototype = {
@@ -113,11 +114,143 @@ ClientServer.prototype = {
 	    });
 	    map.fit(markersinfo);
 	},
-	reloadAlbum : function(){
-	    place = main.getUIState().getCurrentLoadedPlace();
-	    console.log(place);
-	    this._getPlaces();
-	    this._showPlaces();
-	    place.triggerClick();
+	handleUpload : function(repeat){
+	    $form = $("form.mp-dialog");
+	    // get input values
+	    inputValues = {
+		'id' : $form.find("input[name='place']").val(),
+		'title' : $form.find("input[name='title']").val(),
+		'description' : $form.find("textarea[name='description']").val()
+	    };
+	    
+	    // add new photo object and set first values -> finished in responseHandler
+	    var photo = new Photo(inputValues);
+	    
+	    // get FormData-Object for Upload
+	    data = this.getUploadData(inputValues,'photo');
+	    
+	    // close fancybox and reopen if repeat = true
+	    startHandler = function(){
+		$.fancybox.close();
+		main.getUIState().setFileToUpload(null);
+		if (repeat) {
+		    $(".mp-option-add").trigger('click');
+		}
+	    };
+	    
+	    // give user simple feedback about progress (smoothly change font-color and bg-color of title-bar)
+	    progressHandler = function(event){
+		if (event.lengthComputable){
+		    var percentageUploaded = Math.round(event.loaded / event.total);
+		    if (percentageUploaded <= 50){
+			factor = (percentageUploaded * 2);
+			rgbBgColor = 255 * factor;
+			rgbFontColor = 255 - rgbBgColor;
+			$(".mp-gallery-title-bar").css({
+			    'background-color': 'rgba('+rgbBgColor+','+rgbBgColor+','+rgbBgColor+',.6)',
+			    'color': 'rgba('+rgbFontColor+','+rgbFontColor+','+rgbFontColor+',1)'
+			});
+		    }
+		    else{
+			factor = ((percentageUploaded - 50) * 2);
+			rgbFontColor = 255 * factor;
+			rgbBgColor = 255 - rgbFontColor;
+			$(".mp-gallery-title-bar").css({
+			    'background-color': 'rgba('+rgbBgColor+','+rgbBgColor+','+rgbBgColor+',.6)',
+			    'color': 'rgba('+rgbFontColor+','+rgbFontColor+','+rgbFontColor+',1)'
+			});
+		    }
+		    console.log('Upload-Status: ' + percentageUploaded + '%');
+		}
+	    };
+	    
+	    // resets progress changes (=> normalize title-bar)
+	    loadHandler = function(){
+		$(".mp-gallery-title-bar").css({
+		    'background-color': '#333',
+		    'color': '#FFF'
+		});
+		console.log('Done');
+	    };
+	    // add photo to UIState and gallery and set listeners
+	    responseHandler = function(response){
+		state = main.getUIState();
+		album = main.getUI().getAlbum();
+		if(response.success){
+		    // add received value to uploadedPhoto-Object and add it to UIState and current place
+		    photo.source = response.url;
+		    photo.thumb = response.url;
+		    photo.id = response.id;
+		    console.log(photo);
+		    state.addPhoto(photo);
+		    $(".mp-gallery img.mp-option-add").before('<img class="overlay-description sortable mp-control" src=' + response.url + '>');
+		    // reinitialising ScrollPane, cause gallery length might have increased
+		    if (album.getScrollPane()){
+			album.getScrollPane().reinitialise();
+		    }
+		    else if (!album.getScrollPane() && state.getPhotos().length > 9){
+			album.setScrollPane();
+		    }
+		    album.searchImages();
+		    // set bindListener (won't be necessary anymore when upgrading to jQuery 1.7.2 and using .on()
+		    album.bindListener();
+		}
+		else{
+		    alert(response.error);
+		}
+	    };
+	    
+	    // send upload
+	    this.sendUpload(data,startHandler,progressHandler,loadHandler,responseHandler);
+	},
+	getUploadData : function(params,fileType){
+	    state = main.getUIState();
+	    data = new FormData();
+	    
+	    data.append('place', params.id);
+	    data.append('title', params.title);
+	    data.append('description', params.description);
+	    data.append(fileType, state.getFileToUpload());
+	    
+	    return data;
+	},
+	sendUpload : function(data,start,progress,load,done){
+	    
+	    // create a request-object which is also compatible to microsoft
+	    request = main.getUI().getTools().createRequest();
+	    if (!request){
+		return;
+	    }
+	    upload = request.upload;
+	    // don't proceed if browser doesnt support new XMLHttpRequest Level 2
+	    if (!upload){
+		alert('Your browser does not support XMLHttpRequest Level 2 upload. Please upgrade to a newer version.');
+		return;
+	    }
+	    
+	    // handler called after upload is started
+	    upload.addEventListener('loadstart',start);
+	    // handler for the upload progress
+	    upload.addEventListener('progress',progress);
+	    // handler called after all bytes are sent
+	    upload.addEventListener('load',load);
+	    request.onreadystatechange = function(e){
+		// readyState == 4 -> data-transfer completed and response fully received
+		if (request.readyState == 4){
+		    if (request.status == 200){
+			done(JSON.parse(request.responseText));
+		    }
+		    // alert error if upload wasn't successful
+		    else {
+			text = JSON.parse(request.responseText);
+			error = request.status;
+			alert("The upload didn't work. " + error + " " + text);
+		    }
+		}
+	    };
+	    // define method and url - true is for asynchronous 
+	    request.open('post','/insert-photo',true);
+	    // send formdata to server
+	    request.send(data);
 	},
 };

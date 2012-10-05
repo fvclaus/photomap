@@ -9,6 +9,7 @@ function toggleGallery() {
     // trigger event to expose album
     album._setVisibility(false);
     mpEvents.trigger("body",mpEvents.toggleExpose);
+    
   }
   else {
     $gallery.fadeIn(500);
@@ -50,7 +51,7 @@ function exposeListener(){
 };
 function iframeListener(){
   $("body").bind('iframe_close',function(){
-    main.getClientServer().reloadAlbum();
+    state.setFileToUpload(null);
     mpEvents.trigger("body",mpEvents.toggleExpose);
   });
 };
@@ -79,9 +80,8 @@ $(document).ready(function(){
   
   $("#mp-album").hide();
   $(".mp-option-to-dashboard").hide();
-
 });
-  
+
 /* 
  * classes are not completely initiated, when DOM is already ready ->
  * therefor when checking something (isAdmin/isInteractive/...) in these classes 
@@ -100,8 +100,6 @@ $(window).load(function(){
   
   if ( main.getClientState().isAdmin() ) {
     
-    console.log(controls);
-    
     // set page in interactive mode as albumview
     state.setModeInteractive(true,page);
     
@@ -110,7 +108,9 @@ $(window).load(function(){
     iframeListener();
     controls.bindListener();
     controls.markerControlListener('place');
-    
+    // setup the dnd listeners
+    $('#mp-album').bind('dragover', controls.handleDragOver);
+    $('#mp-album').bind('drop', controls.handleGalleryDrop);
     // change cursor style on map (has to be inside .load() cause it depends on state.isInteractive()
     cursor.setMapCursor();
     

@@ -53,42 +53,45 @@ class PhotoControllerTest(SimpleTestCase):
         data = {"place": 1,
                 "title": "Chuck Norris"}
         self._openphoto(data)
-        (photo, content) = self.assertCreates(data, check = self.assertPhotoCreateSuccess)
+        (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
+        self.assertPublicAccess(content["url"])
         #=======================================================================
         # insert something valid with description
         #=======================================================================
         self._openphoto(data)
         data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
-        self.assertCreates(data, check = self.assertPhotoCreateSuccess)
+        (photo,content) = self.assertCreates(data)
+        self.assertEqual(photo.description, data["description"])
+        self.assertPublicAccess(content["url"])
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
         data2 = deepcopy(data)
         self._openphoto(data2)
         del data2["photo"]
-        self.assertPhotoCreateError(data2)
+        self.assertError(data2)
         #=======================================================================
         # delete some more
         #=======================================================================
         data3 = deepcopy(data)
         self._openphoto(data3)
         del data3["title"]
-        self.assertPhotoCreateError(data3)
+        self.assertError(data3)
         #=======================================================================
         # delete something else
         #=======================================================================
         data4 = deepcopy(data)
         self._openphoto(data4)
         del data4["place"]
-        self.assertPhotoCreateError(data4)
+        self.assertError(data4)
         #=======================================================================
         # insert into somebody elses place
         #=======================================================================
         data5 = deepcopy(data)
         self._openphoto(data5)
         data5["place"] = 2
-        self.assertPhotoCreateError(data5)
+        self.assertError(data5)
         
     def test_update(self):
         self.url = "/update-photo"
@@ -123,20 +126,22 @@ class PhotoControllerTest(SimpleTestCase):
         self.assertError(data)
         
     # hack around the fact that create photo will never return json
-    def assertPhotoCreateSuccess(self, data):
-        response = self.c.post(self.url, data)
-        self.assertTrue("text/html" in response["Content-Type"])
-        self.assertFalse("error" in response.content)
-        photos = Photo.objects.all()
-        photo = photos[len(photos) - 1]
-        return {"id" : photo.pk}
+#    this has gone obsolete since the introduction of html5 video upload
+#    def assertPhotoCreateSuccess(self, data):
+#        response = self.c.post(self.url, data)
+#        self.assertTrue("text/html" in response["Content-Type"])
+#        self.assertFalse("error" in response.content)
+#        photos = Photo.objects.all()
+#        photo = photos[len(photos) - 1]
+#        return {"id" : photo.pk}
         
-    def assertPhotoCreateError(self, data):
-        length = len(Photo.objects.all())
-        response = self.c.post(self.url, data)
-        self.assertTrue("text/html" in response["Content-Type"])
-        self.assertTrue("error" in response.content)
-        self.assertEqual(length, len(Photo.objects.all()))
+#    obsolete since html5 video upload
+#    def assertPhotoCreateError(self, data):
+#        length = len(Photo.objects.all())
+#        response = self.c.post(self.url, data)
+#        self.assertTrue("text/html" in response["Content-Type"])
+#        self.assertTrue("error" in response.content)
+#        self.assertEqual(length, len(Photo.objects.all()))
     
     def _openphoto(self,data):
         photo = open(TEST_PHOTO,"rb")

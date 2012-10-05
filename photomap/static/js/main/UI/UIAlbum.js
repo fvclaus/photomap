@@ -27,6 +27,16 @@ UIAlbum.prototype =  {
 	console.log("width = " + position.width + " height = " + position.height);
 	return position;
     },
+    getScrollPane : function(){
+	return this.$album.data('jsp');
+    },
+    setScrollPane : function(){
+	this.$album.jScrollPane({
+	    verticalDragMinHeight: 40,
+	    verticalDragMaxHeight: 40,
+	    animateScroll: true	
+	});
+    },
     _setVisibility : function(visible){
 	this.visible = visible;
     },
@@ -87,9 +97,8 @@ UIAlbum.prototype =  {
 			.find("div.mp-gallery")
 			.width(instance.$album.width())
 			.height(instance.$album.height())
-		    
+		    // Drag n Drop for Photos in gallery if user is admin
 		    if ( state.isInteractive() ){
-			// Drag n Drop for Photos if user is admin
 			instance.$album
 			    .find("div.mp-gallery")
 			    .sortable({
@@ -113,7 +122,7 @@ UIAlbum.prototype =  {
 				    });
 				}
 			    });
-			}
+		    }
 		    // create scrollpane 
 		    instance.$album
 			.css("padding-left",instance.albumPadding)
