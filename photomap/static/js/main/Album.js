@@ -1,8 +1,8 @@
 // Album is itself stored on the Map
 Album = function(data){
-    this.name = data.title;
+    this.title = data.title;
     this.id = data.id;
-    this.desc = data.description;
+    this.description = data.description;
     
     this.marker = new Marker({
 	lat: parseFloat(data.lat),

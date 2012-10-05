@@ -1,7 +1,7 @@
 var UI = {};
 
-UIFullscreen = function(gallery){
-    this.gallery = gallery;
+UIFullscreen = function(album){
+    this.album = album;
     this.iconHelpCount = 5;
     this.$fullscreen = null;
     this.$close = null;
@@ -22,7 +22,7 @@ UIFullscreen.prototype = {
 	// if( !this.$fullscreenEl ) {
 	var data	= {
 	    source	: main.getUIState().getCurrentPhoto().source,
-	    description	: main.getUIState().getCurrentPhoto().name
+	    description	: main.getUIState().getCurrentPhoto().title
 	};
 	$mpContainer.append($.jqote('#galleryFullscreenTmpl', {tmplPhotoData : data} ));
 	

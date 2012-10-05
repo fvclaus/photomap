@@ -74,7 +74,7 @@ UIAlbum.prototype =  {
 
 	
 	for( var i = 0, len = photos.length; i < len; ++i ) {
-	    tmplPhotosData.push( photos[i].thumb );
+	    tmplPhotosData.push( photos[i].source );
 	    $('<img/>').load(function() {
 		++loaded
 		if( loaded === len ) {
@@ -143,7 +143,7 @@ UIAlbum.prototype =  {
 		    controls.bindInsertPhotoListener();
 		    
 		}
-	    }).attr( 'src', photos[i].thumb );
+	    }).attr( 'src', photos[i].source );
 	}
 	if (main.getUIState().isAlbumLoading() && photos.length == 0){
 	    main.getUIState().setAlbumLoading(false);

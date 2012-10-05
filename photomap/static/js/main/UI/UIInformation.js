@@ -29,11 +29,11 @@ UIInformation.prototype = {
 	$(".mp-page-title h1").text(title);
     },
     setPlaceTitle : function(){
-	title = main.getUIState().getCurrentPlace().name;
+	title = main.getUIState().getCurrentPlace().title;
 	$(".mp-place-title").text(title);
     },
     setPhotoTitle : function(){
-	title = main.getUIState().getCurrentPhoto().name;
+	title = main.getUIState().getCurrentPhoto().title;
 	$(".mp-photo-title")
 	    .show()
 	    .find(".mp-option-information")
@@ -89,15 +89,15 @@ UIInformation.prototype = {
 	api.reinitialise();
     },
     setPlaceDescription : function(){
-	info = main.getUIState().getCurrentLoadedPlace().desc;
+	info = main.getUIState().getCurrentLoadedPlace().description;
 	this._setDescription(info);
     },
     setPhotoDescription : function(){
-	info = main.getUIState().getCurrentPhoto().desc;
+	info = main.getUIState().getCurrentPhoto().description;
 	this._setDescription(info);
     },
     setAlbumDescription : function(){
-	info = main.getUIState().getCurrentAlbum().desc;
+	info = main.getUIState().getCurrentAlbum().description;
 	this._setDescription(info);
     },
     closeDescription : function(){
@@ -115,8 +115,8 @@ UIInformation.prototype = {
     updatePlace : function(placeinfo){
 	state = main.getUIState();
 	if (state.getCurrentPlace() == state.getCurrentLoadedPlace()){
-	    this.setPlaceTitle(placeinfo.name);
-	    this.setPlaceDescription(placeinfo.desc);
+	    this.setPlaceTitle(placeinfo.title);
+	    this.setPlaceDescription(placeinfo.description);
 	}
 	else{
 	    return;

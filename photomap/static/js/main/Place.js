@@ -5,14 +5,14 @@
 */
 
 Place = function(data) {
-    this.name = data.title; // will be used for the Map Marker title (mouseover on the map)
+    this.title = data.title; // will be used for the Map Marker title (mouseover on the map)
     this.id = data.id;
-    this.desc = data.description;
+    this.description = data.description;
     
     this.marker		= new Marker({
 	lat		: parseFloat(data.lat), 
 	lng		: parseFloat(data.lon),
-	title	: this.name
+	title	: this.title
     });
 
     this.photos = new Array();

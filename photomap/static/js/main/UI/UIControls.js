@@ -199,11 +199,11 @@ UIControls.prototype = {
 		
 		// delete current photo
 		if (instance.isModifyPhoto) {
-		    if(confirm("Do you really want to delete photo " + photo.name)){
+		    if(confirm("Do you really want to delete photo " + photo.title)){
 			url = "/delete-photo",
 			data = {"id":photo.id};
 			state.removePhoto(photo);
-			$("div.mp-gallery > img[src='"+photo.thumb+"']").remove();
+			$("div.mp-gallery > img[src='"+photo.source+"']").remove();
 			main.getUI().getAlbum().getScrollPane().reinitialise();
 		    }
 		    else 
@@ -212,7 +212,7 @@ UIControls.prototype = {
     
 		// delete current place
 		else if(instance.isModifyPlace){
-		    if(confirm("Do you really want to delete place " + place.name)){
+		    if(confirm("Do you really want to delete place " + place.title)){
 			url = "/delete-place";
 			data = {"id":place.id};
 			state.removePlace(place);
@@ -225,7 +225,7 @@ UIControls.prototype = {
     
 		// delete current album
 		else if(instance.isModifyAlbum){
-		    if(confirm("Do you really want to delete Album " + album.name)){
+		    if(confirm("Do you really want to delete Album " + album.title)){
 			url = "/delete-album";
 			data = {"id":album.id};
 			album._delete();
@@ -255,13 +255,13 @@ UIControls.prototype = {
 			//prefill with values from selected picture
 			$("input[name=id]").val(photo.id);
 			$("input[name=order]").val(photo.order);
-			var $name = $("input[name=title]").val(photo.name);
-			var $desc = $("textarea[name=description]").val(photo.desc);
+			var $title = $("input[name=title]").val(photo.title);
+			var $description = $("textarea[name=description]").val(photo.description);
 
 			input.onForm(function(){
 			    //reflect changes locally
-			    photo.name = $name.val();
-			    photo.desc = $desc.val();
+			    photo.title = $title.val();
+			    photo.description = $description.val();
 			});
 		    })
 		    .get("/update-photo");
@@ -274,13 +274,13 @@ UIControls.prototype = {
 		input
 		    .onLoad(function(){
 			$("input[name=id]").val(place.id);
-			var $name = $("input[name=title]").val(place.name);
-			var $desc = $("textarea[name=description]").val(place.desc);
+			var $title = $("input[name=title]").val(place.title);
+			var $description = $("textarea[name=description]").val(place.description);
 
 			input.onForm(function(){
 			    //reflect changes locally
-			    place.name = $name.val();
-			    place.desc = $desc.val();
+			    place.title = $title.val();
+			    place.description = $description.val();
 			    main.getUI().getInformation().updatePlace(place);
 			});
 		    })
@@ -294,13 +294,13 @@ UIControls.prototype = {
 		input
 		    .onLoad(function(){
 			$("input[name=id]").val(album.id);
-			var $name = $("input[name=title]").val(album.name);
-			var $desc = $("textarea[name=description]").val(album.desc);
+			var $title = $("input[name=title]").val(album.title);
+			var $description = $("textarea[name=description]").val(album.description);
 
 			input.onForm(function(){
 			    //reflect changes locally
-			    album.name = $name.val();
-			    album.desc = $desc.val();
+			    album.title = $title.val();
+			    album.description = $description.val();
 			});
 		    })
 		    .get("/update-album");

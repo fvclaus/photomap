@@ -20,7 +20,6 @@ ClientServer.prototype = {
 		    type : "post",
 		    data : {
 			'id': photo.id,
-			'title': photo.name,
 			'order': photo.order,
 		    }
 		});
@@ -35,17 +34,17 @@ ClientServer.prototype = {
 	    $.getJSON(url, function( album ) {
 		
 		// define album new, so that property names are congruent with the property names of Place and Photo
-		album.name = album.title;
-		album.desc = album.description;
+		album.title = album.title;
+		album.description = album.description;
 		// set current album in UIState to have access on it for information, etc.
 		main.getUIState().setCurrentAlbum(album);
 		// set album title in title-bar
-		main.getUI().getInformation().setAlbumTitle(album.name);
+		main.getUI().getInformation().setAlbumTitle(album.title);
 		
 		// the album name, description and id as ClientServer Property
-		instance.name = album.name;
+		instance.title = album.title;
 		instance.id = album.id;
-		instance.desc = album.desc;
+		instance.description = album.description;
 		
 		// in case there are no places yet show map around album marker
 		if (album.places == undefined) {
@@ -179,7 +178,6 @@ ClientServer.prototype = {
 		if(response.success){
 		    // add received value to uploadedPhoto-Object and add it to UIState and current place
 		    photo.source = response.url;
-		    photo.thumb = response.url;
 		    photo.id = response.id;
 		    console.log(photo);
 		    state.addPhoto(photo);
