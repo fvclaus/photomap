@@ -1,16 +1,12 @@
 ClientServer = function() {
 	// array of places
-	this.places = new Array();
 	this.uploadedPhotos = new Array();
 };
 
 ClientServer.prototype = {
 	init : function() {
-	    var instance = this;
-	    // make an AJAX call to get the places from the XML file, and display them on the Map
-	    this._getPlaces( function() {
-		instance._showPlaces();
-	    });
+		// make an AJAX call to get the places from the XML file, and display them on the Map
+		this._getPlaces();
 	},
 	savePhotoOrder : function(photos){
 	    photos.forEach(function(photo){
@@ -25,93 +21,98 @@ ClientServer.prototype = {
 		});
 	    });
   	  },
-	_getPlaces			: function(callback ) {
+	_getPlaces			: function( ) {
 	    var instance = this;
 	    tools = main.getUI().getTools();
-	    id = tools.getUrlParameterByName('id');
-	    secret = tools.getUrlParameterByName('secret');
-	    url = 'get-album?id=' + id + '&secret=' + secret;
-	    $.getJSON(url, function( album ) {
-		
-		// define album new, so that property names are congruent with the property names of Place and Photo
-		album.title = album.title;
-		album.description = album.description;
-		// set current album in UIState to have access on it for information, etc.
-		main.getUIState().setCurrentAlbum(album);
-		// set album title in title-bar
-		main.getUI().getInformation().setAlbumTitle(album.title);
-		
-		// the album name, description and id as ClientServer Property
-		instance.title = album.title;
-		instance.id = album.id;
-		instance.description = album.description;
-		
-		// in case there are no places yet show map around album marker
-		if (album.places == undefined) {
-		    var map = main.getMap().getInstance();
-		    lat = album.lat;
-		    lon = album.lon;
-		    lowerLatLng = new google.maps.LatLng(lat - .1,lon - .1);
-		    upperLatLng = new google.maps.LatLng(lat + .1,lon + .1);
-		    bounds = new google.maps.LatLngBounds(lowerLatLng,upperLatLng);
-		    map.fitBounds(bounds);
-		    x = ( $("#mp-map").width() * 0.25 );
-		    y = 0;
-		    map.panBy(x,y);
-		    return;
-		}
-		
-		$.each( album.places, function( key, placeinfo ) {
-		    var place = new Place( placeinfo )
-		    instance.places.push( place );
-		});
-		// add to UIState
-		main.getUIState().setPlaces(instance.places);
-		
-		if( callback ) callback.call();
+	    id = tools.getUrlId();
+	    secret = tools.getUrlSecret();
+	    
+	    $.ajax({
+			"url" : "get-album",
+			data : {
+				"id" : id,
+				"secret" : secret
+				},
+			success: function( album ) {
+				// define album new, so that property names are congruent with the property names of Place and Photo
+				album.title = album.title;
+				album.description = album.description;
+				// set current album in UIState to have access on it for information, etc.
+				main.getUIState().setCurrentAlbum(album);
+				// set album title in title-bar
+				main.getUI().getInformation().updateAlbumTitle();
+				
+				// the album name, description and id as ClientServer Property
+				//instance.name = album.name;
+				//instance.id = album.id;
+				//instance.desc = album.desc;
+				
+				// in case there are no places yet show map around album marker
+				if (album.places == undefined) {
+					var map = main.getMap();
+					map.zoomOut(album.lat,album.lon);
+					//~ lat = album.lat;
+					//~ lon = album.lon;
+					//~ lowerLatLng = map.createLatLng(lat - .1,lon - .1);
+					//~ upperLatLng = map.createLatLng(lat + .1,lon + .1);
+					//~ map.setBounds(lowerLatLng,upperLatLng);
+					return;
+				}
+				
+				var places = new Array();
+				
+				$.each( album.places, function( key, placeinfo ) {
+					var place = new Place( placeinfo )
+					places.push( place );
+				});
+				// add to UIState
+				main.getUIState().setPlaces(places);
+				
+				instance._showPlaces(places)
 	    });
 	    
 	},
-	_showPlaces : function() {
-	    var map = main.getMap();
-	    markersinfo = [];
-	    map.places = this.places;	    
-
-	    map.places.forEach(function(place){
-		console.dir(place.photos);
-		copy = place.photos;
-		noOrder = new Array();
-		place.photos = new Array();
-		copy.forEach(function(photo,index){
-		    if (photo.order && parseInt(photo.order) != NaN){
-			place.photos[photo.order] = photo;
-		    }
-		    else{
-			noOrder.push(photo);
-		    }
+	_showPlaces : function(places) {
+		var map = main.getMap();
+		
+		places = this._sortPhotos(places);
+		map.showAsMarker(places);
+	},
+	
+	_sortPhotos : function(places){
+		
+		places.forEach(function(place){
+			console.dir(place.photos);
+			copy = place.photos;
+			noOrder = new Array();
+			place.photos = new Array();
+			// puts photos with order on the right position
+			// order : 6 place.photos[5] = photo
+			copy.forEach(function(photo,index){
+				if (photo.order && parseInt(photo.order) != NaN){
+					place.photos[photo.order] = photo;
+				}
+				else{
+					noOrder.push(photo);
+				}
+			});
+			// fills up null values in place.photo with fifo no order photos
+			noOrder.forEach(function(photo){
+				if (photo == null){
+					return;
+				}
+				nullIndex = arrayExtension.firstUndef(place.photos);
+				if (nullIndex != -1){
+					place.photos[nullIndex] = photo;
+				}
+				else {
+					place.photos.push(photo);
+				}
+			});
+			console.dir(place.photos);
 		});
-
-		noOrder.forEach(function(photo){
-		    if (photo == null){
-			return;
-		    }
-		    nullIndex = arrayExtension.firstUndef(place.photos);
-		    if (nullIndex != -1){
-			place.photos[nullIndex] = photo;
-		    }
-		    else {
-			place.photos.push(photo);
-		    }
-		});
-		console.dir(place.photos);
-		marker	= place.marker;
-		markersinfo.push({
-		    lat	: marker.lat,
-		    lng	: marker.lng
-		});
-		marker.show();
-	    });
-	    map.fit(markersinfo);
+		
+		return places;
 	},
 	handleUpload : function(repeat){
 	    $form = $("form.mp-dialog");

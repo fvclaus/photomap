@@ -66,6 +66,14 @@ UITools.prototype = {
 	return decodeURIComponent(results[1].replace(/\+/g, " "));
     },
     
+    getUrlId : function(){
+		return getUrlParameterByName("id");
+	},
+	
+	getUrlSecret : function(){
+		return getUrlParameterByName("secret");
+	},
+    
     deleteObject : function(url,data){
 	// post request to delete album/place/photo - data is the id of the object
 	$.ajax({

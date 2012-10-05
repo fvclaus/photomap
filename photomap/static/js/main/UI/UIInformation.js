@@ -25,15 +25,25 @@ UIInformation.prototype = {
     isVisible : function(){
 	return this.visible;
     },
-    setAlbumTitle : function(title){
+    updateAlbumTitle : function(){
+			title = main.getUIState().getAlbum().name;
 	$(".mp-page-title h1").text(title);
     },
+<<<<<<< HEAD
     setPlaceTitle : function(){
 	title = main.getUIState().getCurrentPlace().title;
 	$(".mp-place-title").text(title);
     },
     setPhotoTitle : function(){
 	title = main.getUIState().getCurrentPhoto().title;
+=======
+    updatePlaceTitle : function(){
+	title = main.getUIState().getCurrentPlace().name;
+	$(".mp-place-title").text(title);
+    },
+    updatePhotoTitle : function(){
+	title = main.getUIState().getCurrentPhoto().name;
+>>>>>>> origin/development
 	$(".mp-photo-title")
 	    .show()
 	    .find(".mp-option-information")
@@ -42,7 +52,7 @@ UIInformation.prototype = {
     hidePhotoTitle : function(){
 	$(".mp-photo-title").hide();
     },
-    hidePlaceTitle : function(){
+    updatePlaceTitle : function(){
 	if (main.getUIState().getCurrentPlace() == main.getUIState().getCurrentLoadedPlace()){
 	    $(".mp-place-title").empty();
 	}
@@ -88,15 +98,20 @@ UIInformation.prototype = {
 	};
 	api.reinitialise();
     },
-    setPlaceDescription : function(){
+    updatePlaceDescription : function(){
 	info = main.getUIState().getCurrentLoadedPlace().description;
 	this._setDescription(info);
     },
-    setPhotoDescription : function(){
+    updatePhotoDescription : function(){
 	info = main.getUIState().getCurrentPhoto().description;
 	this._setDescription(info);
     },
-    setAlbumDescription : function(){
+    updatePhoto : function(){
+			this.updatePhotoDescription();
+			this.updatePhotoTitle();
+			this.updateImageNumber();
+		},
+    updateAlbumDescription : function(){
 	info = main.getUIState().getCurrentAlbum().description;
 	this._setDescription(info);
     },
@@ -152,7 +167,8 @@ UIInformation.prototype = {
 	margin = - this.$imageNumber.width();
 	this.$imageNumber.next().css("margin-left",margin);
     },
-    setImageNumber : function(index,total) {
-	this.$imageNumber.text(" Bild " + index + "/" + total);
+    updateImageNumber : function() {
+			photos = main.getUIState().getPhotos();
+			this.$imageNumber.text(" Bild " + state.getCurrentPhotoIndex() + 1 + "/" + photos.length);
     },
 };

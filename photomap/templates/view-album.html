@@ -61,6 +61,7 @@
 			<span class="mp-place-title mp-option-information"></span>
 			<span class="mp-photo-title"> | <span class="mp-option-information"></span></span>
 		</div>
+		<img class="mp-image-loading-small" id="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
 		<div class="mp-album-wrapper" id="mp-album-wrapper">
 		</div>
 		<div class="mp-slideshow-background"></div>
@@ -69,7 +70,6 @@
 				<img class="mp-album-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
 				<img class="mp-album-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
 			</div>
-			<img class="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
 			<div class="mp-album-image">
 				<img class="mp-album-zoom" src="static/images/magnify.png"></img>
 				<img class="mp-current-image"></img>
@@ -85,7 +85,9 @@
 			<% for (thumb in this.thumbAddress) { %>
 			<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
 			<% }; %>
-			<img class="mp-option-add mp-control" src="static/images/add.png" title={% trans "control-title add-photo" %}></img>
+			<% if this.isInteractive {%>
+				<img class="mp-option-add mp-control" src="static/images/add.png" title={% trans "control-title add-photo" %}></img>
+			<%  }; %>
 		</div>
 	</div>
 	</script>
