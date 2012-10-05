@@ -25,14 +25,15 @@ UIInformation.prototype = {
     isVisible : function(){
 	return this.visible;
     },
-    setAlbumTitle : function(title){
+    updateAlbumTitle : function(){
+			title = main.getUIState().getAlbum().name;
 	$(".mp-page-title h1").text(title);
     },
-    setPlaceTitle : function(){
+    updatePlaceTitle : function(){
 	title = main.getUIState().getCurrentPlace().name;
 	$(".mp-place-title").text(title);
     },
-    setPhotoTitle : function(){
+    updatePhotoTitle : function(){
 	title = main.getUIState().getCurrentPhoto().name;
 	$(".mp-photo-title")
 	    .show()
@@ -42,7 +43,7 @@ UIInformation.prototype = {
     hidePhotoTitle : function(){
 	$(".mp-photo-title").hide();
     },
-    hidePlaceTitle : function(){
+    updatePlaceTitle : function(){
 	if (main.getUIState().getCurrentPlace() == main.getUIState().getCurrentLoadedPlace()){
 	    $(".mp-place-title").empty();
 	}
@@ -88,15 +89,20 @@ UIInformation.prototype = {
 	};
 	api.reinitialise();
     },
-    setPlaceDescription : function(){
+    updatePlaceDescription : function(){
 	info = main.getUIState().getCurrentLoadedPlace().desc;
 	this._setDescription(info);
     },
-    setPhotoDescription : function(){
+    updatePhotoDescription : function(){
 	info = main.getUIState().getCurrentPhoto().desc;
 	this._setDescription(info);
     },
-    setAlbumDescription : function(){
+    updatePhoto : function(){
+			this.updatePhotoDescription();
+			this.updatePhotoTitle();
+			this.updateImageNumber();
+		},
+    updateAlbumDescription : function(){
 	info = main.getUIState().getCurrentAlbum().desc;
 	this._setDescription(info);
     },
@@ -152,7 +158,8 @@ UIInformation.prototype = {
 	margin = - this.$imageNumber.width();
 	this.$imageNumber.next().css("margin-left",margin);
     },
-    setImageNumber : function(index,total) {
-	this.$imageNumber.text(" Bild " + index + "/" + total);
+    updateImageNumber : function() {
+			photos = main.getUIState().getPhotos();
+			this.$imageNumber.text(" Bild " + state.getCurrentPhotoIndex() + 1 + "/" + photos.length);
     },
 };

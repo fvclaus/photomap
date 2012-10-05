@@ -1,6 +1,6 @@
 
-UISlideshow = function(gallery){
-    this.gallery = gallery; 
+UISlideshow = function(album){
+    this.album = album; 
     
     this.$slideshow = $('#mp-slideshow').hide();
     this.$next = this.$slideshow.find('img.mp-album-nav-next');
@@ -29,44 +29,44 @@ UISlideshow.prototype = {
     },
     
     bindListener : function(){
-	var instance = this;
-	//bind slideshow button listener
-	this.$close.bind('click.Gallery', function() {
-	    if ($(this).hasClass("disabled")){
-		return;
-	    }
-	    instance.closeSlideshow();
-	});
-	
-	this.$next.bind('click.Gallery', function() {
-	    if ($(this).hasClass("disabled")){
-		return;
-	    }
-	    instance._navigateSlider( instance, 'right' );
-	});
-	
-	this.$prev.bind('click.Gallery', function() {
-	    if ($(this).hasClass("disabled")){
-		return;
-	    }
-	    instance._navigateSlider( instance, 'left' );
-	});
-	
-	this.$zoom
-	    .bind("mouseover.Gallery",function(){
-		if (main.getUIState().isSlideshowLoaded()){
-		    $(this)
-			.show()
-			.css("opacity",".7");
-		}
-	    })
-	    .bind("click.Gallery",function(){
-		$(this).hide();
-		instance.gallery.zoom();
-	    })
-	    .bind("mouseleave.Gallery",function(){
-		$(this).css("opacity",".4");
-	    });
+			var instance = this;
+			//bind slideshow button listener
+			this.$close.bind('click.Gallery', function() {
+					if ($(this).hasClass("disabled")){
+				return;
+					}
+					instance.closeSlideshow();
+			});
+			
+			this.$next.bind('click.Gallery', function() {
+					if ($(this).hasClass("disabled")){
+				return;
+					}
+					instance._navigateSlider( instance, 'right' );
+			});
+			
+			this.$prev.bind('click.Gallery', function() {
+					if ($(this).hasClass("disabled")){
+				return;
+					}
+					instance._navigateSlider( instance, 'left' );
+			});
+			
+			this.$zoom
+					.bind("mouseover.Gallery",function(){
+				if (main.getUIState().isSlideshowLoaded()){
+						$(this)
+					.show()
+					.css("opacity",".7");
+				}
+					})
+					.bind("click.Gallery",function(){
+				$(this).hide();
+				instance.gallery.zoom();
+					})
+					.bind("mouseleave.Gallery",function(){
+				$(this).css("opacity",".4");
+					});
     },
 
     position : function(){
@@ -93,149 +93,143 @@ UISlideshow.prototype = {
     },
 
     closeSlideshow : function(){
-	state = main.getUIState();
-	information = main.getUI().getInformation();
-	
-	if (!main.getUIState().isSlideshow())
-	    return;
-	    
-	$(".mp-slideshow").hide();
-	$(".mp-slideshow-background").hide();
-	
-	state.setSlideshow(false);
-	state.setSlideshowLoaded(false);
-	this.$slideshow.fadeOut("slow");
+			state = main.getUIState();
+			information = main.getUI().getInformation();
+			
+			if (!main.getUIState().isSlideshow())
+					return;
+					
+			$(".mp-slideshow").hide();
+			$(".mp-slideshow-background").hide();
+			
+			state.setSlideshow(false);
+			state.setSlideshowLoaded(false);
+			this.$slideshow.fadeOut("slow");
 
-	state.setCurrentPhotoIndex(null);
-	state.setCurrentPhoto(null);
+			state.setCurrentPhotoIndex(null);
+			state.setCurrentPhoto(null);
 
-	information.hidePhotoTitle();
-	information.hideDescription();
-	information.hideImageNumber();
+			information.hidePhotoTitle();
+			information.hideDescription();
+			information.hideImageNumber();
 
     },
 
     showLoading : function(){
-	this.$slideshow.show();
-	this.$loading.show();
-	this.$next.hide();
-	this.$prev.hide();
-	this.$close.hide();
-	this.$image.hide();
+			this.$slideshow.show();
+			this.$loading.show();
+			this.$next.hide();
+			this.$prev.hide();
+			this.$close.hide();
+			this.$image.hide();
     },
 
     hideLoading : function(){
-	this.$slideshow.hide();
-	this.$next.show();
-	this.$prev.show();
-	this.$close.show();
+			this.$slideshow.hide();
+			this.$next.show();
+			this.$prev.show();
+			this.$close.show();
     },
 
     _startSlider: function() {
-	var instance = this;
-	var state = main.getUIState();
-	var information = main.getUI().getInformation();
-	var cursor = main.getUI().getCursor();
-	
-	$(".mp-slideshow-background").show();
-	$(".mp-slideshow").show();
+			var instance = this;
+			var state = main.getUIState();
+			var information = main.getUI().getInformation();
+			var cursor = main.getUI().getCursor();
+			
+			$(".mp-slideshow-background").show();
+			$(".mp-slideshow").show();
 
-	//disable UI interaction
-	this.gallery.disableUI();
-	state.setSlideshow(true);
-	this.$loading.show();
+			//disable UI interaction
+			this.gallery.disableUI();
+			state.setSlideshow(true);
 
-	var once = false;
-	var updateImage = function(){
-	    if (!once){
-		once = true
-		$('<img/>').load(function() {
+			var once = false;
+			var updateImage = function(){
+				if (!once){
+					once = true
+					$('<img/>').load(function() {
+						if (state.getCurrentPhoto()) {
+							state.getCurrentPhoto().showBorder(true);
+						}
+						instance.$image.load(function(){
+							//center in the middle
+							instance.$image.show();
+							instance.$wrapper
+									.css("padding-top",
+								 (instance.$slideshow.height() - instance.$image.height())/2);    
+							instance.$image.hide();
 
-		    if (state.getCurrentPhoto()) {
-			state.getCurrentPhoto().showBorder(true);
-		    }
-		    instance.$image.load(function(){
-			//center in the middle
-			instance.$image.show();
-			instance.$wrapper
-			    .css("padding-top",
-				 (instance.$slideshow.height() - instance.$image.height())/2);    
-			instance.$image.hide();
+							instance.$image.fadeIn("slow",function(){
+									
+									instance.gallery.enableUI();
+							});
 
-			instance.$image.fadeIn("slow",function(){
-			    
-			    instance.gallery.enableUI();
-			});
-
-			instance.$loading.hide();
-			state.setSlideshowLoaded(true);
+							state.setSlideshowLoaded(true);
 
 
-		    });
-	    	    instance.$image.attr( 'src', state.getCurrentPhoto().source );
-	    	    instance._bindFullscreenListener();
-		    instance.gallery._updateText();
-		}).attr( 'src', state.getCurrentPhoto().source );
-	    }
-	    else{
-		return;
-	    }
-	};
-	if (this.$slideshow.is(":hidden")){
-	    this.$slideshow.fadeIn("slow",updateImage);
-	    this.$image.hide();
-	}
-	else{
-	    this.$image.fadeOut("slow",updateImage);
-	}
-	this.$loading.show();
-	
-	// sets Photo title in album title bar and set+shows Photo description
-	information.setPhotoTitle();
-	information.setPhotoDescription();
-	// sets image number in description box
-	photos = main.getUI().getAlbum().$elements;
-	information.setImageNumber(state.getCurrentPhotoIndex() + 1,photos.length);
-	// set cursor for fullscreen control
-	cursor.setCursor($(".mp-album-zoom"),cursor.styles.pointer)
-    },
-    _navigateSlider : function( instance, dir ) {
-	// navigate to next photo or close if no photos left
-	state = main.getUIState();
-	currentPhotoIndex = state.getCurrentPhotoIndex();
-	currentPhoto = state.getCurrentPhoto();
-	photos = state.getPhotos();
-	
-	
-	
-	if( dir === 'right' ) {
-	    if( currentPhotoIndex + 1 < photos.length )
-		state.setCurrentPhotoIndex(++currentPhotoIndex);
-	    else if (photos.length > 0){
-		state.setCurrentPhotoIndex(0);
-	    }
-	    else {
-		state.setCurrentPhotoIndex(0);
-		state.setCurrentPhoto(null);
-		this.closeSlideshow();
-		return;
-	    }
-	}
-	else if( dir === 'left' ) {
-	    if( currentPhotoIndex - 1 >= 0 )
-		state.setCurrentPhotoIndex(--currentPhotoIndex);
-	    else if (photos.length > 0)
-		state.setCurrentIndex(photos.length - 1);
-	    else {
-		state.setCurrentPhotoIndex(0);
-		state.setCurrentPhoto(null);
-		this.closeSlideshow();
-		return;
-	    }
-	}
-	
-	state.setCurrentPhoto(photos[state.getCurrentPhotoIndex()]);
-	this._startSlider();
+						});
+						instance.$image.attr( 'src', state.getCurrentPhoto().source );
+						instance._bindFullscreenListener();
+						instance.gallery._updateText();
+					}).attr( 'src', state.getCurrentPhoto().source );
+				}
+				else{
+						return;
+				}
+			};
+			if (this.$slideshow.is(":hidden")){
+					this.$slideshow.fadeIn("slow",updateImage);
+					this.$image.hide();
+			}
+			else{
+					this.$image.fadeOut("slow",updateImage);
+			}
+			this.album.showLoading();
+			
+			// sets Photo title in album title bar and set+shows Photo description
+			information.updatePhoto();
+			// set cursor for fullscreen control
+			cursor.setCursor($(".mp-album-zoom"),cursor.styles.pointer)
+		},
+		
+		_navigateSlider : function( instance, dir ) {
+				// navigate to next photo or close if no photos left
+				state = main.getUIState();
+				currentPhotoIndex = state.getCurrentPhotoIndex();
+				currentPhoto = state.getCurrentPhoto();
+				photos = state.getPhotos();
+				
+				
+				
+				if( dir === 'right' ) {
+						if( currentPhotoIndex + 1 < photos.length )
+					state.setCurrentPhotoIndex(++currentPhotoIndex);
+						else if (photos.length > 0){
+					state.setCurrentPhotoIndex(0);
+						}
+						else {
+					state.setCurrentPhotoIndex(0);
+					state.setCurrentPhoto(null);
+					this.closeSlideshow();
+					return;
+						}
+				}
+				else if( dir === 'left' ) {
+						if( currentPhotoIndex - 1 >= 0 )
+							state.setCurrentPhotoIndex(--currentPhotoIndex);
+						else if (photos.length > 0)
+							state.setCurrentPhotoIndex(photos.length - 1);
+						else {
+							state.setCurrentPhotoIndex(0);
+							state.setCurrentPhoto(null);
+							this.closeSlideshow();
+							return;
+					}
+			}
+			
+			state.setCurrentPhoto(photos[state.getCurrentPhotoIndex()]);
+			this._startSlider();
     },
 
     disableControls : function(){

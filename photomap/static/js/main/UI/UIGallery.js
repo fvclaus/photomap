@@ -1,14 +1,14 @@
-
-UIGallery = function() {
+UIAlbum = function() {
     
     this.album = new UIAlbum(this);
     this.slideshow = new UISlideshow(this);
     this.fullscreen = new UIFullscreen(this);
     this.state = new UIState(this);
+    this.$loading = $("#mp-image-loading-small");
     
 };
 
-UIGallery.prototype = {
+UIAlbum.prototype = {
     
     init : function(){
 	this.slideshow.init();
@@ -41,11 +41,11 @@ UIGallery.prototype = {
     },
 
     hideLoading : function(){
-	return this.slideshow.hideLoading();
+			this.$loading.hide();
     },
     
     showLoading : function(){
-	return this.slideshow.showLoading();
+			this.$loading.show();
     },
 
     
@@ -55,25 +55,27 @@ UIGallery.prototype = {
 	this.album.getEl().removeData('jsp');
     },
 
-    disableUI : function(){
-	this.slideshow.disableControls();
-	var places = main.getMap().places;
-	places.forEach(function(place){
-	    place.showDisabledIcon();
-	});
-	this.loading = true;
-    },
+	disableUI : function(){
+		this.slideshow.disableControls();
+		var places = main.getUIState().getPlaces();
+		places.forEach(function(place){
+				place.showDisabledIcon();
+		});
+		this._showLoading();
+		this.loading = true;
+	},
 
-    enableUI : function(){
-	this.slideshow.enableControls();
-	var places = main.getMap().places;
-	places.forEach(function(place){
-	    place.checkIconStatus();
-	});
-	this.loading = false;
-    },
+	enableUI : function(){
+		this.slideshow.enableControls();
+		var places = main.getUIState().getPlaces();
+		places.forEach(function(place){
+			place.checkIconStatus();
+		});
+		this._hideLoading();
+		this.loading = false;
+	},
     
-    _updateText : function(){
+	_updateText : function(){
 	if (this.currentPhoto){
 	    information = main.getUI().getInformation();
 	    information.showImageNumber();

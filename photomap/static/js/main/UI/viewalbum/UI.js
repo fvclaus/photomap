@@ -3,7 +3,7 @@ UI = function (){
 	this.information = new UIInformation();
 	this.panel = new UIPanel();
 	this.controls = new UIControls();
-	this.gallery = new UIGallery();
+	this.album = new UIAlbum();
 	this.input = new UIInput();
 	this.cursor = new UICursor();
 }
@@ -20,11 +20,11 @@ UI.prototype = {
 	getCursor : function(){
 		return this.cursor;
 	},
-	getAlbum : function(){
-		return this.gallery.getAlbum();
-	},
 	getGallery : function(){
-		return this.gallery;
+		return this.album.getGallery();
+	},
+	getAlbum : function(){
+		return this.album;
 	},
 	getSlideshow : function(){
 		return this.gallery.getSlideshow();
