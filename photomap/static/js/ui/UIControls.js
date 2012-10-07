@@ -79,9 +79,9 @@ UIControls.prototype = {
 
 		// offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
 		this.$controls
-				.css({
-			top: center.top,
-			left: center.left
+			.css({
+				top: center.top,
+				left: center.left
 				})
 				.show();
 
@@ -133,10 +133,10 @@ UIControls.prototype = {
 	_hideEditControls : function(timeout){
 		var instance = this;
 		hide = function(){
-				if(instance.$controls.isEntered){
-			return;
-				}
-				instance.$controls.hide();
+			if(instance.$controls.isEntered){
+				return;
+			}
+			instance.$controls.hide();
 		};
 
 		if(timeout){
@@ -221,6 +221,7 @@ UIControls.prototype = {
 	 * @private
 	 */
 	_bindDeleteListener : function(){
+		var instance = this;
 		this.$delete
 				.unbind("click")
 				.bind("click",function(event){
@@ -279,6 +280,8 @@ UIControls.prototype = {
 	 * @private
 	 */
 	_bindUpdateListener : function(){
+		var instance = this;
+		var input = main.getUI().getInput();
 		this.$update.unbind("click").bind("click",function(event){
 				var place = state.getCurrentPlace();
 				var photo = state.getCurrentPhoto();
@@ -391,9 +394,14 @@ UIControls.prototype = {
 	 */
 	_bindPlaceListener : function(){
 		places = state.getPlaces();
+		var instance = this;
 		places.forEach(function(place){
-			place.addListener("mouseover",instance._displayEditControls);
-			place.addListener("mouseout",instance._hideEditControls);
+			place.addListener("mouseover",function(){
+				instance._displayEditControls(place);
+			});
+			place.addListener("mouseout",function(){
+				instance._hideEditControls(true);
+			});
 		});
 	},
 	/*
@@ -401,9 +409,14 @@ UIControls.prototype = {
 	 */
 	_bindAlbumListener : function(){
 		 albums = state.getAlbums();
+		 var instance = this;
 		 albums.forEach(function(album){
-			 album.addListener("mouseover",instance._displayEditControls);
-			 album.addListener("mouseout", instance._hideEditControls);
+			 album.addListener("mouseover",function(){
+				 instance._displayEditControls(album);
+			 });
+			 album.addListener("mouseout", function(){
+				 instance._hideEditControls(true);
+			 });
 		 });
 	},
 	
@@ -412,30 +425,30 @@ UIControls.prototype = {
 	 * @param {Album,Place} instance
 	 * @private
 	 */
-	_displayEditControls : function(instance){
+	_displayEditControls : function(element){
 		state = main.getUIState();
 		controls = main.getUI().getControls();
 		
-		if (typeof instance == "Album"){
+		if (element instanceof Album){
 			controls.setModifyAlbum(true);
 			state.setCurrentAlbum(album);
 		}
-		else if(typeof instance == "Place"){
+		else if(element instanceof Place){
 			controls.setModifyPlace(true);
 			state.setCurrentPlace(place);
 		}
 		else{
-			alert("Unknown class "+ typeof instance);
+			alert("Unknown class "+ typeof element);
 			return;
 		}
 			
 		// gets the relative pixel position
 		projection = main.getMap().getOverlay().getProjection();
-		pixel = projection.fromLatLngToContainerPixel(instance.getPosition());
+		pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
 		// add the header height to the position
 		pixel.y += main.getUI().getPanel().getHeight();
 		// add the height of the marker
-		markerSize = instance.getSize();
+		markerSize = element.getSize();
 		pixel.y += markerSize.height;
 		// add the width of the marker
 		pixel.x += markerSize.width/2;

@@ -3,29 +3,22 @@
  * @class Models an album that holds an unspecified amount of places
  */
 Album = function(data){
-	this.title = data.title;
-	this.id = data.id;
-	this.description = data.description;
-    
-	this.marker = new Marker({
-		lat: parseFloat(data.lat),
-		lng: parseFloat(data.lon),
-		title: this.title
-	});
-
+	InfoMarker.call(this,data);
 	this.checkIconStatus();
 	this._bindListener();
 
 };
 
-Album.prototype = {
-	_delete : function(){
+Album.prototype = InfoMarker.prototype;
+
+Album.prototype._delete = function(){
 		this.marker.hide();
-	},
+	};
+
 	/*
 	 * @private
 	 */
-	_bindListener: function(){
+Album.prototype._bindListener = function(){
 		var instance = this;
 		var state = main.getUIState();
 		var controls = main.getUI().getControls();
@@ -38,38 +31,9 @@ Album.prototype = {
 				url = '/view-album?id=' + instance.id;
 				window.location.href=url;
 		});
-	},
-	triggerClick : function(){
-		var map = main.getMap();
-		google.maps.event.trigger(this.marker.MapMarker,"click");
-	},
-	center : function(){
-		var map = main.getMap().getInstance();
-		map.setZoom(ZOOM_LEVEL_CENTERED);
-		map.panTo(this.marker.MapMarker.getPosition());
-	},
-	showVisitedIcon : function(){
-		this.marker.setOption({icon: ALBUM_VISITED_ICON});
-	},
-	checkIconStatus : function(){
+	};
+	
+	
+Album.prototype.checkIconStatus = function(){
 		this.showVisitedIcon();
-	},
-	/*
-	 * @description Shows the album on the map
-	 */
-	 show : function(){
-		 this.marker.show();
-	 },
-	/*
-	 * @description Adds an listener to an event triggered by the Marker
-	 * @param {String} event
-	 * @param {Function} callback
-	 */
-	addListener : function(event,callback){
-		if (!(event && callback)){
-			alert("You must specify event as well as callback");
-			return;
-		}
-		google.maps.event.addListener(this.marker.MapMarker,event,callback);
-	},
-};
+	};

@@ -47,34 +47,32 @@
 		{% compress js %}
 		
 			<!-- javascript libraries -->
-			<script type="text/javascript" src="static/js/date.js" ></script>
-			<script type="text/javascript" src="static/js/noconsole.js" ></script>
-			<script type="text/javascript" src="static/js/jquery.all.min.js" ></script>
-			<script type="text/javascript" src="static/js/main/extensions.js" ></script>
-			<script type="text/javascript" src="static/js/jquery.mousewheel.min.js" ></script>
-			<script type="text/javascript" src="static/js/tzoom.min.js" ></script>
-			<script type="text/javascript" src="static/js/jquery.cookie.js" ></script>
+			<script type="text/javascript" src="static/js/lib/date.js" ></script>
+			<script type="text/javascript" src="static/js/util/noconsole.js" ></script>
+			<script type="text/javascript" src="static/js/lib/jquery.all.min.js" ></script>
+			<script type="text/javascript" src="static/js/util/extensions.js" ></script>
+			<script type="text/javascript" src="static/js/lib/jquery.mousewheel.min.js" ></script>
+			<script type="text/javascript" src="static/js/lib/tzoom.min.js" ></script>
+			<script type="text/javascript" src="static/js/lib/jquery.cookie.js" ></script>
 			<!--
 			<script type="text/javascript" src="static/js/jquery.json.js" ></script>
 			!-->
-			<script type="text/javascript" src="static/js/ie.js" ></script>
+			<script type="text/javascript" src="static/js/lib/ie.js" ></script>
+			<script type="text/javascript" src="static/js/lib/jquery.jqote2.js" ></script>
+			<script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
 			
+			<script type="text/javascript" src="static/js/util/constants.js"></script>
+			<script type="text/javascript" src="static/js/model/Map.js" ></script>
+			<script type="text/javascript" src="static/js/model/Marker.js" ></script>
+			<script type="text/javascript" src="static/js/model/InfoMarker.js"></script>
+			<script type="text/javascript" src="static/js/model/Album.js" ></script>
 			
-			
-			<script type="text/javascript" src="static/js/jquery.jqote2.js" ></script>
-			<script type="text/javascript" src="static/js/jquery.jscrollpane.min.js" ></script>
-			
-			<script type="text/javascript" src="static/js/main/constants.js"></script>
-			<script type="text/javascript" src="static/js/main/Map.js" ></script>
-			<script type="text/javascript" src="static/js/main/Marker.js" ></script>
-			<script type="text/javascript" src="static/js/main/Album.js" ></script>
-			
-			<script type="text/javascript" src="static/js/main/UI/UIState.js" ></script>
-			<script type="text/javascript" src="static/js/main/UI/UIInput.js" ></script>
-			<script type="text/javascript" src="static/js/main/UI/UIControls.js" ></script>
-			<script type="text/javascript" src="static/js/main/UI/UIPanel.js" ></script>
-			<script type="text/javascript" src="static/js/main/UI/UITools.js" ></script>
-			<script type="text/javascript" src="static/js/main/UI/UICursor.js" ></script>
+			<script type="text/javascript" src="static/js/ui/UIState.js" ></script>
+			<script type="text/javascript" src="static/js/ui/UIInput.js" ></script>
+			<script type="text/javascript" src="static/js/ui/UIControls.js" ></script>
+			<script type="text/javascript" src="static/js/ui/UIPanel.js" ></script>
+			<script type="text/javascript" src="static/js/ui/UITools.js" ></script>
+			<script type="text/javascript" src="static/js/ui/UICursor.js" ></script>
 			{% block js %}
 			{% endblock %}
 		{% endcompress %}

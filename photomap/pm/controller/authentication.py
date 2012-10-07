@@ -5,14 +5,18 @@ Created on Jul 10, 2012
 '''
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.contrib.auth import  authenticate,login as auth_login, logout as auth_logout
+from django.contrib.auth import  authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User, check_password
 from django.contrib.auth.backends import ModelBackend
 from django.core.validators import email_re
 
-from pm.form.authentication import LoginForm,RegisterForm
+from pm.form.authentication import LoginForm, RegisterForm
 from pm.model.place import Place
 from pm.model.photo import Photo
+
+import logging
+
+logger = logging.getLogger(__name__)
 
 def login(request):
     if request.method == "GET":
@@ -26,12 +30,15 @@ def login(request):
         data = {"login" : loginform, "register" : registerform}
         if loginform.is_valid():
             user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
-            if user == None:
-                loginform.errors["email"] = "Please recheck the username"
-                loginform.errors["password"] = "Please recheck the password"
-                render_to_response("login.html", data)
-            auth_login(request, user)
-            return HttpResponseRedirect("/dashboard")
+            
+            if not (user == None or user.is_anonymous()):
+                auth_login(request, user)
+                return HttpResponseRedirect("/dashboard")
+            else:
+                loginform.errors["email"] = ["Please recheck the username"]
+                loginform.errors["password"] = ["Please recheck the password"]
+                return render_to_response("login.html", data)
+            
         else:
             return render_to_response("login.html", data)
         
@@ -40,23 +47,23 @@ def logout(request):
     return HttpResponseRedirect("/")
 
 class EmailBackend(ModelBackend):
-    def authenticate(self, username=None, password=None):
+    def authenticate(self, username = None, password = None):
         if email_re.search(username):
             try:
-                user = User.objects.get(email=username)
+                user = User.objects.get(email = username)
                 if user.check_password(password):
                     return user
             except User.DoesNotExist:
                 return None
         return None
 
-def is_authorized(instance,user):
-    if isinstance(instance,Place):
+def is_authorized(instance, user):
+    if isinstance(instance, Place):
         if instance.album.user == user:
             return True
         else:
             return False
-    elif isinstance(instance,Photo):
+    elif isinstance(instance, Photo):
         if instance.place.album.user == user:
             return True
         else:

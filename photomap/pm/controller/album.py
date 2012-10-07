@@ -19,7 +19,7 @@ from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 from pm.model.share import Share
-
+from pm.exception import OSMException
 
 from pm.osm import reversegecode
 from pm.form.album import AlbumInsertForm, AlbumUpdateForm
@@ -121,8 +121,9 @@ def insert(request):
             album.user = request.user
             try:
                 album.country = reversegecode(album.lat, album.lon)
-            except:
-                return error("osm is temporarily not available. please try again later")
+            except OSMException, e:
+#                return error("osm is temporarily not available. please try again later")
+                return error(str(e))
             album.save()
             return success(id = album.pk)
         else:

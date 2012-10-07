@@ -11,24 +11,32 @@ ClientServer.prototype = {
 	_getAlbums : function() {
 		var instance = this;
 		// get the albums and their info
-		$.getJSON('get-all-albums', function( albums ) {
-	
-			// in case there are no albums yet show world map
-			if (albums.length == 0){
-					map = main.getMap();
+		$.ajax({
+			"url" : 'get-all-albums',
+			"async" : false,
+			success :  function( albumsinfo ) {
+			
+				map = main.getMap();
+				
+				// in case there are no albums yet show world map
+				if (albumsinfo.length == 0){
 					map.showWorld();
 					return;
-			}
-			
-			$.each( albums, function( key, albuminfo ) {
-					var album = new Album( albuminfo )
-					instance.albums.push( album );
-			});
-			
-			main.getUIState().setAlbums(instance.albums);
+				}
+				else if (albumsinfo.length == 1){
+					map.zoomOut(albumsinfo[0].lat,albumsinfo[0].lon);
+				}
+				
+				albumsinfo.forEach(function(albuminfo){
+						album = new Album( albuminfo)
+						instance.albums.push( album );
+				});
+				
+				main.getUIState().setAlbums(instance.albums);
 
-			instance._showAlbums(instance.albums);
-	
+				instance._showAlbums(instance.albums);
+		
+			}
 		});
 	},
 	_showAlbums : function(albums) {

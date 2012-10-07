@@ -61,12 +61,13 @@ function bindGalleryListener(){
   });
 };
 
-$(document).ready(function(){
+function initialize(){
   var map = main.getMap();
   var information = main.getUI().getInformation();
   var cursor = main.getUI().getCursor();
   var tools = main.getUI().getTools();
-
+	var state = main.getUIState();
+	var controls = main.getUI().getControls();
 
   // add listeners, which are for guests and admins
   //~ map._bindPanoramaListener();
@@ -80,33 +81,13 @@ $(document).ready(function(){
   
   $("#mp-album").hide();
   $(".mp-option-to-dashboard").hide();
-});
-
-/* 
- * classes are not completely initiated, when DOM is already ready ->
- * therefor when checking something (isAdmin/isInteractive/...) in these classes 
- * you have to wrap it all in a $(window).load() - that way you can
- * wait until the classes are ready, without causing problems with the 
- * jQuery .ready() function!
- * 
- */
-$(window).load(function(){
-
-  var map = main.getMap();
-  var state = main.getUIState();
-  var controls = main.getUI().getControls();
-  var cursor = main.getUI().getCursor();
-  var page = ALBUM_VIEW;
   
   if ( main.getClientState().isAdmin() ) {
     
-    // set page in interactive mode as albumview
-    state.setModeInteractive(true,page);
-    
     // add admin listeners
-    map.bindListener(page);
+    map.bindListener(state.getPage());
     bindIFrameListener();
-    controls.bindListener(page);
+    controls.bindListener(state.getPage());
     
     // setup the dnd listeners
     $('#mp-album').bind('dragover', controls.handleDragOver);
@@ -117,9 +98,18 @@ $(window).load(function(){
     $(".mp-option-to-dashboard").show();
   }
   else {
-    state.setModeInteractive(false,page);
     
     // change map styling if user is guest
     map.setGuestStyle();
   }
-});
+}
+
+/* 
+ * classes are not completely initiated, when DOM is already ready ->
+ * therefor when checking something (isAdmin/isInteractive/...) in these classes 
+ * you have to wrap it all in a $(window).load() - that way you can
+	 * wait until the classes are ready, without causing problems with the 
+ * jQuery .ready() function!
+ * 
+ */
+

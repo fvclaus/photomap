@@ -10,6 +10,7 @@ https://github.com/agabel/python-nominatim
 from pm.exception import OSMException
 from decimal import Decimal
 import urllib
+import logging
 
 import json
 
@@ -21,25 +22,37 @@ BASE_URL = "http://nominatim.openstreetmap.org/"
 REVERSE_URL = BASE_URL + "reverse?format=json&%s"
 ZOOM = 18
 
-def reversegecode(lat,lon):
+logger = logging.getLogger(__name__)
+
+def reversegecode(lat, lon):
     """Performs a lookup and return the nearest adress"""
     params = {}
+    
+    if not lat or not lon:
+        raise OSMException("Both, lat and lon, must be specified!")
+    
     params["lat"] = str(lat)
     params["lon"] = str(lon)
     params["zoom"] = ZOOM
     
-    
+#    logger.debug("Building url with %s" % urllib.urlencode(params))
     url = REVERSE_URL % urllib.urlencode(params)
+    logger.debug("Asking %s..." % url)
     try :
         data = urllib.urlopen(url)
         response = data.read()
         
         data = json.loads(response)
-        
+        logger.debug("Received OSM response %s" % data)
         return data["address"]["country_code"]
     
-    except IOError,e:
-        raise OSMException , str(e)
+    except IOError, e:
+        if data:
+            raise OSMException(data["error"])
+        else:
+            raise OSMException , "Please try again later"
+    except KeyError, e:
+        raise OSMException, "Nothing seems to be here. Try somewhere else."
 
 
 if __name__ == "__main__":

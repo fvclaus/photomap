@@ -31,14 +31,16 @@ ClientServer.prototype = {
 			"url" : "get-album",
 			data : {
 				"id" : id,
-				"secret" : secret
+				"secret" : secret,
 				},
-			success: function( album ) {
+			"async" : false,
+			success: function( albuminfo ) {
 				// define album new, so that property names are congruent with the property names of Place and Photo
-				album.title = album.title;
-				album.description = album.description;
+				//~ album = new Album(albuminfo);
+				//~ album.title = album.title;
+				//~ album.description = album.description;
 				// set current album in UIState to have access on it for information, etc.
-				main.getUIState().setCurrentAlbum(album);
+				main.getUIState().setCurrentAlbum(albuminfo);
 				// set album title in title-bar
 				main.getUI().getInformation().updateAlbumTitle();
 				
@@ -48,9 +50,9 @@ ClientServer.prototype = {
 				//instance.desc = album.description;
 				
 				// in case there are no places yet show map around album marker
-				if (album.places == undefined) {
+				if ((albuminfo.places == null) || (albuminfo.places.length == 0)) {
 					var map = main.getMap();
-					map.zoomOut(album.lat,album.lon);
+					map.zoomOut(albuminfo.lat,albuminfo.lon);
 					//~ lat = album.lat;
 					//~ lon = album.lon;
 					//~ lowerLatLng = map.createLatLng(lat - .1,lon - .1);
@@ -61,7 +63,7 @@ ClientServer.prototype = {
 				
 				var places = new Array();
 				
-				$.each( album.places, function( key, placeinfo ) {
+				albuminfo.places.forEach(function(placeinfo){
 					var place = new Place( placeinfo )
 					places.push( place );
 				});

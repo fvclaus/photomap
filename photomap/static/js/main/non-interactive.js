@@ -11,19 +11,17 @@ function initScrollPane() {
     $container.jScrollPane();
 };
 
-$(document).ready(function(){
+function initialize(){
     // have to declare the map variable here, no idea why though :S
     var map = main.getMap();
     state = main.getUIState();
     cursor = main.getUI().getCursor();
     $container = $("#mp-non-interactive-content");
     
-    // set page mode to non-interactive
-    state.setModeInteractive(false);
     //adjust map controls
     position = google.maps.ControlPosition;
-    map.setControls(true,false,false,false);
-    map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
+    //~ map.setControls(true,false,false,false);
+    //~ map.placeControls(position.TOP_LEFT,undefined,undefined,undefined);
     
     repositionContent();
     initScrollPane();
@@ -37,8 +35,8 @@ $(document).ready(function(){
     // if there is a part of the content specified in the uri (by id) then scroll to that part
     hash = window.location.hash;
     if (hash){
-	api = $container.jScrollPane().data('jsp');
-	api.scrollToElement(hash,true,true);
+			api = $container.jScrollPane().data('jsp');
+			api.scrollToElement(hash,true,true);
     }
-});
+}
 

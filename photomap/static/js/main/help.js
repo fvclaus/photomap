@@ -25,7 +25,7 @@ function toggleTutorialDesc($topic){
     }
 };
 
-$(document).ready(function(){
+function initialize(){
 
     $(".mp-faq-question").bind('click', function(){
 	trigger = $(this);
@@ -36,5 +36,5 @@ $(document).ready(function(){
 	toggleTutorialDesc(trigger);
     });
 
-});    
+}   
 

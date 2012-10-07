@@ -6,22 +6,22 @@
 
 var latLngAlbum,latLngPlace;
 
-$(document).ready(function(){
-    var map = main.getMap().getInstance();
+function initializeTest(){
+	var map = main.getMap().getInstance();
 
-    // calculate random bounds and add listener. remove google maps listener afterwards
-    var listener = google.maps.event.addListener(map,"center_changed",function(){
+	// calculate random bounds and add listener. remove google maps listener afterwards
+	var listener = google.maps.event.addListener(map,"center_changed",function(){
 
-	latLngAlbum = new google.maps.LatLng(Math.random()*42,Math.random()*42);
-	center = map.getCenter();
-	latLngPlace = new google.maps.LatLng(center.lat() - Math.random(), center.lng() + Math.random());
+		latLngAlbum = new google.maps.LatLng(Math.random()*42,Math.random()*42);
+		center = map.getCenter();
+		latLngPlace = new google.maps.LatLng(center.lat() - Math.random(), center.lng() + Math.random());
+		
+		bindListener();
+		google.maps.event.removeListener(listener);
 	
-	bindListener();
-	google.maps.event.removeListener(listener);
-	
-    });
+	});
 
-});
+}
 
 function bindListener(){
     var controls = main.getUI().getControls();

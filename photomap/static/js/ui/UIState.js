@@ -15,22 +15,26 @@ UIState = function(){
 	this.albumLoading = false;
 	this.fontSize = null;
 	this.fullscreen = null;
-	this.interactive = false;
+	this.pageMode = $("meta[property='mp:map']").attr("content");
+	if (this.pageMode == "non-interactive"){
+		this.interactive = false;
+	}
+	else{
+		this.interactive = true;
+	}
+	//PAGE_MAPPING is defined in constants.js
+	this.page = PAGE_MAPPING[window.location.pathname];
 	this.data = {};
 };
 
 UIState.prototype = {
-    
-	setModeInteractive : function(mode,page){
-		this.interactive = mode;
-		this.page = page;
-	},
+   
 	isInteractive : function(){
 		return this.interactive;
 	},
 	isDashboard : function(){
 		// if albumview -> false
-		return this.page == "dashboard";
+		return this.page == DASHBOARD_VIEW;
 	},
 	//--------------------------------------------------------------------
 	//PHOTO---------------------------------------------------------------
@@ -119,6 +123,9 @@ UIState.prototype = {
 	//--------------------------------------------------------------------
 	//UI------------------------------------------------------------------
 	//--------------------------------------------------------------------
+	getPage : function(){
+		return this.page;
+	},
 	setSlideshow : function(slideshow){
 		this.slideshow = slideshow;
 	},

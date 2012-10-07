@@ -13,25 +13,27 @@ Map	= function() {
 		originalWidth	: this.$mapEl.width(),
 		originalHeight	: this.$mapEl.height()
 	});
-	this.ZOOM_OUT_LEVEL = 8;
+	this.ZOOM_OUT_LEVEL = 3;
+	// map gets called as part of the Main.init() function, so everything is in place already
+	state = main.getUIState();
 	// the map options
 	this.mapOptions 	= {
 		mapTypeId : google.maps.MapTypeId.ROADMAP,
-		mapTypeControl : true,
+		mapTypeControl : state.isInteractive(),
 		mapTypeControlOptions : {
 			style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
 			position : google.maps.ControlPosition.TOP_LEFT
 		},
-		panControl : true,
+		panControl : state.isInteractive(),
 		panControlOptions : {
 			position : google.maps.ControlPosition.TOP_LEFT
 		},
-		zoomControl : true,
+		zoomControl : state.isInteractive(),
 		zoomControlOptions : {
 			style : google.maps.ZoomControlStyle.SMALL,
 			position : google.maps.ControlPosition.TOP_LEFT
 		},
-		streetViewControl : true,
+		streetViewControl : state.isInteractive(),
 		streetViewControlOptions : {
 			position : google.maps.ControlPosition.TOP_LEFT
 		}
@@ -63,19 +65,23 @@ Map.prototype = {
 	 * @description Wraps the google.maps.LatLng constructor
 	 */
 	createLatLng : function(lat,lng){
-		return new google.maps.LatLng(lat,lon);
+		return new google.maps.LatLng(lat,lng);
 	},
 	
 	setZoom : function(level){
-		this.setZoom(level);
+		var instance = this;
+		var zoomListener = google.maps.event.addListener(this.map, "tilesloaded", function() { 
+			instance.map.setZoom(level); 
+			google.maps.event.removeListener(zoomListener); 
+		});
 	},
-	showAsMarker : function(elements){
+	showAsMarker : function(instances){
 		var markersInfo = new Array();
-		elements.forEach(function(element){
-			element.show();
+		instances.forEach(function(instance){
+			instance.show();
 			markersInfo.push({
-				lat : element.lat,
-				lng : element.lng
+				lat : instance.getLat(),
+				lng : instance.getLng()
 			});
 		});
 		this.fit(markersInfo);
@@ -271,14 +277,14 @@ Map.prototype = {
 	getBounds : function(){
 		return this.map.getBounds();
 	},
-	setControls : function(type,pan,zoom,streetview){
-		this.map.setOptions({
-				mapTypeControl : type,
-				panControl : pan,
-				zoomControl : zoom,
-				streetViewControl : streetview,
-		});
-	},
+	//~ setControls : function(type,pan,zoom,streetview){
+		//~ this.map.setOptions({
+				//~ mapTypeControl : type,
+				//~ panControl : pan,
+				//~ zoomControl : zoom,
+				//~ streetViewControl : streetview,
+		//~ });
+	//~ },
 	//~ placeControls : function(type,pan,zoom,streetview){
 	//~ // if position == undefined -> no change
 	//~ this.map.setOptions({

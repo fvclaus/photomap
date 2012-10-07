@@ -11,7 +11,10 @@ ClientServer.prototype = {
     },
     _getAlbums: function(callback){
 	var instance = this;
-	$.getJSON("get-all-albums",function(albums) {
+	$.ajax({
+		"url":"get-all-albums",
+		"async": false,
+		success : function(albums) {
 	    
 	    // in case there are no albums yet show world map
 	    if (albums == undefined){

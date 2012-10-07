@@ -1,5 +1,5 @@
   
-function placeLoginForms(){
+function positionLoginForms(){
     $login = $container.find("#mp-login");
     $register = $container.find("#mp-register");
     
@@ -17,7 +17,7 @@ function placeLoginForms(){
     $register.find("form").css('margin-top',registerMarginTop);
 };
 
-$(document).ready(function(){    
-    placeLoginForms();
-});    
+function initialize(){    
+    positionLoginForms();
+}
 

@@ -1,16 +1,21 @@
-DASHBOARD_VIEW = "dashboard"
-ALBUM_VIEW = "albumview"
+DASHBOARD_VIEW = "dashboard";
+ALBUM_VIEW = "albumview";
 
-MARKER_DEFAULT_ICON = "static/images/camera-roadmap.png"
+PAGE_MAPPING = {
+	"/dashboard" : DASHBOARD_VIEW,
+	"/view-album" : ALBUM_VIEW
+};
 
-ALBUM_VISITED_ICON = "static/images/camera-visited.png"
+MARKER_DEFAULT_ICON = "static/images/camera-roadmap.png";
 
-PLACE_VISITED_ICON = "static/images/camera-visited.png"
-PLACE_SELECTED_ICON = "static/images/camera-current.png"
-PLACE_UNSELECTED_ICON = "static/images/camera-roadmap.png"
-PLACE_DISABLED_ICON = "static/images/camera-disabled.png"
+ALBUM_VISITED_ICON = "static/images/camera-visited.png";
 
-TEMP_TITLE_KEY = "temp_title"
-TEMP_DESCRIPTION_KEY = "temp_description"
+PLACE_VISITED_ICON = "static/images/camera-visited.png";
+PLACE_SELECTED_ICON = "static/images/camera-current.png";
+PLACE_UNSELECTED_ICON = "static/images/camera-roadmap.png";
+PLACE_DISABLED_ICON = "static/images/camera-disabled.png";
 
-ZOOM_LEVEL_CENTERED = 13
+TEMP_TITLE_KEY = "temp_title";
+TEMP_DESCRIPTION_KEY = "temp_description";
+
+ZOOM_LEVEL_CENTERED = 13;

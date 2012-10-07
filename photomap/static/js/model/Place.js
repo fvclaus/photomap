@@ -1,20 +1,12 @@
 /*
   Place.js
-  @author: Frederik Claus
-  @summary: Place stores several pictures and is itself stored in the map
+  @author Frederik Claus
+  @class Place stores several pictures and is itself stored in the map
 */
 
 Place = function(data) {
-	this.title = data.title; // will be used for the Map Marker title (mouseover on the map)
-	this.id = data.id;
-	this.description = data.description;
-    
-	this.marker		= new Marker({
-		lat		: parseFloat(data.lat), 
-		lng		: parseFloat(data.lon),
-		title	: this.title
-	});
-
+	InfoMarker.call(this,data)
+	
 	this.photos = new Array();
 	if (data.photos){
 		for( var i = 0, len = data.photos.length; i < len; ++i ) {
@@ -27,16 +19,13 @@ Place = function(data) {
     
 };
 
-Place.prototype = {
-	_delete : function(){
+Place.prototype = InfoMarker.prototype;
+
+Place.prototype._delete = function(){
 		this._clear();
 		this.marker.hide();
-	},
-	triggerClick : function(){
-		var map = main.getMap();
-		google.maps.event.trigger(this.marker.MapMarker,"click");
-	},
-	center : function(){
+	};
+Place.prototype.center = function(){
 		var map = main.getMap().getInstance();
 		map.setZoom(ZOOM_LEVEL_CENTERED);
 		console.log("position " + this.marker.MapMarker.getPosition());
@@ -44,34 +33,19 @@ Place.prototype = {
 		x = ( $("#mp-map").width() * 0.25 );
 		y = 0;
 		map.panBy(x,y);
-	},
-	_showGallery : function() {
+	};
+Place.prototype._showGallery = function() {
 		main.getUI().getAlbum().show( this.photos );
-	},
-	_clear  : function(){
+	};
+Place.prototype._clear = function(){
 		// hide galleryAlbum container if present
 		main.getUI().getGallery().hide();
 		// $("div.mp-gallery-outer").remove();
-	},
+	};
 	/*
 	 * @description Shows the album on the map
 	 */
-	show : function(){
-		this.marker.show();
-	},
-	showVisitedIcon : function(){
-		this.marker.setOption({icon: PLACE_VISITED_ICON});
-	},
-	showSelectedIcon : function(){
-		this.marker.setOption({icon: PLACE_SELECTED_ICON});
-	},
-	showUnselectedIcon : function(){
-		this.marker.setOption({icon: PLACE_UNSELECTED_ICON});
-	},
-	showDisabledIcon : function(){
-		this.marker.setOption({icon: PLACE_DISABLED_ICON});
-	},
-	checkIconStatus : function(){
+Place.prototype.checkIconStatus = function(){
 		var status = true;
 		this.photos.forEach(function(photo){
 				status = status && photo.visited;
@@ -83,11 +57,11 @@ Place.prototype = {
 				this.showVisitedIcon();
 		else
 				this.showUnselectedIcon();
-	},
+	};
 	/*
 	 * @private
 	 */
-	_bindListener : function(){
+Place.prototype._bindListener = function(){
 
 		var instance = this;
 		var state = main.getUIState();
@@ -129,17 +103,4 @@ Place.prototype = {
 			// expose gallery and description
 			mpEvents.trigger("body",mpEvents.toggleExpose);
 			});
-		},
-	/*
-	 * @description Adds an listener to an event triggered by the Marker
-	 * @param {String} event
-	 * @param {Function} callback
-	 */
-	addListener : function(event,callback){
-		if (!(event && callback)){
-			alert("You must specify event as well as callback");
-			return;
-		}
-		google.maps.event.addListener(this.marker.MapMarker,event,callback);
-	},
-};
+		};
