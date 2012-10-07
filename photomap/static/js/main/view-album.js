@@ -21,7 +21,7 @@ function toggleGallery() {
   }
 };
 
-function exposeListener(){
+function bindExposeListener(){
   var album = main.getUI().getAlbum();
   
   $("body").bind('toggleExpose',function(){
@@ -49,13 +49,13 @@ function exposeListener(){
     $("#mp-description").css('z-index',1025);
   });
 };
-function iframeListener(){
+function bindIFrameListener(){
   $("body").bind('iframe_close',function(){
     state.setFileToUpload(null);
     mpEvents.trigger("body",mpEvents.toggleExpose);
   });
 };
-function galleryListener(){
+function bindGalleryListener(){
   $(".mp-option-toggle-gallery").bind("click",function(){
     toggleGallery();
   });
@@ -69,9 +69,9 @@ $(document).ready(function(){
 
 
   // add listeners, which are for guests and admins
-  map.panoramaListener();
-  galleryListener();
-  exposeListener();
+  //~ map._bindPanoramaListener();
+  bindGalleryListener();
+  bindExposeListener();
   
   cursor.setInfoCursor(cursor.styles.info);
   
@@ -104,10 +104,10 @@ $(window).load(function(){
     state.setModeInteractive(true,page);
     
     // add admin listeners
-    map.bindListener();
-    iframeListener();
+    map.bindListener(page);
+    bindIFrameListener();
     controls.bindListener(page);
-    controls.markerControlListener('place');
+    
     // setup the dnd listeners
     $('#mp-album').bind('dragover', controls.handleDragOver);
     $('#mp-album').bind('drop', controls.handleGalleryDrop);

@@ -49,4 +49,14 @@ UI.prototype = {
 	getPanel : function(){
 		return this.panel;
 	},
+	/*
+	 * @description This should disable the UI in a way that no manipluation is possible anymore
+	 */
+	disable : function(){
+	},
+	/*
+	 * @description This should enable the UI
+	 */
+	enable : function(){
+	},
 };

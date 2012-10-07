@@ -144,7 +144,7 @@ UISlideshow.prototype = {
 		$(".mp-slideshow").show();
 
 		//disable UI interaction
-		this.gallery.disableUI();
+		this.album.disable();
 		state.setSlideshow(true);
 
 		var once = false;

@@ -51,7 +51,10 @@ UI.prototype = {
 	getPanel : function(){
 		return this.panel;
 	},
+	/*
+	 * @description This should provide one method to disable the whole GUI
+	 */
 	disable : function(){
-		this.
+		this.album.disable();
 	},
 };

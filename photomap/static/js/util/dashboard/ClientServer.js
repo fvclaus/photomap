@@ -14,8 +14,8 @@ ClientServer.prototype = {
 		$.getJSON('get-all-albums', function( albums ) {
 	
 			// in case there are no albums yet show world map
-			if (albums == undefined){
-					map = main.getMap().getInstance();
+			if (albums.length == 0){
+					map = main.getMap();
 					map.showWorld();
 					return;
 			}

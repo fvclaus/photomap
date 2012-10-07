@@ -17,7 +17,7 @@ UIGallery = function (album) {
 };
 
 UIGallery.prototype =  {
-	/*
+	/*<
 	 * @author Frederik Claus
 	 * @description Reselect all images in the gallery. This is necessary when the gallery gets updated
 	 * @private
@@ -88,7 +88,7 @@ UIGallery.prototype =  {
 			state.setAlbumLoading(true);
 			var tmplPhotosData = new Array();
 			var loaded = 0;
-			this.album.disableUI();
+			this.album.disable();
 			
 			
 			for( var i = 0, len = photos.length; i < len; ++i ) {

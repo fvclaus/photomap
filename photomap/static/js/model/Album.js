@@ -14,7 +14,7 @@ Album = function(data){
 	});
 
 	this.checkIconStatus();
-	this.bindListener();
+	this._bindListener();
 
 };
 
@@ -22,7 +22,10 @@ Album.prototype = {
 	_delete : function(){
 		this.marker.hide();
 	},
-	bindListener: function(){
+	/*
+	 * @private
+	 */
+	_bindListener: function(){
 		var instance = this;
 		var state = main.getUIState();
 		var controls = main.getUI().getControls();
@@ -42,7 +45,7 @@ Album.prototype = {
 	},
 	center : function(){
 		var map = main.getMap().getInstance();
-		map.setZoom(13);
+		map.setZoom(ZOOM_LEVEL_CENTERED);
 		map.panTo(this.marker.MapMarker.getPosition());
 	},
 	showVisitedIcon : function(){
@@ -51,6 +54,12 @@ Album.prototype = {
 	checkIconStatus : function(){
 		this.showVisitedIcon();
 	},
+	/*
+	 * @description Shows the album on the map
+	 */
+	 show : function(){
+		 this.marker.show();
+	 },
 	/*
 	 * @description Adds an listener to an event triggered by the Marker
 	 * @param {String} event

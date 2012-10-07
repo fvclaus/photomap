@@ -5,25 +5,25 @@
 */
 
 Place = function(data) {
-    this.title = data.title; // will be used for the Map Marker title (mouseover on the map)
-    this.id = data.id;
-    this.description = data.description;
+	this.title = data.title; // will be used for the Map Marker title (mouseover on the map)
+	this.id = data.id;
+	this.description = data.description;
     
-    this.marker		= new Marker({
-	lat		: parseFloat(data.lat), 
-	lng		: parseFloat(data.lon),
-	title	: this.title
-    });
+	this.marker		= new Marker({
+		lat		: parseFloat(data.lat), 
+		lng		: parseFloat(data.lon),
+		title	: this.title
+	});
 
-    this.photos = new Array();
-    if (data.photos){
-	for( var i = 0, len = data.photos.length; i < len; ++i ) {
+	this.photos = new Array();
+	if (data.photos){
+		for( var i = 0, len = data.photos.length; i < len; ++i ) {
 	    this.photos.push( new Photo( data.photos[i],i ) );
+		}
 	}
-    }
     
-    this.checkIconStatus();
-    this.bindListener();
+	this.checkIconStatus();
+	this._bindListener();
     
 };
 
@@ -38,7 +38,7 @@ Place.prototype = {
 	},
 	center : function(){
 		var map = main.getMap().getInstance();
-		map.setZoom(13);
+		map.setZoom(ZOOM_LEVEL_CENTERED);
 		console.log("position " + this.marker.MapMarker.getPosition());
 		map.panTo(this.marker.MapMarker.getPosition());
 		x = ( $("#mp-map").width() * 0.25 );
@@ -52,6 +52,12 @@ Place.prototype = {
 		// hide galleryAlbum container if present
 		main.getUI().getGallery().hide();
 		// $("div.mp-gallery-outer").remove();
+	},
+	/*
+	 * @description Shows the album on the map
+	 */
+	show : function(){
+		this.marker.show();
 	},
 	showVisitedIcon : function(){
 		this.marker.setOption({icon: PLACE_VISITED_ICON});
@@ -78,7 +84,10 @@ Place.prototype = {
 		else
 				this.showUnselectedIcon();
 	},
-	bindListener : function(){
+	/*
+	 * @private
+	 */
+	_bindListener : function(){
 
 		var instance = this;
 		var state = main.getUIState();

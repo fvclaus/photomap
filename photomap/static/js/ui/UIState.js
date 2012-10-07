@@ -16,6 +16,7 @@ UIState = function(){
 	this.fontSize = null;
 	this.fullscreen = null;
 	this.interactive = false;
+	this.data = {};
 };
 
 UIState.prototype = {
@@ -171,5 +172,20 @@ UIState.prototype = {
 	},
 	getFileToUpload : function(){
 		return this.fileToUpload;
+	},
+	/*
+	 * @description Provides a simple method to store variables temporarily
+	 * @param {String} key
+	 * @param value
+	 */
+	store : function(key,value){
+	 this.data[key] = value;
+	},
+	/*
+	* @description Counterpart for @reference{store}. Retrieves a value
+	* @param {String} key
+	*/
+	retrieve : function(key){
+		return this.data[key];
 	}
 };
