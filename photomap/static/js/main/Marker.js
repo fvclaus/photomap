@@ -14,8 +14,7 @@ Marker.prototype = {
 	this.title = data.title;
 	tools = main.getUI().getTools();
 	// custom icons for the map markers
-	this.mapicon = new google.maps.MarkerImage("static/images/camera-roadmap.png");
-	// this.mapicon = 'images/camera2.png';
+	this.mapicon = new google.maps.MarkerImage(MARKER_DEFAULT_ICON);
 	console.dir(data);
 	this.MapMarker = new google.maps.Marker({
 	    position : new google.maps.LatLng ( this.lat , this.lng ),

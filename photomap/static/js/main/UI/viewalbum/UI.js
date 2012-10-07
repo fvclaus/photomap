@@ -1,3 +1,7 @@
+/*
+ * @author Frederik Claus
+ * @class UI is a facade for all other UI classes
+ */
 UI = function (){
 	this.tools = new UITools();
 	this.information = new UIInformation();
@@ -11,7 +15,7 @@ UI = function (){
 UI.prototype = {
 
 	init : function(){
-		this.gallery.init();
+		this.album.init();
 		this.information.init();
 		this.panel.init();
 		this.controls.init();
@@ -39,12 +43,15 @@ UI.prototype = {
 		return this.information;
 	},
 	getState : function(){
-		return this.gallery.getState();
+		return this.album.getState();
 	},
 	getInput : function(){
 		return this.input;
 	},
 	getPanel : function(){
 		return this.panel;
+	},
+	disable : function(){
+		this.
 	},
 };

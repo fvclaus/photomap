@@ -1,260 +1,96 @@
-UIGallery = function (album) {
-
-    this.album = album;
+/*
+ * @author Marc Roemer
+ * @class UIAlbum is a facade for UIGallery, UISlideshow, UIFullscreen and UIState
+ * @requires UIAlbum, UIGallery, UIFullscreen, UIState
+ */
+UIAlbum = function() {
     
-    this.$album	= $('#mp-album-wrapper');
-    this.albumPadding = this.$album.css("padding-left");
-    this.albumWidth = this.$album.width();
-    
-    this.visible = false;
-
-    this.$elements = null;
-
-};
-
-UIGallery.prototype =  {
-
-	searchImages : function(){
-		this.$elements = this.$album.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-controls-options");
-	},
-	getEl : function(){
-		return this.$album;
-	},
-	getDimensions : function(){
-		var position =  this.$album.position();
-		position.width = this.$album.width();
-		position.height = this.$album.height();
-		console.log("width = " + position.width + " height = " + position.height);
-		return position;
-	},
-	getScrollPane : function(){
-		return this.$album.data('jsp');
-	},
-    setScrollPane : function(){
-	this.$album.jScrollPane({
-	    verticalDragMinHeight: 40,
-	    verticalDragMaxHeight: 40,
-	    animateScroll: true	
-	});
-    },
-	_setVisibility : function(visible){
-		this.visible = visible;
-	},
-	isVisible : function(){
-		return this.visible;
-	},
-    
-	show : function( photos ) {
-		
-		var state = main.getUIState();
-		state.setPhotos(photos);
-		// show gallery in case it's hidden
-		$("#mp-album").show();
-		// visibility to true for exposé
-		this._setVisibility(true);
-		
-		if (photos.length == 0){
-			// bugfix for empty places (to show empty "add"-tile)
-			if (state.isInteractive()){
-				instance.$album.append(
-						$.jqote( '#galleryTmpl', {} )
-					);
-					
-				controls.bindInsertPhotoListener();
-				controls.bindListener();
-			}
-		}
-		else{
-			
-			var instance = this;
-			
-			var controls = main.getUI().getControls();
-			state.setAlbumLoading(true);
-			var tmplPhotosData = new Array();
-			var loaded = 0;
-			this.album.disableUI();
-			
-			
-			for( var i = 0, len = photos.length; i < len; ++i ) {
-					tmplPhotosData.push( photos[i].source );
-					$('<img/>').load(function() {
-						++loaded;
-						if( loaded === len ) {
-								main.getUIState().setAlbumLoading(false);
-								instance.gallery.enableUI();
-								// create wrapping anchors for images
-								instance.$album.append(
-										$.jqote( '#galleryTmpl', {
-												thumbAddress: tmplPhotosData, 
-												isInteractive : state.isInteractive()
-												})
-								);
-								// if user is guest -> remove add-photo-button
-								//~ if ( !state.isInteractive() ) {
-							//~ $("img.mp-option-add").remove();
-								//~ }
-								//search all anchors
-								instance.searchImages();
-								// make wrapping anchors sortable
-								// write height and width in album image wrapper
-								instance.resizeAlbum();
-								// Drag n Drop for Photos in gallery if user is admin
-								if ( state.isInteractive() ){
-									instance.bindSortableListener();
-								}
-								// create scrollpane 
-								instance.bindScrollPaneListener();
-								
-
-								instance.bindListener();
-
-								controls.bindInsertPhotoListener();
-								
-						}
-					}).attr( 'src', photos[i].source );
-			}
-		}
-
-
-	},
-	bindScrollPaneListener : function(){
-			instance.$album
-				.css("padding-left",instance.albumPadding)
-				.width(instance.albumWidth)
-				.jScrollPane({
-						verticalDragMinHeight	: 40,
-						verticalDragMaxHeight	: 40,
-						animateScroll		: true	
-				});
-			//hack to remove horizontal scrollbars which always show up
-			$(".jspHorizontalBar").remove();
-		},
-	bindSortableListener : function(){
-				instance.$album
-					.find("div.mp-gallery")
-					.sortable({
-				items : "img.sortable",
-				update : function(event,ui){
-						instance.searchImages();
-						var jsonPhotos = new Array();
-						
-						state.getPhotos().forEach(function(photo,index,photos){
-					// get html tag for current photo
-					currentPhoto = $('img[src="' + photo.source + '"]');
-					// find index of current photo in mp-gallery
-					photo.order = instance.$elements.index(currentPhoto);
-					// make a deep copy
-					jsonPhoto = $.extend(true,{},photo);
-					jsonPhotos.push(jsonPhoto);
-					// when all photos with new order are in jsonPhotos, save the order
-					if (index == photos.length-1){
-							main.getClientServer().savePhotoOrder(jsonPhotos);
-					}
-						});
-				}
-<<<<<<< HEAD
-			    });
-		    }
-		    // create scrollpane 
-		    instance.$album
-			.css("padding-left",instance.albumPadding)
-			.width(instance.albumWidth)
-			.jScrollPane({
-			    verticalDragMinHeight	: 40,
-			    verticalDragMaxHeight	: 40,
-			    animateScroll		: true	
-			});
-		    //hack to remove horizontal scrollbars which always show up
-		    $(".jspHorizontalBar").remove();
-		    
-		    //instance.gallery.getSlideshow()
-			//.scale(instance.$album.width());
-
-		    instance.bindListener();
-
-		    controls.bindInsertPhotoListener();
-		    
-		}
-	    }).attr( 'src', photos[i].source );
-	}
-	if (main.getUIState().isAlbumLoading() && photos.length == 0){
-	    main.getUIState().setAlbumLoading(false);
-	    this.gallery.hideLoading();
-	    this.gallery.enableUI();
-	}
-
-    },
-=======
-					});
-	};
-	
-	resizeAlbum : function(){
-		this.$album
-				.find("div.mp-gallery")
-				.width(instance.$album.width())
-				.height(instance.$album.height());
-	},
->>>>>>> origin/development
-
-    bindListener : function(){
-			var instance = this;
-			var state = main.getUIState();
-			var cursor = main.getUI().getCursor();
-			var controls = main.getUI().getControls();
-			
-			//bind events on anchors
-			instance.$elements
-			.unbind('.Gallery')
-			.bind( 'mouseenter.Gallery', function( event ) {
-					var $el = $(this);
-					$el
-				.addClass('current')
-				.removeClass("visited")
-				.siblings('img').removeClass('current');
-					
-					photo = (state.getPhotos())[$el.index()];
-					state.setCurrentPhotoIndex($el.index());
-					state.setCurrentPhoto(photo);
-					
-					if ( state.isInteractive() ){
-				controls.setModifyPhoto(true);
-				controls.showPhotoControls($el,photo);
-					}
-					cursor.setCursor($el,cursor.styles.pointer); 
-
-			}).bind( 'mouseleave.Gallery', function( event ) {
-					var $el = $(this);
-					//add visited border if necessary
-					(state.getPhotos())[$el.index()].checkBorder();
-					$el.removeClass('current');
-					
-					if (state.isInteractive() ){
-				controls.hideControls(true);
-					}
-
-			}).bind( 'mousedown.Gallery', function(event){
-					var $el = $(this);
-					// set Cursor for DragnDrop on images (grabber)
-					cursor.setCursor($el,cursor.styles.grab); 
-					
-			}).bind( 'click.Gallery', function( event ) {
-					var $el = $(this);
-					
-					$el.removeClass('current');
-					state.setCurrentPhotoIndex($el.index());
-					state.setCurrentPhoto((state.getPhotos())[$el.index()]);
-
-					main.getUI().getControls().hideControls(false);
-					
-					// starts little slideshow in gallery div
-					instance.gallery.startSlider();
-					
-					return false;
-			});
-			//draw border on visited elements
-			main.getUIState().getPhotos().forEach(function(photo){
-					photo.checkBorder();
-			});
-				},
+    this.gallery = new UIGallery(this);
+    this.slideshow = new UISlideshow(this);
+    this.fullscreen = new UIFullscreen(this);
+    this.state = new UIState(this);
+    this.$loading = $("#mp-image-loading-small");
     
 };
+
+UIAlbum.prototype = {
+    
+	init : function(){
+		this.slideshow.init();
+	},
+	getSlideshow : function(){
+		return this.slideshow;
+	},
+
+	getFullscreen : function(){
+		return this.fullscreen;
+	},
+
+	getGallery : function(){
+		return this.gallery;
+	},
+
+	getState : function(){
+		return this.state;
+	},
+
+	navigateSlider : function(instance,dir){
+		return this.slideshow._navigateSlider(instance,dir);
+	},
+	startSlider : function(){
+		return this.slideshow._startSlider();
+	},
+
+	zoom : function(){
+		return this.fullscreen.zoom();
+	},
+	/*
+	 * @private
+	 */
+	hideLoading : function(){
+		this.$loading.hide();
+	},
+	/*
+	 * @private
+	 */
+	_showLoading : function(){
+		this.$loading.show();
+	},
+
+		
+	hide : function() {
+		this.slideshow.closeSlideshow();
+		this.album.getEl().empty();
+		this.album.getEl().removeData('jsp');
+	},
+
+	disable : function(){
+		this.slideshow.disableControls();
+		var places = main.getUIState().getPlaces();
+		places.forEach(function(place){
+				place.showDisabledIcon();
+		});
+		this._showLoading();
+		this.loading = true;
+	},
+
+	enableUI : function(){
+		this.slideshow.enableControls();
+		var places = main.getUIState().getPlaces();
+		places.forEach(function(place){
+			place.checkIconStatus();
+		});
+		this._hideLoading();
+		this.loading = false;
+	},
+		
+	_updateText : function(){
+		if (this.currentPhoto){
+			information = main.getUI().getInformation();
+			information.showImageNumber();
+			currentIndex = this.photos.indexOf(this.currentPhoto) + 1;
+			information.setImageNumber(currentIndex+"/"+this.photos.length);
+		}
+	},
+};
+

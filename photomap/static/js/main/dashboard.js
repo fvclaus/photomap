@@ -4,15 +4,15 @@ $(document).ready(function(){
   controls = main.getUI().getControls();
   tools = main.getUI().getTools();
   cursor = main.getUI().getCursor();
-  page = "dashboard";
+  page = DASHBOARD_VIEW;
   
   // set page in interactive mode as dashboard
   state.setModeInteractive(true,page);
   
   // activate listeners
   map.bindListener();
-  controls.bindListener();
-  controls.shareBindListener();
+  controls.bindListener(page);
+
   
   cursor.setMapCursor();
   
@@ -20,9 +20,9 @@ $(document).ready(function(){
   tools.fitMask($("#fancybox-overlay"));
 });
 
-$(window).load(function(){
-  controls = main.getUI().getControls();
-  
-  // has to be added after all albums are loaded (with markers) -> in $(window).load()
-  controls.markerControlListener('album');
-});
+//~ $(window).load(function(){
+  //~ controls = main.getUI().getControls();
+  //~ 
+  //~ // has to be added after all albums are loaded (with markers) -> in $(window).load()
+  //~ controls.markerControlListener('album');
+//~ });

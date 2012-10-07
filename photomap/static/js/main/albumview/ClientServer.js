@@ -9,25 +9,25 @@ ClientServer.prototype = {
 		this._getPlaces();
 	},
 	savePhotoOrder : function(photos){
-	    photos.forEach(function(photo){
-		// post request for each photo with updated order
-		$.ajax({
-		    url : "/update-photo",
-		    type : "post",
-		    data : {
-			'id': photo.id,
-			'order': photo.order,
-		    }
+		photos.forEach(function(photo){
+			// post request for each photo with updated order
+			$.ajax({
+					url : "/update-photo",
+					type : "post",
+					data : {
+				'id': photo.id,
+				'order': photo.order,
+					}
+			});
 		});
-	    });
-  	  },
+	},
 	_getPlaces			: function( ) {
-	    var instance = this;
-	    tools = main.getUI().getTools();
-	    id = tools.getUrlId();
-	    secret = tools.getUrlSecret();
-	    
-	    $.ajax({
+		var instance = this;
+		tools = main.getUI().getTools();
+		id = tools.getUrlId();
+		secret = tools.getUrlSecret();
+		
+		$.ajax({
 			"url" : "get-album",
 			data : {
 				"id" : id,
@@ -69,7 +69,8 @@ ClientServer.prototype = {
 				main.getUIState().setPlaces(places);
 				
 				instance._showPlaces(places)
-	    });
+			}
+		});
 	    
 	},
 	_showPlaces : function(places) {

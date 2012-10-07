@@ -1,41 +1,45 @@
+/*
+ * @author Frederik Claus
+ * @class Map provides an interface to the google.maps services
+ */
 Map	= function() {		
-    // google.maps.Map
-    this.map			= null;
-    // google.maps.StreetViewPanorama
-    this.panorama = null;
-    // the DOM element
-    this.$mapEl			= $('#map');
-    this.$mapEl.data({
-			originalWidth	: this.$mapEl.width(),
-			originalHeight	: this.$mapEl.height()
-    });
-    this.ZOOM_OUT_LEVEL = 8;
-    // the map options
-    this.mapOptions 	= {
-	mapTypeId : google.maps.MapTypeId.ROADMAP,
-	mapTypeControl : true,
-	mapTypeControlOptions : {
-	    style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-	    position : google.maps.ControlPosition.TOP_LEFT
-	},
-	panControl : true,
-	panControlOptions : {
-	    position : google.maps.ControlPosition.TOP_LEFT
-	},
-	zoomControl : true,
-	zoomControlOptions : {
-	    style : google.maps.ZoomControlStyle.SMALL,
-	    position : google.maps.ControlPosition.TOP_LEFT
-	},
-	streetViewControl : true,
-	streetViewControlOptions : {
-	    position : google.maps.ControlPosition.TOP_LEFT
-	}
-    }
+	// google.maps.Map
+	this.map			= null;
+	// google.maps.StreetViewPanorama
+	this.panorama = null;
+	// the DOM element
+	this.$mapEl			= $('#map');
+	this.$mapEl.data({
+		originalWidth	: this.$mapEl.width(),
+		originalHeight	: this.$mapEl.height()
+	});
+	this.ZOOM_OUT_LEVEL = 8;
+	// the map options
+	this.mapOptions 	= {
+		mapTypeId : google.maps.MapTypeId.ROADMAP,
+		mapTypeControl : true,
+		mapTypeControlOptions : {
+			style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
+			position : google.maps.ControlPosition.TOP_LEFT
+		},
+		panControl : true,
+		panControlOptions : {
+			position : google.maps.ControlPosition.TOP_LEFT
+		},
+		zoomControl : true,
+		zoomControlOptions : {
+			style : google.maps.ZoomControlStyle.SMALL,
+			position : google.maps.ControlPosition.TOP_LEFT
+		},
+		streetViewControl : true,
+		streetViewControlOptions : {
+			position : google.maps.ControlPosition.TOP_LEFT
+		}
+	};
 
-    // mode : fullscreen || normal
-    this.mode = 'normal';
-    this._create();
+	// mode : fullscreen || normal
+	this.mode = 'normal';
+	this._create();
     
     
 };
@@ -78,7 +82,7 @@ Map.prototype = {
 				lng : element.lng
 			});
 		});
-		this.map.fit(markersInfo);
+		this.fit(markersInfo);
 	},
 	showWorld : function(){
 		lowerlatlng = new google.maps.LatLng(-50,-90);
@@ -108,6 +112,7 @@ Map.prototype = {
 			
 		google.maps.event.addListener(this.map,"click",function(event){
 			
+			main.getUI().
 				//create new place with description and select it 
 			if (!state.isDashboard()){
 			

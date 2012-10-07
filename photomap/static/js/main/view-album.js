@@ -96,7 +96,7 @@ $(window).load(function(){
   var state = main.getUIState();
   var controls = main.getUI().getControls();
   var cursor = main.getUI().getCursor();
-  var page = "albumview";
+  var page = ALBUM_VIEW;
   
   if ( main.getClientState().isAdmin() ) {
     
@@ -106,7 +106,7 @@ $(window).load(function(){
     // add admin listeners
     map.bindListener();
     iframeListener();
-    controls.bindListener();
+    controls.bindListener(page);
     controls.markerControlListener('place');
     // setup the dnd listeners
     $('#mp-album').bind('dragover', controls.handleDragOver);
