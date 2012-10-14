@@ -4,93 +4,88 @@
  * @requires UIAlbum, UIGallery, UIFullscreen, UIState
  */
 UIAlbum = function() {
-    
-    this.gallery = new UIGallery(this);
-    this.slideshow = new UISlideshow(this);
-    this.fullscreen = new UIFullscreen(this);
-    this.state = new UIState(this);
-    this.$loading = $("#mp-image-loading-small");
-    
+
+   this.gallery = new UIGallery(this);
+   this.slideshow = new UISlideshow(this);
+   this.fullscreen = new UIFullscreen(this);
+   this.state = new UIState(this);
+   this.$loading = $("#mp-image-loading-small");
+
 };
 
 UIAlbum.prototype = {
-    
-	init : function(){
-		this.slideshow.init();
-	},
-	getSlideshow : function(){
-		return this.slideshow;
-	},
 
-	getFullscreen : function(){
-		return this.fullscreen;
-	},
+   initWithoutAjax : function(){
+      this.slideshow.initWithoutAjax();
+   },
+   initAfterAjax : function(){
+      this.gallery.initAfterAjax();
+   },
+   getSlideshow : function(){
+      return this.slideshow;
+   },
 
-	getGallery : function(){
-		return this.gallery;
-	},
+   getFullscreen : function(){
+      return this.fullscreen;
+   },
 
-	getState : function(){
-		return this.state;
-	},
+   getGallery : function(){
+      return this.gallery;
+   },
 
-	navigateSlider : function(instance,dir){
-		return this.slideshow._navigateSlider(instance,dir);
-	},
-	startSlider : function(){
-		return this.slideshow._startSlider();
-	},
+   getState : function(){
+      return this.state;
+   },
 
-	zoom : function(){
-		return this.fullscreen.zoom();
-	},
-	/*
-	 * @private
-	 */
-	hideLoading : function(){
-		this.$loading.hide();
-	},
-	/*
-	 * @private
-	 */
-	_showLoading : function(){
-		this.$loading.show();
-	},
+   navigateSlider : function(instance,dir){
+      return this.slideshow._navigateSlider(instance,dir);
+   },
+   startSlider : function(){
+      return this.slideshow._startSlider();
+   },
 
-		
-	hide : function() {
-		this.slideshow.closeSlideshow();
-		this.album.getEl().empty();
-		this.album.getEl().removeData('jsp');
-	},
+   zoom : function(){
+      return this.fullscreen.zoom();
+   },
+   /*
+    * @private
+    */
+   _hideLoading : function(){
+      this.$loading.hide();
+   },
+   /*
+    * @private
+    */
+   _showLoading : function(){
+      this.$loading.show();
+   },
 
-	disable : function(){
-		this.slideshow.disableControls();
-		var places = main.getUIState().getPlaces();
-		places.forEach(function(place){
-				place.showDisabledIcon();
-		});
-		this._showLoading();
-		this.loading = true;
-	},
 
-	enableUI : function(){
-		this.slideshow.enableControls();
-		var places = main.getUIState().getPlaces();
-		places.forEach(function(place){
-			place.checkIconStatus();
-		});
-		this._hideLoading();
-		this.loading = false;
-	},
-		
-	_updateText : function(){
-		if (this.currentPhoto){
-			information = main.getUI().getInformation();
-			information.showImageNumber();
-			currentIndex = this.photos.indexOf(this.currentPhoto) + 1;
-			information.setImageNumber(currentIndex+"/"+this.photos.length);
-		}
-	},
+   hide : function() {
+      this.slideshow.closeSlideshow();
+      this.gallery.getEl().empty();
+      this.gallery.getEl().removeData('jsp');
+   },
+
+   disableGallery : function(){
+      this.slideshow.disableControls();
+      this._showLoading();
+      this.loading = true;
+   },
+
+   enableGallery : function(){
+      this.slideshow.enableControls();
+      this._hideLoading();
+      this.loading = false;
+   },
+
+   _updateText : function(){
+      if (this.currentPhoto){
+         information = main.getUI().getInformation();
+         information.showImageNumber();
+         currentIndex = this.photos.indexOf(this.currentPhoto) + 1;
+         information.setImageNumber(currentIndex+"/"+this.photos.length);
+      }
+   },
 };
 

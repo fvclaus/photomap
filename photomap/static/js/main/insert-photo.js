@@ -3,17 +3,16 @@ $.tools.validator.fn("[type=file]",function(el,value){
 });
 
 $(document).ready(function(){
-    clientServer = main.getClientServer();
-    controls = main.getUI().getControls();
-    
-    // check input file and save it in case it is valid (*.jpeg||*.png)
-    if ( $("input#file-input") ) {
-	$("#file-input").bind('change',controls.handleFileInput);
-    }
-    $('.mp-single-upload').bind('click',function(){
-	clientServer.handleUpload(false);
-    });
-    $('.mp-multiple-upload').bind('click',function(){
-	clientServer.handleUpload(true);
-    });
+   /*
+    * @description bind all upload events on the /insert-photo form
+    */
+   if ( $("input#file-input") ) {
+      $("#file-input").bind('change',fileUpload.handleFileInput);
+   }
+   $('.mp-single-upload').bind('click',function(){
+      fileUpload.startUpload(false);
+   });
+   $('.mp-multiple-upload').bind('click',function(){
+      fileUpload.startUpload(true);
+   });
 });

@@ -1,46 +1,60 @@
 /*
  * @author Frederik Claus
- * @class Starts the application. Retrieves all objects from server and intialises the rest afterwards. The constructor must be called after dom is ready.
+ * @class Starts the application. Retrieves all objects from server and intialises the rest afterwards. The constructor must be called    after dom is ready.
  */
 Main = function(){
 
-    this.clientState =  new ClientState();
-    // instance of Map
-    this.clientServer = new ClientServer();
-    // instance of Menu
-    this.ui= new UI();
-    
+   this.clientState =  new ClientState();
+   // instance of Map
+   this.clientServer = new ClientServer();
+   // instance of Menu
+   this.ui= new UI();
+
 };
 
 Main.prototype = {
-	init : function(){
-		this.map = new Map();
-		this.clientServer.init();
-		// initialise UI
-		this.ui.init();
-		// do some page specific stuff
-		if (typeof initialize !== "undefined"){
-			initialize();
-		}
-		//initialize test, if they are present
-		if (typeof initializeTest !== "undefined"){
-			initializeTest();
-		}
-	},
-	getUIState : function(){
-		return this.ui.getState();
-	},
-	getClientState : function(){
-		return this.clientState;
-	},
-	getClientServer : function(){
-		return this.clientServer;
-	},
-	getMap : function(){
-		return this.map;
-	},
-	getUI : function(){
-		return this.ui;
-	},
+   initWithoutAjax : function(){
+      this.map = new Map();
+      this.map.initWithoutAjax();
+      // load markers on map
+      this.clientServer.init();
+      // initialise parts of UI that don't need the data loaded from the server
+      this.ui.initWithoutAjax();
+      // initialize non-interactive content if needed
+      if ( !this.getUIState().isInteractive() ){
+         initializeNonInteractive();
+      }
+      // do some page specific stuff
+      if ( window.initialize !== "undefined"){
+         initialize();
+      }
+   },
+   initAfterAjax: function(){
+      this.map.initAfterAjax();
+      this.ui.initAfterAjax();
+      // do some page specific stuff
+      if ( window.initializeAfterAjax !== "undefined"){
+         initializeAfterAjax();
+      }
+      //initialize test, if they are present
+      if ( window.initializeTest !== "undefined"){
+         initializeTest();
+      }
+   },
+   getUIState : function(){
+      return this.ui.getState();
+   },
+   getClientState : function(){
+      return this.clientState;
+   },
+   getClientServer : function(){
+      return this.clientServer;
+   },
+   getMap : function(){
+      return this.map;
+   },
+   getUI : function(){
+      return this.ui;
+   },
 };
 

@@ -14,12 +14,13 @@
 	<script type="text/javascript" src="static/js/ui/UIInformation.js" ></script>
 	
 	<script type="text/javascript" src="static/js/ui/UIGallery.js" ></script>
-	<script type="text/javascript" src="static/js/ui/UITest.js" ></script>
 	
 	<script type="text/javascript" src="static/js/ui/album/UI.js" ></script>
 	
 	<script type="text/javascript" src="static/js/util/ClientState.js" ></script>
 	<script type="text/javascript" src="static/js/util/album/ClientServer.js" ></script>
+	<script type="text/javascript" src="static/js/util/file-upload.js" ></script>
+	<script type="text/javascript" src="static/js/util/ui-tests.js" ></script>
 	
 	<script type="text/javascript" src="static/js/main/Main.js" ></script>
 	<script type="text/javascript" src="static/js/model/Place.js" ></script>	
@@ -85,7 +86,7 @@
 			<% for (thumb in this.thumbAddress) { %>
 			<img class="overlay-description sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
 			<% }; %>
-			<% if this.isInteractive {%>
+			<% if (this.isAdmin) {%>
 				<img class="mp-option-add mp-control" src="static/images/add.png" title={% trans "control-title add-photo" %}></img>
 			<%  }; %>
 		</div>
@@ -105,11 +106,6 @@
 				</div>
 				<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
 			</div>
-		</div>
-	</script>
-	<script id="progressBarTmpl" type="text/html">
-		<div id="mp-progress-bar-<%= this.bar %>" class="mp-progress-bar-wrapper">
-			<span class=".mp-progress-bar-outer"><span class="mp-progress-bar"></span></span><em class="mp-progress-info"></em>
 		</div>
 	</script>
 
