@@ -25,7 +25,7 @@ Main.prototype = {
          initializeNonInteractive();
       }
       // do some page specific stuff
-      if ( window.initialize !== "undefined"){
+      if ( window && window.initialize ){
          initialize();
       }
    },
@@ -33,11 +33,11 @@ Main.prototype = {
       this.map.initAfterAjax();
       this.ui.initAfterAjax();
       // do some page specific stuff
-      if ( window.initializeAfterAjax !== "undefined"){
+      if ( window && window.initializeAfterAjax ){
          initializeAfterAjax();
       }
       //initialize test, if they are present
-      if ( window.initializeTest !== "undefined"){
+      if ( window && window.initializeTest ){
          initializeTest();
       }
    },

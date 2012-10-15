@@ -101,14 +101,23 @@ Map.prototype = {
    },
    showAsMarker : function(instances){
       var markersInfo = new Array();
-      instances.forEach(function(instance){
-         instance.show();
-         markersInfo.push({
-            lat : instance.getLat(),
-            lng : instance.getLng()
+      
+      if (instances.length == 1){
+         instances[0].show();
+         console.log('_-------------------_');
+         console.log(instances[0]);
+         this.expandBounds(instances[0]);
+      }
+      else {
+         instances.forEach(function(instance){
+            instance.show();
+            markersInfo.push({
+               lat : instance.getLat(),
+               lng : instance.getLng()
+            });
          });
-      });
-      this.fit(markersInfo);
+         this.fit(markersInfo);
+      }
    },
    /*
     * @description Set google map bounds to show a big part of the world.
@@ -123,6 +132,20 @@ Map.prototype = {
       center = new google.maps.LatLng(lat,lng)
       this.map.setCenter(center);
       this.setZoom(this.ZOOM_OUT_LEVEL);
+   },
+   expandBounds : function(instance){
+      if (instance.model == undefined){
+         lat = instance.lat;
+         lng = instance.lon;
+      }
+      else {
+         lat = instance.getLat();
+         lng = instance.getLng();
+      }
+      lowerLatLng = new google.maps.LatLng(lat - .2,lng - .2);
+      upperLatLng = new google.maps.LatLng(lat + .2,lng + .2);
+      newBounds = new google.maps.LatLngBounds(lowerLatLng,upperLatLng);
+      this.map.fitBounds(newBounds);
    },
    getInstance : function() {
       return this.map;

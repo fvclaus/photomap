@@ -41,8 +41,8 @@ ClientServer.prototype = {
 
             // in case there are no places yet show map around album marker
             if ((albuminfo.places == null) || (albuminfo.places.length == 0)) {
-               var map = main.getMap();
-               map.zoomOut(albuminfo.lat,albuminfo.lon);
+               main.getMap().expandBounds(albuminfo);
+               main.initAfterAjax();
                return;
             }
 

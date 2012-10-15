@@ -20,10 +20,8 @@ ClientServer.prototype = {
             // in case there are no albums yet show world map
             if (albumsinfo.length == 0){
                map.showWorld();
+               main.initAfterAjax();
                return;
-            }
-            else if (albumsinfo.length == 1){
-               map.zoomOut(albumsinfo[0].lat,albumsinfo[0].lon);
             }
 
             albumsinfo.forEach(function(albuminfo){

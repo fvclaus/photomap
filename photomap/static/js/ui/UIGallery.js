@@ -70,6 +70,7 @@ UIGallery.prototype =  {
    show : function( photos ) {
 
       var state = main.getUIState();
+      controls = main.getUI().getControls();
       var authorized = main.getClientState().isAdmin();
       
       state.setPhotos(photos);
@@ -81,11 +82,10 @@ UIGallery.prototype =  {
       if (photos.length == 0){
          // bugfix for empty places (to show empty "add"-tile)
          if (state.isInteractive()){
-            instance.$gallery.append(
+            this.$gallery.append(
                $.jqote( '#galleryTmpl', {'isAdmin': authorized} )
             );
             controls.bindInsertPhotoListener();
-            controls._bindListener();
          }
       }
       else{
