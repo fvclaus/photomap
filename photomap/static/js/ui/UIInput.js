@@ -14,8 +14,14 @@ UIInput.prototype = {
       var margin = main.getUI().getPanel().getHeaderOffset().top;
       $.fancybox({
          href : url,
+         onStart : function(){
+            main.getUI().disable();
+         },
          onComplete : instance._intercept,
-         onClosed : instance._initialise,
+         onClosed : function(){
+            instance._initialise();
+            main.getUI().enable();
+         },
          margin: 30,
          overlayColor: '#FFF',
          speedOut: 0,
@@ -29,9 +35,12 @@ UIInput.prototype = {
       var instance = this;
       $.fancybox({
          href : url,
+         onStart : function(){
+            main.getUI().disable();
+         },
          onComplete : onCompleteHandler,
          onClosed : function(){
-            mpEvents.trigger("body",mpEvents.iframeClose);
+            main.getUI().enable();
             mpEvents.trigger("body",mpEvents.toggleExpose);
          },
          margin: 50,

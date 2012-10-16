@@ -269,18 +269,18 @@ Map.prototype = {
    _bindStreetviewListener : function(){
       // close description and/or gallery when starting streetview
       google.maps.event.addListener(this.streetview,'visible_changed',function(){
-         album = main.getUI().getAlbum();
+         gallery = main.getUI().getGallery();
          information = main.getUI().getInformation();
          state = main.getUIState();
          if ( main.getMap().getPanorama().getVisible() ) {
             if ( information.isVisible() ){
                $("#mp-description").hide();
             }
-            if ( album.isVisible() ){
+            if ( gallery.isVisible() ){
                $("#mp-album").hide();
                state.setGalleryLoaded(true);
             }
-            else if ( !album.isVisible() ) {
+            else if ( !gallery.isVisible() ) {
                state.setGalleryLoaded(false);
             }
          }

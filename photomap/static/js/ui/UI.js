@@ -55,13 +55,23 @@ UI.prototype = {
       return this.panel;
    },
    /*
-    * @description This should disable the UI in a way that no manipluation is possible anymore
+    * @description This should disable the UI in a way that no manipulation is possible anymore
     */
    disable : function(){
+      state = main.getUIState();
+      var albums = state.getAlbums();
+      albums.forEach(function(album){
+        album.showDisabledIcon();
+      });
    },
    /*
     * @description This should enable the UI
     */
    enable : function(){
+      state = main.getUIState();
+      var albums = state.getAlbums();
+      albums.forEach(function(album){
+         album.checkIconStatus();
+      });
    },
 };

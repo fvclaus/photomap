@@ -152,14 +152,14 @@ UIFullscreen.prototype = {
          .find("img.mp-image-nav-next")
          .bind("click.Gallery",function(event){
             instance.$close.trigger("click");
-            instance.gallery.navigateSlider(instance,"right");
+            instance.album.navigateSlider(instance,"right");
             instance.zoom();
          })
          .end()
          .find("img.mp-image-nav-prev")
          .bind("click.Gallery",function(event){
             instance.$close.trigger("click");
-            instance.gallery.navigateSlider(instance,"left");
+            instance.album.navigateSlider(instance,"left");
             instance.zoom();
          });
       this.$close.unbind("click.Gallery").bind('click.Gallery', function() {

@@ -41,14 +41,6 @@ UIInformation.prototype = {
    hidePhotoTitle : function(){
       $(".mp-photo-title").hide();
    },
-   updatePlaceTitle : function(){
-      if (main.getUIState().getCurrentPlace() == main.getUIState().getCurrentLoadedPlace()){
-         $(".mp-place-title").empty();
-      }
-      else{
-         return;
-      }
-   },
    /*
     * @private
     */
@@ -132,15 +124,15 @@ UIInformation.prototype = {
       this.$infoButton.unbind('click').bind('click',function(){
          $button = $(this);
          if ($button.hasClass("mp-page-title")){
-            instance.setAlbumDescription();
+            instance.updateAlbumDescription();
             instance.hideImageNumber();
          }
          if ($button.hasClass("mp-place-title")){
-            instance.set_positionDescription();
+            instance.updateDescription();
             instance.hideImageNumber();
          }
          if ($button.parent().hasClass("mp-photo-title")){
-            instance.setPhotoDescription();
+            instance.updatePhotoDescription();
             instance.showImageNumber();
          }
       });

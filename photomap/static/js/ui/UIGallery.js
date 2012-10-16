@@ -128,6 +128,14 @@ UIGallery.prototype =  {
          }
       }
    },
+   _resizeThumbs : function(){
+      this._searchImages();
+      desiredHeight = $(".mp-gallery").width() * .25 + 'px';
+      console.log(desiredHeight);
+      this.$elements.each(function(index,element){
+         $(this).height(desiredHeight);
+      });
+   },
    /*
     * @private
     */
@@ -147,7 +155,7 @@ UIGallery.prototype =  {
     * @private
     */
    _bindSortableListener : function(){
-
+      var instance = this;
       this.$gallery
          .find("div.mp-gallery")
          .sortable({

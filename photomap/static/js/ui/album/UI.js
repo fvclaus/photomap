@@ -57,6 +57,18 @@ UI.prototype = {
    getPanel : function(){
       return this.panel;
    },
+   deletePlace : function(){
+      if (main.getUIState().getCurrentPlace() !== main.getUIState().getCurrentLoadedPlace()){
+         return;
+      }
+      else{
+         $("#mp-album").hide();
+         this.information.hideDescription();
+         $(".mp-place-title, .mp-gallery").empty();
+         this.controls.hideEditControls();
+         $.mask.close();
+      }
+   },
    /*
     * @description This should provide one method to disable the whole GUI
     */

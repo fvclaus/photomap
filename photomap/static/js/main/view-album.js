@@ -24,21 +24,22 @@ function toggleGallery() {
  */
 function bindExposeListener(){
    var gallery = main.getUI().getGallery();
-
+   var map = main.getMap();
+   
    $("body").bind('toggleExpose',function(){
       // change exposé depending on visibility of gallery and description
-      if (information.isVisible() && gallery.isVisible()){
+      if ( information.isVisible() && gallery.isVisible() && !map.getPanorama().getVisible() ){
          if ($.mask.isLoaded() == "full"){
             $.mask.close();
          }
-      $("#mp-album, #mp-description").expose({'opacity': 0.7, 'closeSpeed': 0});
-      tools.fitMask($("#exposeMask"));
+         $("#mp-album, #mp-description").expose({'opacity': 0.7, 'closeSpeed': 0});
+         tools.fitMask($("#exposeMask"));
       }
-      else if (!information.isVisible() && gallery.isVisible()){
+      else if ( !information.isVisible() && gallery.isVisible() && !map.getPanorama().getVisible() ){
          $("#mp-album").expose({'opacity': 0.7, 'closeSpeed': 0});
          tools.fitMask($("#exposeMask"));
       }
-      else if (information.isVisible() && !gallery.isVisible()){
+      else if ( information.isVisible() && !gallery.isVisible() && !map.getPanorama().getVisible() ){
          $("#mp-description").expose({'opacity': 0.7, 'closeSpeed': 0});
          tools.fitMask($("#exposeMask"));
       }

@@ -222,41 +222,41 @@ UIControls.prototype = {
 
             // delete current photo
             if (instance.isModifyPhoto) {
-                  if(confirm("Do you really want to delete photo " + photo.title)){
-               url = "/delete-photo",
-               data = {"id":photo.id};
-               state.removePhoto(photo);
-               $("div.mp-gallery > img[src='"+photo.source+"']").remove();
-               main.getUI().getAlbum().getScrollPane().reinitialise();
-                  }
-                  else
-               return;
-            }
+               if(confirm("Do you really want to delete photo " + photo.title)){
+                  url = "/delete-photo",
+                  data = {"id":photo.id};
+                  state.removePhoto(photo);
+                  $("div.mp-gallery > img[src='"+photo.source+"']").remove();
+                  main.getUI().getAlbum().getScrollPane().reinitialise();
+               }
+               else
+                  return;
+               }
             // delete current place
             else if(instance.isModifyPlace){
-                  if(confirm("Do you really want to delete place " + place.title)){
-               url = "/delete-place";
-               data = {"id":place.id};
-               state.removePlace(place);
-               information.hidePlaceTitle();
-               place._delete();
-                  }
-                  else
-               return;
-            }
+               if(confirm("Do you really want to delete place " + place.title)){
+                  url = "/delete-place";
+                  data = {"id":place.id};
+                  state.removePlace(place);
+                  main.getUI().deletePlace();
+                  place._delete();
+               }
+               else
+                  return;
+               }
             // delete current album
             else if(instance.isModifyAlbum){
-                  if(confirm("Do you really want to delete Album " + album.title)){
-               url = "/delete-album";
-               data = {"id":album.id};
-               album._delete();
-                  }
-                  else
-               return;
-            }
-            else{
-                  alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
+               if(confirm("Do you really want to delete Album " + album.title)){
+                  url = "/delete-album";
+                  data = {"id":album.id};
+                  album._delete();
+               }
+               else
                   return;
+               }
+            else{
+               alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
+               return;
             }
 
             // call to delete marker or photo in backend
@@ -288,9 +288,9 @@ UIControls.prototype = {
                      var $description = $("textarea[name=description]").val(photo.description);
 
                      input.onForm(function(){
-                           //reflect changes locally
-                           photo.title = $title.val();
-                           photo.description = $description.val();
+                        //reflect changes locally
+                        photo.title = $title.val();
+                        photo.description = $description.val();
                      });
                   })
                   .get("/update-photo");
@@ -307,10 +307,10 @@ UIControls.prototype = {
                      var $description = $("textarea[name=description]").val(place.description);
 
                      input.onForm(function(){
-                           //reflect changes locally
-                           place.title = $title.val();
-                           place.description = $description.val();
-                           main.getUI().getInformation().updatePlace();
+                        //reflect changes locally
+                        place.title = $title.val();
+                        place.description = $description.val();
+                        main.getUI().getInformation().updatePlace();
                      });
                   })
                   .get("/update-place");
@@ -327,9 +327,9 @@ UIControls.prototype = {
                      var $description = $("textarea[name=description]").val(album.description);
 
                      input.onForm(function(){
-                           //reflect changes locally
-                           album.title = $title.val();
-                           album.description = $description.val();
+                        //reflect changes locally
+                        album.title = $title.val();
+                        album.description = $description.val();
                      });
                   })
                   .get("/update-album");
