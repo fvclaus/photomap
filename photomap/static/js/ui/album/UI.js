@@ -58,7 +58,7 @@ UI.prototype = {
       return this.panel;
    },
    deletePlace : function(){
-      if (main.getUIState().getCurrentPlace() !== main.getUIState().getCurrentLoadedPlace()){
+      if (main.getUIState().getCurrentPlace() != main.getUIState().getCurrentLoadedPlace()){
          return;
       }
       else{

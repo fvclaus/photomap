@@ -197,6 +197,7 @@ Map.prototype = {
                });
                place.show();
                state.addPlace(place);
+               main.getUI().getControls().bindPlaceListener(place);
                //redraws place
                place.triggerClick();
 
@@ -240,6 +241,7 @@ Map.prototype = {
                   "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
                });
                album.show();
+               main.getUI().getControls().bindAlbumListener(album);
                //redirect to new albumview
                album.triggerClick();
             });

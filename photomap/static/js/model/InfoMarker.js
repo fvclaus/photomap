@@ -64,8 +64,8 @@ InfoMarker.prototype = {
     */
    addListener : function(event,callback){
       if (!(event && callback)){
-      alert("You must specify event as well as callback");
-      return;
+         alert("You must specify event as well as callback");
+         return;
       }
       google.maps.event.addListener(this.marker.MapMarker,event,callback);
    },

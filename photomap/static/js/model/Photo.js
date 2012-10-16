@@ -24,6 +24,6 @@ Photo.prototype = {
    },
    triggerClick : function(){
       $("img[src='"+this.source+"']").trigger("click");
-   },
+   }
 };
 

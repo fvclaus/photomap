@@ -128,7 +128,7 @@ UIInformation.prototype = {
             instance.hideImageNumber();
          }
          if ($button.hasClass("mp-place-title")){
-            instance.updateDescription();
+            instance.updatePlaceDescription();
             instance.hideImageNumber();
          }
          if ($button.parent().hasClass("mp-photo-title")){

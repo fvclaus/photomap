@@ -88,6 +88,8 @@ ClientServer.prototype = {
                noOrder.push(photo);
             }
          });
+         console.dir(place.photos);
+         console.log('--------');
          // fills up null values in place.photo with fifo no order photos
          noOrder.forEach(function(photo){
             if (photo == null){

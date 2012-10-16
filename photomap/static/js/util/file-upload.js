@@ -167,11 +167,11 @@ fileUpload = {
          if (gallery.getScrollPane()){
             gallery.getScrollPane().reinitialise();
          }
-         else if (!album.getScrollPane() && state.getPhotos().length > 9){
+         else if (!gallery.getScrollPane() && state.getPhotos().length > 9){
             gallery.setScrollPane();
          }
          gallery.searchImages();
-         // set bindListener (won't be necessary anymore when upgrading to jQuery 1.7.2 and using .on()
+         // set bindListener won't be necessary anymore when upgrading to jQuery 1.7.2 and using .on()
          gallery.bindListener();
       }
       else{

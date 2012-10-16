@@ -24,7 +24,6 @@ Place = function(data) {
 Place.prototype = InfoMarker.prototype;
 
 Place.prototype._delete = function(){
-   this._clear();
    this.marker.hide();
 };
 Place.prototype.center = function(){
@@ -42,7 +41,6 @@ Place.prototype._showGallery = function() {
 Place.prototype._clear = function(){
    // hide galleryAlbum container if present
    main.getUI().getAlbum().hide();
-   // $("div.mp-gallery-outer").remove();
 };
 /*
  * @description Shows the album on the map

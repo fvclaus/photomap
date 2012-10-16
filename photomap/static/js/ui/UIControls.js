@@ -64,11 +64,10 @@ UIControls.prototype = {
 
       // clear any present timeout, as it will hide the controls while the mousepointer never left
       if(this.hideControlsTimeoutId){
-            window.clearTimeout(this.hideControlsTimeoutId);
-            this.hideControlsTimeoutId = null;
+         window.clearTimeout(this.hideControlsTimeoutId);
+         this.hideControlsTimeoutId = null;
       }
       this._showMarkerControls(center);
-      this.setModifyPhoto(true);
    },
 
    /*
@@ -81,6 +80,21 @@ UIControls.prototype = {
       tools = main.getUI().getTools();
       // center the controls below the center
       center.left  -= tools.getRealWidth(this.$controls)/2;
+      
+      // don't resize the icons all the time to save performance
+      if (!this.$controls.isScaled){
+         // change factor depending on the page (-> number of controls in control-box)
+         if (main.getUIState().isDashboard()) {
+               factor = 0.31;
+         }
+         else {
+               factor = 0.45;
+         }
+         this.$controls
+            .find(".mp-controls-options")
+            .height(this.$controls.height() * 0.8)
+            .width(this.$controls.width() * factor);
+      }
 
       // offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
       this.$controls
@@ -88,21 +102,6 @@ UIControls.prototype = {
             top: center.top,
             left: center.left
          }).show();
-
-      // change factor depending on the page (-> number of controls in control-box)
-      if (main.getUIState().isDashboard()) {
-            factor = 0.31;
-      }
-      else {
-            factor = 0.45;
-      }
-      // don't resize the icons all the time to save performance
-      if (!this.$controls.isScaled){
-            this.$controls
-         .find(".mp-controls-options")
-         .height(this.$controls.height() * 0.8)
-         .width(this.$controls.width() * factor);
-      }
    },
    /*
     * @public
@@ -193,14 +192,14 @@ UIControls.prototype = {
 
       this._bindDeleteListener();
       this._bindUpdateListener();
-      this._bindNavigationListener();
+      this._bindControlListener();
 
       if (page == DASHBOARD_VIEW){
          this._bindShareListener();
-         this._bindAlbumListener();
+         this.bindAlbumListener();
       }
       else if (page == ALBUM_VIEW){
-         instance._bindPlaceListener();
+         instance.bindPlaceListener();
       }
       else{
          alert("Unknown page: " + page);
@@ -339,7 +338,7 @@ UIControls.prototype = {
    /*
     * @private
     */
-   _bindNavigationListener : function(){
+   _bindControlListener : function(){
       instance = this;
       this.$controls
          .bind("mouseleave",function(){
@@ -379,11 +378,13 @@ UIControls.prototype = {
             }
          });
    },
-   /*
-    * @private
-    */
-   _bindPlaceListener : function(){
-      places = state.getPlaces();
+   bindPlaceListener : function(place){
+      if (place !== undefined){
+         places = [place];
+      }
+      else{
+         places = state.getPlaces();
+      }
       var instance = this;
       places.forEach(function(place){
          place.addListener("mouseover",function(){
@@ -394,11 +395,13 @@ UIControls.prototype = {
          });
       });
    },
-   /*
-    * @private
-    */
-   _bindAlbumListener : function(){
-      albums = state.getAlbums();
+   bindAlbumListener : function(album){
+      if (album !== undefined){
+         albums = [album];
+      }
+      else{
+         albums = state.getAlbums();
+      }
       var instance = this;
       albums.forEach(function(album){
          album.addListener("mouseover",function(){

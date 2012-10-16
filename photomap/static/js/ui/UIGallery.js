@@ -29,7 +29,7 @@ UIGallery.prototype =  {
     * @description Reselect all images in the gallery. This is necessary when the gallery gets updated
     * @private
     */
-   _searchImages : function(){
+   searchImages : function(){
       this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-controls-options");
    },
    /*
@@ -112,24 +112,23 @@ UIGallery.prototype =  {
                         })
                   );
                   //search all anchors
-                  instance._searchImages();
-                  // Drag n Drop for Photos in gallery if user is admin
+                  instance.searchImages();
+                  // admin listeners
                   if ( authorized ){
                      instance._bindSortableListener();
+                     controls.bindInsertPhotoListener();
                   }
                   // create scrollpane
                   instance._bindScrollPaneListener();
-
-                  instance._bindListener();
-
-                  controls.bindInsertPhotoListener();
+                  instance.bindListener();
+                  
                }
             }).attr( 'src', photos[i].source );
          }
       }
    },
    _resizeThumbs : function(){
-      this._searchImages();
+      this.searchImages();
       desiredHeight = $(".mp-gallery").width() * .25 + 'px';
       console.log(desiredHeight);
       this.$elements.each(function(index,element){
@@ -161,7 +160,7 @@ UIGallery.prototype =  {
          .sortable({
             items : "img.sortable",
             update : function(event,ui){
-               instance._searchImages();
+               instance.searchImages();
                var jsonPhotos = new Array();
 
                state.getPhotos().forEach(function(photo,index,photos){
@@ -180,15 +179,13 @@ UIGallery.prototype =  {
             }
          });
    },
-   /*
-    * @private
-    */
-   _bindListener : function(){
+   bindListener : function(){
 
       var instance = this;
       var state = main.getUIState();
       var cursor = main.getUI().getCursor();
       var controls = main.getUI().getControls();
+      var authorized = main.getClientState().isAdmin();
 
       //bind events on anchors
       instance.$elements
@@ -203,9 +200,9 @@ UIGallery.prototype =  {
             state.setCurrentPhotoIndex($el.index());
             state.setCurrentPhoto(photo);
 
-            if ( state.isInteractive() ){
+            if ( authorized ){
                controls.setModifyPhoto(true);
-               controls.showPhotoControls($el,photo);
+               controls.showPhotoControls($el);
             }
             cursor.setCursor($el,cursor.styles.pointer);
          })
@@ -215,9 +212,10 @@ UIGallery.prototype =  {
             (state.getPhotos())[$el.index()].checkBorder();
             $el.removeClass('current');
 
-            if (state.isInteractive() ){
+            if ( authorized ){
                controls.hideEditControls(true);
-            }})
+            }
+         })
          .bind( 'mousedown.Gallery', function(event){
             var $el = $(this);
             // set Cursor for DragnDrop on images (grabber)
