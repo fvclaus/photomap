@@ -159,6 +159,9 @@ UIGallery.prototype =  {
          .find("div.mp-gallery")
          .sortable({
             items : "img.sortable",
+            start : function (event,ui){
+               ui.item.addClass("noClick");
+            },
             update : function(event,ui){
                instance.searchImages();
                var jsonPhotos = new Array();
@@ -223,17 +226,24 @@ UIGallery.prototype =  {
          })
          .bind( 'click.Gallery', function( event ) {
             var $el = $(this);
+            // workaround for DnD click event:
+            // when element gets dragged class "noClick" is added, when it's dropped and the click event
+            // is triggered, instead of starting the slideshow, the class "noClick" is getting removed
+            if( $el.hasClass("noClick") ){
+               $el.removeClass("noClick");
+            }
+            else{
+               $el.removeClass('current');
+               state.setCurrentPhotoIndex($el.index());
+               state.setCurrentPhoto((state.getPhotos())[$el.index()]);
 
-            $el.removeClass('current');
-            state.setCurrentPhotoIndex($el.index());
-            state.setCurrentPhoto((state.getPhotos())[$el.index()]);
+               main.getUI().getControls().hideEditControls(false);
 
-            main.getUI().getControls().hideEditControls(false);
+               // starts little slideshow in gallery div
+               instance.album.startSlider();
 
-            // starts little slideshow in gallery div
-            instance.album.startSlider();
-
-            return false;
+               return false;
+            }
          });
 
       //draw border on visited elements
