@@ -14,12 +14,25 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.48.3.1 r9886"
-   sodipodi:docname="fredo.pdf"
+   sodipodi:docname="fredo.svg"
    inkscape:export-filename="/home/fredo/photomap/res/logo/fredo.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90">
   <defs
-     id="defs4" />
+     id="defs4">
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect3035"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect3027"
+       is_visible="true" />
+    <inkscape:path-effect
+       effect="spiro"
+       id="path-effect3023"
+       is_visible="true" />
+  </defs>
   <sodipodi:namedview
      id="base"
      pagecolor="#ffffff"
@@ -27,18 +40,18 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="7.9195959"
-     inkscape:cx="131.09501"
-     inkscape:cy="300.27812"
+     inkscape:zoom="5.6"
+     inkscape:cx="72.029977"
+     inkscape:cy="292.20701"
      inkscape:document-units="px"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer2"
      showgrid="false"
      inkscape:window-width="1870"
      inkscape:window-height="1051"
      inkscape:window-x="0"
      inkscape:window-y="1"
      inkscape:window-maximized="1"
-     showguides="false"
+     showguides="true"
      inkscape:guide-bbox="true">
     <sodipodi:guide
        orientation="0,1"
@@ -46,15 +59,15 @@
        id="guide3795" />
     <sodipodi:guide
        orientation="0,1"
-       position="92.678572,320"
+       position="92.678572,317.5"
        id="guide3893" />
     <sodipodi:guide
        orientation="0,1"
-       position="90.848215,310"
+       position="90.848215,312.5"
        id="guide3895" />
     <sodipodi:guide
        orientation="0,1"
-       position="91.860747,323.5"
+       position="91.860747,320"
        id="guide3897" />
     <sodipodi:guide
        orientation="0,1"
@@ -62,11 +75,11 @@
        id="guide3899" />
     <sodipodi:guide
        orientation="0,1"
-       position="112.31634,307.5"
+       position="118.21429,310"
        id="guide3901" />
     <sodipodi:guide
        orientation="1,0"
-       position="125,327.67857"
+       position="122.76786,316.91965"
        id="guide3903" />
   </sodipodi:namedview>
   <metadata
@@ -77,7 +90,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -127,18 +140,38 @@
      inkscape:groupmode="layer"
      id="layer3"
      inkscape:label="camera-lens"
-     style="display:inline">
-    <path
-       style="fill:#000000;stroke:#000000;stroke-width:0.50000000000000000;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;fill-opacity:1"
-       d="m 116.07143,732.36218 8.92857,-3.5 0.0893,16.08929 -8.97323,-2.58929"
-       id="path3905"
-       inkscape:connector-curvature="0" />
+     style="display:inline"
+     sodipodi:insensitive="true">
+    <g
+       id="g3805"
+       style="fill:#a93e3e;fill-opacity:1;stroke:#000000;stroke-opacity:1">
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:original-d="m 115.9375,734.86218 6.83036,-2.5"
+         inkscape:path-effect="#path-effect3023"
+         id="path3021"
+         d="m 115.9375,734.86218 6.83036,-2.5"
+         style="fill:#a93e3e;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:original-d="m 122.76786,732.36218 0,10"
+         inkscape:path-effect="#path-effect3027"
+         id="path3025"
+         d="m 122.76786,732.36218 0,10"
+         style="fill:#a93e3e;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+      <path
+         inkscape:connector-curvature="0"
+         inkscape:original-d="m 115.98214,739.86218 6.78572,2.5"
+         inkscape:path-effect="#path-effect3035"
+         id="path3033"
+         d="m 115.98214,739.86218 6.78572,2.5"
+         style="fill:#a93e3e;fill-opacity:1;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1" />
+    </g>
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="type"
-     sodipodi:insensitive="true">
+     inkscape:label="type">
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Typewriter_Condensed;-inkscape-font-specification:Typewriter_Condensed"
@@ -165,14 +198,14 @@
     <text
        xml:space="preserve"
        style="font-size:10px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Typewriter_Condensed;-inkscape-font-specification:Typewriter_Condensed"
-       x="128.55273"
-       y="741.21942"
+       x="126.94559"
+       y="741.86218"
        id="text3090"
        sodipodi:linespacing="125%"><tspan
          sodipodi:role="line"
          id="tspan3092"
-         x="128.55273"
-         y="741.21942"
+         x="126.94559"
+         y="741.86218"
          style="font-size:15px">kenit</tspan></text>
   </g>
 </svg>
