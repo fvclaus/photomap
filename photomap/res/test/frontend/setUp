@@ -128,6 +128,11 @@
 </tr>
 <tr>
 	<td>store</td>
+	<td>css=button.mp-single-upload</td>
+	<td>upload</td>
+</tr>
+<tr>
+	<td>store</td>
 	<td>css=button.mp-delete-album</td>
 	<td>deleteAlbum</td>
 </tr>

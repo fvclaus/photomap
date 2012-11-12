@@ -49,8 +49,8 @@ UIFullscreen.prototype = {
                .css("margin-top",img.css("margin-top"))
                .css("overflow","hidden")
                .css("cursor","auto")
-               .width(img.width)
-               .height(img.height);
+               .width($("#mp-map") * .25)
+               .height($("#mp-map") * .25);
 
          innerWrapper =
             $("<div/>")
@@ -60,6 +60,16 @@ UIFullscreen.prototype = {
          innerWrapper.append(img)
          instance.$wrapper.append(innerWrapper);
 
+      innerWrapper.tzoom({
+         image:img,
+         onReady : function(){
+             main.getUIState().setFullscreen(true);
+         },
+         onLoad : function(){
+             instance.$load.hide();
+             instance.$wrapper.css("border",border);
+         }
+      });
 
       $(".mp-image-overlay").append(instance.$wrapper);
 
@@ -72,17 +82,6 @@ UIFullscreen.prototype = {
          instance.$wrapper.css("border-top-color");
 
       instance.$wrapper.css("border","0px");
-
-      innerWrapper.tzoom({
-         image:img,
-         onReady : function(){
-             main.getUIState().setFullscreen(true);
-         },
-         onLoad : function(){
-             instance.$load.hide();
-             instance.$wrapper.css("border",border);
-         }
-      });
 
       }).attr( 'src', main.getUIState().getCurrentPhoto().source );
    },

@@ -34,6 +34,7 @@
 		<!-- fancybox and jscrollpane style sheets our of compress in development | make sure to put back in before deploying -->
 			<link rel="stylesheet" type="text/css" href="static/fancybox/jquery.fancybox-1.3.4.css" />
 			<link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
+			<link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
 		{% compress css %}
 			
 			<link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
@@ -47,9 +48,12 @@
 		{% compress js %}
 		
 			<!-- javascript libraries -->
+			<script type="text/javascript" src="static/js/lib/jquery-1.7.2-development.js"></script>
+			<script type="text/javascript" src="static/js/lib/jquery.tools.no-jquery.min.js"></script>
+			<script type="text/javascript" src="static/js/lib/jquery-ui-1.9.0.custom.min.js"></script>
 			<script type="text/javascript" src="static/js/lib/date.js" ></script>
 			<script type="text/javascript" src="static/js/util/noconsole.js" ></script>
-			<script type="text/javascript" src="static/js/lib/jquery.all.min.js" ></script>
+<!--			<script type="text/javascript" src="static/js/lib/jquery.all.min.js" ></script>-->
 			<script type="text/javascript" src="static/js/util/extensions.js" ></script>
 			<script type="text/javascript" src="static/js/lib/jquery.mousewheel.min.js" ></script>
 			<script type="text/javascript" src="static/js/lib/tzoom.min.js" ></script>

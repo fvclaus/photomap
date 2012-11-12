@@ -1,4 +1,4 @@
-/*
+/**
  * file-upload.js
  * @author Marc Römer
  * @description Complete (Html5 +XMLHttpRequest Level 2 + jQuery) - File Upload with DnD-Handlers
@@ -107,7 +107,9 @@ fileUpload = {
     */
    _startHandler : function(){
       state = main.getUIState();
-      $.fancybox.close();
+      input = main.getUI().getInput();
+      
+      input.close();
       state.setFileToUpload(null);
       if (state.isMultipleUpload()) {
          $(".mp-option-add").trigger('click');
@@ -253,23 +255,35 @@ fileUpload = {
     */
    startUpload : function(repeat){
       $form = $("form.mp-dialog");
-      if (repeat){
-         state.setMultipleUpload(true);
+      formValidator = $form.validator({
+         formEvent: null,
+         messageClass: "mp-form-error",
+         position: "bottom center"
+      }).data('validator');
+      
+      if ( formValidator.checkValidity() ){
+      
+         if (repeat){
+            state.setMultipleUpload(true);
+         }
+         // get input values
+         inputValues = {
+            'id' : $form.find("input[name='place']").val(),
+            'title' : $form.find("input[name='title']").val(),
+            'description' : $form.find("textarea[name='description']").val()
+         };
+
+         // add new photo object and set first values -> finished in responseHandler
+         var photo = new Photo(inputValues);
+
+         // get FormData-Object for Upload
+         data = fileUpload.getUploadData(inputValues,'photo');
+
+         fileUpload.sendUpload(data,photo);
       }
-      // get input values
-      inputValues = {
-         'id' : $form.find("input[name='place']").val(),
-         'title' : $form.find("input[name='title']").val(),
-         'description' : $form.find("textarea[name='description']").val()
-      };
-
-      // add new photo object and set first values -> finished in responseHandler
-      var photo = new Photo(inputValues);
-
-      // get FormData-Object for Upload
-      data = fileUpload.getUploadData(inputValues,'photo');
-
-      fileUpload.sendUpload(data,photo);
+      else{
+         alert("Bitte überprüfen Sie nochmal das Formular. Name und Bild müssen angegeben sein.");
+      }
    },
    /*
     * @description Upload the given FormData-Object to the server
@@ -301,7 +315,12 @@ fileUpload = {
             }
             // alert error if upload wasn't successful
             else {
-               text = JSON.parse(request.responseText);
+               if (request.responseText){
+                  text = JSON.parse(request.responseText);
+               } 
+               else {
+                  text = "";
+               }
                error = request.status;
                alert("The upload didn't work. " + error + " " + text);
             }

@@ -4,50 +4,75 @@
  */
 UIInput = function(){
    this._initialise();
+   this.dialog = $("#input-dialog");
 };
 UIInput.prototype = {
    get : function(url){
-      // close mask if open
-      $.mask.close();
 
       var instance = this;
-      var margin = main.getUI().getPanel().getHeaderOffset().top;
-      $.fancybox({
-         href : url,
-         onStart : function(){
+      
+      $.ajax({
+         type: 'get',
+         'url': url,
+         async: false,
+         success: function(res){
+            instance.dialog.html(res);
+         },
+         error: function(error){
+            alert(error);
+         }
+      });
+      
+      this.dialog.dialog({
+         autoOpen: true,
+         modal: true,
+         zIndex: 3000,
+         draggable: false,
+         create: function(){
             main.getUI().disable();
          },
-         onComplete : instance._intercept,
-         onClosed : function(){
+         open: function(){
+            instance._intercept();
+         },
+         close: function(){
             instance._initialise();
             main.getUI().enable();
-         },
-         margin: 30,
-         overlayColor: '#FFF',
-         speedOut: 0,
+            instance.dialog.empty();
+         }
       });
-      return this;
    },
    getUpload : function(url,onCompleteHandler){
-      // close mask if open
-      $.mask.close();
-
+   
       var instance = this;
-      $.fancybox({
-         href : url,
-         onStart : function(){
+      
+      $.ajax({
+         type: 'get',
+         'url': url,
+         async: false,
+         success: function(res){
+            instance.dialog.html(res);
+         },
+         error: function(error){
+            alert(error);
+         }
+      });
+      
+      this.dialog.dialog({
+         autoOpen: true,
+         modal: true,
+         zIndex: 3000,
+         draggable: false,
+         create: function(){
             main.getUI().disable();
          },
-         onComplete : onCompleteHandler,
-         onClosed : function(){
+         open: onCompleteHandler,
+         close: function(){
             main.getUI().enable();
             mpEvents.trigger("body",mpEvents.toggleExpose);
-         },
-         margin: 50,
-         overlayColor: '#FFF',
-         speedOut: 0,
+            instance.dialog.empty();
+         }
       });
-      return this;
+      return false;
    },
    /*
     * @description Fires the onLoad event, when the input dialog is loaded. Subscribe here if you want to receive the onLoad event with  your callback.
@@ -80,10 +105,14 @@ UIInput.prototype = {
       //grep 'this'
       var instance = main.getUI().getInput();
       //register form validator and grep api
-      var form = $("form.mp-dialog")
+      var form = $("form.mp-dialog");
+      console.log(form);
       var api = form.validator().data("validator");
+      console.log(form.serialize());
+      console.log(api);
       //called when data is valid
       api.onSuccess(function(e,els){
+//      form.submit(function(){
          //call all onForm callbacks
          instance._onForm();
          //submit form with ajax call and close popup
@@ -98,10 +127,10 @@ UIInput.prototype = {
                   return;
                }
                instance._onAjax(data);
-               instance._close();
+               instance.close();
             },
             error : function(error){
-               instance._close();
+               instance.close();
                alert(error.toString());
             }
          });
@@ -149,7 +178,7 @@ UIInput.prototype = {
    /*
     * @private
     */
-   _close : function() {
-      $.fancybox.close();
+   close : function() {
+      this.dialog.dialog("close");
    }
 };

@@ -1,0 +1,15 @@
+/* needed for zoom viewport to function correctly */
+.tzoom-viewport {position:relative; overflow:hidden;}
+/* zoom image class */
+.tzoom-image {position:relative;}
+/* loading image class. z-index puts the loading image on top of the proxy image when lazy loading */
+.tzoom-image-loading {position:relative; display:block; z-index:1001;}
+/* non-zoomable images (same size or smaller than viewport) */
+.tzoom-image-static {position:relative; display:block;}
+/* IE specific opacity for when the zoom image is disabled */
+img.tzoom-disabled {filter:alpha(opacity=35) !important; opacity:0.35;}
+/* default error message element class when an error occurs during image load */ 
+.tzoom-error {margin: 10px; padding-left: 10px; clear: both; overflow: hidden;}
+.tzoom-error p {float: left;}
+.tzoom-error span.ui-icon {float: left; margin-right: 10px;}
+.tzoom-error strong {float: left;}

@@ -43,7 +43,7 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>${submit}</td>
+	<td>${upload}</td>
 	<td></td>
 </tr>
 <tr>
