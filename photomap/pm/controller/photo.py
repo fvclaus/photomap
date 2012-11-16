@@ -6,7 +6,6 @@ Created on Jun 30, 2012
 
 from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
-from django.conf import settings
 
 from pm.model.photo import Photo
 from pm.util.s3 import getbucket
@@ -17,12 +16,8 @@ from pm.form.photo import PhotoInsertPRODForm,PhotoInsertDEBUGForm, PhotoUpdateF
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 
-import logging
-import os
-from django.forms.models import model_to_dict
-from message import error,success
-import boto
-import uuid
+
+import  logging, sys, uuid
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +47,9 @@ def insert(request):
                 form.is_valid()
                 
             photo = form.save()
+            nphotos = len(Photo.objects.all().filter(place = photo.place))
+            photo.order = nphotos
+            photo.save()
             # just closes iframe
 #            return render_to_response("insert-photo-success.html")
             return success(id = photo.id, url = photo.getphotourl())
@@ -109,13 +107,19 @@ def delete(request):
 def _generate_filename(request,form,filename):
     """
     @author: Frederik Claus
-    @summary: generates a unique filename consisting of [id of user]-[date joined as YYYY-MM-DD]-[id of place]/[unique id].[ext]
+    @summary: generates a unique filename for production and test settings
+        production: [id of user]-[date joined as YYYY-MM-DD]/[id of place]-[unique id].[ext]
+        test: test/[unique id].[ext]
+        where [unique id] is produced with the uuid the module
     """
     userid = request.user.pk
     userjoined = request.user.date_joined.strftime("%Y-%m-%d")
     placeid = form.cleaned_data["place"].pk
     ext = filename.split('.')[-1]
-    filename = "%s-%s-%s/%s.%s" % (userid,userjoined,placeid,uuid.uuid4(), ext)
+    if 'test' in sys.argv:
+        filename = "test/%s.%s" % (uuid.uuid4(), ext)
+    else:
+        filename = "%s-%s/%s-%s.%s" % (userid,userjoined,placeid,uuid.uuid4(), ext)
     return filename
 
 def _handle_file(request,form):

@@ -16,7 +16,7 @@ from pm.model.photo import Photo
 import os
 from urllib import urlopen
 
-class SimpleTestCase(TestCase):
+class ApiTestCase(TestCase):
     """ loads the simple-test fixtues, appends a logger and logs the client in """
     
     fixtures = ["user", 'simple-test']
@@ -28,7 +28,11 @@ class SimpleTestCase(TestCase):
     def setUp(self):
         self.c = Client()
         self.assertTrue(self.c.login(username = TEST_USER, password = TEST_PASSWORD))
-        self.logger = SimpleTestCase.logger
+        self.logger = ApiTestCase.logger
+        
+    def tearDown(self):
+        #remove all photos from s3 again
+        Photo.objects.all().delete()
         
     def assertSuccess(self, data):
         """ makes a request and checks if the json return is defined according to web api specification. returns content """

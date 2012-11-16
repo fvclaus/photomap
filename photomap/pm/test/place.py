@@ -4,7 +4,7 @@ Created on Jul 8, 2012
 @author: fredo
 '''
 
-from simpletestcase import SimpleTestCase
+from apitestcase import ApiTestCase
 from django.test.client import Client
 from decimal import Decimal
 import json
@@ -14,7 +14,7 @@ import os
 from data import GPS_MANNHEIM_SCHLOSS
 from copy import deepcopy
 
-class PlaceControllerTest(SimpleTestCase):
+class PlaceControllerTest(ApiTestCase):
     
     model = Place
     

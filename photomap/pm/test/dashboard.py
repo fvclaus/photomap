@@ -4,9 +4,9 @@ Created on Jul 27, 2012
 @author: fredo
 '''
 
-from simpletestcase import SimpleTestCase
+from apitestcase import ApiTestCase
 
-class DashboardControllerTest(SimpleTestCase):
+class DashboardControllerTest(ApiTestCase):
     
 
     def test_get(self):

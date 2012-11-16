@@ -4,7 +4,7 @@ Created on Jun 29, 2012
 @author: fredo
 '''
 
-from simpletestcase import SimpleTestCase
+from apitestcase import ApiTestCase
 from django.test.client import Client
 from data import TEST_PASSWORD, TEST_USER,TEST_PHOTO
 from pm.model.photo import Photo
@@ -14,7 +14,7 @@ import logging
 import os
 from copy import deepcopy
 
-class PhotoControllerTest(SimpleTestCase):
+class PhotoControllerTest(ApiTestCase):
         
     model = Photo
     
@@ -55,6 +55,7 @@ class PhotoControllerTest(SimpleTestCase):
         self._openphoto(data)
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
+        self.assertEqual(photo.order,2)
         self.assertPublicAccess(content["url"])
         #=======================================================================
         # insert something valid with description
@@ -63,6 +64,7 @@ class PhotoControllerTest(SimpleTestCase):
         data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
         (photo,content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
+        self.assertEqual(photo.order,3)
         self.assertPublicAccess(content["url"])
         #=======================================================================
         # insert somthing that is not valid

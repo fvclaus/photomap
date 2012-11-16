@@ -8,12 +8,8 @@ from django.db import models
 from description import Description
 from django.conf import settings 
 from place import Place
-import json
-import os
 from django.db.models.signals import post_delete
-from django.conf import settings
-from django.contrib.sites.models import Site
-import sys
+import os
 from pm.util.s3 import getbucket,build_url
 
 class Photo(Description):

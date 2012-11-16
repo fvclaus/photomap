@@ -5,7 +5,7 @@ Created on 22.07.2012
 @author: MrPhil
 '''
 
-from simpletestcase import SimpleTestCase
+from apitestcase import ApiTestCase
 from django.test.client import Client
 from data import TEST_PASSWORD, TEST_USER
 from pm.model.album import Album
@@ -21,7 +21,7 @@ from decimal import Decimal
 
 import re
 
-class AlbumControllerTest(SimpleTestCase):
+class AlbumControllerTest(ApiTestCase):
         
     model = Album
     
