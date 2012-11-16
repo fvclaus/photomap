@@ -32,7 +32,10 @@ class ApiTestCase(TestCase):
         
     def tearDown(self):
         #remove all photos from s3 again
-        Photo.objects.all().delete()
+        photos = Photo.objects.all()
+        if photos:
+            photos.delete()
+
         
     def assertSuccess(self, data):
         """ makes a request and checks if the json return is defined according to web api specification. returns content """
