@@ -165,7 +165,7 @@ fileUpload = {
          photo.order = response.order;
          console.log(photo);
          state.addPhoto(photo);
-         $(".mp-gallery img.mp-option-add").before('<img class="mp-option-add mp-control">');
+         $(".mp-gallery img.mp-option-add").before('<img class="overlay-description sortable mp-control" src="' + photo.source + '">');
          // reinitialising ScrollPane, cause gallery length might have increased
          if (gallery.getScrollPane()){
             gallery.getScrollPane().reinitialise();
