@@ -1,117 +1,136 @@
-/*
+/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
+/*global $, main, mpEvents */
+
+"use strict";
+
+/**
  * @author Frederik Claus
  * @class Handles any form of input. Takes care of form validation,error handling and closing the input dialog
  */
-UIInput = function(){
+
+var UIInput;
+
+UIInput = function () {
    this._initialise();
    this.dialog = $("#input-dialog");
 };
 UIInput.prototype = {
-   get : function(url){
+   /**
+    * @author Marc Römer
+    * @description load Input form, then overlay with jquery ui dialog widget
+    * @param String url Url of the input-form
+    */
+   get : function (url) {
 
       var instance = this;
-      
+
       $.ajax({
          type: 'get',
          'url': url,
          async: false,
-         success: function(res){
+         success: function (res) {
             instance.dialog.html(res);
          },
-         error: function(error){
+         error: function (error) {
             alert(error);
          }
       });
-      
+
       this.dialog.dialog({
          autoOpen: true,
          modal: true,
          zIndex: 3000,
          draggable: false,
-         create: function(){
+         create: function () {
             main.getUI().disable();
          },
-         open: function(){
+         open: function () {
             instance._intercept();
          },
-         close: function(){
+         close: function () {
             instance._initialise();
             main.getUI().enable();
             instance.dialog.empty();
          }
       });
    },
-   getUpload : function(url,onCompleteHandler){
-   
+   /**
+    * @description load upload form and show it with ui-dialog
+    * @param String url Url of the upload-form
+    * @param Function onCompleteHandler Handler which is called after dialog has opened
+    */
+   getUpload : function (url, onCompleteHandler) {
+
       var instance = this;
-      
+
       $.ajax({
          type: 'get',
          'url': url,
          async: false,
-         success: function(res){
+         success: function (res) {
             instance.dialog.html(res);
          },
-         error: function(error){
+         error: function (error) {
             alert(error);
          }
       });
-      
+
       this.dialog.dialog({
          autoOpen: true,
          modal: true,
          zIndex: 3000,
          draggable: false,
-         create: function(){
+         create: function () {
             main.getUI().disable();
          },
          open: onCompleteHandler,
-         close: function(){
+         close: function () {
             main.getUI().enable();
-            mpEvents.trigger("body",mpEvents.toggleExpose);
+            mpEvents.trigger("body", mpEvents.toggleExpose);
             instance.dialog.empty();
          }
       });
       return false;
    },
-   /*
+   /**
     * @description Fires the onLoad event, when the input dialog is loaded. Subscribe here if you want to receive the onLoad event with  your callback.
     * param {Function} callback
     */
-   onLoad : function(callback){
+   onLoad : function (callback) {
       this._onLoads.push(callback);
       return this;
    },
-   /*
+   /**
     * @description Fires the onForm event, when the form is valid, but before submit. Subscribe here if you want to receive the onForm event with your callback.
     * @param {Function} callback
     */
-   onForm : function(callback){
+   onForm : function (callback) {
       this._onForms.push(callback);
       return this;
    },
-   /*
+   /**
     * @description Fires the ajaxReceived event, when a valid response is returned. Subscribe here if you want to receive the ajaxReceived event with your callback.
     * @param {Function} callback
     */
-   onAjax : function(callback){
+   onAjax : function (callback) {
       this._onAjaxs.push(callback);
       return this;
    },
-   /*
+   /**
     * @private
     */
-   _intercept : function(){
+   _intercept : function () {
+      var instance, form, api;
       //grep 'this'
-      var instance = main.getUI().getInput();
+      instance = main.getUI().getInput();
       //register form validator and grep api
-      var form = $("form.mp-dialog");
+      form = $("form.mp-dialog");
       console.log(form);
-      var api = form.validator().data("validator");
+      api = form.validator().data("validator");
       console.log(form.serialize());
       console.log(api);
       //called when data is valid
-      api.onSuccess(function(e,els){
+      api.onSuccess(function (e, els) {
 //      form.submit(function(){
          //call all onForm callbacks
          instance._onForm();
@@ -121,15 +140,15 @@ UIInput.prototype = {
             url  : form.attr("action"),
             data : form.serialize(),
             dataType : "json",
-            success : function(data,textStatus){
-               if (data.error){
+            success : function (data, textStatus) {
+               if (data.error) {
                   alert(data.error.toString());
                   return;
                }
                instance._onAjax(data);
                instance.close();
             },
-            error : function(error){
+            error : function (error) {
                instance.close();
                alert(error.toString());
             }
@@ -140,45 +159,45 @@ UIInput.prototype = {
       //_intercept gets called onLoad
       instance._onLoad();
    },
-   /*
+   /**
     * @private
     */
-   _initialise : function(){
-      this._onLoads = new Array();
-      this._onForms = new Array();
-      this._onAjaxs = new Array();
+   _initialise : function () {
+      this._onLoads = [];
+      this._onForms = [];
+      this._onAjaxs = [];
    },
-   /*
-   * @private
-   */
-   _onLoad : function(){
-      this._onLoads.forEach(function(load){
+   /**
+    * @private
+    */
+   _onLoad : function () {
+      this._onLoads.forEach(function (load) {
          load.call();
       });
-      this._onLoads = new Array();
+      this._onLoads = [];
    },
-   /*
+   /**
     * @private
     */
-   _onForm : function(){
-      this._onForms.forEach(function(form){
+   _onForm : function () {
+      this._onForms.forEach(function (form) {
          form.call();
       });
-      this._onForms = new Array();
+      this._onForms = [];
    },
-   /*
+   /**
     * @private
     */
-   _onAjax : function(data){
-      this._onAjaxs.forEach(function(ajax){
-         ajax.call(this,data);
+   _onAjax : function (data) {
+      this._onAjaxs.forEach(function (ajax) {
+         ajax.call(this, data);
       });
-      this._onAjaxs = new Array();
+      this._onAjaxs = [];
    },
-   /*
+   /**
     * @private
     */
-   close : function() {
+   close : function () {
       this.dialog.dialog("close");
    }
 };

@@ -1,19 +1,28 @@
-/*
+/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
+/*global ClientState, ClientServer, UI, Map , initializeNonInteractive, initialize, initializeAfterAjax, initializeTest */
+
+"use strict";
+
+
+/**
  * @author Frederik Claus
- * @class Starts the application. Retrieves all objects from server and intialises the rest afterwards. The constructor must be called    after dom is ready.
+ * @class Starts the application. Retrieves all objects from server and intialises the rest afterwards. The constructor must be called after dom is ready.
  */
-Main = function(){
+
+var Main;
+
+Main = function () {
 
    this.clientState =  new ClientState();
    // instance of Map
    this.clientServer = new ClientServer();
    // instance of Menu
-   this.ui= new UI();
+   this.ui = new UI();
 
 };
 
 Main.prototype = {
-   initWithoutAjax : function(){
+   initWithoutAjax : function () {
       this.map = new Map();
       this.map.initWithoutAjax();
       // load markers on map
@@ -21,40 +30,40 @@ Main.prototype = {
       // initialise parts of UI that don't need the data loaded from the server
       this.ui.initWithoutAjax();
       // initialize non-interactive content if needed
-      if ( !this.getUIState().isInteractive() ){
+      if (!this.getUIState().isInteractive()) {
          initializeNonInteractive();
       }
       // do some page specific stuff
-      if ( window && window.initialize ){
+      if (window && window.initialize) {
          initialize();
       }
    },
-   initAfterAjax: function(){
+   initAfterAjax: function () {
       this.map.initAfterAjax();
       this.ui.initAfterAjax();
       // do some page specific stuff
-      if ( window && window.initializeAfterAjax ){
+      if (window && window.initializeAfterAjax) {
          initializeAfterAjax();
       }
       //initialize test, if they are present
-      if ( window && window.initializeTest ){
+      if (window && window.initializeTest) {
          initializeTest();
       }
    },
-   getUIState : function(){
+   getUIState : function () {
       return this.ui.getState();
    },
-   getClientState : function(){
+   getClientState : function () {
       return this.clientState;
    },
-   getClientServer : function(){
+   getClientServer : function () {
       return this.clientServer;
    },
-   getMap : function(){
+   getMap : function () {
       return this.map;
    },
-   getUI : function(){
+   getUI : function () {
       return this.ui;
-   },
+   }
 };
 
