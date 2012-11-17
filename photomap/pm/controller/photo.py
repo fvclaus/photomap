@@ -48,7 +48,7 @@ def insert(request):
                 
             photo = form.save()
             nphotos = len(Photo.objects.all().filter(place = photo.place))
-            photo.order = nphotos
+            photo.order = nphotos - 1
             photo.save()
             # just closes iframe
 #            return render_to_response("insert-photo-success.html")

@@ -55,7 +55,7 @@ class PhotoControllerTest(ApiTestCase):
         self._openphoto(data)
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
-        self.assertEqual(photo.order,2)
+        self.assertEqual(photo.order,1)
         self.assertPublicAccess(content["url"])
         #=======================================================================
         # insert something valid with description
@@ -64,7 +64,7 @@ class PhotoControllerTest(ApiTestCase):
         data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
         (photo,content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
-        self.assertEqual(photo.order,3)
+        self.assertEqual(photo.order,2)
         self.assertPublicAccess(content["url"])
         #=======================================================================
         # insert somthing that is not valid
