@@ -18,13 +18,14 @@ function toggleFAQAnswers($question) {
    }
 }
 
+
 var $desc, $descriptions;
 
 function toggleTutorialDesc($topic) {
    $desc = $topic.next('p');
    $descriptions = $(".mp-tutorial-subtopic-desc");
 
-   // hide all other descriptions
+    // hide all other descriptions
    $descriptions.not($desc).slideUp(150);
    if ($desc.is(":visible")) {
       $desc.slideUp(150);
@@ -32,6 +33,7 @@ function toggleTutorialDesc($topic) {
       $desc.slideDown(300);
    }
 }
+
 
 var trigger;
 
