@@ -1,3 +1,9 @@
+/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
+/*global $, Main */
+
+"use strict";
+
+
 /**
  * Photo Map
  *
@@ -17,14 +23,14 @@ var main = null;
 
 //http://stevenbenner.com/2010/04/calculate-page-size-and-view-port-position-in-javascript/
 $mpContainer
-   .width($(window).width()-30)
-   .height($(window).height()-25)
+   .width($(window).width() - 30)
+   .height($(window).height() - 25)
    .css('margin-left', -3);
 
-/*
+/**
  * @description Initializes main constructor. Needs document ready!
  */
-$(document).ready(function(){
+$(document).ready(function () {
    main = new Main();
    // initialise js-classes
    main.initWithoutAjax();

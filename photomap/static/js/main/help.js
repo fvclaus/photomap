@@ -1,9 +1,9 @@
-/*jslint  */
+/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
 /*global $ */
 
 "use strict";
 
-var $answer, $answers, $desc, $descriptions, trigger;
+var $answer, $answers;
 
 function toggleFAQAnswers($question) {
    $answer = $question.next('p');
@@ -18,6 +18,9 @@ function toggleFAQAnswers($question) {
    }
 }
 
+
+var $desc, $descriptions;
+
 function toggleTutorialDesc($topic) {
    $desc = $topic.next('p');
    $descriptions = $(".mp-tutorial-subtopic-desc");
@@ -30,6 +33,9 @@ function toggleTutorialDesc($topic) {
       $desc.slideDown(300);
    }
 }
+
+
+var trigger;
 
 function initialize() {
 

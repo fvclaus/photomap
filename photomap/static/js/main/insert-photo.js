@@ -1,18 +1,24 @@
-$.tools.validator.fn("[type=file]",function(el,value){
-    return /\.(jpg|png)$/i.test(value) ? true : "only jpg or png allowed";
+/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
+/*global $, fileUpload */
+
+"use strict";
+
+$.tools.validator.fn("[type=file]", function (el, value) {
+   return /\.(jpg|png)$/i.test(value) ? true : "only jpg or png allowed";
 });
 
-$(document).ready(function(){
-   /*
+$(document).ready(function () {
+
+   /**
     * @description bind all upload events on the /insert-photo form
     */
-   if ( $("input#file-input") ) {
-      $("#file-input").bind('change',fileUpload.handleFileInput);
+   if ($("input#file-input")) {
+      $("#file-input").bind('change', fileUpload.handleFileInput);
    }
-   $('.mp-single-upload').bind('click',function(){
+   $('.mp-single-upload').bind('click', function () {
       fileUpload.startUpload(false);
    });
-   $('.mp-multiple-upload').bind('click',function(){
+   $('.mp-multiple-upload').bind('click', function () {
       fileUpload.startUpload(true);
    });
 });
