@@ -1,4 +1,4 @@
-/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
+/*jslint */
 /*global $, main, mpEvents */
 
 "use strict";
@@ -13,6 +13,7 @@ var UIInput;
 UIInput = function () {
    this._initialise();
    this.dialog = $("#input-dialog");
+   this.visible = false;
 };
 UIInput.prototype = {
    /**
@@ -46,11 +47,13 @@ UIInput.prototype = {
          },
          open: function () {
             instance._intercept();
+            instance.setVisibility(true);
          },
          close: function () {
             instance._initialise();
             main.getUI().enable();
             instance.dialog.empty();
+            instance.setVisibility(false);
          }
       });
    },
@@ -83,11 +86,15 @@ UIInput.prototype = {
          create: function () {
             main.getUI().disable();
          },
-         open: onCompleteHandler,
+         open: function () {
+            onCompleteHandler();
+            instance.setVisibility(true);
+         },
          close: function () {
             main.getUI().enable();
             mpEvents.trigger("body", mpEvents.toggleExpose);
             instance.dialog.empty();
+            instance.setVisibility(false);
          }
       });
       return false;
@@ -194,9 +201,12 @@ UIInput.prototype = {
       });
       this._onAjaxs = [];
    },
-   /**
-    * @private
-    */
+   setVisibility : function (bool) {
+      this.visible = bool;
+   },
+   isVisible : function () {
+      return this.visible;
+   },
    close : function () {
       this.dialog.dialog("close");
    }

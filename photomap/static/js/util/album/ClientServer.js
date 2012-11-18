@@ -1,4 +1,4 @@
-/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
+/*jslint */
 /*global $, main, Place, arrayExtension */
 
 "use strict";
@@ -52,7 +52,7 @@ ClientServer.prototype = {
             main.getUI().getInformation().updateAlbumTitle();
 
             // in case there are no places yet show map around album marker
-            if ((albuminfo.places === null) || (albuminfo.places.length === 0)) {
+            if (!albuminfo.places || (albuminfo.places === null) || (albuminfo.places.length === 0)) {
                main.getMap().expandBounds(albuminfo);
                main.initAfterAjax();
                return;

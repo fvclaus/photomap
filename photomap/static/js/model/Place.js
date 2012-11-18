@@ -1,18 +1,28 @@
-/*
-  Place.js
-  @author Frederik Claus
-  @class Place stores several pictures and is itself stored in the map
+/*jslint */
+/*global $, InfoMarker, Photo, mpEvents, main, ZOOM_LEVEL_CENTERED, google */
+
+"use strict";
+
+/**
+ * Place.js
+ * @author Frederik Claus
+ * @class Place stores several pictures and is itself stored in the map
 */
 
-Place = function(data) {
+var Place;
+
+Place = function (data) {
+
+   var i, len;
+
    this.model = 'Place';
 
-   InfoMarker.call(this,data)
+   InfoMarker.call(this, data);
 
-   this.photos = new Array();
-   if (data.photos){
-      for( var i = 0, len = data.photos.length; i < len; ++i ) {
-         this.photos.push( new Photo( data.photos[i],i ) );
+   this.photos = [];
+   if (data.photos) {
+      for (i = 0, len = data.photos.length; i < len; ++i) {
+         this.photos.push(new Photo(data.photos[i], i));
       }
    }
 
@@ -23,62 +33,74 @@ Place = function(data) {
 
 Place.prototype = InfoMarker.prototype;
 
-Place.prototype._delete = function(){
+Place.prototype._delete = function () {
    this.marker.hide();
 };
-Place.prototype.center = function(){
-   var map = main.getMap().getInstance();
+Place.prototype.center = function () {
+
+   var map, x, y;
+
+   map = main.getMap().getInstance();
    map.setZoom(ZOOM_LEVEL_CENTERED);
    console.log("position " + this.marker.MapMarker.getPosition());
    map.panTo(this.marker.MapMarker.getPosition());
-   x = ( $("#mp-map").width() * 0.25 );
+   x = ($("#mp-map").width() * 0.25);
    y = 0;
-   map.panBy(x,y);
+   map.panBy(x, y);
 };
-Place.prototype._showGallery = function() {
-   main.getUI().getGallery().show( this.photos );
+Place.prototype._showGallery = function () {
+   main.getUI().getGallery().show(this.photos);
 };
-Place.prototype._clear = function(){
+Place.prototype._clear = function () {
    // hide galleryAlbum container if present
    main.getUI().getAlbum().hide();
 };
-/*
+/**
  * @description Shows the album on the map
  */
-Place.prototype.checkIconStatus = function(){
+Place.prototype.checkIconStatus = function () {
    var status = true;
-   this.photos.forEach(function(photo){
-         status = status && photo.visited;
+   this.photos.forEach(function (photo) {
+      status = status && photo.visited;
    });
 
-   if (main.getUIState().getCurrentPlace() === this)
-         this.showSelectedIcon();
-   else if (status)
-         this.showVisitedIcon();
-   else
-         this.showUnselectedIcon();
+   if (main.getUIState().getCurrentPlace() === this) {
+      this.showSelectedIcon();
+   } else if (status) {
+      this.showVisitedIcon();
+   } else {
+      this.showUnselectedIcon();
+   }
 };
-/*
+/**
  * @private
  */
-Place.prototype._bindListener = function(){
+Place.prototype._bindListener = function () {
 
-   var instance = this;
-   var state = main.getUIState();
-   var ui = main.getUI();
-   var information = ui.getInformation();
-   var controls = ui.getControls();
+   var instance, state, ui, information, controls;
+
+   instance = this;
+   state = main.getUIState();
+   ui = main.getUI();
+   information = ui.getInformation();
+   controls = ui.getControls();
    // click event for place (its marker)
    // in the eventcallback this will be the gmap
    // use instance as closurefunction to access the place object
-   google.maps.event.addListener( this.marker.MapMarker, 'click', function() {
+   google.maps.event.addListener(this.marker.MapMarker, 'click', function () {
+
+      var map, oldPlace;
 
       if (main.getUIState().isAlbumLoading()) {
          return;
       }
 
-      var map = main.getMap();
-      var oldPlace = state.getCurrentLoadedPlace();
+      if (ui.getInput().isVisible()) {
+         ui.getInput().close();
+      }
+
+      map = main.getMap();
+      oldPlace = state.getCurrentLoadedPlace();
 
       //close slideshow if open
       ui.getSlideshow().closeSlideshow();
@@ -92,7 +114,7 @@ Place.prototype._bindListener = function(){
       // change icon of new place
       instance.checkIconStatus();
       // change icon of old place
-      if (oldPlace){
+      if (oldPlace) {
          oldPlace.checkIconStatus();
       }
       instance._showGallery();
@@ -100,6 +122,6 @@ Place.prototype._bindListener = function(){
       // set and show title and description
       information.updatePlace();
       // expose gallery and description
-      mpEvents.trigger("body",mpEvents.toggleExpose);
+      mpEvents.trigger("body", mpEvents.toggleExpose);
    });
 };
