@@ -1,4 +1,4 @@
-/*global $, google, main, Place, Album, ALBUM_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY*/
+/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY*/
 /**
  * @author: Frederik Claus
  * @description: Facade for google maps
@@ -14,7 +14,7 @@ Map = function () {
    // google.maps.StreetViewstreetview
    this.streetview = null;
    // the DOM element
-   this.$mapEl			= $('#map');
+   this.$mapEl = $('#map');
    this.$mapEl.data({
       originalWidth	: this.$mapEl.width(),
       originalHeight	: this.$mapEl.height()
@@ -60,16 +60,17 @@ Map.prototype = {
    initAfterAjax : function () {
       var authorized;
       page = main.getUIState().getPage();
-      if (page === ALBUM_VIEW ) {
+      if (page === ALBUM_VIEW) {
          authorized = main.getClientState().isAdmin();
+         //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
          if (!authorized) {
-            this._setGuestStyle();
-            return;
+            // this.mapOptions = this.guestStyle;
+            // this.bindListener();
+            // return;
          } else {
             this.bindListener();
          }
-      }
-      else if (page === DASHBOARD_VIEW ) {
+      } else if (page === DASHBOARD_VIEW) {
          this.bindListener();
       }
       // set map options if interactive
@@ -328,30 +329,26 @@ Map.prototype = {
     * @description Simplify look of the map for guests. No Roadnumbers etc.
     * @private
     */
-   _setGuestStyle: function () {
-      var guestStyle = [
-            {
-               featureType: "road",
-               elementType: "labels",
-               stylers: [
-                  { visibilty: "simplified"}
-               ]
-            }, {
+   guestStyle :  [
+      {
+         featureType: "road",
+         elementType: "labels",
+         stylers: [
+            { visibilty: "simplified"}
+         ]
+      }, {
 
-               featureType : "poi",
-               elementType : "labels",
-               stylers : [
-                  {visibility: "simplified"}
-               ]
-            }, {
-               featureType : "road.highway",
-               stylers : [
-                  {visibility: "off"}
-               ]
-            }
-         ];
-      this.map.setOptions({
-         styles: guestStyle,
-      });
-   },
+         featureType : "poi",
+         elementType : "labels",
+         stylers : [
+            {visibility: "simplified"}
+         ]
+      }, {
+         featureType : "road.highway",
+         stylers : [
+            {visibility: "off"}
+         ]
+      }
+   ]
+
 };

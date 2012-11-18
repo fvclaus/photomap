@@ -118,5 +118,9 @@ function bindListener() {
       selectAlbum();
       controls.$delete.trigger("click");
    });
+   $("button.mp-show-album-share").click(function () {
+      selectAlbum();
+      controls.$share.trigger("click");
+   });
 }
 
