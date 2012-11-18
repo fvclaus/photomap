@@ -1,8 +1,14 @@
+/*global $, main, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIAlbum, UIInformation*/
 /*
  * @author Frederik Claus
  * @class UI is a facade for all other UI classes
  */
-UI = function (){
+
+"use strict";
+
+var UI;
+
+UI = function () {
    this.tools = new UITools();
    this.information = new UIInformation();
    this.panel = new UIPanel();
@@ -10,11 +16,14 @@ UI = function (){
    this.album = new UIAlbum();
    this.input = new UIInput();
    this.cursor = new UICursor();
-}
+   this._isDisabled = false;
+};
+
+
 
 UI.prototype = {
 
-   initWithoutAjax : function(){
+   initWithoutAjax : function () {
       this.album.initWithoutAjax();
       this.information.initWithoutAjax();
       this.panel.initWithoutAjax();
@@ -22,42 +31,42 @@ UI.prototype = {
       this.cursor.initWithoutAjax();
       this.tools.initWithoutAjax();
    },
-   initAfterAjax : function(){
+   initAfterAjax : function () {
       this.controls.initAfterAjax();
       this.album.initAfterAjax();
       this.cursor.initAfterAjax();
    },
-   getCursor : function(){
+   getCursor : function () {
       return this.cursor;
    },
-   getGallery : function(){
+   getGallery : function () {
       return this.album.getGallery();
    },
-   getAlbum : function(){
+   getAlbum : function () {
       return this.album;
    },
-   getSlideshow : function(){
+   getSlideshow : function () {
       return this.album.getSlideshow();
    },
-   getTools : function(){
+   getTools : function () {
       return this.tools;
    },
-   getControls : function(){
+   getControls : function () {
       return this.controls;
    },
-   getInformation : function(){
+   getInformation : function () {
       return this.information;
    },
-   getState : function(){
+   getState : function () {
       return this.album.getState();
    },
-   getInput : function(){
+   getInput : function () {
       return this.input;
    },
-   getPanel : function(){
+   getPanel : function () {
       return this.panel;
    },
-   deletePlace : function(){
+   deletePlace : function () {
       if (main.getUIState().getCurrentPlace() != main.getUIState().getCurrentLoadedPlace()){
          return;
       }
@@ -72,17 +81,25 @@ UI.prototype = {
    /*
     * @description This should provide one method to disable the whole GUI
     */
-   disable : function(){
+   disable : function () {
       this.album.disableGallery();
       var places = main.getUIState().getPlaces();
-      places.forEach(function(place){
+      this._isDisabled = true;
+      //TODO: disabled the 'cross' cursor on the map
+      places.forEach(function (place) {
          place.showDisabledIcon();
       });
    },
-   enable : function(){
+   isDisabled : function () {
+      return this._isDisabled;
+   },
+
+   enable : function () {
       this.album.enableGallery();
       var places = main.getUIState().getPlaces();
-      places.forEach(function(place){
+      this._isDisabled = false;
+      //TODO: enable the 'cross' cursor on the map
+      places.forEach(function (place) {
          place.checkIconStatus();
       });
    }

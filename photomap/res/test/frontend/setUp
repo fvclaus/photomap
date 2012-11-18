@@ -136,6 +136,16 @@
 	<td>css=button.mp-delete-album</td>
 	<td>deleteAlbum</td>
 </tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-show-album-share</td>
+	<td>showAlbumShare</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=a[title=&quot;Logout&quot;]</td>
+	<td>logout</td>
+</tr>
 </tbody></table>
 </body>
 </html>
