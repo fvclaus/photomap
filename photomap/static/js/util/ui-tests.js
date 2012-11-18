@@ -1,19 +1,22 @@
+/*global $, main, google*/
 /*
   UITest.js
   @author Frederik Claus
   @description adds listener to test buttons to initate actions which are otherwise complicated or impossible to trigger
-*/
+ */
 
-var latLngAlbum,latLngPlace;
+"use strict";
 
-function initializeTest(){
-   var map = main.getMap().getInstance();
+var latLngAlbum, latLngPlace;
+
+function initializeTest() {
+   var gmaps = main.getMap().getInstance();
 
    // calculate random bounds and add listener. remove google maps listener afterwards
-   var listener = google.maps.event.addListener(map,"center_changed",function(){
+   var listener = google.maps.event.addListener(map, "center_changed", function () {
 
-      latLngAlbum = new google.maps.LatLng(Math.random()*42,Math.random()*42);
-      center = map.getCenter();
+      latLngAlbum = new google.maps.LatLng(Math.random()*42, Math.random()*42);
+      center = gmaps.getCenter();
       latLngPlace = new google.maps.LatLng(center.lat() - Math.random(), center.lng() + Math.random());
 
       bindListener();
@@ -23,15 +26,15 @@ function initializeTest(){
 
 }
 
-function bindListener(){
+function bindListener() {
    var controls = main.getUI().getControls();
    var map = main.getMap();
 
-   $("button.mp-insert-place").click(function(){
+   $("button.mp-insert-place").click(function () {
       event = {
          latLng : latLngPlace
       };
-      google.maps.event.trigger(map.getInstance(), "click",event);
+      google.maps.event.trigger(map.getInstance(), "click", event);
    });
    $("button.mp-show-place").click(function(){
       place = selectPlace();

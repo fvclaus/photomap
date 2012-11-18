@@ -44,7 +44,10 @@ class Album(Description):
             
             for place in places:
                 places_dump.append(place.toserializable())
+            if places:
                 data["places"] = places_dump
+            else:
+                data["places"] = []    
                 
         return data
     

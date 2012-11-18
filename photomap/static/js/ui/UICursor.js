@@ -1,4 +1,9 @@
-UICursor = function(){
+/*global $, main, ALBUM_VIEW */
+"use strict";
+
+var UICursor, gmap, cursor, $information, $link, $question, $topic, $toggleGallery;
+
+UICursor = function () {
 
    this.styles = {
       'default': 'default',
@@ -9,62 +14,60 @@ UICursor = function(){
       text: 'text',
       info: 'help',
       stop: 'not-allowed',
-      progress: 'progress',
+      progress: 'progress'
    };
 };
 
 UICursor.prototype = {
 
-   initWithoutAjax : function(){
+   initWithoutAjax : function () {
       this.cursors();
-      if ( main.getUIState().getPage() == ALBUM_VIEW ){
+      if (main.getUIState().getPage() === ALBUM_VIEW) {
          this.setInfoCursor(this.styles.info);
       }
    },
-   initAfterAjax : function(){
+   initAfterAjax : function () {
       this.setMapCursor();
    },
 
-   setCursor : function ($element,style){
-      $element.css('cursor',style);
+   setCursor : function ($element, style) {
+      $element.css('cursor', style);
    },
 
-   setMapCursor : function(style){
-      map = main.getMap().getInstance();
-      if (style){
+   setMapCursor : function (style) {
+      gmap = main.getMap().getInstance();
+      if (style) {
          cursor = style;
-      }
-      // if no style is defined -> cross on interactive pages, else grabber
-      else if ( main.getUIState().isInteractive() ) {
+      } else if (main.getUIState().isInteractive()) {
+         // if no style is defined -> cross on interactive pages, else grabber
          cursor = this.styles.cross;
-      }
-      else {
+      } else {
          cursor = this.styles.grab;
       }
-      map.setOptions({
+      gmap.setOptions({
          draggableCursor: cursor,
          draggingCursor: this.styles.grab,
       });
    },
-   setInfoCursor : function(style){
+   setInfoCursor : function (style) {
       $information = $(".mp-option-information");
-      this.setCursor($information,style);
+      this.setCursor($information, style);
    },
-   cursors : function() {
+   cursors : function () {
 
       // on links
       $link = $("a");
-      this.setCursor($link,this.styles.pointer);
+      this.setCursor($link, this.styles.pointer);
 
       // on faq and tutorial entries
       $question = $(".mp-faq-question");
-      this.setCursor($question,this.styles.pointer);
+      this.setCursor($question, this.styles.pointer);
       $topic = $(".mp-tutorial-subtopic");
-      this.setCursor($topic,this.styles.pointer);
+      this.setCursor($topic, this.styles.pointer);
 
       // on toggle gallery button
       $toggleGallery = $(".mp-option-toggle-gallery");
-      this.setCursor($toggleGallery,this.styles.pointer);
+      this.setCursor($toggleGallery, this.styles.pointer);
    },
 
 };
