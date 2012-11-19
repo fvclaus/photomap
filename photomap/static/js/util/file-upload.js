@@ -293,12 +293,9 @@ fileUpload = {
          // readyState === 4 -> data-transfer completed and response fully received
          if (request.readyState === 4) {
             if (request.status === 200) {
-               alert("hi");
                fileUpload._responseHandler(JSON.parse(request.responseText), file);
             } else {
-               alert("ho");
                // alert error if upload wasn't successful
-
                if (request.responseText) {
                   text = JSON.parse(request.responseText);
                } else {

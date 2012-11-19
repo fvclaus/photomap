@@ -1,16 +1,18 @@
+/*jslint */
 /*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY*/
+
+"use strict";
+
 /**
  * @author: Frederik Claus
  * @description: Facade for google maps
  */
 
-"use strict";
-
 var Map, state, page, authorized, center, lat, lng;
 
 Map = function () {
    // google.maps.Map
-   this.map	= null;
+   this.map = null;
    // google.maps.StreetViewstreetview
    this.streetview = null;
    // the DOM element
@@ -76,7 +78,7 @@ Map.prototype = {
       // set map options if interactive
       this.map.setOptions(this.mapOptions);
    },
-   /*
+   /**
     * @description Initialize the google maps instance with streetview.
     * @private
     */
@@ -93,7 +95,7 @@ Map.prototype = {
       this.overlay.draw = function () {};
       this.overlay.setMap(this.map);
    },
-   /*
+   /**
     * @description Wraps the google.maps.LatLng constructor
     */
    createLatLng : function (lat, lng) {
@@ -101,14 +103,19 @@ Map.prototype = {
    },
 
    setZoom : function (level) {
-      var instance = this;
-      var zoomListener = google.maps.event.addListener(this.map, "tilesloaded", function() {
+
+      var instance, zoomListener;
+
+      instance = this;
+      zoomListener = google.maps.event.addListener(this.map, "tilesloaded", function () {
          instance.map.setZoom(level);
          google.maps.event.removeListener(zoomListener);
       });
    },
    showAsMarker : function (instances) {
+
       var markersInfo = [];
+
       if (instances.length === 1) {
          instances[0].show();
          console.log('_-------------------_');
@@ -125,11 +132,13 @@ Map.prototype = {
          this.fit(markersInfo);
       }
    },
-   /*
+   /**
     * @description Set google map bounds to show a big part of the world.
     */
    showWorld : function () {
+
       var lowerLatLng, upperLatLng, newBounds;
+
       lowerLatLng = new google.maps.LatLng(-50, -90);
       upperLatLng = new google.maps.LatLng(50, 90);
       newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
@@ -141,7 +150,9 @@ Map.prototype = {
       this.setZoom(this.ZOOM_OUT_LEVEL);
    },
    expandBounds : function (instance) {
+
       var lowerLatLng, upperLatLng, newBounds;
+
       if (instance.model === undefined) {
          lat = instance.lat;
          lng = instance.lon;
@@ -174,10 +185,13 @@ Map.prototype = {
       }
    },
 
-   /*
+   /**
     * @private
     */
    _bindClickListener : function () {
+
+      var input, lat, lng, place, album;
+
       google.maps.event.addListener(this.map, "click", function (event) {
          if (main.getUI().isDisabled()) {
             return;
@@ -185,8 +199,9 @@ Map.prototype = {
          //create new place with description and select it
          if (!state.isDashboard()) {
 
-            var input = main.getUI().getInput(), lat = event.latLng.lat(), lng = event.latLng.lng(), place;
-            // declare beforehand so accessible in both closures
+            input = main.getUI().getInput();
+            lat = event.latLng.lat();
+            lng = event.latLng.lng();
 
             input.onAjax(function (data) {
 
@@ -225,10 +240,11 @@ Map.prototype = {
 
             input.get("/insert-place");
          } else {
-            // create a new album
-            var input = main.getUI().getInput(), lat = event.latLng.lat(), lng = event.latLng.lng(), album;
-            // declare beforehand so accessible in both closures
 
+            // create a new album
+            input = main.getUI().getInput();
+            lat = event.latLng.lat(); 
+            lng = event.latLng.lng();
 
             input.onAjax(function (data) {
 
@@ -263,7 +279,7 @@ Map.prototype = {
          }
       });
    },
-   /*
+   /**
     * @private
     * @see view-album.js
     */
@@ -289,9 +305,9 @@ Map.prototype = {
          }
       });
    },
-   /*
-   * @description Takes an array of markers and resizes + pans the map so all places markers are visible. It does not show/hide marker.
-   */
+   /**
+    * @description Takes an array of markers and resizes + pans the map so all places markers are visible. It does not show/hide marker.
+    */
    fit : function (markersinfo) {
       var LatLngList = [], i, len, bounds, LtLgLen, minfo;
       markersinfo = markersinfo || this.markersinfo;
@@ -325,7 +341,7 @@ Map.prototype = {
    getBounds : function () {
       return this.map.getBounds();
    },
-   /*
+   /**
     * @description Simplify look of the map for guests. No Roadnumbers etc.
     * @private
     */

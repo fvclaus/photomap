@@ -1,4 +1,4 @@
-/*jslint indent: 3, nomen: true, devel: true, plusplus: true, browser: true */
+/*jslint */
 /*global $, fileUpload */
 
 "use strict";
