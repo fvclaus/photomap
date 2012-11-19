@@ -17,11 +17,15 @@
 	<td></td>
 </tr>
 <tr>
-	<td>storeText</td>
+	<td>waitForVisible</td>
+	<td>${albumShare}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>storeValue</td>
 	<td>css=input#mp-share-link</td>
 	<td>albumShareUrl</td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

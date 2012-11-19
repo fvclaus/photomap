@@ -146,6 +146,11 @@
 	<td>css=a[title=&quot;Logout&quot;]</td>
 	<td>logout</td>
 </tr>
+<tr>
+	<td>store</td>
+	<td>css=div#mp-share</td>
+	<td>albumShare</td>
+</tr>
 </tbody></table>
 </body>
 </html>

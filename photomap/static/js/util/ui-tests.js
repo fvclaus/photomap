@@ -59,7 +59,7 @@ function initializeTest() {
    // calculate random bounds and add listener. remove google maps listener afterwards
    var listener = google.maps.event.addListener(gmap, "center_changed", function () {
 
-      latLngAlbum = new google.maps.LatLng(Math.random()*42, Math.random()*42);
+      latLngAlbum = new google.maps.LatLng(Math.random() * 42, Math.random() * 42);
       center = gmap.getCenter();
       latLngPlace = new google.maps.LatLng(center.lat() - Math.random(), center.lng() + Math.random());
 
