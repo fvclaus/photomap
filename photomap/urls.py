@@ -46,6 +46,7 @@ urlpatterns = patterns("",
                        url(r'^get-all-albums', dashboard.get),
                        url(r'^dashboard', dashboard.view),
 
+                       url(r'^sandbox', direct_to_template, {"template": "sandbox.html"}),
                        
      
                        

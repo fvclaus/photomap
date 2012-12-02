@@ -52,21 +52,11 @@ class PhotoControllerTest(ApiTestCase):
         #=======================================================================
         data = {"place": 1,
                 "title": "Chuck Norris",
-                "longest_side" : 375}
+                }
         self._openphoto(data)
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
         self.assertEqual(photo.order,1)
-        response = self.assertPublicAccess(content["url"])
-        import Image
-        import tempfile
-        path = os.path.join(tempfile.gettempdir(),"test.jpg")
-        im = open(path,"wb")
-        im.write(response.read())
-        im = open(path, "rb")
-        im = Image.open(im)
-        self.assertEqual(im.size,(375,300))
-        os.remove(path)
         #=======================================================================
         # insert something valid with description
         #=======================================================================
