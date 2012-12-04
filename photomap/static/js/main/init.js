@@ -22,10 +22,10 @@ var $mpContainer = $('#mp-container');
 var main = null;
 
 //http://stevenbenner.com/2010/04/calculate-page-size-and-view-port-position-in-javascript/
-$mpContainer
-   .width($(window).width() - 30)
-   .height($(window).height() - 25)
-   .css('margin-left', -3);
+//$mpContainer
+//   .width($(window).width() - 30)
+//   .height($(window).height() - 25)
+//   .css('margin-left', -3);
 
 /**
  * @description Initializes main constructor. Needs document ready!

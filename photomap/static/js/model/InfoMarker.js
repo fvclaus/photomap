@@ -1,9 +1,18 @@
+/*jslint */
+/*global $, main, google, Marker, ZOOM_LEVEL_CENTERED, PLACE_VISITED_ICON, PLACE_SELECTED_ICON, PLACE_UNSELECTED_ICON, PLACE_DISABLED_ICON */
+
+"use strict";
+
 /*
  * @author Frederik Claus
  * @class Base class for both Album and Place.
  */
-InfoMarker = function(data){
+
+var InfoMarker;
+
+InfoMarker = function (data) {
    
+   this.model = data.model;
    this.title = data.title;
    this.id = data.id;
    this.description = data.description;
@@ -17,56 +26,59 @@ InfoMarker = function(data){
 };
 
 InfoMarker.prototype = {
-   getSize : function(){
+   getModel : function () {
+      return this.model;
+   },
+   getSize : function () {
       return this.marker.getSize();
    },
-   getLat : function(){
+   getLat : function () {
       return this.marker.lat;
    },
-   getLng : function(){
+   getLng : function () {
       return this.marker.lng;
    },
-   getLatLng : function(){
-      map = main.getMap();
-      return map.createLatLng(this.getLat(),this.getLng());
-   },
-   triggerClick : function(){
+   getLatLng : function () {
       var map = main.getMap();
-      google.maps.event.trigger(this.marker.MapMarker,"click");
+      return map.createLatLng(this.getLat(), this.getLng());
    },
-   center : function(){
+   triggerClick : function () {
+      var map = main.getMap();
+      google.maps.event.trigger(this.marker.MapMarker, "click");
+   },
+   center : function () {
       var map = main.getMap().getInstance();
       map.setZoom(ZOOM_LEVEL_CENTERED);
       map.panTo(this.marker.MapMarker.getPosition());
    },
-   showVisitedIcon : function(){
+   showVisitedIcon : function () {
       this.marker.setOption({icon: PLACE_VISITED_ICON});
    },
-   showSelectedIcon : function(){
+   showSelectedIcon : function () {
       this.marker.setOption({icon: PLACE_SELECTED_ICON});
    },
-   showUnselectedIcon : function(){
+   showUnselectedIcon : function () {
       this.marker.setOption({icon: PLACE_UNSELECTED_ICON});
    },
-   showDisabledIcon : function(){
+   showDisabledIcon : function () {
       this.marker.setOption({icon: PLACE_DISABLED_ICON});
    },
-   /*
+   /**
     * @description Shows the album on the map
     */
-   show : function(){
+   show : function () {
       this.marker.show();
    },
-   /*
+   /**
     * @description Adds an listener to an event triggered by the Marker
     * @param {String} event
     * @param {Function} callback
     */
-   addListener : function(event,callback){
-      if (!(event && callback)){
+   addListener : function (event, callback) {
+      if (!(event && callback)) {
          alert("You must specify event as well as callback");
          return;
       }
-      google.maps.event.addListener(this.marker.MapMarker,event,callback);
-   },
+      google.maps.event.addListener(this.marker.MapMarker, event, callback);
+   }
 };

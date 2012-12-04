@@ -1,4 +1,4 @@
-/*global $, main, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIAlbum, UIInformation*/
+/*global $, main, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation, UIGallery, UISlideshow, UIFullscreen */
 /*
  * @author Frederik Claus
  * @class UI is a facade for all other UI classes
@@ -9,11 +9,14 @@
 var UI;
 
 UI = function () {
+   this.state = new UIState();
    this.tools = new UITools();
    this.information = new UIInformation();
    this.panel = new UIPanel();
    this.controls = new UIControls();
-   this.album = new UIAlbum();
+   this.gallery = new UIGallery();
+   this.slideshow = new UISlideshow();
+   this.fullscreen = new UIFullscreen();
    this.input = new UIInput();
    this.cursor = new UICursor();
    this._isDisabled = false;
@@ -24,7 +27,7 @@ UI = function () {
 UI.prototype = {
 
    initWithoutAjax : function () {
-      this.album.initWithoutAjax();
+      this.slideshow.initWithoutAjax();
       this.information.initWithoutAjax();
       this.panel.initWithoutAjax();
       this.controls.initWithoutAjax();
@@ -32,21 +35,22 @@ UI.prototype = {
       this.tools.initWithoutAjax();
    },
    initAfterAjax : function () {
+      this.panel.initAfterAjax();
       this.controls.initAfterAjax();
-      this.album.initAfterAjax();
+      this.gallery.initAfterAjax();
       this.cursor.initAfterAjax();
    },
    getCursor : function () {
       return this.cursor;
    },
    getGallery : function () {
-      return this.album.getGallery();
+      return this.getGallery();
    },
-   getAlbum : function () {
-      return this.album;
+   getFullscreen : function () {
+      return this.fullscreen;
    },
    getSlideshow : function () {
-      return this.album.getSlideshow();
+      return this.getSlideshow();
    },
    getTools : function () {
       return this.tools;
@@ -58,7 +62,7 @@ UI.prototype = {
       return this.information;
    },
    getState : function () {
-      return this.album.getState();
+      return this.getState();
    },
    getInput : function () {
       return this.input;

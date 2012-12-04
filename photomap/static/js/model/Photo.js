@@ -1,7 +1,18 @@
-// photo is stored by in a place object, encapsulation of an marker
-Photo = function(data,index) {
-   this.model = 'Photo';
+/*jslint */
+/*global $, main */
 
+"use strict";
+
+/**
+ * @author Frederik Claus
+ * @class is stored in a place object, encapsulation of an marker
+ */
+
+var Photo;
+
+Photo = function (data, index) {
+   
+   this.model = 'Photo';
    this.source = data.photo;
    this.title = data.title;
    this.description = data.description;
@@ -11,19 +22,22 @@ Photo = function(data,index) {
 };
 
 Photo.prototype = {
-   checkBorder : function(){
+   getModel : function () {
+      return this.model;
+   },
+   checkBorder : function () {
       //need reselection because anchors change
-      if (this.visited){
-         $("img[src='"+this.source+"']").addClass("visited");
+      if (this.visited) {
+         $("img[src='" + this.source + "']").addClass("visited");
       }
    },
-   showBorder : function(bool){
+   showBorder : function (bool) {
       this.visited = bool;
       main.getClientState().addPhoto(this.id);
       this.checkBorder();
    },
-   triggerClick : function(){
-      $("img[src='"+this.source+"']").trigger("click");
+   triggerClick : function () {
+      $("img[src='" + this.source + "']").trigger("click");
    }
 };
 

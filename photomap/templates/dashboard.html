@@ -7,16 +7,16 @@
 
 {% block name %}Dashboard{% endblock %}
 
-{% block js %}
+{% block css %}
+	<link rel="stylesheet" type="text/x-stylus" href="static/css/dashboard-main.styl" />
+{% endblock %}
+
+{% block js_interactive %}
 	
 	<script type="text/javascript" src="static/js/ui/UI.js" ></script>
 	
-	<script type="text/javascript" src="static/js/util/ClientState.js" ></script>
 	<script type="text/javascript" src="static/js/util/dashboard/ClientServer.js" ></script>
-	<script type="text/javascript" src="static/js/util/ui-tests.js" ></script>
-	
-	<script type="text/javascript" src="static/js/main/Main.js" ></script>
-	
+		
 	<script type="text/javascript" src="static/js/main/dashboard.js" ></script>
 	
 	<script type="text/javascript" src="static/js/zeroclipboard/jquery.zclip.min.js" ></script>
@@ -28,30 +28,13 @@
 
 {% block content_interactive %}
 	
-	<section class="mp-map" id="mp-map">
-		<div class="mp-map-container">
-			<div class="mp-map-wrapper" id="map"></div>
-		</div>
-	</section>
-	
-	<div id="mp-share">
-		<span class="mp-share-overlay" rel="#mp-share"></span>
-		<p>
-			<input id="mp-share-link" name="share-link" value="" size="100"/>
-			<input id="mp-copy-button" name="copy" type="button" value='{% trans "mp-copy-link-title" %}' />
-		</p>
-		<aside>
-			<p>
-				<strong>{% trans "How to Share" %}</strong>
-			</p>
-			<p>
-				{% trans "How to Share -> description" %}
-			</p>
-			<p>
-				<strong>{% trans "How to Share -> attention!" %}</strong>
-			</p>
-		</aside>
-	</div>
+   <section class="mp-empty-box column span-8" >
+      <span>This box doesn't have a purpose yet!</span>
+   </section>
+   <section class="mp-news-feed mp-empty-box column span-16 last">
+      <span>For the news feed!</span>
+   </section>
+
 	<!-- helpers for selenium ide. remove from production system -->
 	<div class="mp-invisible">
 		<button class="mp-insert-album"></button>

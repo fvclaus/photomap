@@ -14,9 +14,8 @@ var Place;
 Place = function (data) {
 
    var i, len;
-
-   this.model = 'Place';
-
+   
+   data.model = 'Place';
    InfoMarker.call(this, data);
 
    this.photos = [];
@@ -102,9 +101,6 @@ Place.prototype._bindListener = function () {
       map = main.getMap();
       oldPlace = state.getCurrentLoadedPlace();
 
-      //close slideshow if open
-      ui.getSlideshow().closeSlideshow();
-
       // clear gallery photos + slider and map.place
       instance._clear();
       state.setCurrentPlace(instance);
@@ -121,7 +117,5 @@ Place.prototype._bindListener = function () {
 
       // set and show title and description
       information.updatePlace();
-      // expose gallery and description
-      mpEvents.trigger("body", mpEvents.toggleExpose);
    });
 };

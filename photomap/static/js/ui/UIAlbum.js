@@ -77,15 +77,6 @@ UIAlbum.prototype = {
       this.slideshow.enableControls();
       this._hideLoading();
       this.loading = false;
-   },
-
-   _updateText : function(){
-      if (this.currentPhoto){
-         information = main.getUI().getInformation();
-         information.showImageNumber();
-         currentIndex = this.photos.indexOf(this.currentPhoto) + 1;
-         information.setImageNumber(currentIndex+"/"+this.photos.length);
-      }
-   },
+   }
 };
 

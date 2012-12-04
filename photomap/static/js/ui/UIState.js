@@ -1,25 +1,32 @@
-/*
+/*jslint */
+/*global $, main, PAGE_MAPPING, DASHBOARD_VIEW */
+
+"use strict";
+
+/**
  * @author Frederik Claus
  * @class UIState holds the current state of the application
  */
-UIState = function(){
+
+var UIState;
+
+UIState = function () {
    this.currentPhotoIndex = null;
    this.currentPhoto = null;
    this.currentPlace = null;
    this.currentAlbum = null;
-   this.photos = new Array();
-   this.places = new Array();
-   this.albums = new Array();
+   this.photos = [];
+   this.places = [];
+   this.albums = [];
    this.slideshow = false;
    this.slideshowLoaded = false;
    this.albumLoading = false;
    this.fontSize = null;
    this.fullscreen = null;
    this.pageMode = $("meta[property='mp:map']").attr("content");
-   if (this.pageMode == "non-interactive"){
+   if (this.pageMode === "non-interactive") {
       this.interactive = false;
-   }
-   else{
+   } else {
       this.interactive = true;
    }
    //PAGE_MAPPING is defined in constants.js
@@ -29,179 +36,182 @@ UIState = function(){
 
 UIState.prototype = {
 
-   isInteractive : function(){
+   isInteractive : function () {
       return this.interactive;
    },
-   isDashboard : function(){
+   isDashboard : function () {
       // if albumview -> false
-      return this.page == DASHBOARD_VIEW;
+      return this.page === DASHBOARD_VIEW;
    },
    //--------------------------------------------------------------------
    //PHOTO---------------------------------------------------------------
    //--------------------------------------------------------------------
-   setCurrentPhotoIndex : function(index){
+   setCurrentPhotoIndex : function (index) {
       this.current = index;
    },
 
-   getCurrentPhotoIndex : function(){
+   getCurrentPhotoIndex : function () {
       return this.current;
    },
 
-   setCurrentPhoto : function(photo){
+   setCurrentPhoto : function (photo) {
       this.currentPhoto = photo;
    },
 
-   getCurrentPhoto : function(){
+   getCurrentPhoto : function () {
       return this.currentPhoto;
    },
-   setPhotos : function(photos){
+   setPhotos : function (photos) {
       this.photos = photos;
    },
-   getPhotos : function(){
+   getPhotos : function () {
       return this.photos;
    },
-   addPhoto : function(photo){
+   addPhoto : function (photo) {
       this.photos.push(photo);
    },
-   removePhoto : function(photo){
-      this.photos = this.photos.filter(function(element,index){
+   removePhoto : function (photo) {
+      this.photos = this.photos.filter(function (element, index) {
          return element !== photo;
       });
    },
    //--------------------------------------------------------------------
    //PLACE---------------------------------------------------------------
    //--------------------------------------------------------------------
-   setCurrentPlace : function(place){
+   setCurrentPlace : function (place) {
       this.currentPlace = place;
    },
-   setCurrentLoadedPlace : function(place){
+   setCurrentLoadedPlace : function (place) {
       this.currentLoadedPlace = place;
    },
-   getCurrentPlace : function(){
+   getCurrentPlace : function () {
       return this.currentPlace;
    },
-   getPlaces : function(){
+   getPlaces : function () {
       return this.places;
    },
-   setPlaces : function(places){
+   setPlaces : function (places) {
       this.places = places;
    },
-   addPlace : function(place){
+   addPlace : function (place) {
       this.places.push(place);
    },
-   removePlace : function(place){
-      this.places = this.places.filter(function(element,index){
+   removePlace : function (place) {
+      this.places = this.places.filter(function (element, index) {
          return element !== place;
       });
    },
    //--------------------------------------------------------------------
    //ALBUM---------------------------------------------------------------
    //--------------------------------------------------------------------
-   setAlbums : function(albums){
+   setAlbums : function (albums) {
       this.albums = albums;
    },
-   getAlbums : function(){
+   getAlbums : function () {
       return this.albums;
    },
-   addAlbum : function(album){
+   addAlbum : function (album) {
       this.albums.push(album);
    },
-   removeAlbum : function(album){
-      this.albums = this.albums.filter(function(element,index){
-       return element !== album;
+   removeAlbum : function (album) {
+      this.albums = this.albums.filter(function (element, index) {
+         return element !== album;
       });
    },
-   getCurrentLoadedPlace : function(){
+   getCurrentLoadedPlace : function () {
       return this.currentLoadedPlace;
    },
-   setCurrentAlbum : function(album){
+   setCurrentAlbum : function (album) {
       this.currentAlbum = album;
    },
-   getCurrentAlbum : function(){
+   getCurrentAlbum : function () {
       return this.currentAlbum;
    },
    //--------------------------------------------------------------------
    //UI------------------------------------------------------------------
    //--------------------------------------------------------------------
-   getPage : function(){
+   getPage : function () {
       return this.page;
    },
-   setSlideshow : function(slideshow){
+   setSlideshow : function (slideshow) {
       this.slideshow = slideshow;
    },
-   isSlideshow : function(){
+   isSlideshow : function () {
       return this.slideshow;
    },
-   setSlideshowLoaded : function(bool){
+   setSlideshowLoaded : function (bool) {
       this.slideshowLoaded = bool;
    },
-   isSlideshowLoaded : function(bool){
+   isSlideshowLoaded : function (bool) {
       return this.slideshowLoaded;
    },
-   setAlbumLoading: function(bool) {
+   setAlbumLoading: function (bool) {
       this.albumLoaded = bool;
    },
-   isAlbumLoading : function(bool){
+   isAlbumLoading : function (bool) {
       return this.albumLoaded;
    },
    // not used right now, but maybe worth being used!
-   setFontSize : function(size){
+   setFontSize : function (size) {
       this.fontSize = size;
    },
-   getFontSize: function(){
+   getFontSize: function () {
       return this.fontSize;
    },
-   setFullscreen : function(bool){
+   setFullscreen : function (bool) {
       this.fullscreen = bool;
    },
-   isFullscreen : function(bool){
+   isFullscreen : function (bool) {
       return this.fullscreen;
    },
-   setGalleryLoaded : function(bool){
+   setGalleryLoaded : function (bool) {
       this.galleryLoaded = bool;
    },
-   isGalleryLoaded : function(){
+   isGalleryLoaded : function () {
       return this.galleryLoaded;
    },
-   setAlbumShareURL: function(url,id){
+   setAlbumShareURL: function (url, id) {
+      
+      var host, fullURL;
+      
       host = window.location.host;
       fullURL = 'http://' + host + url;
       this.currentAlbumShare = {
-            'id': id,
-            'url': fullURL,
+         'id': id,
+         'url': fullURL
       };
    },
-   getAlbumShareURL: function(){
+   getAlbumShareURL: function () {
       return this.currentAlbumShare;
    },
-   setFileToUpload : function(file){
+   setFileToUpload : function (file) {
       this.fileToUpload = file;
    },
-   getFileToUpload : function(){
+   getFileToUpload : function () {
       return this.fileToUpload;
    },
-   setMultipleUpload : function(bool){
+   setMultipleUpload : function (bool) {
       this.multiple = bool;
    },
-   isMultipleUpload : function(){
+   isMultipleUpload : function () {
       return this.multiple;
    },
-   /*
+   /**
     * @description Provides a simple method to store variables temporarily
     * @param {String} key
     * @param value
     */
-   store : function(key,value){
-    this.data[key] = value;
+   store : function (key, value) {
+      this.data[key] = value;
    },
-   /*
-   * @description Counterpart for @reference{store}. Retrieves a value
-   * @param {String} key
-   */
-   retrieve : function(key){
+   /**
+    * @description Counterpart for @reference{store}. Retrieves a value
+    * @param {String} key
+    */
+   retrieve : function (key) {
       return this.data[key];
    },
-   removeKey: function(key){
+   removeKey: function (key) {
       delete this.data[key];
       return;
    }

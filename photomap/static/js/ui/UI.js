@@ -1,13 +1,17 @@
-/*global $, main, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor*/
+/*jslint */
+/*global $, main, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation */
+
+"use strict";
+
 /*
  * @author: Frederik Claus
  * @class UI is a wrapper class for everything related to the album div, where all the pictures are shown
- * @requires UITools, UIPanel, UIControls, UIInput, UIState, UICursor
+ * @requires UITools, UIPanel, UIControls, UIInput, UIState, UICursor, UIInformation
  *
  */
-"use strict";
 
 var UI, state, albums;
+
 UI = function () {
    this.tools = new UITools();
    this.panel = new UIPanel();
@@ -15,6 +19,7 @@ UI = function () {
    this.input = new UIInput();
    this.state = new UIState(this);
    this.cursor = new UICursor();
+   this.information = new UIInformation();
    this._isDisabled = false;
 };
 
@@ -35,6 +40,7 @@ UI.prototype = {
       this.tools.initWithoutAjax();
    },
    initAfterAjax : function () {
+      this.panel.initAfterAjax();
       this.controls.initAfterAjax();
       this.cursor.initAfterAjax();
    },
@@ -54,7 +60,7 @@ UI.prototype = {
       return this.state;
    },
    getInformation: function () {
-      return null;
+      return this.information;
    },
    getPanel : function () {
       return this.panel;

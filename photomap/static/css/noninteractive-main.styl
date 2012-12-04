@@ -1,4 +1,31 @@
-/* general styles on non-interactive pages */
+/* ---------------------------------------------------- */
+/* ------- styling of the non-interactive pages ------- */
+/* ---------------------------------------------------- */
+
+/* ------------------------------ */
+/* ---------- imports ----------- */
+
+@import "setup"
+@import "core"
+
+/* -------- end imports --------- */
+
+
+/* ------------------------------- */
+/* -------- map styling ---------- */
+
+.mp-map
+  height $height-main
+  
+.mp-map-wrapper
+  width 100%
+  height 100%
+
+/* ---------- end map ------------ */
+
+
+/* ------------------------------- */
+/* -------- core stylings -------- */
 
 .mp-non-interactive-content
   width 70%
@@ -23,7 +50,12 @@
   li
     margin 5px
 
-/* styling for login page */
+/* --------- end core --------- */
+
+
+/* ---------------------------- */
+/* -- styling for login page -- */
+
 .mp-register
   width 45%
   padding 2%
@@ -38,8 +70,12 @@
   float left
   & input
     float right
-    
-/* styling for help page */
+
+/* -------- end login -------- */    
+
+
+/* --------------------------- */
+/* -- styling for help page -- */
 
 .mp-faq-entry
   padding 5px
@@ -70,8 +106,12 @@
     font-weight bold
   .mp-tutorial-subtopic-desc
     display none
-    
-/* styling for team page */
+
+/* -------- end help --------- */
+
+
+/* --------------------------- */
+/* -- styling for team page -- */
 
 .mp-profile
   clear both
@@ -88,3 +128,5 @@
     float left
     margin 15px
     margin-right 30px
+
+/* -------- end team -------- */

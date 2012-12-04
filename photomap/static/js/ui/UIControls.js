@@ -34,7 +34,6 @@ UIControls.prototype = {
 
       var height;
 
-      this._positionCenterControl();
       height = main.getUI().getPanel().getFooterHeight();
       this.$logout.height(height);
    },
@@ -49,25 +48,6 @@ UIControls.prototype = {
          this.bindListener(page);
       }
    },
-   /**
-    * @private
-    */
-   _positionCenterControl : function () {
-      
-      var position;
-      
-      //reposition
-      this.$center.show();
-      position = $("#mp-map").position();
-
-      position.top += $("#mp-header").height() * 2.25;
-      position.left += $("#mp-header").height() * 0.35;
-      this.$center.css({
-         'top' : position.top,
-         'left' : position.left
-      }).hide();
-   },
-
    /**
     * @description Displays modify control under a photo
     * @param $el The photo element under which controls are placed
@@ -119,11 +99,10 @@ UIControls.prototype = {
       }
 
       // offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
-      this.$controls
-         .css({
-            top: center.top,
-            left: center.left
-         }).show();
+      this.$controls.css({
+         top: center.top,
+         left: center.left
+      }).show();
    },
    /**
     * @public
@@ -150,7 +129,47 @@ UIControls.prototype = {
       this.isModifyAlbum = !active;
    },
    /**
-    * @description hides the modfiy controls
+    * @description This is used as a callback to display the edit controls
+    * @param {Album,Place} instance
+    * @private
+    */
+   _displayEditControls : function (element) {
+      
+      var state, controls, projection, pixel, markerSize;
+      state = main.getUIState();
+      controls = main.getUI().getControls();
+
+      if (element.getModel() === 'Album') {
+         controls.setModifyAlbum(true);
+         state.setCurrentAlbum(element);
+      } else if (element.getModel() === 'Place') {
+         controls.setModifyPlace(true);
+         state.setCurrentPlace(element);
+      } else {
+         alert("Unknown class: " + element.getModel());
+         return;
+      }
+
+      // gets the relative pixel position
+      projection = main.getMap().getOverlay().getProjection();
+      pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
+      console.log(pixel);
+      // add the header height to the position
+      pixel.y += main.getUI().getPanel().getHeight();
+      // add the height of the marker
+      markerSize = element.getSize();
+      pixel.y += markerSize.height;
+      // add the width of the marker
+      pixel.x += markerSize.width / 2;
+      // add width of left margin of container
+      pixel.x += ($("body").width() - $(".mp-container").width()) / 2;
+      controls._showMarkerControls({
+         top: pixel.y,
+         left: pixel.x
+      });
+   },
+   /**
+    * @description hides the modify controls
     * @param {Boolean} timeout if the controls should be hidden after a predefined timout, when the controls are not entered
     * @private
     */
@@ -171,6 +190,7 @@ UIControls.prototype = {
          this.$controls.hide();
       }
    },
+   /* ---- Listeners ---- */
    /**
     * @public
     * @see UIAlbum
@@ -202,25 +222,6 @@ UIControls.prototype = {
             $(".mp-overlay-trigger").overlay().close();
          },*/
       });
-   },
-   /**
-    * @description Binds all the Listeners required by this page. Also handles window.load Listener
-    * @param {String} page Name of current page
-    */
-   bindListener : function (page) {
-      
-      this._bindDeleteListener();
-      this._bindUpdateListener();
-      this._bindControlListener();
-
-      if (page === DASHBOARD_VIEW) {
-         this._bindShareListener();
-         this.bindAlbumListener();
-      } else if (page === ALBUM_VIEW) {
-         this.bindPlaceListener();
-      } else {
-         alert("Unknown page: " + page);
-      }
    },
    /**
     * @private
@@ -438,42 +439,23 @@ UIControls.prototype = {
          });
       });
    },
-
    /**
-    * @description This is used as a callback to display the edit controls
-    * @param {Album,Place} instance
-    * @private
+    * @description Binds all the Listeners required by this page. Also handles window.load Listener
+    * @param {String} page Name of current page
     */
-   _displayEditControls : function (element) {
+   bindListener : function (page) {
       
-      var state, controls, projection, pixel, markerSize;
-      state = main.getUIState();
-      controls = main.getUI().getControls();
+      this._bindDeleteListener();
+      this._bindUpdateListener();
+      this._bindControlListener();
 
-      if (element.model === 'Album') {
-         controls.setModifyAlbum(true);
-         state.setCurrentAlbum(element);
-      } else if (element.model === 'Place') {
-         controls.setModifyPlace(true);
-         state.setCurrentPlace(element);
+      if (page === DASHBOARD_VIEW) {
+         this._bindShareListener();
+         this.bindAlbumListener();
+      } else if (page === ALBUM_VIEW) {
+         this.bindPlaceListener();
       } else {
-         alert("Unknown class: " + typeof element);
-         return;
+         alert("Unknown page: " + page);
       }
-
-      // gets the relative pixel position
-      projection = main.getMap().getOverlay().getProjection();
-      pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
-      // add the header height to the position
-      pixel.y += main.getUI().getPanel().getHeight();
-      // add the height of the marker
-      markerSize = element.getSize();
-      pixel.y += markerSize.height;
-      // add the width of the marker
-      pixel.x += markerSize.width / 2;
-      controls._showMarkerControls({
-         top: pixel.y,
-         left: pixel.x
-      });
    }
 };

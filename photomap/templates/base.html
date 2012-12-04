@@ -1,129 +1,142 @@
+<div class="mp-alignment-div"></div>
+
 <!-- for the translation with django -->
 {% load i18n %}
 
 <!DOCTYPE html>
 <html lang="de" >
-	<head>
-	
-		<title>Photoalbum | {% block title %}{% endblock %}</title>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-		<link rel="shortcut icon" href="static/images/icon.png" />
-		
-		<!-- displays information when link is shared on FB or similiar -->
-		<meta property="og:title" content="Photo Map" />
-		<meta property="og:type" content="website" />
-		<!--
-		<meta property="og:image" content="#{imgurl}" />
-		<meta property="og:url" content="#{url}" />
-		-->
-		<meta property="mp:map" {% block mode %}{% endblock %} />
-		<meta property="og:description" content="Karte mit Photos und Beschreibungen" />
-		{% block meta %}
-		{% endblock %}		
-		
-		
-		<!-- styles -->
-		
-		{% load compress %}
-		{% compress css file %}
-			<link rel="stylesheet" type="text/x-stylus" href="static/css/main.styl" />
-			{% block css %}
-			{% endblock %}
-		{% endcompress %}
-		<!-- scrollpane style sheet out of compress in development | make sure to put back in before deploying -->
-			<link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
-			<link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
-		{% compress css %}
-			
-			<link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
-			<link rel="stylesheet" type="text/css" href="static/css-plain/rokkitt.css" />
-		{% endcompress %}	
+   <head>
 
-		
-		<!-- end styles -->
-				
-		<!-- js -->
-		<!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->
-		<script type="text/javascript" src="static/js/lib/jquery-1.7.2-min.js"></script>
-		<script type="text/javascript" src="static/js/lib/jquery.tools.no-jquery.min.js"></script>
-		<script type="text/javascript" src="static/js/lib/jquery-ui-1.9.0.custom.min.js"></script>
-		{% compress js %}
-		
-			<!-- javascript libraries -->
-			<script type="text/javascript" src="static/js/lib/date.js" ></script>
-			<script type="text/javascript" src="static/js/util/noconsole.js" ></script>
-			<script type="text/javascript" src="static/js/util/extensions.js" ></script>
-			<script type="text/javascript" src="static/js/lib/jquery.mousewheel.min.js" ></script>
-			<script type="text/javascript" src="static/js/lib/tzoom.min.js" ></script>
-			<script type="text/javascript" src="static/js/lib/jquery.cookie.js" ></script>
-			<script type="text/javascript" src="static/js/lib/ie.js" ></script>
-			<script type="text/javascript" src="static/js/lib/jquery.jqote2.min.js" ></script>
-			<script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
-			
-			<script type="text/javascript" src="static/js/util/constants.js"></script>
-			<script type="text/javascript" src="static/js/model/Map.js" ></script>
-			<script type="text/javascript" src="static/js/model/Marker.js" ></script>
-			<script type="text/javascript" src="static/js/model/InfoMarker.js"></script>
-			<script type="text/javascript" src="static/js/model/Album.js" ></script>
-			
-			<script type="text/javascript" src="static/js/ui/UIState.js" ></script>
-			<script type="text/javascript" src="static/js/ui/UIInput.js" ></script>
-			<script type="text/javascript" src="static/js/ui/UIControls.js" ></script>
-			<script type="text/javascript" src="static/js/ui/UIPanel.js" ></script>
-			<script type="text/javascript" src="static/js/ui/UITools.js" ></script>
-			<script type="text/javascript" src="static/js/ui/UICursor.js" ></script>
-			{% block js %}
-			{% endblock %}
-		{% endcompress %}
-		
-		<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script>
-		
-	</head>
-	<body>
+      <title>Photoalbum | {% block title %}{% endblock %}</title>
+      <meta charset="UTF-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+      <link rel="shortcut icon" href="static/images/icon.png" />
+
+      <!-- displays information when link is shared on FB or similiar -->
+      <meta property="og:title" content="Photo Map" />
+      <meta property="og:type" content="website" />
+      <!--
+         <meta property="og:image" content="#{imgurl}" />
+         <meta property="og:url" content="#{url}" />
+      -->
+      <meta property="mp:map" {% block mode %}{% endblock %} />
+      <meta property="og:description" content="Karte mit Photos und Beschreibungen" />
+      {% block meta %}
+      {% endblock %}		
+
+
+      <!-- styles -->
+
+      {% load compress %}
+      {% compress css file %}
+         {% block css %}
+         {% endblock %}
+      {% endcompress %}
+      <!-- scrollpane style sheet out of compress in development | make sure to put back in before deploying -->
+      <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
+      <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
+      <link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
+      {% compress css %}
+         <link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
+         <link rel="stylesheet" type="text/css" href="static/css-plain/rokkitt.css" />
+      {% endcompress %}	
+
+      <!-- end styles -->
+
+      <!-- js -->
+         
+         <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->
+         <script type="text/javascript" src="static/js/lib/jquery-1.7.2-min.js"></script>
+         <script type="text/javascript" src="static/js/lib/jquery.tools.no-jquery.min.js"></script>
+         <script type="text/javascript" src="static/js/lib/jquery-ui-1.9.0.custom.min.js"></script>
+	      {% compress js %}
 	
-		<div class="mp-container" id="mp-container">
-				
-			<header class="mp-header" id="mp-header">
-				<section class="mp-logo"><a href="/"></a></section>
-				<section class="mp-page-title mp-option-information">
-					<h1>{% block name %} {% endblock %}</h1>
+            <!-- javascript libraries -->
+            <script type="text/javascript" src="static/js/lib/date.js" ></script>
+            <script type="text/javascript" src="static/js/util/noconsole.js" ></script>
+            <script type="text/javascript" src="static/js/util/extensions.js" ></script>
+            <script type="text/javascript" src="static/js/lib/jquery.mousewheel.min.js" ></script>
+            <script type="text/javascript" src="static/js/lib/tzoom.min.js" ></script>
+            <script type="text/javascript" src="static/js/lib/jquery.cookie.js" ></script>
+            <script type="text/javascript" src="static/js/lib/ie.js" ></script>
+	         <script type="text/javascript" src="static/js/lib/jquery.jqote2.min.js" ></script>
+	         <script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
+	         <script type="text/javascript" src="static/js/util/constants.js"></script>
+	         <script type="text/javascript" src="static/js/model/Map.js" ></script>
+	         <script type="text/javascript" src="static/js/model/Marker.js" ></script>
+	         <script type="text/javascript" src="static/js/model/InfoMarker.js"></script>
+	         <script type="text/javascript" src="static/js/model/Album.js" ></script>
+	    
+	         <script type="text/javascript" src="static/js/ui/UIState.js" ></script>
+	         <script type="text/javascript" src="static/js/ui/UIInput.js" ></script>
+	         <script type="text/javascript" src="static/js/ui/UIControls.js" ></script>
+	         <script type="text/javascript" src="static/js/ui/UIPanel.js" ></script>
+	         <script type="text/javascript" src="static/js/ui/UITools.js" ></script>
+	         <script type="text/javascript" src="static/js/ui/UICursor.js" ></script>
+
+	         <script type="text/javascript" src="static/js/util/ClientState.js" ></script>
+	         <script type="text/javascript" src="static/js/main/Main.js" ></script>
+
+	         {% block js %}
+	         {% endblock %}
+         {% endcompress %}
+		
+	    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script>
+		
+   </head>
+   <body>
+
+      <div class="mp-container container" id="mp-container">
+
+         <header class="mp-page-header column span-24 last" id="mp-page-header">
+            <section class="mp-logo column span-4">
+               <svg class="mp-keiken-logo" id="logo" width="189.36" height="99.65" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"> 
+                  <g transform="scale(1.0)">
+                    <image class="mp-keiken-logo" x="0" y="0" width="189.36" height="99.65" xlink:href="static/images/logo.svg"></image>
+                  </g>
+               </svg>
+            </section>
+				<section class="mp-top-panel column span-12">
+               <div class="mp-placeholder-div column span-24"></div>
+				   <div class="mp-search column span-24">
+                 <span>
+                    Suche: <input class="mp-search-input" type="text" length="30" disabled="disabled" />
+                 </span>
+               </div>
 				</section>
-				<section class="mp-top-panel">
-					<div class="mp-searchfield"></div>
-					<div class="mp-panel-controls-wrapper">
-						{% block options %} {% endblock %}
-					</div>
-				</section>
+		      <section class="mp-page-title mp-option-information column span-8 last">
+               <h1>{% block name %} {% endblock %}</h1>
+            </section>
 			</header>
 			
-			{% block content %}
-			{% endblock %}	
-			
-			<footer class="mp-footer" id="mp-footer">
-				<section class="mp-internal-links">
-					<a href="/impressum" title='{% trans "link-title-impressum" %}'>{% trans "Impressum" %}</a> |
-					<a href="/privacy" title='{% trans "link-title-privacy" %}'>{% trans "Datenschutz" %}</a> |
-					<a href="/copyright" title='{% trans "link-title-copyright" %}'>{% trans "Urheberrecht" %}</a> |
-					<a href="/contact" title='{% trans "link-title-contact" %}'>{% trans "Kontakt" %}</a> |
-					<a href="/help" title='{% trans "link-title-help" %}'>{% trans "Hilfe" %}</a> |
-					<a href="/team" title='{% trans "link-title-team" %}'>{% trans "Team" %}</a>
-				</section>
-				{% if user.is_authenticated %}
-					<section class="mp-user">
-						<span>
-							<a href="/logout" title="Logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
+         <section class="mp-content" id="mp-content">
+			   {% block content %}
+			   {% endblock %}	
+			</section>
+
+			<footer class="mp-page-footer column span-24 last" id="mp-page-footer">
+			   {% if user.is_authenticated %}
+				   <section class="mp-user column span-8">
+					   <span>
+						   <a href="/logout" title="Logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
 						</span>
 						<span>{{user.email}}</span>
 					</section>
 				{% else %}
-					<section class="mp-login-link">
+					<section class="mp-login-link column span-8">
 						<span>
 							<a href="/login" title ='{% trans "link-title-login" %}'>Login/Registrierung</a>
 						</span>
 					</section>
 				{% endif %}
-		
+            <section class="mp-internal-links column span-16 last">
+			      <a href="/team" title='{% trans "link-title-team" %}'>{% trans "Team" %}</a>
+					<a href="/contact" title='{% trans "link-title-contact" %}'>{% trans "Kontakt" %} | </a>
+					<a href="/privacy" title='{% trans "link-title-privacy" %}'>{% trans "Datenschutz" %} | </a>
+					<a href="/copyright" title='{% trans "link-title-copyright" %}'>{% trans "Urheberrecht" %} | </a>
+					<a href="/help" title='{% trans "link-title-help" %}'>{% trans "Hilfe" %} | </a>
+					<a href="/impressum" title='{% trans "link-title-impressum" %}'>{% trans "Impressum" %} | </a>
+				</section>
 			</footer>
 		</div>
 		

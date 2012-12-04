@@ -1,7 +1,7 @@
 /*global $, main, ALBUM_VIEW */
 "use strict";
 
-var UICursor, gmap, cursor, $information, $link, $question, $topic, $toggleGallery;
+var UICursor, gmap, cursor, $information, $link, $question, $topic, $toggleGallery, $logo;
 
 UICursor = function () {
 
@@ -68,6 +68,10 @@ UICursor.prototype = {
       // on toggle gallery button
       $toggleGallery = $(".mp-option-toggle-gallery");
       this.setCursor($toggleGallery, this.styles.pointer);
+      
+      // on logo
+      $logo = $(".mp-logo").find("svg");
+      this.setCursor($logo, this.styles.pointer);
    },
 
 };

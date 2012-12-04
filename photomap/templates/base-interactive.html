@@ -7,9 +7,49 @@
 content="interactive"
 {% endblock %}
 
-<!-- no javascript here -->
+{% block js %}
+	<script type="text/javascript" src="static/js/ui/UIInformation.js" ></script>
+   <script type="text/javascript" src="static/js/util/ui-tests.js" ></script>
+
+   {% block js_interactive %}
+   {% endblock %}
+{% endblock %}
 
 {% block content %}
+	
+   <section class="mp-map column span-16" id="mp-map">
+	   <div class="mp-map-wrapper" id="map"></div>
+	</section>
+	<section class="mp-description column span-8 last" id="mp-description">
+	   <div class="mp-title-bar mp-description-title">
+	      <span></span>
+	   </div>
+	   <div class="mp-description-wrapper">
+	      <div class="force-scroll">
+	         <p>Es ist noch kein Album ausgewählt!</p>
+	      </div>
+	   </div>
+	</section>
+
+	<div id="mp-share">
+		<span class="mp-share-overlay" rel="#mp-share"></span>
+		<p>
+			<input id="mp-share-link" name="share-link" value="" size="100"/>
+			<input id="mp-copy-button" name="copy" type="button" value='{% trans "mp-copy-link-title" %}' />
+		</p>
+		<aside>
+			<p>
+				<strong>{% trans "How to Share" %}</strong>
+			</p>
+			<p>
+				{% trans "How to Share -> description" %}
+			</p>
+			<p>
+				<strong>{% trans "How to Share -> attention!" %}</strong>
+			</p>
+		</aside>
+	</div>
+
 	<div class="mp-controls-wrapper">
 			<img class="mp-controls-background" src="static/images/controls-box.png" />
 			<img class="mp-controls-options mp-option-delete" src="static/images/delete.png" title='{% trans "control-title delete" %}' />

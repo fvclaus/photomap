@@ -1,16 +1,20 @@
-/*
+/*jslint */
+/*global $, main, fileUpload */
+
+"use strict";
+
+/**
  * @author Marc Roemer
  * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
  */
-UIGallery = function (album) {
 
-   this.album = album;
+var UIGallery;
 
-   this.$container = $('#mp-album');
-   this.$gallery = $('#mp-album-wrapper');
-   this.galleryPadding = this.$gallery.css("padding-left");
-   this.galleryWidth = this.$gallery.width();
+UIGallery = function () {
 
+   this.$container = $('#mp-gallery');
+   this.$gallery = $('#mp-gallery-wrapper');
+   
    this.visible = false;
    this.$elements = null;
 
@@ -18,103 +22,82 @@ UIGallery = function (album) {
 
 UIGallery.prototype =  {
 
-   initAfterAjax : function(){
-      if ( main.getClientState().isAdmin() ){
+   initAfterAjax : function () {
+      if (main.getClientState().isAdmin()) {
          this.$container.bind('dragover', fileUpload.handleGalleryDragover);
          this.$container.bind('drop', fileUpload.handleGalleryDrop);
       }
    },
-   /*
+   /**
     * @author Frederik Claus
     * @description Reselect all images in the gallery. This is necessary when the gallery gets updated
     * @private
     */
-   searchImages : function(){
+   searchImages : function () {
       this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-controls-options");
    },
-   /*
+   /**
     * @returns {jQElement} Gallery element
     */
-   getEl : function(){
+   getEl : function () {
       return this.$gallery;
    },
-   getDimensions : function(){
-      var position =  this.$gallery.position();
-      position.width = this.$gallery.width();
-      position.height = this.$gallery.height();
-      console.log("width = " + position.width + " height = " + position.height);
-      return position;
-   },
-   getScrollPane : function(){
+   getScrollPane : function () {
       return this.$gallery.data('jsp');
    },
-   setScrollPane : function(){
+   setScrollPane : function () {
       this.$gallery.jScrollPane({
-            verticalDragMinHeight: 40,
-            verticalDragMaxHeight: 40,
-            animateScroll: true
+         verticalDragMinHeight: 40,
+         verticalDragMaxHeight: 40,
+         animateScroll: true
       });
    },
-   /*
-    * @private
-    */
-   _setVisibility : function(visible){
-      this.visible = visible;
-   },
-   isVisible : function(){
-      return this.visible;
-   },
-  /*
+  /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
    */
-   show : function( photos ) {
-
-      var state = main.getUIState();
+   show : function (photos) {
+      
+      var state, controls, authorized, tmplPhotosData, loaded, i, len, instance = this;
+      state = main.getUIState();
       controls = main.getUI().getControls();
-      var authorized = main.getClientState().isAdmin();
+      authorized = main.getClientState().isAdmin();
       
       state.setPhotos(photos);
-      // show gallery in case it's hidden
-      $("#mp-album").show();
-      // visibility to true for exposé
-      this._setVisibility(true);
-
-      if (photos.length == 0){
+      
+      if (photos.length === 0) {
          // bugfix for empty places (to show empty "add"-tile)
-         if (state.isInteractive()){
+         if (authorized) {
             this.$gallery.append(
-               $.jqote( '#galleryTmpl', {'isAdmin': authorized} )
+               $.jqote('#galleryTmpl', {'isAdmin': authorized})
             );
             controls.bindInsertPhotoListener();
          }
-      }
-      else{
-         var instance = this;
-
-         var controls = main.getUI().getControls();
+      } else {
+         
          state.setAlbumLoading(true);
-         var tmplPhotosData = new Array();
-         var loaded = 0;
-         main.getUI().disable;
+         tmplPhotosData = [];
+         loaded = 0;
+         main.getUI().disable();
 
-         for( var i = 0, len = photos.length; i < len; ++i ) {
-            tmplPhotosData.push( photos[i].source );
-            $('<img/>').load(function() {
+         for (i = 0, len = photos.length; i < len; ++i) {
+            
+            tmplPhotosData.push(photos[i].source);
+            $('<img/>').load(function () {
                ++loaded;
-               if( loaded === len ) {
+               if (loaded === len) {
                   main.getUIState().setAlbumLoading(false);
                   main.getUI().enable();
                   // create wrapping anchors for images
                   instance.$gallery.append(
-                     $.jqote( '#galleryTmpl', {
-                           thumbAddress: tmplPhotosData,
-                           isAdmin : authorized
-                        })
+                     $.jqote('#galleryTmpl', {
+                        thumbAddress: tmplPhotosData,
+                        isAdmin : authorized
+                     })
                   );
                   //search all anchors
                   instance.searchImages();
                   // admin listeners
-                  if ( authorized ){
+                  if (authorized) {
                      instance._bindSortableListener();
                      controls.bindInsertPhotoListener();
                   }
@@ -123,24 +106,28 @@ UIGallery.prototype =  {
                   instance.bindListener();
                   
                }
-            }).attr( 'src', photos[i].source );
+            }).attr('src', photos[i].source);
          }
       }
    },
-   _resizeThumbs : function(){
+   _resizeThumbs : function () {
+      
+      var desiredHeight;
+      
       this.searchImages();
-      desiredHeight = $(".mp-gallery").width() * .25 + 'px';
+      desiredHeight = $(".mp-gallery").width() * 0.25 + 'px';
       console.log(desiredHeight);
-      this.$elements.each(function(index,element){
+      this.$elements.each(function (index, element) {
          $(this).height(desiredHeight);
       });
    },
-   /*
+   /* ---- Listeners ---- */
+   /**
     * @private
     */
-   _bindScrollPaneListener : function(){
+   _bindScrollPaneListener : function () {
       this.$gallery
-         .css("padding-left",this.galleryPadding)
+         .css("padding-left", this.galleryPadding)
          .width(this.galleryWidth)
          .jScrollPane({
             verticalDragMinHeight	: 40,
@@ -150,50 +137,53 @@ UIGallery.prototype =  {
       //hack to remove horizontal scrollbars which always show up
       $(".jspHorizontalBar").remove();
    },
-   /*
+   /**
     * @private
     */
-   _bindSortableListener : function(){
-      var instance = this;
+   _bindSortableListener : function () {
+      
+      var jsonPhotos, jsonPhoto, currentPhoto, state, instance = this;
+      state = main.getUIState();
+      
       this.$gallery
          .find("div.mp-gallery")
          .sortable({
             items : "img.sortable",
-            start : function (event,ui){
+            start : function (event, ui) {
                ui.item.addClass("noClick");
             },
-            update : function(event,ui){
+            update : function (event, ui) {
                instance.searchImages();
-               var jsonPhotos = new Array();
+               jsonPhotos = [];
 
-               state.getPhotos().forEach(function(photo,index,photos){
+               state.getPhotos().forEach(function (photo, index, photos) {
                   // get html tag for current photo
                   currentPhoto = $('img[src="' + photo.source + '"]');
                   // find index of current photo in mp-gallery
                   photo.order = instance.$elements.index(currentPhoto);
                   // make a deep copy
-                  jsonPhoto = $.extend(true,{},photo);
+                  jsonPhoto = $.extend(true, {}, photo);
                   jsonPhotos.push(jsonPhoto);
                   // when all photos with new order are in jsonPhotos, save the order
-                  if (index == photos.length-1){
+                  if (index === photos.length - 1) {
                      main.getClientServer().savePhotoOrder(jsonPhotos);
                   }
                });
             }
          });
    },
-   bindListener : function(){
+   bindListener : function () {
 
-      var instance = this;
-      var state = main.getUIState();
-      var cursor = main.getUI().getCursor();
-      var controls = main.getUI().getControls();
-      var authorized = main.getClientState().isAdmin();
+      var state, cursor, controls, authorized, photo, instance = this;
+      state = main.getUIState();
+      cursor = main.getUI().getCursor();
+      controls = main.getUI().getControls();
+      authorized = main.getClientState().isAdmin();
 
       //bind events on anchors
       instance.$elements
          .unbind('.Gallery')
-         .bind( 'mouseenter.Gallery', function( event ) {
+         .bind('mouseenter.Gallery', function (event) {
             var $el = $(this);
             $el
                .addClass('current')
@@ -203,36 +193,36 @@ UIGallery.prototype =  {
             state.setCurrentPhotoIndex($el.index());
             state.setCurrentPhoto(photo);
 
-            if ( authorized ){
+            if (authorized) {
                controls.setModifyPhoto(true);
                controls.showPhotoControls($el);
             }
-            cursor.setCursor($el,cursor.styles.pointer);
+            cursor.setCursor($el, cursor.styles.pointer);
          })
-         .bind( 'mouseleave.Gallery', function( event ) {
+         .bind('mouseleave.Gallery', function (event) {
             var $el = $(this);
             //add visited border if necessary
             (state.getPhotos())[$el.index()].checkBorder();
             $el.removeClass('current');
 
-            if ( authorized ){
+            if (authorized) {
                controls.hideEditControls(true);
             }
          })
-         .bind( 'mousedown.Gallery', function(event){
+         .bind('mousedown.Gallery', function (event) {
             var $el = $(this);
             // set Cursor for DragnDrop on images (grabber)
-            cursor.setCursor($el,cursor.styles.grab);
+            cursor.setCursor($el, cursor.styles.grab);
          })
-         .bind( 'click.Gallery', function( event ) {
+         .bind('click.Gallery', function (event) {
             var $el = $(this);
             // workaround for DnD click event:
             // when element gets dragged class "noClick" is added, when it's dropped and the click event
             // is triggered, instead of starting the slideshow, the class "noClick" is getting removed
-            if( $el.hasClass("noClick") ){
+            if ($el.hasClass("noClick")) {
                $el.removeClass("noClick");
-            }
-            else{
+            } else {
+               
                $el.removeClass('current');
                state.setCurrentPhotoIndex($el.index());
                state.setCurrentPhoto((state.getPhotos())[$el.index()]);
@@ -240,14 +230,14 @@ UIGallery.prototype =  {
                main.getUI().getControls().hideEditControls(false);
 
                // starts little slideshow in gallery div
-               instance.album.startSlider();
+               main.getUI().getSlideshow().startSlider();
 
-               return false;
+               //return false;
             }
          });
 
       //draw border on visited elements
-      main.getUIState().getPhotos().forEach(function(photo){
+      main.getUIState().getPhotos().forEach(function (photo) {
          photo.checkBorder();
       });
    },

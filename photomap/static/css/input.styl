@@ -1,10 +1,12 @@
-/* still not percentage layout */
-    
+/* ------------------------------------------------*/
+/* ------ styling of input form and overlays ----- */
+/* ----------------------------------------------- */
+
+/* ------------------------------ */
+/* ----- input form styling ----- */
+
 .mp-input-title
   text-align center
-
-.mp-button
-  cursor pointer
   
 .mp-dialog
   .mp-button
@@ -25,3 +27,33 @@
   z-index -1
   display inline
   position absolute
+
+/* ------- end input forms ------ */
+
+/* ------------------------------ */
+/* ----- album share styling ---- */
+
+#mp-share
+  display none
+  background-color #eee
+  width 80%
+  min-height 100px
+  z-index 100
+  padding 25px
+  border 2px solid #333
+  opacity 0.9
+  border-radius 25px
+  box-shadow 0 0 50px #ccc
+  .close
+    background-image url(../../images/close.png)
+    position absolute 
+    right -15px 
+    top -15px 
+    cursor pointer 
+    height 35px
+    width 35px
+
+.mp-copy-button
+  margin-left 5px
+
+/* ------ end album share ------ */
