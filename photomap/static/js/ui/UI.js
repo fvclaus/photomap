@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation */
+/*global $, main, Map, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation */
 
 "use strict";
 
@@ -13,6 +13,7 @@
 var UI, state, albums;
 
 UI = function () {
+   this.map = null;
    this.tools = new UITools();
    this.panel = new UIPanel();
    this.controls = new UIControls();
@@ -34,6 +35,10 @@ UI.prototype = {
     * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
     */
    initWithoutAjax : function () {
+      this.map = new Map();
+      this.map.initWithoutAjax();
+      // load markers on map
+      main.getClientServer().init();
       this.panel.initWithoutAjax();
       this.controls.initWithoutAjax();
       this.cursor.initWithoutAjax();
@@ -43,6 +48,9 @@ UI.prototype = {
       this.panel.initAfterAjax();
       this.controls.initAfterAjax();
       this.cursor.initAfterAjax();
+   },
+   getMap : function () {
+      return this.map
    },
    getCursor : function () {
       return this.cursor;

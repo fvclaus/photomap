@@ -83,6 +83,7 @@ class ApiTestCase(TestCase):
             code = response.getcode()
             
         self.assertEqual(200, code)
+        return response
         
     def assertNoPublicAccess(self, url):
         c = Client()

@@ -21,7 +21,7 @@ UIPanel.prototype = {
    
    initWithoutAjax : function () {
       this.resizeLogo();
-      this.createHomeLink();
+      this.bindLogoListener();
       this.resizeFooterFont();
       this.$logout.height(this.$nav.height());
    },
@@ -50,7 +50,7 @@ UIPanel.prototype = {
       //this.$logo.attr("height", logoScaledHeight);
       //this.$logo.attr("width", logoScaledWidth);
    },
-   createHomeLink : function () {
+   bindLogoListener : function () {
       this.$logo.bind("click", function () {
          window.location.href = "/";
       });
@@ -64,11 +64,14 @@ UIPanel.prototype = {
       width = 5000;
       height = this.$header.height();
       tools = main.getUI().getTools();
-      size = tools.calculateFontSize(text, width, height) / 2;
+      size = tools.calculateFontSize(text, width, height) / 3;
       $titleWrapper.css("fontSize", size + "px");
       
       margin = ($titleWrapper.height() - this.$title.height()) / 2;
-      this.$title.css("margin", margin + " 0");
+      this.$title.css({
+         margin: margin + " 0",
+         marginRight: "3%"
+      });
       
    },
    resizeFooterFont : function () {

@@ -6,18 +6,17 @@ Created on 22.07.2012
 '''
 
 from apitestcase import ApiTestCase
-from django.test.client import Client
-from data import TEST_PASSWORD, TEST_USER
+
+
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 from data import GPS_MANNHEIM_SCHLOSS
 
-import json
-import logging 
-import os
-from copy import deepcopy
+
+
 from decimal import Decimal
+from copy import deepcopy
 
 import re
 
@@ -65,6 +64,14 @@ class AlbumControllerTest(ApiTestCase):
         
     def test_insert(self):
         self.url = "/insert-album"
+        #=======================================================================
+        # 'ocean test'
+        #=======================================================================
+        data = {"title": "Atlantis",
+                "lat" : Decimal(17.375803),
+                "lon": Decimal(-34.628906)}
+        (album,content) = self.assertCreates(data)
+        self.assertEqual(album.country,"oc")
         #=======================================================================
         # insert something valid without description
         #=======================================================================

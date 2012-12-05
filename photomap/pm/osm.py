@@ -52,7 +52,8 @@ def reversegecode(lat, lon):
         else:
             raise OSMException , "Please try again later"
     except KeyError, e:
-        raise OSMException, "Nothing seems to be here. Try somewhere else."
+            logger.warn("Requested location not in a country. Returning OC for ocean")
+            return "oc"
 
 
 if __name__ == "__main__":

@@ -32,17 +32,15 @@ Album.prototype._delete = function () {
  */
 Album.prototype._bindListener = function () {
    
-   var state, controls, instance = this;
+   var state, information, instance = this;
    state = main.getUIState();
-   controls = main.getUI().getControls();
-
+   information = main.getUI().getInformation();
    /*
     * @description Redirects on albumview of selected album.
     */
    google.maps.event.addListener(this.marker.MapMarker, "click", function () {
       
-      var information = main.getUI().getInformation();
-      
+      state.setCurrentAlbum(instance);
       information.updateAlbumDescription();
       information.updateAlbumTitle();
    });
@@ -50,12 +48,11 @@ Album.prototype._bindListener = function () {
       
       var url = '/view-album?id=' + instance.id;
       
-      state.setCurrentAlbum(instance);
-      window.location.href=url;
+      window.location.href = url;
    });
 };
 
 
-Album.prototype.checkIconStatus = function(){
+Album.prototype.checkIconStatus = function () {
    this.showVisitedIcon();
 };

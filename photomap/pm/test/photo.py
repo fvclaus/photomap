@@ -51,12 +51,12 @@ class PhotoControllerTest(ApiTestCase):
         # insert something valid without description
         #=======================================================================
         data = {"place": 1,
-                "title": "Chuck Norris"}
+                "title": "Chuck Norris",
+                }
         self._openphoto(data)
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
         self.assertEqual(photo.order,1)
-        self.assertPublicAccess(content["url"])
         #=======================================================================
         # insert something valid with description
         #=======================================================================

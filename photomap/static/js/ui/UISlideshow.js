@@ -8,14 +8,13 @@
  * @class UISlideshow displays the current selected Photo in the Slideshow
  */
 
-var UISlideshow; 
+var UISlideshow;
 
 UISlideshow = function () {
 
    this.$slideshow = $('#mp-slideshow');
    this.$next = this.$slideshow.find('img.mp-album-nav-next');
    this.$prev = this.$slideshow.find('img.mp-album-nav-prev');
-   this.$close = this.$slideshow.find('img.mp-slideshow-close');
    this.$image = this.$slideshow.find("div.mp-album-image > img[class!='mp-album-zoom']");
    this.$loading = this.$slideshow.find('img.mp-image-loading-small');
    this.$zoom = this.$slideshow.find("img.mp-album-zoom");
@@ -142,12 +141,6 @@ UISlideshow.prototype = {
    bindListener : function () {
       var instance = this;
       //bind slideshow button listener
-      this.$close.bind('click.Gallery', function () {
-         if ($(this).hasClass("disabled")) {
-            return;
-         }
-         instance.closeSlideshow();
-      });
 
       this.$next.bind('click.Gallery', function () {
          if ($(this).hasClass("disabled")) {
