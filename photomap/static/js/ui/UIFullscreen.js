@@ -22,6 +22,7 @@ UIFullscreen.prototype = {
    // displays zoomed version of current image as overlay
    zoom : function () {
       var data, $mpContainer, instance	= this;
+      $mpContainer = $(".mp-container");
       //disable if clause because it works only once
       // if( !this.$fullscreenEl ) {
       data	= {
@@ -159,14 +160,14 @@ UIFullscreen.prototype = {
          .find("img.mp-image-nav-next")
          .bind("click.Gallery", function (event) {
             instance.$close.trigger("click");
-            instance.album.navigateSlider(instance, "right");
+            main.getUI().getSlideshow().navigateSlider(instance, "right");
             instance.zoom();
          })
          .end()
          .find("img.mp-image-nav-prev")
          .bind("click.Gallery", function (event) {
             instance.$close.trigger("click");
-            instance.album.navigateSlider(instance, "left");
+            main.getUI().getSlideshow().navigateSlider(instance, "left");
             instance.zoom();
          });
       this.$close.unbind("click.Gallery").bind('click.Gallery', function () {

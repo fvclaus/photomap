@@ -52,7 +52,7 @@ Place.prototype._showGallery = function () {
 };
 Place.prototype._clear = function () {
    // hide galleryAlbum container if present
-   main.getUI().getAlbum().hide();
+   //main.getUI().getAlbum().hide();
 };
 /**
  * @description Shows the album on the map
@@ -103,10 +103,10 @@ Place.prototype._bindListener = function () {
 
       // clear gallery photos + slider and map.place
       instance._clear();
+      controls.hideEditControls(false);
       state.setCurrentPlace(instance);
       state.setCurrentLoadedPlace(instance);
 
-      controls.hideEditControls(false);
       // change icon of new place
       instance.checkIconStatus();
       // change icon of old place

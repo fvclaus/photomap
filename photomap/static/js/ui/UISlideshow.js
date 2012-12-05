@@ -13,24 +13,34 @@ var UISlideshow;
 UISlideshow = function () {
 
    this.$slideshow = $('#mp-slideshow');
-   this.$next = this.$slideshow.find('img.mp-album-nav-next');
-   this.$prev = this.$slideshow.find('img.mp-album-nav-prev');
-   this.$image = this.$slideshow.find("div.mp-album-image > img[class!='mp-album-zoom']");
+   this.$nav = this.$slideshow.find("div.mp-slideshow-nav");
+   this.$next = this.$slideshow.find('img.mp-slideshow-nav-next');
+   this.$prev = this.$slideshow.find('img.mp-slideshow-nav-prev');
+   this.$image = this.$slideshow.find("img.mp-current-image");
    this.$loading = this.$slideshow.find('img.mp-image-loading-small');
-   this.$zoom = this.$slideshow.find("img.mp-album-zoom");
-   this.$wrapper = this.$slideshow.find("div.mp-album-image");
+   this.$zoom = this.$slideshow.find("img.mp-slideshow-zoom");
+   this.$wrapper = this.$slideshow.find("div.mp-slideshow-image");
 };
 
 UISlideshow.prototype = {
 
    initWithoutAjax : function () {
       this.bindListener();
+      this.positionNavigation();
+   },
+   positionNavigation : function () {
+      
+      var tools = main.getUI().getTools();
+      
+      tools.centerElement(this.$nav.first(), this.$prev);
+      tools.centerElement(this.$nav.first(), this.$next);
    },
    startSlider: function () {
       
-      var state, information, cursor, updateImage, once, instance = this;
+      var state, information, tools, cursor, updateImage, once, instance = this;
       state = main.getUIState();
       information = main.getUI().getInformation();
+      tools = main.getUI().getTools();
       cursor = main.getUI().getCursor();
       once = false;
       
@@ -46,11 +56,10 @@ UISlideshow.prototype = {
                instance.$image.load(function () {
                   //center in the middle
                   instance.$image.show();
-                  instance.$wrapper
-                     .css("padding-top", (instance.$slideshow.height() - instance.$image.height()) / 2);
+                  tools.centerElement(instance.$wrapper, instance.$image);
                   instance.$image.hide();
 
-                  instance.$image.fadeIn("slow", function () {
+                  instance.$image.fadeIn(300, function () {
                      //instance.album.enableGallery();
                   });
 
@@ -65,13 +74,14 @@ UISlideshow.prototype = {
          }
       };
 
+      updateImage();
       // sets Photo title in album title bar and  Photo description + number
       information.updatePhoto();
       // set cursor for fullscreen control
       cursor.setCursor($(".mp-album-zoom"), cursor.styles.pointer);
    },
 
-   _navigateSlider : function (instance, dir) {
+   navigateSlider : function (instance, dir) {
       
       var state, currentPhotoIndex, currentPhoto, photos;
       state = main.getUIState();
@@ -119,19 +129,15 @@ UISlideshow.prototype = {
    _bindFullscreenListener : function () {
       //problem: every time the slider is started the events get bound and get fired several times
       //unbind all events first, then bind a new one
-      var instance = this;
+      var tools, instance = this;
+      tools = main.getUI().getTools();
+      
       instance.$image
          .unbind(".GalleryZoom")
          .bind("mouseover.GalleryZoom", function () {
             if (main.getUIState().isSlideshowLoaded()) {
-               var position = {
-                  top : parseInt(instance.$wrapper.css("padding-top")),
-                  left : instance.$image.position().left
-               };
-               instance.$zoom
-                  .css("left", position.left + instance.$image.width() / 2 - instance.$zoom.width() / 2)
-                  .css("top", position.top + instance.$image.height() / 2 - instance.$zoom.height() / 2)
-                  .show();
+               tools.centerElement(instance.$image, instance.$zoom);
+               instance.$zoom.show();
             }
          })
          .bind("mouseleave.GalleryZoom", function () {
@@ -142,33 +148,33 @@ UISlideshow.prototype = {
       var instance = this;
       //bind slideshow button listener
 
-      this.$next.bind('click.Gallery', function () {
+      this.$next.bind('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }
-         instance._navigateSlider(instance, 'right');
+         instance.navigateSlider(instance, 'right');
       });
 
-      this.$prev.bind('click.Gallery', function () {
+      this.$prev.bind('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }
-         instance._navigateSlider(instance, 'left');
+         instance.navigateSlider(instance, 'left');
       });
 
       this.$zoom
-         .bind("mouseover.Gallery", function () {
+         .bind("mouseover.Slideshow", function () {
             if (main.getUIState().isSlideshowLoaded()) {
                $(this)
                   .show()
                   .css("opacity", ".7");
             }
          })
-         .bind("click.Gallery", function () {
+         .bind("click.Slideshow", function () {
             $(this).hide();
             main.getUI().getFullscreen().zoom();
          })
-         .bind("mouseleave.Gallery", function () {
+         .bind("mouseleave.Slideshow", function () {
             $(this).css("opacity", ".4");
          });
    }

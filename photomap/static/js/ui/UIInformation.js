@@ -56,7 +56,7 @@ UIInformation.prototype = {
    
    /* ---- Place ---- */
    updatePlaceTitle : function () {
-      title = main.getUIState().getCurrentPlace().title;
+      title = main.getUIState().getCurrentLoadedPlace().title;
       this.$descriptionTitle.text(title);
       $(".mp-place-title").text(title);
    },
@@ -65,9 +65,8 @@ UIInformation.prototype = {
       this._setDescription(info);
    },
    updatePlace : function () {
-      var place = main.getUIState().getCurrentLoadedPlace();
-      this.updatePlaceTitle(place.title);
-      this.updatePlaceDescription(place.description);
+      this.updatePlaceTitle();
+      this.updatePlaceDescription();
    },
    /* ---- end Place ---- */
    
@@ -129,11 +128,11 @@ UIInformation.prototype = {
       this.$infoButton.unbind('click').bind('click', function () {
          $button = $(this);
          if ($button.hasClass("mp-page-title")) {
-            this.updateAlbum();
+            instance.updateAlbum();
          } else if ($button.hasClass("mp-place-title")) {
-            this.updatePlace();
+            instance.updatePlace();
          } else if ($button.parent().hasClass("mp-photo-title")) {
-            this.updatePhoto();
+            instance.updatePhoto();
          }
       });
    }

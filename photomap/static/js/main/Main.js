@@ -23,6 +23,10 @@ Main = function () {
 
 Main.prototype = {
    initWithoutAjax : function () {
+      this.map = new Map();
+      this.map.initWithoutAjax();
+      // load markers on map
+      this.clientServer.init();
       // initialise parts of UI that don't need the data loaded from the server
       this.ui.initWithoutAjax();
       // initialize non-interactive content if needed
@@ -55,7 +59,7 @@ Main.prototype = {
       return this.clientServer;
    },
    getMap : function () {
-      return this.ui.getMap();
+      return this.map;
    },
    getUI : function () {
       return this.ui;

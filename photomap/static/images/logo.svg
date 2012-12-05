@@ -6,13 +6,37 @@
    xmlns:cc="http://creativecommons.org/ns#"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
    xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    preserveAspectRatio="xMinYMin meet"
    viewBox="0 0 189.35515 99.652939"
-   xmlns="http://www.w3.org/2000/svg"
    version="1.1"
    width="189.35515"
    height="99.652939"
-   id="svg3307">
+   id="svg3307"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="logo.svg">
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="640"
+     inkscape:window-height="480"
+     id="namedview15"
+     showgrid="false"
+     inkscape:zoom="2.3682192"
+     inkscape:cx="94.677574"
+     inkscape:cy="49.826469"
+     inkscape:window-x="0"
+     inkscape:window-y="27"
+     inkscape:window-maximized="0"
+     inkscape:current-layer="svg3307" />
   <defs
      id="defs3309" />
   <metadata
@@ -23,18 +47,18 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
   <g
-     transform="translate(-137.44531,-433.97246)"
+     transform="matrix(0.88856075,0,0,0.90254887,-122.12951,-386.61535)"
      id="layer1">
     <rect
        width="26.597134"
        height="82.772232"
        rx="0"
-       ry="4.9244938"
+       ry="5.4562073"
        x="207.25906"
        y="450.24399"
        id="rect3356"
@@ -42,12 +66,13 @@
     <rect
        width="15.775696"
        height="6.9781394"
-       ry="1.0234109"
+       ry="1.1517621"
        x="433.4585"
        y="-235.00331"
        transform="matrix(-0.00269367,0.99999637,-0.99999037,-0.00438874,0,0)"
        id="rect3358"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.00004888;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.00004888;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       rx="1.1339121" />
     <rect
        width="3.6735804"
        height="7.114912"
@@ -58,17 +83,19 @@
     <rect
        width="13.283154"
        height="33.602547"
-       ry="1.5152289"
+       ry="1.6788331"
        x="234.18668"
        y="470.00943"
        id="rect3362"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.17217386;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.17217386;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       rx="1.7052619" />
     <text
        x="132.89531"
        y="502.51779"
        id="text3348-9"
        xml:space="preserve"
-       style="font-size:50px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Typewriter_Condensed;-inkscape-font-specification:Typewriter_Condensed"><tspan
+       style="font-size:50px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Typewriter_Condensed;-inkscape-font-specification:Typewriter_Condensed"
+       sodipodi:linespacing="125%"><tspan
          x="132.89531"
          y="502.51779"
          id="tspan3350-1">kei</tspan></text>
@@ -77,17 +104,19 @@
        y="502.46774"
        id="text3352-6"
        xml:space="preserve"
-       style="font-size:50px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Typewriter_Condensed;-inkscape-font-specification:Typewriter_Condensed"><tspan
+       style="font-size:50px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:125%;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;font-family:Typewriter_Condensed;-inkscape-font-specification:Typewriter_Condensed"
+       sodipodi:linespacing="125%"><tspan
          x="264.17859"
          y="502.46774"
          id="tspan3354-9">ken</tspan></text>
     <rect
        width="8.75"
        height="19.406258"
-       ry="0.99011517"
+       ry="1.0970211"
        x="247.40424"
        y="476.46414"
        id="rect3408"
-       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.26366842;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0" />
+       style="fill:#f9f9f9;fill-opacity:1;stroke:#000000;stroke-width:1.26366842;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       rx="1.114291" />
   </g>
 </svg>

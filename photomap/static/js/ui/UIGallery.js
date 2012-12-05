@@ -13,7 +13,7 @@ var UIGallery;
 UIGallery = function () {
 
    this.$container = $('#mp-gallery');
-   this.$gallery = $('#mp-gallery-wrapper');
+   this.$gallery = $('#mp-gallery-thumbs');
    
    this.visible = false;
    this.$elements = null;
@@ -35,6 +35,14 @@ UIGallery.prototype =  {
     */
    searchImages : function () {
       this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-controls-options");
+   },
+   _resizeThumbs : function () {
+      
+      var $thumbs, length;
+      
+      $thumbs = $(".mp-thumb");
+      length = $thumbs.first().width();
+      $thumbs.height(length);
    },
    /**
     * @returns {jQElement} Gallery element
@@ -82,6 +90,7 @@ UIGallery.prototype =  {
          for (i = 0, len = photos.length; i < len; ++i) {
             
             tmplPhotosData.push(photos[i].source);
+            
             $('<img/>').load(function () {
                ++loaded;
                if (loaded === len) {
@@ -96,6 +105,8 @@ UIGallery.prototype =  {
                   );
                   //search all anchors
                   instance.searchImages();
+                  // adjust height to make the thumbs square
+                  instance._resizeThumbs();
                   // admin listeners
                   if (authorized) {
                      instance._bindSortableListener();
@@ -105,21 +116,13 @@ UIGallery.prototype =  {
                   instance._bindScrollPaneListener();
                   instance.bindListener();
                   
+                  // load the first Photo into the Slideshow
+                  state.getPhotos()[0].triggerClick();
+                  
                }
             }).attr('src', photos[i].source);
          }
       }
-   },
-   _resizeThumbs : function () {
-      
-      var desiredHeight;
-      
-      this.searchImages();
-      desiredHeight = $(".mp-gallery").width() * 0.25 + 'px';
-      console.log(desiredHeight);
-      this.$elements.each(function (index, element) {
-         $(this).height(desiredHeight);
-      });
    },
    /* ---- Listeners ---- */
    /**

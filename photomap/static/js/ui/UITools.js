@@ -7,6 +7,16 @@ UITools.prototype = {
       this.fitMask($("#fancybox-overlay"));
    },
 
+   centerElement : function ($parent, $element) {
+      
+      var margin = (this.getRealHeight($parent) - $element.height()) / 2;
+      margin += "px ";
+      margin += (this.getRealWidth($parent) - $element.height()) / 2;
+      margin += "px";
+      
+      $element.css("margin", margin);
+   },
+      
    calculateFontSize : function(title,desiredWidth,desiredHeight){
       size = 1;
       $fontEl =

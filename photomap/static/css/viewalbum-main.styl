@@ -27,9 +27,8 @@
   height 90% // title-bar is 10% (core.styl)
 
 .mp-gallery img
-  width 150px
-  height 150px
-  padding 2px
+  width 30%
+  padding 1.5%
   display block
   float left
   background $background-color-light
@@ -44,42 +43,28 @@
 /* ------------------------- */
 /* slideshow & fullscreen styling */
 
-.mp-album-zoom
-  width 10%
+.mp-slideshow-zoom
+  width 5%
   height auto
   position absolute
   display none
 
 .mp-slideshow
   height 40%
-  padding 0 0 0 1%
-
+  
 .mp-current-image
-    border 2px solid #FFFFFF
+  max-width 90%
+  max-height 90%
+  border 1px solid white
+  box-shadow(0 0 25px #000)
 
-.mp-album-image
+.mp-slideshow-image
   width 100%
   height 90% // title-bar is 10% (core.styl)
   display block
-  text-align center
-  vertical-align middle
-  position relative
-  img
-    max-width 95%
-    max-height 95%
-    border($box-shadow-light-grey)
-    vertical-align middle
 
-.mp-album-nav img
-  width 5%
-  height auto
-  margin-top -2.5%
-  z-index 10
-  position absolute
-  top 50%
-  &.mp-album-nav-next
-    left auto
-    right 0%
+.mp-slideshow-nav
+  height 90%
    
 .mp-image-number
   float left

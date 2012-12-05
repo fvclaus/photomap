@@ -8,9 +8,9 @@
  * @description: Facade for google maps
  */
 
-var UIMap, state, page, authorized, center, lat, lng;
+var Map, state, page, authorized, center, lat, lng;
 
-UIMap = function () {
+Map = function () {
    // google.maps.Map
    this.map = null;
    // google.maps.StreetViewstreetview
@@ -61,7 +61,7 @@ Map.prototype = {
    },
    initAfterAjax : function () {
       
-      fgthis.map.initAfterAjax();
+      this.map.initAfterAjax();
       var authorized;
       page = main.getUIState().getPage();
       if (page === ALBUM_VIEW) {
@@ -86,7 +86,7 @@ Map.prototype = {
     */
    _create : function () {
 
-      this.map = new google.maps.Map(this.$mapEl[0]);
+      this.map = new google.maps.Map(this.$mapEl[0], this.mapOptions);
       this.maptype = google.maps.MapTypeId.ROADMAP;
       this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
       this.ROADMAP = google.maps.MapTypeId.ROADMAP;

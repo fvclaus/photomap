@@ -95,11 +95,7 @@ aside
 .mp-page-header
   height 13%
   min-height 13%
-  background-image linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -o-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -moz-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -webkit-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -ms-linear-gradient(to bottom, #CFCFCF 15%, #4A4A4A 95%);
+  gradient()
   section
     margin 0 .16%
     padding 0
@@ -148,6 +144,9 @@ aside
   background $background-color-darker
   letter-spacing 2px
   vertical-align middle
+  section
+    margin 0 .16%
+    padding 0
 
 .mp-internal-links
   height 100%

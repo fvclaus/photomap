@@ -62,7 +62,7 @@ ClientServer.prototype = {
          },
          error : function(err){
             alert(err.toString());
-         },
+         }
       });
-   },
+   }
 };

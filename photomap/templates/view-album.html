@@ -34,12 +34,12 @@
 {% endblock %}
 
 {% block content_interactive %}
-	
+
+	<img class="mp-image-loading-small mp-nodisplay" id="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
 	<section class="mp-gallery column span-8" id="mp-gallery">
 		<div class="mp-title-bar">
 			<span class="mp-place-title mp-option-information">No Title</span>
 		</div>
-		<img class="mp-image-loading-small" id="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
 		<div class="mp-gallery-thumbs" id="mp-gallery-thumbs">
 		</div>
 	</section>
@@ -47,15 +47,17 @@
 	  <div class="mp-title-bar">
         <span class="mp-photo-title mp-option-information">No Title</span>
      </div>
-     <div class="mp-slideshow-nav">
+     <div class="mp-slideshow-nav column span-4 last">
 	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
-	      <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
-	   </div>
-	   <div class="mp-slideshow-image">
-	      <img class="mp-slideshow-zoom" src="static/images/magnify.png"></img>
-	      <img class="mp-current-image"></img>
-	   </div>
-	   <span class="mp-image-number"></span>
+	  </div>
+	  <div class="mp-slideshow-image column span-16 last">
+	     <img class="mp-slideshow-zoom" src="static/images/magnify.png"></img>
+	     <img class="mp-current-image"></img>
+	  </div>
+	  <div class="mp-slideshow-nav column span-4 last">
+   	 <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
+     </div>
+     <span class="mp-image-number"></span>
 	</section>
 	
 	<!-- jqote2 templates for gallery and fullscreen -->
@@ -63,7 +65,7 @@
 	<div class="mp-gallery-outer">
 		<div class="mp-gallery">
 			<% for (thumb in this.thumbAddress) { %>
-			<img class="sortable mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+			<img class="sortable mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
 			<% }; %>
 			<% if (this.isAdmin) {%>
 				<img class="mp-option-add mp-control" src="static/images/add.png" title={% trans "control-title add-photo" %}></img>
