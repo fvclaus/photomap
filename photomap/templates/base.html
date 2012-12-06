@@ -27,15 +27,15 @@
 
       <!-- styles -->
 
+      <!-- scrollpane style sheet out of compress in development | make sure to put back in before deploying -->
+      <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
+      <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
+      <link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
       {% load compress %}
       {% compress css file %}
          {% block css %}
          {% endblock %}
       {% endcompress %}
-      <!-- scrollpane style sheet out of compress in development | make sure to put back in before deploying -->
-      <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
-      <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
-      <link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
       {% compress css %}
          <link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
          <link rel="stylesheet" type="text/css" href="static/css-plain/rokkitt.css" />

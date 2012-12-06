@@ -18,6 +18,7 @@ Main = function () {
    this.clientServer = new ClientServer();
    // instance of Menu
    this.ui = new UI();
+   this.map = null;
 
 };
 
@@ -39,6 +40,7 @@ Main.prototype = {
       }
    },
    initAfterAjax: function () {
+      this.map.initAfterAjax();
       this.ui.initAfterAjax();
       // do some page specific stuff
       if (window && window.initializeAfterAjax) {
