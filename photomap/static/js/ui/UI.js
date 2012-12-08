@@ -1,11 +1,11 @@
 /*jslint */
-/*global $, main, UIMap, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation */
+/*global $, main, UIMap, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation, DASHBOARD_VIEW */
 
 "use strict";
 
-/*
- * @author: Frederik Claus
- * @class UI is a wrapper class for everything related to the album div, where all the pictures are shown
+/**
+ * @author Frederik Claus
+ * @class UI is a wrapper class for everything that is visible to the user
  * @requires UITools, UIPanel, UIControls, UIInput, UIState, UICursor, UIInformation
  *
  */
@@ -19,17 +19,19 @@ UI = function () {
    this.input = new UIInput();
    this.state = new UIState(this);
    this.cursor = new UICursor();
-   this.information = new UIInformation();
+   if (this.state.getPage() === DASHBOARD_VIEW) {
+      this.information = new UIInformation();
+   }
    this._isDisabled = false;
 };
 
-/*
+/**
  * @author Marc Roemer
  * @description Defines Getter to retrieve the UI classes wrapped
  */
 
 UI.prototype = {
-   /*
+   /**
     * @author Frederik Claus
     * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
     */

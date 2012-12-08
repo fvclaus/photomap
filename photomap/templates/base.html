@@ -62,27 +62,12 @@
 	         <script type="text/javascript" src="static/js/lib/jquery.jqote2.min.js" ></script>
 	         <script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
 	         <script type="text/javascript" src="static/js/util/constants.js"></script>
-	         <script type="text/javascript" src="static/js/model/Map.js" ></script>
-	         <script type="text/javascript" src="static/js/model/Marker.js" ></script>
-	         <script type="text/javascript" src="static/js/model/InfoMarker.js"></script>
-	         <script type="text/javascript" src="static/js/model/Album.js" ></script>
-	    
-	         <script type="text/javascript" src="static/js/ui/UIState.js" ></script>
-	         <script type="text/javascript" src="static/js/ui/UIInput.js" ></script>
-	         <script type="text/javascript" src="static/js/ui/UIControls.js" ></script>
-	         <script type="text/javascript" src="static/js/ui/UIPanel.js" ></script>
-	         <script type="text/javascript" src="static/js/ui/UITools.js" ></script>
-	         <script type="text/javascript" src="static/js/ui/UICursor.js" ></script>
-
-	         <script type="text/javascript" src="static/js/util/ClientState.js" ></script>
-	         <script type="text/javascript" src="static/js/main/Main.js" ></script>
-
 	         {% block js %}
 	         {% endblock %}
          {% endcompress %}
-		
-	    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script>
-		
+		   
+         {% block mapjs %}
+		   {% endblock %}
    </head>
    <body>
 
@@ -97,7 +82,7 @@
                </svg>
             </section>
 				<section class="mp-top-panel column span-12">
-               <div class="mp-placeholder-div column span-24"></div>
+               <div class="mp-placeholder-halfheight column span-24"></div>
 				   <div class="mp-search column span-24">
                  <span>
                     Suche: <input class="mp-search-input" type="text" length="30" disabled="disabled" />
@@ -109,7 +94,7 @@
             </section>
 			</header>
 			
-         <section class="mp-content" id="mp-content">
+         <section class="mp-content column span-24 last" id="mp-content">
 			   {% block content %}
 			   {% endblock %}	
 			</section>

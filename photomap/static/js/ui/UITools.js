@@ -11,7 +11,7 @@ UITools.prototype = {
       
       var margin = (this.getRealHeight($parent) - $element.height()) / 2;
       margin += "px ";
-      margin += (this.getRealWidth($parent) - $element.height()) / 2;
+      margin += (this.getRealWidth($parent) - $element.width()) / 2;
       margin += "px";
       
       $element.css("margin", margin);

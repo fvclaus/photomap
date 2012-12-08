@@ -3,15 +3,28 @@
 
 "use strict";
 
-var position, left, top, $container;
+var position, tools, $container, $leftPlaceholder, $rightPlaceholder;
 
 function repositionContent() {
-   position = $(".mp-map").position();
-   left = ($(".mp-map").width() - $container.width()) * 0.5;
-   $container.css({
-      'top': position.top,
-      'left': left
+   position = $("#mp-map").position();
+
+   $leftPlaceholder.css({
+      width: tools.getRealWidth($("#mp-container")) * 0.13,
+      top: position.top,
+      left: position.left
    });
+   $container.css({
+      width: tools.getRealWidth($("#mp-container")) * 0.6,
+      marginTop: $("#mp-map").css("padding"),
+      top: position.top,
+      left: position.left + $leftPlaceholder.width()
+   });
+   $rightPlaceholder.css({
+      width: tools.getRealWidth($("#mp-container")) * 0.13,
+      top: position.top,
+      left: position.left + $leftPlaceholder.width() + $container.width()
+   });
+   console.log((tools.getRealWidth($("#mp-container")) * 0.16 + tools.getRealWidth($("#mp-container")) * 0.66 + tools.getRealWidth($("#mp-container")) * 0.16) / tools.getRealWidth($("#mp-container")));
 }
 
 function initScrollPane() {
@@ -26,7 +39,10 @@ function initializeNonInteractive() {
    map = main.getMap();
    state = main.getUIState();
    cursor = main.getUI().getCursor();
+   tools = main.getUI().getTools();
    $container = $("#mp-non-interactive-content");
+   $leftPlaceholder = $(".mp-left-noninteractive-placeholder");
+   $rightPlaceholder = $(".mp-right-noninteractive-placeholder");
 
    repositionContent();
    initScrollPane();

@@ -671,19 +671,6 @@ msgstr ""
 msgid "Willkommen"
 msgstr "Welcome"
 
-#: templates/index.html:17
-msgid "Herzlich Willkommen"
-msgstr "Welcome"
-
-#: templates/index.html:18
-msgid "welcome-paragraph"
-msgstr ""
-"Welcome to Photomap. It's basically a digital online-photo-book which you "
-"can use to share all your travel-experiences with family and friends. The "
-"project is still in development. This is why you can't register yet. The "
-"basic funtions work already though. So if you really want to try it out "
-"already, ask a member of the development team, eg. by writing an email to: "
-
 #: templates/insert-album.html:11
 msgid "insert-dialogue-title insert-album"
 msgstr "Add new album"

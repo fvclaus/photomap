@@ -64,11 +64,18 @@ transition
   -ms-transition $transition
   transition $transition
   
-gradient()
+gradientNS()
   background linear-gradient(90deg, #F4F4F4, #333333)
   background -moz-linear-gradient(to bottom, #F4F4F4 5%, #333333 95%)
   background -webkit-gradient(linear, center-top, center-bottom, colorStop(21%, #F4F4F4), colorStop(95%, #333333))
   background -webkit-linear-gradient(#F4F4F4, #333333)
   background -ms-linear-gradient(to bottom, #F4F4F4 5%, #333333 95%)
+
+gradientEW()
+  background linear-gradient(0deg, #F4F4F4, #333333)
+  background -moz-linear-gradient(to right, #F4F4F4 5%, #333333 95%)
+  background -webkit-gradient(linear, left, right, colorStop(21%, #F4F4F4), colorStop(95%, #333333))
+  background -webkit-linear-gradient(0deg, #F4F4F4, #333333)
+  background -ms-linear-gradient(to right, #F4F4F4 5%, #333333 95%)
 
 /* ------- end mixins ------- */

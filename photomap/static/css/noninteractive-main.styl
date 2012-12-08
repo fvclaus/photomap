@@ -18,7 +18,6 @@
   height $height-main
   
 .mp-map-wrapper
-  width 100%
   height 100%
 
 /* ---------- end map ------------ */
@@ -27,16 +26,21 @@
 /* ------------------------------- */
 /* -------- core stylings -------- */
 
+.mp-left-noninteractive-placeholder
+  position absolute
+
+.mp-right-noninteractive-placeholder
+  position absolute
+
 .mp-non-interactive-content
-  width 70%
-  height 74%
+  height 84%
   padding 3%
-  border 2px solid $background-color-darker
+  border-right 2px solid $background-color-darker
+  border-left 2px solid $background-color-darker
+  //margin-top .25%
   position absolute
   background $background-rgba-alpha09-light
-  border-radius 5px
-  //overflow hidden
-  text-align center
+  overflow hidden
   a
     text-decoration none
     color black
@@ -130,3 +134,11 @@
     margin-right 30px
 
 /* -------- end team -------- */
+
+/* ------------------------------ */
+/* -- styling for landing page -- */
+
+.mp-index-section
+  height 50%
+  min-height 50%
+/* ------ end landing page ------ */

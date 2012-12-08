@@ -24,6 +24,7 @@ Main = function () {
 
 Main.prototype = {
    initWithoutAjax : function () {
+
       this.map = new Map();
       this.map.initWithoutAjax();
       // load markers on map

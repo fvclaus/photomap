@@ -6,14 +6,14 @@
 /* -- styling of the core html elements -- */
 
 body 
-  height 100%
+  height 99%
   margin 5px
   padding 0
   section
     padding .25% .25%
   
 html
-  height 100%
+  height 99%
   margin 0
   padding 0  
   
@@ -37,7 +37,7 @@ aside
 
 .mp-container
   background #f4f4f4
-  box-shadow($box-shadow-lighter-grey)
+  box-shadow(5px 5px 25px #A4A4A4)
 
 .mp-alignment-div
   min-width 100%
@@ -45,8 +45,15 @@ aside
   min-height 1px
   height 1px
 
+.mp-placeholder-halfheight
+  height 50%
+
+.mp-placeholder-fullheight
+  height 100%
+
 .mp-content
  padding 0
+ height 84%
 
 .mp-invisible
   position absolute
@@ -68,14 +75,10 @@ aside
  display none
 
 .mp-empty-box
-  height 41%
+  height 49%
   background-color #BBB
   text-align center
-  background-image linear-gradient(to right, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -o-linear-gradient(to right, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -moz-linear-gradient(to right, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -webkit-linear-gradient(to right, #CFCFCF 15%, #4A4A4A 95%);
-  background-image -ms-linear-gradient(to right, #CFCFCF 15%, #4A4A4A 95%);
+  gradientEW()
   span
     margin 10%
 
@@ -95,7 +98,7 @@ aside
 .mp-page-header
   height 13%
   min-height 13%
-  gradient()
+  gradientNS()
   section
     margin 0 .16%
     padding 0
@@ -106,8 +109,6 @@ aside
 .mp-top-panel
   height 100%
   border-top 1% solid $background-color-light
-  .mp-placeholder-div
-    height 50%
 
 .mp-search
   height 50%

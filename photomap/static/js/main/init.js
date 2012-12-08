@@ -18,14 +18,7 @@
  * Date: Dec 2011
  */
 
-var $mpContainer = $('#mp-container');
 var main = null;
-
-//http://stevenbenner.com/2010/04/calculate-page-size-and-view-port-position-in-javascript/
-//$mpContainer
-//   .width($(window).width() - 30)
-//   .height($(window).height() - 25)
-//   .css('margin-left', -3);
 
 /**
  * @description Initializes main constructor. Needs document ready!
@@ -33,6 +26,10 @@ var main = null;
 $(document).ready(function () {
    main = new Main();
    // initialise js-classes
-   main.initWithoutAjax();
+   if (main && main.initWithoutAjax) {
+      main.initWithoutAjax();
+   } else {
+      main.init();
+   }
 });
 

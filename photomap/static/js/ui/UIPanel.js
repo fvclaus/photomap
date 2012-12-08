@@ -12,7 +12,7 @@ UIPanel = function () {
    this.$footer = $("#mp-page-footer");
    this.$header = $("#mp-page-header");
    this.$title = this.$header.find(".mp-page-title h1");
-   this.$logout = this.$footer.find(".mp-option-logout");
+   this.$logout = this.$footer.find(".mp-option-logout") || null;
    this.$nav = this.$footer.find(".mp-internal-links");
    this.$logo = this.$header.find(".mp-keiken-logo");
 };
@@ -23,7 +23,9 @@ UIPanel.prototype = {
       this.resizeLogo();
       this.bindLogoListener();
       this.resizeFooterFont();
-      this.$logout.height(this.$nav.height());
+      if (this.$logout !== null) {
+         this.$logout.height(this.$nav.height());
+      }
    },
    initAfterAjax : function () {
       this.resizePageTitel();

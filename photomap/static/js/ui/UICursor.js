@@ -22,9 +22,6 @@ UICursor.prototype = {
 
    initWithoutAjax : function () {
       this.cursors();
-      if (main.getUIState().getPage() === ALBUM_VIEW) {
-         this.setInfoCursor(this.styles.info);
-      }
    },
    initAfterAjax : function () {
       this.setMapCursor();

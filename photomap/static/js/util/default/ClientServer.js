@@ -10,7 +10,7 @@ ClientServer.prototype = {
       var instance = this;
       $.ajax({
          "url":"get-all-albums",
-         success : function(albums) {
+         success : function(albumsinfo) {
 
             map = main.getMap();
 

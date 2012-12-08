@@ -1,4 +1,4 @@
-{% extends "base-non-interactive.html" %}
+{% extends "base.html" %}
 
 <!-- for the translation with django -->
 {% load i18n %}
@@ -7,72 +7,39 @@
 
 {% block name %}{% trans "Willkommen" %}{% endblock %}
 
-{% block extrajs %}
-	<script type="text/javascript" src="static/js/main/landingpage.js" ></script>
+{% block mode %}
+content="non-interactive"
 {% endblock %}
 
-{% block non_interactive_content %}
+{% block css %}
+	<link rel="stylesheet" type="text/x-stylus" href="static/css/noninteractive-main.styl" />
+{% endblock %}
 
-	<article class="mp-welcome-note">
-		<h2>{% trans "Herzlich Willkommen" %}</h2>
-		<p>{% trans "welcome-paragraph" %}<strong>s.u.p.p.0.r.t.lghp.projekt@gmail.com</strong>!</p>
+{% block js %}
+	<script type="text/javascript" src="static/js/main/non-interactive.js" ></script>
+	
+	<script type="text/javascript" src="static/js/main/landingpage.js" ></script>
+	
+	<script type="text/javascript" src="static/js/ui/default/UI.js" ></script>
+   <script type="text/javascript" src="static/js/ui/UIPanel.js" ></script>
+   <script type="text/javascript" src="static/js/ui/UICursor.js" ></script>
+   <script type="text/javascript" src="static/js/ui/UITools.js" ></script>
 
-	
-	</article>
-	<p><input class="mp-option-to-login" type="button" value="Zum Login oder Registrierung" /></p>
-	<hr />
-	<!--
-	<article class="mp-welcome-note">
-		<h2>Herzlichen Willkommen</h2>
-		<p>
-			Bitte beachten Sie dass die Seite immer noch in Entwicklung ist! Verzeihen Sie bitte darum 
-			das noch etwas unausgegorene Design und den beschränkten Funktionsumfang. Die Basis-Funktionen
-			sind jedoch schon verfügbar und können von Ihnen genutzt werden. Fühlen Sie sich also frei dazu,
-			sich anzumelden und das Projekt schon einmal auszutesten! 
-		</p>s
-		<p>
-			Warum veröffentlichen wir die App schon jetzt? Nun es sind Sommerferien in Deutschland und viele
-			Familien, Studenten und Paare fahren in den Urlaub und schießen jede Menge an tollen Fotos. Und
-			was wäre besser als diese mit Freunden und Bekannten teilen zu können ?! ;) 
-		</p>
-			Während Sie ihre ersten Bilderalben anlegen und Reisen mit anderen teilen, werden wir an
-			diesem digitalen Poesie-Album weiterarbeiten und regelmäßige Updates veröffentlichen. Dabei werden
-			wir natürlich versuchen den bereits registrierten Nutzern möglichst wenige Komplikationen, wie zB. 
-			grundlegende Änderungen, zu bereiten. Da auch wir ein bisschen Urlaub brauchen bzw. immer noch in der 
-			Prüfungszeit stecken werden die nächsten Versionsupdates jedoch noch bis September warten müssen.
-		<p>
-			Viel Spaß und Freude bei der Gestaltung eures ersten Online Poesiealbums und beim teilen eurer Reisen und
-			Erlebnisse mit anderen, wünscht euch das LGHP-Team!
-		</p>
-		<p>
-			PS: Sollten Sie Fragen oder Anregungen haben schreiben Sie uns doch bitte eine email an <strong>s.u.p.p.0.r.t.lghp.projekt@gmail.com</strong>!
-		</p>
-	
-	</article>
-	<p><input class="mp-option-to-login" type="button" value="Zum Login oder Registrierung" /></p>
-	<hr />
-	<section class="mp-news-wrapper">
-		<h2>News</h2>
-		<article class="mp-news">
-		<header class="mp-news-header">
-			<h3>Das Projekt ist online! :)</h3>
-		</header>
-		<p>
-			Endlich ist das Projekt online. Trotz des noch unbeholfenen Designs und des noch 
-			beschränkten Funktionsumfangs könnt Ihr euch schon Accounts erstellen und Eure Erlebnisse,
-			Photos und Reisen als Poesiealbum anlegen und dann mit anderen teilen. Viel Spass wünscht euch
-			euer LGHP-Team!
-		</p>
-		<footer class="mp-news-footer">
-			<p>Di 28 Aug 2012, 21:00 - LGHP-Team</p>
-		</footer>
-		</article>
-	</section>
-	-->
-	<br /><br /><br /><br />
-	<p>
-		<img class="mp-construction" src="static/images/construction.png" title="Diese Seite ist noch in der Entwicklings-Phase">
-	</p>
-		
+   <script type="text/javascript" src="static/js/main/default/Main.js" ></script>
+{% endblock %}
+
+{% block options %}
+	{% if user.is_authenticated %}
+		{% trans "link-title-dashboard" as dashboardLink %}
+		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title='{{ dashboardLink }}'>{{ dashboardLink }}</a>  
+	{% endif %}
+{% endblock %}
+
+{% block content %}
+
+   <section class="mp-index-section mp-empty-box column span-16">Map Section</section>
+   <section class="mp-index-section mp-empty-box column span-8 last">Info Section</section>
+   <section class="mp-index-section mp-empty-box column span-8">Gallery Section</section>
+   <section class="mp-index-section mp-empty-box column span-16 last">Slideshow Section</section>		
 {% endblock %}
 
