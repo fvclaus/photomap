@@ -28,7 +28,7 @@ UIPanel.prototype = {
       }
    },
    initAfterAjax : function () {
-      this.resizePageTitel();
+      this.resizePageTitle();
    },
    getFooterHeight : function () {
       return this.$footer.height();
@@ -57,19 +57,19 @@ UIPanel.prototype = {
          window.location.href = "/";
       });
    },
-   resizePageTitel: function () {
+   resizePageTitle: function () {
       
       var $titleWrapper, text, width, height, ratio, tools, size, margin;
       
       $titleWrapper = this.$title.parent();
       text = this.$title.text();
-      width = 5000;
-      height = this.$header.height();
+      width = $titleWrapper.width();
+      height = $titleWrapper.height();
       tools = main.getUI().getTools();
-      size = tools.calculateFontSize(text, width, height) / 3;
-      $titleWrapper.css("fontSize", size + "px");
+      size = tools.calculateFontSize(text, width, height);
+      this.$title.css("fontSize", size + "px");
       
-      margin = ($titleWrapper.height() - this.$title.height()) / 2;
+      margin = (height - this.$title.height()) / 2;
       this.$title.css({
          margin: margin + " 0",
          marginRight: "3%"
@@ -81,7 +81,7 @@ UIPanel.prototype = {
       var text, width, height, tools, size;
       
       text = this.$footer.find(".mp-internal-links a").first().text();
-      width = 5000;
+      width = $(".mp-internal-links").width();
       height = this.$footer.height();
       tools = main.getUI().getTools();
       size = tools.calculateFontSize(text, width, height);

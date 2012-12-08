@@ -28,7 +28,9 @@ function repositionContent() {
 }
 
 function initScrollPane() {
-   $container.jScrollPane();
+   if (window.location.pathname !== "/login") {
+      $container.jScrollPane();
+   }
 }
 
 var map, state, cursor;

@@ -1,115 +1,157 @@
-UITools = function(){
+/*jslint */
+/*global $, main */
+
+"use strict";
+
+/**
+ * @author Marc-Leon Römer
+ * @class contains all basic helper functions.
+ */
+
+var UITools;
+
+UITools = function () {
 };
 
 UITools.prototype = {
 
-   initWithoutAjax : function(){
+   initWithoutAjax : function () {
       this.fitMask($("#fancybox-overlay"));
    },
-
-   centerElement : function ($parent, $element) {
+   /**
+    * @description centers element in parent frame - both horizontal and vertical is possible - default centers element vertically and horizontally
+    * @param $parent {jQuery-Object} parent frame
+    * @param $element {jQuery-Object} element that is supposed to be centered
+    * @param direction {String} defines in which direction the element should be centered - can be "vertical", "horizontal" or empty
+    */
+   centerElement : function ($parent, $element, direction) {
       
-      var margin = (this.getRealHeight($parent) - $element.height()) / 2;
-      margin += "px ";
-      margin += (this.getRealWidth($parent) - $element.width()) / 2;
-      margin += "px";
+      var margin;
+      
+      switch (direction) {
+      
+      case "horizontal":
+         margin = "0 ";
+         margin += (this.getRealWidth($parent) - $element.width()) / 2;
+         margin += "px";
+         break;
+      case "vertical":
+         margin = (this.getRealHeight($parent) - $element.height()) / 2;
+         margin += "px ";
+         margin += "0";
+         break;
+      default:
+         margin = (this.getRealHeight($parent) - $element.height()) / 2;
+         margin += "px ";
+         margin += (this.getRealWidth($parent) - $element.width()) / 2;
+         margin += "px";
+         break;
+      }
       
       $element.css("margin", margin);
    },
       
-   calculateFontSize : function(title,desiredWidth,desiredHeight){
-      size = 1;
+   calculateFontSize : function (title, desiredWidth, desiredHeight) {
+      
+      var $fontEl, size = 1;
+      
       $fontEl =
-         $("<div class='mp-font'></div>")
+         $("<span></span>")
             .text(title)
             .appendTo($("body"))
-            .css("fontSize",size+"px");
-      do{
-         $fontEl.css("fontSize",(size++)+("px"));
-      }
-      while($fontEl.width() < desiredWidth && $fontEl.height() < desiredHeight);
+         .css("fontSize", size + "px");
+      
+         console.log("------");
+      do {
+         $fontEl.css("fontSize", (size++) + ("px"));
+         console.log($fontEl.width());
+         console.log(desiredWidth);
+      } while ($fontEl.height() < desiredHeight && $fontEl.width() < desiredWidth);
       $fontEl.remove();
-      return size-1;
+      
+         console.log(size - 1);
+      return size - 1;
    },
 
-   getRealHeight : function($el){
+   getRealHeight : function ($el) {
       return $el.height() +
-         this.getCss2Int($el,[
+         this.getCss2Int($el, [
             "border-bottom-width",
             "border-top-width",
             "margin-bottom",
             "margin-top"
-            ]
-         );
+         ]);
    },
 
-   getRealWidth : function($el){
+   getRealWidth : function ($el) {
       return $el.width() +
-         this.getCss2Int($el,[
+         this.getCss2Int($el, [
             "border-left-width",
             "border-right-width",
             "margin-left",
             "margin-right"
-            ]
-         );
+         ]);
    },
 
-   getCss2Int : function($el,attributes){
-      if (typeof(attributes) == "object"){
-         var total = 0;
-         attributes.forEach(function(attribute){
-            value =  parseInt($el.css(attribute));
-            if (value){
+   getCss2Int : function ($el, attributes) {
+      if (typeof (attributes) === "object") {
+         var value, total = 0;
+         attributes.forEach(function (attribute) {
+            value = parseInt($el.css(attribute));
+            if (value) {
                total += value;
             }
          });
          return total;
-      }
-      else{
+      } else {
          return parseInt($el.css(attributes));
       }
    },
    /*
     * @private
     */
-   _getUrlParameter : function (name){
+   _getUrlParameter : function (name) {
+      
+      var regexS, regex, results;
+      
       name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
-      var regexS = "[\\?&]" + name + "=([^&#]*)";
-      var regex = new RegExp(regexS);
-      var results = regex.exec(window.location.search);
-      if(results == null)
-         return "";
-      else
+      regexS = "[\\?&]" + name + "=([^&#]*)";
+      regex = new RegExp(regexS);
+      results = regex.exec(window.location.search);
+      if (results === null) {
+         return "No results";
+      } else {
          return decodeURIComponent(results[1].replace(/\+/g, " "));
+      }
    },
 
-   getUrlId : function(){
+   getUrlId : function () {
       return this._getUrlParameter("id");
    },
 
-   getUrlSecret : function(){
+   getUrlSecret : function () {
       return this._getUrlParameter("secret");
    },
 
-   deleteObject : function(url,data){
+   deleteObject : function (url, data) {
       // post request to delete album/place/photo - data is the id of the object
       $.ajax({
          type : "post",
          dataType : "json",
          "url" : url,
          "data" : data,
-         success : function(data){
-            if (data.error){
-                  alert(data.error);
+         success : function (data) {
+            if (data.error) {
+               alert(data.error);
             }
          },
-         error : function(err){
+         error : function (err) {
             alert(err.toString());
          },
       });
    },
 
-   fitMask : function($maskID){
+   fitMask : function ($maskID) {
       // fit mask of overlay/expose/fancybox on top map between header and footer
       $maskID.css({
          'max-height': $('#mp-map').height(),
@@ -120,7 +162,7 @@ UITools.prototype = {
       });
    },
 
-   loadOverlay : function($trigger){
+   loadOverlay : function ($trigger) {
       $trigger
          .overlay({
             top: '25%',
@@ -133,16 +175,18 @@ UITools.prototype = {
          .load();
    },
 
-   openShareURL : function(){
-      url = "" + main.getUIState().getAlbumShareURL().url;
+   openShareURL : function () {
+      
+      var url = main.getUIState().getAlbumShareURL().url;
 
       this.loadOverlay($(".mp-share-overlay"));
       this.fitMask($("#exposeMask"));
       //load link in input field and highlight it
       $("#mp-share-link")
          .val(url)
-         .focus(function(){$(this).select();})
-         .focus();
+         .focus(function () {
+            $(this).select();
+         }).focus();
       main.getUI().getControls().bindCopyListener();
-   },
+   }
 };
