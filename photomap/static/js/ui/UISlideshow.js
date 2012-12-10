@@ -16,6 +16,8 @@ UISlideshow = function () {
    this.$nav = this.$slideshow.find("div.mp-slideshow-nav");
    this.$next = this.$slideshow.find('img.mp-slideshow-nav-next');
    this.$prev = this.$slideshow.find('img.mp-slideshow-nav-prev');
+   this.$nextImage = $(".mp-slideshow-nav-next");
+   this.$previousImage = $(".mp-slideshow-nav-prev");
    this.$image = this.$slideshow.find("img.mp-current-image");
    this.$loading = this.$slideshow.find('img.mp-image-loading-small');
    this.$zoom = this.$slideshow.find("img.mp-slideshow-zoom");
@@ -50,8 +52,8 @@ UISlideshow.prototype = {
             once = true;
             
             $('<img/>').load(function () {
-               if (state.getCurrentPhoto()) {
-                  state.getCurrentPhoto().showBorder(true);
+               if (state.getCurrentLoadedPhoto()) {
+                  state.getCurrentLoadedPhoto().showBorder(true);
                }
                instance.$image.load(function () {
                   //center in the middle
@@ -65,10 +67,10 @@ UISlideshow.prototype = {
 
                   state.setSlideshowLoaded(true);
                });
-               instance.$image.attr('src', state.getCurrentPhoto().source);
+               instance.$image.attr('src', state.getCurrentLoadedPhoto().source);
                instance._bindFullscreenListener();
                
-            }).attr('src', state.getCurrentPhoto().source);
+            }).attr('src', state.getCurrentLoadedPhoto().source);
          } else {
             return;
          }
@@ -85,32 +87,32 @@ UISlideshow.prototype = {
       
       var state, currentPhotoIndex, currentPhoto, photos;
       state = main.getUIState();
-      currentPhotoIndex = state.getCurrentPhotoIndex();
-      currentPhoto = state.getCurrentPhoto();
+      currentPhotoIndex = state.getCurrentLoadedPhotoIndex();
+      currentPhoto = state.getCurrentLoadedPhoto();
       photos = state.getPhotos();
 
       if (dir === 'right') {
          if (currentPhotoIndex + 1 < photos.length) {
-            state.setCurrentPhotoIndex(++currentPhotoIndex);
+            state.setCurrentLoadedPhotoIndex(++currentPhotoIndex);
          } else if (photos.length > 0) {
-            state.setCurrentPhotoIndex(0);
+            state.setCurrentLoadedPhotoIndex(0);
          } else {
-            state.setCurrentPhotoIndex(0);
-            state.setCurrentPhoto(null);
+            state.setCurrentLoadedPhotoIndex(0);
+            state.setCurrentLoadedPhoto(null);
             return;
          }
       } else if (dir === 'left') {
          if (currentPhotoIndex - 1 >= 0) {
-            state.setCurrentPhotoIndex(--currentPhotoIndex);
+            state.setCurrentLoadedPhotoIndex(--currentPhotoIndex);
          } else if (photos.length > 0) {
-            state.setCurrentPhotoIndex(photos.length - 1);
+            state.setCurrentLoadedPhotoIndex(photos.length - 1);
          } else {
-            state.setCurrentPhotoIndex(0);
-            state.setCurrentPhoto(null);
+            state.setCurrentLoadedPhotoIndex(0);
+            state.setCurrentLoadedPhoto(null);
             return;
          }
       }
-      state.setCurrentPhoto(photos[state.getCurrentPhotoIndex()]);
+      state.setCurrentLoadedPhoto(photos[state.getCurrentLoadedPhotoIndex()]);
       this.startSlider();
    },
 
@@ -148,14 +150,14 @@ UISlideshow.prototype = {
       var instance = this;
       //bind slideshow button listener
 
-      this.$next.bind('click.Slideshow', function () {
+      this.$nextImage.bind('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }
          instance.navigateSlider(instance, 'right');
       });
 
-      this.$prev.bind('click.Slideshow', function () {
+      this.$previousImage.bind('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }

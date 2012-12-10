@@ -30,15 +30,14 @@ UITools.prototype = {
       
       switch (direction) {
       
+      case "vertical":
+         margin = (this.getRealHeight($parent) - $element.height()) / 2;
+         margin += "px 0";
+         break;
       case "horizontal":
          margin = "0 ";
          margin += (this.getRealWidth($parent) - $element.width()) / 2;
          margin += "px";
-         break;
-      case "vertical":
-         margin = (this.getRealHeight($parent) - $element.height()) / 2;
-         margin += "px ";
-         margin += "0";
          break;
       default:
          margin = (this.getRealHeight($parent) - $element.height()) / 2;
@@ -50,6 +49,41 @@ UITools.prototype = {
       
       $element.css("margin", margin);
    },
+   centerChildren : function ($element, direction) {
+      
+      var i, padding, $child, $children, childWidth, childHeight;
+      
+      $children = $element.children();
+      childWidth = 0;
+      childHeight = 0;
+      
+      for (i = 0; i < $children.length; i++) {
+         $child = $($children[i]);
+         childWidth += this.getRealWidth($child);
+         childHeight += this.getRealHeight($child);
+      }
+         
+      switch (direction) {
+      
+      case "vertical":
+         padding = ($element.height() - childHeight) / 2;
+         padding += "px 0";
+         break;
+      case "horizontal":
+         padding = "0 ";
+         padding += ($element.width() - childWidth) / 2;
+         padding += "px";
+         break;
+      default:
+         padding = ($element.height() - childHeight) / 2;
+         padding += "px ";
+         padding += ($element.width() - childWidth) / 2;
+         padding += "px";
+         break;
+      }
+      
+      $element.css("padding", padding);
+   },
       
    calculateFontSize : function (title, desiredWidth, desiredHeight) {
       
@@ -57,19 +91,13 @@ UITools.prototype = {
       
       $fontEl =
          $("<span></span>")
-            .text(title)
-            .appendTo($("body"))
+         .text(title)
+         .appendTo($("body"))
          .css("fontSize", size + "px");
-      
-         console.log("------");
       do {
          $fontEl.css("fontSize", (size++) + ("px"));
-         console.log($fontEl.width());
-         console.log(desiredWidth);
       } while ($fontEl.height() < desiredHeight && $fontEl.width() < desiredWidth);
       $fontEl.remove();
-      
-         console.log(size - 1);
       return size - 1;
    },
 

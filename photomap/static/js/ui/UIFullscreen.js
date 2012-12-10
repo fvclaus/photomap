@@ -26,8 +26,8 @@ UIFullscreen.prototype = {
       //disable if clause because it works only once
       // if( !this.$fullscreenEl ) {
       data	= {
-         source	: main.getUIState().getCurrentPhoto().source,
-         description	: main.getUIState().getCurrentPhoto().title
+         source	: main.getUIState().getCurrentLoadedPhoto().source,
+         description	: main.getUIState().getCurrentLoadedPhoto().title
       };
       $mpContainer.append($.jqote('#galleryFullscreenTmpl', {tmplPhotoData : data}));
 
@@ -89,7 +89,7 @@ UIFullscreen.prototype = {
 
          instance.$wrapper.css("border", "0px");
 
-      }).attr('src', main.getUIState().getCurrentPhoto().source);
+      }).attr('src', main.getUIState().getCurrentLoadedPhoto().source);
    },
 
    // adjust height and weight properties of image so that it fits current window size

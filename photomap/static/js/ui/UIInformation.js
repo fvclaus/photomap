@@ -72,12 +72,12 @@ UIInformation.prototype = {
    
    /* ---- Photo ---- */
    updatePhotoTitle : function () {
-      title = main.getUIState().getCurrentPhoto().title;
+      title = main.getUIState().getCurrentLoadedPhoto().title;
       this.$descriptionTitle.text(title);
       $(".mp-photo-title").text(title);
    },
    updatePhotoDescription : function () {
-      info = main.getUIState().getCurrentPhoto().description;
+      info = main.getUIState().getCurrentLoadedPhoto().description;
       this._setDescription(info);
    },
    updateImageNumber : function () {

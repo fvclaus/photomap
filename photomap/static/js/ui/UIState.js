@@ -49,17 +49,26 @@ UIState.prototype = {
    setCurrentPhotoIndex : function (index) {
       this.current = index;
    },
-
+   setCurrentLoadedPhotoIndex : function (index) {
+      this.currentLoadedIndex = index;
+   },
    getCurrentPhotoIndex : function () {
       return this.current;
    },
-
+   getCurrentLoadedPhotoIndex : function () {
+      return this.currentLoadedIndex;
+   },
    setCurrentPhoto : function (photo) {
       this.currentPhoto = photo;
    },
-
+   setCurrentLoadedPhoto : function (photo) {
+      this.currentLoadedPhoto = photo;
+   },
    getCurrentPhoto : function () {
       return this.currentPhoto;
+   },
+   getCurrentLoadedPhoto : function () {
+      return this.currentLoadedPhoto;
    },
    setPhotos : function (photos) {
       this.photos = photos;

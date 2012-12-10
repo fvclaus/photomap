@@ -227,8 +227,8 @@ UIGallery.prototype =  {
             } else {
                
                $el.removeClass('current');
-               state.setCurrentPhotoIndex($el.index());
-               state.setCurrentPhoto((state.getPhotos())[$el.index()]);
+               state.setCurrentLoadedPhotoIndex($el.index());
+               state.setCurrentLoadedPhoto((state.getPhotos())[$el.index()]);
 
                main.getUI().getControls().hideEditControls(false);
 
@@ -243,6 +243,6 @@ UIGallery.prototype =  {
       main.getUIState().getPhotos().forEach(function (photo) {
          photo.checkBorder();
       });
-   },
+   }
 
 };
