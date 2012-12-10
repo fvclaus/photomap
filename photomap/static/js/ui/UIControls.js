@@ -156,6 +156,8 @@ UIControls.prototype = {
       console.log(pixel);
       // add the header height to the position
       pixel.y += main.getUI().getPanel().getHeight();
+      pixel.y += ($(".mp-content").innerHeight() - $(".mp-content").height()) / 2;
+      pixel.y += ($(".mp-map").innerHeight() - $(".mp-map").height());
       // add the height of the marker
       markerSize = element.getSize();
       pixel.y += markerSize.height;
@@ -163,6 +165,7 @@ UIControls.prototype = {
       pixel.x += markerSize.width / 2;
       // add width of left margin of container
       pixel.x += ($("body").width() - $(".mp-container").width()) / 2;
+      pixel.x += ($(".mp-map").innerWidth() - $(".mp-map").width()) / 2;
       controls._showMarkerControls({
          top: pixel.y,
          left: pixel.x

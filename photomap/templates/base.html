@@ -74,14 +74,14 @@
       <div class="mp-container container" id="mp-container">
 
          <header class="mp-page-header column span-24 last" id="mp-page-header">
-            <section class="mp-logo column span-8">
+            <section class="mp-logo column span-4">
                <svg class="mp-keiken-logo" id="logo" width="189.36" height="99.65" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"> 
                   <g transform="scale(1.0)">
                     <image class="mp-keiken-logo" x="0" y="0" width="189.36" height="99.65" xlink:href="static/images/logo.svg"></image>
                   </g>
                </svg>
             </section>
-				<section class="mp-top-panel column span-12">
+				<section class="mp-top-panel column span-14">
                <div class="mp-placeholder-halfheight column span-24"></div>
 				   <div class="mp-search column span-24">
                  <span>
@@ -89,8 +89,11 @@
                  </span>
                </div>
 				</section>
-		      <section class="mp-page-title mp-option-information column span-4 last">
+		      <section class="mp-page-title mp-option-information column span-6 last">
                <h1>{% block name %} {% endblock %}</h1>
+               <span class="mp-album-controls mp-nodisplay">
+                 <img class="mp-option-information mp-album-information" src="static/images/logout.png" title="Logout"></img>
+                 <img class="mp-option-share mp-controls" src="static/images/share.png" title='{% trans "control-title share" %}' />
             </section>
 			</header>
 			
