@@ -79,8 +79,9 @@ UISlideshow.prototype = {
 
    navigateSlider : function (instance, dir) {
       
-      var state, currentPhotoIndex, currentPhoto, photos;
+      var state, gallery, currentPhotoIndex, currentPhoto, photos;
       state = main.getUIState();
+      gallery = main.getUI().getGallery();
       currentPhotoIndex = state.getCurrentLoadedPhotoIndex();
       currentPhoto = state.getCurrentLoadedPhoto();
       photos = state.getPhotos();
@@ -107,6 +108,7 @@ UISlideshow.prototype = {
          }
       }
       state.setCurrentLoadedPhoto(photos[state.getCurrentLoadedPhotoIndex()]);
+      gallery.checkSlider();
       this.startSlider();
    },
 

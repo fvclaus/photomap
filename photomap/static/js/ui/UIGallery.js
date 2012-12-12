@@ -15,7 +15,7 @@ UIGallery = function () {
    this.$container = $('#mp-gallery');
    this.$galleryWrapper = $('#mp-gallery-thumbs');
    this.$gallery = $('#mp-gallery-inner');
-   this.$galleryPage = $('.mp-thumb-page');
+   this.$galleryPages = null;
    this.visible = false;
    this.$elements = null;
 
@@ -36,7 +36,8 @@ UIGallery.prototype =  {
     * @private
     */
    searchImages : function () {
-      this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-option-add").not(".mp-controls-options");
+      this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-controls-options");
+      this.$galleryPages =  this.$gallery.find('.mp-thumb-page');
    },
    _resizeThumbs : function () {
       
@@ -52,15 +53,17 @@ UIGallery.prototype =  {
    getEl : function () {
       return this.$gallery;
    },
-   getScrollPane : function () {
-      return this.$gallery.data('jsp');
+   getScrollable : function () {
+      return this.$container.data('scrollable');
    },
-   setScrollPane : function () {
-      this.$gallery.jScrollPane({
-         verticalDragMinHeight: 40,
-         verticalDragMaxHeight: 40,
-         animateScroll: true
-      });
+   getImageIndex : function ($image) {
+      
+      var sliderIndex, imageIndex;
+      
+      sliderIndex = this.getScrollable().getIndex();
+      imageIndex = $image.index();
+      
+      return sliderIndex * 6 + imageIndex;
    },
   /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
@@ -80,7 +83,7 @@ UIGallery.prototype =  {
          tmplPhotosData = [];
          loaded = 0;
          i = 0;
-//         main.getUI().disable();
+         main.getUI().disable();
          this.$gallery.empty();
          
          while (i < photos.length) {
@@ -109,10 +112,10 @@ UIGallery.prototype =  {
                         instance._bindSortableListener();
                      }
                      // center the images and put 3 in a row
-                     instance.$galleryPage.width(instance.$container.width() + "px");
                      instance._centerImages();
                      // initialize scrollable
                      instance._initializeScrollable();
+                     
                      // load the first Photo into the Slideshow
                      state.getPhotos()[0].triggerClick();
                      
@@ -169,13 +172,30 @@ UIGallery.prototype =  {
       
       var $thumbs, thumbWidth, galleryWidth, thumbPadding, marginEW;
       $thumbs = $(".mp-thumb");
+      this.$galleryPages.width(this.$container.width() + "px");
+
       thumbWidth = $thumbs.width() * 3;
       galleryWidth = this.$container.width();
       thumbPadding = ($thumbs.innerWidth() - $thumbs.width()) * 3;
       marginEW = (galleryWidth - thumbWidth - thumbPadding) / 6;
+      
       $thumbs.css("margin", "0 " + marginEW + "px");
    },
-
+   checkSlider : function () {
+      
+      var state, photo, currentIndex, sliderIndex, newSliderIndex, indexInSlider;
+      
+      state = main.getUIState();
+      photo = state.getCurrentLoadedPhoto();
+      currentIndex = state.getCurrentLoadedPhotoIndex();
+      sliderIndex = this.getScrollable().getIndex();
+      
+      indexInSlider = currentIndex > sliderIndex * 6 && currentIndex < sliderIndex * 6 + 6;
+      if (!indexInSlider) {
+         newSliderIndex = Math.floor(currentIndex / 6);
+         this.getScrollable().seekTo(newSliderIndex);
+      }
+   },
    /* ---- Listeners ---- */
    /**
     * @private
@@ -228,8 +248,10 @@ UIGallery.prototype =  {
                .addClass('current')
                .removeClass("visited")
                .siblings('img').removeClass('current');
-            photo = (state.getPhotos())[$el.index()];
-            state.setCurrentPhotoIndex($el.index());
+            photo = $.grep(state.getPhotos(), function (e, i) {
+               return e.source === $el.attr("src");
+            });
+            state.setCurrentPhotoIndex(instance.getImageIndex($el));
             state.setCurrentPhoto(photo);
 
             if (authorized) {
@@ -263,8 +285,8 @@ UIGallery.prototype =  {
             } else {
                
                $el.removeClass('current');
-               state.setCurrentLoadedPhotoIndex($el.index());
-               state.setCurrentLoadedPhoto((state.getPhotos())[$el.index()]);
+               state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
+               state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
 
                main.getUI().getControls().hideEditControls(false);
 
