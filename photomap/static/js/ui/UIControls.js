@@ -203,7 +203,6 @@ UIControls.prototype = {
       var place;
       this.$insert = $(".mp-option-add");
       
-      //commit in iframe because of img upload
       this.$insert
          .remove("click.PhotoMap")
          .bind("click.PhotoMap", function (event) {

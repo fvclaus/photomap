@@ -13,8 +13,9 @@ var UIGallery;
 UIGallery = function () {
 
    this.$container = $('#mp-gallery');
-   this.$gallery = $('#mp-gallery-thumbs');
-   
+   this.$galleryWrapper = $('#mp-gallery-thumbs');
+   this.$gallery = $('#mp-gallery-inner');
+   this.$galleryPage = $('.mp-thumb-page');
    this.visible = false;
    this.$elements = null;
 
@@ -41,8 +42,8 @@ UIGallery.prototype =  {
       var $thumbs, length;
       
       $thumbs = $(".mp-thumb");
-      length = $thumbs.first().width();
-      $thumbs.height(length);
+      length = $thumbs.first().height();
+      $thumbs.width(length);
    },
    /**
     * @returns {jQElement} Gallery element
@@ -65,63 +66,115 @@ UIGallery.prototype =  {
    */
    show : function (photos) {
       
-      var state, controls, authorized, tmplPhotosData, loaded, i, len, instance = this;
+      var state, controls, authorized, tmplPhotosData, tmplData, photoMatrix, loaded, i, j, k, l, m, n, instance = this;
       state = main.getUIState();
       controls = main.getUI().getControls();
       authorized = main.getClientState().isAdmin();
       
-      state.setPhotos(photos);
-      
-      if (photos.length === 0) {
-         // bugfix for empty places (to show empty "add"-tile)
-         if (authorized) {
-            this.$gallery.append(
-               $.jqote('#galleryTmpl', {'isAdmin': authorized})
-            );
-            controls.bindInsertPhotoListener();
-         }
-      } else {
+      if (photos.length !== 0) {
+         
+         state.setPhotos(photos);
          
          state.setAlbumLoading(true);
          tmplPhotosData = [];
+         photoMatrix = [];
+         photoMatrix[0] = [];
          loaded = 0;
-         main.getUI().disable();
-
-         for (i = 0, len = photos.length; i < len; ++i) {
+         i = 0;
+         j = 0;
+         k = 0;
+         l = 0;
+         m = 0;
+         n = 0;
+//         main.getUI().disable();
+         this.$gallery.empty();
+         
+         while (i < photos.length) {
             
-            tmplPhotosData.push(photos[i].source);
-            
-            $('<img/>').load(function () {
-               ++loaded;
-               if (loaded === len) {
-                  main.getUIState().setAlbumLoading(false);
-                  main.getUI().enable();
-                  // create wrapping anchors for images
-                  instance.$gallery.append(
-                     $.jqote('#galleryTmpl', {
-                        thumbAddress: tmplPhotosData,
-                        isAdmin : authorized
-                     })
-                  );
-                  //search all anchors
-                  instance.searchImages();
-                  // adjust height to make the thumbs square
-                  instance._resizeThumbs();
-                  // admin listeners
-                  if (authorized) {
-                     instance._bindSortableListener();
-                     controls.bindInsertPhotoListener();
+            if (photos[i] === undefined) {
+               console.log(photos[i]);
+               continue;
+            } else {
+               tmplPhotosData.push(photos[i].source);
+               $('<img/>').load(function () {
+                  
+                  ++loaded;
+                  
+                  if (loaded === photos.length) {
+                     main.getUIState().setAlbumLoading(false);
+                     main.getUI().enable();
+                     // create wrapping anchors for images
+                     while (j <= 5) {
+                        photoMatrix[l].push(photos[k]);
+                        if (k === photos.length - 1) {
+                           break;
+                        }
+                        if (j === 5) {
+                           j = 0;
+                           k++;
+                           l++;
+                           photoMatrix[l] = [];
+                        } else {
+                           j++;
+                           k++;
+                        }
+                     }
+                     console.log(photoMatrix);
+                     console.log(photos);
+                     console.log(loaded);
+                     while (m < photoMatrix.length) {
+                        console.log(photoMatrix[m].length);
+                        tmplData = $.grep(tmplPhotosData, function (element, index) {
+                           return index >= m * 6 && index < m * 6 + 6;
+                        });
+                        console.log(tmplPhotosData);
+                        console.log(tmplData);
+                        instance.$gallery.append(
+                           $.jqote('#galleryTmpl', {
+                              thumbAddress: tmplData
+                           })
+                        );
+                        m++;
+                     }
+                     //search all anchors
+                     instance.searchImages();
+                     // adjust height to make the thumbs square
+                     instance._resizeThumbs();
+                     // admin listeners
+                     if (authorized) {
+                        instance._bindSortableListener();
+                        controls.bindInsertPhotoListener();
+                     }
+                     // create scrollpane
+                     //instance._bindScrollPaneListener();
+                     instance.bindListener();
+                     
+                     instance.$galleryPage.width(instance.$container.width() + "px");
+                     
+                     var $thumbs = $(".mp-thumb");
+                     var width = $thumbs.width() * 3;
+                     var galleryWidth = instance.$container.width();
+                     var padding = ($thumbs.innerWidth() - $thumbs.width()) * 3;
+                     var margin = (galleryWidth - width - padding) / 6;
+                     console.log("THIS IS THE MARGIN " + margin);
+                     $thumbs.css("margin", "0 " + margin + "px");
+                     
+                     instance.$container.scrollable({
+                        items: ".mp-gallery-inner",
+                        prev: ".mp-gallery-nav-prev",
+                        next: ".mp-gallery-nav-next",
+                        circular: true,
+                        vertical: false
+                     }).navigator();
+                     // load the first Photo into the Slideshow
+                     state.getPhotos()[0].triggerClick();
                   }
-                  // create scrollpane
-                  instance._bindScrollPaneListener();
-                  instance.bindListener();
-                  
-                  // load the first Photo into the Slideshow
-                  state.getPhotos()[0].triggerClick();
-                  
-               }
-            }).attr('src', photos[i].source);
+               }).attr('src', photos[i].source);
+            }
+            i++;
          }
+      } else {
+         this.$gallery.empty();
       }
    },
    /* ---- Listeners ---- */

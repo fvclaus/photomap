@@ -37,6 +37,7 @@ Photo.prototype = {
       this.checkBorder();
    },
    triggerClick : function () {
+      main.getUIState().setCurrentLoadedPhoto(this);
       $("img[src='" + this.source + "']").trigger("click");
    }
 };

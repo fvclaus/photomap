@@ -16,8 +16,6 @@ UISlideshow = function () {
    this.$nav = this.$slideshow.find("div.mp-slideshow-nav");
    this.$next = this.$slideshow.find('img.mp-slideshow-nav-next');
    this.$prev = this.$slideshow.find('img.mp-slideshow-nav-prev');
-   this.$nextImage = $(".mp-slideshow-nav-next");
-   this.$previousImage = $(".mp-slideshow-nav-prev");
    this.$image = this.$slideshow.find("img.mp-current-image");
    this.$loading = this.$slideshow.find('img.mp-image-loading-small');
    this.$zoom = this.$slideshow.find("img.mp-slideshow-zoom");
@@ -51,19 +49,18 @@ UISlideshow.prototype = {
             
             once = true;
             
+            console.log(".-.-.-.-.-.-.-.-.");
+            console.log(main.getUIState().getCurrentLoadedPhoto());
+            console.log(".-.-.-.-.-.-.-.-.");
             $('<img/>').load(function () {
                if (state.getCurrentLoadedPhoto()) {
                   state.getCurrentLoadedPhoto().showBorder(true);
                }
                instance.$image.load(function () {
                   //center in the middle
-                  instance.$image.show();
                   tools.centerElement(instance.$wrapper, instance.$image);
-                  instance.$image.hide();
 
-                  instance.$image.fadeIn(300, function () {
-                     //instance.album.enableGallery();
-                  });
+                  instance.$image.show();
 
                   state.setSlideshowLoaded(true);
                });
@@ -150,14 +147,14 @@ UISlideshow.prototype = {
       var instance = this;
       //bind slideshow button listener
 
-      this.$nextImage.bind('click.Slideshow', function () {
+      this.$next.bind('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }
          instance.navigateSlider(instance, 'right');
       });
 
-      this.$previousImage.bind('click.Slideshow', function () {
+      this.$prev.bind('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }

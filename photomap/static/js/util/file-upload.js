@@ -138,7 +138,7 @@ fileUpload = {
          photo.order = state.getPhotos().length;
          console.log(photo);
          state.addPhoto(photo);
-         $(".mp-gallery img.mp-option-add").before('<img class="overlay-description sortable mp-control" src="' + photo.source + '">');
+         $(".mp-gallery-thumb").append('<img class="sortable mp-control" src="' + photo.source + '">');
          // reinitialising ScrollPane, cause gallery length might have increased
          if (gallery.getScrollPane()) {
             gallery.getScrollPane().reinitialise();
@@ -287,12 +287,15 @@ fileUpload = {
       // handler called after all bytes are sent
       upload.addEventListener('load', fileUpload._loadHandler);
       request.onreadystatechange = function (e) {
-
+         
+         console.log(request.readyState);
          var text, error;
 
          // readyState === 4 -> data-transfer completed and response fully received
          if (request.readyState === 4) {
-            if (request.status === 200) {
+            if (request.status === 200 || request.status === 0) {
+               console.log(request.responseText);
+               console.log(JSON.parse(request.responseText));
                fileUpload._responseHandler(JSON.parse(request.responseText), file);
             } else {
                // alert error if upload wasn't successful
@@ -301,9 +304,12 @@ fileUpload = {
                } else {
                   text = "No responseText.";
                }
-
-               error = request.status;
-               alert("The upload didn't work. " + error + " " + text);
+               if (request.status) {
+                  error = request.status;
+               } else {
+                  error = "No error.";
+               }
+               alert("The upload didn't work. Error: " + error + " - Response-Text: " + text);
             }
          }
       };

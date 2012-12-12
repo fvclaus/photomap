@@ -20,37 +20,46 @@
 .mp-gallery
   height 45%
   padding 2%
+  position relative
   overflow hidden
   .mp-place-title
     width 80%
     margin 0
 
-.mp-gallery-navigation
+.mp-gallery-controls
   width 20%
   height 100%
   img.mp-control
     width 5%
     height auto
     padding 0 2.5%
+    float left
     background none
 
 .mp-gallery-thumbs
   width 100%
   height 88% // title-bar is 10% (core.styl)
   padding 2% 0 0 0
+  position relative
+  overflow hidden
+  img
+    height 40%
+    padding 1.5%
+    float left
+    background $background-color-light
+    transition
+    &.current
+      background $current-color
+    &.visited
+      background $visited-color
 
-.mp-gallery img
-  width 30%
-  padding 1.5%
-  display block
+.mp-gallery-inner
+  height 95%
+  width 20000em
+  position absolute
+.mp-thumb-page
+  height 95%
   float left
-  background $background-color-light
-  transition
-  &.current
-    background $current-color
-  &.visited
-    background $visited-color
-
 /* ------ end gallery ------ */
 
 /* ------------------------- */

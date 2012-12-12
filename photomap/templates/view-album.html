@@ -30,7 +30,7 @@
 {% block options %}
 	{% trans "link-title-dashboard" as dashboard_link %}
 	<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title='{{ dashboard_link }}'>{{ dashboard_link }}</a> 
-	<span class="mp-option-toggle-gallery mp-controls" title='{% trans "control-title toggle gallery"%}'><span class="mp-gallery-hidden">{% trans "Show Gallery" %}</span><span class="mp-gallery-visible">{% trans "Hide Gallery" %}</span></span>
+	<span class="mp-option-toggle-gallery mp-controls" title='{% trans "Toggle Gallery"%}'><span class="mp-gallery-hidden">{% trans "Show Gallery" %}</span><span class="mp-gallery-visible">{% trans "Hide Gallery" %}</span></span>
 {% endblock %}
 
 {% block content_interactive %}
@@ -38,13 +38,16 @@
 	<img class="mp-image-loading-small mp-nodisplay" id="mp-image-loading-small" src="static/images/ajax-loader.gif"></img>
 	<section class="mp-gallery column span-7" id="mp-gallery">
 		<div class="mp-title-bar">
-		  <span class="mp-gallery-navigation">
-          <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
-          <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
+		  <span class="mp-gallery-controls">
+          <img class="mp-gallery-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
+          <img class="mp-gallery-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
+			 <img class="mp-option-add mp-control" src="static/images/add.png" title='{% trans "Add Image" %}'></img>
         </span>  
       <span class="mp-place-title mp-option-information">No Title</span>
 		</div>
 		<div class="mp-gallery-thumbs" id="mp-gallery-thumbs">
+        <div class="mp-gallery-inner" id="mp-gallery-inner">
+        </div>
 		</div>
 	</section>
 	<section class="mp-slideshow column span-15 last" id="mp-slideshow">
@@ -52,30 +55,25 @@
         <span class="mp-photo-title mp-option-information">No Title</span>
      </div>
      <div class="mp-slideshow-nav column span-4 last">
-	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png"></img>
+	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
 	  </div>
 	  <div class="mp-slideshow-image column span-16 last">
-	     <img class="mp-slideshow-zoom" src="static/images/magnify.png"></img>
+	     <img class="mp-slideshow-zoom" src="static/images/magnify.png" title='{% trans "View in Fullscreen" %}'></img>
 	     <img class="mp-current-image"></img>
 	  </div>
 	  <div class="mp-slideshow-nav column span-4 last">
-   	 <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png"></img>
+   	 <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
      </div>
      <span class="mp-image-number"></span>
 	</section>
 	
 	<!-- jqote2 templates for gallery and fullscreen -->
 	<script id="galleryTmpl" type="text/html">
-	<div class="mp-gallery-outer">
-		<div class="mp-gallery">
-			<% for (thumb in this.thumbAddress) { %>
-			<img class="sortable mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
-			<% }; %>
-			<% if (this.isAdmin) {%>
-				<img class="mp-option-add mp-control" src="static/images/add.png" title={% trans "control-title add-photo" %}></img>
-			<%  }; %>
-		</div>
-	</div>
+	  <div class="mp-thumb-page">
+       <% for (thumb in this.thumbAddress) { %>
+	    <img class="sortable mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+	    <% }; %>
+     </div>
 	</script>
 
 	<script id="galleryFullscreenTmpl" type="text/html">
