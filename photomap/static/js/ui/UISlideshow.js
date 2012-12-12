@@ -25,6 +25,7 @@ UISlideshow = function () {
 UISlideshow.prototype = {
 
    initWithoutAjax : function () {
+      this._bindFullscreenListener();
       this.bindListener();
       this.positionNavigation();
    },
@@ -49,9 +50,6 @@ UISlideshow.prototype = {
             
             once = true;
             
-            console.log(".-.-.-.-.-.-.-.-.");
-            console.log(main.getUIState().getCurrentLoadedPhoto());
-            console.log(".-.-.-.-.-.-.-.-.");
             $('<img/>').load(function () {
                if (state.getCurrentLoadedPhoto()) {
                   state.getCurrentLoadedPhoto().showBorder(true);
@@ -65,8 +63,7 @@ UISlideshow.prototype = {
                   state.setSlideshowLoaded(true);
                });
                instance.$image.attr('src', state.getCurrentLoadedPhoto().source);
-               instance._bindFullscreenListener();
-               
+            
             }).attr('src', state.getCurrentLoadedPhoto().source);
          } else {
             return;
@@ -132,14 +129,13 @@ UISlideshow.prototype = {
       tools = main.getUI().getTools();
       
       instance.$image
-         .unbind(".GalleryZoom")
-         .bind("mouseover.GalleryZoom", function () {
+         .on("mouseover.GalleryZoom", function () {
             if (main.getUIState().isSlideshowLoaded()) {
                tools.centerElement(instance.$image, instance.$zoom);
                instance.$zoom.show();
             }
          })
-         .bind("mouseleave.GalleryZoom", function () {
+         .on("mouseleave.GalleryZoom", function () {
             instance.$zoom.hide();
          });
    },
@@ -147,14 +143,14 @@ UISlideshow.prototype = {
       var instance = this;
       //bind slideshow button listener
 
-      this.$next.bind('click.Slideshow', function () {
+      this.$next.on('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }
          instance.navigateSlider(instance, 'right');
       });
 
-      this.$prev.bind('click.Slideshow', function () {
+      this.$prev.on('click.Slideshow', function () {
          if ($(this).hasClass("disabled")) {
             return;
          }
@@ -162,18 +158,18 @@ UISlideshow.prototype = {
       });
 
       this.$zoom
-         .bind("mouseover.Slideshow", function () {
+         .on("mouseover.Slideshow", function () {
             if (main.getUIState().isSlideshowLoaded()) {
                $(this)
                   .show()
                   .css("opacity", ".7");
             }
          })
-         .bind("click.Slideshow", function () {
+         .on("click.Slideshow", function () {
             $(this).hide();
             main.getUI().getFullscreen().zoom();
          })
-         .bind("mouseleave.Slideshow", function () {
+         .on("mouseleave.Slideshow", function () {
             $(this).css("opacity", ".4");
          });
    }

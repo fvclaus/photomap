@@ -27,6 +27,7 @@ UIGallery.prototype =  {
       if (main.getClientState().isAdmin()) {
          this.$container.bind('dragover', fileUpload.handleGalleryDragover);
          this.$container.bind('drop', fileUpload.handleGalleryDrop);
+         this.bindListener();
       }
    },
    /**
@@ -77,15 +78,8 @@ UIGallery.prototype =  {
          
          state.setAlbumLoading(true);
          tmplPhotosData = [];
-         photoMatrix = [];
-         photoMatrix[0] = [];
          loaded = 0;
          i = 0;
-         j = 0;
-         k = 0;
-         l = 0;
-         m = 0;
-         n = 0;
 //         main.getUI().disable();
          this.$gallery.empty();
          
@@ -103,39 +97,9 @@ UIGallery.prototype =  {
                   if (loaded === photos.length) {
                      main.getUIState().setAlbumLoading(false);
                      main.getUI().enable();
-                     // create wrapping anchors for images
-                     while (j <= 5) {
-                        photoMatrix[l].push(photos[k]);
-                        if (k === photos.length - 1) {
-                           break;
-                        }
-                        if (j === 5) {
-                           j = 0;
-                           k++;
-                           l++;
-                           photoMatrix[l] = [];
-                        } else {
-                           j++;
-                           k++;
-                        }
-                     }
-                     console.log(photoMatrix);
-                     console.log(photos);
-                     console.log(loaded);
-                     while (m < photoMatrix.length) {
-                        console.log(photoMatrix[m].length);
-                        tmplData = $.grep(tmplPhotosData, function (element, index) {
-                           return index >= m * 6 && index < m * 6 + 6;
-                        });
-                        console.log(tmplPhotosData);
-                        console.log(tmplData);
-                        instance.$gallery.append(
-                           $.jqote('#galleryTmpl', {
-                              thumbAddress: tmplData
-                           })
-                        );
-                        m++;
-                     }
+                     // create a matrix with 6 columns out of the photos-Array and display each row in a separate div
+                     photoMatrix = main.getUI().getTools().createMatrix(photos, 6);
+                     instance._appendImages(photoMatrix, tmplPhotosData);
                      //search all anchors
                      instance.searchImages();
                      // adjust height to make the thumbs square
@@ -143,31 +107,16 @@ UIGallery.prototype =  {
                      // admin listeners
                      if (authorized) {
                         instance._bindSortableListener();
-                        controls.bindInsertPhotoListener();
                      }
-                     // create scrollpane
-                     //instance._bindScrollPaneListener();
-                     instance.bindListener();
-                     
+                     // center the images and put 3 in a row
                      instance.$galleryPage.width(instance.$container.width() + "px");
-                     
-                     var $thumbs = $(".mp-thumb");
-                     var width = $thumbs.width() * 3;
-                     var galleryWidth = instance.$container.width();
-                     var padding = ($thumbs.innerWidth() - $thumbs.width()) * 3;
-                     var margin = (galleryWidth - width - padding) / 6;
-                     console.log("THIS IS THE MARGIN " + margin);
-                     $thumbs.css("margin", "0 " + margin + "px");
-                     
-                     instance.$container.scrollable({
-                        items: ".mp-gallery-inner",
-                        prev: ".mp-gallery-nav-prev",
-                        next: ".mp-gallery-nav-next",
-                        circular: true,
-                        vertical: false
-                     }).navigator();
+                     instance._centerImages();
+                     // initialize scrollable
+                     instance._initializeScrollable();
                      // load the first Photo into the Slideshow
                      state.getPhotos()[0].triggerClick();
+                     
+                     instance.showBorder();
                   }
                }).attr('src', photos[i].source);
             }
@@ -177,22 +126,57 @@ UIGallery.prototype =  {
          this.$gallery.empty();
       }
    },
-   /* ---- Listeners ---- */
+   showBorder: function () {
+      //draw border on visited elements
+      main.getUIState().getPhotos().forEach(function (photo) {
+         photo.checkBorder();
+      });
+   },
+   _initializeScrollable : function () {
+      this.$container.scrollable({
+         items: ".mp-gallery-inner",
+         prev: ".mp-gallery-nav-prev",
+         next: ".mp-gallery-nav-next",
+         circular: true,
+         vertical: false
+      }).navigator();
+   },
    /**
     * @private
     */
-   _bindScrollPaneListener : function () {
-      this.$gallery
-         .css("padding-left", this.galleryPadding)
-         .width(this.galleryWidth)
-         .jScrollPane({
-            verticalDragMinHeight	: 40,
-            verticalDragMaxHeight	: 40,
-            animateScroll		: true
+   _appendImages : function (imageMatrix, imageSources) {
+      
+      var tmplData, i;
+      i = 0;
+      
+      while (i < imageMatrix.length) {
+         tmplData = $.grep(imageSources, function (element, index) {
+            return index >= i * 6 && index < i * 6 + 6;
          });
-      //hack to remove horizontal scrollbars which always show up
-      $(".jspHorizontalBar").remove();
+         this.$gallery.append(
+            $.jqote('#galleryTmpl', {
+               thumbAddress: tmplData
+            })
+         );
+         i++;
+      }
+ 
    },
+   /**
+    * @private
+    */
+   _centerImages : function () {
+      
+      var $thumbs, thumbWidth, galleryWidth, thumbPadding, marginEW;
+      $thumbs = $(".mp-thumb");
+      thumbWidth = $thumbs.width() * 3;
+      galleryWidth = this.$container.width();
+      thumbPadding = ($thumbs.innerWidth() - $thumbs.width()) * 3;
+      marginEW = (galleryWidth - thumbWidth - thumbPadding) / 6;
+      $thumbs.css("margin", "0 " + marginEW + "px");
+   },
+
+   /* ---- Listeners ---- */
    /**
     * @private
     */
@@ -237,9 +221,8 @@ UIGallery.prototype =  {
       authorized = main.getClientState().isAdmin();
 
       //bind events on anchors
-      instance.$elements
-         .unbind('.Gallery')
-         .bind('mouseenter.Gallery', function (event) {
+      instance.$gallery
+         .on('mouseenter.Gallery', ".mp-thumb", function (event) {
             var $el = $(this);
             $el
                .addClass('current')
@@ -255,7 +238,7 @@ UIGallery.prototype =  {
             }
             cursor.setCursor($el, cursor.styles.pointer);
          })
-         .bind('mouseleave.Gallery', function (event) {
+         .on('mouseleave.Gallery', ".mp-thumb", function (event) {
             var $el = $(this);
             //add visited border if necessary
             (state.getPhotos())[$el.index()].checkBorder();
@@ -265,12 +248,12 @@ UIGallery.prototype =  {
                controls.hideEditControls(true);
             }
          })
-         .bind('mousedown.Gallery', function (event) {
+         .on('mousedown.Gallery', ".mp-thumb", function (event) {
             var $el = $(this);
             // set Cursor for DragnDrop on images (grabber)
             cursor.setCursor($el, cursor.styles.grab);
          })
-         .bind('click.Gallery', function (event) {
+         .on('click.Gallery', ".mp-thumb", function (event) {
             var $el = $(this);
             // workaround for DnD click event:
             // when element gets dragged class "noClick" is added, when it's dropped and the click event
@@ -291,11 +274,7 @@ UIGallery.prototype =  {
                //return false;
             }
          });
-
-      //draw border on visited elements
-      main.getUIState().getPhotos().forEach(function (photo) {
-         photo.checkBorder();
-      });
    }
+
 
 };

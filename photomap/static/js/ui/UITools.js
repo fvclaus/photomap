@@ -24,6 +24,33 @@ UITools.prototype = {
     * @param $element {jQuery-Object} element that is supposed to be centered
     * @param direction {String} defines in which direction the element should be centered - can be "vertical", "horizontal" or empty
     */
+   createMatrix : function (array, columns) {
+      
+      var matrix, i, j, k;
+      i = 0;
+      j = 0;
+      k = 0;
+      matrix = [];
+      matrix[0] = [];
+      
+      while (i <= columns) {
+         matrix[k].push(array[j]);
+         if (j === array.length - 1) {
+            break;
+         }
+         if (i === 5) {
+            i = 0;
+            j++;
+            k++;
+            matrix[k] = [];
+         } else {
+            i++;
+            j++;
+         }
+      }
+      
+      return matrix;
+   },
    centerElement : function ($parent, $element, direction) {
       
       var margin;

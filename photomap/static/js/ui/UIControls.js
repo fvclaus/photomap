@@ -203,9 +203,8 @@ UIControls.prototype = {
       var place;
       this.$insert = $(".mp-option-add");
       
-      this.$insert
-         .remove("click.PhotoMap")
-         .bind("click.PhotoMap", function (event) {
+      $("#mp-gallery > .mp-option-add")
+         .on("click.PhotoMap", function (event) {
             place = main.getUIState().getCurrentPlace();
             // reset load function
             main.getUI().getInput().getUpload("/insert-photo?place=" + place.id, function () { return; });
@@ -236,8 +235,7 @@ UIControls.prototype = {
       tools = main.getUI().getTools();
       
       this.$delete
-         .unbind("click")
-         .bind("click", function (event) {
+         .on("click", function (event) {
             // hide current place's markers and clean photos from gallery
             photo = state.getCurrentPhoto();
             place = state.getCurrentPlace();
@@ -294,8 +292,7 @@ UIControls.prototype = {
       input = main.getUI().getInput();
       
       this.$update
-         .unbind("click")
-         .bind("click", function (event) {
+         .on("click", function (event) {
             place = state.getCurrentPlace();
             photo = state.getCurrentPhoto();
             album = state.getCurrentAlbum();
@@ -366,20 +363,13 @@ UIControls.prototype = {
       state = main.getUIState();
       
       this.$controls
-         .bind("mouseleave", function () {
+         .on("mouseleave", function () {
             instance.$controls.hide();
             instance.$controls.isEntered = false;
          })
-         .bind("mouseenter", function () {
+         .on("mouseenter", function () {
             instance.$controls.isEntered = true;
          });
-
-      this.$center.bind("click.MapPhotoAlbum", function (event) {
-         place = state.getCurrentPlace();
-         if (place) {
-            place.center();
-         }
-      });
    },
    /**
     * @private
@@ -389,8 +379,7 @@ UIControls.prototype = {
       var instance = this, state, tools, url, id;
       
       this.$share
-         .unbind("click")
-         .bind("click", function (event) {
+         .on("click", function (event) {
             state = main.getUIState();
             tools = main.getUI().getTools();
 
@@ -450,11 +439,12 @@ UIControls.prototype = {
       this._bindDeleteListener();
       this._bindUpdateListener();
       this._bindControlListener();
+      this._bindShareListener();
 
       if (page === DASHBOARD_VIEW) {
-         this._bindShareListener();
          this.bindAlbumListener();
       } else if (page === ALBUM_VIEW) {
+         this.bindInsertPhotoListener();
          this.bindPlaceListener();
       } else {
          alert("Unknown page: " + page);
