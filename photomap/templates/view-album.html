@@ -52,19 +52,19 @@
 	</section>
 	<section class="mp-slideshow column span-15 last" id="mp-slideshow">
 	  <div class="mp-title-bar">
-        <span class="mp-photo-title mp-option-information">No Title</span>
-     </div>
-     <div class="mp-slideshow-nav column span-4 last">
+       <span class="mp-slideshow-controls">
 	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
-	  </div>
-	  <div class="mp-slideshow-image column span-16 last">
-	     <img class="mp-slideshow-zoom" src="static/images/magnify.png" title='{% trans "View in Fullscreen" %}'></img>
-	     <img class="mp-current-image"></img>
-	  </div>
-	  <div class="mp-slideshow-nav column span-4 last">
-   	 <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
+   	   <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
+      	<img class="mp-slideshow-zoom mp-control" src="static/images/magnify.png" title='{% trans "View in Fullscreen" %}'></img>
+       </span>
+       <span class="mp-photo-title mp-option-information">No Title</span>
      </div>
+     <div class="mp-slideshow-inner">
+	    <div class="mp-slideshow-image column span-24">
+	      <img class="mp-current-image"></img>
+	    </div>
      <span class="mp-image-number"></span>
+     </div>
 	</section>
 	
 	<!-- jqote2 templates for gallery and fullscreen -->

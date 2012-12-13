@@ -88,13 +88,11 @@ UIControls.prototype = {
       if (!this.$controls.isScaled) {
          // change factor depending on the page (-> number of controls in control-box)
          if (main.getUIState().isDashboard()) {
-            factor = 0.31;
+            factor = 1.5;
          } else {
-            factor = 0.45;
+            factor = 1;
          }
          this.$controls
-            .find(".mp-controls-options")
-            .height(this.$controls.height() * 0.8)
             .width(this.$controls.width() * factor);
       }
 
@@ -135,7 +133,7 @@ UIControls.prototype = {
     */
    _displayEditControls : function (element) {
       
-      var state, controls, projection, pixel, markerSize;
+      var state, controls, projection, pixel, markerSize, mapOffset;
       state = main.getUIState();
       controls = main.getUI().getControls();
 
@@ -153,19 +151,15 @@ UIControls.prototype = {
       // gets the relative pixel position
       projection = main.getMap().getOverlay().getProjection();
       pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
-      console.log(pixel);
-      // add the header height to the position
-      pixel.y += main.getUI().getPanel().getHeight();
-      pixel.y += ($(".mp-content").innerHeight() - $(".mp-content").height()) / 2;
-      pixel.y += ($(".mp-map").innerHeight() - $(".mp-map").height());
-      // add the height of the marker
+      // add height and half-width of the marker
       markerSize = element.getSize();
       pixel.y += markerSize.height;
-      // add the width of the marker
       pixel.x += markerSize.width / 2;
-      // add width of left margin of container
-      pixel.x += ($("body").width() - $(".mp-container").width()) / 2;
-      pixel.x += ($(".mp-map").innerWidth() - $(".mp-map").width()) / 2;
+      // add map offset
+      mapOffset = $(".mp-map").offset();
+      pixel.y += mapOffset.top;
+      pixel.x += mapOffset.left;
+      // show controls
       controls._showMarkerControls({
          top: pixel.y,
          left: pixel.x
@@ -188,7 +182,7 @@ UIControls.prototype = {
       };
 
       if (timeout) {
-         this.hideControlsTimeoutId = window.setTimeout(hide, 1000);
+         this.hideControlsTimeoutId = window.setTimeout(hide, 2000);
       } else {
          this.$controls.hide();
       }

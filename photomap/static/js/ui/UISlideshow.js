@@ -25,16 +25,7 @@ UISlideshow = function () {
 UISlideshow.prototype = {
 
    initWithoutAjax : function () {
-      this._bindFullscreenListener();
       this.bindListener();
-      this.positionNavigation();
-   },
-   positionNavigation : function () {
-      
-      var tools = main.getUI().getTools();
-      
-      tools.centerElement(this.$nav.first(), this.$prev);
-      tools.centerElement(this.$nav.first(), this.$next);
    },
    startSlider: function () {
       
@@ -124,23 +115,6 @@ UISlideshow.prototype = {
    },
 
    /* ---- Listeners ---- */
-   _bindFullscreenListener : function () {
-      //problem: every time the slider is started the events get bound and get fired several times
-      //unbind all events first, then bind a new one
-      var tools, instance = this;
-      tools = main.getUI().getTools();
-      
-      instance.$image
-         .on("mouseover.GalleryZoom", function () {
-            if (main.getUIState().isSlideshowLoaded()) {
-               tools.centerElement(instance.$image, instance.$zoom);
-               instance.$zoom.show();
-            }
-         })
-         .on("mouseleave.GalleryZoom", function () {
-            instance.$zoom.hide();
-         });
-   },
    bindListener : function () {
       var instance = this;
       //bind slideshow button listener
@@ -153,27 +127,15 @@ UISlideshow.prototype = {
       });
 
       this.$prev.on('click.Slideshow', function () {
-         if ($(this).hasClass("disabled")) {
-            return;
-         }
          instance.navigateSlider(instance, 'left');
       });
 
-      this.$zoom
-         .on("mouseover.Slideshow", function () {
-            if (main.getUIState().isSlideshowLoaded()) {
-               $(this)
-                  .show()
-                  .css("opacity", ".7");
-            }
-         })
-         .on("click.Slideshow", function () {
-            $(this).hide();
-            main.getUI().getFullscreen().zoom();
-         })
-         .on("mouseleave.Slideshow", function () {
-            $(this).css("opacity", ".4");
-         });
+      this.$zoom.on("click.Slideshow", function () {
+         if ($(this).hasClass("disabled")) {
+            return;
+         }
+         main.getUI().getFullscreen().zoom();
+      });
    }
 
 };

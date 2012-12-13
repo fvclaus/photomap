@@ -33,6 +33,7 @@ UIInformation.prototype = {
          .empty()
          .html(description);
       api.reinitialise();
+      $(".jspVerticalBar").css("display", "none");
    },
    /* ---- Album ---- */
    updateAlbumTitle : function () {
