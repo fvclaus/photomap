@@ -94,6 +94,7 @@ UIControls.prototype = {
          }
          this.$controls
             .width(this.$controls.width() * factor);
+         this.$controls.isScaled = true;
       }
 
       // offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
