@@ -41,15 +41,20 @@ UISlideshow.prototype = {
             
             once = true;
             
+            if (instance.$image.is(":visible")) {
+               instance.$image.hide();
+            }
+
             $('<img/>').load(function () {
                if (state.getCurrentLoadedPhoto()) {
                   state.getCurrentLoadedPhoto().showBorder(true);
                }
                instance.$image.load(function () {
+                  
                   //center in the middle
                   tools.centerElement(instance.$wrapper, instance.$image);
 
-                  instance.$image.show();
+                  instance.$image.fadeIn(300);
 
                   state.setSlideshowLoaded(true);
                });
