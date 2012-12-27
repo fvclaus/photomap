@@ -29,7 +29,9 @@ function initialize() {
 
 function initializeAfterAjax() {
    
-   state.getPlaces()[0].triggerClick();
+   if (state && state.getPlaces()[0]) {
+      state.getPlaces()[0].triggerClick();
+   }
    
    if (main.getClientState().isAdmin()) {
       $(".mp-option-to-dashboard").show();

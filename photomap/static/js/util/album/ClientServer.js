@@ -29,18 +29,21 @@ ClientServer.prototype = {
       });
    },
    _getPlaces : function () {
-      var instance, tools, id, secret;
-
-      instance = this;
+      
+      var data, tools, id, secret, instance = this;
       tools = main.getUI().getTools();
-      id = tools.getUrlId();
-      secret = tools.getUrlSecret();
+      data = {
+         'id' : tools.getUrlId()
+      };
+      if (tools.getUrlSecret() !== null) {
+         data.secret = tools.getUrlSecret();
+      }
 
       $.ajax({
          "url" : "get-album",
          data : {
             "id" : id,
-            "secret" : secret,
+            "secret" : secret
          },
          success: function (albuminfo) {
 
