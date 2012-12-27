@@ -174,7 +174,7 @@ UITools.prototype = {
       regex = new RegExp(regexS);
       results = regex.exec(window.location.search);
       if (results === null) {
-         return "No results";
+         return null;
       } else {
          return decodeURIComponent(results[1].replace(/\+/g, " "));
       }
