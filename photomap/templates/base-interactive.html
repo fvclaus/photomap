@@ -36,10 +36,12 @@ content="interactive"
 
 {% block content %}
 	
-   <section class="mp-map column span-15" id="mp-map">
+   <section class="mp-map column span-12" id="mp-map">
 	   <div class="mp-map-wrapper" id="map"></div>
 	</section>
-	<section class="mp-description column span-7 last" id="mp-description">
+	{% block content_interactive %}
+	{% endblock %}
+	<section class="mp-description column span-10 last" id="mp-description">
 	   <div class="mp-title-bar mp-description-title">
 	      <span></span>
 	   </div>
@@ -76,6 +78,4 @@ content="interactive"
 	</div>
 	<div id="input-dialog">
 	</div>
-	{% block content_interactive %}
-	{% endblock %}
 {% endblock %}
