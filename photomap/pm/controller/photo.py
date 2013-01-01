@@ -10,6 +10,7 @@ from django.shortcuts import render_to_response
 from pm.model.photo import Photo
 from pm.util.s3 import getbucket
 from pm.controller.authentication import is_authorized
+from pm.controller import set_cookie
 
 from message import success, error 
 from pm.form.photo import PhotoInsertPRODForm,PhotoInsertDEBUGForm, PhotoUpdateForm, PhotoCheckPRODForm
@@ -61,7 +62,9 @@ def insert(request):
             # store photo record
             photo.save()
 
-            return success(id = photo.id, url = photo.getphotourl())
+            response =  success(id = photo.id, url = photo.getphotourl())
+            set_cookie(response, "used_space", userprofile.used_space)
+            return response
         else:
             # closes iframe and displays error message
 #            return render_to_response("insert-photo-error.html", {form : form})
