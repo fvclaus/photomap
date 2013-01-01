@@ -15,9 +15,9 @@ from pm.util.s3 import getbucket,build_url
 class Photo(Description):
   
     place = models.ForeignKey(Place)
-    order = models.IntegerField(null = True, blank = True)
+    order = models.IntegerField()
     photo = models.TextField()
-    
+    size = models.IntegerField()
     
     if settings.DEBUG:
         photo = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)

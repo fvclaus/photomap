@@ -38,6 +38,8 @@ def insert(request):
 #                return render_to_response("insert-photo-error.html",{form:form})
                 return error("This is not your place!")
             
+            size = request.FILES["photo"].size
+            
             if settings.DEBUG:
                 pass
             else:
@@ -46,12 +48,19 @@ def insert(request):
                 form = PhotoInsertPRODForm(request.POST)
                 form.is_valid()
                 
-            photo = form.save()
+            # add photo at the very end                
+            photo = form.save(commit = False)
             nphotos = len(Photo.objects.all().filter(place = photo.place))
-            photo.order = nphotos - 1
+            photo.order = nphotos
+            # add the size of the photo
+            photo.size = size
+            # update the used space
+            userprofile = request.user.userprofile
+            userprofile.used_space += size
+            userprofile.save()
+            # store photo record
             photo.save()
-            # just closes iframe
-#            return render_to_response("insert-photo-success.html")
+
             return success(id = photo.id, url = photo.getphotourl())
         else:
             # closes iframe and displays error message
@@ -96,6 +105,11 @@ def delete(request):
             photo = Photo.objects.get(pk = id)
             if not is_authorized(photo, request.user):
                 return error("not your photo")
+            # update used space
+            userprofile = request.user.userprofile
+            userprofile.used_space -= photo.size
+            userprofile.save()
+            # remove photo record
             photo.delete()
             return success()
         except (KeyError, Photo.DoesNotExist), e:

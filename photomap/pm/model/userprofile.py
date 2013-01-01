@@ -20,6 +20,8 @@ class UserProfile(models.Model):
     """
     user = models.OneToOneField(User)
     picture = models.ImageField(upload_to=settings.PROFILE_PICTURE_PATH,blank = True, null = True)
+    quota = models.IntegerField(default = 367001600) #350 mbyte
+    used_space = models.IntegerField(default = 0)
     
     class Meta:
         app_label = appsettings.APP_NAME
@@ -40,7 +42,11 @@ def create_user_profile(sender, instance, created, **kwargs):
     @summary: Adds the additional fields to a new user on creation
     """
     if created:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.debug("Creating userprofile")
         UserProfile.objects.create(user=instance)
+
 
 post_save.connect(create_user_profile, sender=User)
 

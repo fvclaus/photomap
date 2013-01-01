@@ -58,7 +58,8 @@
          "place": 1,
          "date": "2012-07-27T18:04:37.794",
          "order": 1,
-         "description": "Description, description, description"
+         "description": "Description, description, description",
+         "size": 164898
       }
    },
    {
@@ -70,7 +71,8 @@
          "place": 2,
          "date": "2012-07-27T18:05:33.175",
          "order": 1,
-         "description": "Description, description, description"
+         "description": "Description, description, description",
+         "size": 164898
       }
    }
 ]

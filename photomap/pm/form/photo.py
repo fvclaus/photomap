@@ -14,13 +14,13 @@ class PhotoInsertDEBUGForm(forms.ModelForm):
     """
     class Meta:
         model = Photo
-        exclude = ( "order","date")
+        exclude = ( "order", "date", "size")
 
 class PhotoCheckPRODForm(forms.ModelForm):
     photo = forms.ImageField()
     class Meta:
         model = Photo
-        exclude = ("order","date","photo")
+        exclude = ("order", "date", "photo", "size")
 
 class PhotoInsertPRODForm(forms.ModelForm):
     """
@@ -29,10 +29,12 @@ class PhotoInsertPRODForm(forms.ModelForm):
     """
     class Meta:
         model = Photo
-        exclude = ("order","date")
-        
+        exclude = ("order", "date", "size")
+
+
 class PhotoUpdateForm(forms.ModelForm):
     id = forms.IntegerField()
+        
     class Meta:
         model = Photo
-        exclude = ("photo", "place" , "thumb","date")
+        exclude = ("photo", "place", "thumb", "date", "size" )

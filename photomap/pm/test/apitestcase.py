@@ -13,6 +13,7 @@ import json
 from datetime import datetime
 from time import mktime
 from pm.model.photo import Photo
+from django.contrib.auth.models import User
 import os
 from urllib import urlopen
 
@@ -20,15 +21,16 @@ class ApiTestCase(TestCase):
     """ loads the simple-test fixtues, appends a logger and logs the client in """
     
     fixtures = ["user", 'simple-test']
-    
     logger = logging.getLogger(__name__)
     
+        
     TIME_DELTA = 1000
     
     def setUp(self):
         self.c = Client()
         self.assertTrue(self.c.login(username = TEST_USER, password = TEST_PASSWORD))
         self.logger = ApiTestCase.logger
+        self.user = self.get_user()
         
     def tearDown(self):
         #remove all photos from s3 again
@@ -154,6 +156,11 @@ class ApiTestCase(TestCase):
             raise RuntimeError("self.model is not defined and model was not in parameters")
         else:
             return self.model
+        
+    def get_user(self):
+        return User.objects.all().get(username = TEST_USER)
+    
+    
         
     def json(self, data = {} , url = None, method = "POST", loggedin = True):
         """ 

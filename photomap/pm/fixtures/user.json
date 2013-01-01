@@ -19,6 +19,16 @@
    },
    {
       "pk": 1,
+      "model": "pm.userprofile",
+      "fields": {
+         "picture": "",
+         "used_space": 164898,
+         "user": 2, 
+         "quota": 367001600
+      }
+   },
+   {
+      "pk": 1,
       "model": "auth.user",
       "fields": {
          "username": "admin",
@@ -33,6 +43,16 @@
          "password": "pbkdf2_sha256$10000$QEgqt6GV9Ep5$WDegUwdL7UbvY5+OeD4X9ToqWr077Ge/emvYNp1V4hU=",
          "email": "",
          "date_joined": "2012-07-27T18:01:47.672"
+      }
+   },
+   {
+      "pk": 2,
+      "model": "pm.userprofile",
+      "fields": {
+         "picture": "",
+         "used_space": 164898,
+         "user": 1, 
+         "quota": 367001600
       }
    }
 ]

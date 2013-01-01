@@ -30,6 +30,7 @@ class PhotoControllerTest(ApiTestCase):
         photo = (photo.pk,photo.getphotourl())
         self.assertDeletes({"id" : 1})
         self.assertPhotoDeleted(photo)
+        self.assertEqual(self.user.userprofile.used_space,0)
         #=======================================================================
         # delete something that does not exist
         #=======================================================================
@@ -57,6 +58,9 @@ class PhotoControllerTest(ApiTestCase):
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
         self.assertEqual(photo.order,1)
+        self.assertPublicAccess(content["url"])
+        self.assertEqual(photo.size, self._get_photo_size())
+        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
         #=======================================================================
         # insert something valid with description
         #=======================================================================
@@ -65,7 +69,9 @@ class PhotoControllerTest(ApiTestCase):
         (photo,content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
         self.assertEqual(photo.order,2)
+        self.assertEqual(photo.size, self._get_photo_size())
         self.assertPublicAccess(content["url"])
+        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
@@ -101,9 +107,11 @@ class PhotoControllerTest(ApiTestCase):
         # test something valid without description
         #=======================================================================
         data = {"id" : 1,
-                "title" : "EO changed"}
+                "title" : "EO changed",
+                "order" : 1}
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.title, data["title"])
+        self.assertEqual(self.user.userprofile.used_space, self._get_photo_size())
         #=======================================================================
         # with description
         #=======================================================================
@@ -148,3 +156,6 @@ class PhotoControllerTest(ApiTestCase):
     def _openphoto(self,data):
         photo = open(TEST_PHOTO,"rb")
         data["photo"] = photo
+        
+    def _get_photo_size(self):
+        return os.stat(TEST_PHOTO).st_size
