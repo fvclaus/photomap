@@ -23,11 +23,12 @@ class NoSupportMiddleware():
         try:
             user_agent = request.META["HTTP_USER_AGENT"]
         except:
-            if 'test' in sys.argv:
-                user_agent = "Firefox/15"
-            else:
-                user_agent = None
-                
+            user_agent = None
+        
+        if user_agent is None:
+            logger.info("No user agent set. Redirecting...")
+            return render_to_response("not-supported.html")
+               
         logger.debug("User agent is %s" % user_agent)
         match = self.IS_OK.search(user_agent)
         

@@ -41,7 +41,11 @@ def create_user_profile(sender, instance, created, **kwargs):
     @author: Frederik Claus
     @summary: Adds the additional fields to a new user on creation
     """
-    if created:
+    if kwargs['raw']:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.debug("Skipping creating of userprofile. This is a raw query.")
+    elif created:
         import logging
         logger = logging.getLogger(__name__)
         logger.debug("Creating userprofile")
