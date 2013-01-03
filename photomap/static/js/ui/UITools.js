@@ -32,13 +32,15 @@ UITools.prototype = {
       k = 0;
       matrix = [];
       matrix[0] = [];
-      
+      console.log(columns);
       while (i <= columns) {
+         console.log(i);
          matrix[k].push(array[j]);
          if (j === array.length - 1) {
             break;
          }
-         if (i === 5) {
+         if (i === columns - 1) {
+            console.dir(matrix);
             i = 0;
             j++;
             k++;

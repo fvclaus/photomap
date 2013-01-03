@@ -63,7 +63,7 @@ UIGallery.prototype =  {
       sliderIndex = this.getScrollable().getIndex();
       imageIndex = $image.index();
       
-      return sliderIndex * 6 + imageIndex;
+      return sliderIndex * 5 + imageIndex;
    },
   /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
@@ -90,7 +90,6 @@ UIGallery.prototype =  {
             
             if (photos[i] === undefined) {
                console.log(photos[i]);
-               continue;
             } else {
                tmplPhotosData.push(photos[i].source);
                $('<img/>').load(function () {
@@ -101,7 +100,7 @@ UIGallery.prototype =  {
                      main.getUIState().setAlbumLoading(false);
                      main.getUI().enable();
                      // create a matrix with 6 columns out of the photos-Array and display each row in a separate div
-                     photoMatrix = main.getUI().getTools().createMatrix(photos, 6);
+                     photoMatrix = main.getUI().getTools().createMatrix(photos, 5);
                      instance._appendImages(photoMatrix, tmplPhotosData);
                      //search all anchors
                      instance.searchImages();
@@ -154,7 +153,7 @@ UIGallery.prototype =  {
       
       while (i < imageMatrix.length) {
          tmplData = $.grep(imageSources, function (element, index) {
-            return index >= i * 6 && index < i * 6 + 6;
+            return index >= i * 5 && index < i * 5 + 5;
          });
          this.$gallery.append(
             $.jqote('#galleryTmpl', {
@@ -174,10 +173,10 @@ UIGallery.prototype =  {
       $thumbs = $(".mp-thumb");
       this.$galleryPages.width(this.$container.width() + "px");
 
-      thumbWidth = $thumbs.width() * 3;
+      thumbWidth = $thumbs.width() * 5;
       galleryWidth = this.$container.width();
-      thumbPadding = ($thumbs.innerWidth() - $thumbs.width()) * 3;
-      marginEW = (galleryWidth - thumbWidth - thumbPadding) / 6;
+      thumbPadding = ($thumbs.innerWidth() - $thumbs.width()) * 5;
+      marginEW = (galleryWidth - thumbWidth - thumbPadding) / 10;
       
       $thumbs.css("margin", "0 " + marginEW + "px");
    },

@@ -41,10 +41,7 @@ ClientServer.prototype = {
 
       $.ajax({
          "url" : "get-album",
-         data : {
-            "id" : id,
-            "secret" : secret
-         },
+         "data" : data,
          success: function (albuminfo) {
 
             var places, place;

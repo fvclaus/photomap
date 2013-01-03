@@ -25,20 +25,24 @@
 {% block controls %}
 <img class="mp-controls-options mp-option-share" src="static/images/share.png" title='{% trans "control-title share" %}' />
 {% endblock %}
-
-{% block content_interactive %}
-	
-   <section class="column span-8" >
+{% block slideshow/??? %}
+   <section class="" >
      <div class="mp-empty-box">
       <span>This box doesn't have a purpose yet!</span>
      </div>
    </section>
-   <section class="mp-news-feed column span-16 last">
-     <div class="mp-empty-box">
-      <span>For the news feed!</span>
-     </div
-   </section>
+{% endblock %}
+{% block gallery/news-feed %}
+	<section class="mp-news-feed">
+		<div class="mp-empty-box">
+        <span>For the news feed!</span>
+		</div>
+	</section>
+{% endblock %}
 
+
+
+{% block content_interactive %}
 	<!-- helpers for selenium ide. remove from production system -->
 	<div class="mp-invisible">
 		<button class="mp-insert-album"></button>
