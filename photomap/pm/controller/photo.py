@@ -45,12 +45,14 @@ def create_thumb(buf):
     else:
         resize_factor = LONGEST_SIDE / float(size[1])
         size = (int(resize_factor * size[0]), LONGEST_SIDE)
-        
+    
+    logger.debug("Resizing photo to %s." % str(size))
     resized_image = image.resize(size)
     resized_image.save(thumb, "JPEG", optimize = True)
     thumb.seek(0)
     
     if image.format != "JPEG":
+        logger.debug("Photo needs to be converted to JPEG format.")
         original = StringIO()
         image.save(original, "JPEG", optimize = True)
         original.seek(0)
@@ -68,10 +70,12 @@ def insert(request):
             
         if form.is_valid():
             place = form.cleaned_data["place"]
+            logger.info("User %d is trying to insert a new Photo into Place %d." % (request.user.pk, place.pk))
             #===================================================================
             # check place
             #===================================================================
             if not is_authorized(place, request.user):
+                logger.warn("User %s not authorized to insert a new Photo in Place %d. Aborting." % (request.user, place.pk))
                 return error("This is not your place!")
             #===================================================================
             # check & convert image
@@ -106,8 +110,10 @@ def insert(request):
             photo.size = get_size(original)
             userprofile = request.user.userprofile
             userprofile.used_space += photo.size
+            
             userprofile.save()
             photo.save()
+            logger.debug("Photo %d inserted with order %d and size %d." % (photo.pk, photo.order, photo.size))
             
             response = success(id = photo.id, url = photo.getphotourl(), thumb = photo.getthumburl())
             set_cookie(response, "used_space", userprofile.used_space)
@@ -131,13 +137,18 @@ def update(request):
         if form.is_valid():
             photo = None
             try:
-                photo = Photo.objects.get(pk = form.cleaned_data["id"])
+                id = form.cleaned_data["id"]
+                logger.info("User %d is trying to update Photo %d." % (request.user.pk, id))
+                photo = Photo.objects.get(pk = id)
                 if not is_authorized(photo, request.user):
+                    logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, id))
                     return error("not your photo")
             except Photo.DoesNotExist:
+                logger.warn("Photo %d does not exist. Aborting." % id)
                 return error("photo does not exist")
             form = PhotoUpdateForm(request.POST, instance = photo)
             form.save()
+            logger.info("Photo %d updated." % id)
             return success()
         else:
             return error(str(form.errors))
@@ -147,18 +158,22 @@ def update(request):
 @login_required
 def delete(request):
     if request.method == "POST":
-        logger.debug("inside delete post")
         try:
-            id = request.POST["id"]
+            id = int(request.POST["id"])
+            logger.info("User %d is trying to delete Photo %d." % (request.user.pk, id))
             photo = Photo.objects.get(pk = id)
             if not is_authorized(photo, request.user):
+                logger.warn("User %s not authorized to delete Photo %d. Aborting." % (request.user, id))
                 return error("not your photo")
             userprofile = request.user.userprofile
+            logger.debug("Removing space %d used by image from userprofile." % photo.size)
             userprofile.used_space -= photo.size
             userprofile.save()
+            logger.info("Photo %d deleted." % id)
             photo.delete()
             return success()
         except (KeyError, Photo.DoesNotExist), e:
+            logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))
     else:
         return HttpResponseBadRequest()
@@ -186,8 +201,10 @@ def generate_filenames(user, place):
 
 def handle_upload(user, place, original, thumb):
     photo_key, thumb_key = generate_filenames(user, place)
+    logger.debug("Upload photo %s and thumbnail %s..." % (photo_key, thumb_key))
     upload_photo(original, photo_key)
     upload_photo(thumb, thumb_key)
+    logger.debug("Upload of %s done." % photo_key)
     return photo_key, thumb_key
     
 def upload_photo(photo, filename):

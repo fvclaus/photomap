@@ -22,9 +22,12 @@ def insert(request):
     if request.method == "POST":
         form = InsertPlaceForm(request.POST)
         if form.is_valid():
+            logger.info("User %d is trying to insert a new Place." % request.user.pk)
             if not form.cleaned_data["album"].user == request.user:
+                logger.warn("User %d not authorized to insert a new Place in Album %d. Aborting." % (request.user.pk, form.cleaned_data["album"].pk))
                 return error("not your album")
             place = form.save()
+            logger.info("Place %d inserted." % place.pk)
             return success(id = place.pk)
         else:
             return error(str(form.errors))
@@ -38,15 +41,18 @@ def update(request):
         if form.is_valid():
             place = None
             try:
-                logger.debug("updating place %d", form.cleaned_data["id"])
-                place = Place.objects.get(pk = form.cleaned_data["id"])
+                id = form.cleaned_data["id"]
+                logger.debug("User %d is trying to update Place %d." % (request.user.pk, id))
+                place = Place.objects.get(pk = id)
             except Place.DoesNotExist: 
-                logger.warn("place %d does not exist", form.cleaned_data["id"])
+                logger.warn("Place %d does not exist.", id)
                 return error("place does not exist")
             if not is_authorized(place, request.user):
+                logger.warn("User %d not authorized to update Place %d. Aborting." % (request.user.pk, id))
                 return error("not your place")
             form = UpdatePlaceForm(request.POST, instance = place)
             form.save()
+            logger.info("Place %d updated." % id)
             return success()
         else:
             return error(str(form.errors))
@@ -58,11 +64,14 @@ def update(request):
 def delete(request):
     if request.method == "POST":
         try:
-            place = Place.objects.get(pk = request.POST["id"])
+            id = int(request.POST["id"])
+            logger.info("User %d is trying to delete Place %d." % (request.user.pk, id))
+            place = Place.objects.get(pk = id)
             if not is_authorized(place, request.user):
+                logger.warn("User %d not authorized to delete Place %d. Aborting." % (request.user.pk, id))
                 return error("not your place")
+            logger.info("Place %d deleted." % id)
             place.delete()    
-
             return success()
         except (OSError, Place.DoesNotExist), e:
             return error(str(e))

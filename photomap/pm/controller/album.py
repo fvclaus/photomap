@@ -42,19 +42,25 @@ def share(request):
     if request.method == "GET":
         user = request.user
         try:
-            id = request.GET["id"]
+            id = int(request.GET["id"])
+            logger.debug("User %d is trying to share Album %d." % (request.user.pk, id))
             if not id:
                 raise KeyError, "invalid id %s" % (str(id))
+                logger.warn("%d is not a valid Album ID." % id)
             album = Album.objects.get(pk = id, user = user)
             shares = Share.objects.all().filter(album = album)
             if len(shares) == 0:
+                logger.info("Requested share does not exist. Creating...")
                 secret = crypto.get_random_string(length = 50)
                 share = Share(album = album, token = secret)
+                logger.info("Share with secret %s has been created." % secret)
                 share.save()
             else:
+                logger.info("Requested share already exists. Returning...")
                 share = shares[0]
             return success(url = "/view-album?id=%d&secret=%s" % (share.album.pk, share.token))
         except (KeyError, Album.DoesNotExist), e:
+            logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))
             
     else:
@@ -72,18 +78,19 @@ def view(request):
 
 
 def get(request):
-    logger.debug("get-album: entered view function")
     if request.method == "GET":
         try:
             user = request.user
             
             try:
-                id = request.GET["id"]
-            except KeyError:
+                id = int(request.GET["id"])
+            except Exception, e:
                 id = None
-                
+            logger.info("User %s is trying to get Album %d." % (str(request.user), id))    
+            
             if user.is_anonymous():
                 secret = request.GET["secret"]
+                logger.info("User is not logged in. Checking secret %s for album %d." % (secret, id))
                 album = Album.objects.get(pk = id)
                 share = Share.objects.get(album = album, token = secret)
                 
@@ -92,6 +99,7 @@ def get(request):
                 if not id:
                     albums = Album.objects.all(user = request.user)
                     album = albums[len(albums) - 1]
+                    logger.info("No ID has been specified. Returning album %d." % album.pk)
                 else:
                     album = Album.objects.get(user = request.user, pk = id)
                 
@@ -101,7 +109,9 @@ def get(request):
             else:
                 data["isOwner"] = False
                 
-            logger.debug("get-album: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
+            logger.debug("--------------------------------ALBUM %d--------------------------------------" % album.pk) 
+            logger.debug("%s", json.dumps(data, cls = DecimalEncoder, indent = 4))
+            logger.debug("------------------------------------------------------------------------------") 
             return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
         except (KeyError, Album.DoesNotExist, Share.DoesNotExist), e:
             return error(str(e))
@@ -117,14 +127,16 @@ def insert(request):
         form = AlbumInsertForm(request.POST, auto_id = False)
         if form.is_valid():
             album = form.save(commit = False)
-            logger.debug("user " + str(request.user))
+            logger.info("User %d is trying to insert a new Album." % request.user.pk)
             album.user = request.user
             try:
                 album.country = reversegecode(album.lat, album.lon)
             except OSMException, e:
+                logger.warn("Could not resolve %f,%f. Reason: %s" % (album.lat, album.lon, str(e)))
 #                return error("osm is temporarily not available. please try again later")
                 return error(str(e))
             album.save()
+            logger.info("Album %d inserted." % album.pk)
             return success(id = album.pk)
         else:
             return error(str(form.errors))
@@ -137,12 +149,16 @@ def update(request):
         form = AlbumUpdateForm(request.POST)
         if form.is_valid():
             album = None
+            id = form.cleaned_data["id"]
+            logger.info("Trying to update Album %d." % id)
             try:
-                album = Album.objects.get(user = request.user, pk = form.cleaned_data["id"])
+                album = Album.objects.get(user = request.user, pk = id)
             except Album.DoesNotExist:
+                logger.warn("Album %d does not exist" % id)
                 return error("album does not exist")
             form = AlbumUpdateForm(request.POST, instance = album)
             form.save()
+            logger.info("Album %d updated." % id)
             return success()
         else:
             return error(str(form.errors))
@@ -152,13 +168,15 @@ def update(request):
 @login_required
 def delete(request):
     if request.method == "POST":
-        logger.debug("inside delete post")
         try:
-            id = request.POST["id"]
+            id = int(request.POST["id"])
+            logger.info("User %d is trying to delete Album %d." % (request.user.pk, id))
             album = Album.objects.get(user = request.user, pk = id)
             album.delete()
+            logger.info("Album %d deleted." % id)
             return success()
         except (KeyError, Album.DoesNotExist), e:
+            logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))
     else:
         logger.debug("form not available yet")

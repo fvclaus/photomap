@@ -29,18 +29,18 @@ class NoSupportMiddleware():
             logger.info("No user agent set. Redirecting...")
             return render_to_response("not-supported.html")
                
-        logger.debug("User agent is %s" % user_agent)
+#        logger.debug("User agent is %s" % user_agent)
         match = self.IS_OK.search(user_agent)
         
         if not settings.DEBUG:
             if not match:
-                logger.debug("Browser is not supported. Redirecting...")
+                logger.info("Browser is not supported. Redirecting...")
                 return render_to_response("not-supported.html")
             else:
                 version = int(match.group("version"))
                 
                 if  version < self.MIN_VERSION:
-                    logger.debug("FF in version %d. Must be at least %d" % (version, self.MIN_VERSION))
+                    logger.info("FF in version %d. Must be at least %d" % (version, self.MIN_VERSION))
                     return render_to_response("not-supported.html")
             
                 return None
