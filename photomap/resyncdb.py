@@ -7,6 +7,9 @@ import subprocess as sub
 import sys
 import argparse
 import os
+import threading
+import errno
+import select
 
 if not os.path.exists("clear.sql"):
     print "Create a clear.sql file first. Exiting."
@@ -47,11 +50,83 @@ for CMD in [SYNCDB, DBSHELL, SHELL, LOAD_USER]:
 def drop_db():
 #    p = sub.Popen(DBSHELL, shell = True, stdout = sub.PIPE, stdin = sub.PIPE)
     p = sub.Popen(DBSHELL, stdin = sub.PIPE, stdout = sub.PIPE)
-    p.stdin.write("%s\n" % PASSWORD)
+    
+    
+    def communicate(cmd):
+    
+        poller = select.poll()
+        select_POLLIN_POLLPRI = select.POLLIN | select.POLLPRI
+        poller.register(p.stdin.fileno(), select.POLLOUT)
+        poller.register(p.stdout.fileno(), select_POLLIN_POLLPRI)
+        
+        read = wrote = False
+        
+        while not read or not wrote:
+            try:
+                ready = poller.poll(5)
+            except select.error, e:
+                if e.args[0] == errno.EINTR:
+                        continue
+                raise
+            
+            if not ready:
+                break
+            
+            for fd, mode in ready:
+                print "Looking at %d, %d" % (fd, mode)
+                if fd == p.stdin.fileno() and mode == select.POLLOUT and not wrote:
+                    os.write(fd, cmd)
+                    poller.unregister(fd)
+                    wrote = True
+                elif fd == p.stdout.fileno() and mode == select_POLLIN_POLLPRI and not read:
+                    data = os.read(fd, 4096)
+                    if not data:
+                        poller.unregister(fd)
+                        read = True
+                        break
+                    print data
+                else:
+                    poller.unregister(fd)
+                    read = True
+            
+        
+    
+#    def _readerthread(fh):
+# #        while True:
+#        print dir(fh)
+#        print "STDOUT: %s" % fh.read()
+#
+#
+#    def communicate(input):
+#
+#        stdout_thread = threading.Thread(target = _readerthread, args = (p.stdout,))
+#        stdout_thread.setDaemon(True)
+#        stdout_thread.start()
+#            
+#        
+#        try:
+#            p.stdin.write(input)
+#        except IOError as e:
+#            if e.errno != errno.EPIPE:
+#                raise
+#                    
+#        stdout_thread.join()
+                    
+    communicate("%s" % PASSWORD)
     print "Dropping all tables..."
-    p.stdin.write("\i clear.sql\n")
+    communicate("\i clear.sql\n")
+    import time
+    time.sleep(2)
+    p.kill()
     print "Done. Closing dbshell."
-    p.communicate("\q\n")
+            
+#    p.stdin.write("%s\n" % PASSWORD)
+#    print "Dropping all tables..."
+#    p.stdin.write("\i clear.sql\n")
+#    print "Done. Closing dbshell."
+    communicate("\q\n")
+    
+    
     
 def sync_db():
     print sub.check_output(SYNCDB)

@@ -18,7 +18,7 @@ import json
 import HTMLParser
 _htmlparser = HTMLParser.HTMLParser()
 
-DEMO_PASSWORD  = "aeGoh7"
+DEMO_PASSWORD = "aeGoh7"
 
 client = Client(HTTP_USER_AGENT = "Firefox/15")
 client.login(username = "demo", password = "aeGoh7")
@@ -86,4 +86,4 @@ if __name__ == "__main__":
     data = {"album-lat": decimal.Decimal(35.012414),
             "album-lon": decimal.Decimal(135.768356),
             "user": User.objects.get(username = "demo")}
-    convert("/home/fredo/javascript/multi-level-photo/map.sqlite", data)
+    convert("/home/fredo/javascript/multi-level-photo2/map.sqlite", data)
