@@ -242,8 +242,7 @@ UIControls.prototype = {
                   url = "/delete-photo";
                   data = { id: photo.id };
                   state.removePhoto(photo);
-                  $("div.mp-gallery > img[src='" + photo.source + "']").remove();
-                  main.getUI().getAlbum().getScrollPane().reinitialise();
+                  $("img[src='" + photo.source + "']").remove();
                } else {
                   return;
                }

@@ -301,7 +301,7 @@ UIGallery.prototype =  {
                .siblings('img').removeClass('current');
             photo = $.grep(state.getPhotos(), function (e, i) {
                return e.source === $el.attr("src");
-            });
+            })[0];
             state.setCurrentPhotoIndex(instance.getImageIndex($el));
             state.setCurrentPhoto(photo);
 
