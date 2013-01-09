@@ -48,11 +48,12 @@ UIGallery.prototype =  {
       
       $thumbs = $(".mp-thumb");
       padding = 5;
-      border = 2 * 5;
-      length = this.$mainWrapper.height() - (padding * 2) - border;
-      totalLength = (length + padding * 2 + border) * 5;
+      border = 8;
+      this.$mainWrapper.css("width", this.$mainWrapper.width() - border + "px");
+      length = this.$mainWrapper.height() - (padding * 2);
+      totalLength = (length + padding * 2) * 5 + border * 5;
       if (totalLength > this.$mainWrapper.width()) {
-         length = this.$mainWrapper.width() / 5 - 2 * padding - border;
+         length = (this.$mainWrapper.width() - border * 5) / 5 - 2 * padding;
          increasedPadding = (this.$mainWrapper.height() - length) / 2;
       } else {
          increasedPadding = padding;
@@ -175,22 +176,19 @@ UIGallery.prototype =  {
       
       thumbWidth = $thumbs.innerWidth() * 5;
       galleryWidth = this.$mainWrapper.width();
-      border = (galleryWidth - thumbWidth) / 10 + "px solid black";
-      
+      border = (galleryWidth - thumbWidth) / 5 + "px solid black";
+      console.log(border);
       $nav.css({
-         width: $nav.width() - 5 + "px",
          height: $nav.height() - 10 + "px",
          padding: "5px 0",
          backgroundColor: "#FAFAFA"
       });
-      $rightNav.css("margin-left", "5px");
-      $leftNav.css("margin-right", "5px");
+      $leftNav.css("border-right", border);
       main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-prev"));
       main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-next"));
       
       $thumbs.css({
-         borderRight: border,
-         borderLeft: border
+         borderRight: border
       });
       // adjust right nav-div
       $("#mp-gallery-right-nav").css("width", $("#mp-gallery-right-nav").width() + 1 + "px");
