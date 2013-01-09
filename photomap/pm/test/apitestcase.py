@@ -36,7 +36,7 @@ class ApiTestCase(TestCase):
         self.user = self.get_user()
         
     def tearDown(self):
-        #remove all photos from s3 again
+        # remove all photos from s3 again
         photos = Photo.objects.all()
         if photos:
             photos.delete()
@@ -131,6 +131,8 @@ class ApiTestCase(TestCase):
         url = urlopen(photo[1])
 #        s3 error for access denied
         self.assertEqual(url.getcode(), 403)
+        url = urlopen(photo[2])
+        self.assertEqual(url.getcode(), 403)
     
     def assertAlbumComplete(self, album): 
         self.assertDescriptionComplete(album)
@@ -145,8 +147,9 @@ class ApiTestCase(TestCase):
     
     def assertPhotoComplete(self, photo):
         self.assertTrue(photo["photo"])
-        self.assertTrue(photo["order"])
+        self.assertTrue(int(photo["order"]) > 0)
         self.assertTrue(photo["thumb"])
+        self.assertTrue(photo["photo"] != photo["thumb"])
             
     def assertDescriptionComplete(self, instance):
         self.assertTrue(instance["title"])

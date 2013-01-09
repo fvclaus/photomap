@@ -37,7 +37,7 @@ class AlbumControllerTest(ApiTestCase):
         photos = []
         
         for place in places:
-            photos.extend([(photo.pk, photo.getphotourl()) for photo in Photo.objects.all().filter(place = place)])
+            photos.extend([(photo.pk, photo.getphotourl(), photo.getthumburl()) for photo in Photo.objects.all().filter(place = place)])
             
         self.assertDeletes({"id" : 1})
         
@@ -70,8 +70,8 @@ class AlbumControllerTest(ApiTestCase):
         data = {"title": "Atlantis",
                 "lat" : Decimal(17.375803),
                 "lon": Decimal(-34.628906)}
-        (album,content) = self.assertCreates(data)
-        self.assertEqual(album.country,"oc")
+        (album, content) = self.assertCreates(data)
+        self.assertEqual(album.country, "oc")
         #=======================================================================
         # insert something valid without description
         #=======================================================================
@@ -118,7 +118,7 @@ class AlbumControllerTest(ApiTestCase):
         #=======================================================================
         # wrong id test
         #=======================================================================
-        data["id"] = 999 # does not exist
+        data["id"] = 999  # does not exist
         self.assertError(data)
         #=======================================================================
         # no id test
