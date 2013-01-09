@@ -18,13 +18,26 @@
 /* ---- gallery styling ---- */
 
 .mp-gallery
-  height 15%
-  padding 0.5%
+  width 98%
+  height 19%
+  padding 5px 0
   position relative
   overflow hidden
+  background-color black
   .mp-place-title
     width 80%
     margin 0
+
+.mp-gallery-nav
+  width 10%
+  height 100%
+  img.mp-control
+    width 50%
+    height auto
+
+.mp-gallery-main
+  width 80%
+  height 100%
 
 .mp-gallery-controls
   width 20%
@@ -37,62 +50,66 @@
     background none
 
 .mp-gallery-thumbs
-  width 99%
-  height 96% // title-bar is 10% (core.styl)
-  padding 5px 0 0 0
+  width 100%
+  height 100%
+  padding 0
   position relative
   overflow hidden
   img
-    height 95%
-    padding 1.5%
     float left
     background $background-color-light
     transition
 
 .mp-gallery-inner
-  height 95%
+  height 100%
   width 20000em
   position absolute
+
 .mp-thumb-page
-  height 95%
+  height 100%
   float left
+
 /* ------ end gallery ------ */
 
 /* ------------------------- */
 /* slideshow & fullscreen styling */
 
 .mp-slideshow
-  height 45%
-  padding 1% 1% 1% 0
+  height 54%
+  padding 1% 0 0 0
   .mp-photo-title
-    width 80%
+    width 100%
+    height 90%
+    float left
 
-.mp-slideshow-controls
-  width 20%
+.mp-slideshow-nav
+  width 10%
   height 100%
   img.mp-control
-    width auto
-    height 95%
-    padding 0 2.5%
-    float left
+    width 60%
+    max-width 50px
+    height auto
+    max-height 50px
     background none
 
+.mp-slideshow-info
+  height 100%
+  width 25%
+  float right
+
 .mp-slideshow-inner
-  height 86%
-  width 98%
-  padding 5px 0 0 0
+  height 100%
+  width 70%
+  padding 0
 
 .mp-current-image
-  max-width 90%
-  max-height 90%
+  max-width 95%
+  max-height 95%
   border 5px solid #bababa
 
 .mp-slideshow-image
-  height 90% // title-bar is 10% (core.styl)
-  display block
-
-.mp-slideshow-nav
-  height 90%
+  width 80%
+  height 100%
    
 .mp-image-number
   float left

@@ -13,6 +13,7 @@ var UIGallery;
 UIGallery = function () {
 
    this.$container = $('#mp-gallery');
+   this.$mainWrapper = $('#mp-gallery-main');
    this.$galleryWrapper = $('#mp-gallery-thumbs');
    this.$gallery = $('#mp-gallery-inner');
    this.$galleryPages = null;
@@ -29,6 +30,8 @@ UIGallery.prototype =  {
          this.$container.bind('drop', fileUpload.handleGalleryDrop);
          this.bindListener();
       }
+      // align gallery with map
+      this.$container.css("width", this.$container.width() + 10 + "px");
    },
    /**
     * @author Frederik Claus
@@ -41,11 +44,25 @@ UIGallery.prototype =  {
    },
    _resizeThumbs : function () {
       
-      var $thumbs, length;
+      var $thumbs, padding, increasedPadding, length, totalLength, border;
       
       $thumbs = $(".mp-thumb");
-      length = $thumbs.first().height();
-      $thumbs.width(length);
+      padding = 5;
+      border = 2 * 5;
+      length = this.$mainWrapper.height() - (padding * 2) - border;
+      totalLength = (length + padding * 2 + border) * 5;
+      if (totalLength > this.$mainWrapper.width()) {
+         length = this.$mainWrapper.width() / 5 - 2 * padding - border;
+         increasedPadding = (this.$mainWrapper.height() - length) / 2;
+      } else {
+         increasedPadding = padding;
+      }
+      
+      $thumbs.css({
+         "width": length,
+         "height": length,
+         padding: increasedPadding + "px " + padding + "px"
+      });
    },
    /**
     * @returns {jQElement} Gallery element
@@ -111,7 +128,8 @@ UIGallery.prototype =  {
                         instance._bindSortableListener();
                      }
                      // center the images and put 3 in a row
-                     instance._centerImages();
+                     //instance._centerImages();
+                     instance._createFilmRollEffect();
                      // initialize scrollable
                      instance._initializeScrollable();
                      
@@ -146,6 +164,40 @@ UIGallery.prototype =  {
    /**
     * @private
     */
+   _createFilmRollEffect : function () {
+      
+      var $thumbs, $nav, $leftNav, $rightNav, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin;
+      
+      $thumbs = $(".mp-thumb");
+      $nav = $(".mp-gallery-nav");
+      $leftNav = $("#mp-gallery-left-nav");
+      $rightNav = $("#mp-gallery-right-nav");
+      
+      thumbWidth = $thumbs.innerWidth() * 5;
+      galleryWidth = this.$mainWrapper.width();
+      border = (galleryWidth - thumbWidth) / 10 + "px solid black";
+      
+      $nav.css({
+         width: $nav.width() - 5 + "px",
+         height: $nav.height() - 10 + "px",
+         padding: "5px 0",
+         backgroundColor: "#FAFAFA"
+      });
+      $rightNav.css("margin-left", "5px");
+      $leftNav.css("margin-right", "5px");
+      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-prev"));
+      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-next"));
+      
+      $thumbs.css({
+         borderRight: border,
+         borderLeft: border
+      });
+      // adjust right nav-div
+      $("#mp-gallery-right-nav").css("width", $("#mp-gallery-right-nav").width() + 1 + "px");
+   },
+   /**
+    * @private
+    */
    _appendImages : function (imageMatrix, imageSources) {
       
       var tmplData, i;
@@ -176,7 +228,7 @@ UIGallery.prototype =  {
       thumbWidth = $thumbs.width() * 5;
       galleryWidth = this.$container.width();
       thumbPadding = ($thumbs.innerWidth() - $thumbs.width()) * 5;
-      marginEW = (galleryWidth - thumbWidth - thumbPadding) / 10;
+      marginEW = (galleryWidth - thumbWidth - thumbPadding - 5 * 10) / 10;
       
       $thumbs.css("margin", "0 " + marginEW + "px");
    },

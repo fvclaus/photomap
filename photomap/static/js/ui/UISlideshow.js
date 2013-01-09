@@ -26,6 +26,8 @@ UISlideshow.prototype = {
 
    initWithoutAjax : function () {
       this.bindListener();
+      main.getUI().getTools().centerElement(this.$nav, this.$next);
+      main.getUI().getTools().centerElement(this.$nav, this.$prev);
    },
    startSlider: function () {
       

@@ -35,19 +35,20 @@
 
 {% block slideshow/??? %}
 	<section class="mp-slideshow" id="mp-slideshow">
-	  <div class="mp-title-bar">
-       <span class="mp-slideshow-controls">
-	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
-   	   <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
-      	<img class="mp-slideshow-zoom mp-control" src="static/images/magnify.png" title='{% trans "View in Fullscreen" %}'></img>
-       </span>
+	  <div class="mp-slideshow-info">
        <span class="mp-photo-title mp-option-information">No Title</span>
      </div>
      <div class="mp-slideshow-inner">
-	    <div class="mp-slideshow-image column span-24">
+       <div class="mp-slideshow-nav column">
+	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
+       </div>
+	    <div class="mp-slideshow-image column">
 	      <img class="mp-current-image"></img>
 	    </div>
-     <span class="mp-image-number"></span>
+       <div class="mp-slideshow-nav column">
+   	   <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
+       </div>
+       <span class="mp-image-number"></span>
      </div>
 	</section>
 {% endblock %}
@@ -55,16 +56,22 @@
 	<section class="mp-gallery" id="mp-gallery">
 		<div class="mp-title-bar mp-nodisplay">
 		  <span class="mp-gallery-controls">
-          <img class="mp-gallery-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
-          <img class="mp-gallery-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
 			 <img class="mp-option-add mp-control" src="static/images/add.png" title='{% trans "Add Image" %}'></img>
         </span>  
       <span class="mp-place-title mp-option-information">No Title</span>
 		</div>
-		<div class="mp-gallery-thumbs" id="mp-gallery-thumbs">
-        <div class="mp-gallery-inner" id="mp-gallery-inner">
-        </div>
-		</div>
+      <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
+        <img class="mp-gallery-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
+      </div>
+      <div class="mp-gallery-main column" id="mp-gallery-main">
+        <div class="mp-gallery-thumbs" id="mp-gallery-thumbs">
+          <div class="mp-gallery-inner" id="mp-gallery-inner">
+          </div>
+		  </div>
+      </div>
+      <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
+        <img class="mp-gallery-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
+      </div>
 	</section>
 {% endblock %}
 
