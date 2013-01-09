@@ -159,6 +159,8 @@ UIGallery.prototype =  {
          prev: ".mp-gallery-nav-prev",
          next: ".mp-gallery-nav-next",
          circular: true,
+         mousewheel: true,
+         speed: 500,
          vertical: false
       }).navigator();
    },
@@ -176,7 +178,7 @@ UIGallery.prototype =  {
       
       thumbWidth = $thumbs.innerWidth() * 5;
       galleryWidth = this.$mainWrapper.width();
-      border = (galleryWidth - thumbWidth) / 5 + "px solid black";
+      border = (galleryWidth - thumbWidth) / 5 + "px solid #dadada";
       console.log(border);
       $nav.css({
          height: $nav.height() - 10 + "px",
