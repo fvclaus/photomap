@@ -20,7 +20,7 @@ _htmlparser = HTMLParser.HTMLParser()
 
 DEMO_PASSWORD  = "aeGoh7"
 
-client = Client(HTTP_USER_AGENT = "firefox/15")
+client = Client(HTTP_USER_AGENT = "Firefox/15")
 client.login(username = "demo", password = "aeGoh7")
 
 def unescape(data):
