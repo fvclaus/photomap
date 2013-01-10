@@ -16,7 +16,7 @@ UIInformation = function () {
    this.$album = $("#mp-album");
    this.$infoButton = $(".mp-option-information");
    this.$description = $(".mp-description-wrapper").jScrollPane();
-   this.$imageNumber = this.$wrapper.find(".mp-image-number");
+   this.$imageNumber = $(".mp-image-number");
    this.$descriptionTitle = $(".mp-description-title span");
 };
 
@@ -88,18 +88,10 @@ UIInformation.prototype = {
       state = main.getUIState();
       photos = state.getPhotos();
       
-      this.$imageNumber.text(" Bild " + state.getCurrentPhotoIndex() + 1 + "/" + photos.length);
+      this.$imageNumber.text(" Bild " + (state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
    },
-   hideImageNumber : function () {
-      this.$imageNumber.hide();
-      this.$imageNumber.next().css("margin-left", 0);
-   },
-   showImageNumber : function () {
-      
-      var margin = -this.$imageNumber.width();
-      
-      this.$imageNumber.show();
-      this.$imageNumber.next().css("margin-left", margin);
+   emptyImageNumber : function () {
+      this.$imageNumber.text("No Image");
    },
    updatePhoto : function () {
       this.updatePhotoDescription();

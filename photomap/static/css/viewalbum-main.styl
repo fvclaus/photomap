@@ -55,10 +55,10 @@
   padding 0
   position relative
   overflow hidden
-  img
-    float left
-    background $background-color-light
-    transition
+.mp-thumb
+  float left
+  background $background-color-light
+  transition
 
 .mp-gallery-inner
   height 100%
@@ -77,10 +77,6 @@
 .mp-slideshow
   height 54%
   padding 1% 0 0 0
-  .mp-photo-title
-    width 100%
-    height 90%
-    float left
 
 .mp-slideshow-nav
   width 10%
@@ -91,11 +87,6 @@
     height auto
     max-height 50px
     background none
-
-.mp-slideshow-info
-  height 100%
-  width 25%
-  float right
 
 .mp-slideshow-inner
   height 100%
@@ -111,8 +102,19 @@
   width 80%
   height 100%
    
-.mp-image-number
+.mp-slideshow-info
+  height 100%
+  width 25%
+  float right
+
+.mp-photo-title
+  width 100%
+  height 60%
   float left
-  font-size 90%
+
+.mp-image-number
+  width 100%
+  height 10%
+  float left
 
 /* ------ end slideshow ------ */

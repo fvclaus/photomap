@@ -14,6 +14,7 @@ UIGallery = function () {
 
    this.$container = $('#mp-gallery');
    this.$mainWrapper = $('#mp-gallery-main');
+   this.mainWrapperWidth = this.$mainWrapper.width();
    this.$galleryWrapper = $('#mp-gallery-thumbs');
    this.$gallery = $('#mp-gallery-inner');
    this.$galleryPages = null;
@@ -49,7 +50,7 @@ UIGallery.prototype =  {
       $thumbs = $(".mp-thumb");
       padding = 5;
       border = 8;
-      this.$mainWrapper.css("width", this.$mainWrapper.width() - border + "px");
+      this.$mainWrapper.css("width", this.mainWrapperWidth - border + "px");
       length = this.$mainWrapper.height() - (padding * 2);
       totalLength = (length + padding * 2) * 5 + border * 5;
       if (totalLength > this.$mainWrapper.width()) {
@@ -64,6 +65,33 @@ UIGallery.prototype =  {
          "height": length,
          padding: increasedPadding + "px " + padding + "px"
       });
+   },
+   _createEmptyTiles : function () {
+      
+      var $thumbPage, emptySpots, tile, lastSliderSize, i;
+      $thumbPage = null;
+      emptySpots = 0;
+      tile = "<div class='mp-thumb mp-empty-tile'></div>";
+      
+      if (this.$gallery.children().length === 0) {
+         
+         this.$gallery.append("<div class='mp-thumb-page'></div>");
+         $thumbPage = $(".mp-thumb-page");
+         emptySpots = 5;
+      } else {
+         
+         lastSliderSize = $(".mp-thumb-page").not($(".cloned")).last().children().length;
+         if (lastSliderSize < 5) {
+
+            emptySpots = 5 - lastSliderSize;
+            $thumbPage = $(".mp-thumb-page").not($(".cloned")).last();
+         }
+      }
+      
+      for (i = 0; i < emptySpots; i++) {
+         
+         $thumbPage.append(tile);
+      }
    },
    /**
     * @returns {jQElement} Gallery element
@@ -102,7 +130,7 @@ UIGallery.prototype =  {
          loaded = 0;
          i = 0;
          main.getUI().disable();
-         this.$gallery.empty();
+         this.$gallery.empty().css("left", 0);
          
          while (i < photos.length) {
             
@@ -120,6 +148,8 @@ UIGallery.prototype =  {
                      // create a matrix with 6 columns out of the photos-Array and display each row in a separate div
                      photoMatrix = main.getUI().getTools().createMatrix(photos, 5);
                      instance._appendImages(photoMatrix, tmplPhotosData);
+                     // fill last slider up with empty tiles (unless it is already filled with pics
+                     instance._createEmptyTiles();
                      //search all anchors
                      instance.searchImages();
                      // adjust height to make the thumbs square
@@ -144,7 +174,10 @@ UIGallery.prototype =  {
             i++;
          }
       } else {
-         this.$gallery.empty();
+         this.$gallery.empty().css("left", 0);
+         this._createEmptyTiles();
+         this._resizeThumbs();
+         this._createFilmRollEffect();
       }
    },
    showBorder: function () {
@@ -169,7 +202,7 @@ UIGallery.prototype =  {
     */
    _createFilmRollEffect : function () {
       
-      var $thumbs, $nav, $leftNav, $rightNav, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin;
+      var $thumbs, $nav, $leftNav, $rightNav, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin, difference;
       
       $thumbs = $(".mp-thumb");
       $nav = $(".mp-gallery-nav");
@@ -181,7 +214,7 @@ UIGallery.prototype =  {
       border = (galleryWidth - thumbWidth) / 5 + "px solid #dadada";
       console.log(border);
       $nav.css({
-         height: $nav.height() - 10 + "px",
+         height: $thumbs.innerHeight() - 10 + "px",
          padding: "5px 0",
          backgroundColor: "#FAFAFA"
       });
@@ -193,7 +226,8 @@ UIGallery.prototype =  {
          borderRight: border
       });
       // adjust right nav-div
-      $("#mp-gallery-right-nav").css("width", $("#mp-gallery-right-nav").width() + 1 + "px");
+      difference = this.$container.width() - (this.mainWrapperWidth + $nav.width() * 2);
+      $("#mp-gallery-right-nav").css("width", $("#mp-gallery-left-nav").width() + difference + "px");
    },
    /**
     * @private
@@ -293,7 +327,7 @@ UIGallery.prototype =  {
 
       //bind events on anchors
       instance.$gallery
-         .on('mouseenter.Gallery', ".mp-thumb", function (event) {
+         .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             $el
                .addClass('current')
@@ -311,7 +345,7 @@ UIGallery.prototype =  {
             }
             cursor.setCursor($el, cursor.styles.pointer);
          })
-         .on('mouseleave.Gallery', ".mp-thumb", function (event) {
+         .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             //add visited border if necessary
             (state.getPhotos())[$el.index()].checkBorder();
@@ -321,12 +355,12 @@ UIGallery.prototype =  {
                controls.hideEditControls(true);
             }
          })
-         .on('mousedown.Gallery', ".mp-thumb", function (event) {
+         .on('mousedown.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             // set Cursor for DragnDrop on images (grabber)
             cursor.setCursor($el, cursor.styles.grab);
          })
-         .on('click.Gallery', ".mp-thumb", function (event) {
+         .on('click.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             // workaround for DnD click event:
             // when element gets dragged class "noClick" is added, when it's dropped and the click event
