@@ -14,6 +14,7 @@ from pm.form.authentication import LoginForm, RegisterForm
 from pm.model.place import Place
 from pm.model.photo import Photo
 
+from pm.controller import set_cookie
 import logging
 
 logger = logging.getLogger(__name__)
@@ -33,7 +34,10 @@ def login(request):
             
             if not (user == None or user.is_anonymous()):
                 auth_login(request, user)
-                return HttpResponseRedirect("/dashboard")
+                response = HttpResponseRedirect("/dashboard")
+                set_cookie(response, "quota", user.userprofile.quota)
+                set_cookie(response, "used_space", user.userprofile.used_space)
+                return response
             else:
                 loginform.errors["email"] = ["Please recheck the username"]
                 loginform.errors["password"] = ["Please recheck the password"]

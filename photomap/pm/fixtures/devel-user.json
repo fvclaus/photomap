@@ -1,0 +1,86 @@
+[ 
+   {
+      "pk": 3,
+      "model": "auth.user",
+      "fields": {
+         "username": "demo",
+         "first_name": "",
+         "last_name": "",
+         "is_active": true,
+         "is_superuser": false,
+         "is_staff": false,
+         "last_login": "2012-07-27T18:01:47.672",
+         "groups": [],
+         "user_permissions": [],
+         "password": "pbkdf2_sha256$10000$HUuJBmwOc6Mx$4DZYZ4hvPcvixBxaTr+7+ooSP0/8WET3vxbpuQiXCEs=",
+         "email": "demo@keiken.app",
+         "date_joined": "2012-07-27T18:01:47.672"
+      }
+   },
+   {
+      "pk": 3,
+      "model": "pm.userprofile",
+      "fields": {
+         "picture": "",
+         "used_space": 0,
+         "user": 3, 
+         "quota": 367001600
+      }
+   },
+   {
+      "pk": 2,
+      "model": "auth.user",
+      "fields": {
+         "username": "test",
+         "first_name": "",
+         "last_name": "",
+         "is_active": true,
+         "is_superuser": false,
+         "is_staff": false,
+         "last_login": "2012-07-27T18:01:47.672",
+         "groups": [],
+         "user_permissions": [],
+         "password": "pbkdf2_sha256$10000$el4zJoknyrub$S/HXUQTs9PiV4OO9hPxFIVrGqSkhjVm3znsZozNJBgU=",
+         "email": "test@keiken.app",
+         "date_joined": "2012-07-27T18:01:47.672"
+      }
+   },
+   {
+      "pk": 2,
+      "model": "pm.userprofile",
+      "fields": {
+         "picture": "",
+         "used_space": 164898,
+         "user": 2, 
+         "quota": 367001600
+      }
+   },
+   {
+      "pk": 1,
+      "model": "auth.user",
+      "fields": {
+         "username": "admin",
+         "first_name": "",
+         "last_name": "",
+         "is_active": true,
+         "is_superuser": true,
+         "is_staff": true,
+         "last_login": "2012-07-27T18:01:47.672",
+         "groups": [],
+         "user_permissions": [],
+         "password": "pbkdf2_sha256$10000$QEgqt6GV9Ep5$WDegUwdL7UbvY5+OeD4X9ToqWr077Ge/emvYNp1V4hU=",
+         "email": "admin@keiken.app",
+         "date_joined": "2012-07-27T18:01:47.672"
+      }
+   },
+   {
+      "pk": 1,
+      "model": "pm.userprofile",
+      "fields": {
+         "picture": "",
+         "used_space": 164898,
+         "user": 1, 
+         "quota": 367001600
+      }
+   }
+]

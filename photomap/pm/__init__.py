@@ -6,9 +6,12 @@ import sys
 from django.core.management import setup_environ
 import appsettings
 
-sys.path.append(os.path.realpath(".."))
-import settings
-setup_environ(settings)
+#===============================================================================
+# AUTOMATICALLY SELECT THE DEVEL SETTINGS
+#===============================================================================
+#sys.path.append(os.path.realpath(".."))
+#import settings
+#setup_environ(settings)
 
 
 

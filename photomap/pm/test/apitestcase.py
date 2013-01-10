@@ -13,25 +13,30 @@ import json
 from datetime import datetime
 from time import mktime
 from pm.model.photo import Photo
+from django.contrib.auth.models import User
 import os
 from urllib import urlopen
 
 class ApiTestCase(TestCase):
     """ loads the simple-test fixtues, appends a logger and logs the client in """
     
-    fixtures = ["user", 'simple-test']
-    
+    fixtures = ["devel-user", 'simple-test']
     logger = logging.getLogger(__name__)
     
+        
     TIME_DELTA = 1000
     
+    def createClient(self):
+        return Client(HTTP_USER_AGENT = "Firefox/15")
+    
     def setUp(self):
-        self.c = Client()
+        self.c = self.createClient()
         self.assertTrue(self.c.login(username = TEST_USER, password = TEST_PASSWORD))
         self.logger = ApiTestCase.logger
+        self.user = self.get_user()
         
     def tearDown(self):
-        #remove all photos from s3 again
+        # remove all photos from s3 again
         photos = Photo.objects.all()
         if photos:
             photos.delete()
@@ -75,7 +80,7 @@ class ApiTestCase(TestCase):
     def assertPublicAccess(self, url):
         
         if url.startswith("/"):  
-            c = Client()
+            c = self.createClient()
             response = c.get(url)
             code = response.status_code
         else:
@@ -86,7 +91,7 @@ class ApiTestCase(TestCase):
         return response
         
     def assertNoPublicAccess(self, url):
-        c = Client()
+        c = self.createClient()
         response = c.get(url)
         content = json.loads(response.content)
         self.assertFalse(content["success"])
@@ -126,6 +131,8 @@ class ApiTestCase(TestCase):
         url = urlopen(photo[1])
 #        s3 error for access denied
         self.assertEqual(url.getcode(), 403)
+        url = urlopen(photo[2])
+        self.assertEqual(url.getcode(), 403)
     
     def assertAlbumComplete(self, album): 
         self.assertDescriptionComplete(album)
@@ -140,8 +147,9 @@ class ApiTestCase(TestCase):
     
     def assertPhotoComplete(self, photo):
         self.assertTrue(photo["photo"])
-        self.assertTrue(photo["order"])
+        self.assertTrue(int(photo["order"]) > 0)
         self.assertTrue(photo["thumb"])
+        self.assertTrue(photo["photo"] != photo["thumb"])
             
     def assertDescriptionComplete(self, instance):
         self.assertTrue(instance["title"])
@@ -155,6 +163,11 @@ class ApiTestCase(TestCase):
         else:
             return self.model
         
+    def get_user(self):
+        return User.objects.all().get(username = TEST_USER)
+    
+    
+        
     def json(self, data = {} , url = None, method = "POST", loggedin = True):
         """ 
             @author: Frederik Claus
@@ -163,7 +176,7 @@ class ApiTestCase(TestCase):
         if loggedin:
             client = self.c
         else:
-            client = Client()
+            client = self.createClient()
         if not url:
             if not self.url:
                 raise RuntimeError("self.url is not defined and url was not in parameters")
@@ -180,5 +193,5 @@ class ApiTestCase(TestCase):
         return mktime(datetime.now().timetuple()) 
     
     def getloggedoutclient(self):
-        return Client()
+        return self.createClient()
         

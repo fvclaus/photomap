@@ -6,13 +6,14 @@ Created on Jun 29, 2012
 
 from apitestcase import ApiTestCase
 from django.test.client import Client
-from data import TEST_PASSWORD, TEST_USER,TEST_PHOTO
+from data import TEST_PASSWORD, TEST_USER, TEST_PHOTO
 from pm.model.photo import Photo
 
 import json
 import logging 
 import os
 from copy import deepcopy
+import urllib2
 
 class PhotoControllerTest(ApiTestCase):
         
@@ -27,9 +28,10 @@ class PhotoControllerTest(ApiTestCase):
         # delete something that exists
         #=======================================================================
         photo = Photo.objects.get(pk = 1)
-        photo = (photo.pk,photo.getphotourl())
+        photo = (photo.pk, photo.getphotourl(), photo.getthumburl())
         self.assertDeletes({"id" : 1})
         self.assertPhotoDeleted(photo)
+        self.assertEqual(self.user.userprofile.used_space, 0)
         #=======================================================================
         # delete something that does not exist
         #=======================================================================
@@ -56,16 +58,23 @@ class PhotoControllerTest(ApiTestCase):
         self._openphoto(data)
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
-        self.assertEqual(photo.order,1)
+        self.assertEqual(photo.order, 1)
+        self.assertPublicAccess(content["url"])
+        self.assertThumbSize(content["thumb"])
+        self.assertEqual(photo.size, self._get_photo_size())
+        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
         #=======================================================================
         # insert something valid with description
         #=======================================================================
         self._openphoto(data)
         data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
-        (photo,content) = self.assertCreates(data)
+        (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
-        self.assertEqual(photo.order,2)
+        self.assertEqual(photo.order, 2)
+        self.assertEqual(photo.size, self._get_photo_size())
         self.assertPublicAccess(content["url"])
+        self.assertThumbSize(content["thumb"])
+        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
@@ -101,9 +110,11 @@ class PhotoControllerTest(ApiTestCase):
         # test something valid without description
         #=======================================================================
         data = {"id" : 1,
-                "title" : "EO changed"}
+                "title" : "EO changed",
+                "order" : 1}
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.title, data["title"])
+        self.assertEqual(self.user.userprofile.used_space, self._get_photo_size())
         #=======================================================================
         # with description
         #=======================================================================
@@ -124,27 +135,25 @@ class PhotoControllerTest(ApiTestCase):
         #=======================================================================
         # wrong id test
         #=======================================================================
-        data["id"] = 999 # does not exist
+        data["id"] = 999  # does not exist
         self.assertError(data)
-        
-    # hack around the fact that create photo will never return json
-#    this has gone obsolete since the introduction of html5 video upload
-#    def assertPhotoCreateSuccess(self, data):
-#        response = self.c.post(self.url, data)
-#        self.assertTrue("text/html" in response["Content-Type"])
-#        self.assertFalse("error" in response.content)
-#        photos = Photo.objects.all()
-#        photo = photos[len(photos) - 1]
-#        return {"id" : photo.pk}
-        
-#    obsolete since html5 video upload
-#    def assertPhotoCreateError(self, data):
-#        length = len(Photo.objects.all())
-#        response = self.c.post(self.url, data)
-#        self.assertTrue("text/html" in response["Content-Type"])
-#        self.assertTrue("error" in response.content)
-#        self.assertEqual(length, len(Photo.objects.all()))
     
-    def _openphoto(self,data):
-        photo = open(TEST_PHOTO,"rb")
+    def assertThumbSize(self, thumb_url):
+        from PIL import Image
+        import tempfile
+        url_data = urllib2.urlopen(thumb_url)
+        thumb, name = tempfile.mkstemp(suffix = ".jpeg", text = False)
+        thumb = open(name, "wb")
+        thumb.write(url_data.read())
+        thumb.close()
+        
+        thumb = Image.open(name)
+        self.assertTrue(thumb.size[0] is 100 or thumb.size[1] is 100)
+        
+        
+    def _openphoto(self, data):
+        photo = open(TEST_PHOTO, "rb")
         data["photo"] = photo
+        
+    def _get_photo_size(self):
+        return os.stat(TEST_PHOTO).st_size
