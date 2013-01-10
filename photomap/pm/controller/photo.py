@@ -89,6 +89,8 @@ def insert(request):
             #===================================================================
             if settings.DEBUG:
                 request.FILES["photo"] = original
+                from django.core.files.uploadedfile import InMemoryUploadedFile
+                thumb = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpeg" % original.name, None, thumb.len, None)
                 request.FILES["thumb"] = thumb
                 form = PhotoInsertForm(request.POST, request.FILES)
                 assert form.is_valid(), "Form should always be valid here."
