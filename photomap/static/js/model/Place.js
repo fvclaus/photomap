@@ -83,10 +83,18 @@ Place.prototype._bindListener = function () {
    ui = main.getUI();
    information = ui.getInformation();
    controls = ui.getControls();
-   // click event for place (its marker)
+   
+   google.maps.event.addListener(this.marker.MapMarker, "click", function () {
+      
+      state.setCurrentAlbum(instance);
+      information.updateAlbumDescription();
+      information.updateAlbumTitle();
+   });
+   
+   // dblclick event for place (its marker)
    // in the eventcallback this will be the gmap
    // use instance as closurefunction to access the place object
-   google.maps.event.addListener(this.marker.MapMarker, 'click', function () {
+   google.maps.event.addListener(this.marker.MapMarker, 'dblclick', function () {
 
       var map, oldPlace;
 

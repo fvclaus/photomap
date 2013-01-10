@@ -219,8 +219,9 @@ UIGallery.prototype =  {
          backgroundColor: "#FAFAFA"
       });
       $leftNav.css("border-right", border);
-      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-prev"));
-      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-next"));
+      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-prev"), "horizontal");
+      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-next"), "horizontal");
+      main.getUI().getTools().centerElement($nav, $(".mp-option-insert-photo"), "horizontal");
       
       $thumbs.css({
          borderRight: border

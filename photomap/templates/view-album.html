@@ -35,12 +35,6 @@
 
 {% block slideshow/??? %}
 	<section class="mp-slideshow" id="mp-slideshow">
-	  <div class="mp-slideshow-info">
-       <span class="mp-image-number">No Images</span>
-       <span class="mp-photo-title mp-option-information">No Title</span>
-       <span class="mp-control mp-paint-photo">Starte Bildeditor</span>
-       <span class="mp-control mp-edit-photo">Bildinformationen bearbeiten</span>
-     </div>
      <div class="mp-slideshow-inner">
        <div class="mp-slideshow-nav column">
 	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
@@ -52,16 +46,13 @@
    	   <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
        </div>
      </div>
+	  <div class="mp-slideshow-info">
+       <span class="mp-image-number">No Images</span>
+     </div>
 	</section>
 {% endblock %}
 {% block gallery/news-feed %}
 	<section class="mp-gallery" id="mp-gallery">
-		<div class="mp-title-bar mp-nodisplay">
-		  <span class="mp-gallery-controls">
-			 <img class="mp-option-add mp-control" src="static/images/add.png" title='{% trans "Add Image" %}'></img>
-        </span>  
-      <span class="mp-place-title mp-option-information">No Title</span>
-		</div>
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
         <img class="mp-gallery-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
       </div>
@@ -72,7 +63,12 @@
 		  </div>
       </div>
       <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
-        <img class="mp-gallery-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
+        <span>        
+          <img class="mp-gallery-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
+		  </span>
+        <span>
+          <img class="mp-option-insert-photo mp-control" src="static/images/add.png" title='{% trans "Add Image" %}'></img>
+        </span>
       </div>
 	</section>
 {% endblock %}

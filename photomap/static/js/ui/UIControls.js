@@ -24,7 +24,7 @@ UIControls = function (maxHeight) {
    this.$share = $("img.mp-option-share");
 
    this.$logout = $(".mp-option-logout");
-   this.$center = $(".mp-option-center");
+   this.$insert = $(".mp-option-insert-photo");
 
 };
 
@@ -195,7 +195,6 @@ UIControls.prototype = {
    bindInsertPhotoListener : function () {
       
       var place, insertHandler;
-      this.$insert = $(".mp-option-add");
       insertHandler = function (event) {
          place = main.getUIState().getCurrentLoadedPlace();
          // reset load function
