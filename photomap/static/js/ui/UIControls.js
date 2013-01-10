@@ -40,7 +40,6 @@ UIControls.prototype = {
    initAfterAjax : function () {
       
       var state, clientstate, page;
-      
       state = main.getUIState();
       clientstate = main.getClientState();
       page = state.getPage();
@@ -195,15 +194,15 @@ UIControls.prototype = {
     */
    bindInsertPhotoListener : function () {
       
-      var place;
+      var place, insertHandler;
       this.$insert = $(".mp-option-add");
-      
-      $("#mp-gallery > .mp-option-add")
-         .on("click.PhotoMap", function (event) {
-            place = main.getUIState().getCurrentPlace();
-            // reset load function
-            main.getUI().getInput().getUpload("/insert-photo?place=" + place.id, function () { return; });
-         });
+      insertHandler = function (event) {
+         place = main.getUIState().getCurrentLoadedPlace();
+         // reset load function
+         main.getUI().getInput().getUpload("/insert-photo?place=" + place.id, null);
+      };
+      $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertHandler);
+      this.$insert.on("click.PhotoMap", insertHandler);
    },
    /**
     * @public
@@ -434,7 +433,6 @@ UIControls.prototype = {
       this._bindUpdateListener();
       this._bindControlListener();
       this._bindShareListener();
-
       if (page === DASHBOARD_VIEW) {
          this.bindAlbumListener();
       } else if (page === ALBUM_VIEW) {

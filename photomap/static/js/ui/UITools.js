@@ -18,6 +18,43 @@ UITools.prototype = {
    initWithoutAjax : function () {
       this.fitMask($("#fancybox-overlay"));
    },
+   cutText : function (text, size) {
+      
+      var createSubstring, endingPunctuation, i, substring;
+      endingPunctuation = [".", "!", "?", ";", ":"];
+      
+      createSubstring = function (text, size, end) {
+         
+         var string, index, currentChar;
+         string = null;
+         size -= 25;
+         for (i = 0; i < 50; i++) {
+         
+            index = size + i;
+            currentChar = text.charAt(index);
+            if ($.inArray(currentChar, end) >= 0) {
+               
+               string = text.substring(0, index + 1);
+            }
+         }
+         return string;
+      };
+      
+      if (text !== null && text.length > size) {
+         substring = createSubstring(text, size, endingPunctuation);
+         if (substring === null) {
+            substring = createSubstring(text, size, [" ", ","]);
+         }
+      } else if (text.length <= size) {
+         substring = text;
+      } else {
+         substring = null;
+         alert("The text-string is null.");
+      }
+      
+      return substring;
+   },
+   
    /**
     * @description centers element in parent frame - both horizontal and vertical is possible - default centers element vertically and horizontally
     * @param $parent {jQuery-Object} parent frame

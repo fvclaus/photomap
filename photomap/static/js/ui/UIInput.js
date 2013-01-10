@@ -87,12 +87,13 @@ UIInput.prototype = {
             main.getUI().disable();
          },
          open: function () {
-            onCompleteHandler();
+            if (onCompleteHandler !== null) {
+               onCompleteHandler();
+            }
             instance.setVisibility(true);
          },
          close: function () {
             main.getUI().enable();
-            mpEvents.trigger("body", mpEvents.toggleExpose);
             instance.dialog.empty();
             instance.setVisibility(false);
          }

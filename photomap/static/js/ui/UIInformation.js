@@ -15,7 +15,7 @@ UIInformation = function () {
    this.$wrapper = $("#mp-description");
    this.$album = $("#mp-album");
    this.$infoButton = $(".mp-option-information");
-   this.$description = $(".mp-description-wrapper").jScrollPane();
+   this.$description = $(".mp-description-wrapper");
    this.$imageNumber = $(".mp-image-number");
    this.$descriptionTitle = $(".mp-description-title span");
 };
@@ -27,11 +27,22 @@ UIInformation.prototype = {
       this.resizeTitleBarFont();
    },
    _setDescription : function (description) {
-      api = this.$description.data('jsp');
-      api.getContentPane()
+      
+      var text;
+      if (description !== null) {
+         text = main.getUI().getTools().cutText(description, 300);
+
+         this.$description.html(text);
+         if (text.length < description.length) {
+            this.$description.append("<span class='mp-control mp-open-full-description'> [...]</span>");
+         }
+      }
+   },
+   _showFullDescription : function () {
+            api.getContentPane()
          .find("p")
          .empty()
-         .html(description);
+         .html(text);
       api.reinitialise();
       $(".jspVerticalBar").css("display", "none");
    },

@@ -71,7 +71,7 @@ UIGallery.prototype =  {
       var $thumbPage, emptySpots, tile, lastSliderSize, i;
       $thumbPage = null;
       emptySpots = 0;
-      tile = "<div class='mp-thumb mp-empty-tile'></div>";
+      tile = "<div class='mp-thumb mp-empty-tile mp-control'></div>";
       
       if (this.$gallery.children().length === 0) {
          

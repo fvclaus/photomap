@@ -18,7 +18,6 @@ UISlideshow = function () {
    this.$prev = this.$slideshow.find('img.mp-slideshow-nav-prev');
    this.$image = this.$slideshow.find("img.mp-current-image");
    this.$loading = this.$slideshow.find('img.mp-image-loading-small');
-   this.$zoom = this.$slideshow.find("img.mp-slideshow-zoom");
    this.$wrapper = this.$slideshow.find("div.mp-slideshow-image");
 };
 
@@ -72,7 +71,7 @@ UISlideshow.prototype = {
       // sets Photo title in album title bar and  Photo description + number
       information.updatePhoto();
       // set cursor for fullscreen control
-      cursor.setCursor($(".mp-album-zoom"), cursor.styles.pointer);
+      cursor.setZoomCursor(this.$image);
    },
 
    navigateSlider : function (instance, dir) {
@@ -137,10 +136,7 @@ UISlideshow.prototype = {
          instance.navigateSlider(instance, 'left');
       });
 
-      this.$zoom.on("click.Slideshow", function () {
-         if ($(this).hasClass("disabled")) {
-            return;
-         }
+      this.$image.on("click.Slideshow", function () {
          main.getUI().getFullscreen().zoom();
       });
    }

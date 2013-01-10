@@ -50,6 +50,9 @@ UICursor.prototype = {
       $information = $(".mp-option-information");
       this.setCursor($information, style);
    },
+   setZoomCursor : function ($element) {
+      $element.addClass("mp-zoom");
+   },
    cursors : function () {
 
       // on links
