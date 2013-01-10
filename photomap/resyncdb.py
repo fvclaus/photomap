@@ -49,7 +49,7 @@ for CMD in [SYNCDB, DBSHELL, SHELL, LOAD_USER]:
 
 def drop_db():
 #    p = sub.Popen(DBSHELL, shell = True, stdout = sub.PIPE, stdin = sub.PIPE)
-    p = sub.Popen(DBSHELL, stdin = sub.PIPE, stdout = sub.PIPE)
+    p = sub.Popen(DBSHELL, stdin = sub.PIPE)
     
     
     def communicate(cmd):
@@ -112,19 +112,14 @@ def drop_db():
 #                    
 #        stdout_thread.join()
                     
-    communicate("%s" % PASSWORD)
-    print "Dropping all tables..."
-    communicate("\i clear.sql\n")
-    import time
-    time.sleep(2)
-    p.kill()
-    print "Done. Closing dbshell."
-            
+
+
+    p.stdin.write("\i clear.sql\n")
 #    p.stdin.write("%s\n" % PASSWORD)
 #    print "Dropping all tables..."
 #    p.stdin.write("\i clear.sql\n")
 #    print "Done. Closing dbshell."
-    communicate("\q\n")
+    p.stdin.write("\q\n")
     
     
     
