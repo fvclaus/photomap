@@ -86,9 +86,8 @@ Place.prototype._bindListener = function () {
    
    google.maps.event.addListener(this.marker.MapMarker, "click", function () {
       
-      state.setCurrentAlbum(instance);
-      information.updateAlbumDescription();
-      information.updateAlbumTitle();
+      state.setCurrentPlace(instance);
+      information.updatePlace();
    });
    
    // dblclick event for place (its marker)
@@ -123,7 +122,5 @@ Place.prototype._bindListener = function () {
       }
       instance._showGallery();
 
-      // set and show title and description
-      information.updatePlace();
    });
 };

@@ -50,7 +50,7 @@ UIInput.prototype = {
          minHeight: dimension.height,
          minWidth: dimension.width,
          create: function () {
-            main.getUI().disable();
+//            main.getUI().disable();
          },
          open: function () {
             instance._intercept();
@@ -58,7 +58,7 @@ UIInput.prototype = {
          },
          close: function () {
             instance._initialise();
-            main.getUI().enable();
+//            main.getUI().enable();
             instance.dialog.empty();
             instance.setVisibility(false);
          }
@@ -91,7 +91,7 @@ UIInput.prototype = {
          zIndex: 3000,
          draggable: false,
          create: function () {
-            main.getUI().disable();
+//            main.getUI().disable();
          },
          open: function () {
             if (onCompleteHandler !== null) {
@@ -100,7 +100,7 @@ UIInput.prototype = {
             instance.setVisibility(true);
          },
          close: function () {
-            main.getUI().enable();
+//            main.getUI().enable();
             instance.dialog.empty();
             instance.setVisibility(false);
          }

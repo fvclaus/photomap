@@ -43,7 +43,7 @@ UIInformation.prototype = {
       if (description !== null) {
          
          main.getUIState().setCurrentDescription(description);
-         text = main.getUI().getTools().cutText(description, 500);
+         text = main.getUI().getTools().cutText(description, 350);
 
          this.$description.html(text);
          this.$fullDescription.html(description);
@@ -90,11 +90,11 @@ UIInformation.prototype = {
    
    /* ---- Place ---- */
    updatePlaceTitle : function () {
-      title = main.getUIState().getCurrentLoadedPlace().title;
+      title = main.getUIState().getCurrentPlace().title;
       this._setTitle(title);
    },
    updatePlaceDescription : function () {
-      info = main.getUIState().getCurrentLoadedPlace().description;
+      info = main.getUIState().getCurrentPlace().description;
       this._setDescription(info);
    },
    updatePlace : function () {

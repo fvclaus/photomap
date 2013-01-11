@@ -66,7 +66,7 @@ UIPanel.prototype = {
       $titleWrapper = this.$title.parent();
       text = this.$title.text();
       width = $titleWrapper.width();
-      height = $titleWrapper.height();
+      height = $titleWrapper.height() * 0.4;
       tools = main.getUI().getTools();
       size = tools.calculateFontSize(text, width, height);
       this.$title.css("fontSize", size + "px");

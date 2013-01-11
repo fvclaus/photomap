@@ -81,13 +81,13 @@
       <div class="mp-container container" id="mp-container">
 
          <header class="mp-page-header column span-24 last" id="mp-page-header">
-            <section class="mp-logo column span-5">
-              <img src="static/images/logo.png" class="mp-keiken-logo"/>
+            <section class="mp-logo column span-6">
+              <img src="static/images/logo.png" class="mp-control mp-keiken-logo"/>
             </section>
-				<section class="mp-top-panel column span-12">
+				<section class="mp-top-panel column span-8">
                <div class="mp-placeholder-fullheight column span-24"></div>
 				</section>
-		      <section class="mp-page-title mp-option-information column span-6 last">
+		      <section class="mp-page-title mp-option-information column span-10 last">
                <h1>{% block name %} {% endblock %}</h1>
             </section>
 			</header>
@@ -103,9 +103,10 @@
 					   <span>
 						   <a href="/logout" title="Logout">|{% trans "Abmelden" %}</a>
 						</span>
+                  <span>|</span>
 						<span>{{user.email}}</span>
-                                                <span>|</span>
-                                                <span id="mp-limit">{{user.userprofile.get_limit}}</span>
+                  <span>|</span>
+                  <span id="mp-limit">{{user.userprofile.get_limit}}</span>
 					</section>
 				{% else %}
 					<section class="mp-login-link column span-8">

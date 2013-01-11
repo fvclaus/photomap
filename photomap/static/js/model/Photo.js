@@ -38,7 +38,7 @@ Photo.prototype = {
    },
    triggerClick : function () {
       main.getUIState().setCurrentLoadedPhoto(this);
-      $("img[src='" + this.source + "']").trigger("click");
+      $("#mp-gallery").find("img[src='" + this.source + "']").trigger("click");
    }
 };
 

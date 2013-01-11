@@ -68,6 +68,10 @@ UISlideshow.prototype = {
       };
 
       updateImage();
+      // in case image was already loaded and there is hidden now
+      if (instance.$image.is(":hidden")) {
+         instance.$image.fadeIn(300);
+      }
       // sets Photo title in album title bar and  Photo description + number
       information.updatePhoto();
       // set cursor for fullscreen control
