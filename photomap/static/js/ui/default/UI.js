@@ -16,6 +16,7 @@ UI = function () {
    this.panel = new UIPanel();
    this.cursor = new UICursor();
    this.tools = new UITools();
+   this.state = new UIState();
 };
 
 UI.prototype = {
@@ -33,5 +34,8 @@ UI.prototype = {
    },
    getTools : function () {
       return this.tools;
+   },
+   getState : function () {
+      return this.state;
    }
 };

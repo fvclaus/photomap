@@ -53,7 +53,7 @@ Main.prototype = {
       }
    },
    getUIState : function () {
-      return this.ui.getState();
+      return this.getUI().getState();
    },
    getClientState : function () {
       return this.clientState;

@@ -1,5 +1,5 @@
 /*jslint */
-/*global $ */
+/*global $, reinitialiseScrollPane */
 
 "use strict";
 
@@ -15,6 +15,7 @@ function toggleFAQAnswers($question) {
       $answer.slideUp(150);
    } else {
       $answer.slideDown(300);
+      reinitialiseScrollPane();
    }
 }
 
@@ -31,6 +32,7 @@ function toggleTutorialDesc($topic) {
       $desc.slideUp(150);
    } else {
       $desc.slideDown(300);
+      reinitialiseScrollPane();
    }
 }
 

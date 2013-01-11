@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, UI */
+/*global $, UI, initialize, initializeNonInteractive */
 
 "use strict";
 
@@ -18,8 +18,17 @@ Main = function () {
 Main.prototype = {
    init: function () {
       this.ui.init();
+      if (window && window.initialize) {
+         initialize();
+      }
+      if (window && window.initializeNonInteractive) {
+         initializeNonInteractive();
+      }
    },
    getUI : function () {
       return this.ui;
+   },
+   getUIState : function () {
+      return this.getUI().getState();
    }
 };

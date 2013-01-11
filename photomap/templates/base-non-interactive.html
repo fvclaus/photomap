@@ -13,50 +13,26 @@ content="non-interactive"
 
 {% block js %}
 	<script type="text/javascript" src="static/js/main/non-interactive.js" ></script>
-	<script type="text/javascript" src="static/js/model/Map.js" ></script>
-	<script type="text/javascript" src="static/js/model/Marker.js" ></script>
-	<script type="text/javascript" src="static/js/model/InfoMarker.js"></script>
-	<script type="text/javascript" src="static/js/model/Album.js" ></script>
-	
+
 	<script type="text/javascript" src="static/js/ui/UIState.js" ></script>
-	<script type="text/javascript" src="static/js/ui/UIInput.js" ></script>
 	<script type="text/javascript" src="static/js/ui/UIControls.js" ></script>
 	<script type="text/javascript" src="static/js/ui/UIPanel.js" ></script>
 	<script type="text/javascript" src="static/js/ui/UITools.js" ></script>
 	<script type="text/javascript" src="static/js/ui/UICursor.js" ></script>
-	<script type="text/javascript" src="static/js/ui/UI.js" ></script>
-	<script type="text/javascript" src="static/js/ui/UIState.js" ></script>
-	   
+	<script type="text/javascript" src="static/js/ui/default/UI.js" ></script>
+ 
 	<script type="text/javascript" src="static/js/util/ClientState.js" ></script>	
 	<script type="text/javascript" src="static/js/util/default/ClientServer.js" ></script>	
 	
-   <script type="text/javascript" src="static/js/main/Main.js" ></script>         
+   <script type="text/javascript" src="static/js/main/default/Main.js" ></script>         
 	{% block extrajs %}
 	{% endblock %}
 	
 {% endblock %}
 
-{% block mapjs %}
-   <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script>
-{% endblock %}
-
-{% block options %}
-	{% if user.is_authenticated %}
-		{% trans "link-title-dashboard" as dashboardLink %}
-		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title='{{ dashboardLink }}'>{{ dashboardLink }}</a>  
-	{% endif %}
-{% endblock %}
-
 {% block content %}
-		<section class="mp-map column span-24" id="mp-map">
-			<div class="mp-map-container">
-				<div class="mp-map-wrapper" id="map"></div>
-			</div>
-		</section>
-      <section class="mp-placeholder-fullheight mp-left-noninteractive-placeholder span-4"></section>
 		<section class="mp-non-interactive-content span-16" id="mp-non-interactive-content">
 			{% block non_interactive_content %}
 			{% endblock %}
 	   </section>
-      <section class="mp-placeholder-fullheight mp-right-noninteractive-placeholder span-4 last"></section>
 {% endblock %}

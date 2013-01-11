@@ -195,7 +195,7 @@ UIGallery.prototype =  {
          mousewheel: true,
          speed: 500,
          vertical: false
-      }).navigator();
+      });
    },
    /**
     * @private

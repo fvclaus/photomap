@@ -65,10 +65,6 @@ UICursor.prototype = {
       $topic = $(".mp-tutorial-subtopic");
       this.setCursor($topic, this.styles.pointer);
 
-      // on toggle gallery button
-      $toggleGallery = $(".mp-option-toggle-gallery");
-      this.setCursor($toggleGallery, this.styles.pointer);
-      
       // on logo
       $logo = $(".mp-logo").find("svg");
       this.setCursor($logo, this.styles.pointer);
