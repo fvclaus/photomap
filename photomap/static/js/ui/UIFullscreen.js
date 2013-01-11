@@ -1,9 +1,9 @@
 /*jslint */
-/*global $, main */
+/*global $, main, window, Image */
 
 "use strict";
 
-var UI = {}, UIFullscreen;
+var UI = {}, UIFullscreen, css;
 
 UIFullscreen = function () {
    this.iconHelpCount = 5;
@@ -40,8 +40,8 @@ UIFullscreen.prototype = {
 
       this.bindListener();
       $('<img/>').load(function () {
-         instance._resizeImage(instance.$image);
-         instance.$image.show();
+         css = instance._resizeImage(instance.$image);
+         // instance.$image.show();
 
          //shortcut
          var border, innerWrapper, img = instance.$image;
@@ -49,45 +49,49 @@ UIFullscreen.prototype = {
          //copy properties from img to wrap img for tzoom library
          instance.$wrapper =
             $("<div/>")
-               .addClass("mp-image-overlay-wrapper")
-               .css("margin-left", img.css("margin-left"))
-               .css("margin-top", img.css("margin-top"))
-               .css("overflow", "hidden")
-               .css("cursor", "auto")
-               .width($("#mp-map") * 0.25)
-               .height($("#mp-map") * 0.25);
+            .addClass("mp-image-overlay-wrapper")
+            .css("margin-left", css["margin-left"])
+            .css("margin-top", css["margin-top"])
+            .css("overflow", "hidden")
+            .css("cursor", "auto")
+            .width(css.width)
+            .height(css.height);
+               // .width($("#mp-map") * 0.25) 
+               // .height($("#mp-map") * 0.25);
 
          innerWrapper =
             $("<div/>")
-               .css("width", img.css("width"))
-               .css("height", img.css("height"));
+               .css("width", css.width)
+               .css("height", css.height);
          img.css("margin", "0px 0px");
          innerWrapper.append(img);
          instance.$wrapper.append(innerWrapper);
 
 
          //hide border during fadein
-         border =
-                instance.$wrapper.css("border-top-width") +
-                " " +
-                instance.$wrapper.css("border-top-style") +
-                " " +
-                instance.$wrapper.css("border-top-color");
-         
+         instance.$wrapper.css("border", "0px");
+
          innerWrapper.tzoom({
             image: img,
             onReady : function () {
                main.getUIState().setFullscreen(true);
-            },
-            onLoad : function () {
+               //img is still positioned in the "middle".
+               instance.$image.css({
+                  "top": 0,
+                  "left": 0
+               });
+               innerWrapper.css({
+                  "top": 0,
+                  "left": 0
+               });
+               //show border when the image is ready
+               instance.$wrapper.css("border", "3px solid white");
+               instance.$image.show();
                instance.$load.hide();
-               instance.$wrapper.css("border", border);
             }
          });
 
          $(".mp-image-overlay").append(instance.$wrapper);
-
-         instance.$wrapper.css("border", "0px");
 
       }).attr('src', main.getUIState().getCurrentLoadedPhoto().source);
    },
@@ -144,12 +148,16 @@ UIFullscreen.prototype = {
          }
       }
 
-      $image.css({
+      css = {
          'width' : theImage.width + 'px',
          'height' : theImage.height + 'px',
          'margin-left' : -theImage.width / 2 + 'px',
          'margin-top' : -theImage.height / 2 + this.$name.height() / 2 + 'px'
-      });
+      };
+
+      $image.css(css);
+
+      return css
    },
 
    // bind hide functionality to close button
@@ -180,27 +188,27 @@ UIFullscreen.prototype = {
          var $wrapper, position, lowOpacity, highOpacity, duration;
          
          if (main.getUIState().isFullscreen() && instance.iconHelpCount > 0) {
-            instance.iconHelpCount -= 1;
-            $wrapper = instance.$wrapper;
-            position = {
-               left : $wrapper.position().left,
-               top : $wrapper.position().top
-            };
-            lowOpacity  = {opacity : 0.1};
-            highOpacity = {opacity : 0.8};
-            duration = 1500;
-            //animate blinking
-            instance.$zoom
-               .css("left", position.left)// - instance.$zoom.width()/2)
-               .css("top", position.top) // -  instance.$zoom.height()/2)
-               .css("opacity", 0.1)
-               .show()
-               .animate(highOpacity, duration)
-               .animate(lowOpacity, duration)
-               .animate(highOpacity, duration)
-               .animate(lowOpacity, duration, function () {
-                  instance.$zoom.hide();
-               });
+            // instance.iconHelpCount -= 1;
+            // $wrapper = instance.$wrapper;
+            // position = {
+            //    left : $wrapper.position().left,
+            //    top : $wrapper.position().top
+            // };
+            // lowOpacity  = {opacity : 0.1};
+            // highOpacity = {opacity : 0.8};
+            // duration = 1500;
+            // //animate blinking
+            // instance.$zoom
+            //    .css("left", position.left)// - instance.$zoom.width()/2)
+            //    .css("top", position.top) // -  instance.$zoom.height()/2)
+            //    .css("opacity", 0.1)
+            //    .show()
+            //    .animate(highOpacity, duration)
+            //    .animate(lowOpacity, duration)
+            //    .animate(highOpacity, duration)
+            //    .animate(lowOpacity, duration, function () {
+            //       instance.$zoom.hide();
+            //    });
          }
       });
    }

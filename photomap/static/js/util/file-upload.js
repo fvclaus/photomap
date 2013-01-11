@@ -9,7 +9,7 @@
  * @description Complete (Html5 +XMLHttpRequest Level 2 + jQuery) - File Upload with DnD-Handlers
  */
 
-var fileUpload, state, input, gallery, place, files, checked, data, request;
+var fileUpload, state, input, gallery, place, files, checked, data, request, usedSpace, quota, toMbyte, BYTE_TO_MBYTE = Math.pow(2, 20);
 
 fileUpload = {
 
@@ -138,7 +138,8 @@ fileUpload = {
          photo.order = state.getPhotos().length;
          console.log(photo);
          state.addPhoto(photo);
-         $(".mp-gallery-thumb").append('<img class="sortable mp-control" src="' + photo.source + '">');
+         //TODO: the selector below is not working
+         // $(".mp-gallery-thumb").append('<img class="sortable mp-control" src="' + photo.source + '">');
          // reinitialising ScrollPane, cause gallery length might have increased
          if (gallery.getScrollPane()) {
             gallery.getScrollPane().reinitialise();
@@ -148,6 +149,14 @@ fileUpload = {
          gallery.searchImages();
          // set bindListener won't be necessary anymore when upgrading to jQuery 1.7.2 and using .on()
          gallery.bindListener();
+
+         //update  upload limit
+         toMbyte = function(bytesAsString) { return new Number(parseFloat(bytesAsString) / BYTE_TO_MBYTE)};
+
+         usedSpace = toMbyte($.cookie("used_space"));
+         quota = toMbyte($.cookie("quota"));
+         $(".mp-limit").text(usedSpace.toFixed(1).toString() + "/" + quota.toFixed(1).toString() + " MB");
+
       } else {
          alert(response.error);
       }
@@ -230,6 +239,12 @@ fileUpload = {
 
       var $form, formValidator, inputValues, photo;
 
+      $.browser.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
+      if ($.browser.chrome){
+         alert("Fileupload only works in FF");
+         return;
+      }
+
       $form = $("form.mp-dialog");
       formValidator = $form.validator({
          formEvent: null,
@@ -294,7 +309,7 @@ fileUpload = {
          // readyState === 4 -> data-transfer completed and response fully received
          if (request.readyState === 4) {
             if (request.status === 200 || request.status === 0) {
-               console.log(request.responseText);
+               // console.log(request.responseText);
                console.log(JSON.parse(request.responseText));
                fileUpload._responseHandler(JSON.parse(request.responseText), file);
             } else {

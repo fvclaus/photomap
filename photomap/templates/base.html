@@ -45,6 +45,7 @@
       {% compress css %}
          <link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
          <link rel="stylesheet" type="text/css" href="static/css-plain/rokkitt.css" />
+         <link rel="stylesheet" type="text/css" href="static/css-plain/overcast/jquery-ui-1.9.2.custom.css" />
       {% endcompress %}	
 
       <!-- end styles -->
@@ -80,14 +81,10 @@
       <div class="mp-container container" id="mp-container">
 
          <header class="mp-page-header column span-24 last" id="mp-page-header">
-            <section class="mp-logo column span-4">
-               <svg class="mp-control mp-keiken-logo" id="logo" width="189.36" height="99.65" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns="http://www.w3.org/2000/svg"> 
-                  <g transform="scale(1.0)">
-                    <image class="mp-keiken-logo" x="0" y="0" width="189.36" height="99.65" xlink:href="static/images/logo.svg"></image>
-                  </g>
-               </svg>
+            <section class="mp-logo column span-5">
+              <img src="static/images/logo.png" class="mp-keiken-logo"/>
             </section>
-				<section class="mp-top-panel column span-14">
+				<section class="mp-top-panel column span-12">
                <div class="mp-placeholder-fullheight column span-24"></div>
 				</section>
 		      <section class="mp-page-title mp-option-information column span-6 last">
@@ -102,11 +99,13 @@
 
 			<footer class="mp-page-footer column span-24 last" id="mp-page-footer">
 			   {% if user.is_authenticated %}
-				   <section class="mp-user column span-8">
+				   <section class="mp-user column span-9">
 					   <span>
 						   <a href="/logout" title="Logout">|{% trans "Abmelden" %}</a>
 						</span>
-						<span>: {{user.email}}</span>
+						<span>{{user.email}}</span>
+                                                <span>|</span>
+                                                <span id="mp-limit">{{user.userprofile.get_limit}}</span>
 					</section>
 				{% else %}
 					<section class="mp-login-link column span-8">
@@ -115,7 +114,7 @@
 						</span>
 					</section>
 				{% endif %}
-            <section class="mp-internal-links column span-16 last">
+            <section class="mp-internal-links column span-15 last">
 			      <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
 					<a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
 					<a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
