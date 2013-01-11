@@ -54,7 +54,7 @@ UIPanel.prototype = {
    },
    bindLogoListener : function () {
       this.$logo.bind("click", function () {
-         window.location.href = "/";
+         window.location.href = "/dashboard";
       });
    },
    resizePageTitle: function () {

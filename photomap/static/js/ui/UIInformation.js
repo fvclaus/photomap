@@ -43,7 +43,7 @@ UIInformation.prototype = {
       if (description !== null) {
          
          main.getUIState().setCurrentDescription(description);
-         text = main.getUI().getTools().cutText(description, 300);
+         text = main.getUI().getTools().cutText(description, 500);
 
          this.$description.html(text);
          this.$fullDescription.html(description);
