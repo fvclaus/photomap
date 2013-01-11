@@ -8,7 +8,7 @@
  * @class Handles any form of input. Takes care of form validation,error handling and closing the input dialog
  */
 
-var UIInput;
+var UIInput, dimension, $formWrapper;
 
 UIInput = function () {
    this._initialise();
@@ -37,11 +37,18 @@ UIInput.prototype = {
          }
       });
 
+      $formWrapper = $("<div/>").html(instance.dialog.html());
+      $(".mp-content").append($formWrapper);
+      dimension = {"width": $formWrapper.width(), "height": $formWrapper.height()};
+      $formWrapper.remove();
+
       this.dialog.dialog({
          autoOpen: true,
          modal: true,
          zIndex: 3000,
          draggable: false,
+         minHeight: dimension.height,
+         minWidth: dimension.width,
          create: function () {
             main.getUI().disable();
          },

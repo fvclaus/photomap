@@ -45,6 +45,7 @@
       {% compress css %}
          <link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
          <link rel="stylesheet" type="text/css" href="static/css-plain/rokkitt.css" />
+         <link rel="stylesheet" type="text/css" href="static/css-plain/overcast/jquery-ui-1.9.2.custom.css" />
       {% endcompress %}	
 
       <!-- end styles -->
@@ -106,6 +107,8 @@
 						   <a href="/logout" title="Logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
 						</span>
 						<span>{{user.email}}</span>
+                                                <span>|</span>
+                                                <span id="mp-limit">{{user.userprofile.get_limit}}</span>
 					</section>
 				{% else %}
 					<section class="mp-login-link column span-8">
