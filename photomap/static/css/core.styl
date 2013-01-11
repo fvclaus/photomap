@@ -103,6 +103,7 @@ aside
   height 13%
   min-height 13%
   border-bottom 1px solid black
+  z-index 50
   section
     margin 0 .16%
     padding 0
@@ -148,6 +149,7 @@ aside
   border-top 1px solid black
   letter-spacing 2px
   vertical-align middle
+  z-index 50
   section
     margin 0 .16%
     padding 0
@@ -167,8 +169,12 @@ aside
   height 100%
   text-align left
   a
-    height 100%
+    float right
     text-decoration none
+    color $font-color
+    padding-right 5px
+  a:hover
+    background-color $border-color
   span
     height 100%
     margin-left 1%

@@ -104,14 +104,14 @@
 			   {% if user.is_authenticated %}
 				   <section class="mp-user column span-8">
 					   <span>
-						   <a href="/logout" title="Logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
+						   <a href="/logout" title="Logout">|{% trans "Abmelden" %}</a>
 						</span>
-						<span>{{user.email}}</span>
+						<span>: {{user.email}}</span>
 					</section>
 				{% else %}
 					<section class="mp-login-link column span-8">
 						<span>
-							<a href="/login" title ='{% trans "link-title-login" %}'>Login/Registrierung</a>
+							<a href="/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
 						</span>
 					</section>
 				{% endif %}

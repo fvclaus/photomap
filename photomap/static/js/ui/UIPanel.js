@@ -23,9 +23,6 @@ UIPanel.prototype = {
       this.resizeLogo();
       this.bindLogoListener();
       this.resizeFooterFont();
-      if (this.$logout !== null) {
-         this.$logout.height(this.$nav.height());
-      }
    },
    initAfterAjax : function () {
       this.resizePageTitle();
@@ -54,7 +51,12 @@ UIPanel.prototype = {
    },
    bindLogoListener : function () {
       this.$logo.bind("click", function () {
-         window.location.href = "/dashboard";
+         
+         if ($(".mp-user").size() > 0) {
+            window.location.href = "/dashboard";
+         } else {
+            window.location.href = "/";
+         }
       });
    },
    resizePageTitle: function () {
