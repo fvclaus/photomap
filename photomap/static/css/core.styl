@@ -15,6 +15,7 @@ html
   margin 0
   padding 0  
   font-family $font-family // "Droid Sans"
+  color $font-color
   
 aside
   width 80%
@@ -35,7 +36,7 @@ aside
 /* -- core classes - used on every side -- */
 
 .mp-container
-  background-color #fafafa
+  background-color $background-color
   box-shadow(5px 5px 25px #A4A4A4)
 
 .mp-alignment-div
@@ -164,6 +165,10 @@ aside
   a
     float right
     text-decoration none
+    color $font-color
+    padding-right 5px
+  a:hover
+    background-color $border-color
 
 .mp-user,
 .mp-login-link

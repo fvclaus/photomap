@@ -188,6 +188,18 @@ UIControls.prototype = {
       }
    },
    /* ---- Listeners ---- */
+   _fullDescriptionOpener : function (event) {
+      
+      main.getUI().getInformation().showFullDescription();
+   },
+   _fullDescriptionCloser : function (event) {
+      
+      main.getUI().getInformation().hideFullDescription();
+   },
+   bindFullDescriptionListener : function () {
+      $("#mp-description").on("click", ".mp-open-full-description", this._fullDescriptionOpener);
+      $(".mp-close-full-description").on("click", this._fullDescriptionCloser);
+   },
    /**
     * @public
     * @see UIAlbum
@@ -432,6 +444,7 @@ UIControls.prototype = {
       this._bindUpdateListener();
       this._bindControlListener();
       this._bindShareListener();
+      this.bindFullDescriptionListener();
       if (page === DASHBOARD_VIEW) {
          this.bindAlbumListener();
       } else if (page === ALBUM_VIEW) {

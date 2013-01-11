@@ -199,10 +199,11 @@ UIGallery.prototype =  {
    },
    /**
     * @private
+    * Nur vorläufige Variante - später über css (wenn möglich)
     */
    _createFilmRollEffect : function () {
       
-      var $thumbs, $nav, $leftNav, $rightNav, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin, difference;
+      var $thumbpage, $thumbs, $nav, $leftNav, $rightNav, borderSize, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin, difference;
       
       $thumbs = $(".mp-thumb");
       $nav = $(".mp-gallery-nav");
@@ -211,21 +212,32 @@ UIGallery.prototype =  {
       
       thumbWidth = $thumbs.innerWidth() * 5;
       galleryWidth = this.$mainWrapper.width();
-      border = (galleryWidth - thumbWidth) / 5 + "px solid #dadada";
-      console.log(border);
+      borderSize = (galleryWidth - thumbWidth) / 5;
+      border = "px solid #dadada";
+      console.log(borderSize);
       $nav.css({
          height: $thumbs.innerHeight() - 10 + "px",
          padding: "5px 0",
          backgroundColor: "#FAFAFA"
       });
-      $leftNav.css("border-right", border);
+      $leftNav.css("border-right", borderSize + border);
       main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-prev"), "horizontal");
       main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-next"), "horizontal");
       main.getUI().getTools().centerElement($nav, $(".mp-option-insert-photo"), "horizontal");
       
       $thumbs.css({
-         borderRight: border
+         borderRight: borderSize + border
       });
+      $thumbpage = $(".mp-thumb-page").not(".cloned").first();
+      if (this.mainWrapperWidth > $thumbpage.width()) {
+         borderSize += (this.$mainWrapper.width() - $thumbpage.width()) / 5;
+      }
+      console.log(borderSize);
+      // adjust border again so that the thumbpage certainly fits exactely into the gallery
+      $thumbs.css({
+         borderRight: borderSize + border
+      });
+
       // adjust right nav-div
       difference = this.$container.width() - (this.mainWrapperWidth + $nav.width() * 2);
       $("#mp-gallery-right-nav").css("width", $("#mp-gallery-left-nav").width() + difference + "px");
