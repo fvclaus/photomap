@@ -90,7 +90,7 @@
 
 	<script id="galleryFullscreenTmpl" type="text/html">
 		<div id="mp-image-overlay" class="mp-image-overlay">
-			<img class="mp-loading"></img>
+			<img class="mp-dark-loader" src="static/images/dark-loader.gif"></img>
 			<img class="mp-image-zoom" src="static/images/zoom.png" ></img>
 			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
 			<div class="mp-image-overlay-desc">
@@ -99,7 +99,7 @@
 					<img class="mp-image-nav-next mp-control" src="static/images/image-arrow-right.png" ></img>
 					<img class="mp-image-overlay-close mp-control" src="static/images/close.png" ></img>
 				</div>
-				<h2 class="mp-label"><%= this.tmplPhotoData.description %></h2>
+				<h2 class="mp-fullscreen-photo-title"><%= this.tmplPhotoData.description %></h2>
 			</div>
 		</div>
 	</script>
