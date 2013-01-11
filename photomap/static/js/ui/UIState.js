@@ -15,6 +15,8 @@ UIState = function () {
    this.currentPhoto = null;
    this.currentPlace = null;
    this.currentAlbum = null;
+   this.currentDescription = "";
+   this.currentTitle = "";
    this.photos = [];
    this.places = [];
    this.albums = [];
@@ -42,6 +44,21 @@ UIState.prototype = {
    isDashboard : function () {
       // if albumview -> false
       return this.page === DASHBOARD_VIEW;
+   },
+   //--------------------------------------------------------------------
+   //DESCRIPTION---------------------------------------------------------
+   //--------------------------------------------------------------------
+   setCurrentDescription : function (string) {
+      this.currentDescription = string;
+   },
+   getCurrentDescription : function () {
+      return this.currentDescription;
+   },
+   setCurrentTitle : function (string) {
+      this.currentTitle = string;
+   },
+   getCurrentTitle : function () {
+      return this.currentTitle;
    },
    //--------------------------------------------------------------------
    //PHOTO---------------------------------------------------------------

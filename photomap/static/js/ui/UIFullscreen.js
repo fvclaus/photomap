@@ -36,7 +36,7 @@ UIFullscreen.prototype = {
       this.$name = this.$fullscreen.find('h2.mp-label');
       this.$image = this.$fullscreen.children("img.mp-image-full");
       this.$zoom = this.$fullscreen.find("img.mp-image-zoom");
-      this.$load = this.$fullscreen.find("img.mp-loading");
+      this.$load = this.$fullscreen.find("img.mp-dark-loader");
 
       this.bindListener();
       $('<img/>').load(function () {
@@ -203,7 +203,7 @@ UIFullscreen.prototype = {
                });
          }
       });
-   },
+   }
 };
 
 

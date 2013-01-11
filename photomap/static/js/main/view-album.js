@@ -30,7 +30,7 @@ function initialize() {
 function initializeAfterAjax() {
    
    if (state && state.getPlaces()[0]) {
-      state.getPlaces()[0].triggerClick();
+      state.getPlaces()[0].triggerDoubleClick();
    }
    
    if (main.getClientState().isAdmin()) {

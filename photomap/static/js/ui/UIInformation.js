@@ -15,9 +15,11 @@ UIInformation = function () {
    this.$wrapper = $("#mp-description");
    this.$album = $("#mp-album");
    this.$infoButton = $(".mp-option-information");
-   this.$description = $(".mp-description-wrapper");
+   this.$description = $(".mp-description-wrapper").find(".mp-description-body");
    this.$imageNumber = $(".mp-image-number");
-   this.$descriptionTitle = $(".mp-description-title span");
+   this.$descriptionTitle = $(".mp-description-title");
+   this.$fullDescription = $(".mp-full-description-body");
+   this.$fullDescriptionTitle = $(".mp-full-description-title");
 };
 
 UIInformation.prototype = {
@@ -26,32 +28,52 @@ UIInformation.prototype = {
       this.bindListener();
       this.resizeTitleBarFont();
    },
+   _setTitle : function (title) {
+      
+      if (title !== null) {
+         
+         main.getUIState().setCurrentTitle(title);
+         this.$descriptionTitle.text(title);
+         this.$fullDescriptionTitle.text(title);
+      }
+   },
    _setDescription : function (description) {
       
       var text;
       if (description !== null) {
+         
+         main.getUIState().setCurrentDescription(description);
          text = main.getUI().getTools().cutText(description, 300);
 
          this.$description.html(text);
+         this.$fullDescription.html(description);
          if (text.length < description.length) {
             this.$description.append("<span class='mp-control mp-open-full-description'> [...]</span>");
          }
       }
    },
-   _showFullDescription : function () {
-            api.getContentPane()
-         .find("p")
-         .empty()
-         .html(text);
-      api.reinitialise();
-      $(".jspVerticalBar").css("display", "none");
+   showFullDescription : function () {
+      
+      var $container, $innerWrapper, description, title;
+      $container = $("#mp-full-description");
+      $innerWrapper = $(".mp-full-description-wrapper");
+      $innerWrapper.jScrollPane();
+      
+      $container.removeClass("mp-nodisplay");
+      $innerWrapper
+         .data("jsp")
+         .reinitialise();
+   },
+   hideFullDescription : function () {
+      
+      $("#mp-full-description").addClass("mp-nodisplay");
    },
    /* ---- Album ---- */
    updateAlbumTitle : function () {
       
       title = main.getUIState().getCurrentAlbum().title;
       
-      this.$descriptionTitle.text(title);
+      this._setTitle(title);
       if (main.getUIState().getPage() === ALBUM_VIEW) {
          $(".mp-page-title h1").text(title);
       }
@@ -69,8 +91,7 @@ UIInformation.prototype = {
    /* ---- Place ---- */
    updatePlaceTitle : function () {
       title = main.getUIState().getCurrentLoadedPlace().title;
-      this.$descriptionTitle.text(title);
-      $(".mp-place-title").text(title);
+      this._setTitle(title);
    },
    updatePlaceDescription : function () {
       info = main.getUIState().getCurrentLoadedPlace().description;
@@ -85,8 +106,7 @@ UIInformation.prototype = {
    /* ---- Photo ---- */
    updatePhotoTitle : function () {
       title = main.getUIState().getCurrentLoadedPhoto().title;
-      this.$descriptionTitle.text(title);
-      $(".mp-photo-title").text(title);
+      this._setTitle(title);
    },
    updatePhotoDescription : function () {
       info = main.getUIState().getCurrentLoadedPhoto().description;
@@ -99,10 +119,10 @@ UIInformation.prototype = {
       state = main.getUIState();
       photos = state.getPhotos();
       
-      this.$imageNumber.text(" Bild " + (state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
+      this.$imageNumber.text((state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
    },
    emptyImageNumber : function () {
-      this.$imageNumber.text("No Image");
+      this.$imageNumber.text("0/0");
    },
    updatePhoto : function () {
       this.updatePhotoDescription();

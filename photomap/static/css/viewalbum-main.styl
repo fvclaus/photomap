@@ -31,6 +31,10 @@
 .mp-gallery-nav
   width 10%
   height 100%
+  span
+    height 49%
+    width 100%
+    display block
   img.mp-control
     width 50%
     height auto
@@ -57,7 +61,7 @@
   overflow hidden
 .mp-thumb
   float left
-  background $background-color-light
+  background $background-color
   transition
 
 .mp-gallery-inner
@@ -89,8 +93,8 @@
     background none
 
 .mp-slideshow-inner
-  height 100%
-  width 70%
+  height 90%
+  width 100%
   padding 0
 
 .mp-current-image
@@ -103,18 +107,18 @@
   height 100%
    
 .mp-slideshow-info
-  height 100%
-  width 25%
-  float right
-
+  height 10%
+  width 100%
+  padding-top 2%
+  text-align center
+  
 .mp-photo-title
   width 100%
   height 60%
   float left
 
-.mp-image-number
-  width 100%
-  height 10%
-  float left
+.mp-fullscreen-photo-title
+  z-index 1201
+  color $font-color-inverse
 
 /* ------ end slideshow ------ */

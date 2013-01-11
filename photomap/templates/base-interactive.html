@@ -37,6 +37,12 @@ content="interactive"
 {% block content %}
 	
    <section class="mp-left-column">
+     <section class="mp-full-column mp-nodisplay" id="mp-full-left-column">
+       <div class="mp-full-column-controls">
+         <span class="mp-control mp-close-full-left-column">{% trans "Schließen" %}</span>
+       </div>
+       <div class="mp-data"></div>
+     </section>
      <section class="mp-map" id="mp-map">
 	    <div class="mp-map-wrapper" id="map"></div>
 	  </section>
@@ -47,18 +53,24 @@ content="interactive"
 	  {% block slideshow/??? %}
 	  {% endblock %}
 	  <section class="mp-description" id="mp-description">
-	    <div class="mp-title-bar mp-description-title">
-	      <span></span>
-	    </div>
+       <section class="mp-full-column mp-nodisplay" id="mp-full-description">
+         <div class="mp-full-column-controls">
+           <span class="mp-control mp-close-full-description">{% trans "Schließen" %}</span>
+         </div>
+         <div class="mp-full-description-wrapper">
+           <p class="mp-full-description-title"></p>
+           <p class="mp-full-description-body"></p>
+         </div>
+       </section>
 	    <div class="mp-description-wrapper">
-	      <div class="force-scroll">
-	        <p>Es ist noch kein Album ausgewählt!</p>
-	      </div>
+	      <p class="mp-description-title"></p>
+         <p class="mp-description-body">{% trans "Es ist noch kein Album ausgewählt!" %}</p>
 	    </div>
 	  </section>
    </section>
  	{% block content_interactive %}
 	{% endblock %}
+
    
 	<div id="mp-share">
 		<span class="mp-share-overlay" rel="#mp-share"></span>

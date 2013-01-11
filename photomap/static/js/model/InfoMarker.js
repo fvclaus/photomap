@@ -43,8 +43,10 @@ InfoMarker.prototype = {
       return map.createLatLng(this.getLat(), this.getLng());
    },
    triggerClick : function () {
-      var map = main.getMap();
       google.maps.event.trigger(this.marker.MapMarker, "click");
+   },
+   triggerDoubleClick : function () {
+      google.maps.event.trigger(this.marker.MapMarker, "dblclick");
    },
    center : function () {
       var map = main.getMap().getInstance();
