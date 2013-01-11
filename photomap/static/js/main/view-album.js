@@ -32,7 +32,6 @@ function initializeAfterAjax() {
    if (state && state.getPlaces()[0]) {
       state.getPlaces()[0].triggerDoubleClick();
    }
-   
    if (main.getClientState().isAdmin()) {
       $(".mp-option-to-dashboard").show();
    }
