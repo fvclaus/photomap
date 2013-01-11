@@ -28,18 +28,8 @@ content="non-interactive"
    <script type="text/javascript" src="static/js/main/default/Main.js" ></script>
 {% endblock %}
 
-{% block options %}
-	{% if user.is_authenticated %}
-		{% trans "link-title-dashboard" as dashboardLink %}
-		<a class="mp-option-to-dashboard mp-controls" href="/dashboard" title='{{ dashboardLink }}'>{{ dashboardLink }}</a>  
-	{% endif %}
-{% endblock %}
-
 {% block content %}
-
-   <section class="mp-index-section mp-empty-box column span-16">Map Section</section>
-   <section class="mp-index-section mp-empty-box column span-8 last">Info Section</section>
-   <section class="mp-index-section mp-empty-box column span-8">Gallery Section</section>
-   <section class="mp-index-section mp-empty-box column span-16 last">Slideshow Section</section>		
+   <p style="text-align: center"> Die Seite ist noch in Bearbeitung. Der Login-Link für Beta-Tester befindet sich in der linken unteren Ecke.</p>
+   <p style="text-align: center">Viel Spaß wünscht Euch das keiken-Team!</p>   
 {% endblock %}
 

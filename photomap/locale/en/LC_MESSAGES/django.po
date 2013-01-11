@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-29 21:03+0200\n"
+"POT-Creation-Date: 2013-01-11 18:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,73 +17,118 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base-interactive.html:15
+#: templates/base-interactive.html:42 templates/base-interactive.html.py:58
+msgid "Schließen"
+msgstr "Close"
+
+#: templates/base-interactive.html:67
+msgid "Es ist noch kein Album ausgewählt!"
+msgstr "No album selected"
+
+#: templates/base-interactive.html:79
+msgid "Data Loading"
+msgstr "The requested data is now loading. Please be patient!"
+
+#: templates/base-interactive.html:86
+msgid "mp-copy-link-title"
+msgstr "Copy Link"
+
+#: templates/base-interactive.html:90
+msgid "How to Share"
+msgstr "How to share the link?"
+
+#: templates/base-interactive.html:93
+msgid "How to Share -> description"
+msgstr ""
+"To share this link you need to copy and paste it wherever you would want to "
+"share (Social networks, Email, Blogs,etc). You may copy the link by simply "
+"clicking on the 'Copy Link' button, but for this , you need to have flash "
+"enabled. So in case it doesn't work due to your browser security settings, "
+"you need to copy the highlighted link manually. You can do that with 'Ctrl + "
+"C' (Windows) or 'Command + C' (Mac OS X) or by right clicking on the link "
+"and choosing 'Copy'."
+
+#: templates/base-interactive.html:96
+msgid "How to Share -> attention!"
+msgstr ""
+"Please be aware that copying this link will overwrite whatever is currently "
+"stored on your clipboard. (Whatever information that you copied last.)"
+
+#: templates/base-interactive.html:102
 msgid "control-title delete"
 msgstr "Delete"
 
-#: templates/base-interactive.html:16
+#: templates/base-interactive.html:103
 msgid "control-title modify"
 msgstr "Edit"
 
-#: templates/base-non-interactive.html:29 templates/view-album.html:33
+#: templates/base-non-interactive.html:45 templates/index.html:33
 msgid "link-title-dashboard"
 msgstr "To Dashboard"
 
-#: templates/base.html:101 templates/not-supported.html:59
-msgid "link-title-impressum"
-msgstr "View Legal Terms of NAME OF PROJECT"
+#: templates/base.html:107
+msgid "Abmelden"
+msgstr "Logout"
 
-#: templates/base.html:101 templates/impressum.html:6
-#: templates/impressum.html.py:8
-msgid "Impressum"
-msgstr "Legal Terms"
+#: templates/base.html:114
+msgid "Login or Register"
+msgstr "Login or Register"
 
-#: templates/base.html:102 templates/not-supported.html:60
-msgid "link-title-privacy"
-msgstr "View Data Use Policy"
+#: templates/base.html:114
+msgid "Anmelden/Registrierung"
+msgstr "Login and Registration"
 
-#: templates/base.html:102 templates/privacy.html:5
-#: templates/privacy.html.py:7
-msgid "Datenschutz"
-msgstr "Privacy"
-
-#: templates/base.html:103 templates/not-supported.html:61
-msgid "link-title-copyright"
-msgstr "View Copyright Statement"
-
-#: templates/base.html:103 templates/copyright.html:6
-msgid "Urheberrecht"
-msgstr "Copyright"
-
-#: templates/base.html:104 templates/not-supported.html:62
-msgid "link-title-contact"
-msgstr "Contact, Support, Ask a Question"
-
-#: templates/base.html:104 templates/contact.html:6
-#: templates/contact.html.py:8 templates/impressum.html:30
-msgid "Kontakt"
-msgstr "Contact"
-
-#: templates/base.html:105 templates/not-supported.html:63
-msgid "link-title-help"
-msgstr "View FAQ, Tutorial and help-page"
-
-#: templates/base.html:105 templates/help.html:6
-msgid "Hilfe"
-msgstr "Help"
-
-#: templates/base.html:106 templates/not-supported.html:64
+#: templates/base.html:119 templates/not-supported.html:64
 msgid "link-title-team"
 msgstr "Introduction of the project and core team members"
 
-#: templates/base.html:106 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:119 templates/team.html:6 templates/team.html.py:8
 #: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:118
-msgid "link-title-login"
-msgstr "Login/Register"
+#: templates/base.html:120 templates/not-supported.html:62
+msgid "link-title-contact"
+msgstr "Contact, Support, Ask a Question"
+
+#: templates/base.html:120 templates/contact.html:6
+#: templates/contact.html.py:8 templates/impressum.html:30
+msgid "Kontakt"
+msgstr "Contact"
+
+#: templates/base.html:121 templates/not-supported.html:60
+msgid "link-title-privacy"
+msgstr "View Data Use Policy"
+
+#: templates/base.html:121 templates/privacy.html:5
+#: templates/privacy.html.py:7
+msgid "Datenschutz"
+msgstr "Privacy"
+
+#: templates/base.html:122 templates/not-supported.html:61
+msgid "link-title-copyright"
+msgstr "View Copyright Statement"
+
+#: templates/base.html:122 templates/copyright.html:6
+msgid "Urheberrecht"
+msgstr "Copyright"
+
+#: templates/base.html:123 templates/not-supported.html:63
+msgid "link-title-help"
+msgstr "View FAQ, Tutorial and help-page"
+
+#: templates/base.html:123 templates/help.html:6
+msgid "Hilfe"
+msgstr "Help"
+
+#: templates/base.html:124 templates/not-supported.html:59
+msgid "link-title-impressum"
+msgstr "View Legal Terms of NAME OF PROJECT"
+
+#: templates/base.html:124 templates/impressum.html:6
+#: templates/impressum.html.py:8
+msgid "Impressum"
+msgstr "Legal Terms"
 
 #: templates/contact.html:13
 msgid "contact-intro-article1-line1"
@@ -193,34 +238,9 @@ msgstr ""
 "Duplication, distribution, as well as usage beyond the copyright law, "
 "requires written permission by the author."
 
-#: templates/dashboard.html:31
+#: templates/dashboard.html:26
 msgid "control-title share"
 msgstr "Share"
-
-#: templates/dashboard.html:46
-msgid "mp-copy-link-title"
-msgstr "Copy Link"
-
-#: templates/dashboard.html:50
-msgid "How to Share"
-msgstr "How to share the link?"
-
-#: templates/dashboard.html:53
-msgid "How to Share -> description"
-msgstr ""
-"To share this link you need to copy and paste it wherever you would want to "
-"share (Social networks, Email, Blogs,etc). You may copy the link by simply "
-"clicking on the 'Copy Link' button, but for this , you need to have flash "
-"enabled. So in case it doesn't work due to your browser security settings, "
-"you need to copy the highlighted link manually. You can do that with 'Ctrl + "
-"C' (Windows) or 'Command + C' (Mac OS X) or by right clicking on the link "
-"and choosing 'Copy'."
-
-#: templates/dashboard.html:56
-msgid "How to Share -> attention!"
-msgstr ""
-"Please be aware that copying this link will overwrite whatever is currently "
-"stored on your clipboard. (Whatever information that you copied last.)"
 
 #: templates/help.html:8
 msgid "Hilfe und Support"
@@ -530,10 +550,10 @@ msgstr ""
 "You can reorder the pictures in your gallery by dragging them to a "
 "favourable position and dropping them there."
 
-#: templates/help.html:111 templates/insert-album.html:19
-#: templates/insert-photo.html:27 templates/insert-place.html:19
-#: templates/update-album.html:20 templates/update-photo.html:21
-#: templates/update-place.html:20 templates/view-album.html:49
+#: templates/help.html:111 templates/insert-album.html:15
+#: templates/insert-photo.html:18 templates/insert-place.html:14
+#: templates/update-album.html:15 templates/update-photo.html:16
+#: templates/update-place.html:15
 msgid "Beschreibung"
 msgstr "Description"
 
@@ -671,36 +691,36 @@ msgstr ""
 msgid "Willkommen"
 msgstr "Welcome"
 
-#: templates/insert-album.html:11
+#: templates/insert-album.html:6
 msgid "insert-dialogue-title insert-album"
 msgstr "Add new album"
 
-#: templates/insert-album.html:15 templates/insert-photo.html:23
-#: templates/insert-place.html:15 templates/team.html:17
+#: templates/insert-album.html:11 templates/insert-photo.html:14
+#: templates/insert-place.html:10 templates/team.html:17
 #: templates/team.html.py:31 templates/team.html:45
-#: templates/update-album.html:16 templates/update-photo.html:17
-#: templates/update-place.html:16
+#: templates/update-album.html:11 templates/update-photo.html:12
+#: templates/update-place.html:11
 msgid "Name"
 msgstr "Name"
 
-#: templates/insert-album.html:24 templates/insert-photo.html:35
-#: templates/insert-place.html:25
+#: templates/insert-album.html:20 templates/insert-photo.html:26
+#: templates/insert-place.html:20
 msgid "Speichern"
 msgstr "Save"
 
-#: templates/insert-photo.html:16
+#: templates/insert-photo.html:8
 msgid "insert-dialogue-title insert-photo"
 msgstr "Add new Photo"
 
-#: templates/insert-photo.html:31
+#: templates/insert-photo.html:22
 msgid "insert-dialogue select photo to upload"
 msgstr "Select photo to upload (only *.png and *.jpg)"
 
-#: templates/insert-photo.html:36
+#: templates/insert-photo.html:27
 msgid "Speichern und weitere hinzufügen"
 msgstr "Save and add another"
 
-#: templates/insert-place.html:11
+#: templates/insert-place.html:6
 msgid "insert-dialogue-title insert-place"
 msgstr "Add new place"
 
@@ -912,35 +932,43 @@ msgstr "Motivation for the project"
 msgid "Front End"
 msgstr "Front End"
 
-#: templates/update-album.html:11
+#: templates/update-album.html:6
 msgid "insert-dialogue-title update-album"
 msgstr "Edit current album"
 
-#: templates/update-album.html:23 templates/update-photo.html:24
-#: templates/update-place.html:23
+#: templates/update-album.html:18 templates/update-photo.html:19
+#: templates/update-place.html:18
 msgid "Änderungen bestätigen"
 msgstr "Submit changes"
 
-#: templates/update-photo.html:11
+#: templates/update-photo.html:6
 msgid "insert-dialogue-title update-photo"
 msgstr "Edit current photo"
 
-#: templates/update-place.html:11
+#: templates/update-place.html:6
 msgid "insert-dialogue-title update-place"
 msgstr "Edit current place"
 
-#: templates/view-album.html:35
-msgid "control-title toggle gallery"
-msgstr "Toggle visibility of gallery"
+#: templates/view-album.html:37
+msgid "Previous Image"
+msgstr "Previous Image"
 
-#: templates/view-album.html:35
-msgid "Show Gallery"
-msgstr "Show gallery"
+#: templates/view-album.html:43
+msgid "Next Image"
+msgstr "Next Image"
 
-#: templates/view-album.html:35
-msgid "Hide Gallery"
-msgstr "Hide gallery"
+#: templates/view-album.html:47
+msgid "Bild"
+msgstr "Image"
 
-#: templates/view-album.html:88
-msgid "control-title add-photo"
-msgstr "Add Photo"
+#: templates/view-album.html:55
+msgid "Previous Page"
+msgstr "Previous Page"
+
+#: templates/view-album.html:65
+msgid "Next Page"
+msgstr "Next Page"
+
+#: templates/view-album.html:68
+msgid "Add Image"
+msgstr "Add Image"

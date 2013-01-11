@@ -71,13 +71,17 @@ UI.prototype = {
     * @description This should disable the UI in a way that no manipulation is possible anymore
     */
    disable : function () {
+      
+      var state, album;
       state = main.getUIState();
-      this._isDisabled = true;
-      //TODO: disabled the 'cross' cursor on the map
       albums = state.getAlbums();
+      
+      this._isDisabled = true;
       albums.forEach(function (album) {
          album.showDisabledIcon();
       });
+      main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);
+      main.getUI().getTools().fitMask();
    },
    isDisabled : function () {
       return this._isDisabled;
@@ -86,12 +90,15 @@ UI.prototype = {
     * @description This should enable the UI
     */
    enable : function () {
+      
+      var state, albums;
       state = main.getUIState();
+      albums = state.getAlbums();
       this._isDisabled = false;
       //TODO: enable the 'cross' cursor on the map
-      var albums = state.getAlbums();
       albums.forEach(function (album) {
          album.checkIconStatus();
       });
-   },
+      main.getUI().getTools().closeOverlay($("#mp-ui-loading"));
+   }
 };

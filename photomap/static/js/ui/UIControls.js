@@ -31,11 +31,6 @@ UIControls = function (maxHeight) {
 UIControls.prototype = {
 
    initWithoutAjax : function () {
-
-      var height;
-
-      height = main.getUI().getPanel().getFooterHeight();
-      this.$logout.height(height);
    },
    initAfterAjax : function () {
       

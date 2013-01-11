@@ -241,32 +241,37 @@ UITools.prototype = {
          },
          error : function (err) {
             alert(err.toString());
-         },
+         }
       });
    },
 
-   fitMask : function ($maskID) {
+   fitMask : function () {
       // fit mask of overlay/expose/fancybox on top map between header and footer
-      $maskID.css({
-         'max-height': $('#mp-map').height(),
-         'max-width': $('#mp-map').width(),
-         'top': $('#mp-map').offset().top,
-         'left': $('#mp-map').offset().left,
+      $("#exposeMask").css({
+         'max-height': $('#mp-content').innerHeight(),
+         'max-width': $('#mp-content').innerWidth(),
+         'top': $('#mp-content').offset().top,
+         'left': $('#mp-content').offset().left,
          'z-index': 1000
       });
    },
 
-   loadOverlay : function ($trigger) {
-      $trigger
+   loadOverlay : function ($overlay, modal) {
+      $overlay
          .overlay({
-            top: '25%',
-            load: true,
+            top: "center",
             mask: {
-               color: "white",
-               opacity: 0.7,
-            }
+               color: "#dadada",
+               loadSpeed: 200,
+               opacity: 0.7
+            },
+            closeOnClick: !modal,
+            load: true
          })
          .load();
+   },
+   closeOverlay : function ($overlay) {
+      $overlay.data("overlay").close();
    },
 
    openShareURL : function () {

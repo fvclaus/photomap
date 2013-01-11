@@ -72,6 +72,10 @@ UICursor.prototype = {
       // on logo
       $logo = $(".mp-logo").find("svg");
       this.setCursor($logo, this.styles.pointer);
-   },
+      
+      if (main.getUIState().getPage() === ALBUM_VIEW) {
+         this.setCursor($(".mp-page-title").find("h1"), this.styles.pointer);
+      }
+   }
 
 };

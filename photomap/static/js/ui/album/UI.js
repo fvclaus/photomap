@@ -77,26 +77,37 @@ UI.prototype = {
       }
    },
    /*
-    * @description This should provide one method to disable the whole GUI
+    * @description This should disable the UI in a way that no manipulation is possible anymore
     */
    disable : function () {
-      var places = main.getUIState().getPlaces();
+      
+      var state, album;
+      state = main.getUIState();
+      albums = state.getAlbums();
+      
       this._isDisabled = true;
-      //TODO: disabled the 'cross' cursor on the map
-      places.forEach(function (place) {
-         place.showDisabledIcon();
+      albums.forEach(function (album) {
+         album.showDisabledIcon();
       });
+      main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);
+      main.getUI().getTools().fitMask();
    },
    isDisabled : function () {
       return this._isDisabled;
    },
-
+   /*
+    * @description This should enable the UI
+    */
    enable : function () {
-      var places = main.getUIState().getPlaces();
+      
+      var state, albums;
+      state = main.getUIState();
+      albums = state.getAlbums();
       this._isDisabled = false;
       //TODO: enable the 'cross' cursor on the map
-      places.forEach(function (place) {
-         place.checkIconStatus();
+      albums.forEach(function (album) {
+         album.checkIconStatus();
       });
+      main.getUI().getTools().closeOverlay($("#mp-ui-loading"));
    }
 };

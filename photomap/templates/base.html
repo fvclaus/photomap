@@ -89,9 +89,6 @@
 				</section>
 		      <section class="mp-page-title mp-option-information column span-6 last">
                <h1>{% block name %} {% endblock %}</h1>
-               <span class="mp-album-controls mp-nodisplay">
-                 <img class="mp-option-information mp-album-information" src="static/images/logout.png" title="Logout"></img>
-                 <img class="mp-option-share mp-controls" src="static/images/share.png" title='{% trans "control-title share" %}' />
             </section>
 			</header>
 			
@@ -104,7 +101,7 @@
 			   {% if user.is_authenticated %}
 				   <section class="mp-user column span-8">
 					   <span>
-						   <a href="/logout" title="Logout"><img class="mp-option-logout" src="static/images/logout.png" title="Logout"></img></a>
+						   <a href="/logout" title="Logout">|{% trans "Abmelden" %}</a>
 						</span>
 						<span>{{user.email}}</span>
                                                 <span>|</span>
@@ -113,7 +110,7 @@
 				{% else %}
 					<section class="mp-login-link column span-8">
 						<span>
-							<a href="/login" title ='{% trans "link-title-login" %}'>Login/Registrierung</a>
+							<a href="/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
 						</span>
 					</section>
 				{% endif %}

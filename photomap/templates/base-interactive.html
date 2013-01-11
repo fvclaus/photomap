@@ -71,7 +71,14 @@ content="interactive"
  	{% block content_interactive %}
 	{% endblock %}
 
-   
+   <div class="mp-ui-loading" id="mp-ui-loading">
+     <p class="mp-loading-img">
+       <img src="static/images/content-loader.gif"></img>
+     </p>
+     <p class="mp-loading-msg">
+       {% trans "Data Loading" %}
+     </p>
+   </div>   
 	<div id="mp-share">
 		<span class="mp-share-overlay" rel="#mp-share"></span>
 		<p>
