@@ -27,25 +27,28 @@
 
       <!-- fonts -->
 
-      <link href='http://fonts.googleapis.com/css?family=Droid+Sans:400,700' rel='stylesheet' type='text/css'>
+
 
       <!-- end fonts -->
 
       <!-- styles -->
 
-      <!-- scrollpane style sheet out of compress in development | make sure to put back in before deploying -->
-      <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
-      <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
-      <link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
+
+      <!-- THE IMAGE LINKS BREAK WHEN COMPRESSED -->
+      <link rel="stylesheet" type="text/css" href="static/css-plain/overcast/jquery-ui-1.9.2.custom.css" />
+
       {% load compress %}
-      {% compress css file %}
-         {% block css %}
-         {% endblock %}
-      {% endcompress %}
+      <!-- {% compress css file %} -->
+
+      <!-- {% endcompress %} -->
       {% compress css %}
          <link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
-         <link rel="stylesheet" type="text/css" href="static/css-plain/rokkitt.css" />
-         <link rel="stylesheet" type="text/css" href="static/css-plain/overcast/jquery-ui-1.9.2.custom.css" />
+         <link href="static/css-plain/droid.sans.css" rel="stylesheet" type="text/css"/>
+         <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
+         <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
+         <link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
+         {% block css %}
+         {% endblock %}
       {% endcompress %}	
 
       <!-- end styles -->
@@ -56,9 +59,9 @@
          <script type="text/javascript" src="static/js/lib/jquery-1.7.2-min.js"></script>
          <script type="text/javascript" src="static/js/lib/jquery.tools.no-jquery.min.js"></script>
          <script type="text/javascript" src="static/js/lib/jquery-ui-1.9.0.custom.min.js"></script>
-	      {% compress js %}
-	
-            <!-- javascript libraries -->
+         <!-- javascript libraries -->
+
+      {% compress js %}
             <script type="text/javascript" src="static/js/lib/date.js" ></script>
             <script type="text/javascript" src="static/js/util/noconsole.js" ></script>
             <script type="text/javascript" src="static/js/util/extensions.js" ></script>
@@ -66,11 +69,11 @@
             <script type="text/javascript" src="static/js/lib/tzoom.min.js" ></script>
             <script type="text/javascript" src="static/js/lib/jquery.cookie.js" ></script>
             <script type="text/javascript" src="static/js/lib/ie.js" ></script>
-	         <script type="text/javascript" src="static/js/lib/jquery.jqote2.min.js" ></script>
-	         <script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
-	         <script type="text/javascript" src="static/js/util/constants.js"></script>
-	         {% block js %}
-	         {% endblock %}
+	    <script type="text/javascript" src="static/js/lib/jquery.jqote2.min.js" ></script>
+	    <script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
+	    <script type="text/javascript" src="static/js/util/constants.js"></script>
+	    {% block js %}
+	    {% endblock %}
          {% endcompress %}
 		   
          {% block mapjs %}
