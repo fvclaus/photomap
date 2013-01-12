@@ -37,13 +37,14 @@ UIInput.prototype = {
          }
       });
 
-      $formWrapper = $("<div/>").html(instance.dialog.html());
+      $formWrapper = $("<div/>").css("display","inline-block").html(instance.dialog.html());
       $(".mp-content").append($formWrapper);
-      dimension = {"width": $formWrapper.width(), "height": $formWrapper.height()};
+      dimension = {"width": $formWrapper.width() * 1.2, "height": $formWrapper.height()};
       $formWrapper.remove();
 
       this.dialog.dialog({
          autoOpen: true,
+         title: "Change Dialog",
          modal: true,
          zIndex: 3000,
          draggable: false,
