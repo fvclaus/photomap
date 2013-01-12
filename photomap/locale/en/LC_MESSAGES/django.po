@@ -922,7 +922,7 @@ msgstr "Motivation for the project"
 
 #: templates/update-album.html:6
 msgid "insert-dialogue-title update-album"
-msgstr "Edit current album"
+msgstr "Edit album"
 
 #: templates/update-album.html:18 templates/update-photo.html:19
 #: templates/update-place.html:18
@@ -931,11 +931,11 @@ msgstr "Submit changes"
 
 #: templates/update-photo.html:6
 msgid "insert-dialogue-title update-photo"
-msgstr "Edit current photo"
+msgstr "Edit photo"
 
 #: templates/update-place.html:6
 msgid "insert-dialogue-title update-place"
-msgstr "Edit current place"
+msgstr "Edit place"
 
 #: templates/view-album.html:37
 msgid "Previous Image"

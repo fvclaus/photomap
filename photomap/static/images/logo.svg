@@ -71,9 +71,9 @@
        id="rect3038"
        inkscape:connector-curvature="0"
        sodipodi:nodetypes="ccccccccccc"
-       inkscape:export-filename="/home/fredo/photomap/static/images/logo.ong.png"
-       inkscape:export-xdpi="528.94147"
-       inkscape:export-ydpi="528.94147" />
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
     <rect
        ry="18.588663"
        y="376.79874"
@@ -82,9 +82,9 @@
        width="107.94532"
        id="rect3401"
        style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
-       inkscape:export-filename="/home/fredo/photomap/static/images/logo.ong.png"
-       inkscape:export-xdpi="528.94147"
-       inkscape:export-ydpi="528.94147" />
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
     <path
        sodipodi:type="arc"
        style="fill:#ffffff;fill-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
@@ -95,9 +95,9 @@
        sodipodi:ry="9.0913725"
        d="m 82.327433,105.34417 a 11.616755,9.0913725 0 1 1 -23.233509,0 11.616755,9.0913725 0 1 1 23.233509,0 z"
        transform="matrix(1.9282906,0,0,2.7559707,218.38683,128.06543)"
-       inkscape:export-filename="/home/fredo/photomap/static/images/logo.ong.png"
-       inkscape:export-xdpi="528.94147"
-       inkscape:export-ydpi="528.94147" />
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
     <path
        sodipodi:type="arc"
        style="fill:#000000;fill-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
@@ -108,9 +108,9 @@
        sodipodi:ry="5.4295697"
        d="m 77.024129,109.51105 a 5.8083773,5.4295697 0 1 1 -11.616755,0 5.8083773,5.4295697 0 1 1 11.616755,0 z"
        transform="matrix(2.1173387,0,0,2.461146,203.36405,149.03523)"
-       inkscape:export-filename="/home/fredo/photomap/static/images/logo.ong.png"
-       inkscape:export-xdpi="528.94147"
-       inkscape:export-ydpi="528.94147" />
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4178"
@@ -119,9 +119,9 @@
        x="393.79126"
        y="383.50632"
        ry="3.8836114"
-       inkscape:export-filename="/home/fredo/photomap/static/images/logo.ong.png"
-       inkscape:export-xdpi="528.94147"
-       inkscape:export-ydpi="528.94147" />
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
     <rect
        style="fill:#ffffff;fill-opacity:1;stroke-width:2;stroke-miterlimit:4;stroke-dasharray:none"
        id="rect4180"
@@ -130,9 +130,9 @@
        x="405.0647"
        y="383.32736"
        ry="4.0566144"
-       inkscape:export-filename="/home/fredo/photomap/static/images/logo.ong.png"
-       inkscape:export-xdpi="528.94147"
-       inkscape:export-ydpi="528.94147" />
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
     <text
        xml:space="preserve"
        style="font-size:40px;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-family:Origin;-inkscape-font-specification:Origin"
@@ -141,9 +141,9 @@
        id="text3175-8"
        sodipodi:linespacing="125%"
        transform="scale(1.0410322,0.96058508)"
-       inkscape:export-filename="/home/fredo/photomap/static/images/logo.ong.png"
-       inkscape:export-xdpi="528.94147"
-       inkscape:export-ydpi="528.94147"><tspan
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232"><tspan
          sodipodi:role="line"
          id="tspan3177-5"
          x="184.28134"
@@ -160,7 +160,10 @@
        x="229.96834"
        y="438.93478"
        id="text2995"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232"><tspan
          sodipodi:role="line"
          id="tspan2997"
          x="229.96834"
@@ -172,7 +175,10 @@
        x="271.30533"
        y="438.93478"
        id="text2999"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232"><tspan
          sodipodi:role="line"
          id="tspan3001"
          x="271.30533"
@@ -184,7 +190,10 @@
        x="453.88559"
        y="438.93478"
        id="text3003"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232"><tspan
          sodipodi:role="line"
          id="tspan3005"
          x="453.88559"
@@ -196,7 +205,10 @@
        x="489.29099"
        y="438.93478"
        id="text2995-2"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232"><tspan
          sodipodi:role="line"
          id="tspan2997-4"
          x="489.29099"
@@ -208,7 +220,10 @@
        x="528.27722"
        y="438.93478"
        id="text3028"
-       sodipodi:linespacing="125%"><tspan
+       sodipodi:linespacing="125%"
+       inkscape:export-filename="/home/fredo/photomap/static/images/logo.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232"><tspan
          sodipodi:role="line"
          id="tspan3030"
          x="528.27722"

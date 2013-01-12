@@ -18,6 +18,7 @@ import urllib2
 class PhotoControllerTest(ApiTestCase):
         
     model = Photo
+    UPLOAD_LIMIT = 367001600
     
     def test_delete(self):
         #=======================================================================
@@ -75,6 +76,13 @@ class PhotoControllerTest(ApiTestCase):
         self.assertPublicAccess(content["url"])
         self.assertThumbSize(content["thumb"])
         self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
+        #=======================================================================
+        # try to upload over the limit
+        #=======================================================================
+        self._openphoto(data)
+        self.user.userprofile.used_space = self.UPLOAD_LIMIT - 20
+        self.user.userprofile.save()
+        self.assertError(data)
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
