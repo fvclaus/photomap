@@ -37,8 +37,9 @@ Photo.prototype = {
       this.checkBorder();
    },
    triggerClick : function () {
+      var $thumb = main.getUI().getGallery().getImageBySource(this.source);
       main.getUIState().setCurrentLoadedPhoto(this);
-      $("#mp-gallery").find("img[src='" + this.source + "']").trigger("click");
+      $thumb.trigger("click");
    }
 };
 

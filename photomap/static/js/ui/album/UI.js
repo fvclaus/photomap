@@ -70,11 +70,14 @@ UI.prototype = {
    getPanel : function () {
       return this.panel;
    },
-   deletePlace : function () {
-      if (main.getUIState().getCurrentPlace() === main.getUIState().getCurrentLoadedPlace()) {
-   
-       // do sth here!
+   deletePlace : function (place) {
+      if (place === main.getUIState().getCurrentLoadedPlace()) {
+         
+         this.getGallery().show();
+         this.getSlideshow().removeCurrentImage();
+         this.getInformation().updateAlbum();
       }
+      place._delete();
    },
    /*
     * @description This should disable the UI in a way that no manipulation is possible anymore

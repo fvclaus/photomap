@@ -27,11 +27,3 @@ var arrayExtension = {
       return array.push.apply(array, rest);
    }
 };
-
-var mpEvents = {
-   trigger : function (element, event) {
-      jQuery(element).trigger(event);
-   },
-   toggleExpose: jQuery.Event("toggleExpose"),
-   iframeClose: jQuery.Event("iframe_close"),
-};

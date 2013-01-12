@@ -23,7 +23,7 @@ ClientServer.prototype = {
             type : "post",
             data : {
                'id': photo.id,
-               'order': photo.order,
+               'order': photo.order
             }
          });
       });
@@ -87,14 +87,9 @@ ClientServer.prototype = {
 
       places.forEach(function (place) {
 
-         var copy;
-
-         copy = place.photos;
-         place.photos = [];
-
          // puts photos with order on the right position
-         copy.forEach(function (photo, index) {
-            place.photos[photo.order] = photo;
+         place.photos.sort(function (photo, copy) {
+            return photo.order === copy.order;
          });
       });
 

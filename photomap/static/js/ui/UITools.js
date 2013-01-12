@@ -69,15 +69,12 @@ UITools.prototype = {
       k = 0;
       matrix = [];
       matrix[0] = [];
-      console.log(columns);
       while (i <= columns) {
-         console.log(i);
          matrix[k].push(array[j]);
          if (j === array.length - 1) {
             break;
          }
          if (i === columns - 1) {
-            console.dir(matrix);
             i = 0;
             j++;
             k++;
@@ -92,23 +89,42 @@ UITools.prototype = {
    },
    centerElement : function ($parent, $element, direction) {
       
-      var margin;
+      var margin, heightDifference, widthDifference;
+      
+      heightDifference = $parent.height() - $element.height();
+      widthDifference = $parent.width() - $element.width();
       
       switch (direction) {
       
       case "vertical":
-         margin = (this.getRealHeight($parent) - $element.height()) / 2;
-         margin += "px 0";
+         if (heightDifference === 0) {
+            margin = 0;
+         } else {
+            margin = heightDifference / 2;
+         }
+         margin += "px 0px";
          break;
       case "horizontal":
-         margin = "0 ";
-         margin += (this.getRealWidth($parent) - $element.width()) / 2;
+         margin = "0px ";
+         if (widthDifference === 0) {
+            margin = 0;
+         } else {
+            margin = widthDifference / 2;
+         }
          margin += "px";
          break;
       default:
-         margin = (this.getRealHeight($parent) - $element.height()) / 2;
+         if (heightDifference === 0) {
+            margin = 0;
+         } else {
+            margin = heightDifference / 2;
+         }
          margin += "px ";
-         margin += (this.getRealWidth($parent) - $element.width()) / 2;
+         if (widthDifference === 0) {
+            margin += 0;
+         } else {
+            margin += widthDifference / 2;
+         }
          margin += "px";
          break;
       }

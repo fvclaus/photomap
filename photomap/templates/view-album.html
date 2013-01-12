@@ -38,6 +38,7 @@
        </div>
 	    <div class="mp-slideshow-image column">
 	      <img class="mp-current-image"></img>
+         <div class="mp-slideshow-no-image-msg">{% trans "No image selected." %}</div>
 	    </div>
        <div class="mp-slideshow-nav column">
    	   <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
@@ -80,7 +81,9 @@
 	<script id="galleryTmpl" type="text/html">
 	  <div class="mp-thumb-page">
        <% for (thumb in this.thumbAddress) { %>
-	    <img class="sortable mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+       <span class="mp-gallery-tile">
+	      <img class="sortable mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+       </span>
 	    <% }; %>
      </div>
 	</script>

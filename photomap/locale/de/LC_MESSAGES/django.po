@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-11 18:31+0100\n"
+"POT-Creation-Date: 2013-01-12 15:55+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,11 +67,7 @@ msgstr "Löschen"
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base-non-interactive.html:45 templates/index.html:33
-msgid "link-title-dashboard"
-msgstr "Zum Dashboard"
-
-#: templates/base.html:107
+#: templates/base.html:104
 msgid "Abmelden"
 msgstr "Abmelden"
 
@@ -733,7 +729,7 @@ msgstr "Hinzufügen eines Albums"
 
 #: templates/insert-album.html:11 templates/insert-photo.html:14
 #: templates/insert-place.html:10 templates/team.html:17
-#: templates/team.html.py:31 templates/team.html:45
+#: templates/team.html.py:29 templates/team.html:41
 #: templates/update-album.html:11 templates/update-photo.html:12
 #: templates/update-place.html:11
 msgid "Name"
@@ -943,33 +939,25 @@ msgstr ""
 "Wir werden Ihnen im Rahmen der gesetzlichen Auskunftsansprüche in Kürze alle "
 "verfügbaren Information zu schicken."
 
-#: templates/team.html:19 templates/team.html.py:33 templates/team.html:47
-msgid "Email"
-msgstr "Email"
-
-#: templates/team.html:21 templates/team.html.py:35 templates/team.html:49
+#: templates/team.html:19 templates/team.html.py:31 templates/team.html:43
 msgid "Verantwortlich für"
 msgstr "Verantwortlich für"
 
-#: templates/team.html:22 templates/team.html.py:36
+#: templates/team.html:20 templates/team.html.py:32
 msgid "Back End"
 msgstr "Back End"
 
-#: templates/team.html:22 templates/team.html.py:36 templates/team.html:50
+#: templates/team.html:20 templates/team.html.py:44
+msgid "Front End"
+msgstr "Front End"
+
+#: templates/team.html:20 templates/team.html.py:44
 msgid "Design"
 msgstr "Design"
 
-#: templates/team.html:22 templates/team.html.py:36 templates/team.html:50
-msgid "Ideen"
-msgstr "Ideen"
-
-#: templates/team.html:23 templates/team.html.py:37 templates/team.html:51
+#: templates/team.html:21 templates/team.html.py:33 templates/team.html:45
 msgid "Motivation am Projekt"
 msgstr "Motivation am Projekt"
-
-#: templates/team.html:50
-msgid "Front End"
-msgstr "Front End"
 
 #: templates/update-album.html:6
 msgid "insert-dialogue-title update-album"
@@ -992,22 +980,35 @@ msgstr "Bearbeiten eines Platzes"
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: templates/view-album.html:43
+#: templates/view-album.html:41
+msgid "No image selected."
+msgstr "Kein Bild ausgewählt."
+
+#: templates/view-album.html:44
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: templates/view-album.html:47
+#: templates/view-album.html:48
 msgid "Bild"
 msgstr "Bild"
 
-#: templates/view-album.html:55
+#: templates/view-album.html:56
 msgid "Previous Page"
 msgstr "Vorherige Seite"
 
-#: templates/view-album.html:65
+#: templates/view-album.html:66
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/view-album.html:68
+#: templates/view-album.html:69
 msgid "Add Image"
 msgstr "Bild hinzufügen"
+
+#~ msgid "link-title-dashboard"
+#~ msgstr "Zum Dashboard"
+
+#~ msgid "Email"
+#~ msgstr "Email"
+
+#~ msgid "Ideen"
+#~ msgstr "Ideen"

@@ -43,11 +43,16 @@ UIGallery.prototype =  {
       this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-controls-options");
       this.$galleryPages =  this.$gallery.find('.mp-thumb-page');
    },
+   getImageBySource : function (source) {
+      
+      // due to the way .scrollable() works each img is 3 times in Gallery -> you need to pic the second, which is the currently visible 
+      return this.$gallery.find("img[src='" + source + "']").eq(1);
+   },
    _resizeThumbs : function () {
       
       var $thumbs, padding, increasedPadding, length, totalLength, border;
       
-      $thumbs = $(".mp-thumb");
+      $thumbs = $(".mp-gallery-tile");
       padding = 5;
       border = 8;
       this.$mainWrapper.css("width", this.mainWrapperWidth - border + "px");
@@ -71,7 +76,7 @@ UIGallery.prototype =  {
       var $thumbPage, emptySpots, tile, lastSliderSize, i;
       $thumbPage = null;
       emptySpots = 0;
-      tile = "<div class='mp-thumb mp-empty-tile mp-control'></div>";
+      tile = "<div class='mp-gallery-tile mp-empty-tile mp-control'></div>";
       
       if (this.$gallery.children().length === 0) {
          
@@ -107,7 +112,7 @@ UIGallery.prototype =  {
       var sliderIndex, imageIndex;
       
       sliderIndex = this.getScrollable().getIndex();
-      imageIndex = $image.index();
+      imageIndex = $image.parent().index();
       
       return sliderIndex * 5 + imageIndex;
    },
@@ -121,7 +126,7 @@ UIGallery.prototype =  {
       controls = main.getUI().getControls();
       authorized = main.getClientState().isAdmin();
       
-      if (photos.length !== 0) {
+      if (photos && photos.length !== 0) {
          
          state.setPhotos(photos);
          
@@ -139,7 +144,6 @@ UIGallery.prototype =  {
             } else {
                tmplPhotosData.push(photos[i].source);
                $('<img/>').load(function () {
-                  
                   ++loaded;
                   
                   if (loaded === photos.length) {
@@ -164,9 +168,7 @@ UIGallery.prototype =  {
                      // initialize scrollable
                      instance._initializeScrollable();
                      
-                     // load the first Photo into the Slideshow
-                     state.getPhotos()[0].triggerClick();
-                     
+                     instance._centerImages();
                      instance.showBorder();
                   }
                }).attr('src', photos[i].source);
@@ -205,7 +207,7 @@ UIGallery.prototype =  {
       
       var $thumbpage, $thumbs, $nav, $leftNav, $rightNav, borderSize, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin, difference;
       
-      $thumbs = $(".mp-thumb");
+      $thumbs = $(".mp-gallery-tile");
       $nav = $(".mp-gallery-nav");
       $leftNav = $("#mp-gallery-left-nav");
       $rightNav = $("#mp-gallery-right-nav");
@@ -214,11 +216,10 @@ UIGallery.prototype =  {
       galleryWidth = this.$mainWrapper.width();
       borderSize = (galleryWidth - thumbWidth) / 5;
       border = "px solid #dadada";
-      console.log(borderSize);
+      
       $nav.css({
          height: $thumbs.innerHeight() - 10 + "px",
-         padding: "5px 0",
-         backgroundColor: "#FAFAFA"
+         padding: "5px 0"
       });
       $leftNav.css("border-right", borderSize + border);
       main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-prev"), "horizontal");
@@ -232,7 +233,6 @@ UIGallery.prototype =  {
       if (this.mainWrapperWidth > $thumbpage.width()) {
          borderSize += (this.$mainWrapper.width() - $thumbpage.width()) / 5;
       }
-      console.log(borderSize);
       // adjust border again so that the thumbpage certainly fits exactely into the gallery
       $thumbs.css({
          borderRight: borderSize + border
@@ -240,7 +240,7 @@ UIGallery.prototype =  {
 
       // adjust right nav-div
       difference = this.$container.width() - (this.mainWrapperWidth + $nav.width() * 2);
-      $("#mp-gallery-right-nav").css("width", $("#mp-gallery-left-nav").width() + difference + "px");
+      //$("#mp-gallery-right-nav").css("width", $("#mp-gallery-left-nav").width() + difference + "px");
    },
    /**
     * @private
@@ -268,16 +268,15 @@ UIGallery.prototype =  {
     */
    _centerImages : function () {
       
-      var $thumbs, thumbWidth, galleryWidth, thumbPadding, marginEW;
-      $thumbs = $(".mp-thumb");
-      this.$galleryPages.width(this.$container.width() + "px");
-
-      thumbWidth = $thumbs.width() * 5;
-      galleryWidth = this.$container.width();
-      thumbPadding = ($thumbs.innerWidth() - $thumbs.width()) * 5;
-      marginEW = (galleryWidth - thumbWidth - thumbPadding - 5 * 10) / 10;
+      var $tile, $thumb, photos;
+      $tile = $(".mp-gallery-tile");
+      photos = main.getUIState().getPhotos();
       
-      $thumbs.css("margin", "0 " + marginEW + "px");
+      photos.forEach(function (photo) {
+         
+         $thumb = $("img[src='" + photo.source + "']");
+         main.getUI().getTools().centerElement($tile, $thumb);
+      });
    },
    checkSlider : function () {
       
@@ -387,7 +386,7 @@ UIGallery.prototype =  {
                state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
 
                main.getUI().getControls().hideEditControls(false);
-
+               
                // starts little slideshow in gallery div
                main.getUI().getSlideshow().startSlider();
 
