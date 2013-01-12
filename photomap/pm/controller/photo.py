@@ -78,6 +78,13 @@ def insert(request):
                 logger.warn("User %s not authorized to insert a new Photo in Place %d. Aborting." % (request.user, place.pk))
                 return error("This is not your place!")
             #===================================================================
+            # check upload limit
+            #===================================================================
+            size = get_size(request.FILES["photo"])
+            userprofile = request.user.userprofile
+            if userprofile.used_space + size > userprofile.quota:
+                return error("No more space left. Delete or resize some older photos.")
+            #===================================================================
             # check & convert image
             #===================================================================
             try:
@@ -109,8 +116,7 @@ def insert(request):
             #===================================================================
             # add size
             #===================================================================
-            photo.size = get_size(original)
-            userprofile = request.user.userprofile
+            photo.size = size
             userprofile.used_space += photo.size
             
             userprofile.save()
