@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+{% load i18n %}
+<head>
+  <title>Browser Not Supported</title>
+  <meta charset="UTF-8" />
+  <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+  
+  <style type="text/css">
+  
+    body {
+      background: #333;
+      text-align: center;
+    }
+    header {
+      margin: 25px 0;
+    }
+    footer {
+      margin: 25px 0;
+    }
+    #content {
+      width: 780px;
+      padding: 50px 10px 0 10px;
+      margin: 0 auto;
+      background: #f4f4f4;
+    }
+    #main {
+      min-height: 300px;
+    }
+      
+  </style>
+</head>
+
+<body>
+  <section id="content">
+    <header>
+      <h1>No Support for any browser except Firefox >= Version 10</h1>
+    </header>
+    <section id="main">
+      <p>
+	Making a website (web-application) using as much javascript and css as this one 
+	work with the Internet Explorer without major problems, is a lot of work.
+	Therefor we decided to not support any browser except Mozilla Firefox (v.10+) for now. We might 
+	reconsider this decision once the app is working smoothly and we have enough time, to work on 
+	a broader integration.
+      </p>
+      <p>
+	<strong>We're sorry for any inconvenience this might cause!</strong>
+      </p>
+      <p>
+	If you really want to use this app. You can download and install an firefox, which you use for this app.
+      </p>
+      <p>
+	<a href="http://www.mozilla.org/">Download - Mozilla Firefox</a> <br />
+      </p>
+    </section>
+    <footer>
+      <a href="/impressum" title='{% trans "link-title-impressum" %}'>Impressum</a> |
+      <a href="/privacy" title='{% trans "link-title-privacy" %}'>Datenschutz</a> |
+      <a href="/copyright" title='{% trans "link-title-copyright" %}'>Urheberrecht</a> |
+      <a href="/contact" title='{% trans "link-title-contact" %}'>Kontakt</a> |
+      <a href="/help" title='{% trans "link-title-help" %}'>Hilfe</a> |
+      <a href="/team" title='{% trans "link-title-team" %}'>Team</a>
+    </footer>
+  </section>
+
+
+</body>
+
+</html>
