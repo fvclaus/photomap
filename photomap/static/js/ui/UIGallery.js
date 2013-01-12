@@ -240,7 +240,7 @@ UIGallery.prototype =  {
 
       // adjust right nav-div
       difference = this.$container.width() - (this.mainWrapperWidth + $nav.width() * 2);
-      //$("#mp-gallery-right-nav").css("width", $("#mp-gallery-left-nav").width() + difference + "px");
+      $("#mp-gallery-right-nav").css("width", $("#mp-gallery-left-nav").width() + difference + "px");
    },
    /**
     * @private
