@@ -55,7 +55,11 @@ UIGallery.prototype =  {
       $thumbs = $(".mp-gallery-tile");
       padding = 5;
       border = 8;
-      this.$mainWrapper.css("width", this.mainWrapperWidth - border + "px");
+/*      this.$mainWrapper.css({
+         width: this.mainWrapperWidth - border + "px",
+         paddingLeft: border + "px"
+      });
+   */   
       length = this.$mainWrapper.height() - (padding * 2);
       totalLength = (length + padding * 2) * 5 + border * 5;
       if (totalLength > this.$mainWrapper.width()) {
@@ -73,26 +77,27 @@ UIGallery.prototype =  {
    },
    _createEmptyTiles : function () {
       
-      var $thumbPage, emptySpots, tile, lastSliderSize, i;
+      var $thumbPage, emptySpots, tile, slider, lastSliderSize, i;
       $thumbPage = null;
       emptySpots = 0;
       tile = "<div class='mp-gallery-tile mp-empty-tile mp-control'></div>";
+      slider = "<div class='mp-thumb-page'></div>";
       
       if (this.$gallery.children().length === 0) {
          
-         this.$gallery.append("<div class='mp-thumb-page'></div>");
+         this.$gallery.append(slider);
          $thumbPage = $(".mp-thumb-page");
          emptySpots = 5;
       } else {
          
-         lastSliderSize = $(".mp-thumb-page").not($(".cloned")).last().children().length;
+         lastSliderSize = $(".mp-thumb-page").last().children().size();
          if (lastSliderSize < 5) {
-
+            
             emptySpots = 5 - lastSliderSize;
-            $thumbPage = $(".mp-thumb-page").not($(".cloned")).last();
+            $thumbPage = $(".mp-thumb-page").last();
          }
       }
-      
+         
       for (i = 0; i < emptySpots; i++) {
          
          $thumbPage.append(tile);
@@ -205,7 +210,7 @@ UIGallery.prototype =  {
     */
    _createFilmRollEffect : function () {
       
-      var $thumbpage, $thumbs, $nav, $leftNav, $rightNav, borderSize, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin, difference;
+      var $thumbpage, $thumbs, $nav, $leftNav, $rightNav, borderSize, border, thumbWidth, galleryWidth, thumbPadding, leftNavMargin, rightNavMargin, rightNavWidth;
       
       $thumbs = $(".mp-gallery-tile");
       $nav = $(".mp-gallery-nav");
@@ -221,26 +226,23 @@ UIGallery.prototype =  {
          height: $thumbs.innerHeight() - 10 + "px",
          padding: "5px 0"
       });
-      $leftNav.css("border-right", borderSize + border);
-      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-prev"), "horizontal");
-      main.getUI().getTools().centerElement($nav, $(".mp-gallery-nav-next"), "horizontal");
-      main.getUI().getTools().centerElement($nav, $(".mp-option-insert-photo"), "horizontal");
-      
       $thumbs.css({
-         borderRight: borderSize + border
+         borderRight: borderSize / 2 + border,
+         borderLeft: borderSize / 2 + border
       });
-      $thumbpage = $(".mp-thumb-page").not(".cloned").first();
+      $thumbpage = $(".mp-thumb-page").not("cloned").first();
       if (this.mainWrapperWidth > $thumbpage.width()) {
          borderSize += (this.$mainWrapper.width() - $thumbpage.width()) / 5;
       }
       // adjust border again so that the thumbpage certainly fits exactely into the gallery
       $thumbs.css({
-         borderRight: borderSize + border
+         borderRight: borderSize / 2 + border,
+         borderLeft: borderSize / 2 + border
       });
 
       // adjust right nav-div
-      difference = this.$container.width() - (this.mainWrapperWidth + $nav.width() * 2);
-      $("#mp-gallery-right-nav").css("width", $("#mp-gallery-left-nav").width() + difference + "px");
+      rightNavWidth = this.$container.width() - (this.$mainWrapper.innerWidth() + $leftNav.width());
+      //$("#mp-gallery-right-nav").css("width", rightNavWidth + "px");
    },
    /**
     * @private

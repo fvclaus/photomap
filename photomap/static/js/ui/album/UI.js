@@ -39,6 +39,7 @@ UI.prototype = {
       this.controls.initAfterAjax();
       this.gallery.initAfterAjax();
       this.cursor.initAfterAjax();
+      this.information.initAfterAjax();
    },
    getCursor : function () {
       return this.cursor;

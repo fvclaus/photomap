@@ -138,20 +138,13 @@ fileUpload = {
          photo.order = state.getPhotos().length;
          console.log(photo);
          state.addPhoto(photo);
-         //TODO: the selector below is not working
-         // $(".mp-gallery-thumb").append('<img class="sortable mp-control" src="' + photo.source + '">');
-         // reinitialising ScrollPane, cause gallery length might have increased
-         if (gallery.getScrollPane()) {
-            gallery.getScrollPane().reinitialise();
-         } else if (!gallery.getScrollPane() && state.getPhotos().length > 9) {
-            gallery.setScrollPane();
-         }
-         gallery.searchImages();
-         // set bindListener won't be necessary anymore when upgrading to jQuery 1.7.2 and using .on()
-         gallery.bindListener();
-
+         gallery.show(state.getPhotos());
+         
          //update  upload limit
-         toMbyte = function(bytesAsString) { return new Number(parseFloat(bytesAsString) / BYTE_TO_MBYTE)};
+         toMbyte = function (bytesAsString) {
+            
+            return (parseFloat(bytesAsString) / BYTE_TO_MBYTE);
+         };
 
          usedSpace = toMbyte($.cookie("used_space"));
          quota = toMbyte($.cookie("quota"));

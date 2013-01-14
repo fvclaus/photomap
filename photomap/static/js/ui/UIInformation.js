@@ -28,6 +28,12 @@ UIInformation.prototype = {
       this.bindListener();
       this.resizeTitleBarFont();
    },
+   initAfterAjax : function () {
+      if (main.getUIState().getPage() === ALBUM_VIEW) {
+         
+         $(".mp-page-title").trigger("click");
+      }
+   },
    _setTitle : function (title) {
       
       if (title !== null) {

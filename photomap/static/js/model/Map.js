@@ -220,7 +220,7 @@ Map.prototype = {
                state.addPlace(place);
                main.getUI().getControls().bindPlaceListener(place);
                //redraws place
-               place.triggerClick();
+               place.triggerDoubleClick();
 
             });
 
@@ -261,7 +261,7 @@ Map.prototype = {
                album.show();
                main.getUI().getControls().bindAlbumListener(album);
                //redirect to new albumview
-               album.triggerClick();
+               album.triggerDoubleClick();
             });
 
             input.onLoad(function () {
