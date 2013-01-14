@@ -1,0 +1,9 @@
+
+%\renewcommand{\figurename}{blah}
+
+\captionsetup{figurename=!photo-title!}
+\begin{figure}[h!]
+\floatbox[{\capbeside\thisfloatsetup{capbesideposition={!position!,top},capbesidewidth=0.4\textwidth}}]{figure}[\FBwidth]
+{\caption[LoF entry]{!photo-description!}}
+{\includegraphics[width=0.5\textwidth]{!photo-path!}}
+\end{figure}

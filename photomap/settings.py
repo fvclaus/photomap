@@ -22,7 +22,8 @@ TEST_PATH = os.path.join(RES_PATH, "test")
 CSS_PATH = os.path.join(STATIC_PATH, "css")
 
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
-LATEX_PATH = os.path.join(RES_PATH, "latex") 
+LATEX_PATH = os.path.join(RES_PATH, "latex")
+DEBUG_PATH = os.path.join(RES_PATH, "debug") 
 MANAGERS = ADMINS
 
 LOGGING = {
@@ -89,12 +90,12 @@ if 'test' in sys.argv:
 else:
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'photomap', # Or path to database file if using sqlite3.
-            'USER': 'django', # Not used with sqlite3.
-            'PASSWORD': 'django', # Not used with sqlite3.
-            'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '5432', # Set to empty string for default. Not used with sqlite3.
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': 'photomap',  # Or path to database file if using sqlite3.
+            'USER': 'django',  # Not used with sqlite3.
+            'PASSWORD': 'django',  # Not used with sqlite3.
+            'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
+            'PORT': '5432',  # Set to empty string for default. Not used with sqlite3.
         }
     }
 
@@ -184,7 +185,7 @@ COMPRESS_PRECOMPILERS = (
                          ("text/x-stylus", "stylus < {infile} > {outfile} --include " + CSS_PATH),
                          )
 
-#COMPRESS_ROOT = "static/"
+# COMPRESS_ROOT = "static/"
 COMPRESS_URL = "static/"
 
 MIDDLEWARE_CLASSES = (
@@ -212,8 +213,8 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
 )
 
-#uses django compressor http://django_compressor.readthedocs.org/en/latest/settings/
-#pip install django_compressor
+# uses django compressor http://django_compressor.readthedocs.org/en/latest/settings/
+# pip install django_compressor
 INSTALLED_APPS = (
     "compressor",
     "pm",
