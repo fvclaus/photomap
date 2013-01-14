@@ -257,8 +257,7 @@ UIControls.prototype = {
                   url = "/delete-place";
                   data = { id: place.id };
                   state.removePlace(place);
-                  main.getUI().deletePlace();
-                  place._delete();
+                  main.getUI().deletePlace(place);
                } else {
                   return;
                }

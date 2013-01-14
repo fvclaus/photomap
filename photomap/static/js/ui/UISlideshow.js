@@ -28,6 +28,13 @@ UISlideshow.prototype = {
       main.getUI().getTools().centerElement(this.$nav, this.$next);
       main.getUI().getTools().centerElement(this.$nav, this.$prev);
    },
+   removeCurrentImage : function () {
+      this.$image.attr("src", "");
+      if (this.$image.is(":visible")) {
+         this.$image.hide();
+      }
+      $(".mp-slideshow-no-image-msg").show();
+   },
    startSlider: function () {
       
       var state, information, tools, cursor, updateImage, once, instance = this;
@@ -37,6 +44,7 @@ UISlideshow.prototype = {
       cursor = main.getUI().getCursor();
       once = false;
       
+      $(".mp-slideshow-no-image-msg").hide();
       updateImage = function () {
          if (!once) {
             
@@ -54,7 +62,7 @@ UISlideshow.prototype = {
                   
                   //center in the middle
                   tools.centerElement(instance.$wrapper, instance.$image);
-
+                  
                   instance.$image.fadeIn(300);
 
                   state.setSlideshowLoaded(true);

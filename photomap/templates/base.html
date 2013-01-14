@@ -36,6 +36,8 @@
 
       <!-- THE IMAGE LINKS BREAK WHEN COMPRESSED -->
       <link rel="stylesheet" type="text/css" href="static/css-plain/overcast/jquery-ui-1.9.2.custom.css" />
+      <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
+      <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
 
       {% load compress %}
       <!-- {% compress css file %} -->
@@ -44,8 +46,6 @@
       {% compress css %}
          <link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
          <link href="static/css-plain/droid.sans.css" rel="stylesheet" type="text/css"/>
-         <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
-         <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
          <link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
          {% block css %}
          {% endblock %}

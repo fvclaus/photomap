@@ -120,6 +120,9 @@ Place.prototype._bindListener = function () {
       if (oldPlace) {
          oldPlace.checkIconStatus();
       }
+      
+      main.getUI().getSlideshow().removeCurrentImage();
+      
       instance._showGallery();
 
    });
