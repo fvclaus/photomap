@@ -84,7 +84,7 @@ class AlbumControllerTest(ApiTestCase):
         #=======================================================================
         # insert something valid with description
         #=======================================================================
-        data["description"] = "Some text,text,... Testing some umlauts üäß and other special characters <javascript></javascript>"
+        data["description"] = u'Some text,text,... Testing some umlauts üäß and other special characters <javascript></javascript>'
         (album, content) = self.assertCreates(data)
         self.assertEqual(album.description, data["description"])
         #=======================================================================
