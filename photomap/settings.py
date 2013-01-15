@@ -186,7 +186,7 @@ COMPRESS_PRECOMPILERS = (
                          )
 
 # COMPRESS_ROOT = "static/"
-COMPRESS_URL = "static/"
+COMPRESS_URL = "/static/"
 
 MIDDLEWARE_CLASSES = (
     'pm.middleware.NoSupportMiddleware',

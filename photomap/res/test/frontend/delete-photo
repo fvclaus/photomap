@@ -23,10 +23,9 @@
 </tr>
 <tr>
 	<td>assertElementNotPresent</td>
-	<td>css=div.mp-gallery &gt; img.sortable</td>
+	<td>css=span.mp-gallery-tile &gt; img</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

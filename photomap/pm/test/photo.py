@@ -68,7 +68,7 @@ class PhotoControllerTest(ApiTestCase):
         # insert something valid with description
         #=======================================================================
         self._openphoto(data)
-        data["description"] = "Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>"
+        data["description"] = u'Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>'
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
         self.assertEqual(photo.order, 2)

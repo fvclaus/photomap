@@ -28,8 +28,8 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=img.mp-option-add</td>
-	<td>addPhoto</td>
+	<td>css=button.mp-insert-photo</td>
+	<td>insertPhoto</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -78,7 +78,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=div.mp-description-wrapper</td>
+	<td>css=p.mp-description-body</td>
 	<td>descriptionText</td>
 </tr>
 <tr>

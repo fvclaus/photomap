@@ -14,7 +14,6 @@
 <tr><td><a href="insert-place">insert-place</a></td></tr>
 <tr><td><a href="add-photo">add-photo</a></td></tr>
 <tr><td><a href="update-place">update-place</a></td></tr>
-<tr><td><a href="show-place">show-place</a></td></tr>
 <tr><td><a href="update-photo">update-photo</a></td></tr>
 <tr><td><a href="delete-photo">delete-photo</a></td></tr>
 <tr><td><a href="delete-place">delete-place</a></td></tr>
