@@ -19,12 +19,12 @@
 <tr>
 	<td>type</td>
 	<td>css=input[name=&quot;email&quot;]</td>
-	<td>admin@example.com</td>
+	<td>test@keiken.app</td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>css=input[name=&quot;password&quot;]</td>
-	<td>admin</td>
+	<td>test</td>
 </tr>
 <tr>
 	<td>clickAndWait</td>

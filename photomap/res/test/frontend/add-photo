@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>${addPhoto}</td>
+	<td>${insertPhoto}</td>
 	<td></td>
 </tr>
 <tr>
@@ -47,8 +47,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementNotPresent</td>
-	<td>${inputForm}</td>
+	<td>waitForNotVisible</td>
+	<td>css=div.#exposeMask</td>
 	<td></td>
 </tr>
 </tbody></table>

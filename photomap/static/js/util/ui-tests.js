@@ -17,17 +17,18 @@ var latLngAlbum, latLngPlace, state, places, place, photos, photo, albums, album
 function selectPlace() {
    state = main.getUIState();
    places = state.getPlaces();
-   place = places[places.length - 1];
    if (places.length === 0) {
       alert("Need places for test!");
       return null;
-   } else {
-      state.setCurrentPlace(place);
-      state.setCurrentLoadedPlace(place);
-      main.getUI().getControls().setModifyPlace(true);
-      return place;
    }
+   place = places[0];
+
+   state.setCurrentPlace(place);
+   state.setCurrentLoadedPlace(place);
+   main.getUI().getControls().setModifyPlace(true);
+   return place;
 }
+
 
 /*
   @author: Frederik Claus
@@ -46,8 +47,8 @@ function selectAlbum() {
   @summary: select and returns the last photo of getPlace()
 */
 function selectPhoto() {
-   photos = selectPlace().photos;
-   photo = photos[photos.length - 1];
+   photos = main.getUIState().getPhotos();
+   photo = photos[0];
    main.getUIState().setCurrentPhoto(photo);
    main.getUI().getControls().setModifyPhoto(true);
    return photo;
@@ -79,6 +80,9 @@ function bindListener() {
          latLng : latLngPlace
       };
       google.maps.event.trigger(gmap, "click", event);
+   });
+   $("button.mp-insert-photo").click(function () {
+      controls.$insert.trigger("click");
    });
    $("button.mp-show-place").click(function () {
       place = selectPlace();
