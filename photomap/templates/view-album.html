@@ -6,24 +6,24 @@
 {% block title %}{% trans "Albumsansicht" %}{% endblock %}
 
 {% block css %}
-	<link rel="stylesheet" type="text/x-stylus" href="static/css/viewalbum-main.styl" />
+	<link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl" />
 {% endblock %}
 
 {% block js_interactive %}
 
-	<script type="text/javascript" src="static/js/ui/UIFullscreen.js" ></script>
-	<script type="text/javascript" src="static/js/ui/UISlideshow.js" ></script>
-	<script type="text/javascript" src="static/js/ui/UIGallery.js" ></script>
+	<script type="text/javascript" src="/static/js/ui/UIFullscreen.js" ></script>
+	<script type="text/javascript" src="/static/js/ui/UISlideshow.js" ></script>
+	<script type="text/javascript" src="/static/js/ui/UIGallery.js" ></script>
 
-	<script type="text/javascript" src="static/js/ui/album/UI.js" ></script>
+	<script type="text/javascript" src="/static/js/ui/album/UI.js" ></script>
 
-	<script type="text/javascript" src="static/js/util/album/ClientServer.js" ></script>
-	<script type="text/javascript" src="static/js/util/file-upload.js" ></script>
+	<script type="text/javascript" src="/static/js/util/album/ClientServer.js" ></script>
+	<script type="text/javascript" src="/static/js/util/file-upload.js" ></script>
 
-	<script type="text/javascript" src="static/js/model/Place.js" ></script>
-	<script type="text/javascript" src="static/js/model/Photo.js" ></script>
+	<script type="text/javascript" src="/static/js/model/Place.js" ></script>
+	<script type="text/javascript" src="/static/js/model/Photo.js" ></script>
 
-	<script type="text/javascript" src="static/js/main/view-album.js" ></script>
+	<script type="text/javascript" src="/static/js/main/view-album.js" ></script>
 
 {% endblock %}
 
@@ -34,14 +34,14 @@
 	<section class="mp-slideshow" id="mp-slideshow">
      <div class="mp-slideshow-inner">
        <div class="mp-slideshow-nav column">
-	      <img class="mp-slideshow-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
+	      <img class="mp-slideshow-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
        </div>
 	    <div class="mp-slideshow-image column">
 	      <img class="mp-current-image"></img>
          <div class="mp-slideshow-no-image-msg">{% trans "No image selected." %}</div>
 	    </div>
        <div class="mp-slideshow-nav column">
-   	   <img class="mp-slideshow-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
+   	   <img class="mp-slideshow-nav-next mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
        </div>
      </div>
 	  <div class="mp-slideshow-info">
@@ -53,7 +53,7 @@
 {% block gallery/news-feed %}
 	<section class="mp-gallery" id="mp-gallery">
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
-        <img class="mp-gallery-nav-prev mp-control" src="static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
+        <img class="mp-gallery-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
       </div>
       <div class="mp-gallery-main column" id="mp-gallery-main">
         <div class="mp-gallery-thumbs" id="mp-gallery-thumbs">
@@ -63,10 +63,10 @@
       </div>
       <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
         <span>
-          <img class="mp-gallery-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
+          <img class="mp-gallery-nav-next mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
 		  </span>
         <span>
-          <img class="mp-option-insert-photo mp-control" src="static/images/add.png" title='{% trans "Add Image" %}'></img>
+          <img class="mp-option-insert-photo mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}'></img>
         </span>
       </div>
 	</section>
@@ -90,14 +90,14 @@
 
 	<script id="galleryFullscreenTmpl" type="text/html">
 		<div id="mp-image-overlay" class="mp-image-overlay">
-			<img class="mp-dark-loader" src="static/images/dark-loader.gif"></img>
-			<img class="mp-image-zoom" src="static/images/zoom.png" ></img>
+			<img class="mp-dark-loader" src="/static/images/dark-loader.gif"></img>
+			<img class="mp-image-zoom" src="/static/images/zoom.png" ></img>
 			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
 			<div class="mp-image-overlay-desc">
 				<div class="mp-image-nav">
-					<img class="mp-image-nav-prev mp-control" src="static/images/image-arrow-left.png" ></img>
-					<img class="mp-image-nav-next mp-control" src="static/images/image-arrow-right.png" ></img>
-					<img class="mp-image-overlay-close mp-control" src="static/images/close.png" ></img>
+					<img class="mp-image-nav-prev mp-control" src="/static/images/image-arrow-left.png" ></img>
+					<img class="mp-image-nav-next mp-control" src="/static/images/image-arrow-right.png" ></img>
+					<img class="mp-image-overlay-close mp-control" src="/static/images/close.png" ></img>
 				</div>
 				<h2 class="mp-fullscreen-photo-title"><%= this.tmplPhotoData.description %></h2>
 			</div>
