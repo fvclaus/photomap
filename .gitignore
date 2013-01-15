@@ -26,6 +26,5 @@ debug/*
 *.project
 CACHE/
 .sass-cache
-latex/
 debug/
 .settings
