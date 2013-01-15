@@ -40,9 +40,9 @@ UI.prototype = {
       this.controls.initWithoutAjax();
       this.cursor.initWithoutAjax();
       this.tools.initWithoutAjax();
+      main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    initAfterAjax : function () {
-      this.panel.initAfterAjax();
       this.controls.initAfterAjax();
       this.cursor.initAfterAjax();
    },
