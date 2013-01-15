@@ -173,7 +173,32 @@ UITools.prototype = {
       
       $element.css("padding", padding);
    },
-      
+   /**
+    * @param Array
+    * @description return first key with undefined value
+    */
+   firstUndef : function (array) {
+
+      var i, index;
+
+      index = -1;
+      for (i = 0; i <= array.length; i++) {
+         if (array[i] === null) {
+            return i;
+         }
+      }
+      return -1;
+   },
+   /**
+    * Array Remove - By John Resig (MIT Licensed)
+    *
+    * Usage: arrayRemove(array, 1) -> remove second item; arrayRemove(array, -2) -> remove second to last; arrayRemove(array, 1, 2) -> remove second and third
+    */
+   arrayRemove : function (array, from, to) {
+      var rest = array.slice((to || from) + 1 || array.length);
+      array.length = from < 0 ? array.length + from : from;
+      return array.push.apply(array, rest);
+   },
    calculateFontSize : function (title, desiredWidth, desiredHeight) {
       
       var $fontEl, size = 1;

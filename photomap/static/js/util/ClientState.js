@@ -41,7 +41,7 @@ ClientState.prototype = {
                }
             }
             // rewrite cookie, just in case there was a change
-            this._writeCookie();
+            this._writePhotoCookie();
       }
    },
    isVisitedPhoto : function(id){
@@ -54,11 +54,11 @@ ClientState.prototype = {
    addPhoto : function(id){
       if (this.photos.indexOf(id) == -1){
          this.photos.push(id);
-         this._writeCookie();
+         this._writePhotoCookie();
       }
    },
-   _writeCookie : function(){
+   _writePhotoCookie : function(){
       this.value = this.photos.join(",");
       $.cookie("visited",this.value,this._cookieSettings);
-   },
+   }
 };

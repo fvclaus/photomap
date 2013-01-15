@@ -39,7 +39,7 @@ function toggleTutorialDesc($topic) {
 
 var trigger;
 
-function initialize() {
+function initializePage() {
 
    $(".mp-faq-question").bind('click', function () {
       trigger = $(this);

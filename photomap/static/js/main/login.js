@@ -11,11 +11,6 @@
 var cursor, tools, $container;
 
 
-function initialize() {
-   
-   $container = $(".mp-non-interactive-content");
-   tools = main.getUI().getTools();
-   cursor = main.getUI().getCursor();
-   
+function initializePage() {
 }
 

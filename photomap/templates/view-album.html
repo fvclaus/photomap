@@ -10,19 +10,19 @@
 {% endblock %}
 
 {% block js_interactive %}
-	
+
 	<script type="text/javascript" src="static/js/ui/UIFullscreen.js" ></script>
 	<script type="text/javascript" src="static/js/ui/UISlideshow.js" ></script>
 	<script type="text/javascript" src="static/js/ui/UIGallery.js" ></script>
-	
+
 	<script type="text/javascript" src="static/js/ui/album/UI.js" ></script>
 
 	<script type="text/javascript" src="static/js/util/album/ClientServer.js" ></script>
 	<script type="text/javascript" src="static/js/util/file-upload.js" ></script>
 
-	<script type="text/javascript" src="static/js/model/Place.js" ></script>	
+	<script type="text/javascript" src="static/js/model/Place.js" ></script>
 	<script type="text/javascript" src="static/js/model/Photo.js" ></script>
-	
+
 	<script type="text/javascript" src="static/js/main/view-album.js" ></script>
 
 {% endblock %}
@@ -62,7 +62,7 @@
 		  </div>
       </div>
       <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
-        <span>        
+        <span>
           <img class="mp-gallery-nav-next mp-control" src="static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
 		  </span>
         <span>
@@ -76,7 +76,7 @@
 
 {% block content_interactive %}
 
-	
+
 	<!-- jqote2 templates for gallery and fullscreen -->
 	<script id="galleryTmpl" type="text/html">
 	  <div class="mp-thumb-page">
@@ -104,7 +104,7 @@
 		</div>
 	</script>
 
-	
+
 	<!-- helpers for selenium ide. remove from production system -->
 	<div class="mp-invisible">
 		<button class="mp-insert-place"></button>
@@ -116,6 +116,6 @@
 		<button class="mp-delete-photo"></button>
 		<p id="test-photo-path">{{testphotopath}}</p>
 	</div>
-	
+
 
 {% endblock %}

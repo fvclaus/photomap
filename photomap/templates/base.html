@@ -22,7 +22,7 @@
       <meta property="mp:map" {% block mode %}{% endblock %} />
       <meta property="og:description" content="Karte mit Photos und Beschreibungen" />
       {% block meta %}
-      {% endblock %}		
+      {% endblock %}
 
 
       <!-- fonts -->
@@ -35,26 +35,26 @@
 
 
       <!-- THE IMAGE LINKS BREAK WHEN COMPRESSED -->
-      <link rel="stylesheet" type="text/css" href="static/css-plain/overcast/jquery-ui-1.9.2.custom.css" />
+      <link rel="stylesheet" type="text/css" href="static/css/external/overcast/jquery-ui-1.9.2.custom.css" />
       <link rel="stylesheet" type="text/css" href="static/css/grid.css" />
-      <link rel="stylesheet" type="text/css" href="static/css-plain/jquery.jscrollpane.css" />
+      <link rel="stylesheet" type="text/css" href="static/css/external/jquery.jscrollpane.css" />
 
       {% load compress %}
       <!-- {% compress css file %} -->
 
       <!-- {% endcompress %} -->
       {% compress css %}
-         <link rel="stylesheet" type="text/css" href="static/css-plain/sans.narrow.css" />
-         <link href="static/css-plain/droid.sans.css" rel="stylesheet" type="text/css"/>
-         <link rel="stylesheet" type="text/css" href="static/css-plain/tzoom.css" />
+         <link rel="stylesheet" type="text/css" href="static/css/external/sans.narrow.css" />
+         <link href="static/css/external/droid.sans.css" rel="stylesheet" type="text/css"/>
+         <link rel="stylesheet" type="text/css" href="static/css/external/tzoom.css" />
          {% block css %}
          {% endblock %}
-      {% endcompress %}	
+      {% endcompress %}
 
       <!-- end styles -->
 
       <!-- js -->
-         
+
          <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->
          <script type="text/javascript" src="static/js/lib/jquery-1.7.2-min.js"></script>
          <script type="text/javascript" src="static/js/lib/jquery.tools.no-jquery.min.js"></script>
@@ -63,19 +63,15 @@
 
       {% compress js %}
             <script type="text/javascript" src="static/js/lib/date.js" ></script>
-            <script type="text/javascript" src="static/js/util/noconsole.js" ></script>
-            <script type="text/javascript" src="static/js/util/extensions.js" ></script>
             <script type="text/javascript" src="static/js/lib/jquery.mousewheel.min.js" ></script>
-            <script type="text/javascript" src="static/js/lib/tzoom.min.js" ></script>
             <script type="text/javascript" src="static/js/lib/jquery.cookie.js" ></script>
             <script type="text/javascript" src="static/js/lib/ie.js" ></script>
-	    <script type="text/javascript" src="static/js/lib/jquery.jqote2.min.js" ></script>
-	    <script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
-	    <script type="text/javascript" src="static/js/util/constants.js"></script>
+	         <script type="text/javascript" src="static/js/lib/jquery.jscrollpane.min.js" ></script>
+	         <script type="text/javascript" src="static/js/util/constants.js"></script>
 	    {% block js %}
 	    {% endblock %}
          {% endcompress %}
-		   
+
          {% block mapjs %}
 		   {% endblock %}
    </head>
@@ -94,10 +90,10 @@
                <h1>{% block name %} {% endblock %}</h1>
             </section>
 			</header>
-			
+
          <section class="mp-content column span-24 last" id="mp-content">
 			   {% block content %}
-			   {% endblock %}	
+			   {% endblock %}
 			</section>
 
 			<footer class="mp-page-footer column span-24 last" id="mp-page-footer">
@@ -128,7 +124,7 @@
 				</section>
 			</footer>
 		</div>
-		
+
 		<script type="text/javascript" src="static/js/main/init.js" ></script>
 	</body>
 </html>

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-12 15:55+0100\n"
+"POT-Creation-Date: 2013-01-15 23:04+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:42 templates/base-interactive.html.py:58
+#: templates/base-interactive.html:46 templates/base-interactive.html.py:62
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:67
+#: templates/base-interactive.html:71
 msgid "Es ist noch kein Album ausgewählt!"
 msgstr "Es ist noch kein Album ausgewählt!"
 
-#: templates/base-interactive.html:79
+#: templates/base-interactive.html:83
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:86
+#: templates/base-interactive.html:90
 msgid "mp-copy-link-title"
 msgstr "Link kopieren"
 
-#: templates/base-interactive.html:90
+#: templates/base-interactive.html:94
 msgid "How to Share"
 msgstr "Wie teilt man den Link?"
 
-#: templates/base-interactive.html:93
+#: templates/base-interactive.html:97
 msgid "How to Share -> description"
 msgstr ""
 "Um das Album mit anderen zu teilen müssen Sie den Link kopieren, dann können "
@@ -52,81 +52,81 @@ msgstr ""
 "'Command + C' (Mac OS X) oder per 'Kopieren' in dem Menü, welches sich bei "
 "Rechtsklick auf den Link öffnet, kopieren."
 
-#: templates/base-interactive.html:96
+#: templates/base-interactive.html:100
 msgid "How to Share -> attention!"
 msgstr ""
 "Bitte beachten Sie, dass, was auch immer Sie momentan im Zwischenspeicher "
 "haben (also das, was Sie als letztes kopiert haben), beim Kopieren "
 "überschrieben wird."
 
-#: templates/base-interactive.html:102
+#: templates/base-interactive.html:106
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:103
+#: templates/base-interactive.html:107
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base.html:104
+#: templates/base.html:103
 msgid "Abmelden"
 msgstr "Abmelden"
 
-#: templates/base.html:114
+#: templates/base.html:113
 msgid "Login or Register"
 msgstr "Anmelden oder Registrieren"
 
-#: templates/base.html:114
+#: templates/base.html:113
 msgid "Anmelden/Registrierung"
 msgstr "Anmeldung und Registrierung"
 
-#: templates/base.html:119 templates/not-supported.html:64
+#: templates/base.html:118 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:119 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:118 templates/team.html:6 templates/team.html.py:8
 #: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:120 templates/not-supported.html:62
+#: templates/base.html:119 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:120 templates/contact.html:6
+#: templates/base.html:119 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:121 templates/not-supported.html:60
+#: templates/base.html:120 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:121 templates/privacy.html:5
+#: templates/base.html:120 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:122 templates/not-supported.html:61
+#: templates/base.html:121 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:122 templates/copyright.html:6
+#: templates/base.html:121 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:123 templates/not-supported.html:63
+#: templates/base.html:122 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:123 templates/help.html:6
+#: templates/base.html:122 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:124 templates/not-supported.html:59
+#: templates/base.html:123 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:124 templates/impressum.html:6
+#: templates/base.html:123 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
@@ -142,20 +142,25 @@ msgstr "Hilfe-Seite"
 #: templates/contact.html:14
 msgid "contact-intro-article1-line2"
 msgstr ""
-", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail "
-"unter"
+", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail an"
 
-#: templates/contact.html:18
+#: templates/contact.html:20 templates/impressum.html:37
+msgid "email just in javascript"
+msgstr ""
+"-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und laden Sie die Seite erneut, "
+"um die Email-Adresse lesen zu können. --"
+
+#: templates/contact.html:24
 msgid "contact-intro-article1-line3"
 msgstr ""
 "Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen. (Bald "
 "verfügbar!)"
 
-#: templates/contact.html:19
+#: templates/contact.html:25
 msgid "contact-intro-article1-line4"
 msgstr "Bitte beachten Sie die hierfür gültigen"
 
-#: templates/contact.html:19
+#: templates/contact.html:25
 msgid "contact-linkto-privacy"
 msgstr "Datenschutzgrundsätze"
 
@@ -621,23 +626,11 @@ msgstr "Anschrift wie oben"
 msgid "impressum Vertreten durch"
 msgstr "Vertreten durch"
 
-#: templates/impressum.html:32
-msgid "Telefon"
-msgstr "Telefon"
-
-#: templates/impressum.html:32
-msgid "Handy"
-msgstr "Handy"
-
-#: templates/impressum.html:33
-msgid "Email-Adresse"
-msgstr "Email-Adresse"
-
-#: templates/impressum.html:36
+#: templates/impressum.html:42
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Missbrauch von Kontaktdaten"
 
-#: templates/impressum.html:37
+#: templates/impressum.html:43
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
@@ -647,25 +640,25 @@ msgstr ""
 "behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
 "Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
 
-#: templates/impressum.html:41
+#: templates/impressum.html:47
 msgid "impressum-liability Haftung für Inhalte"
 msgstr "Haftung für Inhalte"
 
-#: templates/impressum.html:44
+#: templates/impressum.html:50
 msgid "impressum-liability Haftung für Inhalte list-item-1"
 msgstr ""
 "Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
 "Erstellung der Website verantwortlich ist. Ihre Profile sind auf der 'Team'-"
 "Seite zu finden."
 
-#: templates/impressum.html:45
+#: templates/impressum.html:51
 msgid "impressum-liability Haftung für Inhalte list-item-2"
 msgstr ""
 "Inhalte, die von den Entwicklern der Website veröffentlicht werden, wurden "
 "vorher mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit "
 "und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen."
 
-#: templates/impressum.html:46
+#: templates/impressum.html:52
 msgid "impressum-liability Haftung für Inhalte list-item-3"
 msgstr ""
 "Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf "
@@ -674,7 +667,7 @@ msgstr ""
 "oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu "
 "forschen, die auf eine rechtswidrige Tätigkeit hinweisen."
 
-#: templates/impressum.html:47
+#: templates/impressum.html:53
 msgid "impressum-liability Haftung für Inhalte list-item-4"
 msgstr ""
 "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen "
@@ -682,29 +675,29 @@ msgstr ""
 "Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten "
 "Rechtsverletzung möglich."
 
-#: templates/impressum.html:48
+#: templates/impressum.html:54
 msgid "impressum-liability Haftung für Inhalte list-item-5"
 msgstr ""
 "Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese "
 "Inhalte umgehend entfernen."
 
-#: templates/impressum.html:51
+#: templates/impressum.html:57
 msgid "impressum-liability Haftung für Links"
 msgstr "Haftung für Links zu externen Websiten"
 
-#: templates/impressum.html:54
+#: templates/impressum.html:60
 msgid "impressum-liability Haftung für Links list-item-1"
 msgstr ""
 "Die Entwickler dieser Website können keine Gewährleistung für die Inhalte "
 "von Websites Dritter, die auf dieser Website verlinkt sind, übernehmen."
 
-#: templates/impressum.html:55
+#: templates/impressum.html:61
 msgid "impressum-liability Haftung für Links list-item-2"
 msgstr ""
 "Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder "
 "Betreiber der Seite verantwortlich."
 
-#: templates/impressum.html:56
+#: templates/impressum.html:62
 msgid "impressum-liability Haftung für Links list-item-3"
 msgstr ""
 "Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche "
@@ -713,7 +706,7 @@ msgstr ""
 "verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer "
 "Rechtsverletzung nicht zumutbar."
 
-#: templates/impressum.html:57
+#: templates/impressum.html:63
 msgid "impressum-liability Haftung für Links list-item-4"
 msgstr ""
 "Bei Bekanntwerden von Rechtsverletzungen werden wir Links zu der "
@@ -888,8 +881,8 @@ msgstr "Emails und Kontaktformulare"
 msgid "privacy-topic Emails und Kontaktformulare list-item-1"
 msgstr ""
 "Nutzer und Besucher können dem Photomap-Team Fragen stellen oder Anregungen "
-"und Kritik anbringen, indem Sie eine Email an 's.u.p.p.0.r.t.lghp."
-"projekt@gmail.com' schreiben oder das Kontaktformular benutzen."
+"und Kritik anbringen, indem Sie eine Email schreiben oder das "
+"Kontaktformular benutzen."
 
 #: templates/privacy.html:52
 msgid "privacy-topic Emails und Kontaktformulare list-item-2"
@@ -1004,11 +997,11 @@ msgstr "Nächste Seite"
 msgid "Add Image"
 msgstr "Bild hinzufügen"
 
-#~ msgid "link-title-dashboard"
-#~ msgstr "Zum Dashboard"
+#~ msgid "Telefon"
+#~ msgstr "Telefon"
 
-#~ msgid "Email"
-#~ msgstr "Email"
+#~ msgid "Handy"
+#~ msgstr "Handy"
 
-#~ msgid "Ideen"
-#~ msgstr "Ideen"
+#~ msgid "Email-Adresse"
+#~ msgstr "Email-Adresse"

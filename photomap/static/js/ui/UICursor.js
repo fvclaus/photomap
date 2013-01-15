@@ -35,7 +35,7 @@ UICursor.prototype = {
       gmap = main.getMap().getInstance();
       if (style) {
          cursor = style;
-      } else if (main.getUIState().isInteractive()) {
+      } else if (main && main.getUIState && main.getUIState().isInteractive()) {
          // if no style is defined -> cross on interactive pages, else grabber
          cursor = this.styles.cross;
       } else {
@@ -69,7 +69,7 @@ UICursor.prototype = {
       $logo = $(".mp-logo").find("svg");
       this.setCursor($logo, this.styles.pointer);
       
-      if (main.getUIState().getPage() === ALBUM_VIEW) {
+      if (main && main.getUIState && main.getUIState().getPage() === ALBUM_VIEW) {
          this.setCursor($(".mp-page-title").find("h1"), this.styles.pointer);
       }
    }

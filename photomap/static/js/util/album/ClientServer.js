@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, Place, arrayExtension */
+/*global $, main, Place */
 
 "use strict";
 

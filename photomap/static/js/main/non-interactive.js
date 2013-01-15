@@ -11,7 +11,7 @@ function reinitialiseScrollPane() {
    }
 }
 
-function initializeNonInteractive() {
+function initialize() {
 
    $container = $("#mp-non-interactive-content");
 
