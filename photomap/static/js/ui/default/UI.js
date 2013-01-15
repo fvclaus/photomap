@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UIPanel, UICursor, UITools */
+/*global $, main, UIPanel, UICursor, UITools, UIState */
 
 "use strict";
 
@@ -23,8 +23,8 @@ UI.prototype = {
 
    init : function () {
       this.panel.initWithoutAjax();
-      this.panel.initAfterAjax();
       this.cursor.initWithoutAjax();
+      main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    getPanel : function () {
       return this.panel;

@@ -24,9 +24,6 @@ UIPanel.prototype = {
       this.bindLogoListener();
       this.resizeFooterFont();
    },
-   initAfterAjax : function () {
-      this.resizePageTitle();
-   },
    getFooterHeight : function () {
       return this.$footer.height();
    },
@@ -58,25 +55,6 @@ UIPanel.prototype = {
             window.location.href = "/";
          }
       });
-   },
-   resizePageTitle: function () {
-      
-      var $titleWrapper, text, width, height, ratio, tools, size, margin;
-      
-      $titleWrapper = this.$title.parent();
-      text = this.$title.text();
-      width = $titleWrapper.width();
-      height = $titleWrapper.height() * 0.4;
-      tools = main.getUI().getTools();
-      size = tools.calculateFontSize(text, width, height);
-      this.$title.css("fontSize", size + "px");
-      
-      margin = (height - this.$title.height()) / 2;
-      this.$title.css({
-         margin: margin + " 0",
-         marginRight: "3%"
-      });
-      
    },
    resizeFooterFont : function () {
       

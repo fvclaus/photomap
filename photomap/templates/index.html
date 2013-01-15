@@ -20,10 +20,11 @@ content="non-interactive"
 	
 	<script type="text/javascript" src="static/js/main/landingpage.js" ></script>
 	
-	<script type="text/javascript" src="static/js/ui/default/UI.js" ></script>
+	<script type="text/javascript" src="static/js/ui/UIState.js" ></script>
    <script type="text/javascript" src="static/js/ui/UIPanel.js" ></script>
    <script type="text/javascript" src="static/js/ui/UICursor.js" ></script>
    <script type="text/javascript" src="static/js/ui/UITools.js" ></script>
+	<script type="text/javascript" src="static/js/ui/default/UI.js" ></script>
 
    <script type="text/javascript" src="static/js/main/default/Main.js" ></script>
 {% endblock %}
@@ -31,6 +32,8 @@ content="non-interactive"
 {% block content %}
    <p style="text-align: center"> Die Seite ist noch in Bearbeitung. Der Login-Link für Beta-Tester befindet sich in der linken unteren Ecke.</p>
    <p style="text-align: center">Viel Spaß wünscht Euch das keiken-Team!</p>
-   <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p>
+   {% if user.is_authenticated %}
+     <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p>
+   {% endif %}
 {% endblock %}
 

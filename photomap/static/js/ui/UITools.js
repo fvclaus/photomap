@@ -18,6 +18,13 @@ UITools.prototype = {
    initWithoutAjax : function () {
       this.fitMask($("#fancybox-overlay"));
    },
+   /**
+    * @description Js-modulo does not work if the first number is negative (eg. -5%4 = -1 | instead of 3)
+    * You can fix that bug by adding the second number and do a modulo calculation again.
+    */
+   modulo : function (x, y) {
+      return ((x % y) + y) % y;
+   },
    cutText : function (text, size) {
       
       var createSubstring, endingPunctuation, i, substring;

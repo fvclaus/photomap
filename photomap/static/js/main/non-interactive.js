@@ -3,7 +3,7 @@
 
 "use strict";
 
-var map, state, cursor, tools, $container;
+var map, state, cursor, tools, $container, email, emailEnabled, i;
 
 function reinitialiseScrollPane() {
    if ($container.data("jsp")) {
@@ -27,7 +27,23 @@ function initializeNonInteractive() {
    /**
     * @description When linked to a certain part of a page, scroll to that part.
     */
-
+   
+   if ($("#mp-email-jsenabled").size() !== 0) {
+      
+      email = $("#mp-email-jsenabled").text();
+      emailEnabled = "";
+      for (i = 0; i <= email.length; i++) {
+         
+         if (main.getUI().getTools().modulo(i, 5) === 0) {
+            
+            emailEnabled += email.charAt(i - 1);
+         }
+      }
+      $("#mp-email-jsenabled")
+         .text(emailEnabled)
+         .removeClass("mp-nodisplay");
+   }
+   
    var hash, api;
 
    hash = window.location.hash;

@@ -26,7 +26,6 @@ UIInformation.prototype = {
 
    initWithoutAjax : function () {
       this.bindListener();
-      this.resizeTitleBarFont();
    },
    initAfterAjax : function () {
       if (main.getUIState().getPage() === ALBUM_VIEW) {
@@ -136,21 +135,6 @@ UIInformation.prototype = {
       this.updateImageNumber();
    },
    /* ---- end Photo ---- */
-   
-   /* ---- Fonts ---- */
-   resizeTitleBarFont : function () {
-      
-      var $titlebar, text, width, height, tools, size;
-      
-      $titlebar = $(".mp-title-bar");
-      text = "No title";
-      width = 5000;
-      height = $titlebar.height();
-      tools = main.getUI().getTools();
-      size = tools.calculateFontSize(text, width, height);
-      $titlebar.css("fontSize", size + "px");
-   },
-   /* ---- end Fonts ---- */
    
    /* ---- Listener ---- */
    bindListener : function () {

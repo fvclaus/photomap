@@ -35,11 +35,11 @@ UI.prototype = {
       this.tools.initWithoutAjax();
    },
    initAfterAjax : function () {
-      this.panel.initAfterAjax();
       this.controls.initAfterAjax();
       this.gallery.initAfterAjax();
       this.cursor.initAfterAjax();
       this.information.initAfterAjax();
+      main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    getCursor : function () {
       return this.cursor;
