@@ -14,6 +14,7 @@ Photo = function (data, index) {
    
    this.model = 'Photo';
    this.source = data.photo;
+   this.thumb = data.thumb;
    this.title = data.title;
    this.description = data.description;
    this.id = data.id;

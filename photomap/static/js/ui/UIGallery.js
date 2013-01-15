@@ -147,7 +147,7 @@ UIGallery.prototype =  {
             if (photos[i] === undefined) {
                console.log(photos[i]);
             } else {
-               tmplPhotosData.push(photos[i].source);
+               tmplPhotosData.push(photos[i].thumb);
                $('<img/>').load(function () {
                   ++loaded;
                   
@@ -176,7 +176,7 @@ UIGallery.prototype =  {
                      instance._centerImages();
                      instance.showBorder();
                   }
-               }).attr('src', photos[i].source);
+               }).attr('src', photos[i].thumb);
             }
             i++;
          }
@@ -276,7 +276,7 @@ UIGallery.prototype =  {
       
       photos.forEach(function (photo) {
          
-         $thumb = $("img[src='" + photo.source + "']");
+         $thumb = $("img[src='" + photo.thumb + "']");
          main.getUI().getTools().centerElement($tile, $thumb);
       });
    },
@@ -317,7 +317,7 @@ UIGallery.prototype =  {
 
                state.getPhotos().forEach(function (photo, index, photos) {
                   // get html tag for current photo
-                  currentPhoto = $('img[src="' + photo.source + '"]');
+                  currentPhoto = $('img[src="' + photo.thumb + '"]');
                   // find index of current photo in mp-gallery
                   photo.order = instance.$elements.index(currentPhoto);
                   // make a deep copy
@@ -348,7 +348,7 @@ UIGallery.prototype =  {
                .removeClass("visited")
                .siblings('img').removeClass('current');
             photo = $.grep(state.getPhotos(), function (e, i) {
-               return e.source === $el.attr("src");
+               return e.thumb === $el.attr("src");
             })[0];
             state.setCurrentPhotoIndex(instance.getImageIndex($el));
             state.setCurrentPhoto(photo);
