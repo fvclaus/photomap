@@ -31,6 +31,7 @@ UIGallery.prototype =  {
          this.$container.bind('drop', fileUpload.handleGalleryDrop);
          this.bindListener();
       }
+      this.bindStartSlideshowListener();
       // align gallery with map
       this.$container.css("width", this.$container.width() + 10 + "px");
    },
@@ -373,7 +374,16 @@ UIGallery.prototype =  {
             var $el = $(this);
             // set Cursor for DragnDrop on images (grabber)
             cursor.setCursor($el, cursor.styles.grab);
-         })
+         });
+   },
+   bindStartSlideshowListener : function () {
+      var state, cursor, controls, authorized, photo, instance = this;
+      state = main.getUIState();
+      cursor = main.getUI().getCursor();
+      controls = main.getUI().getControls();
+      authorized = main.getClientState().isAdmin();
+
+      this.$gallery
          .on('click.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             // workaround for DnD click event:
@@ -396,6 +406,5 @@ UIGallery.prototype =  {
             }
          });
    }
-
 
 };
