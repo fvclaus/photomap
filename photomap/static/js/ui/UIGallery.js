@@ -150,7 +150,6 @@ UIGallery.prototype =  {
                tmplPhotosData.push(photos[i].thumb);
                $('<img/>').load(function () {
                   ++loaded;
-                  
                   if (loaded === photos.length) {
                      main.getUIState().setAlbumLoading(false);
                      main.getUI().enable();
@@ -168,7 +167,6 @@ UIGallery.prototype =  {
                         instance._bindSortableListener();
                      }
                      // center the images and put 3 in a row
-                     //instance._centerImages();
                      instance._createFilmRollEffect();
                      // initialize scrollable
                      instance._initializeScrollable();
