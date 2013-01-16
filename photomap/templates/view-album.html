@@ -65,9 +65,11 @@
         <span>
           <img class="mp-gallery-nav-next mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
 		  </span>
+        {% if user.is_authenticated %}
         <span>
           <img class="mp-option-insert-photo mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}'></img>
         </span>
+        {% endif %}
       </div>
 	</section>
 {% endblock %}
