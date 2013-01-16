@@ -1430,45 +1430,5 @@
          "order": 14, 
          "thumb": "4-2012-09-05/30-95ba4095-6189-41bc-9073-21f0ba2af11e.0.jpeg"
       }
-   }, 
-   {
-      "pk": 3, 
-      "model": "pm.userprofile", 
-      "fields": {
-         "picture": "", 
-         "used_space": 0, 
-         "user": 3, 
-         "quota": 367001600
-      }
-   }, 
-   {
-      "pk": 2, 
-      "model": "pm.userprofile", 
-      "fields": {
-         "picture": "", 
-         "used_space": 164898, 
-         "user": 2, 
-         "quota": 367001600
-      }
-   }, 
-   {
-      "pk": 1, 
-      "model": "pm.userprofile", 
-      "fields": {
-         "picture": "", 
-         "used_space": 164898, 
-         "user": 1, 
-         "quota": 367001600
-      }
-   }, 
-   {
-      "pk": 4, 
-      "model": "pm.userprofile", 
-      "fields": {
-         "picture": "", 
-         "used_space": 8838685, 
-         "user": 4, 
-         "quota": 367001600
-      }
    }
 ]
