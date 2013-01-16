@@ -136,6 +136,7 @@ fileUpload = {
          photo.source = response.url;
          photo.id = response.id;
          photo.order = state.getPhotos().length;
+         photo.thumb = response.thumb;
          console.log(photo);
          state.addPhoto(photo);
          gallery.show(state.getPhotos());

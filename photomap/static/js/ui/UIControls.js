@@ -247,7 +247,8 @@ UIControls.prototype = {
                   url = "/delete-photo";
                   data = { id: photo.id };
                   state.removePhoto(photo);
-                  $("img[src='" + photo.source + "']").remove();
+                  $("img[src='" + photo.thumb + "']").remove();
+                  $("img[src='" + photo.thumb + "']").parent().addClass("mp-empty-tile");
                } else {
                   return;
                }
