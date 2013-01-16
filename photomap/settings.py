@@ -233,3 +233,4 @@ INSTALLED_APPS = (
 
 
 AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
+LOGIN_URL = "/login"
