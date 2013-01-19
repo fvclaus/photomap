@@ -53,10 +53,12 @@
 {% block gallery/news-feed %}
 	<section class="mp-gallery" id="mp-gallery">
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
-        <img class="mp-gallery-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
+        <span>
+          <img class="mp-gallery-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
+        </span>      
       </div>
       <div class="mp-gallery-main column" id="mp-gallery-main">
-        <div class="mp-gallery-thumbs" id="mp-gallery-thumbs">
+        <div class="mp-gallery-outer" id="mp-gallery-outer">
           <div class="mp-gallery-inner" id="mp-gallery-inner">
           </div>
 		  </div>

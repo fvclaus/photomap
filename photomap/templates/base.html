@@ -35,18 +35,18 @@
 
 
       <!-- THE IMAGE LINKS BREAK WHEN COMPRESSED -->
-      <link rel="stylesheet" type="text/css" href="/static/css/external/overcast/jquery-ui-1.9.2.custom.css" />
+      <link rel="stylesheet" type="text/css" href="/static/css/lib/overcast/jquery-ui-1.9.2.custom.css" />
       <link rel="stylesheet" type="text/css" href="/static/css/grid.css" />
-      <link rel="stylesheet" type="text/css" href="/static/css/external/jquery.jscrollpane.css" />
+      <link rel="stylesheet" type="text/css" href="/static/css/lib/jquery.jscrollpane.css" />
 
       {% load compress %}
       <!-- {% compress css file %} -->
 
       <!-- {% endcompress %} -->
       {% compress css %}
-         <link rel="stylesheet" type="text/css" href="/static/css/external/sans.narrow.css" />
-         <link href="/static/css/external/droid.sans.css" rel="stylesheet" type="text/css"/>
-         <link rel="stylesheet" type="text/css" href="/static/css/external/tzoom.css" />
+         <link rel="stylesheet" type="text/css" href="/static/css/lib/sans.narrow.css" />
+         <link href="/static/css/lib/droid.sans.css" rel="stylesheet" type="text/css"/>
+         <link rel="stylesheet" type="text/css" href="/static/css/lib/tzoom.css" />
          {% block css %}
          {% endblock %}
       {% endcompress %}

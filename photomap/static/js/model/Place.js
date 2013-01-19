@@ -50,10 +50,6 @@ Place.prototype.center = function () {
 Place.prototype._showGallery = function () {
    main.getUI().getGallery().show(this.photos);
 };
-Place.prototype._clear = function () {
-   // hide galleryAlbum container if present
-   //main.getUI().getAlbum().hide();
-};
 /**
  * @description Shows the album on the map
  */
@@ -108,8 +104,6 @@ Place.prototype._bindListener = function () {
       map = main.getMap();
       oldPlace = state.getCurrentLoadedPlace();
 
-      // clear gallery photos + slider and map.place
-      instance._clear();
       controls.hideEditControls(false);
       state.setCurrentPlace(instance);
       state.setCurrentLoadedPlace(instance);
