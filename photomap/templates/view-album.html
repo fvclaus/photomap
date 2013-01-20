@@ -55,7 +55,10 @@
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
         <span>
           <img class="mp-gallery-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
-        </span>      
+        </span>
+        <span>
+          <img class="mp-open-full-gallery mp-control" src="/static/images/openEdit.png" title='{% trans "Open Full Gallery" %}'/>
+        </span>
       </div>
       <div class="mp-gallery-main column" id="mp-gallery-main">
         <div class="mp-gallery-outer" id="mp-gallery-outer">
@@ -86,10 +89,18 @@
 	  <div class="mp-thumb-page">
        <% for (thumb in this.thumbAddress) { %>
        <span class="mp-gallery-tile">
-	      <img class="sortable mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+	      <img class="mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
        </span>
 	    <% }; %>
      </div>
+	</script>
+
+	<script id="fullGalleryTmpl" type="text/html">
+       <% for (thumb in this.thumbAddress) { %>
+       <div class="mp-sortable-tile mp-control">
+	      <img class="mp-thumb" src="<%= this.thumbAddress[thumb] %>"></img>
+       </div>
+	    <% }; %>
 	</script>
 
 	<script id="galleryFullscreenTmpl" type="text/html">

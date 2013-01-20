@@ -104,7 +104,7 @@ UITools.prototype = {
       switch (direction) {
       
       case "vertical":
-         if (heightDifference === 0) {
+         if (heightDifference <= 0) {
             margin = 0;
          } else {
             margin = heightDifference / 2;
@@ -113,7 +113,7 @@ UITools.prototype = {
          break;
       case "horizontal":
          margin = "0px ";
-         if (widthDifference === 0) {
+         if (widthDifference <= 0) {
             margin = 0;
          } else {
             margin = widthDifference / 2;
@@ -121,13 +121,13 @@ UITools.prototype = {
          margin += "px";
          break;
       default:
-         if (heightDifference === 0) {
+         if (heightDifference <= 0) {
             margin = 0;
          } else {
             margin = heightDifference / 2;
          }
          margin += "px ";
-         if (widthDifference === 0) {
+         if (widthDifference <= 0) {
             margin += 0;
          } else {
             margin += widthDifference / 2;

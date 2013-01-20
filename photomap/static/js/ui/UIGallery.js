@@ -24,7 +24,7 @@ UIGallery = function () {
    this.loaded = 0;
    this.photos = null;
    this.tmplPhotosData = [];
-
+   this.fullGalleryLoaded = false;
 };
 
 UIGallery.prototype =  {
@@ -88,6 +88,54 @@ UIGallery.prototype =  {
          this.getScrollable().seekTo(newSliderIndex);
       }
    },
+   startFullGallery : function () {
+      var photos, $container, instance = this;
+      photos = main.getUIState().getPhotos();
+      $container = $("#mp-full-left-column");
+      
+      if (photos) {
+         photos.forEach(function (photo) {
+            instance.tmplPhotosData.push(photo.thumb);
+         });
+         
+         $container
+            .find(".mp-data")
+            .addClass("mp-full-gallery")
+            .append(
+               $.jqote('#fullGalleryTmpl', {
+                  thumbAddress: instance.tmplPhotosData
+               })
+            );
+         this.tmplPhotosData = [];
+         this.fullGalleryLoaded = true;
+      }
+   },
+   destroyFullGallery : function () {
+      
+      var $container = $("#mp-full-left-column");
+      
+      $container
+         .find(".mp-data")
+         .empty()
+         .removeClass("mp-full-gallery");
+      if (!$container.hasClass("mp-nosdisplay")) {
+         $container.addClass("mp-nodisplay");
+      }
+      this.fullGalleryLoaded = false;
+   },
+   showFullGallery : function () {
+      
+      if (!this.fullGalleryLoaded) {
+         this.startFullGallery();
+      }
+      $("#mp-full-left-column").removeClass("mp-nodisplay");
+      this._centerImages();
+      
+   },
+   hideFullGallery : function () {
+      
+      $("#mp-full-left-column").addClass("mp-nodisplay");
+   },
   /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
    */
@@ -96,6 +144,10 @@ UIGallery.prototype =  {
       var state, controls, photoMatrix, i, instance = this;
       state = main.getUIState();
       controls = main.getUI().getControls();
+      
+      
+      // this method is just called if the gallery changes -> full-gallery has to be changed as well
+      this.destroyFullGallery();
       
       if (photos && photos.length !== 0) {
          
@@ -122,6 +174,7 @@ UIGallery.prototype =  {
             i++;
          }
       } else {
+         state.setPhotos(null);
          // create empty gallery -> b clicking on empty tile you can add photo
          this.$gallery.empty().css("left", 0);
          this._createEmptyTiles();
@@ -231,12 +284,12 @@ UIGallery.prototype =  {
    _centerImages : function () {
       
       var $tile, $thumb, photos;
-      $tile = $(".mp-gallery-tile");
+      $tile = $(".mp-gallery-tile, .mp-sortable-tile");
       photos = main.getUIState().getPhotos();
       
       photos.forEach(function (photo) {
          
-         $thumb = $("img[src='" + photo.thumb + "']");
+         $thumb = $tile.find("img[src='" + photo.thumb + "']");
          main.getUI().getTools().centerElement($tile, $thumb);
       });
    },
@@ -339,6 +392,14 @@ UIGallery.prototype =  {
       controls = main.getUI().getControls();
       authorized = main.getClientState().isAdmin();
 
+      $(".mp-open-full-gallery").on("click", function (event) {
+         
+         instance.showFullGallery();
+      });
+      $(".mp-close-full-left-column").on("click", function (event) {
+         instance.hideFullGallery();
+      });
+      
       this.$gallery
          .on('click.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
