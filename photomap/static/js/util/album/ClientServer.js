@@ -88,9 +88,11 @@ ClientServer.prototype = {
       places.forEach(function (place) {
 
          // puts photos with order on the right position
-         place.photos.sort(function (photo, copy) {
-            return photo.order === copy.order;
-         });
+         place.photos
+            .sort(function (photo, copy) {
+               return photo.order === copy.order;
+            })
+            .reverse();
       });
 
       return places;

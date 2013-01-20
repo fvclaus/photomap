@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 23:04+0100\n"
+"POT-Creation-Date: 2013-01-20 15:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -140,7 +140,7 @@ msgstr "help-page"
 msgid "contact-intro-article1-line2"
 msgstr ", kindly write us an email to "
 
-#: templates/contact.html:20 templates/impressum.html:37
+#: templates/contact.html:20 templates/impressum.html:39
 msgid "email just in javascript"
 msgstr ""
 "-- Please activate JavaScript in your browser settings and reload the page "
@@ -596,11 +596,23 @@ msgstr "Address as above"
 msgid "impressum Vertreten durch"
 msgstr "Represented by"
 
-#: templates/impressum.html:42
+#: templates/impressum.html:32
+msgid "Telefon"
+msgstr "Telephone"
+
+#: templates/impressum.html:32
+msgid "Handy"
+msgstr "mobile phone"
+
+#: templates/impressum.html:33
+msgid "Email-Adresse"
+msgstr "email-address"
+
+#: templates/impressum.html:44
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Abuse of contact data"
 
-#: templates/impressum.html:43
+#: templates/impressum.html:45
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "The usage of contact data published on this page, by a third party to send "
@@ -609,24 +621,24 @@ msgstr ""
 "this website reserve the right to take legal action in case of an abuse of "
 "contact data."
 
-#: templates/impressum.html:47
+#: templates/impressum.html:49
 msgid "impressum-liability Haftung für Inhalte"
 msgstr "Liability for content published by makers of this website"
 
-#: templates/impressum.html:50
+#: templates/impressum.html:52
 msgid "impressum-liability Haftung für Inhalte list-item-1"
 msgstr ""
 "The makers of the website are a team of aspiring members whose profiles you "
 "can find on the „Team“-page."
 
-#: templates/impressum.html:51
+#: templates/impressum.html:53
 msgid "impressum-liability Haftung für Inhalte list-item-2"
 msgstr ""
 "Content published by the makers of this web-application is carefully checked "
 "before putting it online. Nevertheless we cannot guarantee the completeness "
 "and full integrity and up-to-datedness."
 
-#: templates/impressum.html:52
+#: templates/impressum.html:54
 msgid "impressum-liability Haftung für Inhalte list-item-3"
 msgstr ""
 "Compliant to § 7 Abs.1 TMG we as service providers, are responsible for our "
@@ -634,36 +646,36 @@ msgstr ""
 "monitoring all content uploads and check them for the possibility of "
 "supporting illegal activities."
 
-#: templates/impressum.html:53
+#: templates/impressum.html:55
 msgid "impressum-liability Haftung für Inhalte list-item-4"
 msgstr ""
 "Obligation to remove and block the usage of information, according to the "
 "general law are not touched by this. A liability concerning this matter is "
 "possible, provided that a concrete infringement of the law is known."
 
-#: templates/impressum.html:54
+#: templates/impressum.html:56
 msgid "impressum-liability Haftung für Inhalte list-item-5"
 msgstr ""
 "We will not hesitate to remove the content and even block or notify the user "
 "in this case."
 
-#: templates/impressum.html:57
+#: templates/impressum.html:59
 msgid "impressum-liability Haftung für Links"
 msgstr "Liability for links to external websites"
 
-#: templates/impressum.html:60
+#: templates/impressum.html:62
 msgid "impressum-liability Haftung für Links list-item-1"
 msgstr ""
 "The makers of this website cannot control or safe-guard the content of "
 "websites that are linked on this website."
 
-#: templates/impressum.html:61
+#: templates/impressum.html:63
 msgid "impressum-liability Haftung für Links list-item-2"
 msgstr ""
 "The responsibility of the data published on this website is within the "
 "discretion of the owners."
 
-#: templates/impressum.html:62
+#: templates/impressum.html:64
 msgid "impressum-liability Haftung für Links list-item-3"
 msgstr ""
 "Any linked website gets checked by us and we would not link a website, if "
@@ -671,7 +683,7 @@ msgstr ""
 "indications a perpetual monitoring of the websites’ content is not possible "
 "though."
 
-#: templates/impressum.html:63
+#: templates/impressum.html:65
 msgid "impressum-liability Haftung für Links list-item-4"
 msgstr ""
 "In case we gain knowledge of an infringement will make sure to remove the "
@@ -947,32 +959,19 @@ msgstr "Next Image"
 msgid "Bild"
 msgstr "Image"
 
-#: templates/view-album.html:56
+#: templates/view-album.html:57
 msgid "Previous Page"
 msgstr "Previous Page"
 
-#: templates/view-album.html:66
+#: templates/view-album.html:60
+msgid "Open Full Gallery"
+msgstr "Open Full Gallery"
+
+#: templates/view-album.html:71
 msgid "Next Page"
 msgstr "Next Page"
 
-#: templates/view-album.html:69
+#: templates/view-album.html:75
 msgid "Add Image"
 msgstr "Add Image"
 
-#~ msgid "Telefon"
-#~ msgstr "Telephone"
-
-#~ msgid "Handy"
-#~ msgstr "mobile phone"
-
-#~ msgid "Email-Adresse"
-#~ msgstr "email-address"
-
-#~ msgid "link-title-dashboard"
-#~ msgstr "To Dashboard"
-
-#~ msgid "Email"
-#~ msgstr "Email"
-
-#~ msgid "Ideen"
-#~ msgstr "Ideas"

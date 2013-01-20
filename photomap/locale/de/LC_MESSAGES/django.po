@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-15 23:04+0100\n"
+"POT-Creation-Date: 2013-01-20 15:07+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -144,11 +144,11 @@ msgid "contact-intro-article1-line2"
 msgstr ""
 ", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail an"
 
-#: templates/contact.html:20 templates/impressum.html:37
+#: templates/contact.html:20 templates/impressum.html:39
 msgid "email just in javascript"
 msgstr ""
-"-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und laden Sie die Seite erneut, "
-"um die Email-Adresse lesen zu können. --"
+"-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und laden "
+"Sie die Seite erneut, um die Email-Adresse lesen zu können. --"
 
 #: templates/contact.html:24
 msgid "contact-intro-article1-line3"
@@ -626,11 +626,23 @@ msgstr "Anschrift wie oben"
 msgid "impressum Vertreten durch"
 msgstr "Vertreten durch"
 
-#: templates/impressum.html:42
+#: templates/impressum.html:32
+msgid "Telefon"
+msgstr "Telefon"
+
+#: templates/impressum.html:32
+msgid "Handy"
+msgstr "Handy"
+
+#: templates/impressum.html:33
+msgid "Email-Adresse"
+msgstr "Email-Adresse"
+
+#: templates/impressum.html:44
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Missbrauch von Kontaktdaten"
 
-#: templates/impressum.html:43
+#: templates/impressum.html:45
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
@@ -640,25 +652,25 @@ msgstr ""
 "behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
 "Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
 
-#: templates/impressum.html:47
+#: templates/impressum.html:49
 msgid "impressum-liability Haftung für Inhalte"
 msgstr "Haftung für Inhalte"
 
-#: templates/impressum.html:50
+#: templates/impressum.html:52
 msgid "impressum-liability Haftung für Inhalte list-item-1"
 msgstr ""
 "Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
 "Erstellung der Website verantwortlich ist. Ihre Profile sind auf der 'Team'-"
 "Seite zu finden."
 
-#: templates/impressum.html:51
+#: templates/impressum.html:53
 msgid "impressum-liability Haftung für Inhalte list-item-2"
 msgstr ""
 "Inhalte, die von den Entwicklern der Website veröffentlicht werden, wurden "
 "vorher mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit "
 "und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen."
 
-#: templates/impressum.html:52
+#: templates/impressum.html:54
 msgid "impressum-liability Haftung für Inhalte list-item-3"
 msgstr ""
 "Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf "
@@ -667,7 +679,7 @@ msgstr ""
 "oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu "
 "forschen, die auf eine rechtswidrige Tätigkeit hinweisen."
 
-#: templates/impressum.html:53
+#: templates/impressum.html:55
 msgid "impressum-liability Haftung für Inhalte list-item-4"
 msgstr ""
 "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen "
@@ -675,29 +687,29 @@ msgstr ""
 "Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten "
 "Rechtsverletzung möglich."
 
-#: templates/impressum.html:54
+#: templates/impressum.html:56
 msgid "impressum-liability Haftung für Inhalte list-item-5"
 msgstr ""
 "Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese "
 "Inhalte umgehend entfernen."
 
-#: templates/impressum.html:57
+#: templates/impressum.html:59
 msgid "impressum-liability Haftung für Links"
 msgstr "Haftung für Links zu externen Websiten"
 
-#: templates/impressum.html:60
+#: templates/impressum.html:62
 msgid "impressum-liability Haftung für Links list-item-1"
 msgstr ""
 "Die Entwickler dieser Website können keine Gewährleistung für die Inhalte "
 "von Websites Dritter, die auf dieser Website verlinkt sind, übernehmen."
 
-#: templates/impressum.html:61
+#: templates/impressum.html:63
 msgid "impressum-liability Haftung für Links list-item-2"
 msgstr ""
 "Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder "
 "Betreiber der Seite verantwortlich."
 
-#: templates/impressum.html:62
+#: templates/impressum.html:64
 msgid "impressum-liability Haftung für Links list-item-3"
 msgstr ""
 "Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche "
@@ -706,7 +718,7 @@ msgstr ""
 "verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer "
 "Rechtsverletzung nicht zumutbar."
 
-#: templates/impressum.html:63
+#: templates/impressum.html:65
 msgid "impressum-liability Haftung für Links list-item-4"
 msgstr ""
 "Bei Bekanntwerden von Rechtsverletzungen werden wir Links zu der "
@@ -985,23 +997,18 @@ msgstr "Nächstes Bild"
 msgid "Bild"
 msgstr "Bild"
 
-#: templates/view-album.html:56
+#: templates/view-album.html:57
 msgid "Previous Page"
 msgstr "Vorherige Seite"
 
-#: templates/view-album.html:66
+#: templates/view-album.html:60
+msgid "Open Full Gallery"
+msgstr "Vollstädige Galerie öffnen"
+
+#: templates/view-album.html:71
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/view-album.html:69
+#: templates/view-album.html:75
 msgid "Add Image"
 msgstr "Bild hinzufügen"
-
-#~ msgid "Telefon"
-#~ msgstr "Telefon"
-
-#~ msgid "Handy"
-#~ msgstr "Handy"
-
-#~ msgid "Email-Adresse"
-#~ msgstr "Email-Adresse"
