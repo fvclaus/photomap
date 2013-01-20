@@ -132,14 +132,13 @@ fileUpload = {
       state = main.getUIState();
       gallery = main.getUI().getGallery();
       if (response.success) {
-         // add received value to uploadedPhoto-Object and add it to UIState and current place
+         // add received value to uploadedPhoto-Object, add the photo to current place and restart gallery
          photo.source = response.url;
          photo.id = response.id;
          photo.order = state.getPhotos().length;
          photo.thumb = response.thumb;
          console.log(photo);
-         state.addPhoto(photo);
-         gallery.show(state.getPhotos());
+         state.getCurrentLoadedPlace().addPhoto(photo);
          
          //update  upload limit
          toMbyte = function (bytesAsString) {

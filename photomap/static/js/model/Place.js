@@ -51,8 +51,12 @@ Place.prototype._showGallery = function () {
    main.getUI().getGallery().show(this.photos);
 };
 /**
- * @description Shows the album on the map
+ * @description adds photo and restarts gallery
  */
+Place.prototype.addPhoto = function (photo) {
+   this.photos.push(photo);
+   this._showGallery();
+};
 Place.prototype.checkIconStatus = function () {
    var status = true;
    this.photos.forEach(function (photo) {
