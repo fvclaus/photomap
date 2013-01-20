@@ -27,11 +27,12 @@ UIGallery.prototype =  {
 
    initAfterAjax : function () {
       if (main.getClientState().isAdmin()) {
+    	 //TODO where is the fileUpload variable coming from? violates information hiding
          this.$container.bind('dragover', fileUpload.handleGalleryDragover);
          this.$container.bind('drop', fileUpload.handleGalleryDrop);
-         this.bindListener();
+         this._bindListener();
       }
-      this.bindStartSlideshowListener();
+      this._bindStartSlideshowListener();
       // align gallery with map
       this.$container.css("width", this.$container.width() + 10 + "px");
    },
@@ -40,15 +41,19 @@ UIGallery.prototype =  {
     * @description Reselect all images in the gallery. This is necessary when the gallery gets updated
     * @private
     */
-   searchImages : function () {
+   _searchImages : function () {
       this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-controls-options");
       this.$galleryPages =  this.$gallery.find('.mp-thumb-page');
    },
-   getImageBySource : function (source) {
-      
-      // due to the way .scrollable() works each img is 3 times in Gallery -> you need to pic the second, which is the currently visible 
-      return this.$gallery.find("img[src='" + source + "']").eq(1);
-   },
+   //TODO this does not seem to be used anymore. is this needed?
+//   getImageBySource : function (source) {
+//      
+//      // due to the way .scrollable() works each img is 3 times in Gallery -> you need to pic the second, which is the currently visible 
+//      return this.$gallery.find("img[src='" + source + "']").eq(1);
+//   },
+   /**
+    * @private
+    */
    _resizeThumbs : function () {
       
       var $thumbs, padding, increasedPadding, length, totalLength, border;
@@ -76,6 +81,9 @@ UIGallery.prototype =  {
          padding: increasedPadding + "px " + padding + "px"
       });
    },
+   /**
+    * @private
+    */
    _createEmptyTiles : function () {
       
       var $thumbPage, emptySpots, tile, slider, lastSliderSize, i;
@@ -105,19 +113,19 @@ UIGallery.prototype =  {
       }
    },
    /**
-    * @returns {jQElement} Gallery element
+    * @private
     */
-   getEl : function () {
-      return this.$gallery;
-   },
-   getScrollable : function () {
+   _getScrollable : function () {
       return this.$container.data('scrollable');
    },
-   getImageIndex : function ($image) {
+   /**
+    * @private
+    */
+   _getImageIndex : function ($image) {
       
       var sliderIndex, imageIndex;
       
-      sliderIndex = this.getScrollable().getIndex();
+      sliderIndex = this._getScrollable().getIndex();
       imageIndex = $image.parent().index();
       
       return sliderIndex * 5 + imageIndex;
@@ -160,7 +168,7 @@ UIGallery.prototype =  {
                      // fill last slider up with empty tiles (unless it is already filled with pics
                      instance._createEmptyTiles();
                      //search all anchors
-                     instance.searchImages();
+                     instance._searchImages();
                      // adjust height to make the thumbs square
                      instance._resizeThumbs();
                      // admin listeners
@@ -173,7 +181,7 @@ UIGallery.prototype =  {
                      instance._initializeScrollable();
                      
                      instance._centerImages();
-                     instance.showBorder();
+                     instance._showBorder();
                   }
                }).attr('src', photos[i].thumb);
             }
@@ -186,12 +194,18 @@ UIGallery.prototype =  {
          this._createFilmRollEffect();
       }
    },
-   showBorder: function () {
+   /**
+    * @private
+    */
+   _showBorder: function () {
       //draw border on visited elements
       main.getUIState().getPhotos().forEach(function (photo) {
          photo.checkBorder();
       });
    },
+   /**
+    * @private
+    */
    _initializeScrollable : function () {
       this.$container.scrollable({
          items: ".mp-gallery-inner",
@@ -279,6 +293,7 @@ UIGallery.prototype =  {
          main.getUI().getTools().centerElement($tile, $thumb);
       });
    },
+   //TODO this seems to be a public function. add some documentation
    checkSlider : function () {
       
       var state, photo, currentIndex, sliderIndex, newSliderIndex, indexInSlider;
@@ -286,12 +301,12 @@ UIGallery.prototype =  {
       state = main.getUIState();
       photo = state.getCurrentLoadedPhoto();
       currentIndex = state.getCurrentLoadedPhotoIndex();
-      sliderIndex = this.getScrollable().getIndex();
+      sliderIndex = this._getScrollable().getIndex();
       
       indexInSlider = currentIndex > sliderIndex * 6 && currentIndex < sliderIndex * 6 + 6;
       if (!indexInSlider) {
          newSliderIndex = Math.floor(currentIndex / 6);
-         this.getScrollable().seekTo(newSliderIndex);
+         this._getScrollable().seekTo(newSliderIndex);
       }
    },
    /* ---- Listeners ---- */
@@ -311,7 +326,7 @@ UIGallery.prototype =  {
                ui.item.addClass("noClick");
             },
             update : function (event, ui) {
-               instance.searchImages();
+               instance._searchImages();
                jsonPhotos = [];
 
                state.getPhotos().forEach(function (photo, index, photos) {
@@ -330,7 +345,10 @@ UIGallery.prototype =  {
             }
          });
    },
-   bindListener : function () {
+   /**
+    * @private
+    */
+   _bindListener : function () {
 
       var state, cursor, controls, authorized, photo, instance = this;
       state = main.getUIState();
@@ -349,7 +367,7 @@ UIGallery.prototype =  {
             photo = $.grep(state.getPhotos(), function (e, i) {
                return e.thumb === $el.attr("src");
             })[0];
-            state.setCurrentPhotoIndex(instance.getImageIndex($el));
+            state.setCurrentPhotoIndex(instance._getImageIndex($el));
             state.setCurrentPhoto(photo);
 
             if (authorized) {
@@ -374,7 +392,10 @@ UIGallery.prototype =  {
             cursor.setCursor($el, cursor.styles.grab);
          });
    },
-   bindStartSlideshowListener : function () {
+   /**
+    * @private
+    */
+   _bindStartSlideshowListener : function () {
       var state, cursor, controls, authorized, photo, instance = this;
       state = main.getUIState();
       cursor = main.getUI().getCursor();
@@ -392,8 +413,8 @@ UIGallery.prototype =  {
             } else {
                
                $el.removeClass('current');
-               state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
-               state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
+               state.setCurrentLoadedPhotoIndex(instance._getImageIndex($el));
+               state.setCurrentLoadedPhoto(state.getPhotos()[instance._getImageIndex($el)]);
 
                main.getUI().getControls().hideEditControls(false);
                
