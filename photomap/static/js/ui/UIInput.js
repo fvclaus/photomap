@@ -8,7 +8,15 @@
  * @class Handles any form of input. Takes care of form validation,error handling and closing the input dialog
  */
 
-var UIInput, dimension, $formWrapper;
+var UIInput, dimension, $formWrapper, html;
+
+$.extend($.ui.dialog.prototype.options, {
+   autoOpen: true,
+   title: "Change Dialog",
+   modal: true,
+   zIndex: 3000,
+   draggable: false,
+});
 
 UIInput = function () {
    this._initialise();
@@ -25,29 +33,11 @@ UIInput.prototype = {
 
       var instance = this;
 
-      $.ajax({
-         type: 'get',
-         'url': url,
-         async: false,
-         success: function (res) {
-            instance.dialog.html(res);
-         },
-         error: function (error) {
-            alert(error);
-         }
-      });
+      this.loadHtml(url);
 
-      $formWrapper = $("<div/>").css("display","inline-block").html(instance.dialog.html());
-      $(".mp-content").append($formWrapper);
-      dimension = {"width": $formWrapper.width() * 1.2, "height": $formWrapper.height()};
-      $formWrapper.remove();
+      dimension = this.getDialogDimension(instance.dialog.html());
 
       this.dialog.dialog({
-         autoOpen: true,
-         title: "Change Dialog",
-         modal: true,
-         zIndex: 3000,
-         draggable: false,
          minHeight: dimension.height,
          minWidth: dimension.width,
          create: function () {
@@ -74,23 +64,13 @@ UIInput.prototype = {
 
       var instance = this;
 
-      $.ajax({
-         type: 'get',
-         'url': url,
-         async: false,
-         success: function (res) {
-            instance.dialog.html(res);
-         },
-         error: function (error) {
-            alert(error);
-         }
-      });
+      this.loadHtml(url);
+
+      dimension = this.getDialogDimension(instance.dialog.html());
 
       this.dialog.dialog({
-         autoOpen: true,
-         modal: true,
-         zIndex: 3000,
-         draggable: false,
+         minWidth : dimension.width,
+         minHeight : dimension.height,
          create: function () {
 //            main.getUI().disable();
          },
@@ -108,6 +88,29 @@ UIInput.prototype = {
       });
       return false;
    },
+   loadHtml : function (url){
+      var instance = this;
+      $.ajax({
+         type: 'get',
+         'url': url,
+         async: false,
+         success: function (res) {
+            instance.dialog.html(res);
+         },
+         error: function (error) {
+            alert(error);
+         }
+      });
+      return html;
+   },
+   getDialogDimension : function(html) {
+      $formWrapper = $("<div/>").css("display","inline-block").html(html);
+      $(".mp-content").append($formWrapper);
+      dimension = {"width": $formWrapper.width() * 1.2, "height": $formWrapper.height()};
+      $formWrapper.remove();
+      return dimension;
+   },
+
    /**
     * @description Fires the onLoad event, when the input dialog is loaded. Subscribe here if you want to receive the onLoad event with  your callback.
     * param {Function} callback
