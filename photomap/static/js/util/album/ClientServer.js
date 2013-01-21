@@ -16,14 +16,27 @@ ClientServer.prototype = {
       this._getPlaces();
    },
    savePhotoOrder : function (photos) {
+      
+      var place;
+      
       photos.forEach(function (photo) {
          // post request for each photo with updated order
          $.ajax({
             url : "/update-photo",
             type : "post",
             data : {
-               'id': photo.id,
-               'order': photo.order
+               id : photo.id,
+               title : photo.title,
+               order : photo.order
+            },
+            success : function () {
+               place = main.getUIState().getCurrentLoadedPlace();
+               console.log("Success");
+               place.sortPhotos();
+               main.getUI().getGallery().setGalleryChanged(true);
+            },
+            error : function (jqXHR, textStatus, errorThrown) {
+               alert("Status: " + textStatus + " Error: " + errorThrown);
             }
          });
       });
@@ -88,11 +101,7 @@ ClientServer.prototype = {
       places.forEach(function (place) {
 
          // puts photos with order on the right position
-         place.photos
-            .sort(function (photo, copy) {
-               return photo.order === copy.order;
-            })
-            .reverse();
+         place.sortPhotos();
       });
 
       return places;

@@ -25,6 +25,7 @@ UIGallery = function () {
    this.photos = null;
    this.tmplPhotosData = [];
    this.fullGalleryLoaded = false;
+   this.changed = false;
 };
 
 UIGallery.prototype =  {
@@ -36,6 +37,9 @@ UIGallery.prototype =  {
          this.bindListener();
       }
       this.bindStartSlideshowListener();
+   },
+   setGalleryChanged : function (changed) {
+      this.changed = changed;
    },
    /**
     * @author Frederik Claus
@@ -106,6 +110,7 @@ UIGallery.prototype =  {
                   thumbAddress: instance.tmplPhotosData
                })
             );
+         this._initializeSortable();
          this.tmplPhotosData = [];
          this.fullGalleryLoaded = true;
       }
@@ -114,6 +119,7 @@ UIGallery.prototype =  {
       
       var $container = $("#mp-full-left-column");
       
+      $(".mp-full-gallery").sortable("destroy");
       $container
          .find(".mp-data")
          .empty()
@@ -135,6 +141,10 @@ UIGallery.prototype =  {
    hideFullGallery : function () {
       
       $("#mp-full-left-column").addClass("mp-nodisplay");
+      if (this.changed) {
+         main.getUIState().getCurrentPlace().triggerDoubleClick();
+         this.changed = false;
+      }
    },
   /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
@@ -181,6 +191,9 @@ UIGallery.prototype =  {
          this._resizeTiles();
       }
    },
+   /**
+    * @private
+    */
    _galleryLoader : function () {
       
       var gallery, photoMatrix;
@@ -213,6 +226,9 @@ UIGallery.prototype =  {
          gallery.tmplPhotosData = [];
       }
    },
+   /**
+    * @private
+    */
    _resizeTiles : function () {
       
       var width, height, margin;
@@ -228,6 +244,9 @@ UIGallery.prototype =  {
          marginRight: margin
       });
    },
+   /**
+    * @private
+    */
    _createEmptyTiles : function () {
       
       var $thumbPage, emptySpots, tile, slider, lastSliderSize, i;
@@ -293,6 +312,9 @@ UIGallery.prototype =  {
          main.getUI().getTools().centerElement($tile, $thumb);
       });
    },
+   /**
+    * @private
+    */
    _initializeScrollable : function () {
       this.$container.scrollable({
          items: ".mp-gallery-inner",
@@ -305,31 +327,29 @@ UIGallery.prototype =  {
          easing: "swing"
       });
    },
-   /* ---- Listeners ---- */
    /**
     * @private
     */
-   _bindSortableListener : function () {
+   _initializeSortable : function () {
       
-      var jsonPhotos, jsonPhoto, currentPhoto, state, instance = this;
+      var $fullGallery, $currentTile, jsonPhotos, jsonPhoto, state, instance = this;
       state = main.getUIState();
+      $fullGallery = $(".mp-full-gallery");
       
-      this.$gallery
-         .find("div.mp-gallery")
+      $fullGallery
          .sortable({
-            items : "img.sortable",
-            start : function (event, ui) {
-               ui.item.addClass("noClick");
-            },
+            items : ".mp-sortable-tile",
             update : function (event, ui) {
                instance.searchImages();
                jsonPhotos = [];
 
                state.getPhotos().forEach(function (photo, index, photos) {
-                  // get html tag for current photo
-                  currentPhoto = $('img[src="' + photo.thumb + '"]');
-                  // find index of current photo in mp-gallery
-                  photo.order = instance.$elements.index(currentPhoto);
+                  // get html tag for tile containing current photo
+                  $currentTile = $fullGallery.find('img[src="' + photo.thumb + '"]').parent();
+                  // find index of current photo in gallery
+                  console.log(photo.order);
+                  photo.order = $fullGallery.children().index($currentTile);
+                  console.log(photo.order);
                   // make a deep copy
                   jsonPhoto = $.extend(true, {}, photo);
                   jsonPhotos.push(jsonPhoto);
@@ -341,6 +361,9 @@ UIGallery.prototype =  {
             }
          });
    },
+   
+   /* ---- Listeners ---- */
+   
    bindListener : function () {
 
       var state, cursor, controls, authorized, photo, instance = this;
@@ -403,24 +426,15 @@ UIGallery.prototype =  {
       this.$gallery
          .on('click.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
-            // workaround for DnD click event:
-            // when element gets dragged class "noClick" is added, when it's dropped and the click event
-            // is triggered, instead of starting the slideshow, the class "noClick" is getting removed
-            if ($el.hasClass("noClick")) {
-               $el.removeClass("noClick");
-            } else {
-               
-               $el.removeClass('current');
-               state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
-               state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
-
-               main.getUI().getControls().hideEditControls(false);
-               
-               // starts little slideshow in gallery div
-               main.getUI().getSlideshow().startSlider();
-
-               //return false;
-            }
+            
+            $el.removeClass('current');
+            state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
+            state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
+            
+            main.getUI().getControls().hideEditControls(false);
+            
+            // starts little slideshow in gallery div
+            main.getUI().getSlideshow().startSlider();
          });
    }
 

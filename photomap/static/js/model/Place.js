@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, InfoMarker, Photo, mpEvents, main, ZOOM_LEVEL_CENTERED, google */
+/*global $, InfoMarker, Photo, main, ZOOM_LEVEL_CENTERED, google */
 
 "use strict";
 
@@ -56,6 +56,13 @@ Place.prototype._showGallery = function () {
 Place.prototype.addPhoto = function (photo) {
    this.photos.push(photo);
    this._showGallery();
+};
+Place.prototype.sortPhotos = function () {
+   // puts photos with order on the right position
+   this.photos
+      .sort(function (photo, copy) {
+         return photo.order - copy.order;
+      });
 };
 Place.prototype.checkIconStatus = function () {
    var status = true;

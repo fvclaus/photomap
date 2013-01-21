@@ -63,7 +63,7 @@ Map.prototype = {
       
       var authorized;
       page = main.getUIState().getPage();
-      console.log(page);
+      
       if (page === ALBUM_VIEW) {
          authorized = main.getClientState().isAdmin();
          //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
