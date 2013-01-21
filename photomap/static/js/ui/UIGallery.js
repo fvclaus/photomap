@@ -34,9 +34,9 @@ UIGallery.prototype =  {
       if (main.getClientState().isAdmin()) {
          this.$container.bind('dragover.FileUpload', fileUpload.handleGalleryDragover);
          this.$container.bind('drop.FileUpload', fileUpload.handleGalleryDrop);
-         this.bindListener();
+         this._bindListener();
       }
-      this.bindStartSlideshowListener();
+      this._bindStartSlideshowListener();
    },
    setGalleryChanged : function (changed) {
       this.changed = changed;
@@ -46,7 +46,7 @@ UIGallery.prototype =  {
     * @description Reselect all images in the gallery. This is necessary when the gallery gets updated
     * @private
     */
-   searchImages : function () {
+   _searchImages : function () {
       this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-controls-options");
       this.$galleryPages =  this.$gallery.find('.mp-thumb-page');
       this.$galleryTiles = this.$gallery.find('.mp-gallery-tile');
@@ -60,18 +60,15 @@ UIGallery.prototype =  {
       
       var sliderIndex, imageIndex;
       
-      sliderIndex = this.getScrollable().getIndex();
+      sliderIndex = this._getScrollable().getIndex();
       imageIndex = $image.parent().index();
       
       return sliderIndex * 5 + imageIndex;
    },
    /**
-    * @returns {jQElement} Gallery element
+    * @private
     */
-   getEl : function () {
-      return this.$gallery;
-   },
-   getScrollable : function () {
+   _getScrollable : function () {
       return this.$container.data('scrollable');
    },
    /**
@@ -213,7 +210,7 @@ UIGallery.prototype =  {
          // fill last slider up with empty tiles (unless it is already filled with pics)
          gallery._createEmptyTiles();
          //search all anchors
-         gallery.searchImages();
+         gallery._searchImages();
          // adjust height to make the thumbs square
          gallery._resizeTiles();
          // initialize scrollable
@@ -340,7 +337,7 @@ UIGallery.prototype =  {
          .sortable({
             items : ".mp-sortable-tile",
             update : function (event, ui) {
-               instance.searchImages();
+               instance._searchImages();
                jsonPhotos = [];
 
                state.getPhotos().forEach(function (photo, index, photos) {
@@ -364,7 +361,7 @@ UIGallery.prototype =  {
    
    /* ---- Listeners ---- */
    
-   bindListener : function () {
+   _bindListener : function () {
 
       var state, cursor, controls, authorized, photo, instance = this;
       state = main.getUIState();
@@ -407,22 +404,26 @@ UIGallery.prototype =  {
             // set Cursor for DragnDrop on images (grabber)
             cursor.setCursor($el, cursor.styles.grab);
          });
-   },
-   bindStartSlideshowListener : function () {
-      var state, cursor, controls, authorized, photo, instance = this;
-      state = main.getUIState();
-      cursor = main.getUI().getCursor();
-      controls = main.getUI().getControls();
-      authorized = main.getClientState().isAdmin();
-
+      
       $(".mp-open-full-gallery").on("click", function (event) {
-         
+      
          instance.showFullGallery();
       });
       $(".mp-close-full-left-column").on("click", function (event) {
          instance.hideFullGallery();
       });
       
+   },
+   /**
+    * @private
+    */
+   _bindStartSlideshowListener : function () {
+      var state, cursor, controls, authorized, photo, instance = this;
+      state = main.getUIState();
+      cursor = main.getUI().getCursor();
+      controls = main.getUI().getControls();
+      authorized = main.getClientState().isAdmin();
+
       this.$gallery
          .on('click.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);

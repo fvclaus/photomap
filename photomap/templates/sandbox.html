@@ -1,12 +1,17 @@
 <html>
 	<head>
 		<script type="text/javascript" src="/static/js/lib/jquery-1.7.2-min.js"></script>
-		<script type="text/javascript" src="/static/js/lib/jquery.tools.no-jquery.min.js"></script>
-		<script type="text/javascript" src="/static/js/lib/jquery-ui-1.9.0.custom.min.js"></script>
+                <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
+		<script type="text/javascript" src="/static/js/lib/jquery.tools.notabs.min.js"></script>
+		<script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.min.js"></script>
 		<script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
 		<script type="text/javascript" src="/static/js/main/sandbox.js"></script>
                 <script type="text/javascript" src="/static/js/ui/UIPhotoEditor.js"></script>
-                <link rel="stylesheet" href="/static/css-plain/jquery.ui.min.css" />
+                <link rel="stylesheet" href="/static/css/external/overcast/jquery-ui-1.9.2.custom.css" />
+                {% load compress %}
+                {% compress css %}
+                <link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl"/>
+                {% endcompress %}
 
 		<style type="text/css">
       .preview { border: 1px solid black; }
@@ -17,23 +22,23 @@
 	<body>
           <div id="tabs">
             <ul>
-              <li><a href="#tabs-1">Form</a></li>
-              <li><a href="#tabs-2">Photo</a></li>
+              <li><a href="#tabs-1">Title & Description</a></li>
+              <li><a href="#tabs-2">Photoeditor</a></li>
             </ul>
 	    <div id="tabs-1">
 	      <form class="jquery-validator mp-dialog" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
 
 	        <input type="text" name="place" required="required" value="6"/>
 	        <div>
-		  <label for="title">Title <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
-		  <input class="mp-input-name" type="text" name="title" required="required" size="40"/>
+		  <label for="title">Title <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
+		  <input class="mp-input-name" type="text" name="title" required="required"/>
 	        </div>
 	        <div>
-		  <label for="description">Description</label><br />
+		  <label for="description">Description</label>
 		  <textarea type="text" name="description" cols="50" rows="5"></textarea>
 	        </div>
 	        <div>
-		  <label name="file-upload" for="photo">Photo<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label><br />
+		  <label name="file-upload" for="photo">Photo<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
 		  <input id="file-input" class="mp-input-drop" type="file" name="photo" required="required" size="40"/>
 	        </div>
 

@@ -1,14 +1,19 @@
-/*global $, FileReader,  Pixastic, parseInt, parseFloat, Image */
+/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image */
 
 "use strict";
 
-var UIPhotoEditor, instance, $orig, $preview, longest_side, canvas, context, $canvas, operation, options, wasVisible, rotation, angle, costheta, sintheta, original, dataType;
+var UIPhotoEditor, instance, $orig, $preview, longest_side, canvas, context, $canvas, operation, options, wasVisible, rotation, angle, costheta, sintheta, original, dataType, newImage, newOriginal, $slider, $input;
 
 longest_side = 500;
 
 UIPhotoEditor = function(){
-   this.PREVIEW_SELECTOR = "#preview";
-   this.ORIG_SELECTOR = "#original";
+   //fail if markup is not present
+   if (!document.getElementById("ui-editor")){
+      throw new Error("Markup for UIPhotoEditor is not present. Please use the right template.");
+   }
+
+   this.PREVIEW_SELECTOR = "#ui-editor-preview";
+   this.ORIG_SELECTOR = "#ui-editor-original";
 
    this.isCanvas = false;
 
@@ -24,10 +29,10 @@ UIPhotoEditor = function(){
    
    this.bindListener();
    this.disable();
+   this.isRotateDisabled = false;
 
    this.originals = {};
    this.angles = {};
-
 };
 
 UIPhotoEditor.prototype = {
@@ -41,11 +46,12 @@ UIPhotoEditor.prototype = {
          $orig.load(function () {
 
             //scale canvas to right proportions. check longest_side
-            ($orig.width() >= $orig.height()) ? $preview.width(longest_side) : $preview.height(longest_side);
+            // ($orig.width() >= $orig.height()) ? $preview.width(longest_side) : $preview.height(longest_side);
             
             $preview.load(function () {
-               $("#placeholder").hide();
+               $("#ui-editor-placeholder").hide();
                $preview.show();
+               // $preview.css("max-height", $preview.height());
                instance.enable();
             });
 
@@ -71,13 +77,21 @@ UIPhotoEditor.prototype = {
          }
          
          operation = $(this).attr("name");
-         //this is not a generic photo operation
+         //this is not a generic photo operation. it is either rotate or revert
          if (!operation){
             console.log(operation + " is not a generic operation.");
             instance.enable();
             return;
          }
+         if (!instance.isRotateDisabled){
+            //TODO the disabled here does not seem to work
+            instance.$rotate
+               .text("No rotation possible after pixel operation.")
+               .attr("disabled", "disabled");
 
+            console.log("added disabled");
+            instance.isRotateDisabled = true;
+         }
          instance.apply(instance.ORIG_SELECTOR, operation, this);
          instance.apply(instance.PREVIEW_SELECTOR, operation, this);
 
@@ -90,8 +104,16 @@ UIPhotoEditor.prototype = {
          //revert pixel operation
          Pixastic.revert($(instance.ORIG_SELECTOR).get(0));
          $(instance.ORIG_SELECTOR).hide();
+         $preview = $(instance.PREVIEW_SELECTOR);
+         $preview.css("max-height", $preview.height());
          instance.rotate($(instance.PREVIEW_SELECTOR), 0, true);
          Pixastic.revert($(instance.PREVIEW_SELECTOR).get(0));
+         //enable rotate button again
+         if (instance.isRotateDisabled){
+            instance.$rotate.removeAttr("disabled");
+            console.log("removed disabled");
+            instance.isRotateDisabled = false;
+         }
          instance.enable();
       });
       this.$rotate.click(function () {
@@ -114,12 +136,24 @@ UIPhotoEditor.prototype = {
       original = this.originals[$canvas.attr("id")];
       //apply the operation
       Pixastic.process($canvas.get(0), operation, options);
-      //update the original
-      original.src = $(selector).get(0).toDataURL();
+
+      //update the original - Pixastic returns a new(!) canvas element. Use it to update the src
+      //TODO: this is not working
+      // newOriginal = this.copyImage(original);
+      // original.src = Pixastic.process(newOriginal, operation,options).toDataURL(); 
+      // this.originals[$canvas.attr("id")] = newOriginal;
+      // original.src = $(selector).get(0).toDataURL();
+      
 
       if (!wasVisible){
          $(selector).hide();
       }
+   },
+   copyImage : function (img){
+      newImage = document.createElement("img");
+      newImage.width = img.width;
+      newImage.height = img.height;
+      return newImage;
    },
    replaceWithCanvas : function($img) {
       wasVisible = $img.is(":visible");
@@ -222,22 +256,26 @@ UIPhotoEditor.prototype = {
       this.$operations.removeAttr("disabled");
    },
    initSliders : function () {
-      // $(".slider").each(function () {
-      //    instance = this;
-      //    $slider =  $("<div></div>")
-      //       .insertAfter($(this))
-      //       .slider({
-      //          slide : function (event, ui) {
-      //             $(instance).val(ui.value);
-      //          }
-      //       });
-      //    if ($(this).attr("min")) {
-      //       $slider.slider("option", "min", $(this).attr("min"));
-      //    }
-      //    if ($(this).attr("max")) {
-      //       $slider.slider("option", "max", $(this).attr("max"));
-      //    }
+      $(".slider").each(function () {
+         $slider = $(this);
+         $input = $slider.siblings("input");
+
+         $slider.slider({
+               slide : function (event, ui) {
+                  $(this).siblings("input").val(ui.value);
+               }
+            });
+
+         if ($input.attr("min")) {
+            $slider.slider("option", "min", parseFloat($input.attr("min")));
+         }
+         if ($input.attr("max")) {
+            $slider.slider("option", "max", parseFloat($input.attr("max")));
+         }
+         if ($input.attr("max") || $input.attr("min")){
+            $slider.slider("option", "step", 0.1);
+         }
          
-      // });
+      });
    }
 };

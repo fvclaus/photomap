@@ -1,10 +1,10 @@
 /*jslint */
-/*global $, main, window, Image */
+/*global $, main, window, Image, UI */
 
 "use strict";
 
-var UI = {}, UIFullscreen, css;
-
+var UIFullscreen, css;
+//TODO this class has only 3 methods. All of them are too long
 UIFullscreen = function () {
    this.iconHelpCount = 5;
    this.$fullscreen = null;
@@ -20,6 +20,7 @@ UIFullscreen = function () {
 UIFullscreen.prototype = {
 
    // displays zoomed version of current image as overlay
+	//TODO this method is way too long
    zoom : function () {
       var data, $mpContainer, instance	= this;
       $mpContainer = $(".mp-container");
@@ -38,7 +39,7 @@ UIFullscreen.prototype = {
       this.$zoom = this.$fullscreen.find("img.mp-image-zoom");
       this.$load = this.$fullscreen.find("img.mp-dark-loader");
 
-      this.bindListener();
+      this._bindListener();
       $('<img/>').load(function () {
          css = instance._resizeImage(instance.$image);
          // instance.$image.show();
@@ -96,7 +97,10 @@ UIFullscreen.prototype = {
       }).attr('src', main.getUIState().getCurrentLoadedPhoto().source);
    },
 
-   // adjust height and weight properties of image so that it fits current window size
+   /**
+    * @private
+    *  adjust height and weight properties of image so that it fits current window size
+    */
    _resizeImage : function ($image) {
       
       var widthMargin, heightMargin, windowH, windowW, theImage, imgwidth, imgheight, newwidth, newnewwidth, newheight, newnewheight, ratio, newratio;
@@ -159,9 +163,11 @@ UIFullscreen.prototype = {
 
       return css
    },
-
-   // bind hide functionality to close button
-   bindListener : function () {
+   /**
+    * @private
+    * bind hide functionality to close button
+    */
+   _bindListener : function () {
       var instance = this;
       $("div.mp-image-nav")
          .unbind(".Gallery")
@@ -187,6 +193,7 @@ UIFullscreen.prototype = {
          
          var $wrapper, position, lowOpacity, highOpacity, duration;
          
+         //TODO there needs to be a better way of pointing out the zoom feature
          if (main.getUIState().isFullscreen() && instance.iconHelpCount > 0) {
             // instance.iconHelpCount -= 1;
             // $wrapper = instance.$wrapper;

@@ -1,28 +1,39 @@
-<img id="placeholder" src="/static/images/preview.png"/>
-<img id="original" />
-<img id="preview" />
-<div>
-  <label for="amount">Amount</label>
-  <input type="text" class="slider" name="amount" min="0" max="1" value="0.5" dataType="float">
-  <button name="sharpen" class="photo-operation">Sharpen</button>
-<div>
-  <button name="removenoise" class="photo-operation">Remove Noise</button>
-</div>
-<div>
-  <label for="average">Use Average</label>
-  <input type="checkbox" name="average">
-  <button name="desaturate" class="photo-operation">Desaturate</button>
-</div>
-<div>
-  <label for="amount">Amount</label>
-  <input type="text" class="slider" name="amount" min="-1" max="1" value="0.4" dataType="float">
-  <button name="lighten" class="photo-operation">Lighten</button>
-</div>
-<div>
-  <button id="rotate" class="photo-operation">Rotate</button>
-</div>
-<div>
-  <button id="revert" class="photo-operation">Revert</button>
+<div id="ui-editor"/>
+<strong id="ui-editor-placeholder">Please select a photo first</strong>
+<img id="ui-editor-original" />
+<img id="ui-editor-preview" />
+
+
+<div id="ui-editor-controls">
+  <fieldset>
+  <!--   <legend></legend> -->
+    <!-- <label for="amount">Amount</label> -->
+    <div class="slider"></div>
+    <input type="number" name="amount" min="0" max="1" value="0.5" dataType="float" disabled="disabled">
+    <button name="sharpen" class="photo-operation">Sharpen</button>
+  </fieldset>
+
+  <fieldset>
+  <!--   <legend></legend> -->
+    <!-- <label for="amount">Amount</label> -->
+    <div class="slider"></div>
+    <input type="number" name="amount" min="-1" max="1" value="0.4" dataType="float" disabled="disabled">
+    <button name="lighten" class="photo-operation">Lighten</button>
+  </fieldset>
+
+  <fieldset>
+  <!--   <legend></legend> -->
+    <label for="average">Use Average</label>
+    <input type="checkbox" name="average">
+    <button name="desaturate" class="photo-operation">Desaturate</button>
+  </fieldset>
+
+  <fieldset>
+  <!--   <legend></legend> -->
+    <button name="removenoise" class="photo-operation">Remove Noise</button>
+    <button id="rotate" class="photo-operation">Rotate</button>
+    <button id="revert" class="photo-operation">Revert</button>
+  </fieldset>
 </div>
 
 <!--
