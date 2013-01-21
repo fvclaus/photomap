@@ -32,6 +32,7 @@ UICursor.prototype = {
    },
 
    setMapCursor : function (style) {
+      //TODO this violates information hiding
       gmap = main.getMap().getInstance();
       if (style) {
          cursor = style;
@@ -66,10 +67,12 @@ UICursor.prototype = {
       this.setCursor($topic, this.styles.pointer);
 
       // on logo
+      //TODO this also violates information hiding
       $logo = $(".mp-logo").find("svg");
       this.setCursor($logo, this.styles.pointer);
       
       if (main && main.getUIState && main.getUIState().getPage() === ALBUM_VIEW) {
+         //TODO this violates information hiding
          this.setCursor($(".mp-page-title").find("h1"), this.styles.pointer);
       }
    }

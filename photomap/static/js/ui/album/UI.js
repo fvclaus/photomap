@@ -39,6 +39,7 @@ UI.prototype = {
       this.gallery.initAfterAjax();
       this.cursor.initAfterAjax();
       this.information.initAfterAjax();
+      //TODO this should be done be UIPanel
       main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    getCursor : function () {
@@ -78,6 +79,7 @@ UI.prototype = {
          this.getSlideshow().removeCurrentImage();
          this.getInformation().updateAlbum();
       }
+      //TODO private function call
       place._delete();
    },
    /*

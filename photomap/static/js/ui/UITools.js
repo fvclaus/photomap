@@ -321,7 +321,7 @@ UITools.prototype = {
    closeOverlay : function ($overlay) {
       $overlay.data("overlay").close();
    },
-
+   //TODO UITools should not have dependencies to another module. Move function to another module, preferrably UIInput
    openShareURL : function () {
       
       var url = main.getUIState().getAlbumShareURL().url;

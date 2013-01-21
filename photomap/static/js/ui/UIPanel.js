@@ -20,7 +20,6 @@ UIPanel = function () {
 UIPanel.prototype = {
    
    initWithoutAjax : function () {
-      this.resizeLogo();
       this.bindLogoListener();
       this.resizeFooterFont();
    },
@@ -29,22 +28,6 @@ UIPanel.prototype = {
    },
    getHeaderOffset: function () {
       return this.$header.offset();
-   },
-   resizeLogo : function () {
-      
-      var headerHeight, logoOriginalHeight, logoOriginalWidth, scaleRatio, logoScaledHeight, logoScaledWidth;
-      
-      headerHeight = this.$header.height();
-      logoOriginalHeight = this.$logo.attr("height");
-      logoOriginalWidth = this.$logo.attr("width");
-      
-      scaleRatio = headerHeight / logoOriginalHeight;
-      //logoScaledHeight = logoOriginalHeight * scaleRatio;
-      //logoScaledWidth = logoOriginalWidth * scaleRatio;
-      
-      this.$logo.find("g").attr("transform", "scale(" + scaleRatio + ")");
-      //this.$logo.attr("height", logoScaledHeight);
-      //this.$logo.attr("width", logoScaledWidth);
    },
    bindLogoListener : function () {
       this.$logo.bind("click", function () {
@@ -71,12 +54,13 @@ UIPanel.prototype = {
          width: height + "px"
       });
    },
-   getHeight : function () {
+   //TODO this is not used anymore
+   // getHeight : function () {
       
-      var tools;
+   //    var tools;
       
-      tools = main.getUI().getTools();
-      return tools.getRealHeight(this.$header);
-   }
+   //    tools = main.getUI().getTools();
+   //    return tools.getRealHeight(this.$header);
+   // }
 
 };

@@ -29,7 +29,7 @@ UIInformation.prototype = {
    },
    initAfterAjax : function () {
       if (main.getUIState().getPage() === ALBUM_VIEW) {
-         
+         //TODO this falls under the responsibility of UIPanel
          $(".mp-page-title").trigger("click");
       }
    },
@@ -80,6 +80,7 @@ UIInformation.prototype = {
       
       this._setTitle(title);
       if (main.getUIState().getPage() === ALBUM_VIEW) {
+         //TODO responsiblity of UIPanel
          $(".mp-page-title h1").text(title);
       }
    },

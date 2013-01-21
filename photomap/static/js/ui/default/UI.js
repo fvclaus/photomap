@@ -23,6 +23,7 @@ UI.prototype = {
    init : function () {
       this.panel.initWithoutAjax();
       this.cursor.initWithoutAjax();
+      //TODO this should be done by UIPanel, if present
       main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    getPanel : function () {
