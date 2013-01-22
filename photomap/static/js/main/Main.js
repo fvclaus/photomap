@@ -1,5 +1,5 @@
 /*jslint */
-/*global ClientState, ClientServer, UI, Map , initializeNonInteractive, initialize, initializeAfterAjax, initializeTest */
+/*global ClientState, ClientServer, UI, Map , initializeNonInteractive, initialize, initializeAfterAjax, initializeTest, initializePanels */
 
 "use strict";
 
@@ -30,6 +30,9 @@ Main.prototype = {
       // load markers on map
       this.clientServer.init();
       // initialise parts of UI that don't need the data loaded from the server
+      if (window && window.initializePanels) {
+         initializePanels();
+      }
       this.ui.initWithoutAjax();
       // initialize non-interactive content if needed
       if (!this.getUIState().isInteractive()) {

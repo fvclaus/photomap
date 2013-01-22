@@ -37,8 +37,8 @@
 	      <img class="mp-slideshow-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
        </div>
 	    <div class="mp-slideshow-image column">
-	      <img class="mp-current-image"></img>
-         <div class="mp-slideshow-no-image-msg">{% trans "No image selected." %}</div>
+	      <img class="mp-current-image mp-zoom"></img>
+         <div class="mp-slideshow-no-image-msg">{% trans "Please choose a photo in your gallery to start the slideshow." %}</div>
 	    </div>
        <div class="mp-slideshow-nav column">
    	   <img class="mp-slideshow-nav-next mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
@@ -56,9 +56,11 @@
         <span>
           <img class="mp-gallery-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
         </span>
+        {% if user.is_authenticated %}
         <span>
           <img class="mp-open-full-gallery mp-control" src="/static/images/openEdit.png" title='{% trans "Open Full Gallery" %}'/>
         </span>
+        {% endif %}
       </div>
       <div class="mp-gallery-main column" id="mp-gallery-main">
         <div class="mp-gallery-outer" id="mp-gallery-outer">

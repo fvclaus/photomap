@@ -335,5 +335,9 @@ UITools.prototype = {
             $(this).select();
          }).focus();
       main.getUI().getControls().bindCopyListener();
-   }
+   },
+   setCursor : function ($element, style) {
+      $element.css('cursor', style);
+   },
+
 };

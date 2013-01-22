@@ -81,12 +81,12 @@ UIGallery.prototype =  {
       state = main.getUIState();
       photo = state.getCurrentLoadedPhoto();
       currentIndex = state.getCurrentLoadedPhotoIndex();
-      sliderIndex = this.getScrollable().getIndex();
+      sliderIndex = this._getScrollable().getIndex();
       
       indexInSlider = currentIndex > sliderIndex * 5 && currentIndex < sliderIndex * 5 + 5;
       if (!indexInSlider) {
          newSliderIndex = Math.floor(currentIndex / 5);
-         this.getScrollable().seekTo(newSliderIndex);
+         this._getScrollable().seekTo(newSliderIndex);
       }
    },
    startFullGallery : function () {
@@ -130,6 +130,7 @@ UIGallery.prototype =  {
       
       if (!this.fullGalleryLoaded) {
          this.startFullGallery();
+//         $(".mp-full-gallery").jScrollPane();
       }
       $("#mp-full-left-column").removeClass("mp-nodisplay");
       this._centerImages();
@@ -363,12 +364,12 @@ UIGallery.prototype =  {
    
    _bindListener : function () {
 
-      var state, cursor, controls, authorized, photo, instance = this;
+      var state, tools, controls, authorized, photo, instance = this;
       state = main.getUIState();
-      cursor = main.getUI().getCursor();
       controls = main.getUI().getControls();
       authorized = main.getClientState().isAdmin();
-
+      tools = main.getUI().getTools();
+      
       //bind events on anchors
       instance.$gallery
          .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
@@ -387,7 +388,7 @@ UIGallery.prototype =  {
                controls.setModifyPhoto(true);
                controls.showPhotoControls($el);
             }
-            cursor.setCursor($el, cursor.styles.pointer);
+            tools.setCursor($el, "pointer");
          })
          .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
@@ -402,7 +403,7 @@ UIGallery.prototype =  {
          .on('mousedown.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             // set Cursor for DragnDrop on images (grabber)
-            cursor.setCursor($el, cursor.styles.grab);
+            tools.setCursor($el, "move");
          });
       
       $(".mp-open-full-gallery").on("click", function (event) {
@@ -418,9 +419,9 @@ UIGallery.prototype =  {
     * @private
     */
    _bindStartSlideshowListener : function () {
-      var state, cursor, controls, authorized, photo, instance = this;
+      
+      var state, controls, authorized, photo, instance = this;
       state = main.getUIState();
-      cursor = main.getUI().getCursor();
       controls = main.getUI().getControls();
       authorized = main.getClientState().isAdmin();
 

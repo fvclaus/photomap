@@ -18,7 +18,7 @@ $(document).ready(function () {
    $('.mp-single-upload').bind('click', function () {
       fileUpload.startUpload(false);
    });
-   $('.mp-multiple-upload').bind('click', function () {
-      fileUpload.startUpload(true);
-   });
+//   $('.mp-multiple-upload').bind('click', function () {
+//      fileUpload.startUpload(true);
+//   });
 });

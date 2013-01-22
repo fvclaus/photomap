@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, reinitialiseScrollPane */
+/*global $, main, reinitialiseScrollPane */
 
 "use strict";
 
@@ -40,6 +40,9 @@ function toggleTutorialDesc($topic) {
 var trigger;
 
 function initializePage() {
+   
+   main.getUI().getTools().setCursor($(".mp-faq-question"), "pointer");
+   main.getUI().getTools().setCursor($(".mp-tutorial-subtopic"), "pointer");
 
    $(".mp-faq-question").bind('click', function () {
       trigger = $(this);

@@ -3,7 +3,7 @@
 
 "use strict";
 
-var map, state, cursor, tools, $container, email, emailEnabled, i;
+var map, state, tools, $container, email, emailEnabled, i;
 
 function reinitialiseScrollPane() {
    if ($container.data("jsp")) {

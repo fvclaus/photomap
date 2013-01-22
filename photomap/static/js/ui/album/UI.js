@@ -1,4 +1,4 @@
-/*global $, main, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation, UIGallery, UISlideshow, UIFullscreen */
+/*global $, main, UITools, UIState, UIControls, UIInput, UIInformation, UIGallery, UISlideshow, UIFullscreen */
 /*
  * @author Frederik Claus
  * @class UI is a facade for all other UI classes
@@ -12,13 +12,11 @@ UI = function () {
    this.state = new UIState();
    this.tools = new UITools();
    this.information = new UIInformation();
-   this.panel = new UIPanel();
    this.controls = new UIControls();
    this.gallery = new UIGallery();
    this.slideshow = new UISlideshow();
    this.fullscreen = new UIFullscreen();
    this.input = new UIInput();
-   this.cursor = new UICursor();
    this._isDisabled = false;
 };
 
@@ -29,20 +27,14 @@ UI.prototype = {
    initWithoutAjax : function () {
       this.slideshow.initWithoutAjax();
       this.information.initWithoutAjax();
-      this.panel.initWithoutAjax();
       this.controls.initWithoutAjax();
-      this.cursor.initWithoutAjax();
       this.tools.initWithoutAjax();
    },
    initAfterAjax : function () {
       this.controls.initAfterAjax();
       this.gallery.initAfterAjax();
-      this.cursor.initAfterAjax();
       this.information.initAfterAjax();
       main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
-   },
-   getCursor : function () {
-      return this.cursor;
    },
    getGallery : function () {
       return this.gallery;
@@ -67,9 +59,6 @@ UI.prototype = {
    },
    getInput : function () {
       return this.input;
-   },
-   getPanel : function () {
-      return this.panel;
    },
    deletePlace : function (place) {
       if (place === main.getUIState().getCurrentLoadedPlace()) {

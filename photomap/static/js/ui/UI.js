@@ -1,12 +1,12 @@
 /*jslint */
-/*global $, main, UIMap, UITools,  UIState, UIControls, UIPanel, UIInput, UICursor, UIInformation, DASHBOARD_VIEW */
+/*global $, main, UIMap, UITools,  UIState, UIControls, UIInput, UIInformation, DASHBOARD_VIEW */
 
 "use strict";
 
 /**
  * @author Frederik Claus
  * @class UI is a wrapper class for everything that is visible to the user
- * @requires UITools, UIPanel, UIControls, UIInput, UIState, UICursor, UIInformation
+ * @requires UITools, UIControls, UIInput, UIState, UIInformation
  *
  */
 
@@ -14,11 +14,9 @@ var UI, state, albums;
 
 UI = function () {
    this.tools = new UITools();
-   this.panel = new UIPanel();
    this.controls = new UIControls();
    this.input = new UIInput();
    this.state = new UIState(this);
-   this.cursor = new UICursor();
    if (this.state.getPage() === DASHBOARD_VIEW) {
       this.information = new UIInformation();
    }
@@ -36,18 +34,12 @@ UI.prototype = {
     * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
     */
    initWithoutAjax : function () {
-      this.panel.initWithoutAjax();
       this.controls.initWithoutAjax();
-      this.cursor.initWithoutAjax();
       this.tools.initWithoutAjax();
       main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    initAfterAjax : function () {
       this.controls.initAfterAjax();
-      this.cursor.initAfterAjax();
-   },
-   getCursor : function () {
-      return this.cursor;
    },
    getTools : function () {
       return this.tools;
@@ -63,9 +55,6 @@ UI.prototype = {
    },
    getInformation: function () {
       return this.information;
-   },
-   getPanel : function () {
-      return this.panel;
    },
    /*
     * @description This should disable the UI in a way that no manipulation is possible anymore

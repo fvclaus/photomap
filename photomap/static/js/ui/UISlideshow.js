@@ -37,11 +37,10 @@ UISlideshow.prototype = {
    },
    startSlider: function () {
       
-      var state, information, tools, cursor, updateImage, once, instance = this;
+      var state, information, tools, updateImage, once, instance = this;
       state = main.getUIState();
       information = main.getUI().getInformation();
       tools = main.getUI().getTools();
-      cursor = main.getUI().getCursor();
       once = false;
       
       $(".mp-slideshow-no-image-msg").hide();
@@ -82,8 +81,6 @@ UISlideshow.prototype = {
       }
       // sets Photo title in album title bar and  Photo description + number
       information.updatePhoto();
-      // set cursor for fullscreen control
-      cursor.setZoomCursor(this.$image);
    },
 
    navigateSlider : function (instance, dir) {

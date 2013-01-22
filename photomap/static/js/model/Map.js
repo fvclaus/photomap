@@ -67,11 +67,7 @@ Map.prototype = {
       if (page === ALBUM_VIEW) {
          authorized = main.getClientState().isAdmin();
          //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
-         if (!authorized) {
-            // this.mapOptions = this.guestStyle;
-            // this.bindListener();
-            // return;
-         } else {
+         if (authorized) {
             this.bindListener();
          }
       } else if (page === DASHBOARD_VIEW) {
@@ -79,6 +75,7 @@ Map.prototype = {
       }
       // set map options if interactive
       this.map.setOptions(this.mapOptions);
+      this._setMapCursor();
    },
    /**
     * @description Initialize the google maps instance with streetview.
@@ -103,7 +100,23 @@ Map.prototype = {
    createLatLng : function (lat, lng) {
       return new google.maps.LatLng(lat, lng);
    },
-
+   _setMapCursor : function (style) {
+      
+      var cursor;
+      
+      if (style) {
+         cursor = style;
+      } else if (main && main.getUIState && main.getUIState().isInteractive()) {
+         // if no style is defined -> cross on interactive pages, else grabber
+         cursor = "cross";
+      } else {
+         cursor = "move";
+      }
+      this.map.setOptions({
+         draggableCursor: cursor,
+         draggingCursor: "move"
+      });
+   },
    setZoom : function (level) {
 
       var instance, zoomListener;
@@ -173,6 +186,45 @@ Map.prototype = {
    getPanorama : function () {
       return this.streetview;
    },
+   /**
+    * @description Takes an array of markers and resizes + pans the map so all places markers are visible. It does not show/hide marker.
+    */
+   fit : function (markersinfo) {
+      var LatLngList = [], i, len, bounds, LtLgLen, minfo;
+      markersinfo = markersinfo || this.markersinfo;
+      this.markersinfo = markersinfo;
+
+
+      for (i = 0, len = markersinfo.length; i < len; ++i) {
+         minfo = markersinfo[i];
+         LatLngList.push(new google.maps.LatLng(minfo.lat, minfo.lng));
+      }
+      // create a new viewpoint bound
+      bounds = new google.maps.LatLngBounds();
+
+      // go through each...
+      for (i = 0,  LtLgLen = LatLngList.length; i < LtLgLen; ++i) {
+         // And increase the bounds to take this point
+         bounds.extend(LatLngList[i]);
+      }
+      // fit these bounds to the map
+      this.map.fitBounds(bounds);
+   },
+   getOverlay : function () {
+      return this.overlay;
+   },
+   getZoom : function () {
+      return this.map.getZoom();
+   },
+   getProjection : function () {
+      return this.map.getProjection();
+   },
+   getBounds : function () {
+      return this.map.getBounds();
+   },
+   
+   /* --- Listeners --- */
+   
    bindListener : function () {
       var instance = this, state = main.getUIState();
       page = state.getPage();
@@ -245,7 +297,7 @@ Map.prototype = {
 
             // create a new album
             input = main.getUI().getInput();
-            lat = event.latLng.lat(); 
+            lat = event.latLng.lat();
             lng = event.latLng.lng();
 
             input.onAjax(function (data) {
@@ -306,67 +358,5 @@ Map.prototype = {
             }
          }
       });
-   },
-   /**
-    * @description Takes an array of markers and resizes + pans the map so all places markers are visible. It does not show/hide marker.
-    */
-   fit : function (markersinfo) {
-      var LatLngList = [], i, len, bounds, LtLgLen, minfo;
-      markersinfo = markersinfo || this.markersinfo;
-      this.markersinfo = markersinfo;
-
-
-      for (i = 0, len = markersinfo.length; i < len; ++i) {
-         minfo = markersinfo[i];
-         LatLngList.push(new google.maps.LatLng(minfo.lat, minfo.lng));
-      }
-      // create a new viewpoint bound
-      bounds = new google.maps.LatLngBounds();
-
-      // go through each...
-      for (i = 0,  LtLgLen = LatLngList.length; i < LtLgLen; ++i) {
-         // And increase the bounds to take this point
-         bounds.extend(LatLngList[i]);
-      }
-      // fit these bounds to the map
-      this.map.fitBounds(bounds);
-   },
-   getOverlay : function () {
-      return this.overlay;
-   },
-   getZoom : function () {
-      return this.map.getZoom();
-   },
-   getProjection : function () {
-      return this.map.getProjection();
-   },
-   getBounds : function () {
-      return this.map.getBounds();
-   },
-   /**
-    * @description Simplify look of the map for guests. No Roadnumbers etc.
-    * @private
-    */
-   guestStyle :  [
-      {
-         featureType: "road",
-         elementType: "labels",
-         stylers: [
-            { visibilty: "simplified"}
-         ]
-      }, {
-
-         featureType : "poi",
-         elementType : "labels",
-         stylers : [
-            {visibility: "simplified"}
-         ]
-      }, {
-         featureType : "road.highway",
-         stylers : [
-            {visibility: "off"}
-         ]
-      }
-   ]
-
+   }
 };
