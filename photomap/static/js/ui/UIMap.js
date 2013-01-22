@@ -401,7 +401,7 @@ UIMap.prototype = {
                   var title, description;
                   $("input[name=lat]").val(lat);
                   $("input[name=lon]").val(lng);
-                  $("input[name=album]").val(main.getUIState().getCurrentAlbum().id);
+                  $("input[name=album]").val(main.getUIState().getCurrentLoadedAlbum().id);
                   
                   input.onForm(function () {
                      //get place name + description
@@ -432,6 +432,7 @@ UIMap.prototype = {
                      "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
                   });
                   album.show();
+                  state.addAlbum(album);
                   main.getUI().getControls().bindAlbumListener(album);
                   //redirect to new albumview
                   album.triggerDoubleClick();
