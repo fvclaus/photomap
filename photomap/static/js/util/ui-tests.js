@@ -55,6 +55,7 @@ function selectPhoto() {
 }
 
 function initializeTest() {
+   //TODO no no! information hiding!
    gmap = main.getMap().getInstance();
 
    // calculate random bounds and add listener. remove google maps listener afterwards
@@ -66,6 +67,8 @@ function initializeTest() {
 
       bindListener();
       google.maps.event.removeListener(listener);
+      //give the ok to the selenium test suite
+      $("body").append($("<div id='ui-test-loaded'></div>"));
 
    });
 

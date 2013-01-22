@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY*/
+/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON*/
 
 "use strict";
 
@@ -8,9 +8,9 @@
  * @description: Facade for google maps
  */
 
-var Map, state, page, authorized, center, lat, lng;
+var UIMap, state, page, authorized, center, lat, lng, gmarker;
 
-Map = function () {
+UIMap = function () {
    // google.maps.Map
    this.map = null;
    // google.maps.StreetViewstreetview
@@ -51,11 +51,110 @@ Map = function () {
    // mode : fullscreen || normal
    this.mode = 'normal';
    this._create();
-
 };
 
 
-Map.prototype = {
+UIMap.prototype = {
+   /**
+    @public
+    @summary Returns a object containing the top and left position of
+    @param {InfoMarker} element
+    */
+   getPositionInPixel : function (element) {
+      projection = this.map.getOverlay().getProjection();
+      pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
+      return pixel;
+   },
+
+   // centerElement : function (element){
+   //    this.map.setZoom(ZOOM_LEVEL_CENTERED);
+   //    this.map.panTo(marker.getPosition());
+   // },
+   /**
+    @public
+    @summary This roughly implements a Factory pattern. Marker must only be instantiated through this method.
+    @returns {Marker}
+    */
+   createMarker : function (data) {
+      if (!(data.lat && (data.lng || data.lon) && data.title)){
+         console.log("Data in createMarker does not seem to be complete");
+         console.dir(data);
+      }
+      
+      lat = parseFloat(data.lat);
+      lng = (isNaN(parseFloat(data.lon)))? parseFloat(data.lng) : parseFloat(data.lon);
+
+      if (!(isFinite(lat) && isFinite(lng))){
+         throw new Error("lat or lng is not a float.");
+      }
+      // lng = parseFloat(lng);
+      
+      // marker = new Marker(data, this);
+      gmarker =  new google.maps.Marker({
+         position : new google.maps.LatLng(lat, lng),
+         map : this.map,
+         icon : new google.maps.MarkerImage(MARKER_DEFAULT_ICON),
+         title : data.title
+      });
+      // marker.setImplementation(gmarker);
+      return gmarker;
+   },
+   /**
+    @public
+    @param {Marker} marker
+    */
+   hideMarker : function (marker) {
+      // marker.getImplementation().setMap(null);
+      marker.getImplementation().setVisible(false);
+   },
+   /**
+    @public
+    @param {Marker} marker 
+    */
+   showMarker : function (marker) {
+      // marker.getImplementation().setMap(this.map);
+      marker.getImplementation().setVisible(true);
+   },
+   /**
+    @public
+    @param {Marker} marker
+    */
+   centerMarker : function (marker) {
+      this.map.setZoom(ZOOM_LEVEL_CENTERED);
+      this.map.panTo(marker.getPosition());
+   },
+   /**
+    @public
+    @param {Marker} marker
+    @param {String} event
+    @param {Function} callback
+    */
+   addListenerToMarker : function (marker, event, callback) {
+      if (!(event && callback)) {
+         throw new Error("You must specify event as well as callback");
+      }
+      google.maps.event.addListener(marker.getImplementation(), event, callback);
+   },
+   /**
+    @public
+    @param {Marker} marker
+    */
+   triggerClickOnMarker : function (marker) {
+      this._triggerEventOnMarker(marker, "click");
+   },
+   /**
+    @public
+    @param {Marker} marker
+    */
+   triggerDblClickOnMarker : function (marker) {
+      this._triggerEventOnMarker(marker, "dblclick");
+   },
+   /**
+    @private
+    */
+   _triggerEventOnMarker : function (marker, event) {
+      google.maps.event.trigger(marker.getImplementation(), event);
+   },
 
    initWithoutAjax : function () {
       this._create();

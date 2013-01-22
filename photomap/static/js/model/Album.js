@@ -24,7 +24,7 @@ Album = function (data) {
 Album.prototype = InfoMarker.prototype;
 
 Album.prototype._delete = function () {
-   this.marker.hide();
+   this.hide();
 };
 
 /*
@@ -38,7 +38,7 @@ Album.prototype._bindListener = function () {
    /*
     * @description Redirects on albumview of selected album.
     */
-   google.maps.event.addListener(this.marker.MapMarker, "click", function () {
+   this.addListener("click", function () {
       
       if (!main.getUI().isDisabled()) {
          state.setCurrentAlbum(instance);
@@ -46,7 +46,7 @@ Album.prototype._bindListener = function () {
          information.updateAlbumTitle();
       }
    });
-   google.maps.event.addListener(this.marker.MapMarker, "dblclick", function () {
+   this.addListener("dblclick", function () {
       
       if (!main.getUI().isDisabled()) {
          

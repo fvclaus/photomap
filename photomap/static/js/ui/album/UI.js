@@ -86,7 +86,7 @@ UI.prototype = {
       this._isDisabled = true;
       places.forEach(function (place) {
          place.showDisabledIcon();
-         place.getMarker().setCursor("not-allowed");
+         place.setCursor("not-allowed");
       });
       $("a, .mp-control").css({
 //         opacity: 0.4,
@@ -108,7 +108,7 @@ UI.prototype = {
       this._isDisabled = false;
       places.forEach(function (place) {
          place.checkIconStatus();
-         place.getMarker().setCursor("");
+         place.setCursor("");
       });
       $("a, .mp-control").css({
 //         opacity: 1,

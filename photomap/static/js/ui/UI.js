@@ -72,7 +72,7 @@ UI.prototype = {
       this._isDisabled = true;
       albums.forEach(function (album) {
          album.showDisabledIcon();
-         album.getMarker().setCursor("not-allowed");
+         album.setCursor("not-allowed");
       });
       $("a, .mp-control").css({
 //         opacity: 0.4,

@@ -145,8 +145,7 @@ UIControls.prototype = {
 
       // gets the relative pixel position
       //TODO define a method on Map for this
-      projection = main.getMap().getOverlay().getProjection();
-      pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
+      pixel = main.getMap().getPositionInPixel(element);
       // add height and half-width of the marker
       markerSize = element.getSize();
       pixel.y += markerSize.height;

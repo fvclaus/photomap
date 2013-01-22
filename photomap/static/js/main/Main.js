@@ -25,7 +25,7 @@ Main = function () {
 Main.prototype = {
    initWithoutAjax : function () {
 
-      this.map = new Map();
+      this.map = new UIMap();
       this.map.initWithoutAjax();
       // load markers on map
       this.clientServer.init();
@@ -36,9 +36,10 @@ Main.prototype = {
          initializeNonInteractive();
       }
       // do some page specific stuff
-      if (window && window.initialize) {
+      if (typeof initialize === "function") {
          initialize();
       }
+
    },
    initAfterAjax: function () {
       this.map.initAfterAjax();

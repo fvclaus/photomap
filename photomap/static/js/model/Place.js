@@ -33,20 +33,20 @@ Place = function (data) {
 Place.prototype = InfoMarker.prototype;
 
 Place.prototype._delete = function () {
-   this.marker.hide();
+   this.hide();
 };
-Place.prototype.center = function () {
+// Place.prototype.center = function () {
 
-   var map, x, y;
+//    var map, x, y;
 
-   map = main.getMap().getInstance();
-   map.setZoom(ZOOM_LEVEL_CENTERED);
-   console.log("position " + this.marker.MapMarker.getPosition());
-   map.panTo(this.marker.MapMarker.getPosition());
-   x = ($("#mp-map").width() * 0.25);
-   y = 0;
-   map.panBy(x, y);
-};
+//    map = main.getMap().getInstance();
+//    map.setZoom(ZOOM_LEVEL_CENTERED);
+//    console.log("position " + this.marker.MapMarker.getPosition());
+//    map.panTo(this.marker.MapMarker.getPosition());
+//    x = ($("#mp-map").width() * 0.25);
+//    y = 0;
+//    map.panBy(x, y);
+// };
 Place.prototype._showGallery = function () {
    main.getUI().getGallery().show(this.photos);
 };
@@ -91,7 +91,7 @@ Place.prototype._bindListener = function () {
    information = ui.getInformation();
    controls = ui.getControls();
    
-   google.maps.event.addListener(this.marker.MapMarker, "click", function () {
+   this.addListener("click", function () {
       
       if (!main.getUI().isDisabled()) {
          state.setCurrentPlace(instance);
@@ -102,7 +102,7 @@ Place.prototype._bindListener = function () {
    // dblclick event for place (its marker)
    // in the eventcallback this will be the gmap
    // use instance as closurefunction to access the place object
-   google.maps.event.addListener(this.marker.MapMarker, 'dblclick', function () {
+   this.addListener('dblclick', function () {
 
       var map, oldPlace;
 
