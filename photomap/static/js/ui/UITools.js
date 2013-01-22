@@ -276,15 +276,39 @@ UITools.prototype = {
    },
 
    deleteObject : function (url, data) {
+      
+      var ui, state;
+      state = main.getUIState();
+      ui = main.getUI();
+      
       // post request to delete album/place/photo - data is the id of the object
       $.ajax({
          type : "post",
          dataType : "json",
          "url" : url,
-         "data" : data,
-         success : function (data) {
-            if (data.error) {
-               alert(data.error);
+         data : {
+            id : data.id
+         },
+         success : function (response) {
+            if (response.error) {
+               alert(response.error);
+            } else {
+               
+               switch (data.model) {
+                  
+               case "Photo":
+                  ui.deletePhoto(data.id);
+                  break;
+               case "Place":
+                  ui.deletePlace(data.id);
+                  break;
+               case "Album":
+                  ui.deleteAlbum(data.id);
+                  break;
+               default:
+                  alert("The deleted Object has no model and therefor couldn't be removed from ui");
+                  break;
+               }
             }
          },
          error : function (err) {
@@ -292,7 +316,18 @@ UITools.prototype = {
          }
       });
    },
-
+   getObjectById : function (id, array) {
+      
+      var result;
+      
+      array.forEach(function (object, index) {
+         if (object.id === id) {
+            result = object;
+         }
+      });
+      
+      return result;
+   },
    fitMask : function () {
       // fit mask of overlay/expose/fancybox on top map between header and footer
       $("#exposeMask").css({
@@ -338,6 +373,6 @@ UITools.prototype = {
    },
    setCursor : function ($element, style) {
       $element.css('cursor', style);
-   },
+   }
 
 };

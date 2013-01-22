@@ -23,7 +23,7 @@ Album = function (data) {
 
 Album.prototype = InfoMarker.prototype;
 
-Album.prototype._delete = function () {
+Album.prototype.delete = function () {
    this.marker.hide();
 };
 
@@ -42,6 +42,7 @@ Album.prototype._bindListener = function () {
       
       if (!main.getUI().isDisabled()) {
          state.setCurrentAlbum(instance);
+         state.setCurrentLoadedAlbum(instance);
          information.updateAlbumDescription();
          information.updateAlbumTitle();
       }

@@ -32,7 +32,7 @@ Place = function (data) {
 
 Place.prototype = InfoMarker.prototype;
 
-Place.prototype._delete = function () {
+Place.prototype.delete = function () {
    this.marker.hide();
 };
 Place.prototype.center = function () {

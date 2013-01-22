@@ -60,7 +60,7 @@ ClientServer.prototype = {
             var places, place;
 
             // set current album in UIState to have access on it for information, etc.
-            main.getUIState().setCurrentAlbum(albuminfo);
+            main.getUIState().setCurrentLoadedAlbum(albuminfo);
             // set album title in title-bar
             main.getUI().getInformation().updateAlbumTitle();
 

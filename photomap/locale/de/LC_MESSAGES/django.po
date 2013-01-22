@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-22 00:52+0100\n"
+"POT-Creation-Date: 2013-01-22 17:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,66 +67,78 @@ msgstr "Löschen"
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base.html:96
+#: templates/base-interactive.html:111
+msgid "Do you really want to delete"
+msgstr "Wollen Sie wirklich folgendes Objekt löschen: "
+
+#: templates/base-interactive.html:112
+msgid "Yes"
+msgstr "Ja"
+
+#: templates/base-interactive.html:113
+msgid "No"
+msgstr "Nein"
+
+#: templates/base.html:97
 msgid "Abmelden"
 msgstr "Abmelden"
 
-#: templates/base.html:106
+#: templates/base.html:107
 msgid "Login or Register"
 msgstr "Anmelden oder Registrieren"
 
-#: templates/base.html:106
+#: templates/base.html:107
 msgid "Anmelden/Registrierung"
 msgstr "Anmeldung und Registrierung"
 
-#: templates/base.html:111 templates/not-supported-old.html:64
+#: templates/base.html:112 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:111 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:112 templates/team.html:6 templates/team.html.py:8
 #: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:112 templates/not-supported-old.html:62
+#: templates/base.html:113 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:112 templates/contact.html:6
+#: templates/base.html:113 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:113 templates/not-supported-old.html:60
+#: templates/base.html:114 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:113 templates/privacy.html:5
+#: templates/base.html:114 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:114 templates/not-supported-old.html:61
+#: templates/base.html:115 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:114 templates/copyright.html:6
+#: templates/base.html:115 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:115 templates/not-supported-old.html:63
+#: templates/base.html:116 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:115 templates/help.html:6
+#: templates/base.html:116 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:116 templates/not-supported-old.html:59
+#: templates/base.html:117 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:116 templates/impressum.html:6
+#: templates/base.html:117 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
@@ -983,7 +995,8 @@ msgstr "Vorheriges Bild"
 
 #: templates/view-album.html:41
 msgid "Please choose a photo in your gallery to start the slideshow."
-msgstr "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
+msgstr ""
+"Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
 
 #: templates/view-album.html:44
 msgid "Next Image"

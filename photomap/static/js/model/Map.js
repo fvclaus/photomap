@@ -225,7 +225,7 @@ Map.prototype = {
    },
    enable : function () {
       
-      this._setMapCursor("not-allowed");
+      this._setMapCursor();
       this.map.setOptions({
          draggable : true,
          scrollwheel : true,
@@ -238,7 +238,7 @@ Map.prototype = {
    },
    disable : function () {
       
-      this._setMapCursor();
+      this._setMapCursor("not-allowed");
       this.map.setOptions({
          draggable : false,
          scrollwheel : false,
@@ -302,7 +302,7 @@ Map.prototype = {
                   var title, description;
                   $("input[name=lat]").val(lat);
                   $("input[name=lon]").val(lng);
-                  $("input[name=album]").val(main.getUIState().getCurrentAlbum().id);
+                  $("input[name=album]").val(main.getUIState().getCurrentLoadedAlbum().id);
                   
                   input.onForm(function () {
                      //get place name + description
@@ -333,6 +333,7 @@ Map.prototype = {
                      "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
                   });
                   album.show();
+                  state.addAlbum(album);
                   main.getUI().getControls().bindAlbumListener(album);
                   //redirect to new albumview
                   album.triggerDoubleClick();

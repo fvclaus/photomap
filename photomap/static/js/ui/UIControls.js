@@ -255,10 +255,10 @@ UIControls.prototype = {
     */
    _bindDeleteListener : function () {
       
-      var instance, tools, state, photo, place, album, url, data;
+      var instance, state, input, photo, place, album, url, data;
       instance = this;
       state = main.getUIState();
-      tools = main.getUI().getTools();
+      input = main.getUI().getInput();
       
       this.$delete
          .on("click", function (event) {
@@ -271,44 +271,38 @@ UIControls.prototype = {
                
                if (instance.isModifyPhoto) {
                   // delete current photo
-                  if (confirm("Do you really want to delete photo " + photo.title)) {
-                     //TODO this is confusing. how about gallery.deletePhoto?
-                     url = "/delete-photo";
-                     data = { id: photo.id };
-                     state.removePhoto(photo);
-                     $("img[src='" + photo.thumb + "']").remove();
-                     $("img[src='" + photo.thumb + "']").parent().addClass("mp-empty-tile");
-                  } else {
-                     return;
-                  }
+                  url = "/delete-photo";
+                  data = {
+                     id : photo.id,
+                     title : photo.title,
+                     model : photo.model
+                  };
+                  input.confirmDelete(url, data);
+               
                } else if (instance.isModifyPlace) {
                   // delete current place
-                  if (confirm("Do you really want to delete place " + place.title)) {
-                     //TODO this is also confusing. why does ui has a function deleteplace, but not deletephoto?
-                     url = "/delete-place";
-                     data = { id: place.id };
-                     state.removePlace(place);
-                     main.getUI().deletePlace(place);
-                  } else {
-                     return;
-                  }
+                  url = "/delete-place";
+                  data = {
+                     id : place.id,
+                     title : place.title,
+                     model : place.model
+                  };
+                  input.confirmDelete(url, data);
+               
                } else if (instance.isModifyAlbum) {
                   // delete current album
-                  if (confirm("Do you really want to delete Album " + album.title)) {
-                     //TODO confusing. why is it now album._delete() <-- calling a private function
-                     url = "/delete-album";
-                     data = { id: album.id };
-                     album._delete();
-                  } else {
-                     return;
-                  }
+                  url = "/delete-album";
+                  data = {
+                     id : album.id,
+                     title : album.title,
+                     model : album.model
+                  };
+                  input.confirmDelete(url, data);
+               
                } else {
                   alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
                   return;
                }
-               
-               // call to delete marker or photo in backend
-               tools.deleteObject(url, data);
             }
          });
    },

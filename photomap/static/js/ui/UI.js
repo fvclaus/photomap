@@ -55,6 +55,16 @@ UI.prototype = {
    getInformation: function () {
       return this.information;
    },
+   deleteAlbum : function (id) {
+      
+      var album = main.getUI().getTools().getObjectById(id, this.state.getAlbums());
+      
+      if (album === this.state.getCurrentLoadedAlbum()) {
+         main.getUI().getInformation().removeDescription();
+      }
+      album.delete();
+      this.state.removeAlbum(album);
+   },
    showLoading : function () {
       main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);
       main.getUI().getTools().fitMask();

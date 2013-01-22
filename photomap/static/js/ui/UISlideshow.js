@@ -34,6 +34,7 @@ UISlideshow.prototype = {
          this.$image.hide();
       }
       $(".mp-slideshow-no-image-msg").show();
+      main.getUI().getInformation().emptyImageNumber();
    },
    startSlider: function () {
       

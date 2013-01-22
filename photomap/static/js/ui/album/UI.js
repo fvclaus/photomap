@@ -59,15 +59,30 @@ UI.prototype = {
    getInput : function () {
       return this.input;
    },
-   deletePlace : function (place) {
-      if (place === main.getUIState().getCurrentLoadedPlace()) {
+   deletePlace : function (id) {
+      
+      var place = this.getTools().getObjectById(id, this.getState().getPlaces());
+
+      if (place === this.getState().getCurrentLoadedPlace()) {
          
          this.getGallery().show();
          this.getSlideshow().removeCurrentImage();
-         this.getInformation().updateAlbum();
+         this.getInformation().removeDescription();
       }
-      //TODO private function call
-      place._delete();
+      place.delete();
+      this.state.removePlace(place);
+   },
+   deletePhoto : function (id) {
+      
+      var photo = this.getTools().getObjectById(id, this.state.getPhotos());
+      
+      if (photo === this.getState().getCurrentLoadedPhoto()) {
+         
+         this.getSlideshow().removeCurrentImage();
+         this.getInformation().removeDescription();
+      }
+      this.gallery.deleteImage(photo);
+      this.state.removePhoto(photo);
    },
    showLoading : function () {
       main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);

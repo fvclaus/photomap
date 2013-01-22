@@ -63,6 +63,12 @@ UIState.prototype = {
    //--------------------------------------------------------------------
    //PHOTO---------------------------------------------------------------
    //--------------------------------------------------------------------
+   setPhotos : function (photos) {
+      this.photos = photos;
+   },
+   getPhotos : function () {
+      return this.photos;
+   },
    setCurrentPhotoIndex : function (index) {
       this.current = index;
    },
@@ -87,12 +93,6 @@ UIState.prototype = {
    getCurrentLoadedPhoto : function () {
       return this.currentLoadedPhoto;
    },
-   setPhotos : function (photos) {
-      this.photos = photos;
-   },
-   getPhotos : function () {
-      return this.photos;
-   },
    addPhoto : function (photo) {
       this.photos.push(photo);
    },
@@ -104,25 +104,29 @@ UIState.prototype = {
    //--------------------------------------------------------------------
    //PLACE---------------------------------------------------------------
    //--------------------------------------------------------------------
-   setCurrentPlace : function (place) {
-      this.currentPlace = place;
-   },
-   setCurrentLoadedPlace : function (place) {
-      this.currentLoadedPlace = place;
-   },
-   getCurrentPlace : function () {
-      return this.currentPlace;
-   },
    getPlaces : function () {
       return this.places;
    },
    setPlaces : function (places) {
       this.places = places;
    },
+   setCurrentPlace : function (place) {
+      this.currentPlace = place;
+   },
+   getCurrentPlace : function () {
+      return this.currentPlace;
+   },
+   setCurrentLoadedPlace : function (place) {
+      this.currentLoadedPlace = place;
+   },
+   getCurrentLoadedPlace : function () {
+      return this.currentLoadedPlace;
+   },
    addPlace : function (place) {
       this.places.push(place);
    },
    removePlace : function (place) {
+      
       this.places = this.places.filter(function (element, index) {
          return element !== place;
       });
@@ -136,6 +140,18 @@ UIState.prototype = {
    getAlbums : function () {
       return this.albums;
    },
+   setCurrentAlbum : function (album) {
+      this.currentAlbum = album;
+   },
+   getCurrentAlbum : function () {
+      return this.currentAlbum;
+   },
+   setCurrentLoadedAlbum : function (album) {
+      this.currentLoadedAlbum = album;
+   },
+   getCurrentLoadedAlbum : function () {
+      return this.currentLoadedAlbum;
+   },
    addAlbum : function (album) {
       this.albums.push(album);
    },
@@ -143,15 +159,6 @@ UIState.prototype = {
       this.albums = this.albums.filter(function (element, index) {
          return element !== album;
       });
-   },
-   getCurrentLoadedPlace : function () {
-      return this.currentLoadedPlace;
-   },
-   setCurrentAlbum : function (album) {
-      this.currentAlbum = album;
-   },
-   getCurrentAlbum : function () {
-      return this.currentAlbum;
    },
    //--------------------------------------------------------------------
    //UI------------------------------------------------------------------
