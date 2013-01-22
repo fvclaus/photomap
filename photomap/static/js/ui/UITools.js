@@ -275,24 +275,18 @@ UITools.prototype = {
       return this._getUrlParameter("secret");
    },
 
-   deleteObject : function (url, data) {
-      // post request to delete album/place/photo - data is the id of the object
-      $.ajax({
-         type : "post",
-         dataType : "json",
-         "url" : url,
-         "data" : data,
-         success : function (data) {
-            if (data.error) {
-               alert(data.error);
-            }
-         },
-         error : function (err) {
-            alert(err.toString());
+   getObjectById : function (id, array) {
+      
+      var result;
+      
+      array.forEach(function (object, index) {
+         if (object.id === id) {
+            result = object;
          }
       });
+      
+      return result;
    },
-
    fitMask : function () {
       // fit mask of overlay/expose/fancybox on top map between header and footer
       $("#exposeMask").css({
@@ -338,6 +332,6 @@ UITools.prototype = {
    },
    setCursor : function ($element, style) {
       $element.css('cursor', style);
-   },
+   }
 
 };

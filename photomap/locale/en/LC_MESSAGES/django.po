@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-22 00:52+0100\n"
+"POT-Creation-Date: 2013-01-22 17:37+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -62,66 +62,78 @@ msgstr "Delete"
 msgid "control-title modify"
 msgstr "Edit"
 
-#: templates/base.html:96
+#: templates/base-interactive.html:111
+msgid "Do you really want to delete"
+msgstr "Do you really want to delete:"
+
+#: templates/base-interactive.html:112
+msgid "Yes"
+msgstr "Yes"
+
+#: templates/base-interactive.html:113
+msgid "No"
+msgstr "No"
+
+#: templates/base.html:97
 msgid "Abmelden"
 msgstr "Logout"
 
-#: templates/base.html:106
+#: templates/base.html:107
 msgid "Login or Register"
 msgstr "Login or Register"
 
-#: templates/base.html:106
+#: templates/base.html:107
 msgid "Anmelden/Registrierung"
 msgstr "Login and Registration"
 
-#: templates/base.html:111 templates/not-supported-old.html:64
+#: templates/base.html:112 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Introduction of the project and core team members"
 
-#: templates/base.html:111 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:112 templates/team.html:6 templates/team.html.py:8
 #: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:112 templates/not-supported-old.html:62
+#: templates/base.html:113 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Contact, Support, Ask a Question"
 
-#: templates/base.html:112 templates/contact.html:6
+#: templates/base.html:113 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Contact"
 
-#: templates/base.html:113 templates/not-supported-old.html:60
+#: templates/base.html:114 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "View Data Use Policy"
 
-#: templates/base.html:113 templates/privacy.html:5
+#: templates/base.html:114 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Privacy"
 
-#: templates/base.html:114 templates/not-supported-old.html:61
+#: templates/base.html:115 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "View Copyright Statement"
 
-#: templates/base.html:114 templates/copyright.html:6
+#: templates/base.html:115 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:115 templates/not-supported-old.html:63
+#: templates/base.html:116 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "View FAQ, Tutorial and help-page"
 
-#: templates/base.html:115 templates/help.html:6
+#: templates/base.html:116 templates/help.html:6
 msgid "Hilfe"
 msgstr "Help"
 
-#: templates/base.html:116 templates/not-supported-old.html:59
+#: templates/base.html:117 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "View Legal Terms of NAME OF PROJECT"
 
-#: templates/base.html:116 templates/impressum.html:6
+#: templates/base.html:117 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Legal Terms"

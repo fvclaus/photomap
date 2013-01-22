@@ -71,6 +71,10 @@ UIGallery.prototype =  {
    _getScrollable : function () {
       return this.$container.data('scrollable');
    },
+   deleteImage : function (photo) {
+      $("img[src='" + photo.thumb + "']").remove();
+      $("img[src='" + photo.thumb + "']").parent().addClass("mp-empty-tile");
+   },
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
     */

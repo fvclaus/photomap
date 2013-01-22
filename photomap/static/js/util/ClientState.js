@@ -14,7 +14,7 @@ ClientState.prototype = {
     * @description Checks if user is owner of the current album (just used in albumview).
     */
    isAdmin : function(){
-      album = main.getUIState().getCurrentAlbum();
+      album = main.getUIState().getCurrentLoadedAlbum();
       return album.isOwner;
    },
    /*

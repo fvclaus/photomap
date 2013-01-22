@@ -57,6 +57,10 @@ UIInformation.prototype = {
          }
       }
    },
+   removeDescription : function () {
+      this.$descriptionTitle.empty();
+      this.$description.empty();
+   },
    showFullDescription : function () {
       
       var $container, $innerWrapper, description, title;
@@ -76,7 +80,7 @@ UIInformation.prototype = {
    /* ---- Album ---- */
    updateAlbumTitle : function () {
       
-      title = main.getUIState().getCurrentAlbum().title;
+      title = main.getUIState().getCurrentLoadedAlbum().title;
       
       this._setTitle(title);
       if (main.getUIState().getPage() === ALBUM_VIEW) {
@@ -84,7 +88,7 @@ UIInformation.prototype = {
       }
    },
    updateAlbumDescription : function () {
-      info = main.getUIState().getCurrentAlbum().description;
+      info = main.getUIState().getCurrentLoadedAlbum().description;
       this._setDescription(info);
    },
    updateAlbum : function () {

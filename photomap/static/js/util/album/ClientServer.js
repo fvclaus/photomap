@@ -3,12 +3,21 @@
 
 "use strict";
 
+/**
+ * @author Frederik Claus
+ * @class ClientServer handles interactions between client and server
+ */
 var ClientServer;
 
 ClientServer = function () {
    // array of places
    this.uploadedPhotos = [];
 };
+
+/**
+ * @author Marc-Leon Römer
+ * @description Gets current album, defines handler for saving photo-order and deleting photos & places
+ */
 
 ClientServer.prototype = {
    init : function () {
@@ -41,6 +50,46 @@ ClientServer.prototype = {
          });
       });
    },
+   deleteObject : function (url, data) {
+      
+      var ui, state;
+      state = main.getUIState();
+      ui = main.getUI();
+      
+      $.ajax({
+         type : "post",
+         dataType : "json",
+         "url" : url,
+         data : {
+            id : data.id
+         },
+         success : function (response) {
+            if (response.error) {
+               alert(response.error);
+            } else {
+               
+               switch (data.model) {
+                  
+               case "Photo":
+                  ui.deletePhoto(data.id);
+                  break;
+               case "Place":
+                  ui.deletePlace(data.id);
+                  break;
+               default:
+                  alert("The deleted Object has no model and therefor couldn't be removed from ui");
+                  break;
+               }
+            }
+         },
+         error : function (err) {
+            alert(err.toString());
+         }
+      });
+   },
+   /**
+    * @private
+    */
    _getPlaces : function () {
       
       var data, tools, id, secret, instance = this;
@@ -60,7 +109,7 @@ ClientServer.prototype = {
             var places, place;
 
             // set current album in UIState to have access on it for information, etc.
-            main.getUIState().setCurrentAlbum(albuminfo);
+            main.getUIState().setCurrentLoadedAlbum(albuminfo);
             // set album title in title-bar
             main.getUI().getInformation().updateAlbumTitle();
 
@@ -85,6 +134,9 @@ ClientServer.prototype = {
       });
 
    },
+   /**
+    * @private
+    */
    _showPlaces : function (places) {
       var map = main.getMap();
 

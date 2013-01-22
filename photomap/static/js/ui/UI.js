@@ -25,7 +25,7 @@ UI = function () {
 
 /**
  * @author Marc Roemer
- * @description Defines Getter to retrieve the UI classes wrapped
+ * @description Defines Getter to retrieve the UI classes wrapped, handler to add/remove object to/from ui and to en-/disable the ui completely
  */
 
 UI.prototype = {
@@ -54,6 +54,19 @@ UI.prototype = {
    },
    getInformation: function () {
       return this.information;
+   },
+   /**
+    * @description Removes album fully from ui.
+    */
+   deleteAlbum : function (id) {
+      
+      var album = this.getTools().getObjectById(id, this.getState().getAlbums());
+      
+      if (album === this.getState().getCurrentLoadedAlbum()) {
+         this.getInformation().removeDescription();
+      }
+      album.delete();
+      this.getState().removeAlbum(album);
    },
    showLoading : function () {
       main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);

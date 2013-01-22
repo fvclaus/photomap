@@ -58,7 +58,7 @@
 			CodeGeneration
 		</plugin>
 </profile>
-<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Mon Jul 09 15:12:00 CEST 2012'>
+<XMI xmi.version = '1.2' xmlns:UML = 'org.omg.xmi.namespace.UML' timestamp = 'Sun Jan 20 22:53:33 CET 2013'>
   <XMI.header>    <XMI.documentation>
       <XMI.exporter>ArgoUML (using Netbeans XMI Writer version 1.0)</XMI.exporter>
       <XMI.exporterVersion>0.34(6) revised on $Date: 2010-01-11 22:20:14 +0100 (Mon, 11 Jan 2010) $ </XMI.exporterVersion>
@@ -1966,7 +1966,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
           </UML:Classifier.feature>
         </UML:Class>
         <UML:Class xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B2A'
-          name = 'UIAlbum' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          name = 'UIGallery' visibility = 'public' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
           <UML:ModelElement.taggedValue>
             <UML:TaggedValue xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B2B'
@@ -2105,8 +2105,8 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
           </UML:Classifier.feature>
         </UML:Class>
         <UML:Class xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B39'
-          name = 'UIGallerySlideshow' visibility = 'public' isSpecification = 'false'
-          isRoot = 'false' isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
+          name = 'UISlideShow' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
           <UML:Classifier.feature>
             <UML:Attribute xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B3A'
               name = '$slideshow' visibility = 'public' isSpecification = 'false' ownerScope = 'instance'
@@ -2468,7 +2468,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
           </UML:Classifier.feature>
         </UML:Class>
         <UML:Class xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B4E'
-          name = 'UIGallery' visibility = 'public' isSpecification = 'false' isRoot = 'false'
+          name = 'UIAlbum' visibility = 'public' isSpecification = 'false' isRoot = 'false'
           isLeaf = 'false' isAbstract = 'false' isActive = 'false'>
           <UML:Classifier.feature>
             <UML:Operation xmi.id = '127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B68'
@@ -6580,7 +6580,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       bold="false"
       textsize="12"
       justification="Center"
-    >UIAlbum</text>
+    >UIGallery</text>
     <group name="Fig23.2"
          description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1785, 9, 190, 0]"
          href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B2A"
@@ -6865,7 +6865,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       bold="false"
       textsize="12"
       justification="Center"
-    >UIGallerySlideshow</text>
+    >UISlideShow</text>
     <group name="Fig24.2"
          description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1041, 1, 254, 0]"
          href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B39"
@@ -7579,7 +7579,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       bold="false"
       textsize="12"
       justification="Center"
-    >UIGallery</text>
+    >UIAlbum</text>
     <group name="Fig26.2"
          description="org.argouml.uml.diagram.ui.FigStereotypesGroup[1465, 377, 241, 0]"
          href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B4E"
@@ -7713,7 +7713,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         bold="false"
         textsize="12"
         justification="Left"
-      >getSlideshow() : UIGallerySlideshow</text>
+      >getSlideshow() : UISlideShow</text>
       <text name="Fig26.6.4"
         x="1465"
         y="541"
@@ -7729,7 +7729,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
         bold="false"
         textsize="12"
         justification="Left"
-      >getAlbum() : UIAlbum</text>
+      >getAlbum() : UIGallery</text>
       <text name="Fig26.6.5"
         x="1465"
         y="557"
@@ -8103,7 +8103,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       justification="Center"
     >UIInformation</text>
     <group name="Fig28.2"
-         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 49, 254, 0]"
+         description="org.argouml.uml.diagram.ui.FigStereotypesGroup[729, 49, 262, 0]"
          href="127-0-1-1--654e7c32:1352e0bffa3:-8000:0000000000000B9B"
          fill="0"
          fillcolor="white"
@@ -8117,7 +8117,7 @@ Automatically hides after user interaction. </UML:TaggedValue.dataValue>
       <rectangle name="Fig28.2.0"
         x="729"
         y="49"
-        width="254"
+        width="262"
         height="0"
         fill="0"
         fillcolor="white"

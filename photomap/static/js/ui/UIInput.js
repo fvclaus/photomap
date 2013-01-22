@@ -38,10 +38,11 @@ UIInput.prototype = {
       dimension = this.getDialogDimension(instance.dialog.html());
 
       this.dialog.dialog({
+         modal : true,
          minHeight: dimension.height,
          minWidth: dimension.width,
          create: function () {
-//            main.getUI().disable();
+            main.getUI().disable();
          },
          open: function () {
             instance._intercept();
@@ -49,7 +50,7 @@ UIInput.prototype = {
          },
          close: function () {
             instance._initialise();
-//            main.getUI().enable();
+            main.getUI().enable();
             instance.dialog.empty();
             instance.setVisibility(false);
          }
@@ -69,10 +70,11 @@ UIInput.prototype = {
       dimension = this.getDialogDimension(instance.dialog.html());
 
       this.dialog.dialog({
+         modal : true,
          minWidth : dimension.width,
          minHeight : dimension.height,
          create: function () {
-//            main.getUI().disable();
+            main.getUI().disable();
          },
          open: function () {
             if (onCompleteHandler !== null) {
@@ -81,14 +83,65 @@ UIInput.prototype = {
             instance.setVisibility(true);
          },
          close: function () {
-//            main.getUI().enable();
+            main.getUI().enable();
             instance.dialog.empty();
             instance.setVisibility(false);
          }
       });
       return false;
    },
-   loadHtml : function (url){
+   /**
+    * @author Marc-Leon Römer
+    * @description Show confirm dialog with ui-dialog. If confirmed pass url & data to ClientServer.deleteObject to post the delete.
+    */
+   confirmDelete : function (url, data) {
+      
+      var $dialog, instance = this;
+      $dialog = $("#confirm-delete");
+      
+      $dialog
+         .find(".data-title")
+         .empty()
+         .append(data.title);
+      dimension = this.getDialogDimension($dialog.html());
+
+      $dialog.dialog({
+         modal : true,
+         minWidth : dimension.width * 1.4,
+         minHeight : dimension.height * 2.3,
+         create: function () {
+            main.getUI().disable();
+         },
+         open: function () {
+            instance.setVisibility(true);
+         },
+         close: function () {
+            main.getUI().enable();
+            instance.setVisibility(false);
+         },
+         buttons : [
+            {
+               text : $("span#mp-confirm").text(),
+               click : function () {
+                  main.getUI().getClientServer().deleteObject(url, data);
+                  $(this).dialog("close");
+                  return true;
+               }
+            },
+            {
+               text : $("span#mp-abort").text(),
+               click : function (event) {
+                  
+                  $(this).dialog("close");
+                  return false;
+               }
+            }
+         ]
+      });
+      
+      return false;
+   },      
+   loadHtml : function (url) {
       var instance = this;
       $.ajax({
          type: 'get',
@@ -103,8 +156,8 @@ UIInput.prototype = {
       });
       return html;
    },
-   getDialogDimension : function(html) {
-      $formWrapper = $("<div/>").css("display","inline-block").html(html);
+   getDialogDimension : function (html) {
+      $formWrapper = $("<div/>").css("display", "inline-block").html(html);
       $(".mp-content").append($formWrapper);
       dimension = {"width": $formWrapper.width() * 1.2, "height": $formWrapper.height()};
       $formWrapper.remove();
@@ -221,5 +274,8 @@ UIInput.prototype = {
    },
    close : function () {
       this.dialog.dialog("close");
+   },
+   closeConfirm : function () {
+      $("#confirm-delete").dialog("close");
    }
 };
