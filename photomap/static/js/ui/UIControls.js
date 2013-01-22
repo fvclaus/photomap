@@ -255,54 +255,38 @@ UIControls.prototype = {
     */
    _bindDeleteListener : function () {
       
-      var instance, state, input, photo, place, album, url, data;
+      var instance, state, input, object, url, data;
       instance = this;
       state = main.getUIState();
       input = main.getUI().getInput();
       
       this.$delete
          .on("click", function (event) {
-            // hide current place's markers and clean photos from gallery
-            photo = state.getCurrentPhoto();
-            place = state.getCurrentPlace();
-            album = state.getCurrentAlbum();
             
             if (!main.getUI().isDisabled()) {
                
                if (instance.isModifyPhoto) {
                   // delete current photo
                   url = "/delete-photo";
-                  data = {
-                     id : photo.id,
-                     title : photo.title,
-                     model : photo.model
-                  };
-                  input.confirmDelete(url, data);
-               
+                  object = state.getCurrentPhoto();
                } else if (instance.isModifyPlace) {
                   // delete current place
                   url = "/delete-place";
-                  data = {
-                     id : place.id,
-                     title : place.title,
-                     model : place.model
-                  };
-                  input.confirmDelete(url, data);
-               
+                  object = state.getCurrentPlace();
                } else if (instance.isModifyAlbum) {
                   // delete current album
                   url = "/delete-album";
-                  data = {
-                     id : album.id,
-                     title : album.title,
-                     model : album.model
-                  };
-                  input.confirmDelete(url, data);
-               
+                  object = state.getCurrentAlbum();
                } else {
                   alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
                   return;
                }
+               data = {
+                  id : object.id,
+                  title : object.title,
+                  model : object.model
+               };
+               input.confirmDelete(url, data);
             }
          });
    },

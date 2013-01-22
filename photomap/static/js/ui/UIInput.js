@@ -90,6 +90,10 @@ UIInput.prototype = {
       });
       return false;
    },
+   /**
+    * @author Marc-Leon Römer
+    * @description Show confirm dialog with ui-dialog. If confirmed pass url & data to ClientServer.deleteObject to post the delete.
+    */
    confirmDelete : function (url, data) {
       
       var $dialog, instance = this;
@@ -119,7 +123,7 @@ UIInput.prototype = {
             {
                text : $("span#mp-confirm").text(),
                click : function () {
-                  main.getUI().getTools().deleteObject(url, data);
+                  main.getUI().getClientServer().deleteObject(url, data);
                   $(this).dialog("close");
                   return true;
                }

@@ -1,4 +1,6 @@
+/*jslint */
 /*global $, main, UITools, UIState, UIControls, UIInput, UIInformation, UIGallery, UISlideshow, UIFullscreen */
+
 /*
  * @author Frederik Claus
  * @class UI is a facade for all other UI classes
@@ -20,7 +22,10 @@ UI = function () {
    this._isDisabled = false;
 };
 
-
+/**
+ * @author Marc Roemer
+ * @description Defines Getter to retrieve the UI classes wrapped, handler to add/remove object to/from ui and to en-/disable the ui completely
+ */
 
 UI.prototype = {
 
@@ -59,6 +64,9 @@ UI.prototype = {
    getInput : function () {
       return this.input;
    },
+   /**
+    * @description Removes place fully from ui.
+    */
    deletePlace : function (id) {
       
       var place = this.getTools().getObjectById(id, this.getState().getPlaces());
@@ -70,8 +78,11 @@ UI.prototype = {
          this.getInformation().removeDescription();
       }
       place.delete();
-      this.state.removePlace(place);
+      this.getState().removePlace(place);
    },
+   /**
+    * @description Removes photo fully from ui.
+    */
    deletePhoto : function (id) {
       
       var photo = this.getTools().getObjectById(id, this.state.getPhotos());
@@ -81,8 +92,8 @@ UI.prototype = {
          this.getSlideshow().removeCurrentImage();
          this.getInformation().removeDescription();
       }
-      this.gallery.deleteImage(photo);
-      this.state.removePhoto(photo);
+      this.getGallery().deleteImage(photo);
+      this.getState().removePhoto(photo);
    },
    showLoading : function () {
       main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);
