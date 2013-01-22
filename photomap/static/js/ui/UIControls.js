@@ -54,7 +54,7 @@ UIControls.prototype = {
       center = $el.offset();
       tools = main.getUI().getTools();
       center.left += tools.getRealWidth($el) / 2;
-      center.top += tools.getRealHeight($el);
+      center.top -= (tools.getRealHeight($(".mp-controls-wrapper")) + 5 );
 
       // clear any present timeout, as it will hide the controls while the mousepointer never left
       if (this.hideControlsTimeoutId) {
@@ -184,17 +184,37 @@ UIControls.prototype = {
       }
    },
    /* ---- Listeners ---- */
-   _fullDescriptionOpener : function (event) {
-      
-      main.getUI().getInformation().showFullDescription();
+   _bindFullGalleryListener : function () {
+      $(".mp-open-full-gallery").on("click", function (event) {
+         
+         if (!main.getUI().isDisabled()) {
+            
+            main.getUI().getGallery().showFullGallery();
+         }
+      });
+      $(".mp-close-full-left-column").on("click", function (event) {
+         
+         if (!main.getUI().isDisabled()) {
+            
+            main.getUI().getGallery().hideFullGallery();
+         }
+      });
    },
-   _fullDescriptionCloser : function (event) {
+   _bindFullDescriptionListener : function () {
+      $("#mp-description").on("click", ".mp-open-full-description", function (event) {
+         
+         if (!main.getUI().isDisabled()) {
       
-      main.getUI().getInformation().hideFullDescription();
-   },
-   bindFullDescriptionListener : function () {
-      $("#mp-description").on("click", ".mp-open-full-description", this._fullDescriptionOpener);
-      $(".mp-close-full-description").on("click", this._fullDescriptionCloser);
+            main.getUI().getInformation().showFullDescription();
+         }
+      });
+      $(".mp-close-full-description").on("click", function (event) {
+         
+         if (!main.getUI().isDisabled()) {
+
+            main.getUI().getInformation().hideFullDescription();
+         }
+      });
    },
    /**
     * @public
@@ -208,9 +228,13 @@ UIControls.prototype = {
          // reset load function
          main.getUI().getInput().getUpload("/insert-photo?place=" + place.id, null);
       };
-      //TODO use method on Gallery --> Gallery.addListener(...)
-      $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertHandler);
-      this.$insert.on("click.PhotoMap", insertHandler);
+      
+      if (!main.getUI().isDisabled()) {
+
+         //TODO use method on Gallery --> Gallery.addListener(...)
+         $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertHandler);
+         this.$insert.on("click.PhotoMap", insertHandler);
+      }
    },
    /**
     * @public
@@ -242,47 +266,50 @@ UIControls.prototype = {
             photo = state.getCurrentPhoto();
             place = state.getCurrentPlace();
             album = state.getCurrentAlbum();
-
-            if (instance.isModifyPhoto) {
-               // delete current photo
-               if (confirm("Do you really want to delete photo " + photo.title)) {
-                  //TODO this is confusing. how about gallery.deletePhoto?
-                  url = "/delete-photo";
-                  data = { id: photo.id };
-                  state.removePhoto(photo);
-                  $("img[src='" + photo.thumb + "']").remove();
-                  $("img[src='" + photo.thumb + "']").parent().addClass("mp-empty-tile");
+            
+            if (!main.getUI().isDisabled()) {
+               
+               if (instance.isModifyPhoto) {
+                  // delete current photo
+                  if (confirm("Do you really want to delete photo " + photo.title)) {
+                     //TODO this is confusing. how about gallery.deletePhoto?
+                     url = "/delete-photo";
+                     data = { id: photo.id };
+                     state.removePhoto(photo);
+                     $("img[src='" + photo.thumb + "']").remove();
+                     $("img[src='" + photo.thumb + "']").parent().addClass("mp-empty-tile");
+                  } else {
+                     return;
+                  }
+               } else if (instance.isModifyPlace) {
+                  // delete current place
+                  if (confirm("Do you really want to delete place " + place.title)) {
+                     //TODO this is also confusing. why does ui has a function deleteplace, but not deletephoto?
+                     url = "/delete-place";
+                     data = { id: place.id };
+                     state.removePlace(place);
+                     main.getUI().deletePlace(place);
+                  } else {
+                     return;
+                  }
+               } else if (instance.isModifyAlbum) {
+                  // delete current album
+                  if (confirm("Do you really want to delete Album " + album.title)) {
+                     //TODO confusing. why is it now album._delete() <-- calling a private function
+                     url = "/delete-album";
+                     data = { id: album.id };
+                     album._delete();
+                  } else {
+                     return;
+                  }
                } else {
+                  alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
                   return;
                }
-            } else if (instance.isModifyPlace) {
-                // delete current place
-               if (confirm("Do you really want to delete place " + place.title)) {
-                  //TODO this is also confusing. why does ui has a function deleteplace, but not deletephoto?
-                  url = "/delete-place";
-                  data = { id: place.id };
-                  state.removePlace(place);
-                  main.getUI().deletePlace(place);
-               } else {
-                  return;
-               }
-            } else if (instance.isModifyAlbum) {
-               // delete current album
-               if (confirm("Do you really want to delete Album " + album.title)) {
-                  //TODO confusing. why is it now album._delete() <-- calling a private function
-                  url = "/delete-album";
-                  data = { id: album.id };
-                  album._delete();
-               } else {
-                  return;
-               }
-            } else {
-               alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
-               return;
+               
+               // call to delete marker or photo in backend
+               tools.deleteObject(url, data);
             }
-
-            // call to delete marker or photo in backend
-            tools.deleteObject(url, data);
          });
    },
    /**
@@ -301,61 +328,63 @@ UIControls.prototype = {
             photo = state.getCurrentPhoto();
             album = state.getCurrentAlbum();
 
-            
-            if (instance.isModifyPhoto) {
-               // edit current photo
+            if (!main.getUI().isDisabled()) {
                
-               input
-                  .onLoad(function () {
-                     //prefill with values from selected picture
-                     $("input[name=id]").val(photo.id);
-                     $("input[name=order]").val(photo.order);
-                     $title = $("input[name=title]").val(photo.title);
-                     $description = $("textarea[name=description]").val(photo.description);
-
-                     input.onForm(function () {
-                        //reflect changes locally
-                        photo.title = $title.val();
-                        photo.description = $description.val();
-                     });
-                  })
-                  .get("/update-photo");
-            } else if (instance.isModifyPlace) {
-               //edit current place
-               //prefill with name and update on submit
-
-               input
-                  .onLoad(function () {
-                     $("input[name=id]").val(place.id);
-                     $title = $("input[name=title]").val(place.title);
-                     $description = $("textarea[name=description]").val(place.description);
-
-                     input.onForm(function () {
-                        //reflect changes locally
-                        place.title = $title.val();
-                        place.description = $description.val();
-                        //TODO why is there a update for place but not for photo?
-                        main.getUI().getInformation().updatePlace();
-                     });
-                  })
-                  .get("/update-place");
-            } else if (instance.isModifyAlbum) {
-               //edit current album
-               //prefill with name and update on submit
-
-               input
-                  .onLoad(function () {
-                     $("input[name=id]").val(album.id);
-                     $title = $("input[name=title]").val(album.title);
-                     $description = $("textarea[name=description]").val(album.description);
-
-                     input.onForm(function () {
-                        //reflect changes locally
-                        album.title = $title.val();
-                        album.description = $description.val();
-                     });
-                  })
-                  .get("/update-album");
+               if (instance.isModifyPhoto) {
+                  // edit current photo
+                  
+                  input
+                     .onLoad(function () {
+                        //prefill with values from selected picture
+                        $("input[name=id]").val(photo.id);
+                        $("input[name=order]").val(photo.order);
+                        $title = $("input[name=title]").val(photo.title);
+                        $description = $("textarea[name=description]").val(photo.description);
+                        
+                        input.onForm(function () {
+                           //reflect changes locally
+                           photo.title = $title.val();
+                           photo.description = $description.val();
+                        });
+                     })
+                     .get("/update-photo");
+               } else if (instance.isModifyPlace) {
+                  //edit current place
+                  //prefill with name and update on submit
+                  
+                  input
+                     .onLoad(function () {
+                        $("input[name=id]").val(place.id);
+                        $title = $("input[name=title]").val(place.title);
+                        $description = $("textarea[name=description]").val(place.description);
+                        
+                        input.onForm(function () {
+                           //reflect changes locally
+                           place.title = $title.val();
+                           place.description = $description.val();
+                           //TODO why is there a update for place but not for photo?
+                           main.getUI().getInformation().updatePlace();
+                        });
+                     })
+                     .get("/update-place");
+               } else if (instance.isModifyAlbum) {
+                  //edit current album
+                  //prefill with name and update on submit
+                  
+                  input
+                     .onLoad(function () {
+                        $("input[name=id]").val(album.id);
+                        $title = $("input[name=title]").val(album.title);
+                        $description = $("textarea[name=description]").val(album.description);
+                        
+                        input.onForm(function () {
+                           //reflect changes locally
+                           album.title = $title.val();
+                           album.description = $description.val();
+                        });
+                     })
+                     .get("/update-album");
+               }
             }
          });
    },
@@ -387,13 +416,16 @@ UIControls.prototype = {
          .on("click", function (event) {
             state = main.getUIState();
             tools = main.getUI().getTools();
-
-            if (state.getAlbumShareURL() && state.getAlbumShareURL().id === state.getCurrentAlbum().id) {
-               tools.openShareURL();
-            } else {
-               url = "/get-album-share";
-               id = state.getCurrentAlbum().id;
-               main.getClientServer().getShareLink(url, id);
+            
+            if (!main.getUI().isDisabled()) {
+               
+               if (state.getAlbumShareURL() && state.getAlbumShareURL().id === state.getCurrentAlbum().id) {
+                  tools.openShareURL();
+               } else {
+                  url = "/get-album-share";
+                  id = state.getCurrentAlbum().id;
+                  main.getClientServer().getShareLink(url, id);
+               }
             }
          });
    },
@@ -409,7 +441,9 @@ UIControls.prototype = {
       }
       places.forEach(function (place) {
          place.addListener("mouseover", function () {
-            instance._displayEditControls(place);
+            if (!main.getUI().isDisabled()) {
+               instance._displayEditControls(place);
+            }
          });
          place.addListener("mouseout", function () {
             //TODO this should probably also be a private function
@@ -429,7 +463,9 @@ UIControls.prototype = {
       }
       albums.forEach(function (album) {
          album.addListener("mouseover", function () {
-            instance._displayEditControls(album);
+            if (!main.getUI().isDisabled()) {
+               instance._displayEditControls(album);
+            }
          });
          album.addListener("mouseout", function () {
             instance.hideEditControls(true);
@@ -446,10 +482,11 @@ UIControls.prototype = {
       this._bindUpdateListener();
       this._bindControlListener();
       this._bindShareListener();
-      this.bindFullDescriptionListener();
+      this._bindFullDescriptionListener();
       if (page === DASHBOARD_VIEW) {
          this.bindAlbumListener();
       } else if (page === ALBUM_VIEW) {
+         this._bindFullGalleryListener();
          this.bindInsertPhotoListener();
          this.bindPlaceListener();
       } else {

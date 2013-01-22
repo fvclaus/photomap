@@ -34,14 +34,14 @@
 	<section class="mp-slideshow" id="mp-slideshow">
      <div class="mp-slideshow-inner">
        <div class="mp-slideshow-nav column">
-	      <img class="mp-slideshow-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
+	      <img class="mp-slideshow-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
        </div>
 	    <div class="mp-slideshow-image column">
-	      <img class="mp-current-image mp-zoom"></img>
+	      <img class="mp-current-image mp-control mp-zoom"></img>
          <div class="mp-slideshow-no-image-msg">{% trans "Please choose a photo in your gallery to start the slideshow." %}</div>
 	    </div>
        <div class="mp-slideshow-nav column">
-   	   <img class="mp-slideshow-nav-next mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
+   	   <img class="mp-slideshow-nav-next mp-cursor-pointer mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
        </div>
      </div>
 	  <div class="mp-slideshow-info">
@@ -54,11 +54,11 @@
 	<section class="mp-gallery" id="mp-gallery">
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
         <span>
-          <img class="mp-gallery-nav-prev mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
+          <img class="mp-gallery-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
         </span>
         {% if user.is_authenticated %}
         <span>
-          <img class="mp-open-full-gallery mp-control" src="/static/images/openEdit.png" title='{% trans "Open Full Gallery" %}'/>
+          <img class="mp-open-full-gallery mp-cursor-pointer mp-control" src="/static/images/openEdit.png" title='{% trans "Open Full Gallery" %}'/>
         </span>
         {% endif %}
       </div>
@@ -70,11 +70,11 @@
       </div>
       <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
         <span>
-          <img class="mp-gallery-nav-next mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
+          <img class="mp-gallery-nav-next mp-cursor-pointer mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
 		  </span>
         {% if user.is_authenticated %}
         <span>
-          <img class="mp-option-insert-photo mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}'></img>
+          <img class="mp-option-insert-photo mp-cursor-pointer mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}'></img>
         </span>
         {% endif %}
       </div>
@@ -91,7 +91,7 @@
 	  <div class="mp-thumb-page">
        <% for (thumb in this.thumbAddress) { %>
        <span class="mp-gallery-tile">
-	      <img class="mp-thumb mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
+	      <img class="mp-thumb mp-cursor-pointer mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
        </span>
 	    <% }; %>
      </div>
@@ -99,7 +99,7 @@
 
 	<script id="fullGalleryTmpl" type="text/html">
        <% for (thumb in this.thumbAddress) { %>
-       <div class="mp-sortable-tile mp-control">
+       <div class="mp-sortable-tile mp-cursor-pointer mp-control">
 	      <img class="mp-thumb" src="<%= this.thumbAddress[thumb] %>"></img>
        </div>
 	    <% }; %>
@@ -112,9 +112,9 @@
 			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
 			<div class="mp-image-overlay-desc">
 				<div class="mp-image-nav">
-					<img class="mp-image-nav-prev mp-control" src="/static/images/image-arrow-left.png" ></img>
-					<img class="mp-image-nav-next mp-control" src="/static/images/image-arrow-right.png" ></img>
-					<img class="mp-image-overlay-close mp-control" src="/static/images/close.png" ></img>
+					<img class="mp-image-nav-prev mp-cursor-pointer mp-control" src="/static/images/image-arrow-left.png" ></img>
+					<img class="mp-image-nav-next mp-cursor-pointer mp-control" src="/static/images/image-arrow-right.png" ></img>
+					<img class="mp-image-overlay-close mp-cursor-pointer mp-control" src="/static/images/close.png" ></img>
 				</div>
 				<h2 class="mp-fullscreen-photo-title"><%= this.tmplPhotoData.description %></h2>
 			</div>

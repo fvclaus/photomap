@@ -135,18 +135,24 @@ UISlideshow.prototype = {
       //bind slideshow button listener
 
       this.$next.on('click.Slideshow', function () {
-         if ($(this).hasClass("disabled")) {
-            return;
+         
+         if (!main.getUI().isDisabled()) {
+            instance.navigateSlider(instance, 'right');
          }
-         instance.navigateSlider(instance, 'right');
       });
 
       this.$prev.on('click.Slideshow', function () {
-         instance.navigateSlider(instance, 'left');
+         
+         if (!main.getUI().isDisabled()) {
+            instance.navigateSlider(instance, 'left');
+         }
       });
 
       this.$image.on("click.Slideshow", function () {
-         main.getUI().getFullscreen().zoom();
+         
+         if (!main.getUI().isDisabled()) {
+            main.getUI().getFullscreen().zoom();
+         }
       });
    }
 

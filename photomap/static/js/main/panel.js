@@ -8,10 +8,12 @@ var initializePanels, bindLogoListener, resizeFooterFont;
 bindLogoListener = function () {
    $(".mp-logo img").bind("click", function () {
       
-      if ($(".mp-user").size() > 0) {
-         window.location.href = "/dashboard";
-      } else {
-         window.location.href = "/";
+      if (!main.getUI().isDisabled()) {
+         if ($(".mp-user").size() > 0) {
+            window.location.href = "/dashboard";
+         } else {
+            window.location.href = "/";
+         }
       }
    });
 };

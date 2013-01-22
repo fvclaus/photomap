@@ -44,7 +44,8 @@ Map = function () {
       streetViewControl : state.isInteractive(),
       streetViewControlOptions : {
          position : google.maps.ControlPosition.TOP_LEFT
-      }
+      },
+      disableDoubleClickZoom : true
    };
 
    // mode : fullscreen || normal
@@ -222,7 +223,32 @@ Map.prototype = {
    getBounds : function () {
       return this.map.getBounds();
    },
-   
+   enable : function () {
+      
+      this._setMapCursor("not-allowed");
+      this.map.setOptions({
+         draggable : true,
+         scrollwheel : true,
+         keyboardShortcuts : true,
+         mapTypeControl : true,
+         panControl : true,
+         zoomControl : true,
+         streetViewControl : true
+      });
+   },
+   disable : function () {
+      
+      this._setMapCursor();
+      this.map.setOptions({
+         draggable : false,
+         scrollwheel : false,
+         keyboardShortcuts : false,
+         mapTypeControl : false,
+         panControl : false,
+         zoomControl : false,
+         streetViewControl : false
+      });
+   },
    /* --- Listeners --- */
    
    bindListener : function () {
@@ -234,9 +260,6 @@ Map.prototype = {
 
       this._bindClickListener();
 
-      if (page === ALBUM_VIEW) {
-         this._bindStreetviewListener();
-      }
    },
 
    /**
@@ -247,116 +270,90 @@ Map.prototype = {
       var input, lat, lng, place, album;
 
       google.maps.event.addListener(this.map, "click", function (event) {
-         if (main.getUI().isDisabled()) {
-            return;
-         }
-         //create new place with description and select it
-         if (!state.isDashboard()) {
-
-            input = main.getUI().getInput();
-            lat = event.latLng.lat();
-            lng = event.latLng.lng();
-
-            input.onAjax(function (data) {
-
-               //create new place and show marker
-               //new place accepts only lon, because it handles responses from server
-               place = new Place({
-                  lat: lat,
-                  lon: lng,
-                  id : data.id,
-                  "title" : state.retrieve(TEMP_TITLE_KEY),
-                  "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
+         if (!main.getUI().isDisabled()) {
+            
+            //create new place with description and select it
+            if (!state.isDashboard()) {
+               
+               input = main.getUI().getInput();
+               lat = event.latLng.lat();
+               lng = event.latLng.lng();
+               
+               input.onAjax(function (data) {
+                  
+                  //create new place and show marker
+                  //new place accepts only lon, because it handles responses from server
+                  place = new Place({
+                     lat: lat,
+                     lon: lng,
+                     id : data.id,
+                     "title" : state.retrieve(TEMP_TITLE_KEY),
+                     "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
+                  });
+                  place.show();
+                  state.addPlace(place);
+                  main.getUI().getControls().bindPlaceListener(place);
+                  //redraws place
+                  place.triggerDoubleClick();
+                  
                });
-               place.show();
-               state.addPlace(place);
-               main.getUI().getControls().bindPlaceListener(place);
-               //redraws place
-               place.triggerDoubleClick();
-
-            });
-
-            input.onLoad(function () {
-               var title, description;
-               $("input[name=lat]").val(lat);
-               $("input[name=lon]").val(lng);
-               $("input[name=album]").val(main.getUIState().getCurrentAlbum().id);
-
-               input.onForm(function () {
-                  //get place name + description
-                  title = $("[name=title]").val();
-                  description = $("[name=description]").val();
-                  //dont create place yet, server might return error
-                  state.store(TEMP_TITLE_KEY, title);
-                  state.store(TEMP_DESCRIPTION_KEY, description);
+               
+               input.onLoad(function () {
+                  var title, description;
+                  $("input[name=lat]").val(lat);
+                  $("input[name=lon]").val(lng);
+                  $("input[name=album]").val(main.getUIState().getCurrentAlbum().id);
+                  
+                  input.onForm(function () {
+                     //get place name + description
+                     title = $("[name=title]").val();
+                     description = $("[name=description]").val();
+                     //dont create place yet, server might return error
+                     state.store(TEMP_TITLE_KEY, title);
+                     state.store(TEMP_DESCRIPTION_KEY, description);
+                  });
                });
-            });
-
-            input.get("/insert-place");
-         } else {
-
-            // create a new album
-            input = main.getUI().getInput();
-            lat = event.latLng.lat();
-            lng = event.latLng.lng();
-
-            input.onAjax(function (data) {
-
-               //create new album and show marker
-               album = new Album({
-                  lat: lat,
-                  lon: lng,
-                  id : data.id,
-                  "title" : state.retrieve(TEMP_TITLE_KEY),
-                  "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
+               
+               input.get("/insert-place");
+            } else {
+               
+               // create a new album
+               input = main.getUI().getInput();
+               lat = event.latLng.lat();
+               lng = event.latLng.lng();
+               
+               input.onAjax(function (data) {
+                  
+                  //create new album and show marker
+                  album = new Album({
+                     lat: lat,
+                     lon: lng,
+                     id : data.id,
+                     "title" : state.retrieve(TEMP_TITLE_KEY),
+                     "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
+                  });
+                  album.show();
+                  main.getUI().getControls().bindAlbumListener(album);
+                  //redirect to new albumview
+                  album.triggerDoubleClick();
                });
-               album.show();
-               main.getUI().getControls().bindAlbumListener(album);
-               //redirect to new albumview
-               album.triggerDoubleClick();
-            });
-
-            input.onLoad(function () {
-               $("input[name=lat]").val(lat);
-               $("input[name=lon]").val(lng);
-
-               input.onForm(function () {
-                  //get album name + description
-                  var title = $("[name=title]").val(), description = $("[name=description]").val();
-                  //dont create album yet, server might return error
-                  state.store(TEMP_TITLE_KEY, title);
-                  state.store(TEMP_DESCRIPTION_KEY, description);
+               
+               input.onLoad(function () {
+                  $("input[name=lat]").val(lat);
+                  $("input[name=lon]").val(lng);
+                  
+                  input.onForm(function () {
+                     //get album name + description
+                     var title = $("[name=title]").val(), description = $("[name=description]").val();
+                     //dont create album yet, server might return error
+                     state.store(TEMP_TITLE_KEY, title);
+                     state.store(TEMP_DESCRIPTION_KEY, description);
+                  });
                });
-            });
-
-            input.get("/insert-album");
+               
+               input.get("/insert-album");
+            }
          }
       });
    },
-   /**
-    * @private
-    * @see view-album.js
-    */
-   _bindStreetviewListener : function () {
-      // close description and/or gallery when starting streetview
-      google.maps.event.addListener(this.streetview, 'visible_changed', function () {
-         var gallery = main.getUI().getGallery(), information = main.getUI().getInformation();
-         state = main.getUIState();
-         if (main.getMap().getPanorama().getVisible()) {
-            if (information.isVisible()) {
-               $("#mp-description").hide();
-            }
-            if (gallery.isVisible()) {
-               $("#mp-album").hide();
-               state.setGalleryLoaded(true);
-            } else if (!gallery.isVisible()) {
-               state.setGalleryLoaded(false);
-            }
-         } else {
-            if (state.isGalleryLoaded()) {
-               $("#mp-album").fadeIn(500);
-            }
-         }
-      });
-   }
 };

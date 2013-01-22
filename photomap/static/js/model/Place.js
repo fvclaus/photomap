@@ -93,8 +93,10 @@ Place.prototype._bindListener = function () {
    
    google.maps.event.addListener(this.marker.MapMarker, "click", function () {
       
-      state.setCurrentPlace(instance);
-      information.updatePlace();
+      if (!main.getUI().isDisabled()) {
+         state.setCurrentPlace(instance);
+         information.updatePlace();
+      }
    });
    
    // dblclick event for place (its marker)
@@ -104,31 +106,29 @@ Place.prototype._bindListener = function () {
 
       var map, oldPlace;
 
-      if (main.getUIState().isAlbumLoading()) {
-         return;
+      if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
+
+         if (ui.getInput().isVisible()) {
+            ui.getInput().close();
+         }
+         
+         map = main.getMap();
+         oldPlace = state.getCurrentLoadedPlace();
+         
+         controls.hideEditControls(false);
+         state.setCurrentPlace(instance);
+         state.setCurrentLoadedPlace(instance);
+         
+         // change icon of new place
+         instance.checkIconStatus();
+         // change icon of old place
+         if (oldPlace) {
+            oldPlace.checkIconStatus();
+         }
+         
+         main.getUI().getSlideshow().removeCurrentImage();
+         
+         instance._showGallery();
       }
-
-      if (ui.getInput().isVisible()) {
-         ui.getInput().close();
-      }
-
-      map = main.getMap();
-      oldPlace = state.getCurrentLoadedPlace();
-
-      controls.hideEditControls(false);
-      state.setCurrentPlace(instance);
-      state.setCurrentLoadedPlace(instance);
-
-      // change icon of new place
-      instance.checkIconStatus();
-      // change icon of old place
-      if (oldPlace) {
-         oldPlace.checkIconStatus();
-      }
-      
-      main.getUI().getSlideshow().removeCurrentImage();
-      
-      instance._showGallery();
-
    });
 };

@@ -41,7 +41,7 @@ content="interactive"
    <section class="mp-left-column">
      <section class="mp-full-column mp-nodisplay" id="mp-full-left-column">
        <div class="mp-full-column-controls">
-         <span class="mp-control mp-close-full-left-column">{% trans "Schließen" %}</span>
+         <span class="mp-control mp-cursor-pointer mp-close-full-left-column">{% trans "Schließen" %}</span>
        </div>
        <div class="mp-data"></div>
      </section>
@@ -57,7 +57,7 @@ content="interactive"
 	  <section class="mp-description" id="mp-description">
        <section class="mp-full-column mp-nodisplay" id="mp-full-description">
          <div class="mp-full-column-controls">
-           <span class="mp-control mp-close-full-description">{% trans "Schließen" %}</span>
+           <span class="mp-control mp-cursor-pointer mp-close-full-description">{% trans "Schließen" %}</span>
          </div>
          <div class="mp-full-description-wrapper">
            <p class="mp-full-description-title"></p>
@@ -85,7 +85,7 @@ content="interactive"
 		<span class="mp-share-overlay" rel="#mp-share"></span>
 		<p>
 			<input id="mp-share-link" name="share-link" value="" size="100"/>
-			<input id="mp-copy-button" name="copy" type="button" value='{% trans "mp-copy-link-title" %}' />
+			<input id="mp-copy-button mp-cursor-pointer mp-control" name="copy" type="button" value='{% trans "mp-copy-link-title" %}' />
 		</p>
 		<aside>
 			<p>
@@ -101,8 +101,8 @@ content="interactive"
 	</div>
 
 	<div class="mp-controls-wrapper">
-			<img class="mp-option-delete mp-control" src="/static/images/delete.png" title='{% trans "control-title delete" %}' />
-			<img class="mp-option-modify mp-control" src="/static/images/modify.png" title='{% trans "control-title modify" %}' />
+			<img class="mp-option-delete mp-control mp-cursor-pointer" src="/static/images/delete.png" title='{% trans "control-title delete" %}' />
+			<img class="mp-option-modify mp-control mp-cursor-pointer" src="/static/images/modify.png" title='{% trans "control-title modify" %}' />
 			{% block controls %}{% endblock %}
 	</div>
 	<div id="input-dialog">

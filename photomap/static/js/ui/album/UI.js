@@ -69,38 +69,52 @@ UI.prototype = {
       //TODO private function call
       place._delete();
    },
-   /*
-    * @description This should disable the UI in a way that no manipulation is possible anymore
-    */
-   disable : function () {
-      
-      var state, album;
-      state = main.getUIState();
-      albums = state.getAlbums();
-      
-      this._isDisabled = true;
-      albums.forEach(function (album) {
-         album.showDisabledIcon();
-      });
+   showLoading : function () {
       main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);
       main.getUI().getTools().fitMask();
+      $("body, a, .mp-logo img").css("cursor", "progress");
+   },
+   hideLoading : function () {
+      main.getUI().getTools().closeOverlay($("#mp-ui-loading"));
+      $("body, a, .mp-logo img").css("cursor", "");
+   },
+   disable : function () {
+      
+      var places;
+      places = main.getUIState().getPlaces();
+      
+      this._isDisabled = true;
+      places.forEach(function (place) {
+         place.showDisabledIcon();
+         place.getMarker().setCursor("not-allowed");
+      });
+      $("a, .mp-control").css({
+//         opacity: 0.4,
+         cursor: "not-allowed"
+      });
+      $("a").on("click.Disabled", function (event) {
+         event.preventDefault();
+         event.stopPropagation();
+      });
+      main.getMap().disable();
    },
    isDisabled : function () {
       return this._isDisabled;
    },
-   /*
-    * @description This should enable the UI
-    */
    enable : function () {
       
-      var state, albums;
-      state = main.getUIState();
-      albums = state.getAlbums();
+      var places;
+      places = main.getUIState().getPlaces();
       this._isDisabled = false;
-      //TODO: enable the 'cross' cursor on the map
-      albums.forEach(function (album) {
-         album.checkIconStatus();
+      places.forEach(function (place) {
+         place.checkIconStatus();
+         place.getMarker().setCursor("");
       });
-      main.getUI().getTools().closeOverlay($("#mp-ui-loading"));
+      $("a, .mp-control").css({
+//         opacity: 1,
+         cursor: ""
+      });
+      $("a").off(".Disabled");
+      main.getMap().enable();
    }
 };

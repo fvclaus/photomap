@@ -14,7 +14,6 @@ UIInformation = function () {
 
    this.$wrapper = $("#mp-description");
    this.$album = $("#mp-album");
-   this.$infoButton = $(".mp-option-information");
    this.$description = $(".mp-description-wrapper").find(".mp-description-body");
    this.$imageNumber = $(".mp-image-number");
    this.$descriptionTitle = $(".mp-description-title");
@@ -25,11 +24,12 @@ UIInformation = function () {
 UIInformation.prototype = {
 
    initWithoutAjax : function () {
-      this.bindListener();
+      if (main.getUIState().getPage() === ALBUM_VIEW) {
+         this.bindListener();
+      }
    },
    initAfterAjax : function () {
       if (main.getUIState().getPage() === ALBUM_VIEW) {
-         //TODO this falls under the responsibility of UIPanel
          $(".mp-page-title").trigger("click");
       }
    },
@@ -53,7 +53,7 @@ UIInformation.prototype = {
          this.$description.html(text);
          this.$fullDescription.html(description);
          if (text.length < description.length) {
-            this.$description.append("<span class='mp-control mp-open-full-description'> [...]</span>");
+            this.$description.append("<span class='mp-control mp-cursor-pointer mp-open-full-description'> [...]</span>");
          }
       }
    },
@@ -80,7 +80,6 @@ UIInformation.prototype = {
       
       this._setTitle(title);
       if (main.getUIState().getPage() === ALBUM_VIEW) {
-         //TODO responsiblity of UIPanel
          $(".mp-page-title h1").text(title);
       }
    },
@@ -139,15 +138,14 @@ UIInformation.prototype = {
    
    /* ---- Listener ---- */
    bindListener : function () {
-      var $button, instance = this;
-      this.$infoButton.unbind('click').bind('click', function () {
-         $button = $(this);
-         if ($button.hasClass("mp-page-title")) {
+      
+      var instance = this;
+      
+      $(".mp-page-title h1").on('click', function () {
+         
+         if (!main.getUI().isDisabled()) {
+            
             instance.updateAlbum();
-         } else if ($button.hasClass("mp-place-title")) {
-            instance.updatePlace();
-         } else if ($button.parent().hasClass("mp-photo-title")) {
-            instance.updatePhoto();
          }
       });
    }

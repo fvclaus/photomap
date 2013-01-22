@@ -166,7 +166,7 @@ UIGallery.prototype =  {
          // disable ui while loading & show loader
          state.setAlbumLoading(true);
          main.getUI().disable();
-         //main.getUI().showLoading();
+         main.getUI().showLoading();
          // empty gallery and reposition it to 0
          this.$gallery.empty().css("left", 0);
          
@@ -204,7 +204,7 @@ UIGallery.prototype =  {
          // enable ui & hide loader
          main.getUIState().setAlbumLoading(false);
          main.getUI().enable();
-         //main.getUI().hideLoading();
+         main.getUI().hideLoading();
          // create a matrix with 6 columns out of the photos-Array and display each row in a separate div
          photoMatrix = main.getUI().getTools().createMatrix(gallery.photos, 5);
          gallery._appendImages(photoMatrix, gallery.tmplPhotosData);
@@ -250,7 +250,7 @@ UIGallery.prototype =  {
       var $thumbPage, emptySpots, tile, slider, lastSliderSize, i;
       $thumbPage = null;
       emptySpots = 0;
-      tile = "<div class='mp-gallery-tile mp-empty-tile mp-control'></div>";
+      tile = "<div class='mp-gallery-tile mp-empty-tile mp-cursor-pointer mp-control'></div>";
       slider = "<div class='mp-thumb-page'></div>";
       
       if (this.$gallery.children().length === 0) {
@@ -314,6 +314,7 @@ UIGallery.prototype =  {
     * @private
     */
    _initializeScrollable : function () {
+      
       this.$container.scrollable({
          items: ".mp-gallery-inner",
          prev: ".mp-gallery-nav-prev",
@@ -322,7 +323,13 @@ UIGallery.prototype =  {
          mousewheel: true,
          speed: 500,
          vertical: false,
-         easing: "swing"
+         easing: "swing",
+         onBeforeSeek: function () {
+            if (main.getUI().isDisabled()) {
+               return false;
+            }
+            return true;
+         }
       });
    },
    /**
@@ -334,6 +341,11 @@ UIGallery.prototype =  {
       state = main.getUIState();
       $fullGallery = $(".mp-full-gallery");
       
+      $(".mp-sortable-tile").on("click", function () {
+         if (main.getUI().isDisabled()) {
+            return false;
+         }
+      });
       $fullGallery
          .sortable({
             items : ".mp-sortable-tile",
@@ -374,45 +386,50 @@ UIGallery.prototype =  {
       instance.$gallery
          .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
-            $el
-               .addClass('current')
-               .removeClass("visited")
-               .siblings('img').removeClass('current');
-            photo = $.grep(state.getPhotos(), function (e, i) {
-               return e.thumb === $el.attr("src");
-            })[0];
-            state.setCurrentPhotoIndex(instance.getImageIndex($el));
-            state.setCurrentPhoto(photo);
-
-            if (authorized) {
-               controls.setModifyPhoto(true);
-               controls.showPhotoControls($el);
+            
+            if (!main.getUI().isDisabled()) {
+               
+               $el
+                  .addClass('current')
+                  .removeClass("visited")
+                  .siblings('img').removeClass('current');
+               photo = $.grep(state.getPhotos(), function (e, i) {
+                  return e.thumb === $el.attr("src");
+               })[0];
+               state.setCurrentPhotoIndex(instance.getImageIndex($el));
+               state.setCurrentPhoto(photo);
+               
+               if (authorized) {
+                  controls.setModifyPhoto(true);
+                  controls.showPhotoControls($el);
+               }
+               tools.setCursor($el, "pointer");
             }
-            tools.setCursor($el, "pointer");
          })
          .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
-            //add visited border if necessary
-            (state.getPhotos())[$el.index()].checkBorder();
-            $el.removeClass('current');
-
-            if (authorized) {
-               controls.hideEditControls(true);
+            
+            if (!main.getUI().isDisabled()) {
+            
+               //add visited border if necessary
+               (state.getPhotos())[$el.index()].checkBorder();
+               $el.removeClass('current');
+               
+               if (authorized) {
+                  controls.hideEditControls(true);
+               }
             }
          })
          .on('mousedown.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
-            // set Cursor for DragnDrop on images (grabber)
-            tools.setCursor($el, "move");
+            
+            if (!main.getUI().isDisabled()) {
+            
+               // set Cursor for DragnDrop on images (grabber)
+               tools.setCursor($el, "move");
+            }
          });
       
-      $(".mp-open-full-gallery").on("click", function (event) {
-      
-         instance.showFullGallery();
-      });
-      $(".mp-close-full-left-column").on("click", function (event) {
-         instance.hideFullGallery();
-      });
       
    },
    /**
@@ -429,14 +446,17 @@ UIGallery.prototype =  {
          .on('click.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             
-            $el.removeClass('current');
-            state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
-            state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
+            if (!main.getUI().isDisabled()) {
             
-            main.getUI().getControls().hideEditControls(false);
-            
-            // starts little slideshow in gallery div
-            main.getUI().getSlideshow().startSlider();
+               $el.removeClass('current');
+               state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
+               state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
+               
+               main.getUI().getControls().hideEditControls(false);
+               
+               // starts little slideshow in gallery div
+               main.getUI().getSlideshow().startSlider();
+            }
          });
    }
 

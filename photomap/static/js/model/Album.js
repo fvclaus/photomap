@@ -40,15 +40,19 @@ Album.prototype._bindListener = function () {
     */
    google.maps.event.addListener(this.marker.MapMarker, "click", function () {
       
-      state.setCurrentAlbum(instance);
-      information.updateAlbumDescription();
-      information.updateAlbumTitle();
+      if (!main.getUI().isDisabled()) {
+         state.setCurrentAlbum(instance);
+         information.updateAlbumDescription();
+         information.updateAlbumTitle();
+      }
    });
    google.maps.event.addListener(this.marker.MapMarker, "dblclick", function () {
       
-      var url = '/view-album?id=' + instance.id;
-      
-      window.location.href = url;
+      if (!main.getUI().isDisabled()) {
+         
+         var url = '/view-album?id=' + instance.id;
+         window.location.href = url;
+      }
    });
 };
 

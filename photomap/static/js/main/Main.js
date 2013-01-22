@@ -30,9 +30,6 @@ Main.prototype = {
       // load markers on map
       this.clientServer.init();
       // initialise parts of UI that don't need the data loaded from the server
-      if (window && window.initializePanels) {
-         initializePanels();
-      }
       this.ui.initWithoutAjax();
       // initialize non-interactive content if needed
       if (!this.getUIState().isInteractive()) {
@@ -46,6 +43,9 @@ Main.prototype = {
    initAfterAjax: function () {
       this.map.initAfterAjax();
       this.ui.initAfterAjax();
+      if (window && window.initializePanels) {
+         initializePanels();
+      }
       // do some page specific stuff
       if (window && window.initializeAfterAjax) {
          initializeAfterAjax();
