@@ -19,7 +19,6 @@ UI = function () {
 UI.prototype = {
 
    init : function () {
-      main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    getTools : function () {
       return this.tools;

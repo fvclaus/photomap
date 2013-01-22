@@ -36,7 +36,6 @@ UI.prototype = {
    initWithoutAjax : function () {
       this.controls.initWithoutAjax();
       this.tools.initWithoutAjax();
-      main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    initAfterAjax : function () {
       this.controls.initAfterAjax();

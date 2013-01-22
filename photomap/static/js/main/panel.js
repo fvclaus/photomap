@@ -33,4 +33,6 @@ initializePanels = function () {
    
    bindLogoListener();
    resizeFooterFont();
+   main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
+
 };

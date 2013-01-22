@@ -144,6 +144,7 @@ UIControls.prototype = {
       }
 
       // gets the relative pixel position
+      //TODO define a method on Map for this
       projection = main.getMap().getOverlay().getProjection();
       pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
       // add height and half-width of the marker
@@ -207,6 +208,7 @@ UIControls.prototype = {
          // reset load function
          main.getUI().getInput().getUpload("/insert-photo?place=" + place.id, null);
       };
+      //TODO use method on Gallery --> Gallery.addListener(...)
       $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertHandler);
       this.$insert.on("click.PhotoMap", insertHandler);
    },
@@ -244,6 +246,7 @@ UIControls.prototype = {
             if (instance.isModifyPhoto) {
                // delete current photo
                if (confirm("Do you really want to delete photo " + photo.title)) {
+                  //TODO this is confusing. how about gallery.deletePhoto?
                   url = "/delete-photo";
                   data = { id: photo.id };
                   state.removePhoto(photo);
@@ -255,6 +258,7 @@ UIControls.prototype = {
             } else if (instance.isModifyPlace) {
                 // delete current place
                if (confirm("Do you really want to delete place " + place.title)) {
+                  //TODO this is also confusing. why does ui has a function deleteplace, but not deletephoto?
                   url = "/delete-place";
                   data = { id: place.id };
                   state.removePlace(place);
@@ -265,6 +269,7 @@ UIControls.prototype = {
             } else if (instance.isModifyAlbum) {
                // delete current album
                if (confirm("Do you really want to delete Album " + album.title)) {
+                  //TODO confusing. why is it now album._delete() <-- calling a private function
                   url = "/delete-album";
                   data = { id: album.id };
                   album._delete();
@@ -329,6 +334,7 @@ UIControls.prototype = {
                         //reflect changes locally
                         place.title = $title.val();
                         place.description = $description.val();
+                        //TODO why is there a update for place but not for photo?
                         main.getUI().getInformation().updatePlace();
                      });
                   })
@@ -406,6 +412,7 @@ UIControls.prototype = {
             instance._displayEditControls(place);
          });
          place.addListener("mouseout", function () {
+            //TODO this should probably also be a private function
             instance.hideEditControls(true);
          });
       });

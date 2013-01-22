@@ -34,7 +34,6 @@ UI.prototype = {
       this.controls.initAfterAjax();
       this.gallery.initAfterAjax();
       this.information.initAfterAjax();
-      main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
    },
    getGallery : function () {
       return this.gallery;
@@ -67,6 +66,7 @@ UI.prototype = {
          this.getSlideshow().removeCurrentImage();
          this.getInformation().updateAlbum();
       }
+      //TODO private function call
       place._delete();
    },
    /*
