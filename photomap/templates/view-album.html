@@ -34,14 +34,14 @@
 	<section class="mp-slideshow" id="mp-slideshow">
      <div class="mp-slideshow-inner">
        <div class="mp-slideshow-nav column">
-	      <img class="mp-slideshow-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}'></img>
+	      <img class="mp-slideshow-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}' />
        </div>
 	    <div class="mp-slideshow-image column">
-	      <img class="mp-current-image mp-control mp-zoom"></img>
+	      <img class="mp-current-image mp-control mp-zoom" />
          <div class="mp-slideshow-no-image-msg">{% trans "Please choose a photo in your gallery to start the slideshow." %}</div>
 	    </div>
        <div class="mp-slideshow-nav column">
-   	   <img class="mp-slideshow-nav-next mp-cursor-pointer mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}'></img>
+   	   <img class="mp-slideshow-nav-next mp-cursor-pointer mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}' />
        </div>
      </div>
 	  <div class="mp-slideshow-info">
@@ -54,7 +54,7 @@
 	<section class="mp-gallery" id="mp-gallery">
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
         <span>
-          <img class="mp-gallery-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}'></img>
+          <img class="mp-gallery-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}' />
         </span>
         {% if user.is_authenticated %}
         <span>
@@ -70,11 +70,11 @@
       </div>
       <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
         <span>
-          <img class="mp-gallery-nav-next mp-cursor-pointer mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}'></img>
+          <img class="mp-gallery-nav-next mp-cursor-pointer mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}' />
 		  </span>
         {% if user.is_authenticated %}
         <span>
-          <img class="mp-option-insert-photo mp-cursor-pointer mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}'></img>
+          <img class="mp-option-insert-photo mp-cursor-pointer mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}' />
         </span>
         {% endif %}
       </div>

@@ -23,11 +23,6 @@ Album = function (data) {
 
 Album.prototype = InfoMarker.prototype;
 
-
-Album.prototype._delete = function () {
-   this.hide();
-};
-
 /*
  * @private
  */

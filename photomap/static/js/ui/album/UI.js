@@ -74,7 +74,7 @@ UI.prototype = {
          this.getSlideshow().removeCurrentImage();
          this.getInformation().removeDescription();
       }
-      place.delete();
+      place.hide();
       this.getState().removePlace(place);
    },
    /**

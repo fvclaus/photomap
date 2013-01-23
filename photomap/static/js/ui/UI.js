@@ -64,7 +64,7 @@ UI.prototype = {
       if (album === this.getState().getCurrentLoadedAlbum()) {
          this.getInformation().removeDescription();
       }
-      album.delete();
+      album.hide();
       this.getState().removeAlbum(album);
    },
    showLoading : function () {
