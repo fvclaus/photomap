@@ -102,7 +102,7 @@ InfoMarker.prototype = {
    /**
     @public
     */
-   setCursor : function (cursor){
+   setCursor : function (cursor) {
       this.MapMarker.setCursor(cursor);
    },
    triggerClick : function () {

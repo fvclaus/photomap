@@ -3,7 +3,7 @@
 
 "use strict";
 
-var initializePanels, bindLogoListener, resizeFooterFont;
+var initializePanels, bindLogoListener, bindTitleListener, resizeFooterFont;
 
 bindLogoListener = function () {
    $(".mp-logo img").bind("click", function () {
@@ -17,6 +17,18 @@ bindLogoListener = function () {
       }
    });
 };
+bindTitleListener = function () {
+   
+   var instance = this;
+      
+   $(".mp-page-title h1").on('click', function () {
+      
+      if (!main.getUI().isDisabled()) {
+         
+         instance.updateAlbum();
+      }
+   });
+}
 resizeFooterFont = function () {
    
    var $footer, text, width, height, tools, size;
@@ -36,5 +48,10 @@ initializePanels = function () {
    bindLogoListener();
    resizeFooterFont();
    main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
+   if (main.getUIState().getPage() === ALBUM_VIEW) {
+      bindTitleListener();
+      $(".mp-page-title").trigger("click");
+   }
+
 
 };

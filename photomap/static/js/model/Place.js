@@ -36,19 +36,9 @@ Place.prototype = InfoMarker.prototype;
 Place.prototype._delete = function () {
    this.hide();
 };
-// Place.prototype.center = function () {
-
-//    var map, x, y;
-
-//    map = main.getMap().getInstance();
-//    map.setZoom(ZOOM_LEVEL_CENTERED);
-//    console.log("position " + this.marker.MapMarker.getPosition());
-//    map.panTo(this.marker.MapMarker.getPosition());
-//    x = ($("#mp-map").width() * 0.25);
-//    y = 0;
-//    map.panBy(x, y);
-// };
 Place.prototype._showGallery = function () {
+   // remove current image in slideshow and start gallery with photos of this place
+   main.getUI().getSlideshow().removeCurrentImage();
    main.getUI().getGallery().show(this.photos);
 };
 /**
@@ -94,7 +84,7 @@ Place.prototype._bindListener = function () {
    
    this.addListener("click", function () {
       
-      if (!main.getUI().isDisabled()) {
+      if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
          state.setCurrentPlace(instance);
          information.updatePlace();
       }
@@ -109,11 +99,6 @@ Place.prototype._bindListener = function () {
 
       if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
 
-         if (ui.getInput().isVisible()) {
-            ui.getInput().close();
-         }
-         
-         map = main.getMap();
          oldPlace = state.getCurrentLoadedPlace();
          
          controls.hideEditControls(false);
@@ -126,9 +111,6 @@ Place.prototype._bindListener = function () {
          if (oldPlace) {
             oldPlace.checkIconStatus();
          }
-         
-         main.getUI().getSlideshow().removeCurrentImage();
-         
          instance._showGallery();
       }
    });

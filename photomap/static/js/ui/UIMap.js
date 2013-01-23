@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON*/
+/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON, ZOOM_LEVEL_CENTERED */
 
 "use strict";
 
@@ -61,30 +61,29 @@ UIMap.prototype = {
     @param {InfoMarker} element
     */
    getPositionInPixel : function (element) {
-      projection = this.map.getOverlay().getProjection();
+      
+      var projection, pixel;
+      
+      projection = this.getOverlay().getProjection();
       pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
       return pixel;
    },
 
-   // centerElement : function (element){
-   //    this.map.setZoom(ZOOM_LEVEL_CENTERED);
-   //    this.map.panTo(marker.getPosition());
-   // },
    /**
     @public
     @summary This roughly implements a Factory pattern. Marker must only be instantiated through this method.
     @returns {Marker}
     */
    createMarker : function (data) {
-      if (!(data.lat && (data.lng || data.lon) && data.title)){
+      if (!(data.lat && (data.lng || data.lon) && data.title)) {
          console.log("Data in createMarker does not seem to be complete");
          console.dir(data);
       }
       
       lat = parseFloat(data.lat);
-      lng = (isNaN(parseFloat(data.lon)))? parseFloat(data.lng) : parseFloat(data.lon);
+      lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon);
 
-      if (!(isFinite(lat) && isFinite(lng))){
+      if (!(isFinite(lat) && isFinite(lng))) {
          throw new Error("lat or lng is not a float.");
       }
       // lng = parseFloat(lng);

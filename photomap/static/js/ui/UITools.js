@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main */
+/*global $, main, B */
 
 "use strict";
 
@@ -15,9 +15,6 @@ UITools = function () {
 
 UITools.prototype = {
 
-   initWithoutAjax : function () {
-      this.fitMask($("#fancybox-overlay"));
-   },
    /**
     * @description Js-modulo does not work if the first number is negative (eg. -5%4 = -1 | instead of 3)
     * You can fix that bug by adding the second number and do a modulo calculation again.
@@ -236,35 +233,43 @@ UITools.prototype = {
    },
 
    getCss2Int : function ($el, attributes) {
+      
+      var value, total;
+      
       if (typeof (attributes) === "object") {
-         var value, total = 0;
+         total = 0;
          attributes.forEach(function (attribute) {
-            value = parseInt($el.css(attribute));
+            value = parseInt($el.css(attribute), 10);
             if (value) {
                total += value;
             }
          });
-         return total;
       } else {
-         return parseInt($el.css(attributes));
+         total = parseInt($el.css(attributes), 10);
       }
+      return total;
+   },
+   bytesToMbyte : function (bytesAsString) {
+            
+      return (parseFloat(bytesAsString) / Math.pow(2, 20)).toFixed(1).toString();
    },
    /*
     * @private
     */
    _getUrlParameter : function (name) {
       
-      var regexS, regex, results;
+      var regexS, regex, results, param;
       
-      name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+      name = name.replace("/[]/", "\\").replace("/[]/", "\\");
       regexS = "[\\?&]" + name + "=([^&#]*)";
       regex = new RegExp(regexS);
       results = regex.exec(window.location.search);
       if (results === null) {
-         return null;
+         param = null;
       } else {
-         return decodeURIComponent(results[1].replace(/\+/g, " "));
+         param = decodeURIComponent(results[1].replace(/\+/g, " "));
       }
+      return param;
    },
 
    getUrlId : function () {
@@ -288,7 +293,8 @@ UITools.prototype = {
       return result;
    },
    fitMask : function () {
-      // fit mask of overlay/expose/fancybox on top map between header and footer
+      
+      // fit mask of tools-expose between header and footer
       $("#exposeMask").css({
          'max-height': $('#mp-content').innerHeight(),
          'max-width': $('#mp-content').innerWidth(),

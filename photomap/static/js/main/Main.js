@@ -1,5 +1,5 @@
 /*jslint */
-/*global ClientState, ClientServer, UI, Map , initializeNonInteractive, initialize, initializeAfterAjax, initializeTest, initializePanels */
+/*global ClientState, ClientServer, UI, UIMap , initializeNonInteractive, initialize, initializeAfterAjax, initializeTest, initializePanels */
 
 "use strict";
 
@@ -44,6 +44,7 @@ Main.prototype = {
    initAfterAjax: function () {
       this.map.initAfterAjax();
       this.ui.initAfterAjax();
+      this.clientState.initAfterAjax();
       if (window && window.initializePanels) {
          initializePanels();
       }

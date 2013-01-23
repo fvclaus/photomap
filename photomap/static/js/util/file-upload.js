@@ -139,17 +139,8 @@ fileUpload = {
          photo.thumb = response.thumb;
          console.log(photo);
          state.getCurrentLoadedPlace().addPhoto(photo);
-         
-         //update  upload limit
-         toMbyte = function (bytesAsString) {
-            
-            return (parseFloat(bytesAsString) / BYTE_TO_MBYTE);
-         };
-
-         usedSpace = toMbyte($.cookie("used_space"));
-         quota = toMbyte($.cookie("quota"));
-         $(".mp-limit").text(usedSpace.toFixed(1).toString() + "/" + quota.toFixed(1).toString() + " MB");
-
+         main.getClientState().updateUsedSpace();
+      
       } else {
          alert(response.error);
       }
@@ -233,7 +224,7 @@ fileUpload = {
       var $form, formValidator, inputValues, photo;
 
       $.browser.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
-      if ($.browser.chrome){
+      if ($.browser.chrome) {
          alert("Fileupload only works in FF");
          return;
       }
@@ -331,7 +322,7 @@ fileUpload = {
 * MIT License
 * (c) 2010 François de Metz
 */
-(function(w) {
+(function (w) {
    if (w.FormData) {
       return;
    }
@@ -343,22 +334,23 @@ fileUpload = {
       this._fields.push([key, value]);
    };
    FormData.prototype.toString = function () {
-      var boundary = this.boundary;
-      var body = "";
-      this._fields.forEach(function(field) {
+      var body, boundary;
+      boundary = this.boundary;
+      body = "";
+      this._fields.forEach(function (field) {
          body += "--" + boundary + "\r\n";
          // file upload
          if (field[1].name) {
             var file = field[1];
-            body += "Content-Disposition: form-data; name=\""+ field[0] +"\"; filename=\""+ file.name +"\"\r\n";
-            body += "Content-Type: "+ file.type +"\r\n\r\n";
+            body += "Content-Disposition: form-data; name=\"" + field[0] + "\"; filename=\"" + file.name + "\"\r\n";
+            body += "Content-Type: " + file.type + "\r\n\r\n";
             body += file.getAsBinary() + "\r\n";
          } else {
-            body += "Content-Disposition: form-data; name=\""+ field[0] +"\";\r\n\r\n";
+            body += "Content-Disposition: form-data; name=\"" + field[0] + "\";\r\n\r\n";
             body += field[1] + "\r\n";
          }
       });
-      body += "--" + boundary +"--";
+      body += "--" + boundary + "--";
       return body;
    };
    w.FormData = FormData;

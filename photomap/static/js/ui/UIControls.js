@@ -54,7 +54,7 @@ UIControls.prototype = {
       center = $el.offset();
       tools = main.getUI().getTools();
       center.left += tools.getRealWidth($el) / 2;
-      center.top -= (tools.getRealHeight($(".mp-controls-wrapper")) + 5 );
+      center.top -= (tools.getRealHeight($(".mp-controls-wrapper")) + 5);
 
       // clear any present timeout, as it will hide the controls while the mousepointer never left
       if (this.hideControlsTimeoutId) {
@@ -77,7 +77,7 @@ UIControls.prototype = {
       tools = main.getUI().getTools();
       // center the controls below the center
       center.left -= tools.getRealWidth(this.$controls) / 2;
-      
+
       // don't resize the icons all the time to save performance
       if (!this.$controls.isScaled) {
          // change factor depending on the page (-> number of controls in control-box)
@@ -144,7 +144,6 @@ UIControls.prototype = {
       }
 
       // gets the relative pixel position
-      //TODO define a method on Map for this
       pixel = main.getMap().getPositionInPixel(element);
       // add height and half-width of the marker
       markerSize = element.getSize();

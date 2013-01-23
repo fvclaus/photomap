@@ -23,16 +23,6 @@ UIInformation = function () {
 
 UIInformation.prototype = {
 
-   initWithoutAjax : function () {
-      if (main.getUIState().getPage() === ALBUM_VIEW) {
-         this.bindListener();
-      }
-   },
-   initAfterAjax : function () {
-      if (main.getUIState().getPage() === ALBUM_VIEW) {
-         $(".mp-page-title").trigger("click");
-      }
-   },
    _setTitle : function (title) {
       
       if (title !== null) {
@@ -140,17 +130,13 @@ UIInformation.prototype = {
    },
    /* ---- end Photo ---- */
    
-   /* ---- Listener ---- */
-   bindListener : function () {
+   /* ---- other stuff ---- */
+   updateUsedSpace : function () {
       
-      var instance = this;
+      var used, total;
+      used = main.getClientState().getUsedSpace();
+      total = main.getClientState().getQuota();
       
-      $(".mp-page-title h1").on('click', function () {
-         
-         if (!main.getUI().isDisabled()) {
-            
-            instance.updateAlbum();
-         }
-      });
+      $(".mp-limit").text(used + "/" + total + " MB");
    }
 };

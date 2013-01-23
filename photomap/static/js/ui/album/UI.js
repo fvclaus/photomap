@@ -31,14 +31,11 @@ UI.prototype = {
 
    initWithoutAjax : function () {
       this.slideshow.initWithoutAjax();
-      this.information.initWithoutAjax();
       this.controls.initWithoutAjax();
-      this.tools.initWithoutAjax();
    },
    initAfterAjax : function () {
       this.controls.initAfterAjax();
       this.gallery.initAfterAjax();
-      this.information.initAfterAjax();
    },
    getGallery : function () {
       return this.gallery;
@@ -96,12 +93,12 @@ UI.prototype = {
       this.getState().removePhoto(photo);
    },
    showLoading : function () {
-      main.getUI().getTools().loadOverlay($("#mp-ui-loading"), true);
-      main.getUI().getTools().fitMask();
+      this.getTools().loadOverlay($("#mp-ui-loading"), true);
+      this.getTools().fitMask();
       $("body, a, .mp-logo img").css("cursor", "progress");
    },
    hideLoading : function () {
-      main.getUI().getTools().closeOverlay($("#mp-ui-loading"));
+      this.getTools().closeOverlay($("#mp-ui-loading"));
       $("body, a, .mp-logo img").css("cursor", "");
    },
    disable : function () {

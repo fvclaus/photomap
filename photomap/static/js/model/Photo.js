@@ -29,7 +29,7 @@ Photo.prototype = {
    checkBorder : function () {
       //need reselection because anchors change
       if (this.visited) {
-         $("img[src='" + this.source + "']").addClass("visited");
+         $("img[src='" + this.thumb + "']").addClass("visited");
       }
    },
    showBorder : function (bool) {
