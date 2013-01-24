@@ -107,6 +107,7 @@ UIInput.prototype = {
 
       $dialog.dialog({
          modal : true,
+         //TODO where is 1.4 and 2.3 coming from?
          minWidth : dimension.width * 1.4,
          minHeight : dimension.height * 2.3,
          create: function () {
@@ -159,6 +160,7 @@ UIInput.prototype = {
    getDialogDimension : function (html) {
       $formWrapper = $("<div/>").css("display", "inline-block").html(html);
       $(".mp-content").append($formWrapper);
+      //margin cuts of some space -> make it slightly bigger
       dimension = {"width": $formWrapper.width() * 1.2, "height": $formWrapper.height()};
       $formWrapper.remove();
       return dimension;

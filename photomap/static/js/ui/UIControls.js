@@ -121,79 +121,18 @@ UIControls.prototype = {
       this.isModifyPlace = !active;
       this.isModifyAlbum = !active;
    },
-   /**
-    * @description This is used as a callback to display the edit controls
-    * @param {Album,Place} instance
-    * @private
-    */
-   _displayEditControls : function (element) {
-      
-      var state, controls, projection, pixel, markerSize, mapOffset;
-      state = main.getUIState();
-      controls = main.getUI().getControls();
 
-      if (element.getModel() === 'Album') {
-         controls.setModifyAlbum(true);
-         state.setCurrentAlbum(element);
-      } else if (element.getModel() === 'Place') {
-         controls.setModifyPlace(true);
-         state.setCurrentPlace(element);
-      } else {
-         alert("Unknown class: " + element.getModel());
-         return;
-      }
-
-      // gets the relative pixel position
-      pixel = main.getMap().getPositionInPixel(element);
-      // add height and half-width of the marker
-      markerSize = element.getSize();
-      pixel.y += markerSize.height;
-      pixel.x += markerSize.width / 2;
-      // add map offset
-      mapOffset = $(".mp-map").offset();
-      pixel.y += mapOffset.top;
-      pixel.x += mapOffset.left;
-      // show controls
-      controls._showMarkerControls({
-         top: pixel.y,
-         left: pixel.x
-      });
-   },
-   /**
-    * @description hides the modify controls
-    * @param {Boolean} timeout if the controls should be hidden after a predefined timout, when the controls are not entered
-    * @private
-    */
-   hideEditControls : function (timeout) {
-      
-      var instance = this, hide;
-      
-      hide = function () {
-         if (instance.$controls.isEntered) {
-            return;
-         }
-         instance.$controls.hide();
-      };
-
-      if (timeout) {
-         this.hideControlsTimeoutId = window.setTimeout(hide, 2000);
-      } else {
-         this.$controls.hide();
-      }
-   },
    /* ---- Listeners ---- */
    _bindFullGalleryListener : function () {
       $(".mp-open-full-gallery").on("click", function (event) {
          
          if (!main.getUI().isDisabled()) {
-            
             main.getUI().getGallery().showFullGallery();
          }
       });
       $(".mp-close-full-left-column").on("click", function (event) {
          
          if (!main.getUI().isDisabled()) {
-            
             main.getUI().getGallery().hideFullGallery();
          }
       });
@@ -202,14 +141,12 @@ UIControls.prototype = {
       $("#mp-description").on("click", ".mp-open-full-description", function (event) {
          
          if (!main.getUI().isDisabled()) {
-      
             main.getUI().getInformation().showFullDescription();
          }
       });
       $(".mp-close-full-description").on("click", function (event) {
          
          if (!main.getUI().isDisabled()) {
-
             main.getUI().getInformation().hideFullDescription();
          }
       });
@@ -228,7 +165,6 @@ UIControls.prototype = {
       };
       
       if (!main.getUI().isDisabled()) {
-
          //TODO use method on Gallery --> Gallery.addListener(...)
          $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertHandler);
          this.$insert.on("click.PhotoMap", insertHandler);
@@ -262,7 +198,6 @@ UIControls.prototype = {
          .on("click", function (event) {
             
             if (!main.getUI().isDisabled()) {
-               
                if (instance.isModifyPhoto) {
                   // delete current photo
                   url = "/delete-photo";
@@ -305,10 +240,8 @@ UIControls.prototype = {
             album = state.getCurrentAlbum();
 
             if (!main.getUI().isDisabled()) {
-               
                if (instance.isModifyPhoto) {
                   // edit current photo
-                  
                   input
                      .onLoad(function () {
                         //prefill with values from selected picture
@@ -327,7 +260,6 @@ UIControls.prototype = {
                } else if (instance.isModifyPlace) {
                   //edit current place
                   //prefill with name and update on submit
-                  
                   input
                      .onLoad(function () {
                         $("input[name=id]").val(place.id);
@@ -346,7 +278,6 @@ UIControls.prototype = {
                } else if (instance.isModifyAlbum) {
                   //edit current album
                   //prefill with name and update on submit
-                  
                   input
                      .onLoad(function () {
                         $("input[name=id]").val(album.id);
@@ -394,7 +325,6 @@ UIControls.prototype = {
             tools = main.getUI().getTools();
             
             if (!main.getUI().isDisabled()) {
-               
                if (state.getAlbumShareURL() && state.getAlbumShareURL().id === state.getCurrentAlbum().id) {
                   tools.openShareURL();
                } else {
@@ -422,8 +352,7 @@ UIControls.prototype = {
             }
          });
          place.addListener("mouseout", function () {
-            //TODO this should probably also be a private function
-            instance.hideEditControls(true);
+            instance._hideEditControls(true);
          });
       });
    },
@@ -444,7 +373,7 @@ UIControls.prototype = {
             }
          });
          album.addListener("mouseout", function () {
-            instance.hideEditControls(true);
+            instance._hideEditControls(true);
          });
       });
    },
@@ -468,5 +397,59 @@ UIControls.prototype = {
       } else {
          alert("Unknown page: " + page);
       }
+   },
+   /**
+    * @description This is used as a callback to display the edit controls
+    * @param {Album,Place} instance
+    * @private
+    */
+   _displayEditControls : function (element) {
+      
+      var state, controls, projection, pixel, markerSize, mapOffset;
+      state = main.getUIState();
+      controls = main.getUI().getControls();
+
+      if (element.getModel() === 'Album') {
+         controls.setModifyAlbum(true);
+         state.setCurrentAlbum(element);
+      } else if (element.getModel() === 'Place') {
+         controls.setModifyPlace(true);
+         state.setCurrentPlace(element);
+      } else {
+         alert("Unknown class: " + element);
+         return;
+      }
+
+      // gets the relative pixel position
+      pixel = main.getMap().getPositionInPixel(element);
+      // add height and half-width of the marker
+      markerSize = element.getSize();
+      pixel.top += markerSize.height;
+      pixel.left += markerSize.width / 2;
+      // show controls
+      controls._showMarkerControls(pixel);
+   },
+   /**
+    * @description hides the modify controls
+    * @param {Boolean} timeout if the controls should be hidden after a predefined timout, when the controls are not entered
+    * @private
+    */
+   _hideEditControls : function (timeout) {
+      
+      var instance = this, hide;
+      
+      hide = function () {
+         if (instance.$controls.isEntered) {
+            return;
+         }
+         instance.$controls.hide();
+      };
+
+      if (timeout) {
+         this.hideControlsTimeoutId = window.setTimeout(hide, 2000);
+      } else {
+         this.$controls.hide();
+      }
    }
+
 };

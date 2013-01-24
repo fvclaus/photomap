@@ -57,16 +57,19 @@ UIMap = function () {
 UIMap.prototype = {
    /**
     @public
-    @summary Returns a object containing the top and left position of
+    @summary Returns a object containing the absolute top and left position of the marker
     @param {InfoMarker} element
     */
    getPositionInPixel : function (element) {
       
-      var projection, pixel;
+      var projection, pixel, offset;
       
       projection = this.getOverlay().getProjection();
       pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
-      return pixel;
+      offset = this.$mapEl.offset();
+      pixel.y += offset.top;
+      pixel.x += offset.left;
+      return {top : pixel.y, left : pixel.x};
    },
 
    /**
@@ -154,6 +157,12 @@ UIMap.prototype = {
    _triggerEventOnMarker : function (marker, event) {
       google.maps.event.trigger(marker.getImplementation(), event);
    },
+   /**
+    @public
+    */
+   getMapOffset : function () {
+
+   },
 
    initWithoutAjax : function () {
       this._create();
@@ -167,10 +176,10 @@ UIMap.prototype = {
          authorized = main.getClientState().isAdmin();
          //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
          if (authorized) {
-            this.bindListener();
+            this._bindClickListener();
          }
       } else if (page === DASHBOARD_VIEW) {
-         this.bindListener();
+         this._bindClickListener();
       }
       // set map options if interactive
       this.map.setOptions(this.mapOptions);
@@ -321,6 +330,9 @@ UIMap.prototype = {
    getBounds : function () {
       return this.map.getBounds();
    },
+   /**
+    @public
+    */
    enable : function () {
       
       this._setMapCursor("not-allowed");
@@ -347,22 +359,11 @@ UIMap.prototype = {
          streetViewControl : false
       });
    },
-   /* --- Listeners --- */
-   
-   bindListener : function () {
-      var instance = this, state = main.getUIState();
-      page = state.getPage();
-
-      this.places = [];
-      this.albums = [];
-
-      this._bindClickListener();
-
-   },
 
    /**
     * @private
     */
+   //TODO i dont know if this belongs here
    _bindClickListener : function () {
 
       var input, lat, lng, place, album;
