@@ -1,5 +1,5 @@
 /*jslint windows: true */
-/*global $, main, FormData, ERRORS, ALLOWED_UPLOAD_FILE_TYPES, Photo */
+/*global $, main, FormData, ERRORS, ALLOWED_UPLOAD_FILE_TYPES, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
 
 "use strict";
 
@@ -82,16 +82,13 @@ fileUpload = {
 
       input.close();
       state.setFileToUpload(null);
-      if (state.isMultipleUpload()) {
-         $(".mp-option-add").trigger('click');
-      }
-      state.setMultipleUpload(false);
    },
    /**
-    * @description Simple upload-progress-tracker. Changes color of gallery-title.
+    * @description Simple upload-progress-tracker. Changes color of gallery-title. 
     */
+   // TODO: needs serious changing - mostly because it doesn't work anymore with new design.
    _progressHandler : function (event) {
-
+/*
       var percentageUploaded, factor, rgbBgColor, rgbFontColor;
 
       if (event.lengthComputable) {
@@ -115,12 +112,15 @@ fileUpload = {
          }
          console.log('Upload-Status: ' + percentageUploaded + '%');
       }
+*/
    },
    _loadHandler : function () {
+/*
       $(".mp-gallery-title-bar").css({
          'background-color': '#333',
          'color': '#FFF'
       });
+*/
       console.log('Done');
    },
    /**
@@ -128,17 +128,9 @@ fileUpload = {
     * @param response response-text transform into a JSON-Oject
     * @param photo Photo-Object which was creates before starting the upload. Now properties given by the server can be added.
     */
-   _responseHandler : function (response, photo) {
-      state = main.getUIState();
-      gallery = main.getUI().getGallery();
+   _responseHandler : function (response) {
       if (response.success) {
-         // add received value to uploadedPhoto-Object, add the photo to current place and restart gallery
-         photo.source = response.url;
-         photo.id = response.id;
-         photo.order = state.getPhotos().length;
-         photo.thumb = response.thumb;
-         console.log(photo);
-         state.getCurrentLoadedPlace().addPhoto(photo);
+         main.getUI().addPhoto(response);
          main.getClientState().updateUsedSpace();
       
       } else {
@@ -219,9 +211,11 @@ fileUpload = {
     * @description Get input-values of the request-form and transform them into a FormData-Object and start the upload.
     * @param {Boolean} repeat Repeat defines if the user wants to add more photos afterwards or not.
     */
-   startUpload : function (repeat) {
+   startUpload : function () {
 
-      var $form, formValidator, inputValues, photo;
+      var $form, formValidator, inputValues, photo, state = main.getUIState();
+      
+      // Photo Upload funktioniert in Chrome! Man muss nur die internet-security (same-origin-policy) abschalten (komischerweise klappt es manchmal trotzdem nicht - ka warum!).. an sich muss man das bei FF auch damit der Upload ohne Probleme funktioniert. Ausserdem gilt das beides nur für die Entwicklung. Jeder der etwas auf den amazon-server hochladen will, dürfte damit eigentlich keine Probleme haben (egal welcher Browser .. sogar IE). 
 
       $.browser.chrome = /chrome/.test(navigator.userAgent.toLowerCase());
       if ($.browser.chrome) {
@@ -238,9 +232,6 @@ fileUpload = {
 
       if (formValidator.checkValidity()) {
 
-         if (repeat) {
-            state.setMultipleUpload(true);
-         }
          // get input values
          inputValues = {
             'id' : $form.find("input[name='place']").val(),
@@ -248,13 +239,13 @@ fileUpload = {
             'description' : $form.find("textarea[name='description']").val()
          };
 
-         // add new photo object and set first values -> finished in responseHandler
-         photo = new Photo(inputValues);
-
+         state.store(TEMP_TITLE_KEY, inputValues.title);
+         state.store(TEMP_DESCRIPTION_KEY, inputValues.description);
+         
          // get FormData-Object for Upload
          data = fileUpload.getUploadData(inputValues, 'photo');
 
-         fileUpload.sendUpload(data, photo);
+         fileUpload.sendUpload(data);
 
       } else {
          alert("Bitte überprüfen Sie nochmal das Formular. Name und Bild müssen angegeben sein.");
@@ -265,7 +256,7 @@ fileUpload = {
     * @param {FormData} data FormData-Object with the file to upload and additional params.
     * @param file Photo-Object which was created prior Upload, given to response-Handler in order to add properties given by the server.
     */
-   sendUpload : function (data, file) {
+   sendUpload : function (data) {
 
       var upload;
 
@@ -295,7 +286,7 @@ fileUpload = {
             if (request.status === 200 || request.status === 0) {
                // console.log(request.responseText);
                console.log(JSON.parse(request.responseText));
-               fileUpload._responseHandler(JSON.parse(request.responseText), file);
+               fileUpload._responseHandler(JSON.parse(request.responseText));
             } else {
                // alert error if upload wasn't successful
                if (request.responseText) {

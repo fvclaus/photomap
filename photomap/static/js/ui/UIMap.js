@@ -379,21 +379,7 @@ UIMap.prototype = {
                
                input.onAjax(function (data) {
                   
-                  //create new place and show marker
-                  //new place accepts only lon, because it handles responses from server
-                  place = new Place({
-                     lat: lat,
-                     lon: lng,
-                     id : data.id,
-                     "title" : state.retrieve(TEMP_TITLE_KEY),
-                     "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
-                  });
-                  place.show();
-                  state.addPlace(place);
-                  main.getUI().getControls().bindPlaceListener(place);
-                  //redraws place
-                  place.triggerDoubleClick();
-                  
+                  main.getUI().addPlace(lat, lng, data);
                });
                
                input.onLoad(function () {
@@ -422,19 +408,7 @@ UIMap.prototype = {
                
                input.onAjax(function (data) {
                   
-                  //create new album and show marker
-                  album = new Album({
-                     lat: lat,
-                     lon: lng,
-                     id : data.id,
-                     "title" : state.retrieve(TEMP_TITLE_KEY),
-                     "description" : state.retrieve(TEMP_DESCRIPTION_KEY)
-                  });
-                  album.show();
-                  state.addAlbum(album);
-                  main.getUI().getControls().bindAlbumListener(album);
-                  //redirect to new albumview
-                  album.triggerDoubleClick();
+                  main.getUI().addAlbum(lat, lng, data);
                });
                
                input.onLoad(function () {

@@ -123,7 +123,7 @@ UIInput.prototype = {
             {
                text : $("span#mp-confirm").text(),
                click : function () {
-                  main.getUI().getClientServer().deleteObject(url, data);
+                  main.getClientServer().deleteObject(url, data);
                   $(this).dialog("close");
                   return true;
                }

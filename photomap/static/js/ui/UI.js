@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UIMap, UITools,  UIState, UIControls, UIInput, UIInformation, DASHBOARD_VIEW */
+/*global $, main, UIMap, UITools,  UIState, UIControls, UIInput, UIInformation, DASHBOARD_VIEW, Album, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
 
 "use strict";
 
@@ -55,9 +55,28 @@ UI.prototype = {
       return this.information;
    },
    /**
+    * @description Adds album fully to ui.
+    */
+   addAlbum : function (lat, lon, data) {
+      
+      //create new album and show marker
+      var album = new Album({
+         lat: lat,
+         lon: lon,
+         id : data.id,
+         title : this.getState().retrieve(TEMP_TITLE_KEY),
+         description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
+      });
+      album.show();
+      this.getState().addAlbum(album);
+      this.getControls().bindAlbumListener(album);
+      //redirect to new albumview
+      album.triggerDoubleClick();
+   },
+   /**
     * @description Removes album fully from ui.
     */
-   deleteAlbum : function (id) {
+   removeAlbum : function (id) {
       
       var album = this.getTools().getObjectById(id, this.getState().getAlbums());
       
@@ -106,7 +125,7 @@ UI.prototype = {
       this._isDisabled = false;
       albums.forEach(function (album) {
          album.checkIconStatus();
-         album.getMarker().setCursor("");
+         album.setCursor("");
       });
       $("a, .mp-control").css({
 //         opacity: 1,

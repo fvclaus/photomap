@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UITools, UIState, UIControls, UIInput, UIInformation, UIGallery, UISlideshow, UIFullscreen */
+/*global $, main, UITools, UIState, UIControls, UIInput, UIInformation, UIGallery, UISlideshow, UIFullscreen, Place, Photo, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
 
 /*
  * @author Frederik Claus
@@ -62,9 +62,29 @@ UI.prototype = {
       return this.input;
    },
    /**
+    * @description Adds place fully to ui.
+    */
+   addPlace : function (lat, lon, data) {
+      
+      //create new place and show marker
+      //new place accepts only lon, because it handles responses from server
+      var place = new Place({
+         lat: lat,
+         lon: lon,
+         id : data.id,
+         title : this.getState().retrieve(TEMP_TITLE_KEY),
+         description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
+      });
+      place.show();
+      this.getState().addPlace(place);
+      this.getControls().bindPlaceListener(place);
+      // open inserted place
+      place.triggerDoubleClick();
+   },
+   /**
     * @description Removes place fully from ui.
     */
-   deletePlace : function (id) {
+   removePlace : function (id) {
       
       var place = this.getTools().getObjectById(id, this.getState().getPlaces());
 
@@ -78,9 +98,28 @@ UI.prototype = {
       this.getState().removePlace(place);
    },
    /**
+    * Adds photo fully to ui.
+    */
+   addPhoto : function (data) {
+      
+      // add received value to uploadedPhoto-Object, add the photo to current place and restart gallery
+      
+      var photo = new Photo({
+         id : data.id,
+         source : data.url,
+         thumb : data.thumb,
+         order : this.getState().getPhotos().length,
+         title : this.getState().retrieve(TEMP_TITLE_KEY),
+         description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
+      });
+      this.getState().getCurrentLoadedPlace().addPhoto(photo);
+      this.getState().getCurrentLoadedPlace().triggerDoubleClick();
+      this.getState().setPhotoAdded(true);
+   },
+   /**
     * @description Removes photo fully from ui.
     */
-   deletePhoto : function (id) {
+   removePhoto : function (id) {
       
       var photo = this.getTools().getObjectById(id, this.state.getPhotos());
       

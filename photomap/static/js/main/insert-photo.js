@@ -16,9 +16,6 @@ $(document).ready(function () {
       $("#file-input").bind('change', fileUpload.handleFileInput);
    }
    $('.mp-single-upload').bind('click', function () {
-      fileUpload.startUpload(false);
+      fileUpload.startUpload();
    });
-//   $('.mp-multiple-upload').bind('click', function () {
-//      fileUpload.startUpload(true);
-//   });
 });

@@ -68,7 +68,7 @@ ClientServer.prototype = {
                
                if (data.model === "Album") {
                   
-                  ui.deleteAlbum(data.id);
+                  ui.removeAlbum(data.id);
                
                } else {
                   alert("The deleted Object has no model and therefor couldn't be removed from ui");

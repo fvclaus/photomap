@@ -23,6 +23,7 @@ UIState = function () {
    this.slideshow = false;
    this.slideshowLoaded = false;
    this.albumLoading = false;
+   this.photoAdded = false;
    this.fontSize = null;
    this.fullscreen = null;
    this.pageMode = $("meta[property='mp:map']").attr("content");
@@ -100,6 +101,12 @@ UIState.prototype = {
       this.photos = this.photos.filter(function (element, index) {
          return element !== photo;
       });
+   },
+   setPhotoAdded : function (added) {
+      this.photoAdded = added;
+   },
+   isPhotoAdded : function () {
+      return this.photoAdded;
    },
    //--------------------------------------------------------------------
    //PLACE---------------------------------------------------------------

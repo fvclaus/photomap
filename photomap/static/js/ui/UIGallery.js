@@ -41,6 +41,9 @@ UIGallery.prototype =  {
    setGalleryChanged : function (changed) {
       this.changed = changed;
    },
+   increaseLoaded : function () {
+      this.loaded += 1;
+   },
    /**
     * @author Frederik Claus
     * @description Reselect all images in the gallery. This is necessary when the gallery gets updated
@@ -92,6 +95,9 @@ UIGallery.prototype =  {
          newSliderIndex = Math.floor(currentIndex / 5);
          this._getScrollable().seekTo(newSliderIndex);
       }
+   },
+   scrollToLastSlider : function () {
+      this._getScrollable().end();
    },
    startFullGallery : function () {
       var photos, $container, instance = this;
@@ -198,17 +204,18 @@ UIGallery.prototype =  {
     */
    _galleryLoader : function () {
       
-      var gallery, photoMatrix;
+      var gallery, state, photoMatrix;
       gallery = main.getUI().getGallery();
+      state = main.getUIState();
       
-      gallery.loaded += 1;
+      gallery.increaseLoaded();
       
       if (gallery.photos && gallery.loaded === gallery.photos.length) {
          
-         // enable ui & hide loader
+         //enable ui
          main.getUIState().setAlbumLoading(false);
          main.getUI().enable();
-         main.getUI().hideLoading();
+
          // create a matrix with 6 columns out of the photos-Array and display each row in a separate div
          photoMatrix = main.getUI().getTools().createMatrix(gallery.photos, 5);
          gallery._appendImages(photoMatrix, gallery.tmplPhotosData);
@@ -223,9 +230,17 @@ UIGallery.prototype =  {
          
          gallery._centerImages();
          
+         if (state.isPhotoAdded()) {
+            gallery.scrollToLastSlider();
+            state.setPhotoAdded(false);
+         }
+         
          // reset loading values to 0 / null
          gallery.loaded = 0;
          gallery.tmplPhotosData = [];
+         
+         // hide loader
+         main.getUI().hideLoading();
       }
    },
    /**
