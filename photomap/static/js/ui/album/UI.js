@@ -115,8 +115,10 @@ UI.prototype = {
           });
          
       state.getCurrentLoadedPlace().addPhoto(photo);
-      state.triggerDoubleClick();
+      photo.openPhoto();
       state.setPhotoAdded(true);
+      
+      //TODO does the quota still get updated?
    },
    /**
     * @description Removes photo fully from ui.

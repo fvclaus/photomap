@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, DASHBOARD_VIEW, ALBUM_VIEW */
+/*global $, main, DASHBOARD_VIEW, ALBUM_VIEW, UIPhotoListener, UIPlaceListener, UIAlbumListener, UIEditControls */
 
 "use strict";
 
@@ -12,12 +12,6 @@ var UIControls;
 
 UIControls = function (maxHeight) {
 
-   this.$controls = $(".mp-controls-wrapper");
-   this.$controls.hide();
-   // icons of photo controls are not scaled yet
-   this.$controls.isScaled = false;
-   // tells the hide function whether or not the mouse entered the window
-   this.$controls.isEntered = false;
 
    this.$delete = $("img.mp-option-delete");
    this.$update = $("img.mp-option-modify");
@@ -26,11 +20,17 @@ UIControls = function (maxHeight) {
    this.$logout = $(".mp-option-logout");
    this.$insert = $(".mp-option-insert-photo");
 
+
 };
 
 UIControls.prototype = {
 
    initWithoutAjax : function () {
+      this.photoListener = new UIPhotoListener();
+      this.placeListener = new UIPlaceListener();
+      this.albumListener = new UIAlbumListener();
+      this.editControls = new UIEditControls();
+
    },
    initAfterAjax : function () {
       
@@ -39,63 +39,19 @@ UIControls.prototype = {
       clientstate = main.getClientState();
       page = state.getPage();
       if (page === DASHBOARD_VIEW || (page === ALBUM_VIEW && clientstate.isAdmin())) {
+         this.editControls.bindListener();
          this.bindListener(page);
       }
    },
-   /**
-    * @description Displays modify control under a photo
-    * @param $el The photo element under which controls are placed
-    * @public
-    */
-   showPhotoControls : function ($el) {
-      
-      var center, tools;
-      
-      center = $el.offset();
-      tools = main.getUI().getTools();
-      center.left += tools.getRealWidth($el) / 2;
-      center.top -= (tools.getRealHeight($(".mp-controls-wrapper")) + 5);
-
-      // clear any present timeout, as it will hide the controls while the mousepointer never left
-      if (this.hideControlsTimeoutId) {
-         window.clearTimeout(this.hideControlsTimeoutId);
-         this.hideControlsTimeoutId = null;
-      }
-      this._showMarkerControls(center);
+   handleGalleryDragover : function (event){
+      this.photoListener.handleDrag(event);
+   },
+   handleGalleryDrop : function (event) {
+      this.photoListener.handleDrop(event);
    },
 
-   /**
-    * @description Controls are instantiated once and are used for albums, places and photos
-    * @param {Object} center the bottom center of the element where the controls should be displayed
-    * @private
-    */
-   _showMarkerControls : function (center) {
-      
-      var tools, factor;
-      
-      // calculate the offset
-      tools = main.getUI().getTools();
-      // center the controls below the center
-      center.left -= tools.getRealWidth(this.$controls) / 2;
-
-      // don't resize the icons all the time to save performance
-      if (!this.$controls.isScaled) {
-         // change factor depending on the page (-> number of controls in control-box)
-         if (main.getUIState().isDashboard()) {
-            factor = 1.5;
-         } else {
-            factor = 1;
-         }
-         this.$controls
-            .width(this.$controls.width() * factor);
-         this.$controls.isScaled = true;
-      }
-
-      // offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
-      this.$controls.css({
-         top: center.top,
-         left: center.left
-      }).show();
+   getEditControls : function () {
+      return this.editControls;
    },
    /**
     * @public
@@ -156,19 +112,14 @@ UIControls.prototype = {
     * @see UIAlbum
     */
    bindInsertPhotoListener : function () {
-      
-      var place, insertHandler;
-      insertHandler = function (event) {
-         place = main.getUIState().getCurrentLoadedPlace();
-         // reset load function
-         main.getUI().getInput().getUpload("/insert-photo?place=" + place.id, null);
-      };
-      
-      if (!main.getUI().isDisabled()) {
-         //TODO use method on Gallery --> Gallery.addListener(...)
-         $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertHandler);
-         this.$insert.on("click.PhotoMap", insertHandler);
-      }
+      //TODO use method on Gallery --> Gallery.addListener(...)
+      var instance = this,
+          insertPhotoListener = function (){
+             instance.photoListener.insert.call(instance.photoListener);
+          };
+         
+      $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertPhotoListener);
+      this.$insert.on("click.PhotoMap", insertPhotoListener);
    },
    /**
     * @public
@@ -187,131 +138,66 @@ UIControls.prototype = {
    /**
     * @private
     */
-   _bindDeleteListener : function () {
-      
-      var instance, state, input, object, url, data;
-      instance = this;
-      state = main.getUIState();
-      input = main.getUI().getInput();
-      
-      this.$delete
-         .on("click", function (event) {
-            
-            if (!main.getUI().isDisabled()) {
-               if (instance.isModifyPhoto) {
-                  // delete current photo
-                  url = "/delete-photo";
-                  object = state.getCurrentPhoto();
-               } else if (instance.isModifyPlace) {
-                  // delete current place
-                  url = "/delete-place";
-                  object = state.getCurrentPlace();
-               } else if (instance.isModifyAlbum) {
-                  // delete current album
-                  url = "/delete-album";
-                  object = state.getCurrentAlbum();
-               } else {
-                  alert("I don't know what to delete. Did you set one of setModify{Album,Place,Photo}?");
-                  return;
-               }
-               data = {
-                  id : object.id,
-                  title : object.title,
-                  model : object.model
-               };
-               input.showDeleteDialog(url, data);
+   _bindInsertListener : function () {
+      var map = main.getMap(), instance = this, state = main.getUI().getState();
+
+      map.addClickListener(function (event) {
+         if (!main.getUI().isDisabled()) {
+            //create new place with description and select it
+            if (!state.isDashboard()) {
+               instance.placeListener.insert(event);
+            } else {
+               instance.albumListener.insert(event);
             }
-         });
+         }
+      });
    },
    /**
     * @private
     */
    _bindUpdateListener : function () {
       
-      var instance, input, place, album, photo, state, $title, $description;
-      instance = this;
-      state = main.getUIState();
-      input = main.getUI().getInput();
+      var instance = this,
+          state = main.getUIState();
       
       this.$update
          .on("click", function (event) {
-            place = state.getCurrentPlace();
-            photo = state.getCurrentPhoto();
-            album = state.getCurrentAlbum();
 
             if (!main.getUI().isDisabled()) {
                if (instance.isModifyPhoto) {
-                  // edit current photo
-                  input
-                     .onLoad(function () {
-                        //prefill with values from selected picture
-                        $("input[name=id]").val(photo.id);
-                        $("input[name=order]").val(photo.order);
-                        $title = $("input[name=title]").val(photo.title);
-                        $description = $("textarea[name=description]").val(photo.description);
-                        
-                        input.onForm(function () {
-                           //reflect changes locally
-                           photo.title = $title.val();
-                           photo.description = $description.val();
-                        });
-                     })
-                     .get("/update-photo");
+                  instance.photoListener.update(state.getCurrentPhoto());
                } else if (instance.isModifyPlace) {
-                  //edit current place
-                  //prefill with name and update on submit
-                  input
-                     .onLoad(function () {
-                        $("input[name=id]").val(place.id);
-                        $title = $("input[name=title]").val(place.title);
-                        $description = $("textarea[name=description]").val(place.description);
-                        
-                        input.onForm(function () {
-                           //reflect changes locally
-                           place.title = $title.val();
-                           place.description = $description.val();
-                           //TODO why is there a update for place but not for photo?
-                           main.getUI().getInformation().updatePlace();
-                        });
-                     })
-                     .get("/update-place");
+                  instance.placeListener.update(state.getCurrentPlace());
                } else if (instance.isModifyAlbum) {
-                  //edit current album
-                  //prefill with name and update on submit
-                  input
-                     .onLoad(function () {
-                        $("input[name=id]").val(album.id);
-                        $title = $("input[name=title]").val(album.title);
-                        $description = $("textarea[name=description]").val(album.description);
-                        
-                        input.onForm(function () {
-                           //reflect changes locally
-                           album.title = $title.val();
-                           album.description = $description.val();
-                        });
-                     })
-                     .get("/update-album");
+                  instance.albumListener.update(state.getCurrentAlbum());
                }
             }
          });
    },
+
    /**
     * @private
     */
-   _bindControlListener : function () {
-      
-      var instance = this, place, state;
-      state = main.getUIState();
-      
-      this.$controls
-         .on("mouseleave", function () {
-            instance.$controls.hide();
-            instance.$controls.isEntered = false;
-         })
-         .on("mouseenter", function () {
-            instance.$controls.isEntered = true;
+   _bindDeleteListener : function () {
+
+      var instance = this,
+          state = main.getUIState();
+
+      this.$delete
+         .on("click", function (event) {
+            
+            if (!main.getUI().isDisabled()) {
+               if (instance.isModifyPhoto) {
+                  instance.photoListener.delete(state.getCurrentPhoto());
+               } else if (instance.isModifyPlace) {
+                  instance.placeListener.delete(state.getCurrentPlace());
+               } else if (instance.isModifyAlbum) {
+                  instance.albumListener.delete(state.getCurrentAlbum());
+               }
+            }
          });
    },
+
    /**
     * @private
     */
@@ -336,46 +222,10 @@ UIControls.prototype = {
          });
    },
    bindPlaceListener : function (place) {
-      
-      var instance = this, places, state;
-      state = main.getUIState();
-      
-      if (place !== undefined) {
-         places = [place];
-      } else {
-         places = state.getPlaces();
-      }
-      places.forEach(function (place) {
-         place.addListener("mouseover", function () {
-            if (!main.getUI().isDisabled()) {
-               instance._displayEditControls(place);
-            }
-         });
-         place.addListener("mouseout", function () {
-            instance._hideEditControls(true);
-         });
-      });
+      this.placeListener.bindListener(place);
    },
    bindAlbumListener : function (album) {
-      
-      var instance = this, albums, state;
-      state = main.getUIState();
-      
-      if (album !== undefined) {
-         albums = [album];
-      } else {
-         albums = state.getAlbums();
-      }
-      albums.forEach(function (album) {
-         album.addListener("mouseover", function () {
-            if (!main.getUI().isDisabled()) {
-               instance._displayEditControls(album);
-            }
-         });
-         album.addListener("mouseout", function () {
-            instance._hideEditControls(true);
-         });
-      });
+      this.albumListener.bindListener(album);
    },
    /**
     * @description Binds all the Listeners required by this page. Also handles window.load Listener
@@ -385,8 +235,8 @@ UIControls.prototype = {
       
       this._bindDeleteListener();
       this._bindUpdateListener();
-      this._bindControlListener();
       this._bindShareListener();
+      this._bindInsertListener();
       this._bindFullDescriptionListener();
       if (page === DASHBOARD_VIEW) {
          this.bindAlbumListener();
@@ -398,58 +248,6 @@ UIControls.prototype = {
          alert("Unknown page: " + page);
       }
    },
-   /**
-    * @description This is used as a callback to display the edit controls
-    * @param {Album,Place} instance
-    * @private
-    */
-   _displayEditControls : function (element) {
-      
-      var state, controls, projection, pixel, markerSize, mapOffset;
-      state = main.getUIState();
-      controls = main.getUI().getControls();
 
-      if (element.getModel() === 'Album') {
-         controls.setModifyAlbum(true);
-         state.setCurrentAlbum(element);
-      } else if (element.getModel() === 'Place') {
-         controls.setModifyPlace(true);
-         state.setCurrentPlace(element);
-      } else {
-         alert("Unknown class: " + element);
-         return;
-      }
-
-      // gets the relative pixel position
-      pixel = main.getMap().getPositionInPixel(element);
-      // add height and half-width of the marker
-      markerSize = element.getSize();
-      pixel.top += markerSize.height;
-      pixel.left += markerSize.width / 2;
-      // show controls
-      controls._showMarkerControls(pixel);
-   },
-   /**
-    * @description hides the modify controls
-    * @param {Boolean} timeout if the controls should be hidden after a predefined timout, when the controls are not entered
-    * @private
-    */
-   _hideEditControls : function (timeout) {
-      
-      var instance = this, hide;
-      
-      hide = function () {
-         if (instance.$controls.isEntered) {
-            return;
-         }
-         instance.$controls.hide();
-      };
-
-      if (timeout) {
-         this.hideControlsTimeoutId = window.setTimeout(hide, 2000);
-      } else {
-         this.$controls.hide();
-      }
-   }
 
 };

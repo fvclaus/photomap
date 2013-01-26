@@ -1,4 +1,4 @@
-/*jslint */
++/*jslint */
 /*global $, main, fileUpload */
 
 "use strict";
@@ -31,9 +31,10 @@ UIGallery = function () {
 UIGallery.prototype =  {
 
    initAfterAjax : function () {
+      var controls = main.getUI().getControls();
       if (main.getClientState().isAdmin()) {
-         this.$container.bind('dragover.FileUpload', fileUpload.handleGalleryDragover);
-         this.$container.bind('drop.FileUpload', fileUpload.handleGalleryDrop);
+         this.$container.bind('dragover.FileUpload', controls.handleGalleryDragover);
+         this.$container.bind('drop.FileUpload', controls.handleGalleryDrop);
          this._bindListener();
       }
       this._bindStartSlideshowListener();
@@ -422,7 +423,7 @@ UIGallery.prototype =  {
                
                if (authorized) {
                   controls.setModifyPhoto(true);
-                  controls.showPhotoControls($el);
+                  controls.getEditControls().showPhotoControls($el);
                }
                tools.setCursor($el, "pointer");
             }
@@ -437,7 +438,7 @@ UIGallery.prototype =  {
                $el.removeClass('current');
                
                if (authorized) {
-                  controls.hideEditControls(true);
+                  controls.getEditControls().hide(true);
                }
             }
          })
@@ -473,7 +474,7 @@ UIGallery.prototype =  {
                state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
                state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
                
-               main.getUI().getControls().hideEditControls(false);
+               main.getUI().getControls().getEditControls().hide(false);
                
                // starts little slideshow in gallery div
                main.getUI().getSlideshow().startSlider();

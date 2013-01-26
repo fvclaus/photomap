@@ -38,6 +38,9 @@ Photo.prototype = {
       this.checkBorder();
    },
    triggerClick : function () {
+      this.openPhoto();
+   },
+   openPhoto : function () {
       var $thumb = main.getUI().getGallery().getImageBySource(this.source);
       main.getUIState().setCurrentLoadedPhoto(this);
       $thumb.trigger("click");

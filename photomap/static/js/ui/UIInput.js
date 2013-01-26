@@ -19,7 +19,6 @@ $.extend($.ui.dialog.prototype.options, {
 });
 
 UIInput = function () {
-   this._initialise();
    this.dialog = $("#input-dialog");
    this.visible = false;
    this.$deleteDialog = $("#confirm-delete");
@@ -30,11 +29,13 @@ UIInput.prototype = {
     * @description load Input form, then overlay with jquery ui dialog widget
     * @param String url Url of the input-form
     */
-   get : function (url) {
+   show : function (options) {
 
       var instance = this;
 
-      this.loadHtml(url);
+      this.options = options;
+
+      this.loadHtml(options.url);
 
       dimension = this.getDialogDimension(instance.dialog.html());
 
@@ -46,11 +47,14 @@ UIInput.prototype = {
             main.getUI().disable();
          },
          open: function () {
-            instance._intercept();
+            if (typeof instance.options.submitHandler === "function"){
+               instance.options.submitHandler.call(instance);
+            } else {
+               instance._submitHandler.call(instance);
+            }
             instance.setVisibility(true);
          },
          close: function () {
-            instance._initialise();
             main.getUI().enable();
             instance.dialog.empty();
             instance.setVisibility(false);
@@ -185,47 +189,25 @@ UIInput.prototype = {
    },
 
    /**
-    * @description Fires the onLoad event, when the input dialog is loaded. Subscribe here if you want to receive the onLoad event with  your callback.
-    * param {Function} callback
-    */
-   onLoad : function (callback) {
-      this._onLoads.push(callback);
-      return this;
-   },
-   /**
-    * @description Fires the onForm event, when the form is valid, but before submit. Subscribe here if you want to receive the onForm event with your callback.
-    * @param {Function} callback
-    */
-   onForm : function (callback) {
-      this._onForms.push(callback);
-      return this;
-   },
-   /**
-    * @description Fires the ajaxReceived event, when a valid response is returned. Subscribe here if you want to receive the ajaxReceived event with your callback.
-    * @param {Function} callback
-    */
-   onAjax : function (callback) {
-      this._onAjaxs.push(callback);
-      return this;
-   },
-   /**
     * @private
     */
-   _intercept : function () {
-      var instance, form, api;
+   _submitHandler : function () {
+      var instance = this, form, api;
       //grep 'this'
       instance = main.getUI().getInput();
       //register form validator and grep api
       form = $("form.mp-dialog");
       console.log(form);
       api = form.validator().data("validator");
-      console.log(form.serialize());
-      console.log(api);
+
+
       //called when data is valid
       api.onSuccess(function (e, els) {
 //      form.submit(function(){
          //call all onForm callbacks
-         instance._onForm();
+         if (typeof instance.options.submit === "function"){
+            instance.options.submit.call(instance);
+         }
          //submit form with ajax call and close popup
          $.ajax({
             type : form.attr("method"),
@@ -237,7 +219,9 @@ UIInput.prototype = {
                   alert(data.error.toString());
                   return;
                }
-               instance._onAjax(data);
+               if (typeof instance.options.success === "function"){
+                  instance.options.success.call(instance, data);
+               }
                instance.close();
             },
             error : function (error) {
@@ -249,42 +233,9 @@ UIInput.prototype = {
          return false;
       });
       //_intercept gets called onLoad
-      instance._onLoad();
-   },
-   /**
-    * @private
-    */
-   _initialise : function () {
-      this._onLoads = [];
-      this._onForms = [];
-      this._onAjaxs = [];
-   },
-   /**
-    * @private
-    */
-   _onLoad : function () {
-      this._onLoads.forEach(function (load) {
-         load.call();
-      });
-      this._onLoads = [];
-   },
-   /**
-    * @private
-    */
-   _onForm : function () {
-      this._onForms.forEach(function (form) {
-         form.call();
-      });
-      this._onForms = [];
-   },
-   /**
-    * @private
-    */
-   _onAjax : function (data) {
-      this._onAjaxs.forEach(function (ajax) {
-         ajax.call(this, data);
-      });
-      this._onAjaxs = [];
+      if (typeof this.options.load === "function") {
+         this.options.load.call(instance);
+      }
    },
    setVisibility : function (bool) {
       this.visible = bool;

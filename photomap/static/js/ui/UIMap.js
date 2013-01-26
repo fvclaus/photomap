@@ -370,74 +370,22 @@ UIMap.prototype = {
       });
    },
 
+   addClickListener : function (callback) {
+
+      google.maps.event.addListener(this.map, "click", function (event) {
+         callback.call(this, {
+            lat : parseFloat(event.latLng.lat()),
+            lng : parseFloat(event.latLng.lng())
+         });
+      });
+   },
+
    /**
     * @private
     */
    //TODO i dont know if this belongs here
    _bindClickListener : function () {
 
-      var input, lat, lng, place, album;
 
-      google.maps.event.addListener(this.map, "click", function (event) {
-         if (!main.getUI().isDisabled()) {
-            
-            //create new place with description and select it
-            if (!state.isDashboard()) {
-               
-               input = main.getUI().getInput();
-               lat = event.latLng.lat();
-               lng = event.latLng.lng();
-               
-               input.onAjax(function (data) {
-                  
-                  main.getUI().addPlace(lat, lng, data);
-               });
-               
-               input.onLoad(function () {
-                  var title, description;
-                  $("input[name=lat]").val(lat);
-                  $("input[name=lon]").val(lng);
-                  $("input[name=album]").val(main.getUIState().getCurrentLoadedAlbum().id);
-                  
-                  input.onForm(function () {
-                     //get place name + description
-                     title = $("[name=title]").val();
-                     description = $("[name=description]").val();
-                     //dont create place yet, server might return error
-                     state.store(TEMP_TITLE_KEY, title);
-                     state.store(TEMP_DESCRIPTION_KEY, description);
-                  });
-               });
-               
-               input.get("/insert-place");
-            } else {
-               
-               // create a new album
-               input = main.getUI().getInput();
-               lat = event.latLng.lat();
-               lng = event.latLng.lng();
-               
-               input.onAjax(function (data) {
-                  
-                  main.getUI().addAlbum(lat, lng, data);
-               });
-               
-               input.onLoad(function () {
-                  $("input[name=lat]").val(lat);
-                  $("input[name=lon]").val(lng);
-                  
-                  input.onForm(function () {
-                     //get album name + description
-                     var title = $("[name=title]").val(), description = $("[name=description]").val();
-                     //dont create album yet, server might return error
-                     state.store(TEMP_TITLE_KEY, title);
-                     state.store(TEMP_DESCRIPTION_KEY, description);
-                  });
-               });
-               
-               input.get("/insert-album");
-            }
-         }
-      });
    },
 };
