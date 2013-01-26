@@ -3,11 +3,14 @@
   UITest.js
   @author Frederik Claus
   @description adds listener to test buttons to initate actions which are otherwise complicated or impossible to trigger
+ This scripts directly against google.maps. Adding a public interface to UIMap would be to expensive
  */
 
 "use strict";
 
 var latLngAlbum, latLngPlace, state, places, place, photos, photo, albums, album, event, gmap, center;
+
+
 
 
 /*
@@ -55,18 +58,22 @@ function selectPhoto() {
 }
 
 function initializeTest() {
-   //TODO no no! information hiding!
-   gmap = main.getMap().getInstance();
+
+   if (typeof google.maps !== "object"){
+      throw new Error("gmaps does not seem to be used anymore. Please update ui-tests.");
+   }
+
+   gmap = main.getMap().map;
 
    // calculate random bounds and add listener. remove google maps listener afterwards
-   var listener = google.maps.event.addListener(gmap, "center_changed", function () {
+   var mapOnLoadsListener = google.maps.event.addListener(gmap, "center_changed", function () {
+      google.maps.event.removeListener(mapOnLoadsListener);
 
       latLngAlbum = new google.maps.LatLng(Math.random() * 42, Math.random() * 42);
       center = gmap.getCenter();
       latLngPlace = new google.maps.LatLng(center.lat() - Math.random(), center.lng() + Math.random());
 
-      bindListener();
-      google.maps.event.removeListener(listener);
+      bindTestListener();
       //give the ok to the selenium test suite
       $("body").append($("<div id='ui-test-loaded'></div>"));
 
@@ -74,7 +81,7 @@ function initializeTest() {
 
 }
 
-function bindListener() {
+function bindTestListener() {
    var controls = main.getUI().getControls();
 
 
@@ -110,6 +117,9 @@ function bindListener() {
    $("button.mp-delete-photo").click(function () {
       selectPhoto();
       controls.$delete.trigger("click");
+   });
+   $("button.mp-confirm-delete").click(function () {
+      main.getUI().getInput().confirmDelete();
    });
    $("button.mp-insert-album").click(function () {
       event = {

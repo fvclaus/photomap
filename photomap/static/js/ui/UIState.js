@@ -65,6 +65,10 @@ UIState.prototype = {
    //PHOTO---------------------------------------------------------------
    //--------------------------------------------------------------------
    setPhotos : function (photos) {
+      //TODO someone sets photos to null
+      if (photos === null){
+         return;
+      }
       this.photos = photos;
    },
    getPhotos : function () {

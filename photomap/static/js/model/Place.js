@@ -94,20 +94,26 @@ Place.prototype._bindListener = function () {
       var map, oldPlace;
 
       if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
-
-         oldPlace = state.getCurrentLoadedPlace();
-         
-         controls.hideEditControls(false);
-         state.setCurrentPlace(instance);
-         state.setCurrentLoadedPlace(instance);
-         
-         // change icon of new place
-         instance.checkIconStatus();
-         // change icon of old place
-         if (oldPlace) {
-            oldPlace.checkIconStatus();
-         }
-         instance._showGallery();
+         //TODO confer Album.js. This does also not work during Place creation, because the UI is disabled
+         instance.openPlace();
       }
    });
 };
+
+Place.prototype.openPlace = function () {
+   var state = main.getUIState(), oldPlace = state.getCurrentLoadedPlace();
+         
+   //this is a private function now
+   // controls.hideEditControls(false);
+   state.setCurrentPlace(this);
+   state.setCurrentLoadedPlace(this);
+   
+   // change icon of new place
+   this.checkIconStatus();
+   // change icon of old place
+   if (oldPlace) {
+      oldPlace.checkIconStatus();
+   }
+   this._showGallery();
+};
+   

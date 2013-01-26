@@ -219,7 +219,7 @@ UIControls.prototype = {
                   title : object.title,
                   model : object.model
                };
-               input.confirmDelete(url, data);
+               input.showDeleteDialog(url, data);
             }
          });
    },

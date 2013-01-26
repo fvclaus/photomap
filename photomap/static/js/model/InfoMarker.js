@@ -33,7 +33,7 @@ InfoMarker = function (data) {
    this.map = main.getMap();
    //generate a new Marker from the Map object
    this.setImplementation(this.map.createMarker(data));
-   this.map.hideMarker(this);
+   this.hide();
 
 };
 
@@ -106,7 +106,7 @@ InfoMarker.prototype = {
       this.MapMarker.setCursor(cursor);
    },
    triggerClick : function () {
-      this.triggerClickOnMarker(this);
+      this.map.triggerClickOnMarker(this);
    },
    triggerDoubleClick : function () {
       this.map.triggerDblClickOnMarker(this);

@@ -151,6 +151,16 @@
 	<td>css=div#mp-share</td>
 	<td>albumShare</td>
 </tr>
+<tr>
+	<td>store</td>
+	<td>css=#confirm-delete</td>
+	<td>deleteDialog</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-confirm-delete</td>
+	<td>confirmDelete</td>
+</tr>
 </tbody></table>
 </body>
 </html>

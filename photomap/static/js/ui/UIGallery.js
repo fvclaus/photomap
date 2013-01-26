@@ -196,6 +196,8 @@ UIGallery.prototype =  {
          // create empty gallery -> b clicking on empty tile you can add photo
          this.$gallery.empty().css("left", 0);
          this._createEmptyTiles();
+         //TODO i think a _searchImages is missing here, because $galleryTiles will still be null
+         this._searchImages();
          this._resizeTiles();
       }
    },

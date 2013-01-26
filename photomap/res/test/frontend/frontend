@@ -21,6 +21,7 @@
 <tr><td><a href="delete-place">delete-place</a></td></tr>
 <tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="to-dashboard">to-dashboard</a></td></tr>
+<tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="update-album">update-album</a></td></tr>
 <tr><td><a href="get-album-share">get-album-share</a></td></tr>
 <tr><td><a href="logout">logout</a></td></tr>

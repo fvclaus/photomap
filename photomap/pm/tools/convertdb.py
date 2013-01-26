@@ -2,6 +2,7 @@
 Created on Jul 16, 2012
 
 @author: fredo
+@summary: This script is used to convert the multi level database scheme to the newest production scheme
 '''
 
 import sqlite3
@@ -75,7 +76,7 @@ def convert(path, data):
                 response = client.post("/insert-photo", data = data)
                 content = json.loads(response.content)
                 if content["success"]:
-                    print "Saved photo %s." % str(unescape(photodb["name"]))
+                    print "Saved photo %s." % unescape(photodb["name"])
                 else:
                     raise RuntimeError, "Expected success, got error %s instead." % str(content["error"])
                 
@@ -86,4 +87,4 @@ if __name__ == "__main__":
     data = {"album-lat": decimal.Decimal(35.012414),
             "album-lon": decimal.Decimal(135.768356),
             "user": User.objects.get(username = "demo")}
-    convert("/home/fredo/javascript/multi-level-photo2/map.sqlite", data)
+    convert("/home/fredo/javascript/multi-level-photo/map.sqlite", data)

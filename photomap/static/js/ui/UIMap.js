@@ -71,6 +71,21 @@ UIMap.prototype = {
       pixel.x += offset.left;
       return {top : pixel.y, left : pixel.x};
    },
+   /**
+    * @public
+    * @summary This will return a dictionary contain
+    * In the current implementation that means that the center has changed and the tiles already started loading.
+    */
+   generateRandomCoordinates : function (callback) {
+      if (this._onLoads){
+         throw new Error("onLoad can only be used once atm");
+      }
+      var mapOnLoadsListener = google.maps.event.addListener(this.map, "center_changed", function () {
+         callback();
+         google.maps.event.removeListener(mapOnLoadsListener);
+      });
+      this._onLoads = 1;
+   },
 
    /**
     @public
@@ -79,8 +94,8 @@ UIMap.prototype = {
     */
    createMarker : function (data) {
       if (!(data.lat && (data.lng || data.lon) && data.title)) {
-         console.log("Data in createMarker does not seem to be complete");
          console.dir(data);
+         throw new Error("Data in createMarker does not seem to be complete");
       }
       
       lat = parseFloat(data.lat);
@@ -157,12 +172,7 @@ UIMap.prototype = {
    _triggerEventOnMarker : function (marker, event) {
       google.maps.event.trigger(marker.getImplementation(), event);
    },
-   /**
-    @public
-    */
-   getMapOffset : function () {
 
-   },
 
    initWithoutAjax : function () {
       this._create();
@@ -196,7 +206,7 @@ UIMap.prototype = {
       this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
       this.ROADMAP = google.maps.MapTypeId.ROADMAP;
       // get hold of the default google.maps.StreetView object
-      this.streetview = this.getInstance().getStreetView();
+      this.streetview = this.map.getStreetView();
       //define overlay to retrieve pixel position on mouseover event
       this.overlay = new google.maps.OverlayView();
       this.overlay.draw = function () {};
@@ -289,7 +299,7 @@ UIMap.prototype = {
       this.map.fitBounds(newBounds);
    },
    getInstance : function () {
-      return this.map;
+      throw new Error("Don't used this function anymore. Write a new member function on UIMap that enforces information hiding");
    },
    getPanorama : function () {
       return this.streetview;

@@ -17,13 +17,18 @@
 	<td></td>
 </tr>
 <tr>
-	<td>assertConfirmationPresent</td>
-	<td></td>
+	<td>waitForVisible</td>
+	<td>${deleteDialog}</td>
 	<td></td>
 </tr>
 <tr>
-	<td>assertElementNotPresent</td>
-	<td>css=span.mp-gallery-tile &gt; img</td>
+	<td>click</td>
+	<td>${confirmDelete}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
+	<td>${deleteDialog}</td>
 	<td></td>
 </tr>
 </tbody></table>

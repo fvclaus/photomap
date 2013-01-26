@@ -55,7 +55,7 @@ UI.prototype = {
       return this.information;
    },
    /**
-    * @description Adds album fully to ui.
+    * @description Propagates the addAlbum event to every UI component affected.
     */
    addAlbum : function (lat, lon, data) {
       
@@ -71,7 +71,8 @@ UI.prototype = {
       this.getState().addAlbum(album);
       this.getControls().bindAlbumListener(album);
       //redirect to new albumview
-      album.triggerDoubleClick();
+      //triggerDoubleClick does not work on the time, because the UI is still disabled from UIInput
+      album.openURL();
    },
    /**
     * @description Removes album fully from ui.

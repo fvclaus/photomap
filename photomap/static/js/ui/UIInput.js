@@ -22,6 +22,7 @@ UIInput = function () {
    this._initialise();
    this.dialog = $("#input-dialog");
    this.visible = false;
+   this.$deleteDialog = $("#confirm-delete");
 };
 UIInput.prototype = {
    /**
@@ -94,18 +95,18 @@ UIInput.prototype = {
     * @author Marc-Leon Römer
     * @description Show confirm dialog with ui-dialog. If confirmed pass url & data to ClientServer.deleteObject to post the delete.
     */
-   confirmDelete : function (url, data) {
+   showDeleteDialog : function (url, data) {
       
-      var $dialog, instance = this;
-      $dialog = $("#confirm-delete");
+     var instance = this;
+
       
-      $dialog
+      this.$deleteDialog
          .find(".data-title")
          .empty()
          .append(data.title);
-      dimension = this.getDialogDimension($dialog.html());
+      dimension = this.getDialogDimension(this.$deleteDialog.html());
 
-      $dialog.dialog({
+      this.$deleteDialog.dialog({
          modal : true,
          //TODO where is 1.4 and 2.3 coming from?
          minWidth : dimension.width * 1.4,
@@ -141,7 +142,24 @@ UIInput.prototype = {
       });
       
       return false;
-   },      
+   },
+   /**
+    @public
+    @summary This is needed for testing the deletion of objects, because the confirm buttons cannot be queried in a reasonable fashion
+    */
+   confirmDelete : function () {
+      if (! this.$deleteDialog.dialog("isOpen")){
+         throw new Error("the dialog is not even open!");
+      }
+      var instance = this;
+      this.$deleteDialog.dialog("option", "buttons").forEach(function (button) {
+         //TODO the button text might change. There needs to be a better way to do that.
+         if (button.text === "Yes"){
+            //TODO it gets even uglier. now we need to call the click method and make sure 'this' is the dialog
+            button.click.apply(instance.$deleteDialog.get(0));
+         }
+      });
+   },
    loadHtml : function (url) {
       var instance = this;
       $.ajax({

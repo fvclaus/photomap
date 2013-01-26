@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, InfoMarker, google */
+/*global $, main, InfoMarker, google, window */
 
 "use strict";
 
@@ -44,15 +44,17 @@ Album.prototype._bindListener = function () {
       }
    });
    this.addListener("dblclick", function () {
-      
+      //TODO this is problematique. it gets fired when a new album is added
+      //but the ui is still disabled at that moment
       if (!main.getUI().isDisabled()) {
-         
-         var url = '/view-album?id=' + instance.id;
-         window.location.href = url;
+         instance.openURL();
       }
    });
 };
 
+Album.prototype.openURL = function () {
+   window.location.href = '/view-album?id=' + this.id;
+};
 
 Album.prototype.checkIconStatus = function () {
    this.showVisitedIcon();
