@@ -11,32 +11,6 @@ var FileUpload = function () {
 
 FileUpload.prototype =  {
 
-   handleGalleryDragover : function (event) {
-      event.stopPropagation();
-      event.preventDefault();
-      event.originalEvent.dataTransfer.dropEffect = 'copy';
-   },
-
-   /**
-    * @description Called when input[type='file'] field changes. Empties input-field if file is not ok, else file gets set up for upload.
-    */
-   handleFileInput : function (event) {
-      event.preventDefault();
-      event.stopPropagation();
-
-
-      place = state.getCurrentLoadedPlace();
-      files = event.target.files;
-      checked = this.checkFiles(files);
-
-      if (checked.success) {
-         this.state.setFileToUpload(files[0]);
-      } else {
-         $("input[type='file']").val(null);
-         alert(checked.error);
-      }
-      return;
-   },
 
    /**
     * @description Adds photo to UI after successful upload.
@@ -52,58 +26,14 @@ FileUpload.prototype =  {
          alert(response.error);
       }
    },
-   /**
-    * @description Takes files and checks them for validity.
-    */
-   checkFiles : function (files) {
 
-      var result;
-
-      if (files.length > 1) {
-         // return if more than one file is dropped into the gallery
-         result = {
-            'success' : false,
-            'error' : ERRORS.TOO_MANY_PHOTOS
-         };
-      } else if (!files[0].type || $.inArray(files[0].type, ALLOWED_UPLOAD_FILE_TYPES) < 0) {
-         // return if the file type is not allowed
-         result = {
-            'success' : false,
-            'error' : ERRORS.UNALLOWED_FILE_TYPE
-         };
-      } else {
-         // if everything is correct proceed
-         result = {
-            'success' : true
-         };
-      }
-
-      return result;
-
-   },
-   /**
-    * @description Take params and create a FormData-Object with them.
-    * @param: params Parameters of the request.
-    * @param: {String} fileType Type of the file upload-file (eg. "photo").
-    */
-   getUploadData : function (params, fileType) {
-      state = main.getUIState();
-      data = new FormData();
-
-      data.append('place', params.id);
-      data.append('title', params.title);
-      data.append('description', params.description);
-      data.append(fileType, state.getFileToUpload());
-
-      return data;
-   },
    /**
     * @description Get input-values of the request-form and transform them into a FormData-Object and start the upload.
     * @param {Boolean} repeat Repeat defines if the user wants to add more photos afterwards or not.
     */
-   startUpload : function () {
+   startUpload : function (photo) {
 
-      var $form = $("form.jquery-validator"),  inputValues, photo, state = main.getUIState();
+      var $form = $("form.jquery-validator"),  inputValues, state = main.getUIState();
       
       // Photo Upload funktioniert in Chrome! Man muss nur die internet-security (same-origin-policy) abschalten (komischerweise klappt es manchmal trotzdem nicht - ka warum!).. an sich muss man das bei FF auch damit der Upload ohne Probleme funktioniert. Ausserdem gilt das beides nur für die Entwicklung. Jeder der etwas auf den amazon-server hochladen will, dürfte damit eigentlich keine Probleme haben (egal welcher Browser .. sogar IE).
       //TODO wenn der UIPhotoEditor drinnen ist wird der Upload nicht mehr funktionieren da ich mozilla spezifische JS Funktionen benutzen muss
@@ -126,7 +56,13 @@ FileUpload.prototype =  {
       this.state.store(TEMP_DESCRIPTION_KEY, inputValues.description);
          
       // get FormData-Object for Upload
-      data = this.getUploadData(inputValues, 'photo');
+      data = new FormData();
+
+      data.append('place', inputValues.id);
+      data.append('title', inputValues.title);
+      data.append('description', inputValues.description);
+      data.append("photo", photo);
+
 
       this.sendUpload(data);
 

@@ -1,4 +1,4 @@
-/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, FileUpload*/
+/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, FileUpload, UIPhotoEditor */
 "use strict";
 
 
@@ -6,6 +6,7 @@ var UIPhotoListener = function () {
    this.input = main.getUI().getInput();
    this.state = main.getUI().getState();
    this.fileUpload = new FileUpload();
+   this.editor = new UIPhotoEditor();
 };
 
 
@@ -28,29 +29,24 @@ UIPhotoListener.prototype = {
       });
    },
    handleDrop : function (event) {
+      //TODO whats that for?
       event.stopPropagation();
       event.preventDefault();
 
-      var files = event.originalEvent.dataTransfer.files,
-          checked = this.fileUpload.checkFiles(files),
+      var file = this.editor._checkFile(event),
           instance = this,
           place = this.state.getCurrentLoadedPlace();
       
-      if (checked.success) {
-         // handler for gallery drop
-         this.state.setFileToUpload(files[0]);
-
+      if (file) {
          this.input.show({
             submitHandler : function () {
                //hide input fields
-               $("input[type='file'],label[name='file-upload']").remove();
                instance._submitHandler.apply(instance);
+               $("input[type='file']").trigger("change", event);
+               $("input[type='file'],label[name='file-upload']").remove();
             },
             url : "/insert-photo?place=" + place.id
          });
-      } else {
-         alert(checked.error);
-         return false;
       }
    },
    handleDrag : function (event) {
@@ -60,17 +56,19 @@ UIPhotoListener.prototype = {
    },
    _submitHandler : function () {
       var instance = this;
+      $("#insert-photo-tabs").tabs();
       $("form.jquery-validator").validate({
          success : "valid",
          submitHandler : function () {
-            instance.fileUpload.startUpload.call(instance.fileUpload);
+            //give the fileupload the img data
+            instance.fileUpload.startUpload.call(instance.fileUpload, instance.editor.getAsFile());
          }
       });
-      if ($("input#file-input")) {
-         $("#file-input").bind('change', function(event) {
-            instance.fileUpload.handleFileInput.call(instance.fileUpload, event);
-         });
-      }    
+      //start the editor
+      $("#file-input").bind('change', function(event) {
+         instance.editor.edit.call(instance.editor, event);
+      });
+      
    },
    update : function (photo) {
       var instance = this;

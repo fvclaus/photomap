@@ -4,20 +4,17 @@
                 <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
 		<script type="text/javascript" src="/static/js/lib/jquery.tools.notabs.min.js"></script>
 		<script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.min.js"></script>
+	        <script type="text/javascript" src="/static/js/util/constants.js"></script>
 		<script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
 		<script type="text/javascript" src="/static/js/main/sandbox.js"></script>
                 <script type="text/javascript" src="/static/js/ui/UIPhotoEditor.js"></script>
-                <link rel="stylesheet" href="/static/css/external/overcast/jquery-ui-1.9.2.custom.css" />
+                <link rel="stylesheet" type="text/css" href="/static/css/lib/overcast/jquery-ui-1.9.2.custom.css" />
                 {% load compress %}
                 {% compress css %}
                 <link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl"/>
                 {% endcompress %}
 
-		<style type="text/css">
-      .preview { border: 1px solid black; }
-      #placeholder  { width: 300px; height: 200px;}
-      #load { display: none;}
-    	</style>
+
 	</head>
 	<body>
           <div id="tabs">

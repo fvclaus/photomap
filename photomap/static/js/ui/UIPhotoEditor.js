@@ -1,4 +1,4 @@
-/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image */
+/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image, ERRORS, ALLOWED_UPLOAD_FILE_TYPES */
 
 "use strict";
 
@@ -7,10 +7,7 @@ var UIPhotoEditor, instance, $orig, $preview, longest_side, canvas, context, $ca
 longest_side = 500;
 
 UIPhotoEditor = function(){
-   //fail if markup is not present
-   if (!document.getElementById("ui-editor")){
-      throw new Error("Markup for UIPhotoEditor is not present. Please use the right template.");
-   }
+
 
    this.PREVIEW_SELECTOR = "#ui-editor-preview";
    this.ORIG_SELECTOR = "#ui-editor-original";
@@ -19,29 +16,28 @@ UIPhotoEditor = function(){
 
    this.reader = new FileReader();
 
+   this._init();
 
-   $(this.PREVIEW_SELECTOR).hide();
-   $(this.ORIG_SELECTOR).hide();
-   
-   this.$rotate = $("#rotate");
-   this.$revert = $("#revert");
-   this.$operations = $(".photo-operation");
-   
-   this.bindListener();
-   this.disable();
-   this.isRotateDisabled = false;
-
-   this.originals = {};
-   this.angles = {};
 };
 
 UIPhotoEditor.prototype = {
-   edit : function (file) {
+   edit : function (event) {
+      //fail if markup is not present
+      if (!document.getElementById("ui-editor")){
+         throw new Error("Markup for UIPhotoEditor is not present. Please use the right template.");
+      }
+      
+      this._init();
       instance = this;
       $orig = $(this.ORIG_SELECTOR);
       $preview = $(this.PREVIEW_SELECTOR);
 
-      this.reader.readAsDataURL(file);
+      this.file = this.checkFile(event);
+      if (this.file === null){
+         $("input[type='file']").val(null);
+      }
+         
+      this.reader.readAsDataURL(this.file);
       this.reader.onload = function (evt) {
          $orig.load(function () {
 
@@ -50,6 +46,7 @@ UIPhotoEditor.prototype = {
             
             $preview.load(function () {
                $("#ui-editor-placeholder").hide();
+               $orig.hide();
                $preview.show();
                // $preview.css("max-height", $preview.height());
                instance.enable();
@@ -60,9 +57,53 @@ UIPhotoEditor.prototype = {
          $orig.attr("src", evt.target.result);
       };
    },
+
+   /**
+    @public
+    @description Takes files and checks them for validity.
+    */
+   checkFile : function (event) {
+      event.preventDefault();
+      event.stopPropagation();
+
+      var files = event.target.files;
+
+      if (files.length > 1) {
+         alert(ERRORS.TOO_MANY_PHOTOS);
+         return null;
+      } else if (!files[0].type || $.inArray(files[0].type, ALLOWED_UPLOAD_FILE_TYPES) < 0) {
+         // return if the file type is not allowed
+         alert(ERRORS.UNALLOWED_FILE_TYPE);
+         return null;
+      }
+
+      return files[0];
+   },
    getAsFile : function() {
+      //no processing done. return file
+      if (!instance.isCanvas){
+         return this.file;
+      }
       canvas = $(this.ORIG_SELECTOR).get(0);
       return canvas.mozGetAsFile("photo.jpg", "image/jpeg", 1.0);
+   },
+   /**
+    @private
+    */
+   _init : function () {
+      $(this.PREVIEW_SELECTOR).hide();
+      $(this.ORIG_SELECTOR).hide();
+      
+      this.$rotate = $("#rotate");
+      this.$revert = $("#revert");
+      this.$operations = $(".photo-operation");
+      
+      this.bindListener();
+      this.disable();
+      this.isRotateDisabled = false;
+
+      this.originals = {};
+      this.angles = {};
    },
 
    bindListener : function () {

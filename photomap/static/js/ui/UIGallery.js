@@ -1,4 +1,4 @@
-+/*jslint */
+/*jslint */
 /*global $, main, fileUpload */
 
 "use strict";
