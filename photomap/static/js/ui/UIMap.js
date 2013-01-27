@@ -345,7 +345,7 @@ UIMap.prototype = {
     */
    enable : function () {
       
-      this._setMapCursor("not-allowed");
+      this._setMapCursor();
       this.map.setOptions({
          draggable : true,
          scrollwheel : true,
@@ -356,9 +356,12 @@ UIMap.prototype = {
          streetViewControl : true
       });
    },
+   /**
+    * @public
+    */
    disable : function () {
       
-      this._setMapCursor();
+      this._setMapCursor("not-allowed");
       this.map.setOptions({
          draggable : false,
          scrollwheel : false,
