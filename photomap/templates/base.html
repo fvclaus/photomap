@@ -96,16 +96,23 @@
 			   {% endblock %}
 			</section>
 
+			<section class="mp-dropup-menu" id="mp-user-menu">
+           <div class="mp-dropup-menu-inner">
+             <div>
+               <a href="#" title='{% trans "Settings" %}'>{% trans "Settings" %}</a>
+             </div>
+             <div>
+				   <a href="/logout" title="Logout">{% trans "Abmelden" %}</a>
+			    </div>
+           </div>
+         </section>
+
 			<footer class="mp-page-footer column span-24 last" id="mp-page-footer">
 			   {% if user.is_authenticated %}
-				   <section class="mp-user column span-9">
-					   <span>
-						   <a href="/logout" title="Logout">|{% trans "Abmelden" %}</a>
-						</span>
+				   <section class="mp-user column span-9" id="mp-user">
+						<span class="mp-control mp-cursor-pointer" id="mp-user-mail">{{user.email}}</span>
                   <span>|</span>
-						<span>{{user.email}}</span>
-                  <span>|</span>
-                  <span id="mp-limit">{{user.userprofile.get_limit}}</span>
+                  <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
 					</section>
 				{% else %}
 					<section class="mp-login-link column span-8">

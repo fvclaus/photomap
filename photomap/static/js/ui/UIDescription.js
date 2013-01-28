@@ -1,24 +1,25 @@
 /*jslint */
-/*global $, main, mpEvents, ALBUM_VIEW */
+/*global $, main, ALBUM_VIEW */
 
 "use strict";
 
 /**
  * @author Marc-Leon Römer
- * @class shows description and titles of current Album/Place/Photo in several Places of the UI
+ * @class contains handler to show description, title and other information about the User & Photos/Places/Albums
  */
 
-var title, info, api,
-    UIDescription = function () {
+var title, info, api, UIDescription;
 
-       this.$wrapper = $("#mp-description");
-       this.$album = $("#mp-album");
-       this.$description = $(".mp-description-wrapper").find(".mp-description-body");
-       this.$imageNumber = $(".mp-image-number");
-       this.$descriptionTitle = $(".mp-description-title");
-       this.$fullDescription = $(".mp-full-description-body");
-       this.$fullDescriptionTitle = $(".mp-full-description-title");
-    };
+UIDescription = function () {
+   
+   this.$wrapper = $("#mp-description");
+   this.$album = $("#mp-album");
+   this.$description = $(".mp-description-wrapper").find(".mp-description-body");
+   this.$imageNumber = $(".mp-image-number");
+   this.$descriptionTitle = $(".mp-description-title");
+   this.$fullDescription = $(".mp-full-description-body");
+   this.$fullDescriptionTitle = $(".mp-full-description-title");
+};
 
 UIDescription.prototype = {
 
@@ -136,6 +137,6 @@ UIDescription.prototype = {
       used = main.getClientState().getUsedSpace();
       total = main.getClientState().getQuota();
       
-      $(".mp-limit").text(used + "/" + total + " MB");
+      $(".mp-user-limit").text(used + "/" + total + " MB");
    }
 };
