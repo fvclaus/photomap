@@ -3,7 +3,7 @@
 
 "use strict";
 
-var initializePanels, bindLogoListener, bindTitleListener, resizeFooterFont, showDropupMenu, hideDropupMenu, isMenuEntered, bindUserMenuListener;
+var initializePanels, bindLogoListener, bindTitleListener, resizeFooterFont, showDropupMenu, hideDropupMenu, menuEntered, bindUserMenuListener, menuHeight, menuTimeoutId;
 
 bindLogoListener = function () {
    $(".mp-logo img").bind("click", function () {
@@ -45,23 +45,23 @@ resizeFooterFont = function () {
 
 showDropupMenu = function () {
    
-   var $menu, offset, width, height;
+   var $menu, offset, width;
    $menu = $("#mp-user-menu");
    offset = $("#mp-user").offset();
    width = $("#mp-user-mail").width() + $("#mp-user-mail").next().width();
-   height = $menu.outerHeight();
    
    if (!$menu.is(":visible")) {
       
       $menu
          .css({
             top: offset.top,
-            left: offset.left
-//            width: width
+            left: offset.left,
+            height: "1px"
          })
          .show()
          .animate({
-            top: offset.top - height
+            top: offset.top - menuHeight,
+            height: menuHeight
          }, 200);
    }
 };
@@ -72,31 +72,35 @@ hideDropupMenu = function (timer) {
    
    hideMenu = function () {
       
-      if (isMenuEntered) {
+      if (menuEntered) {
          setMenuTimer();
          return;
       }
-      $menu.fadeOut(400);
+      if ($menu.is(":visible")) {
+         
+         $menu.fadeOut(300);
+      }
    };
    setMenuTimer = function () {
-      window.setTimeout(hideMenu, 1000);
-   };      
-   if ($menu.is(":visible")) {
       
-      if (timer) {
-         
-         setMenuTimer();
-         
-      } else {
+      window.clearTimeout(menuTimeoutId);
+      menuTimeoutId = window.setTimeout(hideMenu, 1000);
+   };
+   if (timer) {
       
-         hideMenu();
-      }
+      setMenuTimer();
+      
+   } else {
+      
+      hideMenu();
    }
 };
 bindUserMenuListener = function () {
    
    $("#mp-user-mail")
       .on("mouseenter", function () {
+         window.clearTimeout(menuTimeoutId);
+         menuTimeoutId = null;
          showDropupMenu();
       })
       .on("mouseleave", function () {
@@ -107,14 +111,20 @@ bindUserMenuListener = function () {
       });
    $("#mp-user-menu")
       .on("mouseenter", function () {
-         isMenuEntered = true;
+         menuEntered = true;
       })
       .on("mouseleave", function () {
-         isMenuEntered = false;
+         menuEntered = false;
+         hideDropupMenu(false);
       });
+   $("body").on("click.UserMenuHide", function () {
+      hideDropupMenu(false);
+   });
 };
 initializePanels = function () {
    
+   menuHeight = $("#mp-user-menu").outerHeight();
+
    bindLogoListener();
    resizeFooterFont();
    bindUserMenuListener();
