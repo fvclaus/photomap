@@ -63,13 +63,33 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>photo1NewTitlePartyurlaub in Mallorca mit Julian und Tom</td>
+	<td>Partyurlaub in Mallorca mit Julian und Tom</td>
 	<td>photo1NewTitle</td>
 </tr>
 <tr>
 	<td>store</td>
 	<td>Am Goldstrand mit Julian und Tom</td>
 	<td>photo2Title</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>Die Stadt abreissen</td>
+	<td>placeTitle</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>Die Stadt zerstören</td>
+	<td>placeNewTitle</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>X-Diaries RTL Malle</td>
+	<td>albumTitle</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>X-Diaries RTL Mallorca</td>
+	<td>albumNewTitle</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -95,11 +115,6 @@
 	<td>store</td>
 	<td>css=button.mp-update-photo</td>
 	<td>updatePhoto</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>css=p.mp-description-body</td>
-	<td>descriptionText</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -205,6 +220,21 @@
 	<td>store</td>
 	<td>css=.mp-full-description-title</td>
 	<td>fullDescriptionTitle</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=.mp-description-title</td>
+	<td>descriptionTitle</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=p.mp-description-body</td>
+	<td>descriptionBody</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=.mp-image-full</td>
+	<td>currentPhotoFull</td>
 </tr>
 </tbody></table>
 </body>

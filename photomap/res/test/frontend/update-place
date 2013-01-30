@@ -27,6 +27,11 @@
 	<td>${lipsum2}</td>
 </tr>
 <tr>
+	<td>type</td>
+	<td>${titleInput}</td>
+	<td>${placeNewTitle}</td>
+</tr>
+<tr>
 	<td>click</td>
 	<td>${submit}</td>
 	<td></td>
@@ -38,8 +43,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>${descriptionText}</td>
+	<td>${descriptionBody}</td>
 	<td>${lipsum2}</td>
+</tr>
+<tr>
+	<td>assertText</td>
+	<td>${descriptionTitle}</td>
+	<td>${placeNewTitle}</td>
 </tr>
 </tbody></table>
 </body>

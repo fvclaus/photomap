@@ -4,43 +4,14 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:8000/login" />
-<title>update-photo</title>
+<title>navigate-slideshow</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">update-photo</td></tr>
+<tr><td rowspan="1" colspan="3">navigate-slideshow</td></tr>
 </thead><tbody>
-<tr>
-	<td>click</td>
-	<td>${updatePhoto}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>${inputForm}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>${descriptionInput}</td>
-	<td>${lipsum2}</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>${titleInput}</td>
-	<td>${photo1NewTitle}</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>${submit}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementNotPresent</td>
-	<td>${inputForm}</td>
-	<td></td>
-</tr>
+
 </tbody></table>
 </body>
 </html>
