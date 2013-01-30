@@ -24,7 +24,7 @@
 <tr>
 	<td>type</td>
 	<td>${titleInput}</td>
-	<td>Random place in the random country</td>
+	<td>${placeTitle}</td>
 </tr>
 <tr>
 	<td>type</td>

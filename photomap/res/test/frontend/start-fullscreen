@@ -4,52 +4,27 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:8000/login" />
-<title>update-album</title>
+<title>start-fullscreen</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">update-album</td></tr>
+<tr><td rowspan="1" colspan="3">start-fullscreen</td></tr>
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>${updateAlbum}</td>
+	<td>${currentPhoto}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>${inputForm}</td>
+	<td>${currentPhotoFull}</td>
 	<td></td>
 </tr>
 <tr>
-	<td>type</td>
-	<td>${titleInput}</td>
-	<td>${albumNewTitle}</td>
-</tr>
-<tr>
-	<td>type</td>
-	<td>${descriptionInput}</td>
-	<td>${lipsum2}</td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>${submit}</td>
+	<td>assertVisible</td>
+	<td>css=.mp-image-overlay</td>
 	<td></td>
-</tr>
-<tr>
-	<td>waitForElementNotPresent</td>
-	<td>${inputForm}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>${descriptionBody}</td>
-	<td>${lipsum2}</td>
-</tr>
-<tr>
-	<td>assertText</td>
-	<td>${descriptionTitle}</td>
-	<td>${albumNewTitle}</td>
 </tr>
 </tbody></table>
 </body>

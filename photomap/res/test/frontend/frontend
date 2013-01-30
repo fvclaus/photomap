@@ -8,28 +8,38 @@
 <body>
 <table id="suiteTable" cellpadding="1" cellspacing="1" border="1" class="selenium"><tbody>
 <tr><td><b>Test Suite</b></td></tr>
-<tr><td><a href="setUp">setUp</a></td></tr>
+<tr><td><a href="check-full-description">setUp</a></td></tr>
 <tr><td><a href="login">login</a></td></tr>
 <tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="insert-album">insert-album</a></td></tr>
 <tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="insert-place">insert-place</a></td></tr>
-<tr><td><a href="add-photo">add-photo</a></td></tr>
 <tr><td><a href="update-place">update-place</a></td></tr>
+<tr><td><a href="insert-another-photo">insert-another-photo</a></td></tr>
+<tr><td><a href="update-another-photo">update-another-photo</a></td></tr>
+<tr><td><a href="check-description">check-description</a></td></tr>
+<tr><td><a href="add-photo">add-photo</a></td></tr>
+<tr><td><a href="open-description">open-description</a></td></tr>
 <tr><td><a href="update-photo">update-photo</a></td></tr>
+<tr><td><a href="check-description">check-full-description</a></td></tr>
+<tr><td><a href="close-description">close-description</a></td></tr>
+<tr><td><a href="start-fullscreen">start-fullscreen</a></td></tr>
+<tr><td><a href="navigate-fullscreen">navigate-fullscreen</a></td></tr>
+<tr><td><a href="navigate-fullscreen">navigate-fullscreen</a></td></tr>
+<tr><td><a href="close-fullscreen">close-fullscreen</a></td></tr>
+<tr><td><a href="check-description">check-description</a></td></tr>
 <tr><td><a href="delete-photo">delete-photo</a></td></tr>
 <tr><td><a href="delete-place">delete-place</a></td></tr>
-<tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="to-dashboard">to-dashboard</a></td></tr>
 <tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="update-album">update-album</a></td></tr>
 <tr><td><a href="get-album-share">get-album-share</a></td></tr>
 <tr><td><a href="logout">logout</a></td></tr>
 <tr><td><a href="show-album-share">show-album-share</a></td></tr>
+<tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="login">login</a></td></tr>
 <tr><td><a href="waitForAppReady">waitForAppReady</a></td></tr>
 <tr><td><a href="delete-album">delete-album</a></td></tr>
-
 </tbody></table>
 </body>
 </html>
