@@ -58,7 +58,7 @@ UIGallery.prototype =  {
    getImageBySource : function (source) {
       
       // due to the way .scrollable() works each img is 3 times in Gallery -> you need to pic the second, which is the currently visible 
-      return this.$gallery.find("img[src='" + source + "']").eq(1);
+      return this.$gallery.find(".mp-thumb-page").not("cloned").find("img[src='" + source + "']");
    },
    getImageIndex : function ($image) {
       
@@ -336,22 +336,20 @@ UIGallery.prototype =  {
     * @private
     */
    _initializeScrollable : function () {
-      
+      /*
+      $(".mp-gallery-nav-prev, .mp-gallery-nav-next").on("click.UIDisabled", function () {
+         if (main.getUI().isDisabled()) {
+            return false;
+         }
+      });
+      */
       this.$container.scrollable({
          items: ".mp-gallery-inner",
          prev: ".mp-gallery-nav-prev",
          next: ".mp-gallery-nav-next",
          circular: true,
          mousewheel: true,
-         speed: 500,
-         vertical: false,
-         easing: "swing",
-         onBeforeSeek: function () {
-            if (main.getUI().isDisabled()) {
-               return false;
-            }
-            return true;
-         }
+         speed: 500
       });
    },
    /**
@@ -363,7 +361,7 @@ UIGallery.prototype =  {
       state = main.getUIState();
       $fullGallery = $(".mp-full-gallery");
       
-      $(".mp-sortable-tile").on("click", function () {
+      $(".mp-sortable-tile").on("click.UIDisabled", function () {
          if (main.getUI().isDisabled()) {
             return false;
          }

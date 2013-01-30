@@ -8,7 +8,7 @@ var initializePanels, bindLogoListener, bindTitleListener, resizeFooterFont, sho
 bindLogoListener = function () {
    $(".mp-logo img").bind("click", function () {
       
-      if (!main.getUI().isDisabled()) {
+      if (!main.getUI().isDisabled || (main.getUI && main.getUI().isDisabled && !main.getUI().isDisabled())) {
          if ($(".mp-user").size() > 0) {
             window.location.href = "/dashboard";
          } else {
@@ -23,7 +23,7 @@ bindTitleListener = function () {
       
    $(".mp-page-title h1").on('click', function () {
       
-      if (!main.getUI().isDisabled()) {
+      if (main.getUI && main.getUI().isDisabled && !main.getUI().isDisabled()) {
          
          instance.updateAlbum();
       }
@@ -129,7 +129,7 @@ initializePanels = function () {
    resizeFooterFont();
    bindUserMenuListener();
    main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
-   if (main.getUIState().getPage() === ALBUM_VIEW) {
+   if (main.getUIState && main.getUIState().getPage() === ALBUM_VIEW) {
       bindTitleListener();
       $(".mp-page-title").trigger("click");
    }

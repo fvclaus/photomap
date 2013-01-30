@@ -30,7 +30,6 @@
   padding 0 5px
   position relative
   overflow hidden
-  background-image url(/static/images/gallery-bg.png)
   background-repeat no-repeat
   background-origin padding-box
   background-position top left
@@ -153,5 +152,20 @@
  left 48%
  position absolute
 
+.mp-image-overlay
+  width 100%
+  height 100%
+  z-index 1200
+  position fixed
+  top 0px
+  left 0px
+  background-color $background-rgba-alpha09-dark
+  text-align center
+  .mp-image-overlay-wrapper
+    border $border-light
+    position absolute
+    top 50%
+    left 50%
+    box-shadow($box-shadow-black)
 
 /* ------ end slideshow ------ */

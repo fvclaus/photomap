@@ -41,7 +41,10 @@ Photo.prototype = {
       this.openPhoto();
    },
    openPhoto : function () {
-      var $thumb = main.getUI().getGallery().getImageBySource(this.source);
+      var $thumb = main.getUI().getGallery().getImageBySource(this.thumb);
+      console.log("----");
+      console.log(this.thumb);
+      console.log($thumb);
       main.getUIState().setCurrentLoadedPhoto(this);
       $thumb.trigger("click");
    }

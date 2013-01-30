@@ -18,24 +18,27 @@ $.tools.validator.fn("[type=file]", function (el, value) {
 UIPhotoListener.prototype = {
    insert : function () {
       var instance = this,
-          place = this.state.getCurrentLoadedPlace();
-
-      this.input.show({  
-         submitHandler: function () {
-            //bind listener for form submit and file change
-            instance._submitHandler.call(instance);
-         },
-         url : "/insert-photo?place=" + place.id
-      });
+         place = this.state.getCurrentLoadedPlace();
+      
+      // if-clause to prevent method from being executed if there are no places yet
+      if (main.getUIState().getPlaces().length !== 0) {
+         this.input.show({
+            submitHandler: function () {
+               //bind listener for form submit and file change
+               instance._submitHandler.call(instance);
+            },
+            url : "/insert-photo?place=" + place.id
+         });
+      }
    },
    handleDrop : function (event) {
-      //TODO whats that for?
+      //TODO whats that for? -> If you mean the stopPropagation etc. -> prevents the event from bubbling up the dom tree and triggering the default action, which is loading the pic into the browser - else you may have to explain the "that" ;) 
       event.stopPropagation();
       event.preventDefault();
 
       var file = this.editor._checkFile(event),
-          instance = this,
-          place = this.state.getCurrentLoadedPlace();
+         instance = this,
+         place = this.state.getCurrentLoadedPlace();
       
       if (file) {
          this.input.show({
@@ -65,7 +68,7 @@ UIPhotoListener.prototype = {
          }
       });
       //start the editor
-      $("#file-input").bind('change', function(event) {
+      $("#file-input").bind('change', function (event) {
          instance.editor.edit.call(instance.editor, event);
       });
       

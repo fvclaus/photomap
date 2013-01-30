@@ -82,7 +82,7 @@ UIControls.prototype = {
    _bindFullGalleryListener : function () {
       $(".mp-open-full-gallery").on("click", function (event) {
          
-         if (!main.getUI().isDisabled()) {
+         if (!main.getUI().isDisabled() && main.getUIState().getPlaces().length !== 0) {
             main.getUI().getGallery().showFullGallery();
          }
       });
@@ -114,9 +114,9 @@ UIControls.prototype = {
    bindInsertPhotoListener : function () {
       //TODO use method on Gallery --> Gallery.addListener(...)
       var instance = this,
-          insertPhotoListener = function (){
-             instance.photoListener.insert.call(instance.photoListener);
-          };
+         insertPhotoListener = function () {
+            instance.photoListener.insert.call(instance.photoListener);
+         };
          
       $("#mp-gallery").on("click.PhotoMap", ".mp-empty-tile", insertPhotoListener);
       this.$insert.on("click.PhotoMap", insertPhotoListener);
