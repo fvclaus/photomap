@@ -69,7 +69,7 @@ UIInformation.prototype = {
    },
    /* ---- Album ---- */
    updateAlbumTitle : function () {
-      title = main.getUIState().getCurrentAlbum().title;
+      title = main.getUIState().getCurrentLoadedAlbum().title;
       
       this._setTitle(title);
       if (main.getUIState().getPage() === ALBUM_VIEW) {
@@ -82,7 +82,7 @@ UIInformation.prototype = {
    },
    updateAlbum : function () {
       //no album selected yet
-      if (main.getUIState().getCurrentLoadedAlbum() === undefined){
+      if (main.getUIState().getCurrentLoadedAlbum() === null){
          return;
       }
       this.updateAlbumTitle();
@@ -100,6 +100,10 @@ UIInformation.prototype = {
       this._setDescription(info);
    },
    updatePlace : function () {
+      //no place loaded yet
+      if (main.getUIState().getCurrentLoadedPlace() === null){
+         return;
+      }
       this.updatePlaceTitle();
       this.updatePlaceDescription();
    },
@@ -127,6 +131,10 @@ UIInformation.prototype = {
       this.$imageNumber.text("0/0");
    },
    updatePhoto : function () {
+      //no photo loaded yet
+      if (main.getUIState().getCurrentLoadedPhoto() === null){
+         return;
+      }
       this.updatePhotoDescription();
       this.updatePhotoTitle();
       this.updateImageNumber();

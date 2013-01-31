@@ -13,8 +13,11 @@ var UIState;
 UIState = function () {
    this.currentPhotoIndex = null;
    this.currentPhoto = null;
+   this.currentLoadedPhoto = null;
    this.currentPlace = null;
+   this.currentLoadedPlace = null;
    this.currentAlbum = null;
+   this.currentLoadedAlbum = null;
    this.currentDescription = "";
    this.currentTitle = "";
    this.photos = [];

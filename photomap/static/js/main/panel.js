@@ -25,7 +25,7 @@ bindTitleListener = function () {
       
       if (main.getUI && main.getUI().isDisabled && !main.getUI().isDisabled()) {
          
-         instance.updateAlbum();
+         main.getUI().getInformation().updateAlbum();
       }
    });
 };
