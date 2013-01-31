@@ -13,30 +13,37 @@
 
 {% block non_interactive_content %}
 
-   <section class="mp-tabs" >
-     <span>Login</span>
-     <span>Registration</span>
-   </section>
-   <section class="mp-panes">
+        <section class="mp-tabs" >
+          <span>Login</span>
+          <span>Registration</span>
+        </section>
+        <section class="mp-panes">
 	  <section class="mp-login" id="mp-login">
-		 <h2 class="mp-font">Login</h2>
-		 <form action="" method="post">
-			{{login.as_p}}
-			<p>
-			  <input class="ui-widget" type="submit" name="login" value="Login" />
-			</p>
-		 </form>
+	    <h2 class="mp-font">Login</h2>
+            <form action="" method="post">
+	      <p>
+                <label for="id_email">Email:</label> 
+                <input type="text" name="email" id="id_email" autofocus/>
+              </p>
+              <p>
+                <label for="id_password">Password:</label>
+                <input type="password" name="password" id="id_password" />
+              </p>
+	      <p>
+		<input class="ui-widget" type="submit" name="login" value="Login" />
+	      </p>
+	    </form>
 	  </section>
 	  <section class="mp-register" id="mp-register">
-		 <h2 class="mp-font">Registration</h2>
-		 <form action="" method="post">
-			{{register.as_p}}
-			<p>
-			  <input class="ui-widget" type="submit" name="register" value="Registrieren" disabled="disabled" />
-			</p>
-		 </form>
+	    <h2 class="mp-font">Registration</h2>
+	    <form action="" method="post">
+	      {{register.as_p}}
+	      <p>
+		<input class="ui-widget" type="submit" name="register" value="Registrieren" disabled="disabled" />
+	      </p>
+	    </form>
 	  </section>
-   </section>
+        </section>
 {% endblock %}
 
 
