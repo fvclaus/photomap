@@ -18,8 +18,13 @@ UIAlbumListener.prototype = {
          },
          submit : function () {
             //reflect changes locally
-            album.title = this.$title.val();
-            album.description = this.$description.val();
+            this._title = this.$title.val();
+            this._description = this.$description.val();
+         },
+         success : function () {
+            album.title = this._title;
+            album.description = this._description;
+            main.getUI().getInformation().updateAlbum();
          },
          url : "/update-album"
       });

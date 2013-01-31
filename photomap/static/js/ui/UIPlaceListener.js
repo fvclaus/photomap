@@ -35,18 +35,20 @@ UIPlaceListener.prototype = {
       });
    },
    update : function (place) {
-      var instance = this;
       this.input.show({
          load : function () {
             $("input[name=id]").val(place.id);
-            instance.$title = $("input[name=title]").val(place.title);
-            instance.$description = $("textarea[name=description]").val(place.description);
+            this.$title = $("input[name=title]").val(place.title);
+            this.$description = $("textarea[name=description]").val(place.description);
          },
          submit : function () {
-            //reflect changes locally
-            place.title = instance.$title.val();
-            place.description = instance.$description.val();
-            //TODO why is there a update for place but not for photo?
+            //save changes
+            this._title = this.$title.val();
+            this._description = this.$description.val();
+         },
+         success : function () {
+            place.title = this._title;
+            place.description = this._description;
             main.getUI().getInformation().updatePlace();
          },
          url : "/update-place"

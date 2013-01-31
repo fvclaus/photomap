@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, PAGE_MAPPING, DASHBOARD_VIEW */
+/*global $, window, main, PAGE_MAPPING, DASHBOARD_VIEW */
 
 "use strict";
 

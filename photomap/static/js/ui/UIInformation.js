@@ -69,8 +69,7 @@ UIInformation.prototype = {
    },
    /* ---- Album ---- */
    updateAlbumTitle : function () {
-      
-      title = main.getUIState().getCurrentLoadedAlbum().title;
+      title = main.getUIState().getCurrentAlbum().title;
       
       this._setTitle(title);
       if (main.getUIState().getPage() === ALBUM_VIEW) {
@@ -82,6 +81,10 @@ UIInformation.prototype = {
       this._setDescription(info);
    },
    updateAlbum : function () {
+      //no album selected yet
+      if (main.getUIState().getCurrentLoadedAlbum() === undefined){
+         return;
+      }
       this.updateAlbumTitle();
       this.updateAlbumDescription();
    },

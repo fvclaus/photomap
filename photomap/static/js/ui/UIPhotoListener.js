@@ -74,19 +74,24 @@ UIPhotoListener.prototype = {
       
    },
    update : function (photo) {
-      var instance = this;
+
       this.input.show({
          load : function () {
             //prefill with values from selected picture
             $("input[name=id]").val(photo.id);
             $("input[name=order]").val(photo.order);
-            instance.$title = $("input[name=title]").val(photo.title);
-            instance.$description = $("textarea[name=description]").val(photo.description);
+            this.$title = $("input[name=title]").val(photo.title);
+            this.$description = $("textarea[name=description]").val(photo.description);
          },
          submit : function () {
-            //reflect changes locally
-            photo.title = instance.$title.val();
-            photo.description = instance.$description.val();
+            //store them
+            this._title = this.$title.val();
+            this._description = this.$description.val();
+         },
+         success : function (data) {
+            photo.title = this._title;
+            photo.description = this._description;
+            main.getUI().getInformation().updatePhoto();
          },
          url : "/update-photo"
       });
