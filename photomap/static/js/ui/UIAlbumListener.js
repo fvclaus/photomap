@@ -74,6 +74,5 @@ UIAlbumListener.prototype = {
          });
       });
    },
- 
-}
+};
             

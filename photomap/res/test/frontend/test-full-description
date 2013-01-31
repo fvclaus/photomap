@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=button.mp-insert-photo</td>
+	<td>css=.mp-option-insert-photo</td>
 	<td>insertPhoto</td>
 </tr>
 <tr>
@@ -235,6 +235,31 @@
 	<td>store</td>
 	<td>css=.mp-image-full</td>
 	<td>currentPhotoFull</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=.mp-controls-wrapper</td>
+	<td>editControls</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=.mp-option-delete</td>
+	<td>deleteButton</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=.mp-option-modify</td>
+	<td>updateButton</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-mouseover-album</td>
+	<td>showAlbumControls</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=button.mp-mouseover-place</td>
+	<td>showPlaceControls</td>
 </tr>
 </tbody></table>
 </body>

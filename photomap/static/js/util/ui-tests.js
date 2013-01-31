@@ -102,21 +102,24 @@ function bindTestListener() {
       photo = selectPhoto();
       photo.triggerClick();
    });
-   $("button.mp-update-place").click(function () {
-      selectPlace();
-      controls.$update.trigger("click");
-   });
+   // $("button.mp-update-place").click(function () {
+   //    selectPlace();
+   //    controls.$update.trigger("click");
+   // });
    $("button.mp-update-photo").click(function () {
       selectPhoto();
       controls.$update.trigger("click");
    });
-   $("button.mp-delete-place").click(function () {
-      selectPlace(); 
-      controls.$delete.trigger("click");
-   });
+   // $("button.mp-delete-place").click(function () {
+   //    selectPlace(); 
+   //    controls.$delete.trigger("click");
+   // });
    $("button.mp-delete-photo").click(function () {
       selectPhoto();
       controls.$delete.trigger("click");
+   });
+   $("button.mp-mouseover-place").click(function () {
+      selectPlace().triggerMouseOver();
    });
    $("button.mp-confirm-delete").click(function () {
       main.getUI().getInput().confirmDelete();
@@ -127,17 +130,20 @@ function bindTestListener() {
       };
       google.maps.event.trigger(gmap, "click", event);
    });
-   $("button.mp-update-album").click(function () {
-      selectAlbum();
-      controls.$update.trigger("click");
+   // $("button.mp-update-album").click(function () {
+   //    selectAlbum();
+   //    controls.$update.trigger("click");
+   // });
+   // $("button.mp-delete-album").click(function () {
+   //    selectAlbum();
+   //    controls.$delete.trigger("click");
+   // });
+   $("button.mp-mouseover-album").click(function () {
+      selectAlbum().triggerMouseOver();
    });
-   $("button.mp-delete-album").click(function () {
-      selectAlbum();
-      controls.$delete.trigger("click");
-   });
-   $("button.mp-show-album-share").click(function () {
-      selectAlbum();
-      controls.$share.trigger("click");
-   });
+   // $("button.mp-show-album-share").click(function () {
+   //    selectAlbum();
+   //    controls.$share.trigger("click");
+   // });
 }
 

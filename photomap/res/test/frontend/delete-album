@@ -13,7 +13,17 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>${deleteAlbum}</td>
+	<td>${showAlbumControls}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>${editControls}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>${deleteButton}</td>
 	<td></td>
 </tr>
 <tr>

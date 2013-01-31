@@ -111,7 +111,9 @@ InfoMarker.prototype = {
    triggerDoubleClick : function () {
       this.map.triggerDblClickOnMarker(this);
    },
-
+   triggerMouseOver : function () {
+      this.map.triggerMouseOverOnMarker(this);
+   },
    showVisitedIcon : function () {
       this._setOption({icon: PLACE_VISITED_ICON});
    },

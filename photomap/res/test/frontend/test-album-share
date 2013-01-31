@@ -4,43 +4,29 @@
 <head profile="http://selenium-ide.openqa.org/profiles/test-case">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <link rel="selenium.base" href="http://localhost:8000/login" />
-<title>get-album-share</title>
+<title>test-album-share</title>
 </head>
 <body>
 <table cellpadding="1" cellspacing="1" border="1">
 <thead>
-<tr><td rowspan="1" colspan="3">get-album-share</td></tr>
+<tr><td rowspan="1" colspan="3">test-album-share</td></tr>
 </thead><tbody>
 <tr>
-	<td>click</td>
-	<td>${showAlbumControls}</td>
+	<td>assertNotVisible</td>
+	<td>${insertPhoto}</td>
 	<td></td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>click</td>
+	<td>${showPlaceControls}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>assertNotVisible</td>
 	<td>${editControls}</td>
 	<td></td>
 </tr>
-<tr>
-	<td>click</td>
-	<td>css=.mp-option-share</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>${showAlbumShare}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForVisible</td>
-	<td>${albumShare}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>storeValue</td>
-	<td>css=input#mp-share-link</td>
-	<td>albumShareUrl</td>
-</tr>
+
 </tbody></table>
 </body>
 </html>

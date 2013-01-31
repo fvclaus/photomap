@@ -13,7 +13,17 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>${updatePlace}</td>
+	<td>${showPlaceControls}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>${editControls}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>${updateButton}</td>
 	<td></td>
 </tr>
 <tr>

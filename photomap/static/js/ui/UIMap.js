@@ -166,6 +166,9 @@ UIMap.prototype = {
    triggerDblClickOnMarker : function (marker) {
       this._triggerEventOnMarker(marker, "dblclick");
    },
+   triggerMouseOverOnMarker : function (marker) {
+      this._triggerEventOnMarker(marker, "mouseover");
+   },
    /**
     @private
     */

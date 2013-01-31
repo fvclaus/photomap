@@ -80,5 +80,5 @@ UIPlaceListener.prototype = {
          });
       });
    }
-}
+};
       

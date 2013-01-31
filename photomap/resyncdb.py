@@ -40,6 +40,7 @@ if not parser.production:
 else: 
     SETTINGS_MODULE = ["--settings=settings_prod"]
     LOAD_USER = LOAD_FIXTURE + ["prod-user"]
+    LOAD_DEMO_DATA = LOAD_FIXTURE + ["demo-data"]
     import settings_prod as settings
 
 PASSWORD = settings.DATABASES["default"]["PASSWORD"]
@@ -118,7 +119,7 @@ def load_user():
 
 
 
-def load_data():
+def load_debug_data():
     from django.test.client import Client
     print "Inserting Album & Place..." 
     print sub.check_output(LOAD_DATA)
@@ -141,8 +142,9 @@ def load_data():
     print client.post("/insert-photo", get_data(TITLE_SHORT))
     print client.post("/insert-photo", get_data(TITLE_LONG))
     print "Done."
-    
-    
+
+def load_production_data():
+    print sub.check_output(LOAD_DEMO_DATA)
     
     
 
@@ -151,7 +153,11 @@ sync_db()
 delete_user()
 load_user()
 if not parser.production:
-    load_data()
+    load_debug_data()
+else:
+    pass
+    # load_production_data()
+
 # print sub.check_output(SYNCDB, shell = True)
 #
 # p = sub.Popen(SHELL, shell = True, stdout = sub.PIPE, stdin = sub.PIPE)
