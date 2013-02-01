@@ -124,11 +124,13 @@ UIInformation.prototype = {
       
       state = main.getUIState();
       photos = state.getPhotos();
-      
-      this.$imageNumber.text((state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
+      //TODO I think Photo is fine in every language
+      this.$imageNumber.text("Photo "+(state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
    },
    emptyImageNumber : function () {
-      this.$imageNumber.text("0/0");
+      //TODO 0/0 is a little misguiding. I suggest nothing instead.
+      // this.$imageNumber.text("0/0");
+      this.$imageNumber.text("");
    },
    updatePhoto : function () {
       //no photo loaded yet
