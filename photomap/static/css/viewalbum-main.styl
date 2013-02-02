@@ -19,7 +19,7 @@
 
 /*
  * The proportions for the gallery are 780 : 280 (w : h)
- * nav-boxes are 60 : 240 | tiles are 120 : 240 | top&bottom border 20 (h) | space between tiles 10 (w)
+ * nav-boxes are 60 : 240 | content-part is 650 (=780-2*60-10) : 240 | tiles are 120 : 240 | top&bottom border 20 (h) | space between tiles 10 (w)
  * (the percentages are calculated accordingly) | note: % in padding refers to width of containing box!
  * size and margins of thumbs has to be calculated (UIGallery.js) due to using liquid layout and jquerytools "scrollable" (-> 20000em width)
  */
@@ -30,6 +30,7 @@
   padding 0 5px
   position relative
   overflow hidden
+  background-image url(/static/images/gallery-bg.png)
   background-repeat no-repeat
   background-origin padding-box
   background-position top left
@@ -54,27 +55,25 @@
   height 86% // - 2 * 7%
   padding 1.2% 0 //padding refers to width of containing box -> the 1.2% are about 7% of the height
   padding-left 1.3%
+  display box
+  display -webkit-box
+  box-orient horizontal
+  -webkit-box-orient horizontal
   overflow hidden
-
-.mp-gallery-outer
-  width 100%
-  height 100%
-  padding 0
-  position relative
-  overflow hidden
-
-.mp-gallery-inner
-  height 100%
-  width 20000em
-  position absolute
-
-.mp-thumb-page
-  height 100%
-  float left
-  background none
 
 .mp-gallery-tile
-  float left
+  width 16.92% //(120/650=) 18.46% - 2 * 0.77% (-> 5px)
+  height 95.84% //100% - 2 * 2.08% (-> 5px)
+  padding 0.77% // -> 5px
+  margin-right 1.54%
+  display box
+  display -webkit-box
+  box-orient horizontal
+  -webkit-box-orient horizontal
+  box-pack center
+  -webkit-box-pack center
+  box-align center
+  -webkit-box-align center
   background none
 
 .mp-thumb

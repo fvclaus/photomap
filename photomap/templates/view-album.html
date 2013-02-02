@@ -14,10 +14,12 @@
 	<script type="text/javascript" src="/static/js/ui/UIFullscreen.js" ></script>
 	<script type="text/javascript" src="/static/js/ui/UISlideshow.js" ></script>
 	<script type="text/javascript" src="/static/js/ui/UIGallery.js" ></script>
+	<script type="text/javascript" src="/static/js/ui/UICarousel.js" ></script>
 
 	<script type="text/javascript" src="/static/js/ui/album/UI.js" ></script>
 
 	<script type="text/javascript" src="/static/js/util/album/ClientServer.js" ></script>
+	<script type="text/javascript" src="/static/js/util/DataPage.js" ></script>
 	<!-- <script type="text/javascript" src="/static/js/util/file-upload.js" ></script> -->
 
 	<script type="text/javascript" src="/static/js/model/Place.js" ></script>
@@ -52,6 +54,8 @@
 {% endblock %}
 {% block gallery/news-feed %}
 	<section class="mp-gallery" id="mp-gallery">
+     <div class="mp-nodisplay" id="mp-gallery-thumbs">
+     </div>
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
         <span>
           <img class="mp-gallery-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}' />
@@ -63,10 +67,21 @@
         {% endif %}
       </div>
       <div class="mp-gallery-main column" id="mp-gallery-main">
-        <div class="mp-gallery-outer" id="mp-gallery-outer">
-          <div class="mp-gallery-inner" id="mp-gallery-inner">
-          </div>
-		  </div>
+       <div class="mp-gallery-tile">
+	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
+       </div>
+       <div class="mp-gallery-tile">
+	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
+       </div>
+       <div class="mp-gallery-tile">
+	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
+       </div>
+       <div class="mp-gallery-tile">
+	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
+       </div>
+       <div class="mp-gallery-tile">
+	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
+       </div>
       </div>
       <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
         <span>
@@ -88,33 +103,29 @@
 
 	<!-- jqote2 templates for gallery and fullscreen -->
 	<script id="galleryTmpl" type="text/html">
-	  <div class="mp-thumb-page">
        <% for (thumb in this.thumbAddress) { %>
-       <span class="mp-gallery-tile">
-	      <img class="mp-thumb mp-cursor-pointer mp-control" src="<%= this.thumbAddress[thumb] %>"></img>
-       </span>
+	      <img class="mp-nodisplay" src="<%= this.thumbAddress[thumb] %>" />
 	    <% }; %>
-     </div>
 	</script>
 
 	<script id="fullGalleryTmpl" type="text/html">
        <% for (thumb in this.thumbAddress) { %>
        <div class="mp-sortable-tile mp-cursor-pointer mp-control">
-	      <img class="mp-thumb" src="<%= this.thumbAddress[thumb] %>"></img>
+	      <img class="mp-thumb" src="<%= this.thumbAddress[thumb] %>" />
        </div>
 	    <% }; %>
 	</script>
 
 	<script id="galleryFullscreenTmpl" type="text/html">
 		<div id="mp-image-overlay" class="mp-image-overlay">
-			<img class="mp-dark-loader" src="/static/images/dark-loader.gif"></img>
-			<img class="mp-image-zoom" src="/static/images/zoom.png" ></img>
-			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;"></img>
+			<img class="mp-dark-loader" src="/static/images/dark-loader.gif" />
+			<img class="mp-image-zoom" src="/static/images/zoom.png" />
+			<img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;" />
 			<div class="mp-image-overlay-desc">
 				<div class="mp-image-nav">
-					<img class="mp-image-nav-prev mp-cursor-pointer mp-control" src="/static/images/image-arrow-left.png" ></img>
-					<img class="mp-image-nav-next mp-cursor-pointer mp-control" src="/static/images/image-arrow-right.png" ></img>
-					<img class="mp-image-overlay-close mp-cursor-pointer mp-control" src="/static/images/close.png" ></img>
+					<img class="mp-image-nav-prev mp-cursor-pointer mp-control" src="/static/images/image-arrow-left.png" />
+					<img class="mp-image-nav-next mp-cursor-pointer mp-control" src="/static/images/image-arrow-right.png" />
+					<img class="mp-image-overlay-close mp-cursor-pointer mp-control" src="/static/images/close.png" />
 				</div>
 				<h2 class="mp-fullscreen-photo-title"><%= this.tmplPhotoData.description %></h2>
 			</div>
