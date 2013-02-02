@@ -27,45 +27,62 @@ UICarousel.prototype = {
    
    _updateCarousel : function (sources, dir) {
       
-      var showNew, i;
+      var showNew, instance = this;
       
-      showNew = function ($el, src) {
+      showNew = function () {
          
-         $el
-            .attr("src", src)
-            .removeClass("mp-scale-X-0");
+         instance.$items.each(function (index) {
+            $(this).attr("src", sources[index]);
+         });
+         instance.$items.removeClass("mp-scale-X-0");
       };
       
-      if (!dir || dir === "right") {
-         for (i = 0; i < sources.length; i++) {
-            
-            this.$items[i].addClass("mp-scale-X-0");
-            // transition time is .4s
-            window.setTimeout(showNew(this.$items[i], sources[i]), 400);
-         }
-      } else if (dir === "left") {
-         for (i = sources.length - 1; i >= 0; i--) {
-            
-            this.$items[i].addClass("mp-scale-X-0");
-            // transition time is .4s
-            window.setTimeout(showNew(this.$items[i], sources[i]), 400);
-         }
-      } else {
-         alert("No direction specified");
+      if (sources !== null) {
+         this.$items.addClass("mp-scale-X-0");
+         // transition time is .2s
+         window.setTimeout(showNew, 200);
       }
    },
    
+   /**
+    * @description Starts the carousel by adding the mp-animate class to the items and loading the first page
+    */
    start : function () {
       
-      var startPage = this.dataPage.getFirstPage();
+      var i, startPage = this.dataPage.getFirstPage();
       
-      this.$items.forEach(function ($item) {
-         $item.addClass("mp-animate");
-      });
+      for (i = 0; i < this.$items.length; i++) {
+         $(this.$items[i]).addClass("mp-animate");
+      }
       
       this._updateCarousel(startPage);
    },
    
+   /**
+    * @description reinitialises the DataPage-Instance once the sources have been updated (element removed or added)
+    */
+   reinitialise : function (newImageSources) {
+      
+      this.dataPage = new DataPage(newImageSources, this.$root.find("img").length);
+   },
+   navigateTo : function (index) {
+      
+      var page;
+      
+      switch (index) {
+      case "start":
+         page = this.dataPage.getFirstPage();
+         break;
+      case "end":
+         page = this.dataPage.getLastPage();
+         break;
+      default:
+         page = this.dataPage.getPage(index);
+         break;
+      }
+      
+      this._updateCarousel(page);
+   },
    navigateLeft : function () {
       
       var page;
@@ -86,7 +103,6 @@ UICarousel.prototype = {
             alert(e.message);
          }
       }
-      
       if (page !== null) {
          this._updateCarousel(page);
       }
@@ -98,7 +114,7 @@ UICarousel.prototype = {
       
       try {
          
-         page = this.dataPage.getPreviousPage();
+         page = this.dataPage.getNextPage();
          
       } catch (e) {
          
@@ -112,7 +128,6 @@ UICarousel.prototype = {
             alert(e.message);
          }
       }
-      
       if (page !== null) {
          this._updateCarousel(page);
       }

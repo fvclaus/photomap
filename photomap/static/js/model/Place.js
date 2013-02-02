@@ -40,9 +40,8 @@ Place.prototype._showGallery = function () {
 /**
  * @description adds photo and restarts gallery
  */
-Place.prototype.addPhoto = function (photo) {
+Place.prototype.insertPhoto = function (photo) {
    this.photos.push(photo);
-   this._showGallery();
 };
 Place.prototype.sortPhotos = function () {
    // puts photos with order on the right position

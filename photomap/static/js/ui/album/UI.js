@@ -64,7 +64,7 @@ UI.prototype = {
    /**
     * @description Adds place fully to ui.
     */
-   addPlace : function (lat, lon, data) {
+   insertPlace : function (lat, lon, data) {
       
       //create new place and show marker
       //new place accepts only lon, because it handles responses from server
@@ -84,7 +84,7 @@ UI.prototype = {
    /**
     * @description Removes place fully from ui.
     */
-   removePlace : function (id) {
+   deletePlace : function (id) {
       
       var place = this.getTools().getObjectById(id, this.getState().getPlaces());
 
@@ -100,7 +100,7 @@ UI.prototype = {
    /**
     * Adds photo fully to ui.
     */
-   addPhoto : function (data) {
+   insertPhoto : function (data) {
       
       // add received value to uploadedPhoto-Object, add the photo to current place and restart gallery
       console.log("DATA-THUMB: " + data.thumb);
@@ -114,15 +114,14 @@ UI.prototype = {
             description : state.retrieve(TEMP_DESCRIPTION_KEY)
          });
          
-      state.getCurrentLoadedPlace().addPhoto(photo);
-      photo.openPhoto();
-      state.setPhotoAdded(true);
-      
+      state.getCurrentLoadedPlace().insertPhoto(photo);
+      state.insertPhoto(photo);
+      this.gallery.insertPhoto(photo);
    },
    /**
     * @description Removes photo fully from ui.
     */
-   removePhoto : function (id) {
+   deletePhoto : function (id) {
       
       var photo = this.getTools().getObjectById(id, this.state.getPhotos());
       
@@ -131,8 +130,8 @@ UI.prototype = {
          this.getSlideshow().removeCurrentImage();
          this.getInformation().removeDescription();
       }
-      this.getGallery().deleteImage(photo);
-      this.getState().removePhoto(photo);
+      this.getGallery().deletePhoto(photo);
+      this.getState().deletePhoto(photo);
    },
    showLoading : function () {
       this.getTools().loadOverlay($("#mp-ui-loading"), true);

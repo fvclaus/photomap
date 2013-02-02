@@ -55,44 +55,37 @@
   height 86% // - 2 * 7%
   padding 1.2% 0 //padding refers to width of containing box -> the 1.2% are about 7% of the height
   padding-left 1.3%
-  display box
-  display -webkit-box
-  box-orient horizontal
-  -webkit-box-orient horizontal
   overflow hidden
+  box()
+  centerChildren()
 
 .mp-gallery-tile
-  width 16.92% //(120/650=) 18.46% - 2 * 0.77% (-> 5px)
-  height 95.84% //100% - 2 * 2.08% (-> 5px)
-  padding 0.77% // -> 5px
+  width 18.46%
+  height 100%
   margin-right 1.54%
-  display box
-  display -webkit-box
-  box-orient horizontal
-  -webkit-box-orient horizontal
-  box-pack center
-  -webkit-box-pack center
-  box-align center
-  -webkit-box-align center
-  background none
+  box()
+  centerChildren()
 
 .mp-thumb
   max-width 95%
   max-height 95%
+  box()
 
 #mp-full-left-column .mp-full-gallery
   width 95%
   padding-left 5%
   overflow hidden
+  box()
+  centerChildren()
 
 .mp-sortable-tile
-  width 15%
+  width 20%
   height 20%
-  padding-right 5%
-  margin 5px 0
-  float left
+  box()
+  centerChildren()
   img
     border 3px solid #dadada
+    box()
 /* -------- end gallery --------- */
 
 /* ------------------------------ */

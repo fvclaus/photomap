@@ -39,7 +39,7 @@ $box-shadow-light-grey = $box-shadow #999
 $box-shadow-lighter-grey = $box-shadow #cac4ab
 $box-shadow-black = $box-shadow #000
 
-$transition = all 0.4s ease-in-out
+$transition = all 0.2s ease-in-out
 
 $font-family = 'Droid Sans', sans-serif
 $font-color = #070707
@@ -51,6 +51,25 @@ $mp-dialog-margin-top = 5px
 
 /* -------------------------- */
 /* --------- mixins --------- */
+
+box()
+  display flex
+  display -webkit-flex
+  display -moz-flex
+
+centerChildren()
+ flex-direction row
+ justify-content center
+ align-items center
+ flex-wrap wrap
+ -webkit-flex-direction row
+ -webkit-justify-content center
+ -webkit-align-items center
+ -webkit-flex-wrap wrap
+ -moz-flex-direction row
+ -moz-justify-content center
+ -moz-align-items center
+ -moz-flex-wrap wrap
 
 center-element(width,height)
   top 50%

@@ -58,7 +58,7 @@
      </div>
       <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
         <span>
-          <img class="mp-gallery-nav-prev mp-cursor-pointer mp-control" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}' />
+          <img class="mp-gallery-nav-prev mp-cursor-pointer mp-control" id="mp-gallery-nav-left" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}' />
         </span>
         {% if user.is_authenticated %}
         <span>
@@ -85,7 +85,7 @@
       </div>
       <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
         <span>
-          <img class="mp-gallery-nav-next mp-cursor-pointer mp-control" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}' />
+          <img class="mp-gallery-nav-next mp-cursor-pointer mp-control" id="mp-gallery-nav-right" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}' />
 		  </span>
         {% if user.is_authenticated %}
         <span>
@@ -103,15 +103,15 @@
 
 	<!-- jqote2 templates for gallery and fullscreen -->
 	<script id="galleryTmpl" type="text/html">
-       <% for (thumb in this.thumbAddress) { %>
-	      <img class="mp-nodisplay" src="<%= this.thumbAddress[thumb] %>" />
+       <% for (thumb in this.thumbSources) { %>
+	      <img class="mp-nodisplay" src="<%= this.thumbSources[thumb] %>" />
 	    <% }; %>
 	</script>
 
 	<script id="fullGalleryTmpl" type="text/html">
-       <% for (thumb in this.thumbAddress) { %>
+       <% for (thumb in this.thumbSources) { %>
        <div class="mp-sortable-tile mp-cursor-pointer mp-control">
-	      <img class="mp-thumb" src="<%= this.thumbAddress[thumb] %>" />
+	      <img class="mp-thumb" src="<%= this.thumbSources[thumb] %>" />
        </div>
 	    <% }; %>
 	</script>

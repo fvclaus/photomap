@@ -71,10 +71,10 @@ ClientServer.prototype = {
                switch (data.model) {
                   
                case "Photo":
-                  ui.removePhoto(data.id);
+                  ui.deletePhoto(data.id);
                   break;
                case "Place":
-                  ui.removePlace(data.id);
+                  ui.deletePlace(data.id);
                   break;
                default:
                   alert("The deleted Object has no model and therefor couldn't be removed from ui");

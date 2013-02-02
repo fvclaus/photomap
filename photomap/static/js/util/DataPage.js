@@ -79,7 +79,24 @@ DataPage.prototype = {
       
       return (this.currentPage === this.pages[this.pages.length - 1]);
    },
-
+   /**
+    * @private
+    */
+   _isFirstPage : function () {
+      
+      return (this.currentPage === this.pages[0]); 
+   },
+   
+   /**
+    * @description returns page with given index - used 
+    */
+   getPage : function (index) {
+      
+      this._setCurrentPage(index);
+      
+      return this.currentPage;
+   },
+   
    getFirstPage : function () {
       
       this._setCurrentPage(0);
@@ -111,7 +128,7 @@ DataPage.prototype = {
       
       if (this.currentPage === null) {
          throw new Error("PageNotInitialized");
-      } else if (this._isLastPage()) {
+      } else if (this._isFirstPage()) {
          throw new Error("IndexOutOfBounds");
       } else {
          this._setCurrentPage(this.currentPageNumber - 1);

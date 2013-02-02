@@ -42,15 +42,10 @@ Photo.prototype = {
    },
    openPhoto : function () {
       var $thumb = main.getUI().getGallery().getImageBySource(this.thumb);
-      console.log("----");
-      console.log(this.thumb);
-      console.log($thumb);
       main.getUIState().setCurrentLoadedPhoto(this);
-      //TODO uncomment this when getImageBySource works again
-      // if ($thumb.length === 0){
-      //    throw new Error("Photo must always have a $thumb");
-      // }
-      //TODO this does not seem to work anymore with the new .on jQuery listener style
+      if ($thumb.length === 0) {
+         throw new Error("Photo must always have a $thumb");
+      }
       $thumb.trigger("click");
    }
 };
