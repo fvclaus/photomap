@@ -184,7 +184,7 @@ def delete(request):
             logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))
     else:
-        return HttpResponseBadRequest()
+        return render_to_response("delete-photo.html")
 
 
 def generate_filenames(user, place):

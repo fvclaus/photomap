@@ -1,4 +1,4 @@
-/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY*/
+/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput*/
 "use strict";
 
 
@@ -55,10 +55,14 @@ UIPlaceListener.prototype = {
       });
    },
    delete : function (place) {
-      this.input.showDeleteDialog("/delete-place", {
-         id : place.id,
-         title : place.title,
-         model : place.model
+      this.input.show({
+         type : UIInput.CONFIRM_DIALOG,
+         url: "/delete-place",
+         data : {
+            id : place.id,
+            title : place.title,
+            model : place.model
+         }
       });
    },
    bindListener : function (place) {

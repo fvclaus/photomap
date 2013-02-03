@@ -1,4 +1,4 @@
-/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY*/
+/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput*/
 "use strict";
 
 var UIAlbumListener = function () {
@@ -51,10 +51,14 @@ UIAlbumListener.prototype = {
       });
    },
    delete : function (album) {
-      this.input.showDeleteDialog("/delete-album", {
-         id : album.id,
-         title : album.title,
-         model : album.model
+      this.input.show({
+         type : UIInput.CONFIRM_DIALOG,
+         url : "/delete-album",
+         data : {
+            id : album.id,
+            title : album.title,
+            model : album.model
+         }
       });
    },
    bindListener : function (album) {
