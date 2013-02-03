@@ -75,5 +75,7 @@ def delete(request):
             return success()
         except (OSError, Place.DoesNotExist), e:
             return error(str(e))
+    else:
+        return render_to_response("delete-place.html")
         
     

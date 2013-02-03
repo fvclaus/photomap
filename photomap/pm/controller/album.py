@@ -179,8 +179,7 @@ def delete(request):
             logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))
     else:
-        logger.debug("form not available yet")
-        return HttpResponseBadRequest()     
+        return render_to_response("delete-album.html")
         
 def redirect_to_get(request):
     return HttpResponseRedirect("/get-album")

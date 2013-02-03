@@ -15,6 +15,7 @@ from pm.controller import photo, place
 from pm.controller import authentication 
 from pm.controller import album
 from pm.controller import dashboard
+from pm.controller import debug
 
 # admin.site.register(model.album.Album)
 # admin.site.register(model.photo.Photo)
@@ -46,9 +47,8 @@ urlpatterns = patterns("",
                        url(r'^get-all-albums', dashboard.get),
                        url(r'^dashboard', dashboard.view),
 
-                       url(r'^sandbox-fredo', direct_to_template, {"template": "sandbox.html"}),
-                       url(r'^sandbox-marc', direct_to_template, {"template" : "sandbox-marc.html"}),
-                       
+
+                       url(r'^debug/(.+)', debug.view),
      
                        
                        #========================================================

@@ -1,4 +1,4 @@
-/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, FileUpload, UIPhotoEditor */
+/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, FileUpload, UIPhotoEditor, UIInput */
 "use strict";
 
 
@@ -33,6 +33,7 @@ UIPhotoListener.prototype = {
    },
    handleDrop : function (event) {
       //TODO whats that for? -> If you mean the stopPropagation etc. -> prevents the event from bubbling up the dom tree and triggering the default action, which is loading the pic into the browser - else you may have to explain the "that" ;) 
+      //Whats wrong with letting the element bubble?
       event.stopPropagation();
       event.preventDefault();
 
@@ -97,10 +98,14 @@ UIPhotoListener.prototype = {
       });
    },
    delete : function (photo) {
-      this.input.showDeleteDialog("/delete-photo", {
-         id : photo.id,
-         title : photo.title,
-         model : photo.model
+      this.input.show({
+         type : UIInput.CONFIRM_DIALOG,
+         url: "/delete-photo",
+         data : {
+            id : photo.id,
+            title : photo.title,
+            model : photo.model
+         }
       });
    },
 

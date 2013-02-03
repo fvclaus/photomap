@@ -35,5 +35,9 @@ DATABASES = {
             'PASSWORD': 'Tah7Ve', # Not used with sqlite3.
             'HOST': 'localhost', # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '5432', # Set to empty string for default. Not used with sqlite3.
-        }
+        },
+        "export": {
+                   "ENGINE": "django.db.backends.sqlite3",
+                   "NAME": "export.sqlite3"
+                   }
     }
