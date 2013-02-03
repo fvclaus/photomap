@@ -35,7 +35,8 @@ Place.prototype = InfoMarker.prototype;
 Place.prototype._showGallery = function () {
    // remove current image in slideshow and start gallery with photos of this place
    main.getUI().getSlideshow().removeCurrentImage();
-   main.getUI().getGallery().show(this.photos);
+   main.getUIState().setPhotos(this.photos);
+   main.getUI().getGallery().start();
 };
 /**
  * @description adds photo and restarts gallery

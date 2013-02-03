@@ -101,10 +101,10 @@
 {% block content_interactive %}
 
 
-	<!-- jqote2 templates for gallery and fullscreen -->
-	<script id="galleryTmpl" type="text/html">
-       <% for (thumb in this.thumbSources) { %>
-	      <img class="mp-nodisplay" src="<%= this.thumbSources[thumb] %>" />
+	<!-- jqote2 templates for gallery, slideshow and fullscreen -->
+	<script id="hiddenPhotosTmpl" type="text/html">
+       <% for (src in this.sources) { %>
+	      <img class="mp-nodisplay" src="<%= this.sources[src] %>" />
 	    <% }; %>
 	</script>
 

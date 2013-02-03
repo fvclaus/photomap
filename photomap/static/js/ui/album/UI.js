@@ -103,17 +103,15 @@ UI.prototype = {
    insertPhoto : function (data) {
       
       // add received value to uploadedPhoto-Object, add the photo to current place and restart gallery
-      console.log("DATA-THUMB: " + data.thumb);
       var state = this.getState(),
          photo = new Photo({
             id : data.id,
-            source : data.url,
+            url : data.url,
             thumb : data.thumb,
             order : state.getPhotos().length,
             title : state.retrieve(TEMP_TITLE_KEY),
             description : state.retrieve(TEMP_DESCRIPTION_KEY)
          });
-         
       state.getCurrentLoadedPlace().insertPhoto(photo);
       state.insertPhoto(photo);
       this.gallery.insertPhoto(photo);

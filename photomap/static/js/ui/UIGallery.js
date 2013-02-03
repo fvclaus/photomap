@@ -14,8 +14,8 @@ var UIGallery;
 UIGallery = function () {
 
    this.$container = $('#mp-gallery');
-   this.$gallery = $('#mp-gallery-main');
-   this.$hiddenThumbs = $("#mp-gallery-thumbs");
+   this.$inner = $('#mp-gallery-main');
+   this.$hidden = $("#mp-gallery-thumbs");
    this.$galleryTiles = null;
    this.$elements = $(".mp-gallery-tile");
    this.$navLeft = $("#mp-gallery-nav-left");
@@ -23,12 +23,10 @@ UIGallery = function () {
    
    this.carousel = null;
    
-   this.visible = false;
    this.loaded = 0;
    this.photos = null;
-   this.thumbSources = [];
+   this.imageSources = [];
    this.fullGalleryLoaded = false;
-   this.changed = false;
 };
 
 UIGallery.prototype =  {
@@ -43,53 +41,23 @@ UIGallery.prototype =  {
       this._bindNavigationListener();
       this._bindStartSlideshowListener();
    },
-   setGalleryChanged : function (changed) {
-      this.changed = changed;
-   },
    increaseLoaded : function () {
       this.loaded += 1;
    },
    getImageBySource : function (source) {
       
-      return this.$gallery.find("img[src='" + source + "']");
+      return this.$inner.find("img[src='" + source + "']");
    },
    getImageIndex : function ($image) {
       
       var src = $image.attr("src");
       
-      return this.$hiddenThumbs.find("img[src='" + src + "']").index();
-   },
-   /**
-    * @description adds new photo to gallery.
-    */
-   insertImage : function (photo) {
-      // insert hidden thumb
-      this._appendImages(photo.thumb);
-      // update carousel
-      this.thumbSources.push(photo.thumb);
-      this.carousel.reinitialize(this.thumbSources);
-      // navigate to new image
-      this._navigateToLastPage();
-   },
-   /**
-    * @description removes image from gallery.
-    */
-   deleteImage : function (photo) {
-      // delete hidden thumb
-      this.$hiddenThumbs.find("img[src='" + photo.thumb + "']").remove();
-      // update carousel
-      this.thumbSources.filter(function (src) {
-         return src !== photo.thumb;
-      });
-      this.carousel.reinitialise(this.thumbSources);
-      // delete image in currently visible gallery-page
-      this.$gallery.find("img[src='" + photo.thumb + "']").attr("src", null);
-      this.$gallery.find("img[src='" + photo.thumb + "']").parent().addClass("mp-empty-tile");
+      return this.$hidden.find("img[src='" + src + "']").index();
    },
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
     */
-   checkSlider : function (dir) {
+   checkSlider : function () {
       
       var state, currentIndex, minIndex, maxIndex;
       
@@ -104,8 +72,44 @@ UIGallery.prototype =  {
          this._navigateRight();
       }
    },
-   scrollToLastSlider : function () {
-      this._getScrollable().end();
+   /**
+    * @description adds new photo to gallery.
+    */
+   insertPhoto : function (photo) {
+      // insert hidden thumb
+      this._appendImages([photo.thumb]);
+      // update carousel
+      this.imageSources = this.imageSources.filter(function (src) {
+         return src !== null;
+      });
+      this.imageSources.push(photo.thumb);
+      this.carousel.reinitialise(this.imageSources);
+      // navigate to new image
+      this._navigateToLastPage();
+   },
+   /**
+    * @description removes image from gallery.
+    */
+   deletePhoto : function (photo) {
+      
+      var reload, instance = this;
+      
+      // delete hidden thumb
+      this.$hidden.find("img[src='" + photo.thumb + "']").remove();
+      // update carousel
+      this.imageSources = this.imageSources.filter(function (src) {
+         return src !== photo.thumb;
+      });
+      this.carousel.reinitialise(instance.imageSources);
+      // visualise delete
+      this.$inner.find("img[src='" + photo.thumb + "']").fadeOut(500);
+      
+      reload = function () {
+         instance.$inner.find("img[src='" + photo.thumb + "']").attr("src", null);
+         instance.carousel.reloadCurrentPage();
+      };
+      // wait for visualisation to finish
+      window.setTimeout(reload, 500);
    },
    startFullGallery : function () {
       var photos, $container, instance = this;
@@ -119,7 +123,7 @@ UIGallery.prototype =  {
             .addClass("mp-full-gallery")
             .append(
                $.jqote('#fullGalleryTmpl', {
-                  thumbSources: instance.thumbSources
+                  thumbSources: instance.imageSources
                })
             );
          
@@ -145,7 +149,8 @@ UIGallery.prototype =  {
       
       if (!this.fullGalleryLoaded) {
          this.startFullGallery();
-         $(".mp-full-gallery").jScrollPane();
+         //TODO Das geht noch nicht.
+//         $(".mp-full-gallery").jScrollPane();
       }
       $("#mp-full-left-column").removeClass("mp-nodisplay");
    },
@@ -160,20 +165,20 @@ UIGallery.prototype =  {
   /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
    */
-   show : function (photos) {
+   start : function () {
       
-      var state, controls, photoMatrix, i, instance = this;
+      var photos, state, controls, photoMatrix, i, instance = this;
       state = main.getUIState();
+      photos = state.getPhotos();
       controls = main.getUI().getControls();
-      //reset this.thumbSources
-      this.thumbSources = [];
+      //reset this.imageSources
+      this.imageSources = [];
       
       // this method is just called if the gallery changes -> full-gallery has to be changed as well
       this.destroyFullGallery();
       
       if (photos && photos.length !== 0) {
          
-         state.setPhotos(photos);
          this.photos = photos;
          
          i = 0;
@@ -186,7 +191,7 @@ UIGallery.prototype =  {
             
             if (photos[i] !== undefined) {
                
-               instance.thumbSources.push(photos[i].thumb);
+               instance.imageSources.push(photos[i].thumb);
                
                $('<img/>')
                   .load(instance._galleryLoader)
@@ -196,6 +201,7 @@ UIGallery.prototype =  {
          }
       } else {
          state.setPhotos(null);
+         this.carousel.reset();
       }
    },
    /**
@@ -216,9 +222,9 @@ UIGallery.prototype =  {
          main.getUI().enable();
          
          // append loaded images to gallery (hidden)
-         gallery._appendImages(gallery.thumbSources);
+         gallery._appendImages(gallery.imageSources);
          // initialize and start carousel
-         gallery.carousel = new UICarousel(gallery.$gallery, gallery.thumbSources);
+         gallery.carousel = new UICarousel(gallery.$inner, gallery.imageSources);
          gallery.carousel.start();
          
          // reset loaded value
@@ -235,9 +241,9 @@ UIGallery.prototype =  {
       
       var instance = this;
       
-      this.$hiddenThumbs.append(
-         $.jqote('#galleryTmpl', {
-            thumbSources: sources
+      this.$hidden.append(
+         $.jqote('#hiddenPhotosTmpl', {
+            sources: sources
          })
       );
    },
@@ -330,7 +336,7 @@ UIGallery.prototype =  {
       tools = main.getUI().getTools();
       
       //bind events on anchors
-      instance.$gallery
+      instance.$inner
          .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             
@@ -371,13 +377,13 @@ UIGallery.prototype =  {
       controls = main.getUI().getControls();
       authorized = main.getClientState().isAdmin();
 
-      this.$gallery
+      this.$inner
          .on('click.Gallery', ".mp-gallery-tile", function (event) {
             var $el = $(this).children();
             
             if (!main.getUI().isDisabled()) {
                
-               
+               console.log(instance.getImageIndex($el));
                state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
                state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
                
