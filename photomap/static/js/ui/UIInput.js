@@ -100,8 +100,8 @@ UIInput.prototype = {
    _prepareDialog : function (url){
       html = this._loadHtml(url);
       var $wrapper = this._wrapHtml(html),
-          dimension = this._getDialogDimension($wrapper),
-          title = this._removeTitle($wrapper);
+          title = this._removeTitle($wrapper),
+          dimension = this._getDialogDimension($wrapper);
 
       //add the html without the title
       this.$dialog.html($wrapper.html());
@@ -113,26 +113,14 @@ UIInput.prototype = {
          create: function () {
             main.getUI().disable();
          },
-         "title" : title,
-         "minWidth": dimension.width,
-         "minHeigth": dimension.height
+         "title": title,
+         "width": dimension.width,
+         // "height": dimension.height, //TODO height is a messy business. height includes the title bar (wtf?!)
+         "heightStyle": "content"
       });
 
 
    },
-
-   _wrapHtml : function (html) {
-      var $wrapper = $("<div/>").css("display", "inline-block").html(html);
-      $(".mp-content").append($wrapper);
-      return $wrapper;
-   },
-   _removeTitle : function ($el) {
-      var $title = $el.find("h2"),
-          title = $title.text();
-      $title.remove();
-      return title;
-   },
-
    /**
     @public
     @summary This is needed for testing the deletion of objects, because the confirm buttons cannot be queried in a reasonable fashion
@@ -149,6 +137,17 @@ UIInput.prototype = {
             button.click.apply(instance.$dialog.get(0));
          }
       });
+   },
+   _wrapHtml : function (html) {
+      var $wrapper = $("<div/>").css("display", "inline-block").html(html);
+      $(".mp-content").append($wrapper);
+      return $wrapper;
+   },
+   _removeTitle : function ($el) {
+      var $title = $el.find("h2"),
+          title = $title.text();
+      $title.remove();
+      return title;
    },
    /**
     @private
@@ -175,6 +174,13 @@ UIInput.prototype = {
     @returns {Object} width and height of the dialog containing the html
     */
    _getDialogDimension : function ($wrapper) {
+      if ($wrapper.find(".mp-tabs")){
+         //TODO tabs causes messy problems when the height varies between the tabs
+         //HOTFIX heightStyle auto adapts to the height of the tallest tab
+         $wrapper.find(".mp-tabs").tabs({
+            "heightStyle" : "auto"
+         });
+      }
       //margin cuts of some space -> make it slightly bigger
       dimension = {"width": $wrapper.width() * 1.2, "height": $wrapper.height()};
       return dimension;
@@ -232,7 +238,4 @@ UIInput.prototype = {
    close : function () {
       this.dialog.dialog("close");
    },
-   closeConfirm : function () {
-      $("#confirm-delete").dialog("close");
-   }
 };

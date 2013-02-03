@@ -9,12 +9,6 @@ var UIPhotoListener = function () {
    this.editor = new UIPhotoEditor();
 };
 
-
-//TODO this has no effect. we are using jquery validator plugin now
-$.tools.validator.fn("[type=file]", function (el, value) {
-   return (/\.(jpg|png)$/i).test(value) ? true : "only jpg or png allowed";
-});
-
 UIPhotoListener.prototype = {
    insert : function () {
       var instance = this,
@@ -63,6 +57,12 @@ UIPhotoListener.prototype = {
       $("#insert-photo-tabs").tabs();
       $("form.jquery-validator").validate({
          success : "valid",
+         rules : {
+            photo : {
+               accept : "image/png, image/jpeg"
+            }
+         },
+         errorPlacement : function () {}, //don't show any errors
          submitHandler : function () {
             //give the fileupload the img data
             instance.fileUpload.startUpload.call(instance.fileUpload, instance.editor.getAsFile());
