@@ -19,7 +19,7 @@ FileUpload.prototype =  {
     */
    _responseHandler : function (response) {
       if (response.success) {
-         main.getUI().addPhoto(response);
+         main.getUI().insertPhoto(response);
          main.getClientState().updateUsedSpace();
       
       } else {

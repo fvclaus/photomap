@@ -26,7 +26,6 @@ UIState = function () {
    this.slideshow = false;
    this.slideshowLoaded = false;
    this.albumLoading = false;
-   this.photoAdded = false;
    this.fontSize = null;
    this.fullscreen = null;
    this.pageMode = $("meta[property='mp:map']").attr("content");
@@ -69,7 +68,7 @@ UIState.prototype = {
    //--------------------------------------------------------------------
    setPhotos : function (photos) {
       //TODO someone sets photos to null
-      if (photos === null){
+      if (photos === null) {
          return;
       }
       this.photos = photos;
@@ -101,19 +100,13 @@ UIState.prototype = {
    getCurrentLoadedPhoto : function () {
       return this.currentLoadedPhoto;
    },
-   addPhoto : function (photo) {
+   insertPhoto : function (photo) {
       this.photos.push(photo);
    },
-   removePhoto : function (photo) {
+   deletePhoto : function (photo) {
       this.photos = this.photos.filter(function (element, index) {
          return element !== photo;
       });
-   },
-   setPhotoAdded : function (added) {
-      this.photoAdded = added;
-   },
-   isPhotoAdded : function () {
-      return this.photoAdded;
    },
    //--------------------------------------------------------------------
    //PLACE---------------------------------------------------------------
@@ -136,10 +129,10 @@ UIState.prototype = {
    getCurrentLoadedPlace : function () {
       return this.currentLoadedPlace;
    },
-   addPlace : function (place) {
+   insertPlace : function (place) {
       this.places.push(place);
    },
-   removePlace : function (place) {
+   deletePlace : function (place) {
       
       this.places = this.places.filter(function (element, index) {
          return element !== place;
@@ -166,10 +159,10 @@ UIState.prototype = {
    getCurrentLoadedAlbum : function () {
       return this.currentLoadedAlbum;
    },
-   addAlbum : function (album) {
+   insertAlbum : function (album) {
       this.albums.push(album);
    },
-   removeAlbum : function (album) {
+   deleteAlbum : function (album) {
       this.albums = this.albums.filter(function (element, index) {
          return element !== album;
       });

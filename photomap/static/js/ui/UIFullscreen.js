@@ -161,7 +161,7 @@ UIFullscreen.prototype = {
 
       $image.css(css);
 
-      return css
+      return css;
    },
    /**
     * @private

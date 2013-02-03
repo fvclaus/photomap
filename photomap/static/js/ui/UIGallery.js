@@ -1,11 +1,12 @@
 /*jslint */
-/*global $, main, fileUpload */
+/*global $, main, fileUpload, UICarousel */
 
 "use strict";
 
 /**
  * @author Marc Roemer
  * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
+ * @requires UICarousel
  */
 
 var UIGallery;
@@ -13,19 +14,19 @@ var UIGallery;
 UIGallery = function () {
 
    this.$container = $('#mp-gallery');
-   this.$mainWrapper = $('#mp-gallery-main');
-   this.$galleryWrapper = $('#mp-gallery-outer');
-   this.$gallery = $('#mp-gallery-inner');
-   this.$galleryPages = null;
+   this.$inner = $('#mp-gallery-main');
+   this.$hidden = $("#mp-gallery-thumbs");
    this.$galleryTiles = null;
-   this.$elements = null;
+   this.$elements = $(".mp-gallery-tile");
+   this.$navLeft = $("#mp-gallery-nav-left");
+   this.$navRight = $("#mp-gallery-nav-right");
    
-   this.visible = false;
+   this.carousel = null;
+   
    this.loaded = 0;
    this.photos = null;
-   this.tmplPhotosData = [];
+   this.imageSources = [];
    this.fullGalleryLoaded = false;
-   this.changed = false;
 };
 
 UIGallery.prototype =  {
@@ -37,68 +38,78 @@ UIGallery.prototype =  {
          this.$container.bind('drop.FileUpload', controls.handleGalleryDrop);
          this._bindListener();
       }
+      this._bindNavigationListener();
       this._bindStartSlideshowListener();
-   },
-   setGalleryChanged : function (changed) {
-      this.changed = changed;
    },
    increaseLoaded : function () {
       this.loaded += 1;
    },
-   /**
-    * @author Frederik Claus
-    * @description Reselect all images in the gallery. This is necessary when the gallery gets updated
-    * @private
-    */
-   _searchImages : function () {
-      this.$elements = this.$gallery.find('div.mp-gallery > img').not(".mp-controls-options");
-      this.$galleryPages =  this.$gallery.find('.mp-thumb-page');
-      this.$galleryTiles = this.$gallery.find('.mp-gallery-tile');
-   },
    getImageBySource : function (source) {
       
-      // due to the way .scrollable() works each img is 3 times in Gallery -> you need to pic the second, which is the currently visible 
-      return this.$gallery.find(".mp-thumb-page").not("cloned").find("img[src='" + source + "']");
+      return this.$inner.find("img[src='" + source + "']");
    },
    getImageIndex : function ($image) {
       
-      var sliderIndex, imageIndex;
+      var src = $image.attr("src");
       
-      sliderIndex = this._getScrollable().getIndex();
-      imageIndex = $image.parent().index();
-      
-      return sliderIndex * 5 + imageIndex;
-   },
-   /**
-    * @private
-    */
-   _getScrollable : function () {
-      return this.$container.data('scrollable');
-   },
-   deleteImage : function (photo) {
-      $("img[src='" + photo.thumb + "']").remove();
-      $("img[src='" + photo.thumb + "']").parent().addClass("mp-empty-tile");
+      return this.$hidden.find("img[src='" + src + "']").index();
    },
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
     */
    checkSlider : function () {
       
-      var state, photo, currentIndex, sliderIndex, newSliderIndex, indexInSlider;
+      var state, currentIndex, minIndex, maxIndex;
       
       state = main.getUIState();
-      photo = state.getCurrentLoadedPhoto();
       currentIndex = state.getCurrentLoadedPhotoIndex();
-      sliderIndex = this._getScrollable().getIndex();
+      minIndex = this.getImageIndex(this.$elements.first());
+      maxIndex = this.getImageIndex(this.$elements.last());
       
-      indexInSlider = currentIndex > sliderIndex * 5 && currentIndex < sliderIndex * 5 + 5;
-      if (!indexInSlider) {
-         newSliderIndex = Math.floor(currentIndex / 5);
-         this._getScrollable().seekTo(newSliderIndex);
+      if (currentIndex < minIndex) {
+         this._navigateLeft();
+      } else if (currentIndex > minIndex) {
+         this._navigateRight();
       }
    },
-   scrollToLastSlider : function () {
-      this._getScrollable().end();
+   /**
+    * @description adds new photo to gallery.
+    */
+   insertPhoto : function (photo) {
+      // insert hidden thumb
+      this._appendImages([photo.thumb]);
+      // update carousel
+      this.imageSources = this.imageSources.filter(function (src) {
+         return src !== null;
+      });
+      this.imageSources.push(photo.thumb);
+      this.carousel.reinitialise(this.imageSources);
+      // navigate to new image
+      this._navigateToLastPage();
+   },
+   /**
+    * @description removes image from gallery.
+    */
+   deletePhoto : function (photo) {
+      
+      var reload, instance = this;
+      
+      // delete hidden thumb
+      this.$hidden.find("img[src='" + photo.thumb + "']").remove();
+      // update carousel
+      this.imageSources = this.imageSources.filter(function (src) {
+         return src !== photo.thumb;
+      });
+      this.carousel.reinitialise(instance.imageSources);
+      // visualise delete
+      this.$inner.find("img[src='" + photo.thumb + "']").fadeOut(500);
+      
+      reload = function () {
+         instance.$inner.find("img[src='" + photo.thumb + "']").attr("src", null);
+         instance.carousel.reloadCurrentPage();
+      };
+      // wait for visualisation to finish
+      window.setTimeout(reload, 500);
    },
    startFullGallery : function () {
       var photos, $container, instance = this;
@@ -106,20 +117,17 @@ UIGallery.prototype =  {
       $container = $("#mp-full-left-column");
       
       if (photos) {
-         photos.forEach(function (photo) {
-            instance.tmplPhotosData.push(photo.thumb);
-         });
          
          $container
             .find(".mp-data")
             .addClass("mp-full-gallery")
             .append(
                $.jqote('#fullGalleryTmpl', {
-                  thumbAddress: instance.tmplPhotosData
+                  thumbSources: instance.imageSources
                })
             );
+         
          this._initializeSortable();
-         this.tmplPhotosData = [];
          this.fullGalleryLoaded = true;
       }
    },
@@ -141,11 +149,10 @@ UIGallery.prototype =  {
       
       if (!this.fullGalleryLoaded) {
          this.startFullGallery();
+         //TODO Das geht noch nicht.
 //         $(".mp-full-gallery").jScrollPane();
       }
       $("#mp-full-left-column").removeClass("mp-nodisplay");
-      this._centerImages();
-      
    },
    hideFullGallery : function () {
       
@@ -158,19 +165,20 @@ UIGallery.prototype =  {
   /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
    */
-   show : function (photos) {
+   start : function () {
       
-      var state, controls, photoMatrix, i, instance = this;
+      var photos, state, controls, photoMatrix, i, instance = this;
       state = main.getUIState();
+      photos = state.getPhotos();
       controls = main.getUI().getControls();
-      
+      //reset this.imageSources
+      this.imageSources = [];
       
       // this method is just called if the gallery changes -> full-gallery has to be changed as well
       this.destroyFullGallery();
       
       if (photos && photos.length !== 0) {
          
-         state.setPhotos(photos);
          this.photos = photos;
          
          i = 0;
@@ -178,14 +186,13 @@ UIGallery.prototype =  {
          state.setAlbumLoading(true);
          main.getUI().disable();
          main.getUI().showLoading();
-         // empty gallery and reposition it to 0
-         this.$gallery.empty().css("left", 0);
          
          while (i < photos.length) {
             
             if (photos[i] !== undefined) {
                
-               instance.tmplPhotosData.push(photos[i].thumb);
+               instance.imageSources.push(photos[i].thumb);
+               
                $('<img/>')
                   .load(instance._galleryLoader)
                   .attr('src', photos[i].thumb);
@@ -194,12 +201,7 @@ UIGallery.prototype =  {
          }
       } else {
          state.setPhotos(null);
-         // create empty gallery -> b clicking on empty tile you can add photo
-         this.$gallery.empty().css("left", 0);
-         this._createEmptyTiles();
-         //TODO i think a _searchImages is missing here, because $galleryTiles will still be null
-         this._searchImages();
-         this._resizeTiles();
+         this.carousel.reset();
       }
    },
    /**
@@ -218,139 +220,53 @@ UIGallery.prototype =  {
          //enable ui
          main.getUIState().setAlbumLoading(false);
          main.getUI().enable();
-
-         // create a matrix with 6 columns out of the photos-Array and display each row in a separate div
-         photoMatrix = main.getUI().getTools().createMatrix(gallery.photos, 5);
-         gallery._appendImages(photoMatrix, gallery.tmplPhotosData);
-         // fill last slider up with empty tiles (unless it is already filled with pics)
-         gallery._createEmptyTiles();
-         //search all anchors
-         gallery._searchImages();
-         // adjust height to make the thumbs square
-         gallery._resizeTiles();
-         // initialize scrollable
-         gallery._initializeScrollable();
          
-         gallery._centerImages();
+         // append loaded images to gallery (hidden)
+         gallery._appendImages(gallery.imageSources);
+         // initialize and start carousel
+         gallery.carousel = new UICarousel(gallery.$inner, gallery.imageSources);
+         gallery.carousel.start();
          
-         if (state.isPhotoAdded()) {
-            gallery.scrollToLastSlider();
-            state.setPhotoAdded(false);
-         }
-         
-         // reset loading values to 0 / null
+         // reset loaded value
          gallery.loaded = 0;
-         gallery.tmplPhotosData = [];
-         
          // hide loader
          main.getUI().hideLoading();
       }
    },
    /**
     * @private
+    * @description appends any number (1->Inf) of thumbnails to gallery (hidden)
     */
-   _resizeTiles : function () {
+   _appendImages : function (sources) {
       
-      var width, height, margin;
+      var instance = this;
       
-      width = this.$container.innerWidth() * (120 / 780) - 10;
-      height = this.$container.innerHeight() * (240 / 280) - 10;
-      margin = this.$container.innerWidth() * (10 / 780);
-      
-      this.$galleryTiles.css({
-         width: width,
-         height: height,
-         padding: "5px",
-         marginRight: margin
-      });
+      this.$hidden.append(
+         $.jqote('#hiddenPhotosTmpl', {
+            sources: sources
+         })
+      );
    },
    /**
     * @private
     */
-   _createEmptyTiles : function () {
+   _navigateLeft : function () {
       
-      var $thumbPage, emptySpots, tile, slider, lastSliderSize, i;
-      $thumbPage = null;
-      emptySpots = 0;
-      tile = "<div class='mp-gallery-tile mp-empty-tile mp-cursor-pointer mp-control'></div>";
-      slider = "<div class='mp-thumb-page'></div>";
-      
-      if (this.$gallery.children().length === 0) {
-         
-         this.$gallery.append(slider);
-         $thumbPage = $(".mp-thumb-page");
-         emptySpots = 5;
-      } else {
-         
-         lastSliderSize = $(".mp-thumb-page").last().children().size();
-         if (lastSliderSize < 5) {
-            
-            emptySpots = 5 - lastSliderSize;
-            $thumbPage = $(".mp-thumb-page").last();
-         }
-      }
-         
-      for (i = 0; i < emptySpots; i++) {
-         
-         $thumbPage.append(tile);
-      }
+      this.carousel.navigateLeft();
    },
    /**
     * @private
     */
-   _appendImages : function (imageMatrix, imageSources) {
+   _navigateRight : function () {
       
-      var tmplData, i, getNextFive;
-      i = 0;
-      
-      getNextFive = function (element, index) {
-         return index >= i * 5 && index < i * 5 + 5;
-      };
-      while (i < imageMatrix.length) {
-         tmplData = $.grep(imageSources, getNextFive);
-         this.$gallery.append(
-            $.jqote('#galleryTmpl', {
-               thumbAddress: tmplData
-            })
-         );
-         i++;
-      }
- 
+      this.carousel.navigateRight();
    },
    /**
     * @private
     */
-   _centerImages : function () {
+   _navigateToLastPage : function () {
       
-      var $tile, $thumb, photos;
-      $tile = $(".mp-gallery-tile, .mp-sortable-tile");
-      photos = main.getUIState().getPhotos();
-      
-      photos.forEach(function (photo) {
-         
-         $thumb = $tile.find("img[src='" + photo.thumb + "']");
-         main.getUI().getTools().centerElement($tile, $thumb);
-      });
-   },
-   /**
-    * @private
-    */
-   _initializeScrollable : function () {
-      /*
-      $(".mp-gallery-nav-prev, .mp-gallery-nav-next").on("click.UIDisabled", function () {
-         if (main.getUI().isDisabled()) {
-            return false;
-         }
-      });
-      */
-      this.$container.scrollable({
-         items: ".mp-gallery-inner",
-         prev: ".mp-gallery-nav-prev",
-         next: ".mp-gallery-nav-next",
-         circular: true,
-         mousewheel: true,
-         speed: 500
-      });
+      this.carousel.navigateTo("end");
    },
    /**
     * @private
@@ -370,7 +286,6 @@ UIGallery.prototype =  {
          .sortable({
             items : ".mp-sortable-tile",
             update : function (event, ui) {
-               instance._searchImages();
                jsonPhotos = [];
 
                state.getPhotos().forEach(function (photo, index, photos) {
@@ -394,6 +309,24 @@ UIGallery.prototype =  {
    
    /* ---- Listeners ---- */
    
+   _bindNavigationListener : function () {
+      
+      var instance = this;
+      
+      this.$navLeft.on("click", function () {
+         
+         if (!main.getUI().isDisabled()) {
+            instance._navigateLeft();
+         }
+      });
+      this.$navRight.on("click", function () {
+         
+         if (!main.getUI().isDisabled()) {
+            instance._navigateRight();
+         }
+      });
+   },
+   
    _bindListener : function () {
 
       var state, tools, controls, authorized, photo, instance = this;
@@ -403,16 +336,12 @@ UIGallery.prototype =  {
       tools = main.getUI().getTools();
       
       //bind events on anchors
-      instance.$gallery
+      instance.$inner
          .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             
             if (!main.getUI().isDisabled()) {
                
-               $el
-                  .addClass('current')
-                  .removeClass("visited")
-                  .siblings('img').removeClass('current');
                photo = $.grep(state.getPhotos(), function (e, i) {
                   return e.thumb === $el.attr("src");
                })[0];
@@ -423,7 +352,6 @@ UIGallery.prototype =  {
                   controls.setModifyPhoto(true);
                   controls.getEditControls().showPhotoControls($el);
                }
-               tools.setCursor($el, "pointer");
             }
          })
          .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
@@ -431,22 +359,9 @@ UIGallery.prototype =  {
             
             if (!main.getUI().isDisabled()) {
             
-               //add visited border if necessary
-               (state.getPhotos())[$el.index()].checkBorder();
-               $el.removeClass('current');
-               
                if (authorized) {
                   controls.getEditControls().hide(true);
                }
-            }
-         })
-         .on('mousedown.Gallery', "img.mp-thumb", function (event) {
-            var $el = $(this);
-            
-            if (!main.getUI().isDisabled()) {
-            
-               // set Cursor for DragnDrop on images (grabber)
-               tools.setCursor($el, "move");
             }
          });
       
@@ -462,13 +377,13 @@ UIGallery.prototype =  {
       controls = main.getUI().getControls();
       authorized = main.getClientState().isAdmin();
 
-      this.$gallery
-         .on('click.Gallery', "img.mp-thumb", function (event) {
-            var $el = $(this);
+      this.$inner
+         .on('click.Gallery', ".mp-gallery-tile", function (event) {
+            var $el = $(this).children();
             
             if (!main.getUI().isDisabled()) {
-            
-               $el.removeClass('current');
+               
+               console.log(instance.getImageIndex($el));
                state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
                state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
                
