@@ -125,16 +125,6 @@ UIControls.prototype = {
     * @public
     * @see UITools
     */
-   bindCopyListener : function () {
-      // copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
-      $("#mp-copy-button").zclip('remove').zclip({
-         path: 'static/js/zeroclipboard/zeroclipboard.swf',
-         copy: $("#mp-share-link").val()
-         /*afterCopy: function(){
-            $(".mp-overlay-trigger").overlay().close();
-         },*/
-      });
-   },
    /**
     * @private
     */
