@@ -29,7 +29,7 @@ urlpatterns = patterns("",
                        #========================================================
                        url(r'^login', authentication.login),
                        url(r'^view-album', album.view),
-                       url(r'^get-album-share', album.share),
+                       
                        url(r'^get-album', album.get),
                        
                        url(r'^impressum', direct_to_template, {"template": "impressum.html"}),
@@ -63,11 +63,12 @@ urlpatterns = patterns("",
         #               (r'^$', direct_to_template, {"template": "index.tpl"}),
                        
                        #================================================================
-                       # photo hooks
+                       # album hooks
                        #================================================================
-                       url(r'^insert-album', album.insert),
-                       url(r'^update-album', album.update),
-                       url(r'^delete-album', album.delete),
+                       url(r'^insert-album$', album.insert),
+                       url(r'^update-album$', album.update),
+                       url(r'^delete-album$', album.delete),
+                       url(r'^update-album-password$', album.share),
                        #================================================================
                        # photo hooks
                        #================================================================

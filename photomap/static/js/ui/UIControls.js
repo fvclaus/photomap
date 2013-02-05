@@ -203,21 +203,14 @@ UIControls.prototype = {
     */
    _bindShareListener : function () {
       
-      var instance = this, state, tools, url, id;
+      var instance = this,
+          state = main.getUIState(), 
+          tools = main.getUI().getTools(), url, id;
       
       this.$share
          .on("click", function (event) {
-            state = main.getUIState();
-            tools = main.getUI().getTools();
-            
             if (!main.getUI().isDisabled()) {
-               if (state.getAlbumShareURL() && state.getAlbumShareURL().id === state.getCurrentAlbum().id) {
-                  tools.openShareURL();
-               } else {
-                  url = "/get-album-share";
-                  id = state.getCurrentAlbum().id;
-                  main.getClientServer().getShareLink(url, id);
-               }
+               instance.albumListener.share(state.getCurrentAlbum());
             }
          });
    },

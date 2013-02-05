@@ -61,6 +61,20 @@ UIAlbumListener.prototype = {
          }
       });
    },
+   share : function (album) {
+      this.input.show({
+         url : "/update-album-password",
+         load : function ()  {
+            $("input[name='album']").val(album.id);
+            // $("input[name='share']").val(
+            // copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
+            $("#mp-copy-share").zclip({
+               path: 'static/js/zeroclipboard/zeroclipboard.swf',
+               copy: $("input[name='share']").val()
+            });
+         },
+      });
+   },
    bindListener : function (album) {
             
       var instance = this, albums, state,

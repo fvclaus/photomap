@@ -10,7 +10,6 @@ from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib.auth import models
 
-from django.utils import crypto
 from django.contrib.auth import hashers
 
 from message import success, error
@@ -22,7 +21,7 @@ from pm.model.share import Share
 from pm.exception import OSMException
 
 from pm.osm import reversegecode
-from pm.form.album import AlbumInsertForm, AlbumUpdateForm
+from pm.form.album import AlbumInsertForm, AlbumUpdateForm, AlbumPasswordUpdateForm
 
 import json
 import logging
@@ -39,32 +38,32 @@ logger = logging.getLogger(__name__)
 
 @login_required
 def share(request):
-    if request.method == "GET":
+    if request.method == "POST":
         user = request.user
-        try:
-            id = int(request.GET["id"])
-            logger.debug("User %d is trying to share Album %d." % (request.user.pk, id))
-            if not id:
-                raise KeyError, "invalid id %s" % (str(id))
-                logger.warn("%d is not a valid Album ID." % id)
-            album = Album.objects.get(pk = id, user = user)
-            shares = Share.objects.all().filter(album = album)
-            if len(shares) == 0:
-                logger.info("Requested share does not exist. Creating...")
-                secret = crypto.get_random_string(length = 50)
-                share = Share(album = album, token = secret)
-                logger.info("Share with secret %s has been created." % secret)
+        form = AlbumPasswordUpdateForm(request.POST)
+        if form.is_valid():
+            try:
+                id = form.cleaned_data["id"]
+                logger.debug("User %d is trying to set new password for Album %d." % (request.user.pk, id))
+
+                album = Album.objects.get(pk = id, user = user)
+                share = Share.objects.get(album = album)
+                
+                secret = hashers.make_password(form.cleaned_data["password"])
+                share.password = secret
+                
                 share.save()
-            else:
-                logger.info("Requested share already exists. Returning...")
-                share = shares[0]
-            return success(url = "/view-album?id=%d&secret=%s" % (share.album.pk, share.token))
-        except (KeyError, Album.DoesNotExist), e:
-            logger.warn("Something unexpected happened: %s" % str(e))
-            return error(str(e))
+                logger.info("Share with secret %s has been created." % secret)
+                
+                return success()
             
+            except (Album.DoesNotExist), e:
+                logger.warn("Something unexpected happened: %s" % str(e))
+                return error(str(e))
+        else:
+            return error(str(form.errors))
     else:
-        return HttpResponseBadRequest()
+        return render_to_response("update-album-password.html")
 
 def view(request):
 #    if not request.user.is_authenticated():
