@@ -66,6 +66,7 @@ UIAlbumListener.prototype = {
          url : "/update-album-password",
          load : function ()  {
             $("input[name='album']").val(album.id);
+            $("input[name='share']").val("/album/share/"+album.secret+"-"+album.id);
             // $("input[name='share']").val(
             // copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
             $("#mp-copy-share").zclip({

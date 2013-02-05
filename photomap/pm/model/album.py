@@ -19,6 +19,8 @@ class Album(Description):
     lon = models.DecimalField(decimal_places = 140, max_digits = 150)
     user = models.ForeignKey(User)
     country = models.CharField(max_length = 2)
+    secret = models.TextField()
+    password = models.TextField()
     
     def toserializable(self,includeplaces = True, guest = False):
         # avoid circular import
@@ -31,6 +33,7 @@ class Album(Description):
                     "country": self.country,
                     "description": self.description,
                     "date": self.date.isoformat(),
+                    "secret": self.secret,
                     "id": self.pk}
         else:
             data = {"lat" : self.lat,

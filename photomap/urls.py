@@ -27,34 +27,29 @@ urlpatterns = patterns("",
                        #========================================================
                        # main
                        #========================================================
-                       url(r'^login', authentication.login),
-                       url(r'^view-album', album.view),
+                       url(r'^login$', authentication.login),
+                       url(r'^view-album$', album.view),
+                       url(r'^get-all-albums$', dashboard.get),
+                       url(r'^get-album$', album.get),
                        
-                       url(r'^get-album', album.get),
-                       
-                       url(r'^impressum', direct_to_template, {"template": "impressum.html"}),
-                       url(r'^privacy', direct_to_template, {"template": "privacy.html"}),
-                       url(r'^copyright', direct_to_template, {"template": "copyright.html"}),
-                       url(r'^contact', direct_to_template, {"template": "contact.html"}),
-                       url(r'^help', direct_to_template, {"template": "help.html"}),
-                       url(r'^team', direct_to_template, {"template": "team.html"}),
+                       url(r'^impressum$', direct_to_template, {"template": "impressum.html"}),
+                       url(r'^privacy$', direct_to_template, {"template": "privacy.html"}),
+                       url(r'^copyright$', direct_to_template, {"template": "copyright.html"}),
+                       url(r'^contact$', direct_to_template, {"template": "contact.html"}),
+                       url(r'^help$', direct_to_template, {"template": "help.html"}),
+                       url(r'^team$', direct_to_template, {"template": "team.html"}),
                        
 
-                       url(r'^logout', authentication.logout),
+                       url(r'^logout$', authentication.logout),
                        url(r'^$', direct_to_template, {"template": "index.html"}),
                        
                     
-                       url(r'^get-all-albums', dashboard.get),
-                       url(r'^dashboard', dashboard.view),
-
-
-                       url(r'^debug/(.+)', debug.view),
-     
                        
-                       #========================================================
-                       # legacy
-                       #========================================================
-                       url(r'^album', album.redirect_to_get),
+                       url(r'^dashboard$', dashboard.view),
+
+
+                       url(r'^debug/(.+)$', debug.view),
+                       
                        #========================================================
                        # 3rd party apps
                        #========================================================
@@ -68,17 +63,18 @@ urlpatterns = patterns("",
                        url(r'^insert-album$', album.insert),
                        url(r'^update-album$', album.update),
                        url(r'^delete-album$', album.delete),
-                       url(r'^update-album-password$', album.share),
+                       url(r'^update-album-password$', album.update_password),
+                       url(r'^album/share/(.*)-(\d)$', album.share),
                        #================================================================
                        # photo hooks
                        #================================================================
-                       url(r'^insert-photo', photo.insert),
-                       url(r'^update-photo', photo.update),
-                       url(r'^delete-photo', photo.delete),
+                       url(r'^insert-photo$', photo.insert),
+                       url(r'^update-photo$', photo.update),
+                       url(r'^delete-photo$', photo.delete),
                        #================================================================
                        # place hooks
                        #================================================================
-                       url(r'^insert-place', place.insert),
-                       url(r'^update-place', place.update),
-                       url(r'^delete-place', place.delete)
+                       url(r'^insert-place$', place.insert),
+                       url(r'^update-place$', place.update),
+                       url(r'^delete-place$', place.delete)
                        ) 

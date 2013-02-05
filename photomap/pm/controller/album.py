@@ -5,11 +5,12 @@ Created on Jul 10, 2012
 '''
 
 from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest 
-from django.shortcuts import render_to_response
+from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.contrib.auth import models
 
+from django.utils import crypto
 from django.contrib.auth import hashers
 
 from message import success, error
@@ -17,11 +18,10 @@ from pm.test import data
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
-from pm.model.share import Share
 from pm.exception import OSMException
 
 from pm.osm import reversegecode
-from pm.form.album import AlbumInsertForm, AlbumUpdateForm, AlbumPasswordUpdateForm
+from pm.form.album import AlbumInsertForm, AlbumUpdateForm, AlbumPasswordUpdateForm, AlbumShareLoginForm
 
 import json
 import logging
@@ -37,24 +37,18 @@ SECRET_KEY_POOL = string.ascii_letters + string.digits
 logger = logging.getLogger(__name__)
 
 @login_required
-def share(request):
+def update_password(request):
     if request.method == "POST":
         user = request.user
         form = AlbumPasswordUpdateForm(request.POST)
         if form.is_valid():
             try:
-                id = form.cleaned_data["id"]
-                logger.debug("User %d is trying to set new password for Album %d." % (request.user.pk, id))
-
-                album = Album.objects.get(pk = id, user = user)
-                share = Share.objects.get(album = album)
-                
-                secret = hashers.make_password(form.cleaned_data["password"])
-                share.password = secret
-                
-                share.save()
-                logger.info("Share with secret %s has been created." % secret)
-                
+                album_id = form.cleaned_data["album"]
+                logger.debug("User %d is trying to set new password for Album %d." % (request.user.pk, album_id))
+                album = Album.objects.get(pk = album_id, user = user)
+                password = hashers.make_password(form.cleaned_data["password"])
+                album.password = password
+                album.save()
                 return success()
             
             except (Album.DoesNotExist), e:
@@ -64,6 +58,7 @@ def share(request):
             return error(str(form.errors))
     else:
         return render_to_response("update-album-password.html")
+
 
 def view(request):
 #    if not request.user.is_authenticated():
@@ -76,31 +71,61 @@ def view(request):
         return HttpResponseBadRequest()
 
 
+def share(request, secret, album_id):
+    try:
+        album_id = int(album_id)
+        album = Album.objects.get(pk=album_id)
+        
+        logger.debug("User is trying to access album %d with secret %s." % (album_id, secret))
+        
+        if album.secret != secret:
+            #TODO better name
+            logger.debug("Secret does not match.")
+            logger.debug("%s is not %s" % (secret, album.secret))
+            return render_to_response("album-share-error.html")
+    
+        if request.method == "GET":
+            # album does not has a password yet
+            if not hashers.is_password_usable(album.password):
+                logger.debug("Album does not has a password yet.")
+                return render_to_response("album-share-error.html")
+            return render_to_response("album-share-login.html")
+        else:
+            password = request.POST["password"]
+            
+            if hashers.check_password(password, album.password):
+                request.session["album_%d" % album_id] = True
+                return redirect("/view-album?id=%d" % album_id)
+            else:
+                return render_to_response("album-share-login.html", {error: "Passwort is not correct."})
+    except Exception, e:
+        logger.info(str(e))
+        return render_to_response("album-share-error.html")
+
+
+
 def get(request):
     if request.method == "GET":
         try:
             user = request.user
+            album_id = int(request.GET["id"])
             
-            try:
-                id = int(request.GET["id"])
-            except Exception, e:
-                id = None
-            logger.info("User %s is trying to get Album %d." % (str(request.user), id))    
             
+            logger.info("User %s is trying to get Album %d." % (str(request.user), album_id))    
+        
             if user.is_anonymous():
-                secret = request.GET["secret"]
-                logger.info("User is not logged in. Checking secret %s for album %d." % (secret, id))
-                album = Album.objects.get(pk = id)
-                share = Share.objects.get(album = album, token = secret)
+                if not request.session.get("album_%d" % album_id):
+                    return error("You are not authorized to view this album.")
                 
-            # no id -- try to take newest album of this user
-            else:
-                if not id:
-                    albums = Album.objects.all(user = request.user)
-                    album = albums[len(albums) - 1]
-                    logger.info("No ID has been specified. Returning album %d." % album.pk)
-                else:
-                    album = Album.objects.get(user = request.user, pk = id)
+#            # no album_id -- try to take newest album of this user
+#            else:
+#                if not album_id:
+#                    albums = Album.objects.all(user = request.user)
+#                    album = albums[len(albums) - 1]
+#                    logger.info("No ID has been specified. Returning album %d." % album.pk)
+#                else:
+#                   
+            album = Album.objects.get(user = request.user, pk = album_id)
                 
             data = album.toserializable()
             if album.user == user:
@@ -112,7 +137,7 @@ def get(request):
             logger.debug("%s", json.dumps(data, cls = DecimalEncoder, indent = 4))
             logger.debug("------------------------------------------------------------------------------") 
             return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
-        except (KeyError, Album.DoesNotExist, Share.DoesNotExist), e:
+        except (KeyError, Album.DoesNotExist), e:
             return error(str(e))
 
     
@@ -134,6 +159,11 @@ def insert(request):
                 logger.warn("Could not resolve %f,%f. Reason: %s" % (album.lat, album.lon, str(e)))
 #                return error("osm is temporarily not available. please try again later")
                 return error(str(e))
+            secret = crypto.get_random_string(length = 50)
+            password = hashers.make_password(None)
+            logger.info("Adding secret %s to Album." % secret)
+            album.secret = secret
+            album.password = password
             album.save()
             logger.info("Album %d inserted." % album.pk)
             return success(id = album.pk)

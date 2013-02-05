@@ -209,14 +209,15 @@ UIInput.prototype = {
     */
    _submitHandler : function () {
       var instance = this,
-          $form = $("form.jquery-validator");
+          $form = $("form.jquery-validator"),
+          $buttons = $form.find("button, input[type='submit']");
 
       //called when data is valid
       $form.validate({
          success : "valid",
          errorPlacement : function () {}, //don't show any errors
          submitHandler : function () {
-            $form.find("button, input[type='submit']").button("disable");
+            $buttons.button("disable");
             if (typeof instance.options.submit === "function"){
                instance.options.submit.call(instance);
             }
@@ -229,6 +230,7 @@ UIInput.prototype = {
                success : function (data, textStatus) {
                   if (data.error) {
                      alert(data.error.toString());
+                     $buttons.button("enable");
                      return;
                   }
                   if (typeof instance.options.success === "function"){
@@ -237,8 +239,9 @@ UIInput.prototype = {
                   instance.close();
                },
                error : function (error) {
-                  instance.close();
+                  // instance.close();
                   alert(error.toString());
+                  $buttons.button("enable");
                }
             });
          }
@@ -255,6 +258,6 @@ UIInput.prototype = {
       return this.visible;
    },
    close : function () {
-      this.dialog.dialog("close");
+      this.$dialog.dialog("close");
    },
 };
