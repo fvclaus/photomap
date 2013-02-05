@@ -140,6 +140,7 @@ class ApiTestCase(TestCase):
         self.assertTrue(album["lat"])
         self.assertTrue(album["lon"])
         self.assertTrue(album["country"])
+        self.assertTrue(album["secret"])
         
     def assertPlaceComplete(self, place):
         self.assertTrue(place["lat"])

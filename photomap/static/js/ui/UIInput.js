@@ -18,9 +18,13 @@ $.extend($.ui.dialog.prototype.options, {
 });
 
 UIInput = function () {
-   this.$dialog = $("#input-dialog");
+   this.$dialog = $("#mp-dialog");
+   this.width = this.$dialog.width();
+   this.height = this.$dialog.height();
+   //#mp-dialog receives styling to set up the height and width
+   //ui.dialog does not play well with that
+   this.$dialog.removeAttr("id");
    this.visible = false;
-   // this.$deleteDialog = $("#confirm-delete");
 };
 
 UIInput.INPUT_DIALOG = 0;
@@ -29,7 +33,7 @@ UIInput.CONFIRM_DIALOG = 1;
 
 UIInput.prototype = {
    /**
-    * @author Marc Römer
+    * @author Frederik Claus, Marc Römer
     * @description load Input form, then overlay with jquery ui dialog widget
     * @param String url Url of the input-form
     */
@@ -73,14 +77,18 @@ UIInput.prototype = {
             },
             buttons : [
                {
+                  id: "mp-dialog-button-ok",
                   text : $("span#mp-confirm").text(),
                   click : function () {
+                     //disable button before submit
+                     $("#mp-dialog-button-ok, #mp-dialog-button-cancel").button("disable");
                      main.getClientServer().deleteObject(this.options.url, this.options.data);
                      $(this).dialog("close");
                      return true;
                   }
                },
                {
+                  id : "mp-dialog-button-cancel",
                   text : $("span#mp-abort").text(),
                   click : function (event) {
                      $(this).dialog("close");
@@ -100,12 +108,14 @@ UIInput.prototype = {
    _prepareDialog : function (url){
       html = this._loadHtml(url);
       var $wrapper = this._wrapHtml(html),
-          dimension = this._getDialogDimension($wrapper),
           title = this._removeTitle($wrapper);
+          // dimension = this._getDialogDimension($wrapper);
 
       //add the html without the title
       this.$dialog.html($wrapper.html());
       $wrapper.remove();
+      //turn buttons into jquery ui buttons if present
+      this.$dialog.find("button, input[type='submit']").button();
       //resize the dialog to fit the content without scrolling
       //we must add a new dialog here
       this.$dialog.dialog({
@@ -113,26 +123,22 @@ UIInput.prototype = {
          create: function () {
             main.getUI().disable();
          },
-         "title" : title,
-         "minWidth": dimension.width,
-         "minHeigth": dimension.height
+         "title": title,
+         "width": this.width,
+         "height" : this.height,
+         // "heightStyle": "content"
       });
+         //TODO height is a messy business. height includes the title bar (wtf?!)
+         //the dialog content is styled in percent of the parent. 
+         //this makes it impossible to calculate dimension of a dialog, because they depend on the dimension of the parent.
+         //limit maximum height
+         // "maxHeight" : this.height,
+         // "maxHeight" : 500,
+         //set the width to allow percentage styling
+         // "width" : this.width,
 
 
    },
-
-   _wrapHtml : function (html) {
-      var $wrapper = $("<div/>").css("display", "inline-block").html(html);
-      $(".mp-content").append($wrapper);
-      return $wrapper;
-   },
-   _removeTitle : function ($el) {
-      var $title = $el.find("h2"),
-          title = $title.text();
-      $title.remove();
-      return title;
-   },
-
    /**
     @public
     @summary This is needed for testing the deletion of objects, because the confirm buttons cannot be queried in a reasonable fashion
@@ -149,6 +155,17 @@ UIInput.prototype = {
             button.click.apply(instance.$dialog.get(0));
          }
       });
+   },
+   _wrapHtml : function (html) {
+      var $wrapper = $("<div/>").css("display", "inline-block").html(html);
+      $(".mp-content").append($wrapper);
+      return $wrapper;
+   },
+   _removeTitle : function ($el) {
+      var $title = $el.find("h2"),
+          title = $title.text();
+      $title.remove();
+      return title;
    },
    /**
     @private
@@ -174,24 +191,33 @@ UIInput.prototype = {
     @param html markup to show in the dialog
     @returns {Object} width and height of the dialog containing the html
     */
-   _getDialogDimension : function ($wrapper) {
-      //margin cuts of some space -> make it slightly bigger
-      dimension = {"width": $wrapper.width() * 1.2, "height": $wrapper.height()};
-      return dimension;
-   },
+   // _getDialogDimension : function ($wrapper) {
+   //    if ($wrapper.find(".mp-tabs").length > 0){
+   //       //TODO tabs causes messy problems when the height varies between the tabs
+   //       //HOTFIX heightStyle auto adapts to the height of the tallest tab
+   //       $wrapper.find(".mp-tabs").tabs({
+   //          "heightStyle" : "auto"
+   //       });
+   //    }
+   //    //margin cuts of some space -> make it slightly bigger
+   //    dimension = {"width": $wrapper.width() * 1.2, "height": $wrapper.height()};
+   //    return dimension;
+   // },
 
    /**
     * @private
     */
    _submitHandler : function () {
       var instance = this,
-          $form = $("form.jquery-validator");
+          $form = $("form.jquery-validator"),
+          $buttons = $form.find("button, input[type='submit']");
 
       //called when data is valid
       $form.validate({
          success : "valid",
          errorPlacement : function () {}, //don't show any errors
          submitHandler : function () {
+            $buttons.button("disable");
             if (typeof instance.options.submit === "function"){
                instance.options.submit.call(instance);
             }
@@ -204,6 +230,7 @@ UIInput.prototype = {
                success : function (data, textStatus) {
                   if (data.error) {
                      alert(data.error.toString());
+                     $buttons.button("enable");
                      return;
                   }
                   if (typeof instance.options.success === "function"){
@@ -212,8 +239,9 @@ UIInput.prototype = {
                   instance.close();
                },
                error : function (error) {
-                  instance.close();
+                  // instance.close();
                   alert(error.toString());
+                  $buttons.button("enable");
                }
             });
          }
@@ -230,9 +258,6 @@ UIInput.prototype = {
       return this.visible;
    },
    close : function () {
-      this.dialog.dialog("close");
+      this.$dialog.dialog("close");
    },
-   closeConfirm : function () {
-      $("#confirm-delete").dialog("close");
-   }
 };

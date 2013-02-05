@@ -2,22 +2,20 @@
 {% load i18n %}
 
 <div id="insert-form" class="insert">
-	
-	<h2 class="mp-input-title">{% trans "insert-dialogue-title insert-album" %}</h2>
-	
-	<form class="jquery-validator mp-dialog" name="update-album" action="/insert-album" method="post">
-	   <fieldset>
-		   <div>
-			   <label for="title">{% trans "Name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
-			   <input class="mp-input-name" type="text" name="title" required="required" size="40"/>
-		   </div>	
-		   <div>
-			   <label for="description">{% trans "Beschreibung" %}</label>
-			   <textarea type="text" name="description" cols="50" rows="5"></textarea>
-		   </div>	
-		   <input type="hidden" name="lat" required="required" />
-		   <input type="hidden" name="lon" required="required" />
-		   <input class="mp-button mp-submit" type="submit" value='{% trans "Speichern" %}' name="submit" />
-		</fieldset>
-	</form>
+  
+  <h2 class="mp-input-title">{% trans "insert-dialogue-title insert-album" %}</h2>
+  
+  <form class="jquery-validator mp-dialog-content" name="update-album" action="/insert-album" method="post">
+    <div>
+      <label for="title">{% trans "Name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
+      <input class="mp-input-name" type="text" name="title" required="required"/>
+    </div>	
+    <div>
+      <label for="description">{% trans "Beschreibung" %}</label>
+      <textarea type="text" name="description" cols="50" rows="5"></textarea>
+    </div>	
+    <input type="hidden" name="lat" required="required" />
+    <input type="hidden" name="lon" required="required" />
+    <input class="mp-button mp-submit" type="submit" value='{% trans "Speichern" %}' name="submit" />
+  </form>
 </div>

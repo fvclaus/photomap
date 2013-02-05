@@ -71,6 +71,7 @@ class AlbumControllerTest(ApiTestCase):
                 "lat" : Decimal(17.375803),
                 "lon": Decimal(-34.628906)}
         (album, content) = self.assertCreates(data)
+        self.assertTrue(album.secret != None)
         self.assertEqual(album.country, "oc")
         #=======================================================================
         # insert something valid without description
@@ -79,6 +80,7 @@ class AlbumControllerTest(ApiTestCase):
                 "lat": GPS_MANNHEIM_SCHLOSS["lat"],
                 "lon": GPS_MANNHEIM_SCHLOSS["lon"]}
         (album, content) = self.assertCreates(data)
+        self.assertTrue(album.secret != None)
         self.assertEqual(album.title, data["title"])
         self.assertEqual(album.country, "de")
         #=======================================================================
@@ -131,6 +133,15 @@ class AlbumControllerTest(ApiTestCase):
         data["id"] = 2
         self.assertError(data)
         
+    def test_update_password(self):
+        self.url = "/update-album-password"
+        data = {"album" : 1, "password" : "blah"}
+        self.assertSuccess(data)
+        album = Album.objects.get(pk=1)
+        from django.contrib.auth import hashers 
+        self.assertTrue(hashers.is_password_usable(album.password))
+        
+        
     def test_get(self):
         self.url = "/get-album"
         data = {"id" : 1}
@@ -154,21 +165,21 @@ class AlbumControllerTest(ApiTestCase):
         #=======================================================================
         self.assertError({"id" : 2}, method = "GET")
         
-    def test_share(self):
-        self.url = "/get-album-share"
-        response = self.json(method = "GET", data = {"id":1})
-        self.assertTrue(response["success"])
-        self.assertRegexpMatches(response["url"], "\/view-album\?id=\d+&secret=.*")
-        secret = re.search("secret=(?P<secret>.*)", response["url"]).group("secret")
-        self.assertPublicAccess("/get-album?id=%d&secret=%s" % (1, secret))
-        # assert that exactly one token is generated
-        response2 = self.json(method = "GET", data = {"id":1})
-        self.assertEqual(response["url"], response2["url"])
-        #=======================================================================
-        # does not belong to you
-        #=======================================================================
-        self.assertError({"id":2}, method = "GET")
-        self.assertNoPublicAccess("/get-album?id=2")
-        self.assertNoPublicAccess("/get-album?id=2&secret=asdfs823420D")
+#    def test_share(self):
+#        self.url = "/get-album-share"
+#        response = self.json(method = "GET", data = {"id":1})
+#        self.assertTrue(response["success"])
+#        self.assertRegexpMatches(response["url"], "\/view-album\?id=\d+&secret=.*")
+#        secret = re.search("secret=(?P<secret>.*)", response["url"]).group("secret")
+#        self.assertPublicAccess("/get-album?id=%d&secret=%s" % (1, secret))
+#        # assert that exactly one token is generated
+#        response2 = self.json(method = "GET", data = {"id":1})
+#        self.assertEqual(response["url"], response2["url"])
+#        #=======================================================================
+#        # does not belong to you
+#        #=======================================================================
+#        self.assertError({"id":2}, method = "GET")
+#        self.assertNoPublicAccess("/get-album?id=2")
+#        self.assertNoPublicAccess("/get-album?id=2&secret=asdfs823420D")
         
    

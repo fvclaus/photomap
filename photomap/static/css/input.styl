@@ -5,10 +5,14 @@
 /* ------------------------------ */
 /* ----- input form styling ----- */
 
-.mp-input-title
-  text-align center
-  
-.mp-dialog
+/* define the maxHeight and width for the UIInput class */
+#mp-dialog
+  width 60%
+  height 60%
+  position absolute
+  z-index -100
+
+.mp-dialog-content
   .mp-button
     float right
   label
@@ -18,6 +22,9 @@
   input, textarea
     margin 1% 0
     width 75%
+
+div.mp-dialog-content
+  display inline-block
 
 .error
  border 4px solid red

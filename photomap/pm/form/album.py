@@ -9,10 +9,21 @@ from pm.model.album import Album
 class AlbumInsertForm(forms.ModelForm):
     class Meta:
         model = Album
-        exclude = ("country", "user", "date")
+        exclude = ("country", "user", "date", "secret", "password")
         
 class AlbumUpdateForm(forms.ModelForm):
     id = forms.IntegerField()
     class Meta:
         model = Album
-        exclude = ("country", "user","lat","lon","date")
+        exclude = ("country", "user","lat","lon","date", "secret", "password")
+        
+class AlbumPasswordUpdateForm(forms.Form):
+    album = forms.IntegerField()
+    password = forms.CharField()
+    
+
+class AlbumShareLoginForm(forms.Form):
+    password = forms.CharField()
+    
+
+    

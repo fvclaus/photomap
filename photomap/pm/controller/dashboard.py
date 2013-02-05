@@ -30,20 +30,14 @@ def get(request):
     if request.method == "GET":
         user = request.user
         
-        if  user.is_authenticated():
-            albums = Album.objects.all().filter(user = user) 
-        else:
-#            last 30 albums
-            albums = Album.objects.all().order_by("-pk")[:30]
+        
+        albums = Album.objects.all().filter(user = user) 
+        
         data = []
         
         for album in albums:
-            if user.is_authenticated():
-                albumflat = album.toserializable(includeplaces = False)
-                albumflat["isOwner"] = True
-            else:
-                albumflat = album.toserializable(includeplaces = False, guest = True)
-                albumflat["isOwner"] = False
+            albumflat = album.toserializable(includeplaces = False)
+            albumflat["isOwner"] = True
             data.append(albumflat)
             
         logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))

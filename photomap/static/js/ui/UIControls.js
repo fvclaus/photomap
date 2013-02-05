@@ -125,16 +125,6 @@ UIControls.prototype = {
     * @public
     * @see UITools
     */
-   bindCopyListener : function () {
-      // copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
-      $("#mp-copy-button").zclip('remove').zclip({
-         path: 'static/js/zeroclipboard/zeroclipboard.swf',
-         copy: $("#mp-share-link").val()
-         /*afterCopy: function(){
-            $(".mp-overlay-trigger").overlay().close();
-         },*/
-      });
-   },
    /**
     * @private
     */
@@ -203,21 +193,14 @@ UIControls.prototype = {
     */
    _bindShareListener : function () {
       
-      var instance = this, state, tools, url, id;
+      var instance = this,
+          state = main.getUIState(), 
+          tools = main.getUI().getTools(), url, id;
       
       this.$share
          .on("click", function (event) {
-            state = main.getUIState();
-            tools = main.getUI().getTools();
-            
             if (!main.getUI().isDisabled()) {
-               if (state.getAlbumShareURL() && state.getAlbumShareURL().id === state.getCurrentAlbum().id) {
-                  tools.openShareURL();
-               } else {
-                  url = "/get-album-share";
-                  id = state.getCurrentAlbum().id;
-                  main.getClientServer().getShareLink(url, id);
-               }
+               instance.albumListener.share(state.getCurrentAlbum());
             }
          });
    },

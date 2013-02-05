@@ -126,10 +126,10 @@ UIPhotoEditor.prototype = {
          }
          if (!instance.isRotateDisabled){
             //TODO the disabled here does not seem to work
-            instance.$rotate
-               .text("No rotation possible after pixel operation.")
-               .attr("disabled", "disabled");
-
+            instance.$rotate.button({
+               text : "No rotation possible after pixel operation."
+            });
+            instance.$rotate.button("disable");
             console.log("added disabled");
             instance.isRotateDisabled = true;
          }
@@ -151,7 +151,7 @@ UIPhotoEditor.prototype = {
          Pixastic.revert($(instance.PREVIEW_SELECTOR).get(0));
          //enable rotate button again
          if (instance.isRotateDisabled){
-            instance.$rotate.removeAttr("disabled");
+            instance.$rotate.button("enable");
             console.log("removed disabled");
             instance.isRotateDisabled = false;
          }

@@ -14,6 +14,7 @@ var Album;
 Album = function (data) {
    
    data.model = 'Album';
+   this.secret = data.secret;
    InfoMarker.call(this, data);
    
    this.checkIconStatus();
