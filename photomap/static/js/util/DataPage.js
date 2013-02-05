@@ -28,25 +28,28 @@ DataPage.prototype = {
     */
    _init : function (data, entriesPerPage) {
       
-      var matrix, i, j, k, rest, m;
-      i = 0;
-      j = 0;
-      k = 0;
-      matrix = [];
+      var matrix = [],
+         pageData = $.extend(true, [], data), //make a deep copy so that the original data won't get modified
+         i = 0,
+         j = 0,
+         k = 0,
+         rest,
+         m;
+      
       matrix[0] = [];
-      rest = data.length % entriesPerPage;
+      rest = pageData.length % entriesPerPage;
       // fill up empty slot with null
       if (rest !== 0) {
          
          for (m = 0; m < (entriesPerPage - rest); m++) {
-            data.push(null);
+            pageData.push(null);
          }
       }
       
       // create a matrix with all pages as separate array
       while (i <= entriesPerPage) {
-         matrix[k].push(data[j]);
-         if (j === data.length - 1) {
+         matrix[k].push(pageData[j]);
+         if (j === pageData.length - 1) {
             break;
          }
          if (i === entriesPerPage - 1) {
