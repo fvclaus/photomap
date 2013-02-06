@@ -106,7 +106,7 @@ UI.prototype = {
       var state = this.getState(),
          photo = new Photo({
             id : data.id,
-            url : data.url,
+            photo : data.url,
             thumb : data.thumb,
             order : state.getPhotos().length,
             title : state.retrieve(TEMP_TITLE_KEY),

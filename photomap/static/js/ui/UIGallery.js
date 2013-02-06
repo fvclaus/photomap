@@ -23,9 +23,9 @@ UIGallery = function () {
    
    this.carousel = null;
    
-   this.loaded = 0;
    this.photos = null;
    this.imageSources = [];
+   this.isStarted = false;
    this.fullGalleryLoaded = false;
 };
 
@@ -41,9 +41,6 @@ UIGallery.prototype =  {
       this._bindNavigationListener();
       this._bindStartSlideshowListener();
    },
-   increaseLoaded : function () {
-      this.loaded += 1;
-   },
    getImageBySource : function (source) {
       
       return this.$inner.find("img[src='" + source + "']");
@@ -51,8 +48,10 @@ UIGallery.prototype =  {
    getImageIndex : function ($image) {
       
       var src = $image.attr("src");
-      
       return this.$hidden.find("img[src='" + src + "']").index();
+   },
+   getCarousel : function () {
+      return this.carousel;
    },
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
@@ -76,16 +75,22 @@ UIGallery.prototype =  {
     * @description adds new photo to gallery.
     */
    insertPhoto : function (photo) {
-      // insert hidden thumb
-      this._appendImages([photo.thumb]);
-      // update carousel
-      this.imageSources = this.imageSources.filter(function (src) {
-         return src !== null;
-      });
-      this.imageSources.push(photo.thumb);
-      this.carousel.reinitialise(this.imageSources);
-      // navigate to new image
-      this._navigateToLastPage();
+      
+      if (this.isStarted) {
+         // insert hidden thumb
+         this.appendImages([photo.thumb]);
+         // update carousel
+         this.imageSources = this.imageSources.filter(function (src) {
+            return src !== null;
+         });
+         this.imageSources.push(photo.thumb);
+         this.carousel.reinitialise(this.imageSources);
+         // navigate to new image
+         this._navigateToLastPage();
+      } else {
+         this.start();
+      }
+         
    },
    /**
     * @description removes image from gallery.
@@ -162,104 +167,109 @@ UIGallery.prototype =  {
          this.changed = false;
       }
    },
+   /**
+    * @description appends any number (1->Inf) of thumbnails to gallery (hidden)
+    */
+   appendImages : function (sources) {
+      
+      var instance = this,
+         images = this.$hidden.find("img"),
+         data = [],
+         tmplData = [],
+         i;
+      
+      images.each(function () {
+         
+         data.push($(this).attr("src"));
+      });
+      
+      for (i = 0; i <= sources.length; i++) {
+         
+         if (i === sources.length) {
+            
+            if (tmplData.length > 0) {
+               
+               this.$hidden.append(
+                  $.jqote('#hiddenPhotosTmpl', {
+                     sources: tmplData
+                  })
+               );
+            }
+         } else {
+            if ($.inArray(sources[i], data) === -1) {
+               tmplData.push(sources[i]);
+            }
+         }
+      }
+   },
   /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
    */
    start : function () {
       
-      var photos, state, controls, photoMatrix, i, instance = this;
-      state = main.getUIState();
-      photos = state.getPhotos();
-      controls = main.getUI().getControls();
+      var ui = main.getUI(),
+         state = ui.getState(),
+         options,
+         photoMatrix,
+         i,
+         instance = this;
+      
+      //get photos
+      this.photos = state.getPhotos();
       //reset this.imageSources
       this.imageSources = [];
-      
-      // this method is just called if the gallery changes -> full-gallery has to be changed as well
+      // reset FullGallery
       this.destroyFullGallery();
       
-      if (photos && photos.length !== 0) {
+      if (this.photos && this.photos.length !== 0) {
          
-         this.photos = photos;
-         
-         i = 0;
          // disable ui while loading & show loader
          state.setAlbumLoading(true);
-         main.getUI().disable();
-         main.getUI().showLoading();
+         ui.disable();
+         ui.showLoading();
          
-         while (i < photos.length) {
+         for (i = 0; i < this.photos.length; i++) {
             
-            if (photos[i] !== undefined) {
-               
-               instance.imageSources.push(photos[i].thumb);
-               
-               $('<img/>')
-                  .load(instance._galleryLoader)
-                  .attr('src', photos[i].thumb);
+            if (this.photos[i] !== undefined) {
+               instance.imageSources.push(this.photos[i].thumb);
             }
-            i++;
          }
-      } else {
-         state.setPhotos(null);
-         this.carousel.reset();
-      }
-   },
-   /**
-    * @private
-    */
-   _galleryLoader : function () {
-      
-      var gallery, state, photoMatrix;
-      gallery = main.getUI().getGallery();
-      state = main.getUIState();
-      
-      gallery.increaseLoaded();
-      
-      if (gallery.photos && gallery.loaded === gallery.photos.length) {
-         
-         //enable ui
-         main.getUIState().setAlbumLoading(false);
-         main.getUI().enable();
-         
-         // append loaded images to gallery (hidden)
-         gallery._appendImages(gallery.imageSources);
          // initialize and start carousel
-         gallery.carousel = new UICarousel(gallery.$inner, gallery.imageSources);
-         gallery.carousel.start();
+         options = {
+            lazy : !main.getClientState().isAdmin(),
+            effect : "foldIn",
+            onLoad : instance._load
+         };
+         this.carousel = new UICarousel(instance.$inner, instance.imageSources, options);
+         this.carousel.start();
          
-         // reset loaded value
-         gallery.loaded = 0;
-         // hide loader
-         main.getUI().hideLoading();
+         this.isStarted = true;
+      
+      } else {
+         
+         this.isStarted = false;
+         if (this.carousel !== null) {
+            this.carousel.reset();
+         }
       }
    },
    /**
     * @private
-    * @description appends any number (1->Inf) of thumbnails to gallery (hidden)
     */
-   _appendImages : function (sources) {
+   _load : function () {
+      var ui = main.getUI(),
+         gallery = ui.getGallery(),
+         state = ui.getState();
       
-      var instance = this;
+      //enable ui
+      state.setAlbumLoading(false);
+      ui.enable();
       
-      this.$hidden.append(
-         $.jqote('#hiddenPhotosTmpl', {
-            sources: sources
-         })
-      );
-   },
-   /**
-    * @private
-    */
-   _navigateLeft : function () {
+      // append loaded images to gallery (hidden)
+      gallery.appendImages(gallery.getCarousel().getLoadedData());
       
-      this.carousel.navigateLeft();
-   },
-   /**
-    * @private
-    */
-   _navigateRight : function () {
-      
-      this.carousel.navigateRight();
+      // hide loader
+      ui.hideLoading();
    },
    /**
     * @private
@@ -311,36 +321,40 @@ UIGallery.prototype =  {
    
    _bindNavigationListener : function () {
       
-      var instance = this;
+      var disabled = main.getUI().isDisabled(),
+         instance = this;
       
       this.$navLeft.on("click", function () {
          
-         if (!main.getUI().isDisabled()) {
-            instance._navigateLeft();
+         if (!disabled) {
+            instance.carousel.navigateLeft();
          }
       });
       this.$navRight.on("click", function () {
          
-         if (!main.getUI().isDisabled()) {
-            instance._navigateRight();
+         if (!disabled) {
+            instance.carousel.navigateRight();
          }
       });
    },
    
    _bindListener : function () {
 
-      var state, tools, controls, authorized, photo, instance = this;
-      state = main.getUIState();
-      controls = main.getUI().getControls();
-      authorized = main.getClientState().isAdmin();
-      tools = main.getUI().getTools();
+      var ui = main.getUI(),
+         state = ui.getState(),
+         tools = ui.getTools(),
+         controls = ui.getControls(),
+         disabled = ui.isDisabled(),
+         authorized = main.getClientState().isAdmin(),
+         photo,
+         instance = this;
       
       //bind events on anchors
       instance.$inner
          .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             
-            if (!main.getUI().isDisabled()) {
+            if (!disabled) {
                
                photo = $.grep(state.getPhotos(), function (e, i) {
                   return e.thumb === $el.attr("src");
@@ -357,7 +371,7 @@ UIGallery.prototype =  {
          .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
             var $el = $(this);
             
-            if (!main.getUI().isDisabled()) {
+            if (!disabled) {
             
                if (authorized) {
                   controls.getEditControls().hide(true);
@@ -372,25 +386,23 @@ UIGallery.prototype =  {
     */
    _bindStartSlideshowListener : function () {
       
-      var state, controls, authorized, photo, instance = this;
-      state = main.getUIState();
-      controls = main.getUI().getControls();
-      authorized = main.getClientState().isAdmin();
-
+      var ui = main.getUI(),
+         state = ui.getState(),
+         photo,
+         instance = this;
+      
       this.$inner
          .on('click.Gallery', ".mp-gallery-tile", function (event) {
             var $el = $(this).children();
             
-            if (!main.getUI().isDisabled()) {
+            if (!ui.isDisabled()) {
                
-               console.log(instance.getImageIndex($el));
                state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
                state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
+               console.log((state.getPhotos()[instance.getImageIndex($el)]));
+               ui.getControls().getEditControls().hide(false);
                
-               main.getUI().getControls().getEditControls().hide(false);
-               
-               // starts little slideshow in gallery div
-               main.getUI().getSlideshow().startSlider();
+               ui.getSlideshow().startSlider();
             }
          });
    }

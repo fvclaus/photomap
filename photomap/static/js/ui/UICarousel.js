@@ -11,44 +11,142 @@
 
 var UICarousel;
    
-UICarousel = function ($el, imageSources) {
+UICarousel = function ($el, imageSources, options) {
    
+   // make a deep copy of the imageSources so that the original aray won't get modified
+   this.data = $.extend(true, [], imageSources);
    this.dataPage = new DataPage(imageSources, $el.find("img").length);
+   
+   this.defaults = {
+      lazy : false,
+      effect: "fade",
+      onLoad : null
+   };
+   this.options = $.extend({}, this.defaults, options);
    
    this.$root = $el;
    this.$items = $el.find("img");
+   this.size = this.$items.length;
    
-   this.currentPageIndex = null;
+   this.currentPage = null;
+   this.loadedData = [];
 };
 
 /**
  * @author Marc-Leon Roemer
- * @description defines handler to initialize and navigate through the carousel
+ * @description defines handler to initialize and navigate through the carousel and to load images (supports lazy-loading)
  */
 UICarousel.prototype = {
    
-   _updateCarousel : function (newPage) {
+   /**
+    * @description Loads all photos, or just current page depending on this.options.lazy (=true/false). When everything is loaded this.options.onLoad (optional) 
+    * is executed and the carousel is updated to show the current page.
+    */
+   _load : function () {
       
-      var showNew, instance = this;
+      var i, j, loadHandler, loaded, maxLoad, currentPage, source, instance = this;
+      loaded = 0;
       
-      showNew = function () {
+      // handler is called after all images are loaded
+      loadHandler = function () {
          
-         instance.$items.each(function (index) {
+         ++loaded;
+         if (loaded === maxLoad) {
             
-            if (newPage.page[index] !== null) {
-               $(this).fadeIn(200).attr("src", newPage.page[index]);
-            } else {
-               $(this).hide();
+            // if there is a load-handler specified in the options, execute it first
+            if (instance.options.onLoad !== null) {
+               instance.options.onLoad();
             }
-         });
-         instance.$items.removeClass("mp-scale-X-0");
+            instance._update();
+         }
       };
       
-      if (newPage !== null) {
-         this.currentPageIndex = newPage.index;
-         this.$items.addClass("mp-scale-X-0");
-         // transition time is .2s
-         window.setTimeout(showNew, 200);
+      // check whether lazy loading is enabled or not
+      if (this.options.lazy) {
+         
+         // filter current page to get the actual amount of images
+         currentPage = this.currentPage.page.filter(function (e, i) {
+            return e !== null;
+         });
+         // set maxLoad to the amount of images on the current page
+         maxLoad = currentPage.length;
+         
+         for (i = 0; i < maxLoad; i++) {
+            
+            source = this.currentPage.page[i];
+            
+            if (source !== null) {
+               // add sources to loadedData
+               if ($.inArray(source, this.loadedData) === -1) {
+                  this.loadedData.push(source);
+               }
+               // load images
+               $('<img/>')
+                  .load(loadHandler)
+                  .attr('src', source);
+            }
+         }
+      } else {
+         
+         // set maxLoad to the full data-length
+         maxLoad = this.data.length;
+         
+         for (i = 0; i < maxLoad; i++) {
+            
+            source = this.data[i];
+            
+            if (source !== null) {
+               // add sources to loadedData
+               if ($.inArray(source, this.loadedData) === -1) {
+                  this.loadedData.push(source);
+               }
+               // load images
+               $('<img/>')
+                  .load(loadHandler)
+                  .attr('src', this.data[i]);
+            }
+         }
+      }
+   },
+   
+   /**
+    * @description Updates carousel to show current page.
+    */
+   _update : function () {
+      
+      var showNew, additionalHandler, instance = this;
+      
+      if (this.currentPage !== null) {
+         
+         showNew = function () {
+            
+            instance.$items.each(function (index) {
+               if (instance.currentPage.page[index] !== null) {
+                  $(this).fadeTo(200, 1).attr("src", instance.currentPage.page[index]);
+               } else {
+                  $(this).fadeOut(0);
+               }
+            });
+            if (additionalHandler) {
+               additionalHandler();
+            }
+         };
+         
+         if (this.options.effect === "foldIn") {
+            
+            additionalHandler = function () {
+               instance.$items.removeClass("mp-scale-X-0");
+            };
+            
+            instance.$items.addClass("mp-scale-X-0");
+            // transition time is .2s
+            window.setTimeout(showNew, 200);
+         
+         } else if (this.options.effect === "fade") {
+            
+            instance.$items.fadeTo(200, 0.1);
+            window.setTimeout(showNew, 200);
+         }
       }
    },
    
@@ -57,13 +155,11 @@ UICarousel.prototype = {
     */
    start : function () {
       
-      var i, startPage = this.dataPage.getFirstPage();
+      this.currentPage = this.dataPage.getFirstPage();
+
+      this.$items.addClass("mp-animate");
       
-      for (i = 0; i < this.$items.length; i++) {
-         $(this.$items[i]).addClass("mp-animate");
-      }
-      
-      this._updateCarousel(startPage);
+      this._load();
    },
    
    /**
@@ -79,100 +175,98 @@ UICarousel.prototype = {
     */
    reset : function () {
       
+      this.data = null;
       this.dataPage = null;
-      this.currentPageIndex = null;
+      this.options = null;
+      this.currentPage = null;
+      this.loadedData = [];
       this.$items.each(function (index) {
          
          $(this).hide().attr("src", null);
       });
    },
+   /**
+    * @description returns array with sources of already loaded images
+    */
+   getLoadedData : function () {
+      return this.loadedData;
+   },
    // reloads the current page (-> can be called after photo was deleted)
    reloadCurrentPage : function () {
       
-      var page;
-      
       // get currentPage (if page is empty, cause all images were deleted -> get previous page)
       try {
-         page = this.dataPage.getPage(this.currentPageIndex);
+         this.currentPage = this.dataPage.getPage(this.currentPageIndex);
       } catch (e) {
          if (e.message === "IndexOutOfBounds") {
-            page = this.dataPage.getPage(this.currentPageIndex - 1);
+            this.currentPage = this.dataPage.getPage(this.currentPageIndex - 1);
          }
       }
       
-      this._updateCarousel(page);
-   },      
+      this._load();
+   },
    navigateTo : function (index) {
-      
-      var page;
       
       switch (index) {
       case "start":
-         page = this.dataPage.getFirstPage();
+         this.currentPage = this.dataPage.getFirstPage();
          break;
       case "end":
-         page = this.dataPage.getLastPage();
+         this.currentPage = this.dataPage.getLastPage();
          break;
       default:
          try {
-            page = this.dataPage.getPage(index);
+            this.currentPage = this.dataPage.getPage(index);
          } catch (e) {
-            page = null;
+            this.currentPage = null;
             alert(e.message);
          }
          break;
       }
       
-      this._updateCarousel(page);
+      this._load();
    },
    navigateLeft : function () {
       
-      var page;
-      
       try {
          
-         page = this.dataPage.getPreviousPage();
+         this.currentPage = this.dataPage.getPreviousPage();
          
       } catch (e) {
          
          if (e.message === "IndexOutOfBounds") {
             
-            page = this.dataPage.getLastPage();
+            this.currentPage = this.dataPage.getLastPage();
          
          } else {
             
-            page = null;
+            this.currentPage = null;
             alert(e.message);
          }
       }
-      if (page !== null) {
-         this._updateCarousel(page);
-      }
+      
+      this._load();
    },
    
    navigateRight : function () {
       
-      var page;
-      
       try {
          
-         page = this.dataPage.getNextPage();
+         this.currentPage = this.dataPage.getNextPage();
          
       } catch (e) {
          
          if (e.message === "IndexOutOfBounds") {
             
-            page = this.dataPage.getFirstPage();
+            this.currentPage = this.dataPage.getFirstPage();
          
          } else {
             
-            page = null;
+            this.currentPage = null;
             alert(e.message);
          }
       }
-      if (page !== null) {
-         this._updateCarousel(page);
-      }
+      this._load();
    }
 };
    
