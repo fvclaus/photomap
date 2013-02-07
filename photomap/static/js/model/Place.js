@@ -33,8 +33,7 @@ Place = function (data) {
 Place.prototype = InfoMarker.prototype;
 
 Place.prototype._showGallery = function () {
-   // remove current image in slideshow and start gallery with photos of this place
-   main.getUI().getSlideshow().removeCurrentImage();
+   // set photos of this place as current and start gallery
    main.getUIState().setPhotos(this.photos);
    main.getUI().getGallery().start();
 };
@@ -101,7 +100,9 @@ Place.prototype._bindListener = function () {
 };
 
 Place.prototype.openPlace = function () {
-   var state = main.getUIState(), oldPlace = state.getCurrentLoadedPlace();
+   var ui = main.getUI(),
+      state = ui.getState(),
+      oldPlace = state.getCurrentLoadedPlace();
          
    //this is a private function now
    // controls.hideEditControls(false);
@@ -114,6 +115,8 @@ Place.prototype.openPlace = function () {
    if (oldPlace) {
       oldPlace.checkIconStatus();
    }
+   ui.getGallery().reset();
+   ui.getSlideshow().reset();
    this._showGallery();
 };
    

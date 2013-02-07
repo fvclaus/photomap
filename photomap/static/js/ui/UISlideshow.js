@@ -1,158 +1,229 @@
 /*jslint */
-/*global $, main */
+/*global $, main, UICarousel, UIFullscreen */
 
 "use strict";
 
 /**
- * @author Frederik Claus
+ * @author Marc Roemer
  * @class UISlideshow displays the current selected Photo in the Slideshow
+ * @requires UICarousel UIFullscreen
  */
 
 var UISlideshow;
 
 UISlideshow = function () {
 
-   this.$slideshow = $('#mp-slideshow');
-   this.$nav = this.$slideshow.find("div.mp-slideshow-nav");
-   this.$next = this.$slideshow.find('img.mp-slideshow-nav-next');
-   this.$prev = this.$slideshow.find('img.mp-slideshow-nav-prev');
-   this.$image = this.$slideshow.find("img.mp-current-image");
-   this.$loading = this.$slideshow.find('img.mp-image-loading-small');
-   this.$wrapper = this.$slideshow.find("div.mp-slideshow-image");
+   this.$container = $('#mp-slideshow');
+   this.$inner = $("#mp-slideshow-image-wrapper");
+   this.$image = $("img#mp-slideshow-image");
+   this.$hidden = $("#mp-slideshow-photos");
+   this.$navLeft = $('img#mp-slideshow-nav-prev');
+   this.$navRight = $('img#mp-slideshow-nav-next');
+   
+   this.carousel = null;
+   this.fullscreen = new UIFullscreen(this);
+   
+   this.isStarted = false;
+   this.imageSources = [];
 };
 
 UISlideshow.prototype = {
 
    initWithoutAjax : function () {
-      this.bindListener();
-      main.getUI().getTools().centerElement(this.$nav, this.$next);
-      main.getUI().getTools().centerElement(this.$nav, this.$prev);
+      this._bindNavigationListener();
+      this._bindStartFullscreenListener();
    },
-   removeCurrentImage : function () {
-      this.$image.attr("src", "");
-      if (this.$image.is(":visible")) {
-         this.$image.hide();
-      }
-      $(".mp-slideshow-no-image-msg").show();
-      main.getUI().getInformation().emptyImageNumber();
+   getCarousel : function () {
+      return this.carousel;
    },
-   startSlider: function () {
+   insertPhoto : function (photo) {
       
-      var state, information, tools, updateImage, once, instance = this;
-      state = main.getUIState();
-      information = main.getUI().getInformation();
-      tools = main.getUI().getTools();
-      once = false;
+      if (this.isStarted) {
+         // insert hidden thumb
+         this.appendImages([photo.photo]);
+         // update carousel
+         this.imageSources = this.imageSources.filter(function (src) {
+            return src !== null;
+         });
+         this.imageSources.push(photo.photo);
+         this.carousel.reinitialise(this.imageSources);
+         this.carousel.navigateTo("end");
+      } else {
+         this.start("end");
+      }
+         
+   },
+   deletePhoto : function (photo) {
+      
+      var state = main.getUIState(),
+         reload,
+         instance = this;
+      
+      // delete hidden thumb
+      this.$hidden.find("img[src='" + photo.photo + "']").remove();
+      // update carousel
+      this.imageSources = this.imageSources.filter(function (src) {
+         return src !== photo.photo;
+      });
+      this.carousel.reinitialise(instance.imageSources);
+      // visualise delete (if photo was loaded)
+      if (photo === state.getCurrentLoadedPhoto()) {
+         this.$image.fadeOut(500);
+         
+         reload = function () {
+            instance.carousel.navigateRight();
+         };
+         // wait for visualisation to finish
+         window.setTimeout(reload, 500);
+      }
+   },
+   /**
+    * @description appends any number (1->Inf) of thumbnails to slideshow (hidden)
+    */
+   appendImages : function (sources) {
+      
+      var instance = this,
+         images = this.$hidden.find("img"),
+         data = [],
+         tmplData = [],
+         i;
+      
+      images.each(function () {
+         
+         data.push($(this).attr("src"));
+      });
+      
+      for (i = 0; i <= sources.length; i++) {
+         
+         if (i === sources.length) {
+            
+            if (tmplData.length > 0) {
+               
+               this.$hidden.append(
+                  $.jqote('#hiddenPhotosTmpl', {
+                     sources: tmplData
+                  })
+               );
+            }
+         } else {
+            if ($.inArray(sources[i], data) === -1) {
+               tmplData.push(sources[i]);
+            }
+         }
+      }
+   },
+   /**
+    * @description starts slideshow by initialising and starting the carousel (with given index)
+    */
+   start: function (index) {
+      var instance = this,
+         ui = main.getUI(),
+         state = ui.getState(),
+         photos = state.getPhotos(),
+         options;
       
       $(".mp-slideshow-no-image-msg").hide();
-      updateImage = function () {
-         if (!once) {
-            
-            once = true;
-            
-            if (instance.$image.is(":visible")) {
-               instance.$image.hide();
-            }
-
-            $('<img/>').load(function () {
-               if (state.getCurrentLoadedPhoto()) {
-                  state.getCurrentLoadedPhoto().showBorder(true);
-               }
-               instance.$image.load(function () {
-                  
-                  //center in the middle
-                  tools.centerElement(instance.$wrapper, instance.$image);
-                  
-                  instance.$image.fadeIn(300);
-
-                  state.setSlideshowLoaded(true);
-               });
-               instance.$image.attr('src', state.getCurrentLoadedPhoto().source);
-            
-            }).attr('src', state.getCurrentLoadedPhoto().source);
-         } else {
-            return;
-         }
-      };
-
-      updateImage();
-      // in case image was already loaded and there is hidden now
-      if (instance.$image.is(":hidden")) {
-         instance.$image.fadeIn(300);
-      }
-      // sets Photo title in album title bar and  Photo description + number
-      information.updatePhoto();
-   },
-
-   navigateSlider : function (instance, dir) {
       
-      var state, gallery, currentPhotoIndex, currentPhoto, photos;
-      state = main.getUIState();
-      gallery = main.getUI().getGallery();
-      currentPhotoIndex = state.getCurrentLoadedPhotoIndex();
-      currentPhoto = state.getCurrentLoadedPhoto();
-      photos = state.getPhotos();
-
-      if (dir === 'right') {
-         if (currentPhotoIndex + 1 < photos.length) {
-            state.setCurrentLoadedPhotoIndex(++currentPhotoIndex);
-         } else if (photos.length > 0) {
-            state.setCurrentLoadedPhotoIndex(0);
-         } else {
-            state.setCurrentLoadedPhotoIndex(0);
-            state.setCurrentLoadedPhoto(null);
-            return;
+      photos.forEach(function (photo, index) {
+         if (photo !== undefined) {
+            instance.imageSources.push(photo.photo);
          }
-      } else if (dir === 'left') {
-         if (currentPhotoIndex - 1 >= 0) {
-            state.setCurrentLoadedPhotoIndex(--currentPhotoIndex);
-         } else if (photos.length > 0) {
-            state.setCurrentLoadedPhotoIndex(photos.length - 1);
-         } else {
-            state.setCurrentLoadedPhotoIndex(0);
-            state.setCurrentLoadedPhoto(null);
-            return;
-         }
+      });
+      // initialize and start carousel
+      options = {
+         lazy : true,
+         effect : "fade",
+         onLoad : instance._load
+      };
+      this.carousel = new UICarousel(this.$inner, this.imageSources, options);
+      this.carousel.start(index);
+      
+      this.isStarted = true;
+   },
+   reset : function () {
+      
+      this.isStarted = false;
+      if (this.carousel !== null) {
+         this.carousel.reset();
+         this.carousel = null;
       }
-      state.setCurrentLoadedPhoto(photos[state.getCurrentLoadedPhotoIndex()]);
-      gallery.checkSlider();
-      this.startSlider();
+      this.imageSources = [];
+      $(".mp-slideshow-no-image-msg").show();
    },
-
-   disableControls : function () {
-      this.$next.addClass("disabled");
-      this.$prev.addClass("disabled");
-      this.$close.addClass("disabled");
+   /**
+    * @description navigates to given index; starts slideshow if carousel is not yet initialized
+    */
+   navigateTo : function (index) {
+      
+      if (!this.isStarted) {
+         
+         this.start(index);
+      } else {
+         this.carousel.navigateTo(index);
+      }
    },
-   enableControls : function () {
-      this.$next.removeClass("disabled");
-      this.$prev.removeClass("disabled");
-      this.$close.removeClass("disabled");
+   /**
+    * @private
+    * @description handler is called after slideshow-image is loaded
+    */
+   _load : function () {
+      
+      var ui = main.getUI(),
+         state = ui.getState(),
+         description = ui.getInformation(),
+         slideshow = ui.getSlideshow();
+      
+      state.setSlideshowLoaded(true);
+      slideshow.setCurrentPhoto();
+      slideshow.appendImages(slideshow.getCarousel().getLoadedData());
+      description.updatePhoto();
+      $("#mp-content").trigger("slideshowChanged");
    },
-
+   setCurrentPhoto : function () {
+      
+      var ui = main.getUI(),
+         state = main.getUIState(),
+         photos = state.getPhotos(),
+         currentPhoto = ui.getTools().getObjectByKey("photo", this.$image.attr("src"), photos),
+         currentIndex = $.inArray(currentPhoto, photos);
+      
+      state.setCurrentPhoto(currentPhoto);
+      state.setCurrentPhotoIndex(currentIndex);
+   },
    /* ---- Listeners ---- */
-   bindListener : function () {
+   _bindNavigationListener : function () {
+      
+      var disabled = main.getUI().isDisabled(),
+         instance = this;
+      
+      this.$navLeft.on("click", function () {
+         
+         if (!disabled) {
+            if (!instance.isStarted) {
+               instance.start();
+            } else {
+               instance.carousel.navigateLeft();
+            }
+         }
+      });
+      this.$navRight.on("click", function () {
+         
+         if (!disabled) {
+            if (!instance.isStarted) {
+               instance.start();
+            } else {
+               instance.carousel.navigateRight();
+            }
+         }
+      });
+   },
+   _bindStartFullscreenListener : function () {
+      
       var instance = this;
-      //bind slideshow button listener
-
-      this.$next.on('click.Slideshow', function () {
-         
-         if (!main.getUI().isDisabled()) {
-            instance.navigateSlider(instance, 'right');
-         }
-      });
-
-      this.$prev.on('click.Slideshow', function () {
-         
-         if (!main.getUI().isDisabled()) {
-            instance.navigateSlider(instance, 'left');
-         }
-      });
-
       this.$image.on("click.Slideshow", function () {
          
          if (!main.getUI().isDisabled()) {
-            main.getUI().getFullscreen().zoom();
+            instance.fullscreen.zoom();
          }
       });
    }

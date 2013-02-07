@@ -114,52 +114,61 @@ UICarousel.prototype = {
     */
    _update : function () {
       
-      var showNew, additionalHandler, instance = this;
+      var showNew, instance = this;
+      
+      // remove mp-animate classes
+      this.$items.removeClass("mp-animate-02s mp-animate-08s");
       
       if (this.currentPage !== null) {
          
-         showNew = function () {
-            
-            instance.$items.each(function (index) {
-               if (instance.currentPage.page[index] !== null) {
-                  $(this).fadeTo(200, 1).attr("src", instance.currentPage.page[index]);
-               } else {
-                  $(this).fadeOut(0);
-               }
-            });
-            if (additionalHandler) {
-               additionalHandler();
-            }
-         };
-         
          if (this.options.effect === "foldIn") {
             
-            additionalHandler = function () {
+            showNew = function () {
+            
+               instance.$items.each(function (index) {
+                  if (instance.currentPage.page[index] !== null) {
+                     $(this).fadeTo(200, 1).attr("src", instance.currentPage.page[index]);
+                  } else {
+                     $(this).fadeOut(0);
+                  }
+               });
                instance.$items.removeClass("mp-scale-X-0");
             };
             
-            instance.$items.addClass("mp-scale-X-0");
+            instance.$items.addClass("mp-animate-02s mp-scale-X-0");
             // transition time is .2s
             window.setTimeout(showNew, 200);
          
          } else if (this.options.effect === "fade") {
             
-            instance.$items.fadeTo(200, 0.1);
-            window.setTimeout(showNew, 200);
+            showNew = function () {
+            
+               instance.$items.each(function (index) {
+                  if (instance.currentPage.page[index] !== null) {
+                     $(this).fadeTo(500, 1).attr("src", instance.currentPage.page[index]);
+                  } else {
+                     $(this).fadeOut(0);
+                  }
+               });
+            };
+
+            instance.$items.fadeTo(500, 0);
+            window.setTimeout(showNew, 500);
          }
       }
    },
    
    /**
-    * @description Starts the carousel by adding the mp-animate class to the items and loading the first page
+    * @description Starts the carousel by loading the first or the requested page
     */
-   start : function () {
+   start : function (index) {
       
-      this.currentPage = this.dataPage.getFirstPage();
-
-      this.$items.addClass("mp-animate");
-      
-      this._load();
+      if (index) {
+         this.navigateTo(index);
+      } else {
+         this.currentPage = this.dataPage.getFirstPage();
+         this._load();
+      }
    },
    
    /**
@@ -182,7 +191,7 @@ UICarousel.prototype = {
       this.loadedData = [];
       this.$items.each(function (index) {
          
-         $(this).hide().attr("src", null);
+         $(this).hide().attr("src", "");
       });
    },
    /**

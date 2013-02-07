@@ -14,10 +14,9 @@ var UIGallery;
 UIGallery = function () {
 
    this.$container = $('#mp-gallery');
-   this.$inner = $('#mp-gallery-main');
+   this.$inner = $('#mp-gallery-inner');
    this.$hidden = $("#mp-gallery-thumbs");
-   this.$galleryTiles = null;
-   this.$elements = $(".mp-gallery-tile");
+   this.$thumbs = $(".mp-gallery-tile");
    this.$navLeft = $("#mp-gallery-nav-left");
    this.$navRight = $("#mp-gallery-nav-right");
    
@@ -40,6 +39,7 @@ UIGallery.prototype =  {
       }
       this._bindNavigationListener();
       this._bindStartSlideshowListener();
+      this._bindSlideshowNavigationListener();
    },
    getImageBySource : function (source) {
       
@@ -56,15 +56,16 @@ UIGallery.prototype =  {
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
     */
-   checkSlider : function () {
+   _checkSlider : function () {
       
       var state, currentIndex, minIndex, maxIndex;
       
       state = main.getUIState();
       currentIndex = state.getCurrentLoadedPhotoIndex();
-      minIndex = this.getImageIndex(this.$elements.first());
-      maxIndex = this.getImageIndex(this.$elements.last());
+      minIndex = this.getImageIndex(this.$thumbs.first());
+      maxIndex = this.getImageIndex(this.$thumbs.last());
       
+      //TODO change navigation to trigger("click")
       if (currentIndex < minIndex) {
          this._navigateLeft();
       } else if (currentIndex > minIndex) {
@@ -209,52 +210,50 @@ UIGallery.prototype =  {
       
       var ui = main.getUI(),
          state = ui.getState(),
+         photos = state.getPhotos(),
          options,
-         photoMatrix,
-         i,
          instance = this;
       
-      //get photos
-      this.photos = state.getPhotos();
-      //reset this.imageSources
-      this.imageSources = [];
       // reset FullGallery
       this.destroyFullGallery();
       
-      if (this.photos && this.photos.length !== 0) {
+      if (photos && photos.length !== 0) {
          
          // disable ui while loading & show loader
          state.setAlbumLoading(true);
          ui.disable();
          ui.showLoading();
          
-         for (i = 0; i < this.photos.length; i++) {
-            
-            if (this.photos[i] !== undefined) {
-               instance.imageSources.push(this.photos[i].thumb);
+         photos.forEach(function (photo, index) {
+            if (photo !== undefined) {
+               instance.imageSources.push(photo.thumb);
             }
-         }
+         });
          // initialize and start carousel
          options = {
             lazy : !main.getClientState().isAdmin(),
             effect : "foldIn",
-            onLoad : instance._load
+            onLoad : this._load
          };
-         this.carousel = new UICarousel(instance.$inner, instance.imageSources, options);
+         this.carousel = new UICarousel(this.$inner, this.imageSources, options);
          this.carousel.start();
          
          this.isStarted = true;
       
-      } else {
-         
-         this.isStarted = false;
-         if (this.carousel !== null) {
-            this.carousel.reset();
-         }
       }
+   },
+   reset : function () {
+      
+      this.isStarted = false;
+      if (this.carousel !== null) {
+         this.carousel.reset();
+         this.carousel = null;
+      }
+      this.imageSources = [];
    },
    /**
     * @private
+    * @description handler is called after gallery-thumbs are loaded
     */
    _load : function () {
       var ui = main.getUI(),
@@ -383,26 +382,33 @@ UIGallery.prototype =  {
    },
    /**
     * @private
+    * @description binds listener to custom event "slideshowChanged" which is triggered each time the slideshow is updated. In case the current image in
+    * the slideshow is not visible in the gallery anymore the gallery-carousel has to be updated as well!
+    */
+   _bindSlideshowNavigationListener : function () {
+      
+      var instance = this;
+      
+      $("#mp-content").on("slideshowChanged", function () {
+         instance._checkSlider();
+      });
+   },
+   /**
+    * @private
     */
    _bindStartSlideshowListener : function () {
       
       var ui = main.getUI(),
-         state = ui.getState(),
-         photo,
          instance = this;
       
       this.$inner
          .on('click.Gallery', ".mp-gallery-tile", function (event) {
+            
             var $el = $(this).children();
             
             if (!ui.isDisabled()) {
-               
-               state.setCurrentLoadedPhotoIndex(instance.getImageIndex($el));
-               state.setCurrentLoadedPhoto(state.getPhotos()[instance.getImageIndex($el)]);
-               console.log((state.getPhotos()[instance.getImageIndex($el)]));
                ui.getControls().getEditControls().hide(false);
-               
-               ui.getSlideshow().startSlider();
+               ui.getSlideshow().navigateTo(instance.getImageIndex($el));
             }
          });
    }

@@ -25,7 +25,7 @@ UIState = function () {
    this.albums = [];
    this.slideshow = false;
    this.slideshowLoaded = false;
-   this.albumLoading = false;
+   this.albumLoaded = false;
    this.fontSize = null;
    this.fullscreen = null;
    this.pageMode = $("meta[property='mp:map']").attr("content");

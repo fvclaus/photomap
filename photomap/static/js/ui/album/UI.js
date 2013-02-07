@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UITools, UIState, UIControls, UIInput, UIInformation, UIGallery, UISlideshow, UIFullscreen, Place, Photo, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
+/*global $, main, UITools, UIState, UIControls, UIInput, UIInformation, UIGallery, UISlideshow, Place, Photo, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
 
 /*
  * @author Frederik Claus
@@ -17,7 +17,6 @@ UI = function () {
    this.controls = new UIControls();
    this.gallery = new UIGallery();
    this.slideshow = new UISlideshow();
-   this.fullscreen = new UIFullscreen();
    this.input = new UIInput();
    this._isDisabled = false;
 };
@@ -39,9 +38,6 @@ UI.prototype = {
    },
    getGallery : function () {
       return this.gallery;
-   },
-   getFullscreen : function () {
-      return this.fullscreen;
    },
    getSlideshow : function () {
       return this.slideshow;
@@ -86,7 +82,7 @@ UI.prototype = {
     */
    deletePlace : function (id) {
       
-      var place = this.getTools().getObjectById(id, this.getState().getPlaces());
+      var place = this.getTools().getObjectByKey("id", id, this.getState().getPlaces());
 
       if (place === this.getState().getCurrentLoadedPlace()) {
          
@@ -114,23 +110,27 @@ UI.prototype = {
          });
       state.getCurrentLoadedPlace().insertPhoto(photo);
       state.insertPhoto(photo);
-      this.gallery.insertPhoto(photo);
+      this.getGallery().insertPhoto(photo);
+      this.getSlideshow().insertPhoto(photo);
    },
    /**
     * @description Removes photo fully from ui.
     */
    deletePhoto : function (id) {
       
-      var photo = this.getTools().getObjectById(id, this.state.getPhotos());
+      var photo = this.getTools().getObjectByKey("id", id, this.state.getPhotos());
       
       if (photo === this.getState().getCurrentLoadedPhoto()) {
          
-         this.getSlideshow().removeCurrentImage();
          this.getInformation().removeDescription();
       }
+      this.getSlideshow().deletePhoto(photo);
       this.getGallery().deletePhoto(photo);
       this.getState().deletePhoto(photo);
    },
+   // loader should (maybe) be placed over the ui-element which is currently loading.
+   // loader is sometimes called twice in a row (slideshow.navigate followed by gallery.checkslider)
+   // so loader might disappear and then suddenly milliseconds later appear again, which might confuse many users! 
    showLoading : function () {
       this.getTools().loadOverlay($("#mp-ui-loading"), true);
       this.getTools().fitMask();
@@ -140,6 +140,7 @@ UI.prototype = {
       this.getTools().closeOverlay($("#mp-ui-loading"));
       $("body, a, .mp-logo img").css("cursor", "");
    },
+   //TODO some methods are called while disabled and therefor they don't work allthough they should!
    disable : function () {
       
       var places;

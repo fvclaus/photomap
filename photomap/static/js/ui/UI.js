@@ -79,7 +79,7 @@ UI.prototype = {
     */
    removeAlbum : function (id) {
       
-      var album = this.getTools().getObjectById(id, this.getState().getAlbums());
+      var album = this.getTools().getObjectByKey("id", id, this.getState().getAlbums());
       
       if (album === this.getState().getCurrentLoadedAlbum()) {
          this.getInformation().removeDescription();

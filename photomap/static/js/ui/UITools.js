@@ -108,41 +108,6 @@ UITools.prototype = {
       
       $element.css("margin", margin);
    },
-   centerChildren : function ($element, direction) {
-      
-      var i, padding, $child, $children, childWidth, childHeight;
-      
-      $children = $element.children();
-      childWidth = 0;
-      childHeight = 0;
-      
-      for (i = 0; i < $children.length; i++) {
-         $child = $($children[i]);
-         childWidth += this.getRealWidth($child);
-         childHeight += this.getRealHeight($child);
-      }
-         
-      switch (direction) {
-      
-      case "vertical":
-         padding = ($element.height() - childHeight) / 2;
-         padding += "px 0";
-         break;
-      case "horizontal":
-         padding = "0 ";
-         padding += ($element.width() - childWidth) / 2;
-         padding += "px";
-         break;
-      default:
-         padding = ($element.height() - childHeight) / 2;
-         padding += "px ";
-         padding += ($element.width() - childWidth) / 2;
-         padding += "px";
-         break;
-      }
-      
-      $element.css("padding", padding);
-   },
    /**
     * @param Array
     * @description return first key with undefined value
@@ -184,7 +149,6 @@ UITools.prototype = {
       $fontEl.remove();
       return size - 1;
    },
-
    getRealHeight : function ($el) {
       return $el.height() +
          this.getCss2Int($el, [
@@ -194,7 +158,6 @@ UITools.prototype = {
             "margin-top"
          ]);
    },
-
    getRealWidth : function ($el) {
       return $el.width() +
          this.getCss2Int($el, [
@@ -204,7 +167,6 @@ UITools.prototype = {
             "margin-right"
          ]);
    },
-
    getCss2Int : function ($el, attributes) {
       
       var value, total;
@@ -252,13 +214,15 @@ UITools.prototype = {
    getUrlSecret : function () {
       return this._getUrlParameter("secret");
    },
-
-   getObjectById : function (id, array) {
+   /**
+    * @description get the last object with specified key-value-pair in any array of objects
+    */
+   getObjectByKey : function (key, value, array) {
       
       var result;
       
       array.forEach(function (object, index) {
-         if (object.id === id) {
+         if (object[key] === value) {
             result = object;
          }
       });

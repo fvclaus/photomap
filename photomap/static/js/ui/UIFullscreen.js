@@ -5,7 +5,10 @@
 
 var UIFullscreen, css;
 //TODO this class has only 3 methods. All of them are too long
-UIFullscreen = function () {
+UIFullscreen = function (slideshow) {
+   
+   this.slideshow = slideshow;
+   
    this.iconHelpCount = 5;
    this.$fullscreen = null;
    this.$close = null;
@@ -27,7 +30,7 @@ UIFullscreen.prototype = {
       //disable if clause because it works only once
       // if( !this.$fullscreenEl ) {
       data	= {
-         source	: main.getUIState().getCurrentLoadedPhoto().source,
+         source	: main.getUIState().getCurrentLoadedPhoto().photo,
          description	: main.getUIState().getCurrentLoadedPhoto().title
       };
       $mpContainer.append($.jqote('#galleryFullscreenTmpl', {tmplPhotoData : data}));
@@ -94,14 +97,14 @@ UIFullscreen.prototype = {
 
          $(".mp-image-overlay").append(instance.$wrapper);
 
-      }).attr('src', main.getUIState().getCurrentLoadedPhoto().source);
+      }).attr('src', main.getUIState().getCurrentLoadedPhoto().photo);
    },
 
    /**
     * @private
     *  adjust height and weight properties of image so that it fits current window size
     */
-   _resizeImage : function ($image) {
+/*   _resizeImage : function ($image) {
       
       var widthMargin, heightMargin, windowH, windowW, theImage, imgwidth, imgheight, newwidth, newnewwidth, newheight, newnewheight, ratio, newratio;
       
@@ -163,6 +166,7 @@ UIFullscreen.prototype = {
 
       return css;
    },
+ */
    /**
     * @private
     * bind hide functionality to close button
@@ -170,21 +174,18 @@ UIFullscreen.prototype = {
    _bindListener : function () {
       var instance = this;
       $("div.mp-image-nav")
-         .unbind(".Gallery")
-         .find("img.mp-image-nav-next")
-         .bind("click.Gallery", function (event) {
+         .off(".Fullscreen")
+         .on("click.Fullscreen", "img.mp-image-nav-next", function (event) {
             instance.$close.trigger("click");
-            main.getUI().getSlideshow().navigateSlider(instance, "right");
+            instance.slideshow.navigateRight();
             instance.zoom();
          })
-         .end()
-         .find("img.mp-image-nav-prev")
-         .bind("click.Gallery", function (event) {
+         .on("click.Fullscreen", "img.mp-image-nav-prev", function (event) {
             instance.$close.trigger("click");
-            main.getUI().getSlideshow().navigateSlider(instance, "left");
+            instance.slideshow.lideshow.navigateLeft();
             instance.zoom();
          });
-      this.$close.unbind("click.Gallery").bind('click.Gallery', function () {
+      this.$close.off(".Fullscreen").on('click.Fullscreen', function () {
          //remove since it will be recreated with every call to gallery.zoom()
          main.getUIState().setFullscreen(false);
          instance.$fullscreen.fadeOut("slow").remove();

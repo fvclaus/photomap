@@ -39,8 +39,6 @@ $box-shadow-light-grey = $box-shadow #999
 $box-shadow-lighter-grey = $box-shadow #cac4ab
 $box-shadow-black = $box-shadow #000
 
-$transition = all 0.2s ease-in-out
-
 $font-family = 'Droid Sans', sans-serif
 $font-color = #070707
 $font-color-inverse = #F8F8F8
@@ -98,12 +96,22 @@ box-shadow(color)
   -webkit-box-shadow color
   box-shadow color
   
-transition()
-  -webkit-transition $transition
-  -moz-transition $transition
-  -o-transition $transition
-  -ms-transition $transition
-  transition $transition
+transition(time)
+  -webkit-transition-property all
+  -moz-transition-property all
+  -o-transition-property all
+  -ms-transition-property all
+  transition-property all
+  -webkit-transition-duration time
+  -moz-transition-duration time
+  -o-transition-duration time
+  -ms-transition-duration time
+  transition-duration time
+  -webkit-transition-timing-function ease-in-out
+  -moz-transition-timing-function ease-in-out
+  -o-transition-timing-function ease-in-out
+  -ms-transition-timing-function ease-in-out
+  transition-timing-function ease-in-out
 
 transform(transformation)
   -webkit-transform transformation

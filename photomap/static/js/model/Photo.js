@@ -13,7 +13,7 @@ var Photo;
 Photo = function (data, index) {
    
    this.model = 'Photo';
-   this.source = data.photo;
+   this.photo = data.photo;
    this.thumb = data.thumb;
    this.title = data.title;
    this.description = data.description;
