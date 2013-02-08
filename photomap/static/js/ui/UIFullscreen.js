@@ -3,6 +3,11 @@
 
 "use strict";
 
+/**
+ * @author Marc Roemer
+ * @description Displays current slideshow-image as fullscreen, supports zooming into the image
+ */
+
 var UIFullscreen, css;
 //TODO this class has only 3 methods. All of them are too long
 UIFullscreen = function (slideshow) {
@@ -10,18 +15,26 @@ UIFullscreen = function (slideshow) {
    this.slideshow = slideshow;
    
    this.iconHelpCount = 5;
-   this.$fullscreen = null;
+/*   this.$fullscreen = null;
    this.$close = null;
    this.$name = null;
    this.$image = null;
    this.$zoom = null;
    this.$load = null;
    this.$wrapper = null;
-
+ */
+   this.$container = null;
+   this.$navLeft = null;
+   this.$navRight = null;
+   this.$close = null;
+   this.$title = null;
+   this.$image = null;
+   this.$zoom = null;
+   this.$load = null;
 };
 
 UIFullscreen.prototype = {
-
+/*
    // displays zoomed version of current image as overlay
 	//TODO this method is way too long
    zoom : function () {
@@ -99,11 +112,12 @@ UIFullscreen.prototype = {
 
       }).attr('src', main.getUIState().getCurrentLoadedPhoto().photo);
    },
-
+      */
    /**
     * @private
     *  adjust height and weight properties of image so that it fits current window size
     */
+   /*
    _resizeImage : function ($image) {
       
       var widthMargin, heightMargin, windowH, windowW, theImage, imgwidth, imgheight, newwidth, newnewwidth, newheight, newnewheight, ratio, newratio;
@@ -166,11 +180,12 @@ UIFullscreen.prototype = {
 
       return css;
    },
-
+      */
    /**
     * @private
     * bind hide functionality to close button
     */
+   /*
    _bindListener : function () {
       var instance = this;
       $("div.mp-image-nav")
@@ -220,6 +235,7 @@ UIFullscreen.prototype = {
          }
       });
    }
+    */
 };
 
 
