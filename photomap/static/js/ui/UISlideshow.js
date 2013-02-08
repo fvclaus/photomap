@@ -133,7 +133,8 @@ UISlideshow.prototype = {
       options = {
          lazy : true,
          effect : "fade",
-         onLoad : instance._load
+         onLoad : instance._load,
+         onUpdate : instance._update
       };
       this.carousel = new UICarousel(this.$inner, this.imageSources, options);
       this.carousel.start(index);
@@ -164,6 +165,19 @@ UISlideshow.prototype = {
    },
    /**
     * @private
+    * @description handler is called after slideshow-image is displayed
+    */
+   _update : function () {
+      var ui = main.getUI(),
+         description = ui.getInformation(),
+         slideshow = ui.getSlideshow();
+   
+      slideshow.setCurrentLoadedPhoto();
+      description.updatePhoto();
+      $("#mp-content").trigger("slideshowChanged");
+   },
+   /**
+    * @private
     * @description handler is called after slideshow-image is loaded
     */
    _load : function () {
@@ -174,12 +188,9 @@ UISlideshow.prototype = {
          slideshow = ui.getSlideshow();
       
       state.setSlideshowLoaded(true);
-      slideshow.setCurrentPhoto();
       slideshow.appendImages(slideshow.getCarousel().getLoadedData());
-      description.updatePhoto();
-      $("#mp-content").trigger("slideshowChanged");
    },
-   setCurrentPhoto : function () {
+   setCurrentLoadedPhoto : function () {
       
       var ui = main.getUI(),
          state = main.getUIState(),
@@ -187,8 +198,14 @@ UISlideshow.prototype = {
          currentPhoto = ui.getTools().getObjectByKey("photo", this.$image.attr("src"), photos),
          currentIndex = $.inArray(currentPhoto, photos);
       
-      state.setCurrentPhoto(currentPhoto);
-      state.setCurrentPhotoIndex(currentIndex);
+      state.setCurrentLoadedPhoto(currentPhoto);
+      state.setCurrentLoadedPhotoIndex(currentIndex);
+   },
+   _navigateLeft : function () {
+      this.$navLeft.trigger("click");
+   },
+   _navigateRight : function () {
+      this.$navRight.trigger("click");
    },
    /* ---- Listeners ---- */
    _bindNavigationListener : function () {

@@ -104,7 +104,7 @@ UIFullscreen.prototype = {
     * @private
     *  adjust height and weight properties of image so that it fits current window size
     */
-/*   _resizeImage : function ($image) {
+   _resizeImage : function ($image) {
       
       var widthMargin, heightMargin, windowH, windowW, theImage, imgwidth, imgheight, newwidth, newnewwidth, newheight, newnewheight, ratio, newratio;
       
@@ -166,7 +166,7 @@ UIFullscreen.prototype = {
 
       return css;
    },
- */
+
    /**
     * @private
     * bind hide functionality to close button

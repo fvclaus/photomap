@@ -20,7 +20,8 @@ UICarousel = function ($el, imageSources, options) {
    this.defaults = {
       lazy : false,
       effect: "fade",
-      onLoad : null
+      onLoad : null,
+      onUpdate : null
    };
    this.options = $.extend({}, this.defaults, options);
    
@@ -133,6 +134,10 @@ UICarousel.prototype = {
                   }
                });
                instance.$items.removeClass("mp-scale-X-0");
+               // execute onUpdate handler if defined in options
+               if (instance.options.onUpdate) {
+                  instance.options.onUpdate();
+               }
             };
             
             instance.$items.addClass("mp-animate-02s mp-scale-X-0");
@@ -150,6 +155,10 @@ UICarousel.prototype = {
                      $(this).fadeOut(0);
                   }
                });
+               // execute onUpdate handler if defined in options
+               if (instance.options.onUpdate) {
+                  instance.options.onUpdate();
+               }
             };
 
             instance.$items.fadeTo(500, 0);

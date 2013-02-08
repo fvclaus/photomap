@@ -54,22 +54,32 @@ UIGallery.prototype =  {
       return this.carousel;
    },
    /**
+    * @description loop over all gallery-tiles and return the last one containing a thumbnail
+    */
+   _getLastActiveThumbnail : function () {
+      var i, $image;
+      for (i = this.$thumbs.length - 1; i >= 0; i--) {
+         if ($(this.$thumbs[i]).children().attr("src") !== "") {
+            $image = $(this.$thumbs[i]).children();
+            break;
+         }
+      }
+      return $image;
+   },
+   /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
     */
    _checkSlider : function () {
       
-      var state, currentIndex, minIndex, maxIndex;
+      var currentIndex = main.getUIState().getCurrentLoadedPhotoIndex(),
+         minIndex = this.getImageIndex(this.$thumbs.first().children()),
+         $last = this._getLastActiveThumbnail(),
+         maxIndex = this.getImageIndex($last);
       
-      state = main.getUIState();
-      currentIndex = state.getCurrentLoadedPhotoIndex();
-      minIndex = this.getImageIndex(this.$thumbs.first());
-      maxIndex = this.getImageIndex(this.$thumbs.last());
-      
-      //TODO change navigation to trigger("click")
       if (currentIndex < minIndex) {
-         this._navigateLeft();
-      } else if (currentIndex > minIndex) {
-         this._navigateRight();
+         this.$navLeft.trigger("click");
+      } else if (currentIndex > maxIndex) {
+         this.$navRight.trigger("click");
       }
    },
    /**
