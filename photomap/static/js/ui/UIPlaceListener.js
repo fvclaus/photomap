@@ -29,7 +29,7 @@ UIPlaceListener.prototype = {
             instance.state.store(TEMP_DESCRIPTION_KEY, instance.description);
          },
          success : function (data) {
-            main.getUI().addPlace(event.lat, event.lng, data);      
+            main.getUI().insertPlace(event.lat, event.lng, data);      
          },
          url : "/insert-place"
       });

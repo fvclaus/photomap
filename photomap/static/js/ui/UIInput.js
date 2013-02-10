@@ -187,7 +187,11 @@ UIInput.prototype = {
    _submitHandler : function () {
       var instance = this,
           $form = $("form.jquery-validator"),
-          $buttons = $form.find("button, input[type='submit']");
+          $buttons = $form.find("button, input[type='submit']"),
+          $message = $("#mp-dialog-message"),
+          $success = $message.find("#mp-dialog-message-success").hide(),
+          $failure = $message.find("#mp-dialog-message-failure").hide();
+      
 
       //called when data is valid
       $form.validate({
@@ -213,7 +217,12 @@ UIInput.prototype = {
                   if (typeof instance.options.success === "function"){
                      instance.options.success.call(instance, data);
                   }
-                  instance.close();
+                  if ($message.length > 0) {
+                     $success.show("slow");
+                  }
+                  else{
+                     instance.close();
+                  }
                },
                error : function (error) {
                   // instance.close();

@@ -72,7 +72,7 @@ UI.prototype = {
          description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
       });
       place.show();
-      this.getState().addPlace(place);
+      this.getState().insertPlace(place);
       this.getControls().bindPlaceListener(place);
       //TODO triggerDoubleClick does not respond, because the UI is still disabled at that point
       place.openPlace();

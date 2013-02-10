@@ -1,0 +1,26 @@
+{% load i18n %}
+<div>
+  <h2 class="mp-input-title">{% block title %}Untitled{% endblock%}</h2>
+  {% block content %}
+  {% endblock %}
+  <div id="mp-dialog-message">
+    <div class="ui-state-error ui-corner-all" id="mp-dialog-message-failure">
+      <p>
+        <span class="ui-icon ui-icon-alert mp-inline-block"></span>
+        <strong>Failure</strong>
+      </p>
+    </div>
+    
+    <div class="ui-state-hightlight ui-corner-all" id="mp-dialog-message-success">
+      <p>
+        <span class="ui-icon ui-icon-circle-check mp-inline-block"></span>
+        <strong>Success</strong>
+        <br/>
+      <input type="checkbox" name="auto-close">
+      <label for="auto-close">Automatically close on success</label>
+      </p>
+    </div>
+  </div>
+</div>
+
+      

@@ -68,7 +68,7 @@ UI.prototype = {
          description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
       });
       album.show();
-      this.getState().addAlbum(album);
+      this.getState().insertAlbum(album);
       this.getControls().bindAlbumListener(album);
       //redirect to new albumview
       //triggerDoubleClick does not work on the time, because the UI is still disabled from UIInput
