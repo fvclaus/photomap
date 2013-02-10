@@ -26,7 +26,8 @@ UIAlbumListener.prototype = {
             album.description = this._description;
             main.getUI().getInformation().updateAlbum();
          },
-         url : "/update-album"
+         url : "/update-album",
+         context : this
       });
    },
    insert : function (event) {
@@ -47,17 +48,20 @@ UIAlbumListener.prototype = {
          success : function (data){
             main.getUI().addAlbum(event.lat, event.lng, data);
          },
-         url : "/insert-album"
+         url : "/insert-album",
+         context : this
       });
    },
    delete : function (album) {
       this.input.show({
          type : UIInput.CONFIRM_DIALOG,
          url : "/delete-album",
-         data : {
-            id : album.id,
-            title : album.title,
-            model : album.model
+         submit : function () {
+            main.getClientServer().deleteObject("/delete-album",{
+               id : album.id,
+               title : album.title,
+               model : album.model
+            });
          }
       });
    },
@@ -74,6 +78,7 @@ UIAlbumListener.prototype = {
                copy: $("input[name='share']").val()
             });
          },
+         context : this,
       });
    },
    bindListener : function (album) {

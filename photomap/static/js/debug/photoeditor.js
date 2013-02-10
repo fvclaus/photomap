@@ -33,14 +33,27 @@ $(document).ready(function () {
          data.append("title", $("input[name='title']").val());
          data.append("description", $("input[name='description']").val());
          data.append("photo", editor.getAsFile());
+
+         $.ajax({
+            data : data,
+            type : "post",
+            processData : false,
+            contentType : false,
+            cache : false,
+            url : "/insert-photo",
+            success : function(data){
+               console.dir(data);
+            },
+         });
+            
          
-         request.onreadystatechange = function (e) {
-            if (request.readyState === 4) {
-               console.dir(JSON.parse(request.response));
-            }
-         };
-         request.open("post", "/insert-photo", true);
-         request.send(data);
+         // request.onreadystatechange = function (e) {
+         //    if (request.readyState === 4) {
+         //       console.dir(JSON.parse(request.response));
+         //    }
+         // };
+         // request.open("post", "/insert-photo", true);
+         // request.send(data);
       }
    });
 });

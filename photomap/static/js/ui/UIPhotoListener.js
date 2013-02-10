@@ -1,4 +1,4 @@
-/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, FileUpload, UIPhotoEditor, UIInput */
+/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, FileUpload, UIPhotoEditor, UIInput, FormData */
 "use strict";
 
 
@@ -17,11 +17,35 @@ UIPhotoListener.prototype = {
       // if-clause to prevent method from being executed if there are no places yet
       if (main.getUIState().getPlaces().length !== 0) {
          this.input.show({
-            submitHandler: function () {
-               //bind listener for form submit and file change
-               instance._submitHandler.call(instance);
+            load : function () {      
+               $("#insert-photo-tabs").tabs();
+               $("input[name='place']").val(place.id);
+               this.$title = $("input[name='title']");
+               this.$description = $("input[name='description']");
+               //start the editor
+               $("#file-input").bind('change', function (event) {
+                  instance.editor.edit.call(instance.editor, event);
+               });
             },
-            url : "/insert-photo?place=" + place.id
+            submit: function () {
+               this.state.store(TEMP_TITLE_KEY, this.$title.val());
+               this.state.store(TEMP_DESCRIPTION_KEY, this.$description.val());
+            },
+            data : function () {
+               var data = new FormData();
+               data.append('place', place.id);
+               data.append('title', this.$title.val());
+               data.append('description', this.$description.val());
+               data.append("photo", this.editor.getAsFile());
+
+               return data;
+            },
+            success : function (data) {
+               main.getUI().insertPhoto(data);
+               main.getClientState().updateUsedSpace();
+            },
+            url : "/insert-photo",
+            context : this
          });
       }
    },
@@ -54,7 +78,7 @@ UIPhotoListener.prototype = {
    },
    _submitHandler : function () {
       var instance = this;
-      $("#insert-photo-tabs").tabs();
+
       $("form.jquery-validator").validate({
          success : "valid",
          rules : {
@@ -72,6 +96,7 @@ UIPhotoListener.prototype = {
       $("#file-input").bind('change', function (event) {
          instance.editor.edit.call(instance.editor, event);
       });
+
       
    },
    update : function (photo) {
@@ -94,18 +119,26 @@ UIPhotoListener.prototype = {
             photo.description = this._description;
             main.getUI().getInformation().updatePhoto();
          },
-         url : "/update-photo"
+         url : "/update-photo",
+         context : this
       });
    },
    delete : function (photo) {
       this.input.show({
          type : UIInput.CONFIRM_DIALOG,
+         load : function () {
+            $("input[name='id']").val(photo.id);
+         },
+         success : function (data) {
+            // main.getClientServer().deleteObject("/delete-photo",{
+            //    id : photo.id,
+            //    title : photo.title,
+            //    model : photo.model
+            // });
+            console.dir(data);
+         },
          url: "/delete-photo",
-         data : {
-            id : photo.id,
-            title : photo.title,
-            model : photo.model
-         }
+         context : this
       });
    },
 

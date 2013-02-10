@@ -8,7 +8,7 @@
  * @class Handles any form of input. Takes care of form validation,error handling and closing the input dialog
  */
 
-var UIInput, dimension, $formWrapper, html;
+var UIInput, UIInputMessage, dimension, $formWrapper, html;
 
 $.extend($.ui.dialog.prototype.options, {
    autoOpen: false,
@@ -41,7 +41,7 @@ UIInput.prototype = {
 
       var instance = this;
       //default dialog type is INPUT_DIALOG
-      this.options = $.extend({}, {type: UIInput.INPUT_DIALOG}, options);
+      this.options = $.extend({}, {type : UIInput.INPUT_DIALOG, context : this}, options);
       //load html, add the title and the resize the box
       this._prepareDialog(this.options.url);
 
@@ -51,39 +51,25 @@ UIInput.prototype = {
             instance.$dialog.empty();
             instance.$dialog.dialog("destroy");
             instance.setVisibility(false);
+         },
+         open: function () {
+            instance._submitHandler.call(instance);
+            instance.setVisibility(true);
          }
 
       });
 
       switch (this.options.type) {
 
-      case UIInput.INPUT_DIALOG :  
-         this.$dialog.dialog("option", {
-            open: function () {
-               if (typeof instance.options.submitHandler === "function"){
-                  instance.options.submitHandler.call(instance);
-               } else {
-                  instance._submitHandler.call(instance);
-               }
-               instance.setVisibility(true);
-            }
-         });
-         break;
-
       case UIInput.CONFIRM_DIALOG:
          this.$dialog.dialog("option", {
-            open: function () {
-               instance.setVisibility(true);
-            },
             buttons : [
                {
                   id: "mp-dialog-button-ok",
                   text : $("span#mp-confirm").text(),
                   click : function () {
-                     //disable button before submit
-                     $("#mp-dialog-button-ok, #mp-dialog-button-cancel").button("disable");
-                     main.getClientServer().deleteObject(this.options.url, this.options.data);
-                     $(this).dialog("close");
+                     //we just emulate the form submit to call the submit routines ;)
+                     $(".jquery-validator").trigger("submit");
                      return true;
                   }
                },
@@ -98,8 +84,6 @@ UIInput.prototype = {
             ]
          });
          break;
-
-      default: throw new Error("Unknown dialog type "+ this.options.type);
       }
       //if we open the dialog earlier the open callback from above will never be called
       this.$dialog.dialog("open");
@@ -109,7 +93,6 @@ UIInput.prototype = {
       html = this._loadHtml(url);
       var $wrapper = this._wrapHtml(html),
           title = this._removeTitle($wrapper);
-          // dimension = this._getDialogDimension($wrapper);
 
       //add the html without the title
       this.$dialog.html($wrapper.html());
@@ -176,7 +159,8 @@ UIInput.prototype = {
             html = res;
          },
          error: function (error) {
-            alert(error);
+            //TODO we need to change the type of the dialog to INPUT_DIALOG to prevent the buttons from showing
+            html = "A network error has occured. Please check back later.";
          }
       });
       return html;
@@ -188,9 +172,7 @@ UIInput.prototype = {
       var instance = this,
           $form = $("form.jquery-validator"),
           $buttons = $form.find("button, input[type='submit']"),
-          $message = $("#mp-dialog-message"),
-          $success = $message.find("#mp-dialog-message-success").hide(),
-          $failure = $message.find("#mp-dialog-message-failure").hide();
+          message = new UIInputMessage($("#mp-dialog-message"));
       
 
       //called when data is valid
@@ -199,42 +181,54 @@ UIInput.prototype = {
          errorPlacement : function () {}, //don't show any errors
          submitHandler : function () {
             $buttons.button("disable");
-            if (typeof instance.options.submit === "function"){
-               instance.options.submit.call(instance);
-            }
+            instance._trigger(instance.options, "submit");
             //submit form with ajax call and close popup
-            $.ajax({
+            $.ajaxSetup({
                type : $form.attr("method"),
-               url  : $form.attr("action"),
-               data : $form.serialize(),
-               dataType : "json",
                success : function (data, textStatus) {
                   if (data.error) {
-                     alert(data.error.toString());
+                     message.showFailure(data.error);
                      $buttons.button("enable");
                      return;
                   }
-                  if (typeof instance.options.success === "function"){
-                     instance.options.success.call(instance, data);
-                  }
-                  if ($message.length > 0) {
-                     $success.show("slow");
-                  }
-                  else{
+                  instance._trigger(instance.options, "success", data);
+
+                  if (message.isAutoClose()){
                      instance.close();
+                  } else {
+                     message.showSuccess();
                   }
                },
                error : function (error) {
                   // instance.close();
-                  alert(error.toString());
+                  message.showFailure("A network error has occured. Please check back later.");
                   $buttons.button("enable");
                }
             });
+
+            if (typeof instance.options.data === "function"){
+               $.ajax({
+                  processData : false,
+                  contentType : false,
+                  cache : false,
+                  data : instance.options.data.call(instance.options.context),
+                  url : $form.attr("action")
+               });
+            }
+            else{
+               $.ajax({               
+                  url  : $form.attr("action"),
+                  data : $form.serialize(),
+                  dataType : "json"
+               });
+            }
          }
       });
-      //_intercept gets called onLoad
-      if (typeof this.options.load === "function") {
-         this.options.load.call(instance);
+      this._trigger(this.options, "load");
+   },
+   _trigger : function (options, name, args){
+      if (typeof options[name] === "function"){
+         options[name].call(options.context, args);
       }
    },
    setVisibility : function (bool) {
@@ -247,3 +241,44 @@ UIInput.prototype = {
       this.$dialog.dialog("close");
    },
 };
+
+UIInputMessage = function ($el) {
+   this.$el = $el;
+   this.$success = this.$el.find("#mp-dialog-message-success").hide();
+   this.$failure = this.$el.find("#mp-dialog-message-failure").hide();
+   this.$error = this.$failure.find("em");
+   this.$autoClose = this.$el.find("input[name='auto-close']");
+   this.autoClose = main.getUIState().getDialogAutoClose();
+   this._bindListener();
+};
+
+UIInputMessage.prototype = {
+   showSuccess : function () {
+      this.$success.show("slow");
+   },
+   showFailure : function (error) {
+      this.$failure.show("slow");
+      this.$error.text(error.toString());
+   },
+   isAvailable : function () {
+      return this.$el.length > 0;
+   },
+   isAutoClose : function () {
+      return this.autoClose;
+   },
+   /**
+    @private
+    */
+   _bindListener : function () {
+      this.$autoClose.click(function () {
+         var autoClose = false;
+         if ($(this).is(":checked")){
+            autoClose = true;
+         }
+         main.getUIState().setDialogAutoClose(autoClose);
+         this.autoClose = autoClose;
+      });
+   },
+}
+      
+      

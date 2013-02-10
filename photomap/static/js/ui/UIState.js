@@ -28,6 +28,7 @@ UIState = function () {
    this.albumLoaded = false;
    this.fontSize = null;
    this.fullscreen = null;
+   this.dialogAutoClose = false;
    this.pageMode = $("meta[property='mp:map']").attr("content");
    if (this.pageMode === "non-interactive") {
       this.interactive = false;
@@ -214,6 +215,12 @@ UIState.prototype = {
          'id': id,
          'url': fullURL
       };
+   },
+   getDialogAutoClose : function () {
+      return this.dialogAutoClose;
+   },
+   setDialogAutoClose : function (autoClose) {
+      this.dialogAutoClose = autoClose;
    },
    getAlbumShareURL: function () {
       return this.currentAlbumShare;

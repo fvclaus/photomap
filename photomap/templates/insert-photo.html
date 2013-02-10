@@ -1,38 +1,43 @@
-{% load i18n %}
+{% extends "dialog.html" %}
 
-<div class="mp-dialog-content">
-  <h2 class="mp-input-title">{% trans "insert-dialogue-title insert-photo" %}</h2>
-  <div id="insert-photo-tabs" class="mp-tabs">
-    <ul>
-      <li><a href="#tabs-1">Title & Description</a></li>
-      <li><a href="#tabs-2">Photoeditor</a></li>
-    </ul>
+{% load i18n %} <!-- we always need to load i18n -->
 
-    <div id="tabs-1">
-      <form class="jquery-validator mp-dialog-content" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
+{% block title %}{% trans "insert-dialogue-title insert-photo" %}{% endblock %}
+  
+{% block content %}
 
-        <input type="hidden" name="place" required="required" value="{{place}}"/>
-        <div>
-          <label for="title">{% trans "Name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
-          <input class="mp-input-name" type="text" name="title" required="required" size="40"/>
-        </div>
-        <div>
-          <label for="description">{% trans "Beschreibung" %}</label>
-          <textarea type="text" name="description" cols="50" rows="5"></textarea>
-        </div>
-        <div>
-          <label name="file-upload" for="photo">{% trans "insert-dialogue select photo to upload" %}<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
-          <input id="file-input" class="mp-input-drop" type="file" name="photo" required="required" size="40"/>
-        </div>
+<div id="insert-photo-tabs" class="mp-tabs">
+  <ul>
+    <li><a href="#tabs-1">Title & Description</a></li>
+    <li><a href="#tabs-2">Photoeditor</a></li>
+  </ul>
 
-        <input type="submit" class="mp-button mp-single-upload" value="{% trans 'Speichern' %}" />
-      </form>
-    </div>
+  <div id="tabs-1">
+    <form class="jquery-validator mp-dialog-content" id="insert-photo" method="post" action="/insert-photo" enctype="multipart/form-data">
 
-    <div id="tabs-2">
-      {% include "photo-editor.html" %}
-    </div>
+      <input type="hidden" name="place" required="required" value="{{place}}"/>
+      <div>
+        <label for="title">{% trans "Name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
+        <input class="mp-input-name" type="text" name="title" required="required" size="40"/>
+      </div>
+      <div>
+        <label for="description">{% trans "Beschreibung" %}</label>
+        <textarea type="text" name="description" cols="50" rows="5"></textarea>
+      </div>
+      <div>
+        <label name="file-upload" for="photo">{% trans "insert-dialogue select photo to upload" %}<sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label>
+        <input id="file-input" class="mp-input-drop" type="file" name="photo" required="required" size="40"/>
+      </div>
+
+      <input type="submit" class="mp-button mp-single-upload" value="{% trans 'Speichern' %}" />
+    </form>
   </div>
 
-
+  <div id="tabs-2">
+    {% include "photo-editor.html" %}
+  </div>
 </div>
+
+{% endblock %}
+
+

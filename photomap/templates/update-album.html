@@ -1,20 +1,20 @@
-<!-- for the translation with django -->
-{% load i18n %}
+{% extends "dialog.html" %}
 
-<div class="insert">
+{% load i18n %} <!-- we always need to load i18n -->
+
+{% block title %}{% trans "insert-dialogue-title update-album" %}{% endblock %}
   
-  <h2 class="mp-input-title">{% trans "insert-dialogue-title update-album" %}</h2>
-  
-  <form class="jquery-validator mp-dialog-content" name="update-album" action="/update-album" method="post">
-    <input type="hidden" name="id" value="" />
-    <div>
-      <label for="title">{% trans "Name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
-      <input class="mp-input-name" type="text" name="title" required="required" size="40" />
-    </div>	
-    <div>
-      <label for="description">{% trans "Beschreibung" %}</label>
-      <textarea type="text" name="description" cols="50" rows="5"></textarea>
-    </div>
-    <input class="mp-button" type="submit" value='{% trans "Änderungen bestätigen" %}' name="submit" />
-  </form>
-</div>
+{% block content %}
+<form class="jquery-validator mp-dialog-content" name="update-album" action="/update-album" method="post">
+  <input type="hidden" name="id" value="" />
+  <div>
+    <label for="title">{% trans "Name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
+    <input class="mp-input-name" type="text" name="title" required="required" size="40" />
+  </div>	
+  <div>
+    <label for="description">{% trans "Beschreibung" %}</label>
+    <textarea type="text" name="description" cols="50" rows="5"></textarea>
+  </div>
+  <input class="mp-button" type="submit" value='{% trans "Änderungen bestätigen" %}' name="submit" />
+</form>
+{% endblock %}

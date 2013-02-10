@@ -31,7 +31,8 @@ UIPlaceListener.prototype = {
          success : function (data) {
             main.getUI().insertPlace(event.lat, event.lng, data);      
          },
-         url : "/insert-place"
+         url : "/insert-place",
+         context : this
       });
    },
    update : function (place) {
@@ -51,18 +52,22 @@ UIPlaceListener.prototype = {
             place.description = this._description;
             main.getUI().getInformation().updatePlace();
          },
-         url : "/update-place"
+         url : "/update-place",
+         context : this
       });
    },
    delete : function (place) {
       this.input.show({
          type : UIInput.CONFIRM_DIALOG,
+         submit : function () {
+            main.getClientServer().deleteObject("/delete-place",{
+               id : place.id,
+               title : place.title,
+               model : place.model
+            });
+         },
          url: "/delete-place",
-         data : {
-            id : place.id,
-            title : place.title,
-            model : place.model
-         }
+         context : this,
       });
    },
    bindListener : function (place) {
