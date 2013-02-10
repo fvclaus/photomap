@@ -3,25 +3,184 @@
 
 "use strict";
 
-var UIFullscreen, css;
-//TODO this class has only 3 methods. All of them are too long
+/**
+ * @author Marc Roemer
+ * @description Displays current slideshow-image as fullscreen, supports zooming into the image
+ */
+
+var UIFullscreen;
+
 UIFullscreen = function (slideshow) {
    
    this.slideshow = slideshow;
    
    this.iconHelpCount = 5;
-   this.$fullscreen = null;
+/*   this.$fullscreen = null;
    this.$close = null;
    this.$name = null;
    this.$image = null;
    this.$zoom = null;
    this.$load = null;
    this.$wrapper = null;
-
+ */
+   this.$container = $("#mp-fullscreen");
+   this.$inner = $("#mp-fullscreen-main");
+   this.$navLeft = $("#mp-fullscreen-nav-prev");
+   this.$navRight = $("#mp-fullscreen-nav-next");
+   this.$close = $("#mp-fullscreen-close");
+   this.$title = $("#mp-fullscreen-title");
+   this.$imageWrapper = $("#mp-fullscreen-image-wrapper");
+   this.$image = $("#mp-fullscreen-image");
+   this.$description = $("#mp-fullscreen-image-description");
+   this.$zoom = $(".mp-image-zoom");
+   this.$load = $(".mp-dark-loader");
+   
+   this.visible = false;
+   this.started = false;
+   this.zoomInitialized = false;
 };
 
 UIFullscreen.prototype = {
+   
+   init : function () {
+      
+      this._bindListener();
+   },
+   start : function () {
+      
+      var instance = this,
+         state = main.getUIState();
+       
+      this.$container.show();
+      
+      this.$imageWrapper.css({
+         width: instance.$imageWrapper.width() + "px",
+         height: instance.$imageWrapper.height() + "px"
+      });
+      this.$inner.css("visibility", "hidden");
+//      this.$image.addClass("mp-fixed-position");
+      this.$image.on("drag", function () {
+         if (instance.$image.hasClass("mp-fixed-position")) {
+            instance.$image.removeClass("mp-fixed-position");
+         }
+      });
+      this.$image.addClass("mp-fullscreen-image");
+      this.$imageWrapper.tzoom({
+         image: instance.$image,
+         imageSrc: state.getCurrentLoadedPhoto().photo,
+         loadingImage: instance.$load,
+         fixed: true,
+         wheelStep: 5, //default is 15
+         onZoom: function (zoomlevel) {
+            $(this).removeClass("mp-fullscreen-image");
+            if (zoomlevel !== 0) {
+               if (!$(this).hasClass("mp-fixed-position") && $(this).width() < instance.$imageWrapper.width()) {
+                  $(this).addClass("mp-fixed-position");
+               } else if ($(this).hasClass("mp-fixed-position") && $(this).width() > instance.$imageWrapper.width()) {
+                  $(this).removeClass("mp-fixed-position");
+               }
+            } else {
+               if (!$(this).hasClass("mp-fixed-position")) {
+                  $(this).addClass("mp-fixed-position");
+               }
+            }
+         },
+         onZoomed : function (zoomlevel) {
+            if (zoomlevel !== 0) {
+               if (!$(this).hasClass("mp-fixed-position") && $(this).width() < instance.$imageWrapper.width()) {
+                  $(this).addClass("mp-fixed-position");
+               } else if ($(this).hasClass("mp-fixed-position") && $(this).width() > instance.$imageWrapper.width()) {
+                  $(this).removeClass("mp-fixed-position");
+               }
+            } else {
+               if (!$(this).hasClass("mp-fullscreen-image")) {
+                  $(this).addClass("mp-fullscreen-image");
+               }
+            }
+         },
+         onReady: function () {
+            state.setFullscreen(true);
+            instance.$image.css({
+               top: 0,
+               left: 0
+            });
+            instance.$inner.css("visibility", "visible");
+         }
+      });
+      this.started = true;
+      this.$imageWrapper.tzoom("enable");
+   },
+   open : function () {
+      
+      var instance = this,
+         state = main.getUIState();
+      
+      if (!this.started) {
+         this.start();
+      } else {
+         this.$container.show();
+         this.$imageWrapper.tzoom("imageSrc", state.getCurrentLoadedPhoto().photo);
+         this.$imageWrapper.tzoom("enable");
+      }
+      this.visible = true;
+   },
+   close : function () {
+      
+      this.$container.hide();
+      this.$imageWrapper.tzoom("disable");
+      this.visible = false;
+   },
+   update : function () {
+      
+      var ui = main.getUI(),
+         state = ui.getState(),
+         description = ui.getInformation(),
+         photo = state.getCurrentLoadedPhoto(),
+         instance = this;
+      
+      description.updateFullscreen();
+      
+      if (this.visible) {
+         
+         this.disable();
+         this.$image.fadeOut(300);
+         // change src and fade in after fading out is complete
+         window.setTimeout(function () {
+            instance.$image.fadeIn(300).attr("src", photo.photo);
+         }, 300);
+         // enable fullscreen controls again after new image is displayed (and animation is complete)
+         window.setTimeout(function () {
+            instance.enable();
+         }, 600);
 
+      } else {
+         this.$image.attr("src", photo.photo);
+      }
+   },
+   disable : function () {
+      
+      this.$navLeft.off(".Fullscreen");
+      this.$navRight.off(".Fullscreen");
+      this.$close.off(".Fullscreen");
+   },
+   enable : function () {
+      this._bindListener();
+   },
+   _bindListener : function () {
+      
+      var instance = this;
+      this.$navLeft.on("click.Fullscreen", function () {
+         instance.slideshow.navigateLeft();
+      });
+      this.$navRight.on("click.Fullscreen", function () {
+         instance.slideshow.navigateRight();
+      });
+      this.$close.on("click.Fullscreen", function () {
+         instance.close();
+      });
+   }
+      
+/*
    // displays zoomed version of current image as overlay
 	//TODO this method is way too long
    zoom : function () {
@@ -99,12 +258,13 @@ UIFullscreen.prototype = {
 
       }).attr('src', main.getUIState().getCurrentLoadedPhoto().photo);
    },
-
+      */
    /**
     * @private
     *  adjust height and weight properties of image so that it fits current window size
     */
-/*   _resizeImage : function ($image) {
+   /*
+   _resizeImage : function ($image) {
       
       var widthMargin, heightMargin, windowH, windowW, theImage, imgwidth, imgheight, newwidth, newnewwidth, newheight, newnewheight, ratio, newratio;
       
@@ -166,11 +326,12 @@ UIFullscreen.prototype = {
 
       return css;
    },
- */
+      */
    /**
     * @private
     * bind hide functionality to close button
     */
+   /*
    _bindListener : function () {
       var instance = this;
       $("div.mp-image-nav")
@@ -220,6 +381,7 @@ UIFullscreen.prototype = {
          }
       });
    }
+    */
 };
 
 

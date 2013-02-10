@@ -15,10 +15,10 @@ UISlideshow = function () {
 
    this.$container = $('#mp-slideshow');
    this.$inner = $("#mp-slideshow-image-wrapper");
-   this.$image = $("img#mp-slideshow-image");
+   this.$image = $("#mp-slideshow-image");
    this.$hidden = $("#mp-slideshow-photos");
-   this.$navLeft = $('img#mp-slideshow-nav-prev');
-   this.$navRight = $('img#mp-slideshow-nav-next');
+   this.$navLeft = $('#mp-slideshow-nav-prev');
+   this.$navRight = $('#mp-slideshow-nav-next');
    
    this.carousel = null;
    this.fullscreen = new UIFullscreen(this);
@@ -30,11 +30,15 @@ UISlideshow = function () {
 UISlideshow.prototype = {
 
    initWithoutAjax : function () {
+      this.fullscreen.init();
       this._bindNavigationListener();
       this._bindStartFullscreenListener();
    },
    getCarousel : function () {
       return this.carousel;
+   },
+   getFullscreen : function () {
+      return this.fullscreen;
    },
    insertPhoto : function (photo) {
       
@@ -133,7 +137,8 @@ UISlideshow.prototype = {
       options = {
          lazy : true,
          effect : "fade",
-         onLoad : instance._load
+         onLoad : instance._load,
+         onUpdate : instance._update
       };
       this.carousel = new UICarousel(this.$inner, this.imageSources, options);
       this.carousel.start(index);
@@ -164,6 +169,20 @@ UISlideshow.prototype = {
    },
    /**
     * @private
+    * @description handler is called after slideshow-image is displayed
+    */
+   _update : function () {
+      var ui = main.getUI(),
+         description = ui.getInformation(),
+         slideshow = ui.getSlideshow();
+   
+      slideshow.setCurrentLoadedPhoto();
+      slideshow.getFullscreen().update();
+      description.updatePhoto();
+      $("#mp-content").trigger("slideshowChanged");
+   },
+   /**
+    * @private
     * @description handler is called after slideshow-image is loaded
     */
    _load : function () {
@@ -174,12 +193,9 @@ UISlideshow.prototype = {
          slideshow = ui.getSlideshow();
       
       state.setSlideshowLoaded(true);
-      slideshow.setCurrentPhoto();
       slideshow.appendImages(slideshow.getCarousel().getLoadedData());
-      description.updatePhoto();
-      $("#mp-content").trigger("slideshowChanged");
    },
-   setCurrentPhoto : function () {
+   setCurrentLoadedPhoto : function () {
       
       var ui = main.getUI(),
          state = main.getUIState(),
@@ -187,8 +203,14 @@ UISlideshow.prototype = {
          currentPhoto = ui.getTools().getObjectByKey("photo", this.$image.attr("src"), photos),
          currentIndex = $.inArray(currentPhoto, photos);
       
-      state.setCurrentPhoto(currentPhoto);
-      state.setCurrentPhotoIndex(currentIndex);
+      state.setCurrentLoadedPhoto(currentPhoto);
+      state.setCurrentLoadedPhotoIndex(currentIndex);
+   },
+   navigateLeft : function () {
+      this.$navLeft.trigger("click");
+   },
+   navigateRight : function () {
+      this.$navRight.trigger("click");
    },
    /* ---- Listeners ---- */
    _bindNavigationListener : function () {
@@ -198,10 +220,12 @@ UISlideshow.prototype = {
       
       this.$navLeft.on("click", function () {
          
+         console.log("?left?");
          if (!disabled) {
             if (!instance.isStarted) {
                instance.start();
             } else {
+               console.log("left");
                instance.carousel.navigateLeft();
             }
          }
@@ -223,7 +247,7 @@ UISlideshow.prototype = {
       this.$image.on("click.Slideshow", function () {
          
          if (!main.getUI().isDisabled()) {
-            instance.fullscreen.zoom();
+            instance.fullscreen.open();
          }
       });
    }

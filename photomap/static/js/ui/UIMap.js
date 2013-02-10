@@ -352,11 +352,11 @@ UIMap.prototype = {
       this.map.setOptions({
          draggable : true,
          scrollwheel : true,
-         keyboardShortcuts : true,
-         mapTypeControl : true,
-         panControl : true,
-         zoomControl : true,
-         streetViewControl : true
+         keyboardShortcuts : true
+//         mapTypeControl : true,
+//         panControl : true,
+//         zoomControl : true,
+//         streetViewControl : true
       });
    },
    /**
@@ -368,11 +368,11 @@ UIMap.prototype = {
       this.map.setOptions({
          draggable : false,
          scrollwheel : false,
-         keyboardShortcuts : false,
-         mapTypeControl : false,
-         panControl : false,
-         zoomControl : false,
-         streetViewControl : false
+         keyboardShortcuts : false
+ //        mapTypeControl : false,
+ //        panControl : false,
+ //        zoomControl : false,
+ //        streetViewControl : false
       });
    },
 

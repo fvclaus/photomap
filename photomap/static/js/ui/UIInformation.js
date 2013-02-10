@@ -134,13 +134,22 @@ UIInformation.prototype = {
    },
    updatePhoto : function () {
       //no photo loaded yet
-      if (main.getUIState().getCurrentLoadedPhoto() === null){
+      if (main.getUIState().getCurrentLoadedPhoto() === null) {
          return;
       }
       this.updatePhotoDescription();
       this.updatePhotoTitle();
       this.updateImageNumber();
    },
+   /* --- fullscreen photo --- */
+   
+   updateFullscreen : function () {
+      
+      var photo = main.getUIState().getCurrentLoadedPhoto();
+      $("#mp-fullscreen-title").text(photo.title);
+      //$("#mp-fullscreen-image-description").text(photo.description);
+   },
+   
    /* ---- end Photo ---- */
    
    /* ---- other stuff ---- */

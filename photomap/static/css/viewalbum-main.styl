@@ -137,34 +137,86 @@
 /* ------------------------------ */
 /* ----- fullscreen styling ----- */
 
-.mp-photo-title
-  width 100%
-  height 60%
-  float left
-
-.mp-fullscreen-photo-title
-  z-index 1201
-  color $font-color-inverse
-
-.mp-dark-loader
- top 48%
- left 48%
- position absolute
-
-.mp-image-overlay
+.mp-fullscreen
   width 100%
   height 100%
+  display none
   z-index 1200
   position fixed
   top 0px
   left 0px
   background-color $background-rgba-alpha09-dark
   text-align center
-  .mp-image-overlay-wrapper
-    border $border-light
-    position absolute
-    top 50%
-    left 50%
-    box-shadow($box-shadow-black)
+
+.mp-fullscreen-header
+  width 100%
+  height 10%
+  z-index 1201
+
+.mp-fullscreen-nav,
+.mp-fullscreen-close
+  width 10%
+  height 100%
+  float left
+  img
+    max-height 95%
+    max-width 95%
+
+.mp-fullscreen-title-wrapper
+  width 70%
+  height 100%
+  float left
+  text-align center
+  h2
+  z-index 1202
+  color $font-color-inverse
+
+.mp-fullscreen-main
+  width 100%
+  height 90%
+  text-align center
+
+.mp-fullscreen-image-wrapper
+  width 59%
+  height 91%
+  max-width 59%
+  max-height 91%
+  border $border-light
+  margin 2% 0 1% 5%
+  position relative
+  float left
+  overflow hidden
+
+.mp-fullscreen-image
+  max-width 100%
+  max-height 100%
+
+.mp-fixed-position
+  left 0 !important
+
+.mp-fullscreen-image-description
+  width 19%
+  height 91%
+  padding 0 5%
+  border $border-light
+  border-left none
+  margin 2% 5% 1% 0
+  float left
+  z-index 1202
+  color $font-color-inverse
+
+.mp-image-overlay-wrapper
+  border $border-light
+  position absolute
+  top 50%
+  left 50%
+  box-shadow($box-shadow-black)
+
+.mp-dark-loader
+ top 48%
+ left 48%
+ position absolute
+ display none
+
 
 /* ------ end fullscreen ------ */

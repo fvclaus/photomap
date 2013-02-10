@@ -70,7 +70,7 @@ UITools.prototype = {
       
       heightDifference = $parent.height() - $element.height();
       widthDifference = $parent.width() - $element.width();
-      
+      console.log(widthDifference);
       switch (direction) {
       
       case "vertical":
@@ -84,9 +84,9 @@ UITools.prototype = {
       case "horizontal":
          margin = "0px ";
          if (widthDifference <= 0) {
-            margin = 0;
+            margin += 0;
          } else {
-            margin = widthDifference / 2;
+            margin += widthDifference / 2;
          }
          margin += "px";
          break;
