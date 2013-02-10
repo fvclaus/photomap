@@ -124,20 +124,15 @@ UIInput.prototype = {
             main.getUI().disable();
          },
          "title": title,
-         "width": this.width,
-         "height" : this.height,
-         // "heightStyle": "content"
-      });
          //TODO height is a messy business. height includes the title bar (wtf?!)
          //the dialog content is styled in percent of the parent. 
          //this makes it impossible to calculate dimension of a dialog, because they depend on the dimension of the parent.
          //limit maximum height
-         // "maxHeight" : this.height,
-         // "maxHeight" : 500,
+         "maxHeight" : this.height,
          //set the width to allow percentage styling
-         // "width" : this.width,
-
-
+         "width": this.width,
+         // "heightStyle": "content"
+      });
    },
    /**
     @public
@@ -186,24 +181,6 @@ UIInput.prototype = {
       });
       return html;
    },
-   /**
-    @private
-    @param html markup to show in the dialog
-    @returns {Object} width and height of the dialog containing the html
-    */
-   // _getDialogDimension : function ($wrapper) {
-   //    if ($wrapper.find(".mp-tabs").length > 0){
-   //       //TODO tabs causes messy problems when the height varies between the tabs
-   //       //HOTFIX heightStyle auto adapts to the height of the tallest tab
-   //       $wrapper.find(".mp-tabs").tabs({
-   //          "heightStyle" : "auto"
-   //       });
-   //    }
-   //    //margin cuts of some space -> make it slightly bigger
-   //    dimension = {"width": $wrapper.width() * 1.2, "height": $wrapper.height()};
-   //    return dimension;
-   // },
-
    /**
     * @private
     */
