@@ -15,10 +15,10 @@ UISlideshow = function () {
 
    this.$container = $('#mp-slideshow');
    this.$inner = $("#mp-slideshow-image-wrapper");
-   this.$image = $("img#mp-slideshow-image");
+   this.$image = $("#mp-slideshow-image");
    this.$hidden = $("#mp-slideshow-photos");
-   this.$navLeft = $('img#mp-slideshow-nav-prev');
-   this.$navRight = $('img#mp-slideshow-nav-next');
+   this.$navLeft = $('#mp-slideshow-nav-prev');
+   this.$navRight = $('#mp-slideshow-nav-next');
    
    this.carousel = null;
    this.fullscreen = new UIFullscreen(this);
@@ -30,11 +30,15 @@ UISlideshow = function () {
 UISlideshow.prototype = {
 
    initWithoutAjax : function () {
+      this.fullscreen.init();
       this._bindNavigationListener();
       this._bindStartFullscreenListener();
    },
    getCarousel : function () {
       return this.carousel;
+   },
+   getFullscreen : function () {
+      return this.fullscreen;
    },
    insertPhoto : function (photo) {
       
@@ -173,6 +177,7 @@ UISlideshow.prototype = {
          slideshow = ui.getSlideshow();
    
       slideshow.setCurrentLoadedPhoto();
+      slideshow.getFullscreen().update();
       description.updatePhoto();
       $("#mp-content").trigger("slideshowChanged");
    },
@@ -201,10 +206,10 @@ UISlideshow.prototype = {
       state.setCurrentLoadedPhoto(currentPhoto);
       state.setCurrentLoadedPhotoIndex(currentIndex);
    },
-   _navigateLeft : function () {
+   navigateLeft : function () {
       this.$navLeft.trigger("click");
    },
-   _navigateRight : function () {
+   navigateRight : function () {
       this.$navRight.trigger("click");
    },
    /* ---- Listeners ---- */
@@ -215,10 +220,12 @@ UISlideshow.prototype = {
       
       this.$navLeft.on("click", function () {
          
+         console.log("?left?");
          if (!disabled) {
             if (!instance.isStarted) {
                instance.start();
             } else {
+               console.log("left");
                instance.carousel.navigateLeft();
             }
          }
@@ -240,7 +247,7 @@ UISlideshow.prototype = {
       this.$image.on("click.Slideshow", function () {
          
          if (!main.getUI().isDisabled()) {
-            instance.fullscreen.zoom();
+            instance.fullscreen.open();
          }
       });
    }
