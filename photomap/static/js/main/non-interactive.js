@@ -13,6 +13,15 @@ function reinitialiseScrollPane() {
 
 function initialize() {
 
+   //TODO this needs to be centralized somewhere
+   $(".jquery-validator")
+      .find("input[type='submit']").button()
+      .end()
+      .validate({
+      success : "valid",
+      errorPlacement : function () {} //don't show any errors
+   });
+
    $container = $("#mp-non-interactive-content");
 
    if (window.location.pathname !== "/login") {

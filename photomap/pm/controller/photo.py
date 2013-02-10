@@ -179,7 +179,9 @@ def delete(request):
             userprofile.save()
             logger.info("Photo %d deleted." % id)
             photo.delete()
-            return success()
+            response =  success()
+            set_cookie(response, "used_space", userprofile.used_space)
+            return response
         except (KeyError, Photo.DoesNotExist), e:
             logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))

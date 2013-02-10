@@ -82,13 +82,13 @@ def share(request, secret, album_id):
             #TODO better name
             logger.debug("Secret does not match.")
             logger.debug("%s is not %s" % (secret, album.secret))
-            return render_to_response("album-share-error.html")
+            return render_to_response("album-share-failure.html")
     
         if request.method == "GET":
             # album does not has a password yet
             if not hashers.is_password_usable(album.password):
                 logger.debug("Album does not has a password yet.")
-                return render_to_response("album-share-error.html")
+                return render_to_response("album-share-failure.html")
             return render_to_response("album-share-login.html")
         else:
             password = request.POST["password"]
@@ -100,7 +100,7 @@ def share(request, secret, album_id):
                 return render_to_response("album-share-login.html", {error: "Passwort is not correct."})
     except Exception, e:
         logger.info(str(e))
-        return render_to_response("album-share-error.html")
+        return render_to_response("album-share-failure.html")
 
 
 
