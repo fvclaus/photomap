@@ -16,6 +16,7 @@ from pm.controller import authentication
 from pm.controller import album
 from pm.controller import dashboard
 from pm.controller import debug
+from pm.controller import footer
 
 # admin.site.register(model.album.Album)
 # admin.site.register(model.photo.Photo)
@@ -35,7 +36,8 @@ urlpatterns = patterns("",
                        url(r'^impressum$', direct_to_template, {"template": "impressum.html"}),
                        url(r'^privacy$', direct_to_template, {"template": "privacy.html"}),
                        url(r'^copyright$', direct_to_template, {"template": "copyright.html"}),
-                       url(r'^contact$', direct_to_template, {"template": "contact.html"}),
+                       url(r'^contact$', footer.contact),
+                       url(r'^contact-success$', footer.contact_success),
                        url(r'^help$', direct_to_template, {"template": "help.html"}),
                        url(r'^team$', direct_to_template, {"template": "team.html"}),
                        

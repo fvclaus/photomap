@@ -123,7 +123,7 @@ def insert(request):
             photo.save()
             logger.debug("Photo %d inserted with order %d and size %d." % (photo.pk, photo.order, photo.size))
             
-            response = success(id = photo.id, url = photo.getphotourl(), thumb = photo.getthumburl())
+            response = success(id = photo.id, photo = photo.getphotourl(), thumb = photo.getthumburl(), url = photo.getphotourl())
             set_cookie(response, "used_space", userprofile.used_space)
             return response
         else:
@@ -179,7 +179,9 @@ def delete(request):
             userprofile.save()
             logger.info("Photo %d deleted." % id)
             photo.delete()
-            return success()
+            response =  success()
+            set_cookie(response, "used_space", userprofile.used_space)
+            return response
         except (KeyError, Photo.DoesNotExist), e:
             logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))
