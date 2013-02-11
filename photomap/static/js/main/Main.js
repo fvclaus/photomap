@@ -31,10 +31,7 @@ Main.prototype = {
       this.clientServer.init();
       // initialise parts of UI that don't need the data loaded from the server
       this.ui.initWithoutAjax();
-      // initialize non-interactive content if needed
-      if (!this.getUIState().isInteractive()) {
-         initializeNonInteractive();
-      }
+
       // do some page specific stuff
       if (typeof initialize === "function") {
          initialize();

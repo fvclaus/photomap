@@ -1,4 +1,4 @@
-/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput*/
+/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput, window*/
 "use strict";
 
 var UIAlbumListener = function () {
@@ -70,7 +70,7 @@ UIAlbumListener.prototype = {
          url : "/update-album-password",
          load : function ()  {
             $("input[name='album']").val(album.id);
-            $("input[name='share']").val("/album/share/"+album.secret+"-"+album.id);
+            $("input[name='share']").val("http://"+ window.location.host +"/album/share/"+album.secret+"-"+album.id);
             // $("input[name='share']").val(
             // copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
             $("#mp-copy-share").zclip({

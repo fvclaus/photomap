@@ -27,21 +27,21 @@ UIMap = function () {
    // the map options
    this.mapOptions = {
       mapTypeId : google.maps.MapTypeId.ROADMAP,
-      mapTypeControl : state.isInteractive(),
+      mapTypeControl : true,
       mapTypeControlOptions : {
          style : google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
          position : google.maps.ControlPosition.TOP_LEFT
       },
-      panControl : state.isInteractive(),
+      panControl : true,
       panControlOptions : {
          position : google.maps.ControlPosition.TOP_LEFT
       },
-      zoomControl : state.isInteractive(),
+      zoomControl : true,
       zoomControlOptions : {
          style : google.maps.ZoomControlStyle.SMALL,
          position : google.maps.ControlPosition.TOP_LEFT
       },
-      streetViewControl : state.isInteractive(),
+      streetViewControl : true,
       streetViewControlOptions : {
          position : google.maps.ControlPosition.TOP_LEFT
       },
@@ -183,15 +183,14 @@ UIMap.prototype = {
    initAfterAjax : function () {
       
       var authorized;
-      page = main.getUIState().getPage();
       
-      if (page === ALBUM_VIEW) {
+      if (main.getUIState().isAlbumView()) {
          authorized = main.getClientState().isAdmin();
          //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
          if (authorized) {
             this._bindClickListener();
          }
-      } else if (page === DASHBOARD_VIEW) {
+      } else {
          this._bindClickListener();
       }
       // set map options if interactive
@@ -227,7 +226,7 @@ UIMap.prototype = {
       
       if (style) {
          cursor = style;
-      } else if (main && main.getUIState && main.getUIState().isInteractive()) {
+      } else if (main && main.getUIState) {
          // if no style is defined -> cross on interactive pages, else grabber
          cursor = "cross";
       } else {

@@ -27,7 +27,6 @@ UIInformation.prototype = {
       
       if (title !== null) {
          
-         main.getUIState().setCurrentTitle(title);
          this.$descriptionTitle.text(title);
          this.$fullDescriptionTitle.text(title);
       }
@@ -36,8 +35,6 @@ UIInformation.prototype = {
       
       var text;
       if (description !== null) {
-         
-         main.getUIState().setCurrentDescription(description);
          text = main.getUI().getTools().cutText(description, 350);
 
          this.$description.html(text);
@@ -72,7 +69,7 @@ UIInformation.prototype = {
       title = main.getUIState().getCurrentLoadedAlbum().title;
       
       this._setTitle(title);
-      if (main.getUIState().getPage() === ALBUM_VIEW) {
+      if (main.getUIState().isAlbumView()) {
          $(".mp-page-title h1").text(title);
       }
    },

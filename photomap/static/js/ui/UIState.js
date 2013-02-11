@@ -11,59 +11,25 @@
 var UIState;
 
 UIState = function () {
-   this.currentPhotoIndex = null;
    this.currentPhoto = null;
    this.currentLoadedPhoto = null;
    this.currentPlace = null;
    this.currentLoadedPlace = null;
    this.currentAlbum = null;
    this.currentLoadedAlbum = null;
-   this.currentDescription = "";
-   this.currentTitle = "";
    this.photos = [];
    this.places = [];
    this.albums = [];
-   this.slideshow = false;
-   this.slideshowLoaded = false;
    this.albumLoaded = false;
    this.fontSize = null;
    this.fullscreen = null;
    this.dialogAutoClose = false;
-   this.pageMode = $("meta[property='mp:map']").attr("content");
-   if (this.pageMode === "non-interactive") {
-      this.interactive = false;
-   } else {
-      this.interactive = true;
-   }
    //PAGE_MAPPING is defined in constants.js
    this.page = PAGE_MAPPING[window.location.pathname];
    this.data = {};
 };
 
 UIState.prototype = {
-
-   isInteractive : function () {
-      return this.interactive;
-   },
-   isDashboard : function () {
-      // if albumview -> false
-      return this.page === DASHBOARD_VIEW;
-   },
-   //--------------------------------------------------------------------
-   //DESCRIPTION---------------------------------------------------------
-   //--------------------------------------------------------------------
-   setCurrentDescription : function (string) {
-      this.currentDescription = string;
-   },
-   getCurrentDescription : function () {
-      return this.currentDescription;
-   },
-   setCurrentTitle : function (string) {
-      this.currentTitle = string;
-   },
-   getCurrentTitle : function () {
-      return this.currentTitle;
-   },
    //--------------------------------------------------------------------
    //PHOTO---------------------------------------------------------------
    //--------------------------------------------------------------------
@@ -77,14 +43,8 @@ UIState.prototype = {
    getPhotos : function () {
       return this.photos;
    },
-   setCurrentPhotoIndex : function (index) {
-      this.current = index;
-   },
    setCurrentLoadedPhotoIndex : function (index) {
       this.currentLoadedIndex = index;
-   },
-   getCurrentPhotoIndex : function () {
-      return this.current;
    },
    getCurrentLoadedPhotoIndex : function () {
       return this.currentLoadedIndex;
@@ -177,15 +137,7 @@ UIState.prototype = {
    //--------------------------------------------------------------------
    //UI------------------------------------------------------------------
    //--------------------------------------------------------------------
-   getPage : function () {
-      return this.page;
-   },
-   setSlideshow : function (slideshow) {
-      this.slideshow = slideshow;
-   },
-   isSlideshow : function () {
-      return this.slideshow;
-   },
+
    setSlideshowLoaded : function (bool) {
       this.slideshowLoaded = bool;
    },
@@ -211,37 +163,12 @@ UIState.prototype = {
    isFullscreen : function (bool) {
       return this.fullscreen;
    },
-   setAlbumShareURL: function (url, id) {
-      
-      var host, fullURL;
-      
-      host = window.location.host;
-      fullURL = 'http://' + host + url;
-      this.currentAlbumShare = {
-         'id': id,
-         'url': fullURL
-      };
-   },
+
    getDialogAutoClose : function () {
       return this.dialogAutoClose;
    },
    setDialogAutoClose : function (autoClose) {
       this.dialogAutoClose = autoClose;
-   },
-   getAlbumShareURL: function () {
-      return this.currentAlbumShare;
-   },
-   setFileToUpload : function (file) {
-      this.fileToUpload = file;
-   },
-   getFileToUpload : function () {
-      return this.fileToUpload;
-   },
-   setMultipleUpload : function (bool) {
-      this.multiple = bool;
-   },
-   isMultipleUpload : function () {
-      return this.multiple;
    },
    /**
     * @description Provides a simple method to store variables temporarily

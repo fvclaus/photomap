@@ -134,7 +134,7 @@ UIControls.prototype = {
       map.addClickListener(function (event) {
          if (!main.getUI().isDisabled()) {
             //create new place with description and select it
-            if (!state.isDashboard()) {
+            if (!state.isDashboardView()) {
                instance.placeListener.insert(event);
             } else {
                instance.albumListener.insert(event);

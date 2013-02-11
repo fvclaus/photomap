@@ -53,7 +53,7 @@ UIEditControls.prototype = {
       // don't resize the icons all the time to save performance
       if (!this.$controls.isScaled) {
          // change factor depending on the page (-> number of controls in control-box)
-         if (main.getUIState().isDashboard()) {
+         if (main.getUIState().isDashboardView()) {
             factor = 1.5;
          } else {
             factor = 1;

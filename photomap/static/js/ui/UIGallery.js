@@ -368,7 +368,6 @@ UIGallery.prototype =  {
                photo = $.grep(state.getPhotos(), function (e, i) {
                   return e.thumb === $el.attr("src");
                })[0];
-               state.setCurrentPhotoIndex(instance.getImageIndex($el));
                state.setCurrentPhoto(photo);
                
                if (authorized) {
