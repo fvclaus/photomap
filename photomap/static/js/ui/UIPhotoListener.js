@@ -1,11 +1,10 @@
-/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, FileUpload, UIPhotoEditor, UIInput, FormData */
+/*global main, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY,  UIPhotoEditor, UIInput, FormData */
 "use strict";
 
 
 var UIPhotoListener = function () {
    this.input = main.getUI().getInput();
    this.state = main.getUI().getState();
-   this.fileUpload = new FileUpload();
    this.editor = new UIPhotoEditor();
 };
 
