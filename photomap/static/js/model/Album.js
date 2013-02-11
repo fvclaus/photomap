@@ -22,7 +22,7 @@ Album = function (data) {
 
 };
 
-Album.prototype = InfoMarker.prototype;
+Album.prototype = $.extend({},InfoMarker.prototype);
 
 /*
  * @private

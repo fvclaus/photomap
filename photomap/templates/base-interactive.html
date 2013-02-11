@@ -8,34 +8,44 @@ content="interactive"
 {% endblock %}
 
 {% block js %}
-   <script type="text/javascript" src="/static/js/lib/tzoom.min.js" ></script>
-   <script type="text/javascript" src="/static/js/util/noconsole.js" ></script>
-	<script type="text/javascript" src="/static/js/lib/jquery.jqote2.min.js" ></script>
+<script type="text/javascript" src="/static/js/lib/tzoom.min.js" ></script>
+<script type="text/javascript" src="/static/js/util/noconsole.js" ></script>
+<script type="text/javascript" src="/static/js/lib/jquery.jqote2.min.js" ></script>
+<script type="text/javascript" src="/static/js/zeroclipboard/jquery.zclip.min.js" ></script>
 
-	<script type="text/javascript" src="/static/js/util/ui-tests.js" ></script>
-	<script type="text/javascript" src="/static/js/ui/UIMap.js" ></script>
-	<script type="text/javascript" src="/static/js/model/InfoMarker.js"></script>
-	<script type="text/javascript" src="/static/js/model/Album.js" ></script>
-        
-	<script type="text/javascript" src="/static/js/ui/UIState.js" ></script>
-	<script type="text/javascript" src="/static/js/ui/UIInput.js" ></script>
+<script type="text/javascript" src="/static/js/util/ui-tests.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIMap.js" ></script>
 
-        <script type="text/javascript" src="/static/js/ui/UIPhotoListener.js"></script>
-        <script type="text/javascript" src="/static/js/ui/UIPlaceListener.js"></script>
-        <script type="text/javascript" src="/static/js/ui/UIAlbumListener.js"></script>
-        <script type="text/javascript" src="/static/js/ui/UIPhotoEditor.js"></script>
+<script type="text/javascript" src="/static/js/model/InfoMarker.js"></script>
+<script type="text/javascript" src="/static/js/model/Album.js" ></script>
+<script type="text/javascript" src="/static/js/model/Place.js" ></script>
+<script type="text/javascript" src="/static/js/model/Photo.js" ></script>
 
-        <script type="text/javascript" src="/static/js/ui/UIEditControls.js"></script>
-	<script type="text/javascript" src="/static/js/ui/UIControls.js" ></script>
-	<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
-        <script type="text/javascript" src="/static/js/ui/UIInformation.js" ></script>
+<script type="text/javascript" src="/static/js/util/DataPage.js" ></script>
 
-        <script type="text/javascript" src="/static/js/ui/UI.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UICarousel.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIState.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIInput.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIFullscreen.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UISlideshow.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIGallery.js" ></script>
 
-	<script type="text/javascript" src="/static/js/util/ClientState.js" ></script>
-	<script type="text/javascript" src="/static/js/util/ClientServer.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIPhotoEditor.js"></script>
+<script type="text/javascript" src="/static/js/ui/UIPhotoListener.js"></script>
+<script type="text/javascript" src="/static/js/ui/UIPlaceListener.js"></script>
+<script type="text/javascript" src="/static/js/ui/UIAlbumListener.js"></script>
 
-   <script type="text/javascript" src="/static/js/main/Main.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIEditControls.js"></script>
+<script type="text/javascript" src="/static/js/ui/UIControls.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UIInformation.js" ></script>
+
+<script type="text/javascript" src="/static/js/ui/UI.js" ></script>
+
+<script type="text/javascript" src="/static/js/util/ClientState.js" ></script>
+<script type="text/javascript" src="/static/js/util/ClientServer.js" ></script>
+
+<script type="text/javascript" src="/static/js/main/Main.js" ></script>
 
    {% block js_interactive %}
    {% endblock %}
@@ -90,24 +100,7 @@ content="interactive"
        {% trans "Data Loading" %}
      </p>
    </div>
-	<div id="mp-share">
-		<span class="mp-share-overlay" rel="#mp-share"></span>
-		<p>
-			<input id="mp-share-link" name="share-link" value="" size="100"/>
-			<input id="mp-copy-button mp-cursor-pointer mp-control" name="copy" type="button" value='{% trans "mp-copy-link-title" %}' />
-		</p>
-		<aside>
-			<p>
-				<strong>{% trans "How to Share" %}</strong>
-			</p>
-			<p>
-				{% trans "How to Share -> description" %}
-			</p>
-			<p>
-				<strong>{% trans "How to Share -> attention!" %}</strong>
-			</p>
-		</aside>
-	</div>
+
 
 	<div class="mp-controls-wrapper">
 			<img class="mp-option-delete mp-control mp-cursor-pointer" src="/static/images/delete.png" title='{% trans "control-title delete" %}' />
@@ -116,9 +109,7 @@ content="interactive"
 	</div>
         <!-- div for UIInput. The dimensions are defined in input.sty -->
 	<div id="mp-dialog"></div>
-   <!-- <div id="confirm-delete"> -->
-   <!--   <div>{% trans "Do you really want to delete" %} <span class="data-title"></span></div> -->
-   <!--   <span class="mp-nodisplay" id="mp-confirm">{% trans "Yes" %}</span>  -->
-   <!--   <span class="mp-nodisplay" id="mp-abort">{% trans "No" %}</span>  -->
-   <!-- </div> -->
+	<!-- helpers for selenium ide. remove from production system -->
+        {% include "tests.html" %}
+
 {% endblock %}

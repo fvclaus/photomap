@@ -30,7 +30,7 @@ Place = function (data) {
 
 };
 
-Place.prototype = InfoMarker.prototype;
+Place.prototype = $.extend({},InfoMarker.prototype);
 
 Place.prototype._showGallery = function () {
    // set photos of this place as current and start gallery
