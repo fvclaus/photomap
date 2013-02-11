@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UIMap, UITools,  UIState, UIControls, UIInput, UIInformation, DASHBOARD_VIEW, Album, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
+/*global $, main, UIMap, UITools,  UIState, UIControls, UIGallery, UISlideshow, UIInput, UIInformation, DASHBOARD_VIEW, ALBUM_VIEW, Album, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, Photo, Place */
 
 "use strict";
 
@@ -17,8 +17,11 @@ UI = function () {
    this.controls = new UIControls();
    this.input = new UIInput();
    this.state = new UIState(this);
-   if (this.state.getPage() === DASHBOARD_VIEW) {
-      this.information = new UIInformation();
+   this.information = new UIInformation();
+
+   if (this.state.isAlbumView()) {
+      this.gallery = new UIGallery();
+      this.slideshow = new UISlideshow();
    }
    this._isDisabled = false;
 };
@@ -35,9 +38,21 @@ UI.prototype = {
     */
    initWithoutAjax : function () {
       this.controls.initWithoutAjax();
+      if (this.state.isAlbumView()){
+         this.slideshow.initWithoutAjax();
+      }
    },
    initAfterAjax : function () {
       this.controls.initAfterAjax();
+      if (this.state.isAlbumView()){
+         this.gallery.initAfterAjax();
+      }
+   },
+   getGallery : function () {
+      return this.gallery;
+   },
+   getSlideshow : function () {
+      return this.slideshow;
    },
    getTools : function () {
       return this.tools;
@@ -53,6 +68,80 @@ UI.prototype = {
    },
    getInformation: function () {
       return this.information;
+   },
+   /**
+    * @description Adds place fully to ui.
+    */
+   insertPlace : function (lat, lon, data) {
+      
+      //create new place and show marker
+      //new place accepts only lon, because it handles responses from server
+      var place = new Place({
+         lat: lat,
+         lon: lon,
+         id : data.id,
+         title : this.getState().retrieve(TEMP_TITLE_KEY),
+         description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
+      });
+      place.show();
+      this.getState().insertPlace(place);
+      this.getControls().bindPlaceListener(place);
+      //TODO triggerDoubleClick does not respond, because the UI is still disabled at that point
+      place.openPlace();
+   },
+   /**
+    * @description Removes place fully from ui.
+    */
+   deletePlace : function (id) {
+      
+      var place = this.getTools().getObjectByKey("id", id, this.getState().getPlaces());
+
+      if (place === this.getState().getCurrentLoadedPlace()) {
+         
+         //TODO what was gallery.show()? shouldnt it be gallery.hide()?
+         // this.getGallery().show();
+         this.getGallery().reset();
+         // this.getSlideshow().removeCurrentImage();
+         this.getSlideshow().reset();
+         this.getInformation().removeDescription();
+      }
+      place.hide();
+      this.getState().deletePlace(place);
+   },
+   /**
+    * Adds photo fully to ui.
+    */
+   insertPhoto : function (data) {
+      
+      // add received value to uploadedPhoto-Object, add the photo to current place and restart gallery
+      var state = this.getState(),
+         photo = new Photo({
+            id : data.id,
+            photo : data.url,
+            thumb : data.thumb,
+            order : state.getPhotos().length,
+            title : state.retrieve(TEMP_TITLE_KEY),
+            description : state.retrieve(TEMP_DESCRIPTION_KEY)
+         });
+      state.getCurrentLoadedPlace().insertPhoto(photo);
+      state.insertPhoto(photo);
+      this.getGallery().insertPhoto(photo);
+      this.getSlideshow().insertPhoto(photo);
+   },
+   /**
+    * @description Removes photo fully from ui.
+    */
+   deletePhoto : function (id) {
+      
+      var photo = this.getTools().getObjectByKey("id", id, this.state.getPhotos());
+      
+      if (photo === this.getState().getCurrentLoadedPhoto()) {
+         
+         this.getInformation().removeDescription();
+      }
+      this.getSlideshow().deletePhoto(photo);
+      this.getGallery().deletePhoto(photo);
+      this.getState().deletePhoto(photo);
    },
    /**
     * @description Propagates the addAlbum event to every UI component affected.
@@ -87,6 +176,10 @@ UI.prototype = {
       album.hide();
       this.getState().removeAlbum(album);
    },
+   // loader should (maybe) be placed over the ui-element which is currently loading.
+   // loader is sometimes called twice in a row (slideshow.navigate followed by gallery.checkslider)
+   // so loader might disappear and then suddenly milliseconds later appear again, which might confuse many users!
+   //TODO place in individual class. this is likely to change
    showLoading : function () {
       this.getTools().loadOverlay($("#mp-ui-loading"), true);
       this.getTools().fitMask();
@@ -98,13 +191,13 @@ UI.prototype = {
    },
    disable : function () {
       
-      var albums;
-      albums = main.getUIState().getAlbums();
-      
+
+      var models = (this.state.isAlbumView())? this.state.getPlaces() : this.state.getAlbums();
+
       this._isDisabled = true;
-      albums.forEach(function (album) {
-         album.showDisabledIcon();
-         album.setCursor("not-allowed");
+      models.forEach(function (model) {
+         model.showDisabledIcon();
+         model.setCursor("not-allowed");
       });
       $("a, .mp-control").css({
 //         opacity: 0.4,

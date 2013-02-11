@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, window, main, PAGE_MAPPING, DASHBOARD_VIEW */
+/*global $, window, main, PAGE_MAPPING, DASHBOARD_VIEW, ALBUM_VIEW */
 
 "use strict";
 
@@ -167,6 +167,12 @@ UIState.prototype = {
       this.albums = this.albums.filter(function (element, index) {
          return element !== album;
       });
+   },
+   isDashboardView : function () {
+      return this.page === DASHBOARD_VIEW;
+   },
+   isAlbumView : function () {
+      return this.page === ALBUM_VIEW;
    },
    //--------------------------------------------------------------------
    //UI------------------------------------------------------------------

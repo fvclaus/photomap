@@ -23,6 +23,9 @@ UITools.prototype = {
       return ((x % y) + y) % y;
    },
    cutText : function (text, size) {
+      if (text === null){
+         return text;
+      }
       
       var createSubstring, endingPunctuation, i, substring;
       endingPunctuation = [".", "!", "?", ";", ":"];
