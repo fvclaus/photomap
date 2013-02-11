@@ -24,6 +24,11 @@ from pm.controller import footer
 # admin.site.register(model.userprofile.UserProfile)
 admin.autodiscover()
 
+js_info_dict = {
+    'packages': ('pm',),
+}
+
+
 urlpatterns = patterns("",
                        #========================================================
                        # main
@@ -45,7 +50,7 @@ urlpatterns = patterns("",
                        url(r'^logout$', authentication.logout),
                        url(r'^$', direct_to_template, {"template": "index.html"}),
                        
-                    
+                       url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog', js_info_dict),                
                        
                        url(r'^dashboard$', dashboard.view),
 

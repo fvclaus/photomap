@@ -97,7 +97,11 @@ DataPage.prototype = {
     * @description returns page with given index
     */
    getPage : function (index) {
-      
+
+      if (index === null || index === undefined){
+         throw new Error("IllegalArgument");
+      }
+         
       if (this.pages[index] === undefined) {
          throw new Error("IndexOutOfBounds");
       } else {

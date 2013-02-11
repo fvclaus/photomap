@@ -2,13 +2,11 @@
 
 {% load i18n %} <!-- we always need to load i18n -->
 
-{% block title %}Delete Place{% endblock %}
+{% block title %}{% trans "DELETE_PLACE" %}{% endblock %}
   
 {% block content %}
-<form class="jquery-validator mp-dialog" action="/delete-photo" method="post">
+<form class="jquery-validator mp-dialog" action="/delete-place" method="post">
   <input type="hidden" name="id" required="required"/>
 </form>
-<div>{% trans "Do you really want to delete" %} Place<span class="data-title"></span></div>
-<span class="mp-nodisplay" id="mp-confirm">{% trans "Yes" %}</span> 
-<span class="mp-nodisplay" id="mp-abort">{% trans "No" %}</span> 
+<div>{% trans "DELETE_PLACE_QUESTION" %} Place </div>
 {% endblock %}

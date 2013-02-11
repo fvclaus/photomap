@@ -15,7 +15,7 @@ class NoSupportMiddleware():
         # IS_OK = re.compile("(Firefox|Opera)/(?P<version>\d{1,2})")
         IS_OK = re.compile("(?P<version>}d{1,2})")
     else:
-        IS_OK = re.compile("Firefox/(?P<version>\d{2})")
+        IS_OK = re.compile("(Firefox|Chrome)/(?P<version>\d{2})")
     MIN_VERSION = 9
     
     def process_request(self, request):
@@ -40,7 +40,7 @@ class NoSupportMiddleware():
                 version = int(match.group("version"))
                 
                 if  version < self.MIN_VERSION:
-                    logger.info("FF in version %d. Must be at least %d" % (version, self.MIN_VERSION))
+                    logger.info("FF or Chrome in version %d. Must be at least %d" % (version, self.MIN_VERSION))
                     return render_to_response("not-supported.html")
             
                 return None

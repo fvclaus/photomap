@@ -58,10 +58,17 @@ UISlideshow.prototype = {
          
    },
    deletePhoto : function (photo) {
+
+      //TODO this method does not work when the slideshow is not loaded
+      if (! this.isStarted){
+         return;
+      }
       
       var state = main.getUIState(),
          reload,
          instance = this;
+
+
       
       // delete hidden thumb
       this.$hidden.find("img[src='" + photo.photo + "']").remove();

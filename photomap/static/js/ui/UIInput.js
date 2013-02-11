@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, mpEvents */
+/*global $, main, mpEvents, gettext */
 
 "use strict";
 
@@ -65,22 +65,35 @@ UIInput.prototype = {
          this.$dialog.dialog("option", {
             buttons : [
                {
-                  id: "mp-dialog-button-ok",
-                  text : $("span#mp-confirm").text(),
+                  id: "mp-dialog-button-yes",
+                  text : gettext("NO"),
                   click : function () {
-                     //we just emulate the form submit to call the submit routines ;)
-                     $(".jquery-validator").trigger("submit");
+                     instance._submitForm();
                      return true;
                   }
                },
                {
-                  id : "mp-dialog-button-cancel",
-                  text : $("span#mp-abort").text(),
+                  id : "mp-dialog-button-no",
+                  text : gettext("YES"),
                   click : function (event) {
                      $(this).dialog("close");
                      return false;
                   }
                }
+            ]
+         });
+         break;
+
+      case UIInput.INPUT_DIALOG : 
+         this.$dialog.dialog("option", {
+            buttons : [
+               {
+                  text : gettext("SAVE"),
+                  click : function () {
+                     instance._submitForm();
+                  },
+               },
+
             ]
          });
          break;
@@ -170,8 +183,9 @@ UIInput.prototype = {
     */
    _submitHandler : function () {
       var instance = this,
-          $form = $("form.jquery-validator"),
-          $buttons = $form.find("button, input[type='submit']"),
+          $widget = this.$dialog.dialog("widget"),
+          $form = $widget.find("form.mp-dialog-content"),
+          $buttons = $form.find("button, input[type='submit']").add("#mp-dialog-button-yes, #mp-dialog-button-no"),
           message = new UIInputMessage($("#mp-dialog-message"));
       
 
@@ -231,6 +245,9 @@ UIInput.prototype = {
          options[name].call(options.context, args);
       }
    },
+   _submitForm : function () {
+      this.$dialog.dialog("widget").find("form.mp-dialog-content").trigger("submit");
+   },
    setVisibility : function (bool) {
       this.visible = bool;
    },
@@ -279,6 +296,6 @@ UIInputMessage.prototype = {
          this.autoClose = autoClose;
       });
    },
-}
+};
       
       

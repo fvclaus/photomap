@@ -55,14 +55,14 @@ UIAlbumListener.prototype = {
    delete : function (album) {
       this.input.show({
          type : UIInput.CONFIRM_DIALOG,
+         load : function () {
+            $("input[name='id']").val(album.id);
+         },
+         success : function () {
+            main.getUI().deleteAlbum(album.id);
+         },
          url : "/delete-album",
-         submit : function () {
-            main.getClientServer().deleteObject("/delete-album",{
-               id : album.id,
-               title : album.title,
-               model : album.model
-            });
-         }
+         context : this
       });
    },
    share : function (album) {

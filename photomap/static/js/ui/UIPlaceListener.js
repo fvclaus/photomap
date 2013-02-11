@@ -59,12 +59,11 @@ UIPlaceListener.prototype = {
    delete : function (place) {
       this.input.show({
          type : UIInput.CONFIRM_DIALOG,
-         submit : function () {
-            main.getClientServer().deleteObject("/delete-place",{
-               id : place.id,
-               title : place.title,
-               model : place.model
-            });
+         load : function () {
+            $("input[name='id']").val(place.id);
+         },
+         success : function () {
+            main.getUI().deletePlace(place.id);
          },
          url: "/delete-place",
          context : this,

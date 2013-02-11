@@ -2,21 +2,20 @@
 
 {% load i18n %} <!-- we always need to load i18n -->
 
-{% block title %}{% trans "insert-dialogue-title insert-album" %}{% endblock %}
+{% block title %}{% trans "INSERT_ALBUM" %}{% endblock %}
   
 {% block content %}
-<form class="jquery-validator mp-dialog-content" name="update-album" action="/insert-album" method="post">
+<form class="mp-dialog-content" name="update-album" action="/insert-album" method="post">
   <div>
     <label for="title">{% trans "Name" %} <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup></label> 
     <input class="mp-input-name" type="text" name="title" required="required"/>
   </div>	
   <div>
-    <label for="description">{% trans "Beschreibung" %}</label>
+    <label for="description">{% trans "DESCRIPTION" %}</label>
     <textarea type="text" name="description" cols="50" rows="5"></textarea>
   </div>	
   <input type="hidden" name="lat" required="required" />
   <input type="hidden" name="lon" required="required" />
-  <input class="mp-button mp-submit" type="submit" value='{% trans "Speichern" %}' name="submit" />
 </form>
 {% endblock %}
 

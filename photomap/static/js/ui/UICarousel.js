@@ -174,8 +174,10 @@ UICarousel.prototype = {
       
       if (index) {
          this.navigateTo(index);
+         this.currentPageIndex = index;
       } else {
          this.currentPage = this.dataPage.getFirstPage();
+         this.currentPageIndex = 0;
          this._load();
       }
    },
@@ -217,6 +219,7 @@ UICarousel.prototype = {
          this.currentPage = this.dataPage.getPage(this.currentPageIndex);
       } catch (e) {
          if (e.message === "IndexOutOfBounds") {
+            //TODO this does not make sense. getPage could also throw a IndexOutOfBounds
             this.currentPage = this.dataPage.getPage(this.currentPageIndex - 1);
          }
       }

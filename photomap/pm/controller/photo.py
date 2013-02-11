@@ -146,6 +146,7 @@ def update(request):
             photo = None
             try:
                 id = form.cleaned_data["id"]
+                #TODO we need to update the used_space cookie
                 logger.info("User %d is trying to update Photo %d." % (request.user.pk, id))
                 photo = Photo.objects.get(pk = id)
                 if not is_authorized(photo, request.user):

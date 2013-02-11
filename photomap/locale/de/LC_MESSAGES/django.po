@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-22 17:37+0100\n"
+"POT-Creation-Date: 2013-02-11 16:34+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,29 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:44 templates/base-interactive.html.py:60
+#: templates/base-interactive.html:51 templates/base-interactive.html.py:67
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:69
+#: templates/base-interactive.html:76
 msgid "Es ist noch kein Album ausgewählt!"
 msgstr "Es ist noch kein Album ausgewählt!"
 
-#: templates/base-interactive.html:81
+#: templates/base-interactive.html:88
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:88
+#: templates/base-interactive.html:95 templates/update-album-password.html:14
 msgid "mp-copy-link-title"
 msgstr "Link kopieren"
 
-#: templates/base-interactive.html:92
+#: templates/base-interactive.html:99 templates/update-album-password.html:18
 msgid "How to Share"
 msgstr "Wie teilt man den Link?"
 
-#: templates/base-interactive.html:95
+#: templates/base-interactive.html:102 templates/update-album-password.html:21
 msgid "How to Share -> description"
 msgstr ""
 "Um das Album mit anderen zu teilen müssen Sie den Link kopieren, dann können "
@@ -52,93 +52,97 @@ msgstr ""
 "'Command + C' (Mac OS X) oder per 'Kopieren' in dem Menü, welches sich bei "
 "Rechtsklick auf den Link öffnet, kopieren."
 
-#: templates/base-interactive.html:98
+#: templates/base-interactive.html:105 templates/update-album-password.html:24
 msgid "How to Share -> attention!"
 msgstr ""
 "Bitte beachten Sie, dass, was auch immer Sie momentan im Zwischenspeicher "
 "haben (also das, was Sie als letztes kopiert haben), beim Kopieren "
 "überschrieben wird."
 
-#: templates/base-interactive.html:104
+#: templates/base-interactive.html:111
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:105
+#: templates/base-interactive.html:112
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base-interactive.html:111
+#: templates/base-interactive.html:118
 msgid "Do you really want to delete"
 msgstr "Wollen Sie wirklich folgendes Objekt löschen: "
 
-#: templates/base-interactive.html:112
+#: templates/base-interactive.html:119
 msgid "Yes"
-msgstr "Ja"
+msgstr ""
 
-#: templates/base-interactive.html:113
+#: templates/base-interactive.html:120
 msgid "No"
-msgstr "Nein"
+msgstr ""
 
-#: templates/base.html:97
+#: templates/base.html:106 templates/base.html.py:107
+msgid "Settings"
+msgstr ""
+
+#: templates/base.html:110
 msgid "Abmelden"
 msgstr "Abmelden"
 
-#: templates/base.html:107
+#: templates/base.html:125
 msgid "Login or Register"
 msgstr "Anmelden oder Registrieren"
 
-#: templates/base.html:107
+#: templates/base.html:125
 msgid "Anmelden/Registrierung"
 msgstr "Anmeldung und Registrierung"
 
-#: templates/base.html:112 templates/not-supported-old.html:64
+#: templates/base.html:130 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:112 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:130 templates/team.html:6 templates/team.html.py:8
 #: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:113 templates/not-supported-old.html:62
+#: templates/base.html:131 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:113 templates/contact.html:6
+#: templates/base.html:131 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:114 templates/not-supported-old.html:60
+#: templates/base.html:132 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:114 templates/privacy.html:5
+#: templates/base.html:132 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:115 templates/not-supported-old.html:61
+#: templates/base.html:133 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:115 templates/copyright.html:6
+#: templates/base.html:133 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:116 templates/not-supported-old.html:63
+#: templates/base.html:134 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:116 templates/help.html:6
+#: templates/base.html:134 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:117 templates/not-supported-old.html:59
+#: templates/base.html:135 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:117 templates/impressum.html:6
+#: templates/base.html:135 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
@@ -175,6 +179,10 @@ msgstr "Bitte beachten Sie die hierfür gültigen"
 #: templates/contact.html:25
 msgid "contact-linkto-privacy"
 msgstr "Datenschutzgrundsätze"
+
+#: templates/contact.html:63 templates/debug/dialogdimension.html:24
+msgid "Speichern"
+msgstr ""
 
 #: templates/copyright.html:8
 msgid "Urheberrechtserklärung"
@@ -267,6 +275,34 @@ msgstr ""
 #: templates/dashboard.html:26
 msgid "control-title share"
 msgstr "Teilen"
+
+#: templates/delete-album.html:5
+#, fuzzy
+msgid "DELETE_ALBUM"
+msgstr "Album löschen?"
+
+#: templates/delete-album.html:11
+#, fuzzy
+msgid "DELETE_ALBUM_QUESTION"
+msgstr "Wollen Sie dieses Album  wirklich löschen?"
+
+#: templates/delete-photo.html:5
+#, fuzzy
+msgid "DELETE_PHOTO"
+msgstr "Photo löschen?"
+
+#: templates/delete-photo.html:11
+#, fuzzy
+msgid "DELETE_PHOTO_QUESTION"
+msgstr "Wollen Sie dieses Photo wirklich löschen?"
+
+#: templates/delete-place.html:5
+msgid "DELETE_PLACE"
+msgstr "Platz löschen?"
+
+#: templates/delete-place.html:11
+msgid "DELETE_PLACE_QUESTION"
+msgstr "Wollen Sie diesen Platz wirklich löschen?"
 
 #: templates/help.html:8
 msgid "Hilfe und Support"
@@ -594,12 +630,9 @@ msgstr ""
 "Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
 "Photo an die gewünschte Stelle ziehen."
 
-#: templates/help.html:111 templates/insert-album.html:15
-#: templates/insert-photo.html:18 templates/insert-place.html:14
-#: templates/update-album.html:15 templates/update-photo.html:16
-#: templates/update-place.html:15
+#: templates/help.html:111 templates/debug/dialogdimension.html:18
 msgid "Beschreibung"
-msgstr "Beschreibung"
+msgstr ""
 
 #: templates/help.html:114
 msgid ""
@@ -740,34 +773,35 @@ msgstr ""
 msgid "Willkommen"
 msgstr "Willkommen"
 
-#: templates/insert-album.html:6
-msgid "insert-dialogue-title insert-album"
-msgstr "Hinzufügen eines Albums"
+#: templates/insert-album.html:5
+msgid "INSERT_ALBUM"
+msgstr "Album hinzufügen"
 
-#: templates/insert-album.html:11 templates/insert-photo.html:14
+#: templates/insert-album.html:10 templates/insert-photo.html:20
 #: templates/insert-place.html:10 templates/team.html:17
 #: templates/team.html.py:29 templates/team.html:41
 #: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:11
+#: templates/update-place.html:12 templates/debug/dialogdimension.html:14
 msgid "Name"
 msgstr "Name"
 
-#: templates/insert-album.html:20 templates/insert-photo.html:26
-#: templates/insert-place.html:20
-msgid "Speichern"
-msgstr "Speichern"
+#: templates/insert-album.html:14 templates/insert-photo.html:24
+#: templates/insert-place.html:14 templates/update-album.html:15
+#: templates/update-photo.html:16 templates/update-place.html:16
+msgid "DESCRIPTION"
+msgstr "Beschreibung"
 
-#: templates/insert-photo.html:8
-msgid "insert-dialogue-title insert-photo"
-msgstr "Hinzufügen eines neuen Photos"
+#: templates/insert-photo.html:5
+msgid "INSERT_PHOTO"
+msgstr "Photo hinzufügen"
 
-#: templates/insert-photo.html:22
-msgid "insert-dialogue select photo to upload"
+#: templates/insert-photo.html:28
+msgid "INSERT_PHOTO_UPLOAD"
 msgstr "Photo zum Hochladen auswählen (nur *.png und *.jpg)"
 
-#: templates/insert-place.html:6
-msgid "insert-dialogue-title insert-place"
-msgstr "Hinzufügen eines Platzes"
+#: templates/insert-place.html:5
+msgid "INSERT_PLACE"
+msgstr "Platz hinzufügen"
 
 #: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
@@ -972,55 +1006,59 @@ msgstr "Design"
 msgid "Motivation am Projekt"
 msgstr "Motivation am Projekt"
 
-#: templates/update-album.html:6
-msgid "insert-dialogue-title update-album"
-msgstr "Bearbeiten eines Albums"
+#: templates/update-album.html:5
+msgid "UPDATE_ALBUM"
+msgstr "Album bearbeiten"
 
-#: templates/update-album.html:18 templates/update-photo.html:19
-#: templates/update-place.html:18
-msgid "Änderungen bestätigen"
-msgstr "Änderungen bestätigen"
+#: templates/update-photo.html:5
+msgid "UPDATE_PHOTO"
+msgstr "Photo bearbeiten"
 
-#: templates/update-photo.html:6
-msgid "insert-dialogue-title update-photo"
-msgstr "Bearbeiten eines Photos"
+#: templates/update-place.html:5
+msgid "UPDATE_PLACE"
+msgstr "Platz bearbeiten"
 
-#: templates/update-place.html:6
-msgid "insert-dialogue-title update-place"
-msgstr "Bearbeiten eines Platzes"
-
-#: templates/view-album.html:37
+#: templates/view-album.html:40
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: templates/view-album.html:41
+#: templates/view-album.html:45
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr ""
 "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
 
-#: templates/view-album.html:44
+#: templates/view-album.html:49
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: templates/view-album.html:48
+#: templates/view-album.html:52
 msgid "Bild"
 msgstr "Bild"
 
-#: templates/view-album.html:57
+#: templates/view-album.html:88
 msgid "Previous Page"
 msgstr "Vorherige Seite"
 
-#: templates/view-album.html:61
+#: templates/view-album.html:92
 msgid "Open Full Gallery"
 msgstr "Vollstädige Galerie öffnen"
 
-#: templates/view-album.html:73
+#: templates/view-album.html:115
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/view-album.html:77
+#: templates/view-album.html:119
 msgid "Add Image"
 msgstr "Bild hinzufügen"
+
+#~ msgid "YES"
+#~ msgstr "Ja"
+
+#~ msgid "NO"
+#~ msgstr "Nein"
+
+#~ msgid "SAVE"
+#~ msgstr "Speichern"
 
 #~ msgid "Speichern und weitere hinzufügen"
 #~ msgstr "Speichern und weitere hinzufügen"

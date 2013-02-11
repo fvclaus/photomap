@@ -130,12 +130,7 @@ UIPhotoListener.prototype = {
             $("input[name='id']").val(photo.id);
          },
          success : function (data) {
-            // main.getClientServer().deleteObject("/delete-photo",{
-            //    id : photo.id,
-            //    title : photo.title,
-            //    model : photo.model
-            // });
-            console.dir(data);
+            main.getUI().deletePhoto(photo.id);
          },
          url: "/delete-photo",
          context : this

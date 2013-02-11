@@ -86,12 +86,15 @@ UI.prototype = {
 
       if (place === this.getState().getCurrentLoadedPlace()) {
          
-         this.getGallery().show();
-         this.getSlideshow().removeCurrentImage();
+         //TODO what was gallery.show()? shouldnt it be gallery.hide()?
+         // this.getGallery().show();
+         this.getGallery().reset();
+         // this.getSlideshow().removeCurrentImage();
+         this.getSlideshow().reset();
          this.getInformation().removeDescription();
       }
       place.hide();
-      this.getState().removePlace(place);
+      this.getState().deletePlace(place);
    },
    /**
     * Adds photo fully to ui.
