@@ -63,7 +63,7 @@ UIPlaceListener.prototype = {
             $("input[name='id']").val(place.id);
          },
          success : function () {
-            main.getUI().deletePlace(place.id);
+            main.getUI().deletePlace(place);
          },
          url: "/delete-place",
          context : this,

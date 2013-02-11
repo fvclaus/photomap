@@ -25,7 +25,7 @@ UIGallery = function () {
    this.photos = null;
    this.imageSources = [];
    this.isStarted = false;
-   this.fullGalleryLoaded = false;
+   this.fullGalleryLoaded = false;b
 };
 
 UIGallery.prototype =  {

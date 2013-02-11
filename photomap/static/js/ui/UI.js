@@ -92,9 +92,7 @@ UI.prototype = {
    /**
     * @description Removes place fully from ui.
     */
-   deletePlace : function (id) {
-      
-      var place = this.getTools().getObjectByKey("id", id, this.getState().getPlaces());
+   deletePlace : function (place) {
 
       if (place === this.getState().getCurrentLoadedPlace()) {
          
@@ -131,9 +129,7 @@ UI.prototype = {
    /**
     * @description Removes photo fully from ui.
     */
-   deletePhoto : function (id) {
-      
-      var photo = this.getTools().getObjectByKey("id", id, this.state.getPhotos());
+   deletePhoto : function (photo) {
       
       if (photo === this.getState().getCurrentLoadedPhoto()) {
          

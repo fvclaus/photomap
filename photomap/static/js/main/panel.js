@@ -129,7 +129,7 @@ initializePanels = function () {
    resizeFooterFont();
    bindUserMenuListener();
    main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
-   if (main.getUIState && main.getUIState().getPage() === ALBUM_VIEW) {
+   if (main.getUIState && main.getUIState().isAlbumView()) {
       bindTitleListener();
       $(".mp-page-title").trigger("click");
    }

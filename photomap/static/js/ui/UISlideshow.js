@@ -68,7 +68,6 @@ UISlideshow.prototype = {
          reload,
          instance = this;
 
-
       
       // delete hidden thumb
       this.$hidden.find("img[src='" + photo.photo + "']").remove();

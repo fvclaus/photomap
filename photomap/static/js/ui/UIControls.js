@@ -37,8 +37,8 @@ UIControls.prototype = {
       var state, clientstate, page;
       state = main.getUIState();
       clientstate = main.getClientState();
-      page = state.getPage();
-      if (page === DASHBOARD_VIEW || (page === ALBUM_VIEW && clientstate.isAdmin())) {
+
+      if (state.isDashboardView() || (state.isAlbumView() && clientstate.isAdmin())) {
          this.editControls.bindListener();
          this.bindListener(page);
       }
@@ -214,23 +214,20 @@ UIControls.prototype = {
     * @description Binds all the Listeners required by this page. Also handles window.load Listener
     * @param {String} page Name of current page
     */
-   bindListener : function (page) {
+   bindListener : function () {
       
       this._bindDeleteListener();
       this._bindUpdateListener();
       this._bindShareListener();
       this._bindInsertListener();
       this._bindFullDescriptionListener();
-      if (page === DASHBOARD_VIEW) {
+      if (main.getUIState().isDashboardView()) {
          this.bindAlbumListener();
-      } else if (page === ALBUM_VIEW) {
+      } else if (main.getUIState().isAlbumView()) {
          this._bindFullGalleryListener();
          this.bindInsertPhotoListener();
          this.bindPlaceListener();
-      } else {
-         alert("Unknown page: " + page);
       }
    },
-
 
 };
