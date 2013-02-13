@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UICarousel, UIFullscreen */
+/*global $, main, UIPhotoCarousel, UIFullscreen */
 
 "use strict";
 
@@ -16,7 +16,6 @@ UISlideshow = function () {
    this.$container = $('#mp-slideshow');
    this.$inner = $("#mp-slideshow-image-wrapper");
    this.$image = $("#mp-slideshow-image");
-   this.$hidden = $("#mp-slideshow-photos");
    this.$navLeft = $('#mp-slideshow-nav-prev');
    this.$navRight = $('#mp-slideshow-nav-next');
    
@@ -24,7 +23,6 @@ UISlideshow = function () {
    this.fullscreen = new UIFullscreen(this);
    
    this.isStarted = false;
-   this.imageSources = [];
 };
 
 UISlideshow.prototype = {
@@ -41,104 +39,38 @@ UISlideshow.prototype = {
       return this.fullscreen;
    },
    insertPhoto : function (photo) {
-      
-      if (this.isStarted) {
-         // insert hidden thumb
-         this.appendImages([photo.photo]);
-         // update carousel
-         this.imageSources = this.imageSources.filter(function (src) {
-            return src !== null;
-         });
-         this.imageSources.push(photo.photo);
-         this.carousel.reinitialise(this.imageSources);
-         this.carousel.navigateTo("end");
-      } else {
-         this.start("end");
+      // this is an unfortunate annoyance, but the gallery can be started without the slideshow
+      // therefore we need to check if the gallery is started on an insert photo event
+      // this is unfortunate, because the slideshow behaves differntly than the gallery
+      if (this.isStarted){
+         // does not move to the new photo, because photo cant be on current page
+         this.carousel.insertPhoto(photo.photo);
       }
-         
    },
    deletePhoto : function (photo) {
-
-      //TODO this method does not work when the slideshow is not loaded
-      if (! this.isStarted){
-         return;
-      }
-      
-      var state = main.getUIState(),
-         reload,
-         instance = this;
-
-      
-      // delete hidden thumb
-      this.$hidden.find("img[src='" + photo.photo + "']").remove();
-      // update carousel
-      this.imageSources = this.imageSources.filter(function (src) {
-         return src !== photo.photo;
-      });
-      this.carousel.reinitialise(instance.imageSources);
-      // visualise delete (if photo was loaded)
-      if (photo === state.getCurrentLoadedPhoto()) {
-         this.$image.fadeOut(500);
-         
-         reload = function () {
-            instance.carousel.navigateRight();
-         };
-         // wait for visualisation to finish
-         window.setTimeout(reload, 500);
-      }
-   },
-   /**
-    * @description appends any number (1->Inf) of thumbnails to slideshow (hidden)
-    */
-   appendImages : function (sources) {
-      
-      var instance = this,
-         images = this.$hidden.find("img"),
-         data = [],
-         tmplData = [],
-         i;
-      
-      images.each(function () {
-         
-         data.push($(this).attr("src"));
-      });
-      
-      for (i = 0; i <= sources.length; i++) {
-         
-         if (i === sources.length) {
-            
-            if (tmplData.length > 0) {
-               
-               this.$hidden.append(
-                  $.jqote('#hiddenPhotosTmpl', {
-                     sources: tmplData
-                  })
-               );
-            }
-         } else {
-            if ($.inArray(sources[i], data) === -1) {
-               tmplData.push(sources[i]);
-            }
-         }
+      // @see insertPhoto
+      if (this.isStarted) {
+         // automatically delete if photo is on current page
+         this.carousel.deletePhoto(photo.photo);
+         // update the photo counter
+         this.updateCurrentLoadedPhoto();
       }
    },
    /**
     * @description starts slideshow by initialising and starting the carousel (with given index)
     */
    start: function (index) {
-      var instance = this,
-         ui = main.getUI(),
-         state = ui.getState(),
-         photos = state.getPhotos(),
-         options;
+      var ui = main.getUI(),
+          state = ui.getState(),
+          photos = state.getPhotos(),
+          options,
+          instance = this,
+          //UISlideshow does not need to store imageSources
+          imageSources = [];
+
+      this.isStarted = true;
       
-      $(".mp-slideshow-no-image-msg").hide();
-      
-      photos.forEach(function (photo, index) {
-         if (photo !== undefined) {
-            instance.imageSources.push(photo.photo);
-         }
-      });
+
       // initialize and start carousel
       options = {
          lazy : true,
@@ -146,10 +78,16 @@ UISlideshow.prototype = {
          onLoad : instance._load,
          onUpdate : instance._update
       };
-      this.carousel = new UICarousel(this.$inner, this.imageSources, options);
-      this.carousel.start(index);
+      photos.forEach(function (photo, index) {
+         imageSources.push(photo.photo);
+      });
+      this.carousel = new UIPhotoCarousel(this.$inner, imageSources, options);
       
-      this.isStarted = true;
+      if (photos.length !== 0) {
+         $(".mp-slideshow-no-image-msg").hide();
+         this.carousel.start(index);
+      }
+
    },
    reset : function () {
       
@@ -167,7 +105,6 @@ UISlideshow.prototype = {
    navigateTo : function (index) {
       
       if (!this.isStarted) {
-         
          this.start(index);
       } else {
          this.carousel.navigateTo(index);
@@ -182,7 +119,7 @@ UISlideshow.prototype = {
          description = ui.getInformation(),
          slideshow = ui.getSlideshow();
    
-      slideshow.setCurrentLoadedPhoto();
+      slideshow.updateCurrentLoadedPhoto();
       slideshow.getFullscreen().update();
       description.updatePhoto();
       $("#mp-content").trigger("slideshowChanged");
@@ -193,15 +130,13 @@ UISlideshow.prototype = {
     */
    _load : function () {
       
-      var ui = main.getUI(),
-         state = ui.getState(),
-         description = ui.getInformation(),
-         slideshow = ui.getSlideshow();
-      
-      state.setSlideshowLoaded(true);
-      slideshow.appendImages(slideshow.getCarousel().getLoadedData());
+      // var ui = main.getUI(),
+      //    state = ui.getState(),
+      //    description = ui.getInformation(),
+      //    slideshow = ui.getSlideshow();
+
    },
-   setCurrentLoadedPhoto : function () {
+   updateCurrentLoadedPhoto : function () {
       
       var ui = main.getUI(),
          state = main.getUIState(),
@@ -221,13 +156,13 @@ UISlideshow.prototype = {
    /* ---- Listeners ---- */
    _bindNavigationListener : function () {
       
-      var disabled = main.getUI().isDisabled(),
+      var ui  = main.getUI(),
          instance = this;
       
       this.$navLeft.on("click", function () {
          
          console.log("?left?");
-         if (!disabled) {
+         if (!ui.isDisabled()) {
             if (!instance.isStarted) {
                instance.start();
             } else {
@@ -238,7 +173,7 @@ UISlideshow.prototype = {
       });
       this.$navRight.on("click", function () {
          
-         if (!disabled) {
+         if (!ui.isDisabled()) {
             if (!instance.isStarted) {
                instance.start();
             } else {

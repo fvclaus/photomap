@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, fileUpload, UICarousel */
+/*global $, main, fileUpload, UIPhotoCarousel */
 
 "use strict";
 
@@ -15,7 +15,7 @@ UIGallery = function () {
 
    this.$container = $('#mp-gallery');
    this.$inner = $('#mp-gallery-inner');
-   this.$hidden = $("#mp-gallery-thumbs");
+   // this.$hidden = $("#mp-gallery-thumbs");
    this.$thumbs = $(".mp-gallery-tile");
    this.$navLeft = $("#mp-gallery-nav-left");
    this.$navRight = $("#mp-gallery-nav-right");
@@ -23,9 +23,8 @@ UIGallery = function () {
    this.carousel = null;
    
    this.photos = null;
-   this.imageSources = [];
    this.isStarted = false;
-   this.fullGalleryLoaded = false;b
+   this.fullGalleryLoaded = false;
 };
 
 UIGallery.prototype =  {
@@ -42,29 +41,19 @@ UIGallery.prototype =  {
       this._bindSlideshowNavigationListener();
    },
    getImageBySource : function (source) {
-      
       return this.$inner.find("img[src='" + source + "']");
    },
-   getImageIndex : function ($image) {
-      
-      var src = $image.attr("src");
-      return this.$hidden.find("img[src='" + src + "']").index();
+   _getIndexOfImage : function ($image) {
+      return this.carousel.getAllImageSources().indexOf($image.attr("src"));
    },
    getCarousel : function () {
       return this.carousel;
    },
-   /**
-    * @description loop over all gallery-tiles and return the last one containing a thumbnail
-    */
-   _getLastActiveThumbnail : function () {
-      var i, $image;
-      for (i = this.$thumbs.length - 1; i >= 0; i--) {
-         if ($(this.$thumbs[i]).children().attr("src") !== "") {
-            $image = $(this.$thumbs[i]).children();
-            break;
-         }
-      }
-      return $image;
+   _getIndexOfFirstThumbnail : function () {
+      return this._getIndexOfImage(this.$thumbs.first().children());
+   },
+   _getIndexOfLastThumbnail : function () {
+      return this._getIndexOfImage(this.$thumbs.find("img[src!=]").last());
    },
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
@@ -72,9 +61,8 @@ UIGallery.prototype =  {
    _checkSlider : function () {
       
       var currentIndex = main.getUIState().getCurrentLoadedPhotoIndex(),
-         minIndex = this.getImageIndex(this.$thumbs.first().children()),
-         $last = this._getLastActiveThumbnail(),
-         maxIndex = this.getImageIndex($last);
+          minIndex = this._getIndexOfFirstThumbnail(),
+          maxIndex = this._getIndexOfLastThumbnail();
       
       if (currentIndex < minIndex) {
          this.$navLeft.trigger("click");
@@ -87,18 +75,16 @@ UIGallery.prototype =  {
     */
    insertPhoto : function (photo) {
       
-      if (this.isStarted) {
-         // insert hidden thumb
-         this.appendImages([photo.thumb]);
-         // update carousel
-         this.imageSources = this.imageSources.filter(function (src) {
-            return src !== null;
-         });
-         this.imageSources.push(photo.thumb);
-         this.carousel.reinitialise(this.imageSources);
-         // navigate to new image
+      // this.imageSources.push(photo.thumb);
+      // automatically adds the photo if we are on last page
+      this.carousel.insertPhoto(photo.thumb);
+
+      // navigate to the picture if we are not on the last page
+      if (this.isStarted && !this.carousel.isLastPage()) {
          this._navigateToLastPage();
       } else {
+         // show the new photo
+         //TODO this does now show the new photo yet
          this.start();
       }
          
@@ -107,26 +93,173 @@ UIGallery.prototype =  {
     * @description removes image from gallery.
     */
    deletePhoto : function (photo) {
-      
-      var reload, instance = this;
-      
-      // delete hidden thumb
-      this.$hidden.find("img[src='" + photo.thumb + "']").remove();
-      // update carousel
-      this.imageSources = this.imageSources.filter(function (src) {
-         return src !== photo.thumb;
-      });
-      this.carousel.reinitialise(instance.imageSources);
-      // visualise delete
-      this.$inner.find("img[src='" + photo.thumb + "']").fadeOut(500);
-      
-      reload = function () {
-         instance.$inner.find("img[src='" + photo.thumb + "']").attr("src", null);
-         instance.carousel.reloadCurrentPage();
-      };
-      // wait for visualisation to finish
-      window.setTimeout(reload, 500);
+      // automatically delete if photo is on current page
+      // otherwise we dont care
+      this.carousel.deletePhoto(photo.thumb);
    },
+
+  /**
+   * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
+   */
+   start : function () {
+      
+      var ui = main.getUI(),
+          state = ui.getState(),
+          photos = state.getPhotos(),
+          options,
+          instance = this,
+          imageSources = [];
+
+      this.isStarted = true;
+      
+      // reset FullGallery
+      this.destroyFullGallery();
+
+      // initialize and start carousel
+      options = {
+         lazy : !main.getClientState().isAdmin(),
+         effect : "foldIn",
+         onLoad : this._load
+      };
+      photos.forEach(function (photo, index) {
+         imageSources.push(photo.thumb);
+      });
+      this.carousel = new UIPhotoCarousel(this.$inner, imageSources, options);
+      
+      if (photos.length !== 0) {
+         // disable ui while loading & show loader
+         state.setAlbumLoading(true);
+         ui.disable();
+         ui.showLoading();
+         this.carousel.start();
+      }
+   },
+   reset : function () {
+      
+      this.isStarted = false;
+      if (this.carousel !== null) {
+         this.carousel.reset();
+         this.carousel = null;
+      }
+   },
+   /**
+    * @private
+    * @description handler is called after gallery-thumbs are loaded
+    */
+   _load : function () {
+      var ui = main.getUI();
+      
+      //enable ui
+      ui.enable();
+      
+      // hide loader
+      ui.hideLoading();
+   },
+   /**
+    * @private
+    */
+   _navigateToLastPage : function () {
+      
+      this.carousel.navigateTo("end");
+   },
+
+   
+   /* ---- Listeners ---- */
+   
+   _bindNavigationListener : function () {
+      
+      var ui = main.getUI(),
+         instance = this;
+      
+      this.$navLeft.on("click", function () {
+         
+         if (!ui.isDisabled()) {
+            instance.carousel.navigateLeft();
+         }
+      });
+      this.$navRight.on("click", function () {
+         
+         if (!ui.isDisabled()) {
+            instance.carousel.navigateRight();
+         }
+      });
+   },
+   
+   _bindListener : function () {
+
+      var ui = main.getUI(),
+         state = ui.getState(),
+         tools = ui.getTools(),
+         controls = ui.getControls(),
+         authorized = main.getClientState().isAdmin(),
+         photo,
+         instance = this;
+      
+      //bind events on anchors
+      instance.$inner
+         .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
+            var $el = $(this);
+            
+            if (!ui.isDisabled()) {
+               
+               photo = $.grep(state.getPhotos(), function (e, i) {
+                  return e.thumb === $el.attr("src");
+               })[0];
+               state.setCurrentPhoto(photo);
+               
+               if (authorized) {
+                  controls.setModifyPhoto(true);
+                  controls.getEditControls().showPhotoControls($el);
+               }
+            }
+         })
+         .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
+            var $el = $(this);
+            
+            if (!ui.isDisabled()) {
+            
+               if (authorized) {
+                  controls.getEditControls().hide(true);
+               }
+            }
+         });
+      
+      
+   },
+   /**
+    * @private
+    * @description binds listener to custom event "slideshowChanged" which is triggered each time the slideshow is updated. In case the current image in
+    * the slideshow is not visible in the gallery anymore the gallery-carousel has to be updated as well!
+    */
+   _bindSlideshowNavigationListener : function () {
+      
+      var instance = this;
+      
+      $("#mp-content").on("slideshowChanged", function () {
+         instance._checkSlider();
+      });
+   },
+   /**
+    * @private
+    */
+   _bindStartSlideshowListener : function () {
+      
+      var ui = main.getUI(),
+         instance = this;
+      
+      this.$inner
+         .on('click.Gallery', ".mp-gallery-tile", function (event) {
+            
+            var $el = $(this).children();
+            
+            if (!ui.isDisabled()) {
+               ui.getControls().getEditControls().hide(false);
+               ui.getSlideshow().navigateTo(instance._getIndexOfImage($el));
+            }
+         });
+   },
+
+   /** FULL_GALLERY_START */
    startFullGallery : function () {
       var photos, $container, instance = this;
       photos = main.getUIState().getPhotos();
@@ -179,115 +312,6 @@ UIGallery.prototype =  {
       }
    },
    /**
-    * @description appends any number (1->Inf) of thumbnails to gallery (hidden)
-    */
-   appendImages : function (sources) {
-      
-      var instance = this,
-         images = this.$hidden.find("img"),
-         data = [],
-         tmplData = [],
-         i;
-      
-      images.each(function () {
-         
-         data.push($(this).attr("src"));
-      });
-      
-      for (i = 0; i <= sources.length; i++) {
-         
-         if (i === sources.length) {
-            
-            if (tmplData.length > 0) {
-               
-               this.$hidden.append(
-                  $.jqote('#hiddenPhotosTmpl', {
-                     sources: tmplData
-                  })
-               );
-            }
-         } else {
-            if ($.inArray(sources[i], data) === -1) {
-               tmplData.push(sources[i]);
-            }
-         }
-      }
-   },
-  /**
-   * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
-   */
-   start : function () {
-      
-      var ui = main.getUI(),
-         state = ui.getState(),
-         photos = state.getPhotos(),
-         options,
-         instance = this;
-      
-      // reset FullGallery
-      this.destroyFullGallery();
-      
-      if (photos && photos.length !== 0) {
-         
-         // disable ui while loading & show loader
-         state.setAlbumLoading(true);
-         ui.disable();
-         ui.showLoading();
-         
-         photos.forEach(function (photo, index) {
-            if (photo !== undefined) {
-               instance.imageSources.push(photo.thumb);
-            }
-         });
-         // initialize and start carousel
-         options = {
-            lazy : !main.getClientState().isAdmin(),
-            effect : "foldIn",
-            onLoad : this._load
-         };
-         this.carousel = new UICarousel(this.$inner, this.imageSources, options);
-         this.carousel.start();
-         
-         this.isStarted = true;
-      
-      }
-   },
-   reset : function () {
-      
-      this.isStarted = false;
-      if (this.carousel !== null) {
-         this.carousel.reset();
-         this.carousel = null;
-      }
-      this.imageSources = [];
-   },
-   /**
-    * @private
-    * @description handler is called after gallery-thumbs are loaded
-    */
-   _load : function () {
-      var ui = main.getUI(),
-         gallery = ui.getGallery(),
-         state = ui.getState();
-      
-      //enable ui
-      state.setAlbumLoading(false);
-      ui.enable();
-      
-      // append loaded images to gallery (hidden)
-      gallery.appendImages(gallery.getCarousel().getLoadedData());
-      
-      // hide loader
-      ui.hideLoading();
-   },
-   /**
-    * @private
-    */
-   _navigateToLastPage : function () {
-      
-      this.carousel.navigateTo("end");
-   },
-   /**
     * @private
     */
    _initializeSortable : function () {
@@ -325,101 +349,5 @@ UIGallery.prototype =  {
             }
          });
    },
-   
-   /* ---- Listeners ---- */
-   
-   _bindNavigationListener : function () {
-      
-      var disabled = main.getUI().isDisabled(),
-         instance = this;
-      
-      this.$navLeft.on("click", function () {
-         
-         if (!disabled) {
-            instance.carousel.navigateLeft();
-         }
-      });
-      this.$navRight.on("click", function () {
-         
-         if (!disabled) {
-            instance.carousel.navigateRight();
-         }
-      });
-   },
-   
-   _bindListener : function () {
-
-      var ui = main.getUI(),
-         state = ui.getState(),
-         tools = ui.getTools(),
-         controls = ui.getControls(),
-         disabled = ui.isDisabled(),
-         authorized = main.getClientState().isAdmin(),
-         photo,
-         instance = this;
-      
-      //bind events on anchors
-      instance.$inner
-         .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
-            var $el = $(this);
-            
-            if (!disabled) {
-               
-               photo = $.grep(state.getPhotos(), function (e, i) {
-                  return e.thumb === $el.attr("src");
-               })[0];
-               state.setCurrentPhoto(photo);
-               
-               if (authorized) {
-                  controls.setModifyPhoto(true);
-                  controls.getEditControls().showPhotoControls($el);
-               }
-            }
-         })
-         .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
-            var $el = $(this);
-            
-            if (!disabled) {
-            
-               if (authorized) {
-                  controls.getEditControls().hide(true);
-               }
-            }
-         });
-      
-      
-   },
-   /**
-    * @private
-    * @description binds listener to custom event "slideshowChanged" which is triggered each time the slideshow is updated. In case the current image in
-    * the slideshow is not visible in the gallery anymore the gallery-carousel has to be updated as well!
-    */
-   _bindSlideshowNavigationListener : function () {
-      
-      var instance = this;
-      
-      $("#mp-content").on("slideshowChanged", function () {
-         instance._checkSlider();
-      });
-   },
-   /**
-    * @private
-    */
-   _bindStartSlideshowListener : function () {
-      
-      var ui = main.getUI(),
-         instance = this;
-      
-      this.$inner
-         .on('click.Gallery', ".mp-gallery-tile", function (event) {
-            
-            var $el = $(this).children();
-            
-            if (!ui.isDisabled()) {
-               ui.getControls().getEditControls().hide(false);
-               ui.getSlideshow().navigateTo(instance.getImageIndex($el));
-            }
-         });
-   }
 
 };
