@@ -66,7 +66,7 @@ UIInput.prototype = {
             buttons : [
                {
                   id: "mp-dialog-button-yes",
-                  text : gettext("NO"),
+                  text : gettext("YES"),
                   click : function () {
                      instance._submitForm();
                      return true;
@@ -74,7 +74,7 @@ UIInput.prototype = {
                },
                {
                   id : "mp-dialog-button-no",
-                  text : gettext("YES"),
+                  text : gettext("NO"),
                   click : function (event) {
                      $(this).dialog("close");
                      return false;

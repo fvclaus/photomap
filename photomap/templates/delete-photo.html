@@ -5,7 +5,7 @@
 {% block title %}{% trans "DELETE_PHOTO" %}{% endblock %}
   
 {% block content %}
-<form class="jquery-validator mp-dialog" action="/delete-photo" method="post">
+<form class="mp-dialog-content" action="/delete-photo" method="post">
   <input type="hidden" name="id" required="required"/>
 </form>
 <div>{% trans "DELETE_PHOTO_QUESTION" %}</div>
