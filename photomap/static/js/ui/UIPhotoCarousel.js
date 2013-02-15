@@ -16,9 +16,8 @@ var UIPhotoCarousel = function ($photos, imageSources, options) {
    
    this.defaults = {
       lazy : false,
-      effect: "fade",
-      onLoad : null,
-      onUpdate : null 
+      effect : "fade",
+      context : this,
    };
    this.options = $.extend({}, this.defaults, options);
    
@@ -70,14 +69,14 @@ UIPhotoCarousel.prototype = {
             // if there is a load-handler specified in the options, execute it first
             if (typeof instance.options.afterLoad === "function") {
                //TODO call with elements loaded
-               instance.options.afterLoad(instance.$items.slice(from));
+               instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from));
             }
             instance._update(from);
          }
       };
       if (typeof this.options.beforeLoad === "function") {
          //TODO call with elements loaded
-         this.options.beforeLoad(this.$items.slice(from));
+         this.options.beforeLoad.call(this.options.context, this.$items.slice(from));
       }
       nSources = imageSources.length;
 
@@ -127,7 +126,7 @@ UIPhotoCarousel.prototype = {
             }
             // execute onUpdate handler if defined in options
             if (instance.options.onUpdate) {
-               instance.options.onUpdate();
+               instance.options.onUpdate.call(instance.options.context);
             }
       }, duration);
    },

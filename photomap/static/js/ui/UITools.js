@@ -214,9 +214,6 @@ UITools.prototype = {
       return this._getUrlParameter("id");
    },
 
-   getUrlSecret : function () {
-      return this._getUrlParameter("secret");
-   },
    /**
     * @description get the last object with specified key-value-pair in any array of objects
     */

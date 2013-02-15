@@ -19,6 +19,7 @@ UIInformation = function () {
    this.$descriptionTitle = $(".mp-description-title");
    this.$fullDescription = $(".mp-full-description-body");
    this.$fullDescriptionTitle = $(".mp-full-description-title");
+   this.noDescription = $("#mp-description-no-description").html();
 };
 
 UIInformation.prototype = {
@@ -31,18 +32,24 @@ UIInformation.prototype = {
          this.$fullDescriptionTitle.text(title);
       }
    },
-   _setDescription : function (description) {
+   _setDescription : function (fullDescription) {
       
-      var text;
-      if (description !== null) {
-         text = main.getUI().getTools().cutText(description, 350);
-
-         this.$description.html(text);
-         this.$fullDescription.html(description);
-         if (text.length < description.length) {
-            this.$description.append("<span class='mp-control mp-cursor-pointer mp-open-full-description'> [...]</span>");
-         }
+      var description;
+      // the description is null (what the db says), the description is "" (what $description.val() says)
+      if (fullDescription !== null && fullDescription !== "") {
+         description = main.getUI().getTools().cutText(fullDescription, 350);
       }
+      else{
+         description = this.noDescription;
+         fullDescription = this.noDescription;
+      }
+      this.$description.html(description);
+      this.$fullDescription.html(fullDescription);
+
+      if (description.length < fullDescription.length) {
+         this.$description.append("<span class='mp-control mp-cursor-pointer mp-open-full-description'> [...]</span>");
+      }
+
    },
    removeDescription : function () {
       this.$descriptionTitle.empty();

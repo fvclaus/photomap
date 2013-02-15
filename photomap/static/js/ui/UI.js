@@ -186,9 +186,7 @@ UI.prototype = {
       $("body, a, .mp-logo img").css("cursor", "");
    },
    disable : function () {
-      
-
-      var models = (this.state.isAlbumView())? this.state.getPlaces() : this.state.getAlbums();
+      var models = this._getModels();
 
       this._isDisabled = true;
       models.forEach(function (model) {
@@ -209,13 +207,12 @@ UI.prototype = {
       return this._isDisabled;
    },
    enable : function () {
+      var models = this._getModels();
 
-      var albums;
-      albums = main.getUIState().getAlbums();
       this._isDisabled = false;
-      albums.forEach(function (album) {
-         album.checkIconStatus();
-         album.setCursor("");
+      models.forEach(function (model) {
+         model.checkIconStatus();
+         model.setCursor("");
       });
       $("a, .mp-control").css({
 //         opacity: 1,
@@ -223,5 +220,8 @@ UI.prototype = {
       });
       $("a").off(".Disabled");
       main.getMap().enable();
-   }
+   },
+   _getModels : function () {
+      return (this.state.isAlbumView())? this.state.getPlaces() : this.state.getAlbums();
+   },
 };

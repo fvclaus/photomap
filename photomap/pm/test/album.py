@@ -155,6 +155,7 @@ class AlbumControllerTest(ApiTestCase):
             
             for photo in photos:
                 self.assertPhotoComplete(photo)
+                self.assertTrue(photo["description"] is None)
                 
         #=======================================================================
         # something invalid

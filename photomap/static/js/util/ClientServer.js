@@ -107,9 +107,6 @@ ClientServer.prototype = {
       data = {
          'id' : tools.getUrlId()
       };
-      if (tools.getUrlSecret() !== null) {
-         data.secret = tools.getUrlSecret();
-      }
 
       $.ajax({
          "url" : "get-album",
@@ -119,9 +116,9 @@ ClientServer.prototype = {
             var places, place;
 
             // set current album in UIState to have access on it for information, etc.
-            main.getUIState().setCurrentLoadedAlbum(albuminfo);
-            // set album title in title-bar
-            main.getUI().getInformation().updateAlbumTitle();
+            main.getUIState().setCurrentLoadedAlbum(new Album(albuminfo));
+            // set album title & description
+            main.getUI().getInformation().updateAlbum();
 
             // in case there are no places yet show map around album marker
             if (!albuminfo.places || (albuminfo.places === null) || (albuminfo.places.length === 0)) {

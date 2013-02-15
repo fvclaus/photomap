@@ -41,14 +41,11 @@ UIGallery.prototype =  {
       this._bindStartSlideshowListener();
       this._bindSlideshowNavigationListener();
    },
-   getImageBySource : function (source) {
-      return this.$inner.find("img[src='" + source + "']");
+   triggerClickOnPhoto : function (photo) {
+      this.$photo.find("[src='" + photo.thumb + "']").trigger("click");
    },
    _getIndexOfImage : function ($image) {
       return this.carousel.getAllImageSources().indexOf($image.attr("src"));
-   },
-   getCarousel : function () {
-      return this.carousel;
    },
    _getIndexOfFirstThumbnail : function () {
       return this._getIndexOfImage(this.$photos.first());
@@ -121,7 +118,8 @@ UIGallery.prototype =  {
          lazy : !main.getClientState().isAdmin(),
          effect : "foldIn",
          beforeLoad : this._beforeLoad,
-         afterLoad : this._afterLoad
+         afterLoad : this._afterLoad,
+         context : this
       };
       photos.forEach(function (photo, index) {
          imageSources.push(photo.thumb);
@@ -149,10 +147,6 @@ UIGallery.prototype =  {
     * @description handler is called after gallery-thumbs are loaded
     */
    _beforeLoad : function ($photos) {
-      var ui = main.getUI();
-      
-      //enable ui
-      ui.enable();
       //TODO show loading
       $photos.each(function () {
          $(this)
@@ -170,12 +164,14 @@ UIGallery.prototype =  {
             .siblings(".mp-gallery-loader")
             .hide();
       });
+      var ui = main.getUI();
+      //enable ui
+      ui.enable();
    },
    /**
     * @private
     */
    _navigateToLastPage : function () {
-      
       this.carousel.navigateTo("end");
    },
 

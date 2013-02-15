@@ -32,12 +32,6 @@ UISlideshow.prototype = {
       this._bindNavigationListener();
       this._bindStartFullscreenListener();
    },
-   getCarousel : function () {
-      return this.carousel;
-   },
-   getFullscreen : function () {
-      return this.fullscreen;
-   },
    insertPhoto : function (photo) {
       // this is an unfortunate annoyance, but the gallery can be started without the slideshow
       // therefore we need to check if the gallery is started on an insert photo event
@@ -75,9 +69,10 @@ UISlideshow.prototype = {
       options = {
          lazy : true,
          effect : "fade",
-         beforeLoad : instance._beforeLoad,
-         afterLoad : instance._afterLoad,
-         onUpdate : instance._update
+         beforeLoad : this._beforeLoad,
+         afterLoad : this._afterLoad,
+         onUpdate : this._update,
+         context : this
       };
       photos.forEach(function (photo, index) {
          imageSources.push(photo.photo);
@@ -116,13 +111,9 @@ UISlideshow.prototype = {
     * @description handler is called after slideshow-image is displayed
     */
    _update : function () {
-      var ui = main.getUI(),
-         description = ui.getInformation(),
-         slideshow = ui.getSlideshow();
-   
-      slideshow.updateCurrentLoadedPhoto();
-      slideshow.getFullscreen().update();
-      description.updatePhoto();
+      this.updateCurrentLoadedPhoto();
+      this.fullscreen.update();
+      main.getUI().getInformation().updatePhoto();
       $("#mp-content").trigger("slideshowChanged");
    },
    /**
@@ -130,11 +121,6 @@ UISlideshow.prototype = {
     * @description handler is called after slideshow-image is loaded
     */
    _beforeLoad : function ($photos) {
-      
-      // var ui = main.getUI(),
-      //    state = ui.getState(),
-      //    description = ui.getInformation(),
-      //    slideshow = ui.getSlideshow();
       $photos.each(function () {
          $(this)
             .hide()

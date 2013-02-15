@@ -16,7 +16,7 @@ Photo = function (data, index) {
    this.photo = data.photo;
    this.thumb = data.thumb;
    this.title = data.title;
-   this.description = data.description;
+   this.description = data.description || null;
    this.id = data.id;
    this.order = data.order;
    this.visited = main.getClientState().isVisitedPhoto(this.id);
@@ -41,12 +41,8 @@ Photo.prototype = {
       this.openPhoto();
    },
    openPhoto : function () {
-      var $thumb = main.getUI().getGallery().getImageBySource(this.thumb);
       main.getUIState().setCurrentLoadedPhoto(this);
-      if ($thumb.length === 0) {
-         throw new Error("Photo must always have a $thumb");
-      }
-      $thumb.trigger("click");
+      main.getUI().getGallery().triggerClickOnPhoto(this);
    }
 };
 

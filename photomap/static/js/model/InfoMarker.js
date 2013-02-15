@@ -15,7 +15,7 @@ InfoMarker = function (data) {
    this.model = data.model;
    this.title = data.title;
    this.id = data.id;
-   this.description = data.description;
+   this.description = data.description || null;
    this.lat = data.lat;
    this.lng = data.lon;
 
