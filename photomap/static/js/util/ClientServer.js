@@ -112,31 +112,38 @@ ClientServer.prototype = {
          "url" : "get-album",
          "data" : data,
          success: function (albuminfo) {
-
             var places, place;
 
-            // set current album in UIState to have access on it for information, etc.
-            main.getUIState().setCurrentLoadedAlbum(new Album(albuminfo));
-            // set album title & description
-            main.getUI().getInformation().updateAlbum();
+            if (albuminfo.success) {
 
-            // in case there are no places yet show map around album marker
-            if (!albuminfo.places || (albuminfo.places === null) || (albuminfo.places.length === 0)) {
-               main.getMap().expandBounds(albuminfo);
-               main.initAfterAjax();
-               return;
+               // set current album in UIState to have access on it for information, etc.
+               main.getUIState().setCurrentLoadedAlbum(new Album(albuminfo));
+               // set album title & description
+               main.getUI().getInformation().updateAlbum();
+
+               // in case there are no places yet show map around album marker
+               if (!albuminfo.places || (albuminfo.places === null) || (albuminfo.places.length === 0)) {
+                  main.getMap().expandBounds(albuminfo);
+                  main.initAfterAjax();
+                  return;
+               }
+
+               places = [];
+
+               albuminfo.places.forEach(function (placeinfo) {
+                  place = new Place(placeinfo);
+                  places.push(place);
+               });
+               // add to UIState
+               main.getUIState().setPlaces(places);
+
+               instance._showPlaces(places);
+            } else {
+               alert("Could not show album with id "+ data.id+". Error: "+ albuminfo.error);
             }
-
-            places = [];
-
-            albuminfo.places.forEach(function (placeinfo) {
-               place = new Place(placeinfo);
-               places.push(place);
-            });
-            // add to UIState
-            main.getUIState().setPlaces(places);
-
-            instance._showPlaces(places);
+         },
+         error : function () {
+            alert("A network error occurred. Please try again later.");
          }
       });
 
