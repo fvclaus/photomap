@@ -19,6 +19,7 @@ UIGallery = function () {
    this.$thumbs = $(".mp-gallery-tile");
    this.$navLeft = $("#mp-gallery-nav-left");
    this.$navRight = $("#mp-gallery-nav-right");
+   this.$photos = this.$thumbs.find(".mp-thumb");
    
    this.carousel = null;
    
@@ -50,10 +51,10 @@ UIGallery.prototype =  {
       return this.carousel;
    },
    _getIndexOfFirstThumbnail : function () {
-      return this._getIndexOfImage(this.$thumbs.first().children());
+      return this._getIndexOfImage(this.$photos.first());
    },
    _getIndexOfLastThumbnail : function () {
-      return this._getIndexOfImage(this.$thumbs.find("img[src!=]").last());
+      return this._getIndexOfImage(this.$photos.filter(":[src]").last());
    },
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
@@ -119,18 +120,19 @@ UIGallery.prototype =  {
       options = {
          lazy : !main.getClientState().isAdmin(),
          effect : "foldIn",
-         onLoad : this._load
+         beforeLoad : this._beforeLoad,
+         afterLoad : this._afterLoad
       };
       photos.forEach(function (photo, index) {
          imageSources.push(photo.thumb);
       });
-      this.carousel = new UIPhotoCarousel(this.$inner, imageSources, options);
+      this.carousel = new UIPhotoCarousel(this.$inner.find("img.mp-thumb"), imageSources, options);
       
       if (photos.length !== 0) {
          // disable ui while loading & show loader
          state.setAlbumLoading(true);
          ui.disable();
-         ui.showLoading();
+         // ui.showLoading();
          this.carousel.start();
       }
    },
@@ -146,14 +148,28 @@ UIGallery.prototype =  {
     * @private
     * @description handler is called after gallery-thumbs are loaded
     */
-   _load : function () {
+   _beforeLoad : function ($photos) {
       var ui = main.getUI();
       
       //enable ui
       ui.enable();
-      
+      //TODO show loading
+      $photos.each(function () {
+         $(this)
+            .hide()
+            .siblings(".mp-gallery-loader")
+            .show();
+      });
       // hide loader
-      ui.hideLoading();
+      // ui.hideLoading();
+   },
+   _afterLoad : function ($photos) {
+      //TODO hide loading
+      $photos.each(function () {
+         $(this)
+            .siblings(".mp-gallery-loader")
+            .hide();
+      });
    },
    /**
     * @private

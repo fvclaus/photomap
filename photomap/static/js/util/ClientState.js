@@ -98,5 +98,46 @@ ClientState.prototype = {
       
       this.usedSpace =  main.getUI().getTools().bytesToMbyte($.cookie("used_space"));
       main.getUI().getInformation().updateUsedSpace();
+   },
+   write : function (ns, key, value){
+      var data = $.cookie(ns);
+
+      if (data === null) {
+         console.log("Ns %s does not exist. Creating a new one", ns);
+         data = {};
+      }
+
+      data[key] = value;
+
+      try{
+         data = JSON.stringify(data);
+      } catch (stringifyError) {
+         console.log("Could not stringify value %s. Reiceved error %s.", value, stringifyError.toString());
+         return;
+      }
+      
+      console.log("Storing value %s in key %s in ns %s", value, key, ns);
+      $.cookie(ns, data, this._cookieSettings);
+   },
+   read : function (ns, key, defaultValue) {
+      var data = $.cookie(ns);
+      
+      try{
+         data = JSON.parse(data);
+      } catch (parseError) {
+         console.log("Ns %s seems to have invalid data %s.", ns, data);
+         return defaultValue;
+      }
+      
+      if (data === null) {
+         console.log("Ns %s does not exist returing defaultValue %s", ns, defaultValue);
+         return defaultValue;
+      }
+      
+      if (data[key] !== undefined) {
+         return data[key];
+      } else {
+         return defaultValue;
+      }
    }
 };

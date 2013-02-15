@@ -6,109 +6,98 @@
 {% block title %}{% trans "Albumsansicht" %}{% endblock %}
 
 {% block css %}
-	<link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl" />
+<link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl" />
 {% endblock %}
 
 {% block js_interactive %}
-
-
-
-	<script type="text/javascript" src="/static/js/main/view-album.js" ></script>
-
+<script type="text/javascript" src="/static/js/main/view-album.js" ></script>
 {% endblock %}
 
 {% block options %}
 {% endblock %}
 
 {% block slideshow/??? %}
-	<section class="mp-slideshow" id="mp-slideshow">
-     <div class="mp-nodisplay" id="mp-slideshow-photos">
-     </div>
-     <div class="mp-slideshow-nav column">
-	    <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-prev" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}' />
-     </div>
-     <div class="mp-slideshow-inner column" id="mp-slideshow-inner">
-	    <div class="mp-slideshow-tile" id="mp-slideshow-image-wrapper">
-	      <img class="mp-slideshow-image mp-control mp-zoom" id="mp-slideshow-image" src=""/>
-         <div class="mp-slideshow-no-image-msg">{% trans "Please choose a photo in your gallery to start the slideshow." %}</div>
-	    </div>
-     </div>
-     <div class="mp-slideshow-nav column">
-   	 <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-next" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}' />
-     </div>
-	  <div class="mp-slideshow-info column">
-       <!-- {% trans "Bild" %} -->
-       <span class="mp-image-number"><!-- 0/0 --></span>
-     </div>
-	</section>
-   <section class="mp-fullscreen" id="mp-fullscreen">
-	  <img class="mp-dark-loader" src="/static/images/dark-loader.gif" />
-	  <img class="mp-image-zoom" src="/static/images/zoom.png" />
-     <header class="mp-fullscreen-header" id="mp-fullscreen-header">
-       <div class="mp-fullscreen-nav">
-		   <img class="mp-fullscreen-nav-prev mp-cursor-pointer mp-control" id="mp-fullscreen-nav-prev" src="/static/images/image-arrow-left.png" />
-       </div>
-       <div class="mp-fullscreen-title-wrapper">
-	      <h2 id="mp-fullscreen-title"></h2>
-       </div>
-       <div class="mp-fullscreen-nav">
-			<img class="mp-fullscreen-nav-next mp-cursor-pointer mp-control" id="mp-fullscreen-nav-next" src="/static/images/image-arrow-right.png" />
-       </div>
-		 <div class="mp-fullscreen-close-wrapper">
-			<img class="mp-fullscreen-close mp-cursor-pointer mp-control" id="mp-fullscreen-close" src="/static/images/close.png" />
-		 </div>
-     </header>
- 	  <div class="mp-fullscreen-main" id="mp-fullscreen-main">
-       <div class="mp-fullscreen-image-wrapper" id="mp-fullscreen-image-wrapper">
-         <img id="mp-fullscreen-image" src="" />
-       </div>
-       <div class="mp-fullscreen-image-description" id="mp-fullscreen-image-description">
-       </div>
-     </div>
-   </section>
+<section class="mp-slideshow" id="mp-slideshow">
+  <div class="mp-nodisplay" id="mp-slideshow-photos">
+  </div>
+  <div class="mp-slideshow-nav column">
+    <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-prev" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}' />
+  </div>
+  <div class="mp-slideshow-inner column" id="mp-slideshow-inner">
+    <div class="mp-slideshow-tile" id="mp-slideshow-image-wrapper">
+      <img class="mp-slideshow-image mp-control mp-zoom" id="mp-slideshow-image" src=""/>
+      <img class="mp-slideshow-loader mp-nodisplay" src="/static/images/light-loader.gif" />
+      <div class="mp-slideshow-no-image-msg">{% trans "Please choose a photo in your gallery to start the slideshow." %}</div>
+    </div>
+  </div>
+  <div class="mp-slideshow-nav column">
+    <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-next" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}' />
+  </div>
+  <div class="mp-slideshow-info column">
+    <!-- {% trans "Bild" %} -->
+    <span class="mp-image-number"><!-- 0/0 --></span>
+  </div>
+</section>
+<section class="mp-fullscreen" id="mp-fullscreen">
+  <img class="mp-dark-loader" src="/static/images/dark-loader.gif" />
+  <img class="mp-image-zoom" src="/static/images/zoom.png" />
+  <header class="mp-fullscreen-header" id="mp-fullscreen-header">
+    <div class="mp-fullscreen-nav">
+      <img class="mp-fullscreen-nav-prev mp-cursor-pointer mp-control" id="mp-fullscreen-nav-prev" src="/static/images/image-arrow-left.png" />
+    </div>
+    <div class="mp-fullscreen-title-wrapper">
+      <h2 id="mp-fullscreen-title"></h2>
+    </div>
+    <div class="mp-fullscreen-nav">
+      <img class="mp-fullscreen-nav-next mp-cursor-pointer mp-control" id="mp-fullscreen-nav-next" src="/static/images/image-arrow-right.png" />
+    </div>
+    <div class="mp-fullscreen-close-wrapper">
+      <img class="mp-fullscreen-close mp-cursor-pointer mp-control" id="mp-fullscreen-close" src="/static/images/close.png" />
+    </div>
+  </header>
+  <div class="mp-fullscreen-main" id="mp-fullscreen-main">
+    <div class="mp-fullscreen-image-wrapper" id="mp-fullscreen-image-wrapper">
+      <img id="mp-fullscreen-image" src="" />
+    </div>
+    <div class="mp-fullscreen-image-description" id="mp-fullscreen-image-description">
+    </div>
+  </div>
+</section>
 {% endblock %}
 {% block gallery/news-feed %}
-	<section class="mp-gallery" id="mp-gallery">
-     <div class="mp-nodisplay" id="mp-gallery-thumbs">
-     </div>
-     <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
-       <span>
-         <img class="mp-cursor-pointer mp-control" id="mp-gallery-nav-left" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}' />
-       </span>
-       {% if user.is_authenticated %}
-       <span>
-         <img class="mp-open-full-gallery mp-cursor-pointer mp-control" src="/static/images/openEdit.png" title='{% trans "Open Full Gallery" %}'/>
-       </span>
-       {% endif %}
-     </div>
-     <div class="mp-gallery-inner column" id="mp-gallery-inner">
-       <div class="mp-gallery-tile">
-	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
-       </div>
-       <div class="mp-gallery-tile">
-	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
-       </div>
-       <div class="mp-gallery-tile">
-	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
-       </div>
-       <div class="mp-gallery-tile">
-	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
-       </div>
-       <div class="mp-gallery-tile">
-	      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
-       </div>
-      </div>
-      <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
-        <span>
-          <img class="mp-cursor-pointer mp-control" id="mp-gallery-nav-right" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}' />
-		  </span>
-        {% if user.is_authenticated %}
-        <span>
-          <img class="mp-option-insert-photo mp-cursor-pointer mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}' />
-        </span>
-        {% endif %}
-      </div>
-	</section>
+<section class="mp-gallery" id="mp-gallery">
+  <div class="mp-nodisplay" id="mp-gallery-thumbs">
+  </div>
+  <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
+    <span>
+      <img class="mp-cursor-pointer mp-control" id="mp-gallery-nav-left" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}' />
+    </span>
+    {% if user.is_authenticated %}
+    <span>
+      <img class="mp-open-full-gallery mp-cursor-pointer mp-control" src="/static/images/openEdit.png" title='{% trans "Open Full Gallery" %}'/>
+    </span>
+    {% endif %}
+  </div>
+  <div class="mp-gallery-inner column" id="mp-gallery-inner">
+    <!-- loop exactly 5 times. this iterates through every character of the string -->
+    {% for index in "12345" %}
+    <div class="mp-gallery-tile">
+      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
+      <img class="mp-gallery-loader mp-nodisplay" src="/static/images/light-loader.gif" />
+    </div>
+    {% endfor %}
+  </div>
+  <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
+    <span>
+      <img class="mp-cursor-pointer mp-control" id="mp-gallery-nav-right" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}' />
+    </span>
+    {% if user.is_authenticated %}
+    <span>
+      <img class="mp-option-insert-photo mp-cursor-pointer mp-control" src="/static/images/add.png" title='{% trans "Add Image" %}' />
+    </span>
+    {% endif %}
+  </div>
+</section>
 {% endblock %}
 
 

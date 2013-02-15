@@ -75,13 +75,14 @@ UISlideshow.prototype = {
       options = {
          lazy : true,
          effect : "fade",
-         onLoad : instance._load,
+         beforeLoad : instance._beforeLoad,
+         afterLoad : instance._afterLoad,
          onUpdate : instance._update
       };
       photos.forEach(function (photo, index) {
          imageSources.push(photo.photo);
       });
-      this.carousel = new UIPhotoCarousel(this.$inner, imageSources, options);
+      this.carousel = new UIPhotoCarousel(this.$inner.find("img.mp-slideshow-image"), imageSources, options);
       
       if (photos.length !== 0) {
          $(".mp-slideshow-no-image-msg").hide();
@@ -128,13 +129,27 @@ UISlideshow.prototype = {
     * @private
     * @description handler is called after slideshow-image is loaded
     */
-   _load : function () {
+   _beforeLoad : function ($photos) {
       
       // var ui = main.getUI(),
       //    state = ui.getState(),
       //    description = ui.getInformation(),
       //    slideshow = ui.getSlideshow();
+      $photos.each(function () {
+         $(this)
+            .hide()
+            .siblings(".mp-slideshow-loader")
+            .show();
+      });
 
+   },
+   _afterLoad : function ($photos) {
+      //TODO hide loading again
+      $photos.each(function () {
+         $(this)
+            .siblings(".mp-slideshow-loader")
+            .hide();
+      });
    },
    updateCurrentLoadedPhoto : function () {
       

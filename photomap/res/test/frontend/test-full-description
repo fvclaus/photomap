@@ -98,12 +98,12 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=input[type=&quot;submit&quot;]</td>
+	<td>css=#mp-dialog-button-save</td>
 	<td>submit</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=form.mp-dialog</td>
+	<td>css=form.mp-dialog-content</td>
 	<td>inputForm</td>
 </tr>
 <tr>

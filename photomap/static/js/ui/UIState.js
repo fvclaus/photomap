@@ -11,6 +11,7 @@
 var UIState;
 
 UIState = function () {
+   this._NS = "UIState";
    this.currentPhoto = null;
    this.currentLoadedPhoto = null;
    this.currentPlace = null;
@@ -23,7 +24,6 @@ UIState = function () {
    this.albumLoaded = false;
    this.fontSize = null;
    this.fullscreen = null;
-   this.dialogAutoClose = false;
    //PAGE_MAPPING is defined in constants.js
    this.page = PAGE_MAPPING[window.location.pathname];
    this.data = {};
@@ -163,12 +163,20 @@ UIState.prototype = {
    isFullscreen : function (bool) {
       return this.fullscreen;
    },
-
    getDialogAutoClose : function () {
+      if (this.dialogAutoClose === undefined){
+         this.dialogAutoClose = main.getClientState().read(this._NS, "dialogAutoClose", false);
+      }
       return this.dialogAutoClose;
    },
    setDialogAutoClose : function (autoClose) {
       this.dialogAutoClose = autoClose;
+      main.getClientState().write(this._NS, "dialogAutoClose", autoClose);
+   },
+   _save : function () {
+      main.getClientState().writeCookie(this._COOKIE_KEY, {
+         dialogAutoClose : this.dialogAutoClose
+      });
    },
    /**
     * @description Provides a simple method to store variables temporarily

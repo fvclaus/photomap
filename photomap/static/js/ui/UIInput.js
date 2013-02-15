@@ -88,6 +88,7 @@ UIInput.prototype = {
          this.$dialog.dialog("option", {
             buttons : [
                {
+                  id : "mp-dialog-button-save",
                   text : gettext("SAVE"),
                   click : function () {
                      instance._submitForm();
@@ -185,7 +186,7 @@ UIInput.prototype = {
       var instance = this,
           $widget = this.$dialog.dialog("widget"),
           $form = $widget.find("form.mp-dialog-content"),
-          $buttons = $form.find("button, input[type='submit']").add("#mp-dialog-button-yes, #mp-dialog-button-no"),
+          $buttons = $form.find("button, input[type='submit']").add("#mp-dialog-button-yes, #mp-dialog-button-no", "#mp-dialog-button-save"),
           message = new UIInputMessage($("#mp-dialog-message"));
       
 

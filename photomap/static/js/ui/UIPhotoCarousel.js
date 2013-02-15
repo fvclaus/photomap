@@ -10,7 +10,7 @@
  */
 
    
-var UIPhotoCarousel = function ($el, imageSources, options) {
+var UIPhotoCarousel = function ($photos, imageSources, options) {
    
    // make a deep copy of the imageSources so that the original aray won't get modified
    
@@ -22,8 +22,7 @@ var UIPhotoCarousel = function ($el, imageSources, options) {
    };
    this.options = $.extend({}, this.defaults, options);
    
-   this.$root = $el;
-   this.$items = $el.find("img");
+   this.$items = $photos;
    this.size = this.$items.length;
 
    this.dataPage = new CarouselPage(imageSources, this.size);
@@ -69,12 +68,17 @@ UIPhotoCarousel.prototype = {
 
          if (loaded === nSources) {
             // if there is a load-handler specified in the options, execute it first
-            if (typeof instance.options.onLoad === "function") {
-               instance.options.onLoad();
+            if (typeof instance.options.afterLoad === "function") {
+               //TODO call with elements loaded
+               instance.options.afterLoad(instance.$items.slice(from));
             }
             instance._update(from);
          }
       };
+      if (typeof this.options.beforeLoad === "function") {
+         //TODO call with elements loaded
+         this.options.beforeLoad(this.$items.slice(from));
+      }
       nSources = imageSources.length;
 
       for (i = 0; i < nSources; i++) {
