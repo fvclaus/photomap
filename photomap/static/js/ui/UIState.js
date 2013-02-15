@@ -62,7 +62,8 @@ UIState.prototype = {
       return this.currentLoadedPhoto;
    },
    insertPhoto : function (photo) {
-      this.photos.push(photo);
+      //TODO photos are inserted twice. Once in the place which uses setPhotos and then again her
+      // this.photos.push(photo);
    },
    deletePhoto : function (photo) {
       this.photos = this.photos.filter(function (element, index) {

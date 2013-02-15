@@ -39,6 +39,9 @@ UISlideshow.prototype = {
       if (this.isStarted){
          // does not move to the new photo, because photo cant be on current page
          this.carousel.insertPhoto(photo.photo);
+         // update the photo counter
+         this.updateCurrentLoadedPhoto();
+         main.getUI().getInformation().updatePhoto();
       }
    },
    deletePhoto : function (photo) {
@@ -48,6 +51,7 @@ UISlideshow.prototype = {
          this.carousel.deletePhoto(photo.photo);
          // update the photo counter
          this.updateCurrentLoadedPhoto();
+         main.getUI().getInformation().updatePhoto();
       }
    },
    /**
@@ -144,9 +148,11 @@ UISlideshow.prototype = {
          photos = state.getPhotos(),
          currentPhoto = ui.getTools().getObjectByKey("photo", this.$image.attr("src"), photos),
          currentIndex = $.inArray(currentPhoto, photos);
-      
-      state.setCurrentLoadedPhoto(currentPhoto);
-      state.setCurrentLoadedPhotoIndex(currentIndex);
+
+      if (currentPhoto !== null) {
+         state.setCurrentLoadedPhoto(currentPhoto);
+         state.setCurrentLoadedPhotoIndex(currentIndex);
+      }
    },
    navigateLeft : function () {
       this.$navLeft.trigger("click");

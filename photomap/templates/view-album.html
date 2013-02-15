@@ -82,7 +82,8 @@
     <!-- loop exactly 5 times. this iterates through every character of the string -->
     {% for index in "12345" %}
     <div class="mp-gallery-tile">
-      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
+      <!-- hide img tag while page loads. mp-nodisplay is overwritten by mp-thumb -->
+      <img class="mp-thumb mp-cursor-pointer mp-control" style="display : none;" src="" />
       <img class="mp-gallery-loader mp-nodisplay" src="/static/images/light-loader.gif" />
     </div>
     {% endfor %}

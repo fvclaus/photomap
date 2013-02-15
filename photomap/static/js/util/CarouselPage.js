@@ -12,7 +12,6 @@
 var CarouselPage  = function (entries, entriesPerPage) {
    
    this._createPages(entries, entriesPerPage);
-   this.currentPage = this.getFirstPage();
    this.entries = $.extend(true, [], entries);
    this.entriesPerPage = entriesPerPage;
 };
@@ -79,7 +78,7 @@ CarouselPage.prototype = {
    },
    deleteEntry : function (entry) {
       var index = this.entries.indexOf(entry);
-      this.entries.splice(index, index);
+      this.entries.splice(index, 1);
       this._createPages(this.entries, this.entriesPerPage);
       //the current page does not exist anymore. go back one
       if (this.pages[this.currentPageIndex] === undefined){
@@ -94,14 +93,15 @@ CarouselPage.prototype = {
     * @private
     */
    _setCurrentPage : function (index) {
+      //TODO setting currentPage is prone to error when we update the pages Array. Only store currentPageIndex
       if (this.pages[index] === undefined){
          throw new Error("Page "+index+" is undefined");
       }
       this.currentPageIndex = index;
-      this.currentPage = this.pages[index];
    },
    getCurrentPage : function () {
-      return this.currentPage;
+      this._setCurrentPage(this.currentPageIndex);
+      return this.pages[this.currentPageIndex];
    },
    /**
     * @private
@@ -124,17 +124,17 @@ CarouselPage.prototype = {
     */
    getPage : function (index) {
       this._setCurrentPage(index);
-      return this.currentPage;
+      return this.getCurrentPage();
    },
    
    getFirstPage : function () {
       this._setCurrentPage(0);
-      return this.currentPage;
+      return this.getCurrentPage();
    },
    
    getLastPage : function () {
       this._setCurrentPage(this.pages.length - 1);
-      return this.currentPage;
+      return this.getCurrentPage();
    },
    
    getNextPage : function () {
@@ -142,7 +142,7 @@ CarouselPage.prototype = {
          return this.getFirstPage();
       } else {
          this._setCurrentPage(this.currentPageIndex + 1);
-         return this.currentPage;
+         return this.getCurrentPage();
       }
    },
    
@@ -151,10 +151,13 @@ CarouselPage.prototype = {
          return this.getLastPage();
       } else {
          this._setCurrentPage(this.currentPageIndex - 1);
-         return this.currentPage;
+         return this.getCurrentPage();
       }
    },
    getAllEntries : function () {
       return $.extend(true, [], this.entries);
+   },
+   getIndexOfEntry : function (entry) {
+      return this.entries.indexOf(entry);
    }
 };

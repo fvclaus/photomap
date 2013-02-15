@@ -219,7 +219,7 @@ UITools.prototype = {
     */
    getObjectByKey : function (key, value, array) {
       
-      var result;
+      var result = null;
       
       array.forEach(function (object, index) {
          if (object[key] === value) {

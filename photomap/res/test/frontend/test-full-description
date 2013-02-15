@@ -193,7 +193,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=button.mp-confirm-delete</td>
+	<td>css=#mp-dialog-button-yes</td>
 	<td>confirmDelete</td>
 </tr>
 <tr>

@@ -69,25 +69,30 @@ UIPhotoCarousel.prototype = {
             // if there is a load-handler specified in the options, execute it first
             if (typeof instance.options.afterLoad === "function") {
                //TODO call with elements loaded
-               instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from));
+               instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, nSources));
             }
-            instance._update(from);
+            instance._update(from, nSources);
          }
       };
-      if (typeof this.options.beforeLoad === "function") {
-         //TODO call with elements loaded
-         this.options.beforeLoad.call(this.options.context, this.$items.slice(from));
-      }
       nSources = imageSources.length;
+
+      if (typeof this.options.beforeLoad === "function") {
+         //TODO nSources is not the last index but the length
+         this.options.beforeLoad.call(this.options.context, this.$items.slice(from, nSources));
+      }
+      
+      if (nSources === 0){
+         if (typeof this.options.afterLoad === "function") {
+            instance.options.afterLoad.call(instance.options.context, $());
+         }
+      }
 
       for (i = 0; i < nSources; i++) {
          source = imageSources[i];
 
-         if (source !== null) {
-            $('<img/>')
-               .load(loadHandler)
-               .attr('src', source);
-         }
+         $('<img/>')
+            .load(loadHandler)
+            .attr('src', source);
       }
 
    },
@@ -95,10 +100,10 @@ UIPhotoCarousel.prototype = {
     * @description Updates carousel to show current page.
     * @param {int} from: The index of the first photo that gets updated. Default is 0
     */
-   _update : function (from) {
+   _update : function (from, to) {
       
       var showNew, instance = this, duration, imageSource,
-          $items = this.$items.slice(from);
+          $items = this.$items.slice(from, to);
       
       // remove mp-animate classes
       $items.removeClass("mp-animate-02s mp-animate-08s");
@@ -118,7 +123,7 @@ UIPhotoCarousel.prototype = {
                if ( imageSource !== null) {
                   $(this).fadeTo(duration, 1).attr("src", imageSource);
                } else {
-                  $(this).fadeOut(0).attr("src", imageSource);
+                  $(this).fadeOut(0).removeAttr("src");
                }
             });
             if (instance.options.effect === "foldIn") {
@@ -150,24 +155,25 @@ UIPhotoCarousel.prototype = {
       console.log("Adding new photo "+imageSource+" to Carousel");
       // update page
       this.dataPage.insertEntry(imageSource);
+      var from = this.dataPage.getIndexOfEntry(imageSource);
      
       // Did we insert on the current page? Then we need to update it
       if (this.isLastPage()){
-         console.log("New photo is inserted on current page. Reload current page.");
+         console.log("New photo is inserted on current page. Reload current page from index %d.", from);
          this.currentPage = this.dataPage.getCurrentPage();
-         //TODO only update the picture inserted
-         this._load();
+         this._load(from);
       }
    },
    deletePhoto : function (imageSource) {
 
       var instance = this, 
-          from = this.dataPage.getCurrentPage().indexOf(imageSource);
+          from = this.dataPage.getCurrentPage().indexOf(imageSource),
+          oldPage = this.dataPage.getCurrentPage();
 
       this.dataPage.deleteEntry(imageSource);
 
       // Did we delete on the current page?
-      if (this.isStarted) {
+      if ($.inArray(imageSource, oldPage) !== -1) {
          this.$items
             .filter("img[src='" + imageSource + "']")
             .fadeOut(500, function () {

@@ -288,13 +288,13 @@ UIMap.prototype = {
 
       var lowerLatLng, upperLatLng, newBounds;
 
-      if (instance.model === undefined) {
-         lat = instance.lat;
-         lng = instance.lon;
-      } else {
+      // if (instance.model === undefined) {
+      //    lat = instance.lat;
+      //    lng = instance.lon;
+      // } else {
          lat = instance.getLat();
          lng = instance.getLng();
-      }
+      // }
       lowerLatLng = new google.maps.LatLng(lat - 0.2, lng - 0.2);
       upperLatLng = new google.maps.LatLng(lat + 0.2, lng + 0.2);
       newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);

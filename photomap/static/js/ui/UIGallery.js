@@ -51,7 +51,14 @@ UIGallery.prototype =  {
       return this._getIndexOfImage(this.$photos.first());
    },
    _getIndexOfLastThumbnail : function () {
-      return this._getIndexOfImage(this.$photos.filter(":[src]").last());
+      //this does not work with a simple selector
+      var $photo = this.$photos.first();
+      this.$photos.each(function (photoIndex) {
+         if ($(this).attr("src")){
+            $photo = $(this);
+         }
+      });
+      return this._getIndexOfImage($photo);
    },
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
@@ -80,7 +87,7 @@ UIGallery.prototype =  {
       // navigate to the picture if we are not on the last page
       if (this.isStarted && !this.carousel.isLastPage()) {
          this._navigateToLastPage();
-      } else {
+      } else if (!this.isStarted) {
          // show the new photo
          //TODO this does now show the new photo yet
          this.start();
@@ -126,13 +133,12 @@ UIGallery.prototype =  {
       });
       this.carousel = new UIPhotoCarousel(this.$inner.find("img.mp-thumb"), imageSources, options);
       
-      if (photos.length !== 0) {
-         // disable ui while loading & show loader
-         state.setAlbumLoading(true);
-         ui.disable();
-         // ui.showLoading();
-         this.carousel.start();
-      }
+
+      // disable ui while loading & show loader
+      state.setAlbumLoading(true);
+      ui.disable();
+      // ui.showLoading();
+      this.carousel.start();
    },
    reset : function () {
       

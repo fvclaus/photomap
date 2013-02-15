@@ -112,18 +112,19 @@ ClientServer.prototype = {
          "url" : "get-album",
          "data" : data,
          success: function (albuminfo) {
-            var places, place;
 
             if (albuminfo.success) {
-
+               var places, place,
+                   album = new Album(albuminfo);
+               
                // set current album in UIState to have access on it for information, etc.
-               main.getUIState().setCurrentLoadedAlbum(new Album(albuminfo));
+               main.getUIState().setCurrentLoadedAlbum(album);
                // set album title & description
                main.getUI().getInformation().updateAlbum();
 
                // in case there are no places yet show map around album marker
                if (!albuminfo.places || (albuminfo.places === null) || (albuminfo.places.length === 0)) {
-                  main.getMap().expandBounds(albuminfo);
+                  main.getMap().expandBounds(album);
                   main.initAfterAjax();
                   return;
                }

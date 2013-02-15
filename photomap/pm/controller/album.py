@@ -133,7 +133,7 @@ def get(request):
             else:
                 data["isOwner"] = False
                 
-            album.success = True
+            data["success"] = True
                 
             logger.debug("--------------------------------ALBUM %d--------------------------------------" % album.pk) 
             logger.debug("%s", json.dumps(data, cls = DecimalEncoder, indent = 4))
