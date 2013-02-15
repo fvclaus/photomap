@@ -10,7 +10,7 @@
   width 60%
   height 75%
   position absolute
-  z-index -100
+  z-index -100 //hide behind map
 
 .mp-dialog-content
   .mp-button
@@ -24,61 +24,19 @@
     width 75%
 
 div.mp-dialog-content
-  display inline-block
+  display inline-block //strech dialog background to full height
 
 #mp-dialog-message
   clear both
 
-.mp-inline-block
-  display inline-block
-
 .error
  border 4px solid red
-
-#confirm-delete,    
-#input-dialog
-  background-color #CCC
-  border 2px solid black
-  display none
-  min-width 400px
-  min-height 400px
   
 .mp-form-error
   z-index -1
   display inline
   position absolute
 
-#confirm-delete
-  text-align center
-  button
-    margin 10px
 
 /* ------- end input forms ------ */
 
-/* ------------------------------ */
-/* ----- album share styling ---- */
-
-#mp-share
-  display none
-  background-color #eee
-  width 80%
-  min-height 100px
-  z-index 100
-  padding 25px
-  border 2px solid #333
-  opacity 0.9
-  border-radius 25px
-  box-shadow 0 0 50px #ccc
-  .close
-    background-image url(/images/close.png)
-    position absolute 
-    right -15px 
-    top -15px 
-    cursor pointer 
-    height 35px
-    width 35px
-
-.mp-copy-button
-  margin-left 5px
-
-/* ------ end album share ------ */
