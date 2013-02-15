@@ -159,10 +159,10 @@
 .mp-fullscreen-nav,
 .mp-fullscreen-close
   width 10%
-  height 100%
+  // height 100%
   float left
   img
-    max-height 95%
+    height 95% // we need to scale all icons even behind their native resolution
     max-width 95%
 
 .mp-fullscreen-title-wrapper
@@ -180,33 +180,34 @@
   text-align center
 
 .mp-fullscreen-image-wrapper
-  width 59%
+  width 98%
   height 91%
-  max-width 59%
+  max-width 98%
   max-height 91%
-  border $border-light
-  margin 2% 0 1% 5%
+  margin 2% 1% 1% 1%
   position relative
   float left
   overflow hidden
 
-.mp-fullscreen-image
+#mp-fullscreen-image
   max-width 100%
   max-height 100%
+  border $border-light
+
 
 .mp-fixed-position
   left 0 !important
 
-.mp-fullscreen-image-description
-  width 19%
-  height 91%
-  padding 0 5%
-  border $border-light
-  border-left none
-  margin 2% 5% 1% 0
-  float left
-  z-index 1202
-  color $font-color-inverse
+// .mp-fullscreen-image-description
+//   width 19%
+//   height 91%
+//   padding 0 5%
+//   border $border-light
+//   border-left none
+//   margin 2% 5% 1% 0
+//   float left
+//   z-index 1202
+//   color $font-color-inverse
 
 .mp-image-overlay-wrapper
   border $border-light
