@@ -22,6 +22,10 @@ parser.add_argument("--production",
                     default = False,
                     action = "store_true",
                     help = "Use production instead of development scheme.")
+parser.add_argument("--reset",
+                    default = False,
+                    action = "store_true",
+                    help = "Do not drop and create all tables. This saves time.")
 
 parser = parser.parse_args()
 
@@ -108,11 +112,15 @@ def sync_db():
     print sub.check_output(SYNCDB)
     
 def delete_user():
-    p = sub.Popen(SHELL, stdin = sub.PIPE, stdout = sub.PIPE)
-    print "Deleting all Users..."
-    p.stdin.write("from django.contrib.auth.models import User\n")
-    p.communicate("User.objects.all().delete()\n")
-    print "Done. Closing shell."
+    print "Dropping all entries..."
+    from django.contrib.auth.models import User
+    User.objects.all().delete()
+    print "Done."
+#    p = sub.Popen(SHELL, stdin = sub.PIPE, stdout = sub.PIPE)
+#    print "Deleting all Users..."
+#    p.stdin.write("from django.contrib.auth.models import User\n")
+#    p.communicate("User.objects.all().delete()\n")
+#    print "Done. Closing shell."
     
 def load_user():
     print sub.check_output(LOAD_USER)
@@ -147,9 +155,12 @@ def load_production_data():
     print sub.check_output(LOAD_DEMO_DATA)
     
     
+if parser.reset:
+    drop_db()
+    sync_db()
+# instead of settings up the whole db, drop all users
+# this should trigger a delete_cascade on Album, Place & Photo    
 
-drop_db()
-sync_db()
 delete_user()
 load_user()
 if not parser.production:
