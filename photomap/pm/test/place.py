@@ -97,6 +97,7 @@ class PlaceControllerTest(ApiTestCase):
 #        assert on delete cascade
         for photo in photos:
             self.assertPhotoDeleted(photo)
+        self.assertEqual(self.user.userprofile.used_space, 164898)
         #=======================================================================
         # not yours
         #=======================================================================

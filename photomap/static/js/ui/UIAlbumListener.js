@@ -59,7 +59,7 @@ UIAlbumListener.prototype = {
             $("input[name='id']").val(album.id);
          },
          success : function () {
-            main.getUI().deleteAlbum(album.id);
+            main.getUI().deleteAlbum(album);
          },
          url : "/delete-album",
          context : this

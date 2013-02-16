@@ -41,7 +41,6 @@ UIPhotoListener.prototype = {
             },
             success : function (data) {
                main.getUI().insertPhoto(data);
-               main.getClientState().updateUsedSpace();
             },
             url : "/insert-photo",
             context : this

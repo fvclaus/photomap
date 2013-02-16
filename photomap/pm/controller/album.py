@@ -18,6 +18,7 @@ from pm.test import data
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
+from pm.controller import set_cookie, update_used_space
 from pm.exception import OSMException
 
 from pm.osm import reversegecode
@@ -203,9 +204,16 @@ def delete(request):
             id = int(request.POST["id"])
             logger.info("User %d is trying to delete Album %d." % (request.user.pk, id))
             album = Album.objects.get(user = request.user, pk = id)
+            size = 0
+            for place in Place.objects.filter(album = album):
+                for photo in Photo.objects.filter(place = place):
+                    size += photo.size
             album.delete()
+            used_space = update_used_space(request.user, -1 * size)
             logger.info("Album %d deleted." % id)
-            return success()
+            response =  success()
+            set_cookie(response, "used_space", used_space)
+            return response
         except (KeyError, Album.DoesNotExist), e:
             logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))

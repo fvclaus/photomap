@@ -12,6 +12,7 @@ from pm.model.place import Place
 from pm.model.photo import Photo
 from pm.controller.authentication import is_authorized
 import logging
+from pm.controller import set_cookie, update_used_space
 import os
 from django.contrib.auth.decorators import login_required
 
@@ -70,9 +71,15 @@ def delete(request):
             if not is_authorized(place, request.user):
                 logger.warn("User %d not authorized to delete Place %d. Aborting." % (request.user.pk, id))
                 return error("not your place")
-            logger.info("Place %d deleted." % id)
-            place.delete()    
-            return success()
+            size = 0
+            for photo in Photo.objects.filter(place = place):
+                size += photo.size
+            used_space = update_used_space(request.user, -1 * size)
+            place.delete()
+            logger.info("Place %d deleted." % id)    
+            response = success()
+            set_cookie(response, "used_space", used_space)
+            return response
         except (OSError, Place.DoesNotExist), e:
             return error(str(e))
     else:

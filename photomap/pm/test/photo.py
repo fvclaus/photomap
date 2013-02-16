@@ -32,7 +32,7 @@ class PhotoControllerTest(ApiTestCase):
         photo = (photo.pk, photo.getphotourl(), photo.getthumburl())
         self.assertDeletes({"id" : 1})
         self.assertPhotoDeleted(photo)
-        self.assertEqual(self.user.userprofile.used_space, 0)
+        self.assertEqual(self.user.userprofile.used_space, 164898)
         #=======================================================================
         # delete something that does not exist
         #=======================================================================
@@ -63,7 +63,7 @@ class PhotoControllerTest(ApiTestCase):
         self.assertPublicAccess(content["url"])
         self.assertThumbSize(content["thumb"])
         self.assertEqual(photo.size, self._get_photo_size())
-        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
+        self.assertEqual(self.user.userprofile.used_space, 3 * self._get_photo_size())
         #=======================================================================
         # insert something valid with description
         #=======================================================================
@@ -75,7 +75,7 @@ class PhotoControllerTest(ApiTestCase):
         self.assertEqual(photo.size, self._get_photo_size())
         self.assertPublicAccess(content["url"])
         self.assertThumbSize(content["thumb"])
-        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
+        self.assertEqual(self.user.userprofile.used_space, 3 * self._get_photo_size())
         #=======================================================================
         # try to upload over the limit
         #=======================================================================
@@ -122,7 +122,7 @@ class PhotoControllerTest(ApiTestCase):
                 "order" : 1}
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.title, data["title"])
-        self.assertEqual(self.user.userprofile.used_space, self._get_photo_size())
+        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
         #=======================================================================
         # with description
         #=======================================================================

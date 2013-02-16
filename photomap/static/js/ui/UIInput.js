@@ -213,6 +213,8 @@ UIInput.prototype = {
                   } else {
                      message.showSuccess();
                   }
+                  // so we don't forget :)
+                  main.getClientState().updateUsedSpace();
                },
                error : function (error) {
                   // instance.close();

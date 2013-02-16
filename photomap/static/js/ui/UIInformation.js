@@ -163,6 +163,6 @@ UIInformation.prototype = {
       used = main.getClientState().getUsedSpace();
       total = main.getClientState().getQuota();
       
-      $(".mp-limit").text(used + "/" + total + " MB");
+      $("#mp-user-limit").text(used + "/" + total + " MB");
    }
 };

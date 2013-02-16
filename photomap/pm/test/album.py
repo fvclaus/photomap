@@ -46,6 +46,8 @@ class AlbumControllerTest(ApiTestCase):
         
         for photo in photos:
             self.assertPhotoDeleted(photo)
+            
+        self.assertEqual(self.user.userprofile.used_space, 0)
         
         #=======================================================================
         # delete something that does not exist

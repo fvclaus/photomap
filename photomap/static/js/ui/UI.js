@@ -142,7 +142,7 @@ UI.prototype = {
    /**
     * @description Propagates the addAlbum event to every UI component affected.
     */
-   addAlbum : function (lat, lon, data) {
+   insertAlbum : function (lat, lon, data) {
       
       //create new album and show marker
       var album = new Album({
@@ -162,15 +162,13 @@ UI.prototype = {
    /**
     * @description Removes album fully from ui.
     */
-   removeAlbum : function (id) {
-      
-      var album = this.getTools().getObjectByKey("id", id, this.getState().getAlbums());
+   deleteAlbum : function (album) {
       
       if (album === this.getState().getCurrentLoadedAlbum()) {
          this.getInformation().removeDescription();
       }
       album.hide();
-      this.getState().removeAlbum(album);
+      this.getState().deleteAlbum(album);
    },
    // loader should (maybe) be placed over the ui-element which is currently loading.
    // loader is sometimes called twice in a row (slideshow.navigate followed by gallery.checkslider)

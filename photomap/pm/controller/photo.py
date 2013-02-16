@@ -10,7 +10,7 @@ from django.shortcuts import render_to_response
 from pm.model.photo import Photo
 from pm.util.s3 import getbucket
 from pm.controller.authentication import is_authorized
-from pm.controller import set_cookie
+from pm.controller import set_cookie, update_used_space
 
 from message import success, error 
 from pm.form.photo import PhotoInsertForm, PhotoUpdateForm, PhotoCheckForm
@@ -174,14 +174,12 @@ def delete(request):
             if not is_authorized(photo, request.user):
                 logger.warn("User %s not authorized to delete Photo %d. Aborting." % (request.user, id))
                 return error("not your photo")
-            userprofile = request.user.userprofile
-            logger.debug("Removing space %d used by image from userprofile." % photo.size)
-            userprofile.used_space -= photo.size
-            userprofile.save()
+            
+            used_space = update_used_space(request.user, -1 * photo.size)
             logger.info("Photo %d deleted." % id)
             photo.delete()
             response =  success()
-            set_cookie(response, "used_space", userprofile.used_space)
+            set_cookie(response, "used_space", used_space)
             return response
         except (KeyError, Photo.DoesNotExist), e:
             logger.warn("Something unexpected happened: %s" % str(e))
