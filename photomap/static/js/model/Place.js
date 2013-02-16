@@ -79,7 +79,7 @@ Place.prototype._bindListener = function () {
    
    this.addListener("click", function () {
       
-      if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
+      if (!main.getUI().isDisabled()) {
          state.setCurrentPlace(instance);
          information.updatePlace();
       }
@@ -92,7 +92,7 @@ Place.prototype._bindListener = function () {
 
       var map, oldPlace;
 
-      if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
+      if (!main.getUI().isDisabled()) {
          //TODO confer Album.js. This does also not work during Place creation, because the UI is disabled
          instance.openPlace();
       }
