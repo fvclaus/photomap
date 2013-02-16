@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 16:07+0100\n"
+"POT-Creation-Date: 2013-02-16 16:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,23 +16,19 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base-interactive.html:63 templates/base-interactive.html.py:79
+#: templates/base-interactive.html:63 templates/base-interactive.html.py:80
 msgid "Schließen"
 msgstr "Close"
 
-#: templates/base-interactive.html:88
-msgid "Es ist noch kein Album ausgewählt!"
-msgstr "No album selected"
-
-#: templates/base-interactive.html:100
+#: templates/base-interactive.html:106
 msgid "Data Loading"
 msgstr "The requested data is now loading. Please be patient!"
 
-#: templates/base-interactive.html:106
+#: templates/base-interactive.html:112
 msgid "control-title delete"
 msgstr "Delete"
 
-#: templates/base-interactive.html:107
+#: templates/base-interactive.html:113
 msgid "control-title modify"
 msgstr "Edit"
 
@@ -232,7 +228,7 @@ msgstr "Delete Album?"
 
 #: templates/delete-album.html:11
 msgid "DELETE_ALBUM_QUESTION"
-msgstr "Do you really want to delete this Album?"
+msgstr "Do you really want to delete Album "
 
 #: templates/delete-photo.html:5
 msgid "DELETE_PHOTO"
@@ -240,7 +236,7 @@ msgstr "Delete Photo?"
 
 #: templates/delete-photo.html:11
 msgid "DELETE_PHOTO_QUESTION"
-msgstr "Do you really want to delete this Photo?"
+msgstr "Do you really want to delete Photo "
 
 #: templates/delete-place.html:5
 msgid "DELETE_PLACE"
@@ -248,7 +244,7 @@ msgstr "Delete Place?"
 
 #: templates/delete-place.html:11
 msgid "DELETE_PLACE_QUESTION"
-msgstr "Do you really want to delete this Place?"
+msgstr "Do you really want to delete Place "
 
 #: templates/help.html:8
 msgid "Hilfe und Support"
@@ -963,37 +959,40 @@ msgstr "Update Photo"
 msgid "UPDATE_PLACE"
 msgstr "Update Place"
 
-#: templates/view-album.html:28
+#: templates/view-album.html:24
 msgid "Previous Image"
 msgstr "Previous Image"
 
-#: templates/view-album.html:33
+#: templates/view-album.html:30
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr "Please choose a photo in your gallery to start the slideshow."
 
-#: templates/view-album.html:37
+#: templates/view-album.html:34
 msgid "Next Image"
 msgstr "Next Image"
 
-#: templates/view-album.html:40
+#: templates/view-album.html:37
 msgid "Bild"
 msgstr "Image"
 
-#: templates/view-album.html:76
+#: templates/view-album.html:74
 msgid "Previous Page"
 msgstr "Previous Page"
 
-#: templates/view-album.html:80
+#: templates/view-album.html:78
 msgid "Open Full Gallery"
 msgstr "Open Full Gallery"
 
-#: templates/view-album.html:103
+#: templates/view-album.html:94
 msgid "Next Page"
 msgstr "Next Page"
 
-#: templates/view-album.html:107
+#: templates/view-album.html:98
 msgid "Add Image"
 msgstr "Add Image"
+
+#~ msgid "Es ist noch kein Album ausgewählt!"
+#~ msgstr "No album selected"
 
 #~ msgid "Do you really want to delete"
 #~ msgstr "Do you really want to delete:"

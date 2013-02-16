@@ -186,7 +186,11 @@ UIInput.prototype = {
       var instance = this,
           $widget = this.$dialog.dialog("widget"),
           $form = $widget.find("form.mp-dialog-content"),
-          $buttons = $form.find("button, input[type='submit']").add("#mp-dialog-button-yes, #mp-dialog-button-no", "#mp-dialog-button-save"),
+          $buttons = $form
+             .find("button, input[type='submit']")
+             .add($("#mp-dialog-button-yes"))
+             .add($("#mp-dialog-button-no"))
+             .add($("#mp-dialog-button-save")),
           message = new UIInputMessage($("#mp-dialog-message"));
       
 

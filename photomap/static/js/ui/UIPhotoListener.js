@@ -126,6 +126,7 @@ UIPhotoListener.prototype = {
          type : UIInput.CONFIRM_DIALOG,
          load : function () {
             $("input[name='id']").val(photo.id);
+            $("span#mp-dialog-photo-title").text(photo.title+"?");
          },
          success : function (data) {
             main.getUI().deletePhoto(photo);

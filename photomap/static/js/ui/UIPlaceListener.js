@@ -61,6 +61,7 @@ UIPlaceListener.prototype = {
          type : UIInput.CONFIRM_DIALOG,
          load : function () {
             $("input[name='id']").val(place.id);
+            $("span#mp-dialog-place-title").text(place.title+"?");
          },
          success : function () {
             main.getUI().deletePlace(place);

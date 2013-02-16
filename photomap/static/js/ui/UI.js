@@ -122,7 +122,6 @@ UI.prototype = {
             description : state.retrieve(TEMP_DESCRIPTION_KEY)
          });
       state.getCurrentLoadedPlace().insertPhoto(photo);
-      state.insertPhoto(photo);
       this.getGallery().insertPhoto(photo);
       this.getSlideshow().insertPhoto(photo);
    },
@@ -137,7 +136,7 @@ UI.prototype = {
       }
       this.getSlideshow().deletePhoto(photo);
       this.getGallery().deletePhoto(photo);
-      this.getState().deletePhoto(photo);
+      this.getState().getCurrentLoadedPlace().deletePhoto(photo);
    },
    /**
     * @description Propagates the addAlbum event to every UI component affected.

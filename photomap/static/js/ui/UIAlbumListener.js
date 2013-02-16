@@ -46,7 +46,7 @@ UIAlbumListener.prototype = {
             instance.state.store(TEMP_DESCRIPTION_KEY, description);
          },
          success : function (data){
-            main.getUI().addAlbum(event.lat, event.lng, data);
+            main.getUI().insertAlbum(event.lat, event.lng, data);
          },
          url : "/insert-album",
          context : this
@@ -57,6 +57,7 @@ UIAlbumListener.prototype = {
          type : UIInput.CONFIRM_DIALOG,
          load : function () {
             $("input[name='id']").val(album.id);
+            $("span#mp-dialog-album-title").text(album.title+"?");
          },
          success : function () {
             main.getUI().deleteAlbum(album);

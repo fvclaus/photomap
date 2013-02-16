@@ -33,8 +33,6 @@ Place = function (data) {
 Place.prototype = $.extend({},InfoMarker.prototype);
 
 Place.prototype._showGallery = function () {
-   // set photos of this place as current and start gallery
-   main.getUIState().setPhotos(this.photos);
    main.getUI().getGallery().start();
 };
 /**
@@ -42,6 +40,11 @@ Place.prototype._showGallery = function () {
  */
 Place.prototype.insertPhoto = function (photo) {
    this.photos.push(photo);
+};
+Place.prototype.deletePhoto = function (photo) {
+   this.photos = this.photos.filter(function (element, index) {
+      return element !== photo;
+   });
 };
 Place.prototype.sortPhotos = function () {
    // puts photos with order on the right position
@@ -79,7 +82,7 @@ Place.prototype._bindListener = function () {
    
    this.addListener("click", function () {
       
-      if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
+      if (!main.getUI().isDisabled()) {
          state.setCurrentPlace(instance);
          information.updatePlace();
       }
@@ -92,7 +95,7 @@ Place.prototype._bindListener = function () {
 
       var map, oldPlace;
 
-      if (!main.getUIState().isAlbumLoading() && !main.getUI().isDisabled()) {
+      if (!main.getUI().isDisabled()) {
          //TODO confer Album.js. This does also not work during Place creation, because the UI is disabled
          instance.openPlace();
       }

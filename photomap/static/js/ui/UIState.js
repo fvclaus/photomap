@@ -18,7 +18,6 @@ UIState = function () {
    this.currentLoadedPlace = null;
    this.currentAlbum = null;
    this.currentLoadedAlbum = null;
-   this.photos = [];
    this.places = [];
    this.albums = [];
    this.albumLoaded = false;
@@ -34,14 +33,14 @@ UIState.prototype = {
    //PHOTO---------------------------------------------------------------
    //--------------------------------------------------------------------
    setPhotos : function (photos) {
-      //TODO someone sets photos to null
-      if (photos === null) {
-         return;
-      }
-      this.photos = photos;
+      //TODO don't hold another reference to the photos array
+      // instead return from current Place
+      throw new Error("DoNotUseThisError");
    },
    getPhotos : function () {
-      return this.photos;
+      if (this.getCurrentLoadedPlace() !== null){
+         return this.getCurrentLoadedPlace().photos;
+      }
    },
    setCurrentLoadedPhotoIndex : function (index) {
       this.currentLoadedIndex = index;
@@ -63,12 +62,13 @@ UIState.prototype = {
    },
    insertPhoto : function (photo) {
       //TODO photos are inserted twice. Once in the place which uses setPhotos and then again her
-      // this.photos.push(photo);
+      // @see deletePhoto()
+      throw new Error("DoNotUseThisError");
+
    },
    deletePhoto : function (photo) {
-      this.photos = this.photos.filter(function (element, index) {
-         return element !== photo;
-      });
+      //TODO it is not our job to keep track of the photos. Place should do that instead
+      throw new Error("DoNotUseThisError");
    },
    //--------------------------------------------------------------------
    //PLACE---------------------------------------------------------------

@@ -1,4 +1,4 @@
-/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image, ERRORS, ALLOWED_UPLOAD_FILE_TYPES */
+/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image */
 
 "use strict";
 
@@ -63,17 +63,16 @@ UIPhotoEditor.prototype = {
     @description Takes files and checks them for validity.
     */
    checkFile : function (event) {
-      event.preventDefault();
-      event.stopPropagation();
+      // event.preventDefault();
+      // event.stopPropagation();
 
       var files = event.target.files;
 
       if (files.length > 1) {
-         alert(ERRORS.TOO_MANY_PHOTOS);
+         alert("Please select only one photo");
          return null;
-      } else if (!files[0].type || $.inArray(files[0].type, ALLOWED_UPLOAD_FILE_TYPES) < 0) {
-         // return if the file type is not allowed
-         alert(ERRORS.UNALLOWED_FILE_TYPE);
+      } else if (!files[0].type || $.inArray(files[0].type.toLowerCase(), ["image/jpeg", "image/png"]) === -1) {
+         alert("Extension "+ files[0].type+ " not allowed. Please select either PNG or JPEG files.");
          return null;
       }
 

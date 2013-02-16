@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-14 16:07+0100\n"
+"POT-Creation-Date: 2013-02-16 16:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,25 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:63 templates/base-interactive.html.py:79
+#: templates/base-interactive.html:63 templates/base-interactive.html.py:80
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:88
-msgid "Es ist noch kein Album ausgewählt!"
-msgstr "Es ist noch kein Album ausgewählt!"
-
-#: templates/base-interactive.html:100
+#: templates/base-interactive.html:106
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:106
+#: templates/base-interactive.html:112
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:107
+#: templates/base-interactive.html:113
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
@@ -1001,38 +997,41 @@ msgstr "Photo bearbeiten"
 msgid "UPDATE_PLACE"
 msgstr "Platz bearbeiten"
 
-#: templates/view-album.html:28
+#: templates/view-album.html:24
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: templates/view-album.html:33
+#: templates/view-album.html:30
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr ""
 "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
 
-#: templates/view-album.html:37
+#: templates/view-album.html:34
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: templates/view-album.html:40
+#: templates/view-album.html:37
 msgid "Bild"
 msgstr "Bild"
 
-#: templates/view-album.html:76
+#: templates/view-album.html:74
 msgid "Previous Page"
 msgstr "Vorherige Seite"
 
-#: templates/view-album.html:80
+#: templates/view-album.html:78
 msgid "Open Full Gallery"
 msgstr "Vollstädige Galerie öffnen"
 
-#: templates/view-album.html:103
+#: templates/view-album.html:94
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/view-album.html:107
+#: templates/view-album.html:98
 msgid "Add Image"
 msgstr "Bild hinzufügen"
+
+#~ msgid "Es ist noch kein Album ausgewählt!"
+#~ msgstr "Es ist noch kein Album ausgewählt!"
 
 #~ msgid "Do you really want to delete"
 #~ msgstr "Wollen Sie wirklich folgendes Objekt löschen: "
