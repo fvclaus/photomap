@@ -20,10 +20,11 @@
 .mp-full-column
   width 100%
   height 100%
-  position absolute
-  top 0
-  left 0
+  position relative // absolute is behind the map, unless z-index is specified. But: EditControls don't have z-index
+  // top 0 // top & left 0 are default values
+  // left 0
   background-color $background-color
+  //TODO mp-data is not a good name
   .mp-data
     width 100%
     height 90%

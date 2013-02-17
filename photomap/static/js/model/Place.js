@@ -53,6 +53,20 @@ Place.prototype.sortPhotos = function () {
          return photo.order - copy.order;
       });
 };
+/**
+ * @description Get a photo by src. Returns null if Photo with src not present
+ */
+Place.prototype.getPhoto = function (src) {
+   var photo = $.grep(this.photos, function (photo) {
+      return photo.photo === src;
+   });
+   if (photo.length === 0) {
+      return null;
+   } else {
+      return photo[0];
+   }
+};         
+   
 Place.prototype.checkIconStatus = function () {
    var status = true;
    this.photos.forEach(function (photo) {

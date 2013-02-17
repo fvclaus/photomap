@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, Album, Place */
+/*global $, main, Album, Place, Photo */
 
 "use strict";
 
@@ -71,11 +71,23 @@ ClientServer.prototype = {
       
       main.initAfterAjax();
    },
+   /**
+    * @description Updates the order of all Photos of a single place and notifies the Gallery. 
+    * The actual Photo objects will get updated, once the server sends a positive confirmation.
+    * @param {Array} photos Must be an array of plain objects with photo, id, title, order attributes.
+    * This must not an array of instances of Photos that are in use. 
+    */
    savePhotoOrder : function (photos) {
       
-      var place;
+      var index = 0,
+          nPhotos = photos.length,
+          place = main.getUIState().getCurrentLoadedPlace();
       
       photos.forEach(function (photo) {
+         if (photo instanceof Photo) {
+            throw new Error("Please only use plain objects. Do not use the 'real' Photos");
+         }
+         
          // post request for each photo with updated order
          $.ajax({
             url : "/update-photo",
@@ -85,14 +97,28 @@ ClientServer.prototype = {
                title : photo.title,
                order : photo.order
             },
-            success : function () {
-               place = main.getUIState().getCurrentLoadedPlace();
-               console.log("Success");
-               place.sortPhotos();
-               main.getUI().getGallery().setGalleryChanged(true);
+            success : function (response) {
+               if (response.success) {
+                  index += 1;
+                  // update the 'real' photo order
+                  // server might return an error, so we have to wait till the confirmation
+                  place.getPhoto(photo.photo).order = photo.order;
+
+                  console.log("Update order of photo %d successful.", index);
+
+                  if (index >= nPhotos){
+                     console.log("All Photos updated. Updating Gallery.");
+                     place.sortPhotos();
+                     //TODO we should also notice the Slideshow(!)
+                     main.getUI().getGallery().start();
+                  }
+               }
+               else {
+                  console.log("Update order of Photo %d failed. Error: %s", index, response.error);
+               }
             },
-            error : function (jqXHR, textStatus, errorThrown) {
-               alert("Status: " + textStatus + " Error: " + errorThrown);
+            error : function () {
+               alert("A network error occurred. Please try again later");
             }
          });
       });

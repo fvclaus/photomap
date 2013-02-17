@@ -79,20 +79,7 @@ UIControls.prototype = {
    },
 
    /* ---- Listeners ---- */
-   _bindFullGalleryListener : function () {
-      $(".mp-open-full-gallery").on("click", function (event) {
-         
-         if (!main.getUI().isDisabled() && main.getUIState().getPlaces().length !== 0) {
-            main.getUI().getGallery().showFullGallery();
-         }
-      });
-      $(".mp-close-full-left-column").on("click", function (event) {
-         
-         if (!main.getUI().isDisabled()) {
-            main.getUI().getGallery().hideFullGallery();
-         }
-      });
-   },
+
    _bindFullDescriptionListener : function () {
       $("#mp-description").on("click", ".mp-open-full-description", function (event) {
          
@@ -224,7 +211,6 @@ UIControls.prototype = {
       if (main.getUIState().isDashboardView()) {
          this.bindAlbumListener();
       } else if (main.getUIState().isAlbumView()) {
-         this._bindFullGalleryListener();
          this.bindInsertPhotoListener();
          this.bindPlaceListener();
       }
