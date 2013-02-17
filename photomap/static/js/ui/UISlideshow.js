@@ -125,7 +125,8 @@ UISlideshow.prototype = {
     * @description Navigates to given index; starts slideshow if carousel is not yet initialized
     */
    //TODO we should probably support navigateTo(photo) instead. 
-   // This will shorten the code in other places and provides a more consistend abstraction
+   // This will shorten the code in other places and provides a more consistend abstraction.
+   // All other public methods take photo as parameter.
    navigateTo : function (index) {
       
       if (!this.isStarted) {

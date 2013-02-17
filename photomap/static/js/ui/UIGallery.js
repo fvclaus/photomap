@@ -110,13 +110,17 @@ UIGallery.prototype =  {
          
    },
    /**
-    * @description removes image from gallery.
+    * @description Deletes an existing Photo. If the Photo was on the current page, fade it out and move all
+    * remaining Photos to the left. If Photo was the last Photo, show an empty page.
     */
    deletePhoto : function (photo) {
       // automatically delete if photo is on current page
       // otherwise we dont care
       this.carousel.deletePhoto(photo.thumb);
    },
+   /**
+    * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
+    */
    reset : function () {
       
       this.isStarted = false;

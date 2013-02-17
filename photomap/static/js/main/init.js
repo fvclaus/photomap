@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, Main */
+/*global $, Main, document */
 
 "use strict";
 
@@ -9,11 +9,6 @@
  *
  *
  * Copyright 2011 - 2012, Frederik Claus, Marc-Leon Römer
- * Original Code by Pedro Botelho
- *   Multi-level Photo Map -> http://www.codrops.com/
- *
- * Licensed under the MIT license.
- * http://www.opensource.org/licenses/mit-license.php
  *
  * Date: Dec 2011
  */

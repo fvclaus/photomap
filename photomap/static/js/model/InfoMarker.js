@@ -8,9 +8,7 @@
  * @class Base class for both Album and Place.
  */
 
-var InfoMarker;
-
-InfoMarker = function (data) {
+var InfoMarker = function (data) {
    
    this.model = data.model;
    this.title = data.title;
@@ -19,20 +17,10 @@ InfoMarker = function (data) {
    this.lat = data.lat;
    this.lng = data.lon;
 
-
-   // this.marker = main.getMap().createMarker({
-   //    lat : parseFloat(data.lat),
-   //    lng : parseFloat(data.lon),
-   //    title : this.title
-   // });
-   // this.marker = new Marker({
-   //    lat: parseFloat(data.lat),
-   //    lng: parseFloat(data.lon),
-   //    title: this.title
-   // }); 
    this.map = main.getMap();
-   //generate a new Marker from the Map object
+   // generate a new Marker from the Map object
    this.setImplementation(this.map.createMarker(data));
+   // show only when requested
    this.hide();
 
 };
@@ -40,19 +28,21 @@ InfoMarker = function (data) {
 InfoMarker.prototype = {
    /**
     * @public
-    * @description Shows the album on the map
+    * @description Shows the Marker on the Map
     */
    show : function () {
       this.map.showMarker(this);
    },
    /**
-    @public
+    * @public
+    * @description Hides the Marker on the Map
     */
    hide : function () {
       this.map.hideMarker(this);
    },
    /**
-    @public
+    * @public
+    * @description Centers the Map on the Marker
     */
    center : function () {
       this.map.center(this);
@@ -73,25 +63,38 @@ InfoMarker.prototype = {
       this.map.addListenerToMarker(this, event, callback);
    },
    /**
-    @private
-    @summary Used by the Map to set the used Marker instance
+    @public
+    @summary Used by the Map to get the Marker instance
     */
    getImplementation : function () {
       return this.MapMarker;
    },
    /**
-    @private
-    @summary Used by the Map to retrieve the used Marker instance
+    * @public
+    * @summary Used by the Map to set the Marker instance
+    * @param {MarkerClass} implementation Concrete implementation of a marker class, eg. google.maps.MapMarker
     */
    setImplementation : function (implementation) {
       this.MapMarker =  implementation;
    },
+   /**
+    * @public
+    * @returns {String} Name of this model
+    */
    getModel : function () {
       return this.model;
    },
+   /**
+    * @public
+    * @returns {float} Latitude
+    */
    getLat : function () {
       return this.lat;
    },
+   /**
+    * @public
+    * @returns {float} Longitude
+    */
    getLng : function () {
       return this.lng;
    },

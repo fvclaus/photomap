@@ -54,7 +54,8 @@ Place.prototype.sortPhotos = function () {
       });
 };
 /**
- * @description Get a photo by src. Returns null if Photo with src not present
+ * @description Get a photo by src
+ * @returns {Photo}  Photo with src present, else null
  */
 Place.prototype.getPhoto = function (src) {
    var photo = $.grep(this.photos, function (photo) {
@@ -68,14 +69,14 @@ Place.prototype.getPhoto = function (src) {
 };         
    
 Place.prototype.checkIconStatus = function () {
-   var status = true;
+   var visited = true;
    this.photos.forEach(function (photo) {
-      status = status && photo.visited;
+      visited = visited && photo.visited;
    });
 
-   if (main.getUIState().getCurrentPlace() === this) {
+   if (main.getUIState().getCurrentLoadedPlace() === this) {
       this.showSelectedIcon();
-   } else if (status) {
+   } else if (visited) {
       this.showVisitedIcon();
    } else {
       this.showUnselectedIcon();

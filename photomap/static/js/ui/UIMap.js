@@ -56,9 +56,10 @@ UIMap = function () {
 
 UIMap.prototype = {
    /**
-    @public
-    @summary Returns a object containing the absolute top and left position of the marker
-    @param {InfoMarker} element
+    * @public
+    * @summary Returns a object containing the absolute bottom and left position of the marker.
+    * @param {InfoMarker} element 
+    * @returns {Object} Containing the bottom and left coordinate as (!!)top(!!) and left attribute 
     */
    getPositionInPixel : function (element) {
       
@@ -88,9 +89,9 @@ UIMap.prototype = {
    },
 
    /**
-    @public
-    @summary This roughly implements a Factory pattern. Marker must only be instantiated through this method.
-    @returns {Marker}
+    * @public
+    * @summary This roughly implements a Factory pattern. google.maps.Marker must only be instantiated through this method.
+    * @returns {Marker}
     */
    createMarker : function (data) {
       if (!(data.lat && (data.lng || data.lon) && data.title)) {
@@ -105,8 +106,7 @@ UIMap.prototype = {
          throw new Error("lat or lng is not a float.");
       }
       // lng = parseFloat(lng);
-      
-      // marker = new Marker(data, this);
+
       gmarker =  new google.maps.Marker({
          position : new google.maps.LatLng(lat, lng),
          map : this.map,
@@ -117,8 +117,8 @@ UIMap.prototype = {
       return gmarker;
    },
    /**
-    @public
-    @param {Marker} marker
+    * @public
+    * @param {Marker} marker
     */
    hideMarker : function (marker) {
       // marker.getImplementation().setMap(null);
@@ -141,10 +141,10 @@ UIMap.prototype = {
       this.map.panTo(marker.getPosition());
    },
    /**
-    @public
-    @param {Marker} marker
-    @param {String} event
-    @param {Function} callback
+    * @public
+    * @param {Marker} marker
+    * @param {String} event
+    * @param {Function} callback
     */
    addListenerToMarker : function (marker, event, callback) {
       if (!(event && callback)) {
@@ -153,15 +153,15 @@ UIMap.prototype = {
       google.maps.event.addListener(marker.getImplementation(), event, callback);
    },
    /**
-    @public
-    @param {Marker} marker
+    * @public
+    * @param {Marker} marker
     */
    triggerClickOnMarker : function (marker) {
       this._triggerEventOnMarker(marker, "click");
    },
    /**
-    @public
-    @param {Marker} marker
+    * @public
+    * @param {Marker} marker
     */
    triggerDblClickOnMarker : function (marker) {
       this._triggerEventOnMarker(marker, "dblclick");
@@ -170,7 +170,7 @@ UIMap.prototype = {
       this._triggerEventOnMarker(marker, "mouseover");
    },
    /**
-    @private
+    * @private
     */
    _triggerEventOnMarker : function (marker, event) {
       google.maps.event.trigger(marker.getImplementation(), event);

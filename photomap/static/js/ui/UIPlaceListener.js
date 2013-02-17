@@ -70,10 +70,16 @@ UIPlaceListener.prototype = {
          context : this,
       });
    },
+   /**
+    * @public
+    * @desription Binds Listener to one Place or all Places to show the EditControls on MouseOver
+    * @param {Place} Place to bind the Listener to. If place is undefined, all places are used
+    */
    bindListener : function (place) {
-      var instance = this, places, state, 
+      var instance = this, 
+          places = null, 
+          state = main.getUIState(), 
           editControls = main.getUI().getControls().getEditControls();
-      state = main.getUIState();
       
       if (place !== undefined) {
          places = [place];
@@ -87,6 +93,8 @@ UIPlaceListener.prototype = {
             }
          });
          place.addListener("mouseout", function () {
+            // hide EditControls after a small timeout, when the EditControls are not entered
+            // the place is never seamlessly connected to a place, so we need to give the user some time
             editControls.hide(true);
          });
       });

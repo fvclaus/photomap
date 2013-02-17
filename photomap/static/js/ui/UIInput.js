@@ -15,6 +15,7 @@ $.extend($.ui.dialog.prototype.options, {
    modal: true,
    zIndex: 3000,
    draggable: false,
+   closeOnEscape : false
 });
 
 UIInput = function () {
@@ -131,23 +132,6 @@ UIInput.prototype = {
          // "heightStyle": "content"
       });
    },
-   /**
-    @public
-    @summary This is needed for testing the deletion of objects, because the confirm buttons cannot be queried in a reasonable fashion
-    */
-   confirmDelete : function () {
-      if (! this.$dialog.dialog("isOpen")){
-         throw new Error("the dialog is not even open!");
-      }
-      var instance = this;
-      this.$dialog.dialog("option", "buttons").forEach(function (button) {
-         //TODO the button text might change. There needs to be a better way to do that.
-         if (button.text === "Yes"){
-            //TODO it gets even uglier. now we need to call the click method and make sure 'this' is the dialog
-            button.click.apply(instance.$dialog.get(0));
-         }
-      });
-   },
    _wrapHtml : function (html) {
       var $wrapper = $("<div/>").css("display", "inline-block").html(html);
       $(".mp-content").append($wrapper);
@@ -186,11 +170,13 @@ UIInput.prototype = {
       var instance = this,
           $widget = this.$dialog.dialog("widget"),
           $form = $widget.find("form.mp-dialog-content"),
+          $close = $widget.find("ui-dialog-titlebar-close"),
           $buttons = $form
              .find("button, input[type='submit']")
              .add($("#mp-dialog-button-yes"))
              .add($("#mp-dialog-button-no"))
-             .add($("#mp-dialog-button-save")),
+             .add($("#mp-dialog-button-save"))
+             .add($close),
           message = new UIInputMessage($("#mp-dialog-message"));
       
 
@@ -216,6 +202,7 @@ UIInput.prototype = {
                      instance.close();
                   } else {
                      message.showSuccess();
+                     $close.button("enable");
                   }
                   // so we don't forget :)
                   main.getClientState().updateUsedSpace();

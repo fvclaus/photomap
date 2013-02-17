@@ -38,7 +38,7 @@ UIEditControls.prototype = {
 
    /**
     * @description Controls are instantiated once and are used for albums, places and photos
-    * @param {Object} center the bottom center of the element where the controls should be displayed
+    * @param {Object} center The bottom center of the element where the controls should be displayed
     * @private
     */
    _showMarkerControls : function (center) {
@@ -73,15 +73,15 @@ UIEditControls.prototype = {
 
 
    /**
-    * @description This is used as a callback to display the edit controls
+    * @description This is used to select the model the user wants to change and to show the controls
     * @param {Album,Place} instance
     * @private
     */
    show : function (element) {
       
-      var state, controls, projection, pixel, markerSize, mapOffset;
-      state = main.getUIState();
-      controls = main.getUI().getControls();
+      var state = main.getUIState(), 
+          controls = main.getUI().getControls(), 
+          projection, pixel, markerSize, mapOffset;
 
       if (element.getModel() === 'Album') {
          controls.setModifyAlbum(true);
@@ -90,17 +90,16 @@ UIEditControls.prototype = {
          controls.setModifyPlace(true);
          state.setCurrentPlace(element);
       } else {
-         alert("Unknown class: " + element);
-         return;
+         throw new Error("Element must be one of Place or Album");
       }
-
-      // gets the relative pixel position
+      // gets the absolute pixel position
       pixel = main.getMap().getPositionInPixel(element);
-      // add height and half-width of the marker
       markerSize = element.getSize();
-      pixel.top += markerSize.height;
+
+      // center box under marker
       pixel.left += markerSize.width / 2;
       // show controls
+      // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
       this._showMarkerControls(pixel);
    },
 
