@@ -12,25 +12,56 @@ content="non-interactive"
 {% endblock %}
 
 {% block css %}
-	<link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
+<link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
 {% endblock %}
 
 {% block js %}
-	<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
+<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
 
-	<script type="text/javascript" src="/static/js/main/landingpage.js" ></script>
+<script type="text/javascript" src="/static/js/main/landingpage.js" ></script>
 
-   <script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
-	<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
+<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
 
-   <script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
+<script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
 {% endblock %}
 
 {% block content %}
-   <p style="text-align: center"> Die Seite ist noch in Bearbeitung. Der Login-Link für Beta-Tester befindet sich in der linken unteren Ecke.</p>
-   <p style="text-align: center">Viel Spaß wünscht Euch das keiken-Team!</p>
+<section style="font-size: 1.3em; padding-left: 5%; width: 95%">
+  <p style="text-align: center; font-size: 1.4em">Illustrate your experiences abroad for your family and friends</p>
+  <br/>
+  <p>Before we found KEIKEN, we had a hard time reporting about our exchange semester:</p>
+  <div class="span-7 mp-inline-block">
+    <!-- <img src="/static/images/zip.png" /> -->
+    <!-- <p style="font-size: 1.4em; color: red">ZIP</p> -->
+    <p>You can zip your photos and write a long description via email, but often a lot of pictures
+      needs explaining to the unfamiliar eye</p>
+  </div>
+  <div class="span-1 mp-inline-block" ></div>
+  <div class="span-7 mp-inline-block">
+    <!-- <img src="/static/images/presentation.png"/> -->
+    <p>You can also give a presentation when you come back, but this will only reach the people close to you</p>
+  </div>
+  <div class="span-1 mp-inline-block" ></div>
+  <div class="span-7 mp-inline-block">
+    <!-- <img src="/static/images/network.png"> -->
+    <p>You can also post the photos on your favourite social network, but not everyone you want to reach
+      will be member there</p>
+  </div>
+  <p>Therefore we called KEIKEN to life. We hope to provide you with the tools to give everyone of your friends
+    a presentation they deserve.</p>
    {% if user.is_authenticated %}
      <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p>
    {% endif %}
+</section>
+
+
+
+  
+   <!-- <p style="text-align: center"> Die Seite ist noch in Bearbeitung. Der Login-Link für Beta-Tester befindet sich in der linken unteren Ecke.</p> -->
+   <!-- <p style="text-align: center">Viel Spaß wünscht Euch das keiken-Team!</p> -->
+   <!-- {% if user.is_authenticated %} -->
+   <!--   <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p> -->
+   <!-- {% endif %} -->
 {% endblock %}
 
