@@ -56,7 +56,7 @@ UITools.prototype = {
          substring = text;
       } else {
          substring = null;
-         alert("The text-string is null.");
+         throw new Error("The text-string is null.");
       }
       
       return substring;

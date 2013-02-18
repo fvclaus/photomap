@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, Album, Place, Photo */
+/*global $, main, Album, Place, Photo, gettext */
 
 "use strict";
 
@@ -118,7 +118,7 @@ ClientServer.prototype = {
                }
             },
             error : function () {
-               alert("A network error occurred. Please try again later");
+               alert(gettext("NETWORK_ERROR"));
             }
          });
       });
@@ -166,11 +166,11 @@ ClientServer.prototype = {
 
                instance._showPlaces(places);
             } else {
-               alert("Could not show album with id "+ data.id+". Error: "+ albuminfo.error);
+               alert(gettext("GET_ALBUM_ERROR") + albuminfo.error);
             }
          },
          error : function () {
-            alert("A network error occurred. Please try again later.");
+            alert(gettext("NETWORK_ERROR"));
          }
       });
 

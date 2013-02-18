@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 17:38+0100\n"
+"POT-Creation-Date: 2013-02-18 14:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,3 +29,32 @@ msgstr "Nein"
 #: static/js/ui/UIInput.js:93
 msgid "SAVE"
 msgstr "Speichern"
+
+#: static/js/ui/UIInput.js:161 static/js/ui/UIInput.js.c:212
+#: static/js/util/ClientServer.js:121 static/js/util/ClientServer.js.c:173
+msgid "NETWORK_ERROR"
+msgstr ""
+"Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einen späteren "
+"Zeitpunkt nochmal."
+
+#: static/js/ui/UIPhotoEditor.js:72
+msgid "TOO_MANY_PHOTOS"
+msgstr "Bitte wählen Sie nur ein Photo auf einmal aus."
+
+#: static/js/ui/UIPhotoEditor.js:75
+msgid "EXTENSION_NOT_SUPPORTED"
+msgstr ""
+"Dieses Format wird leider nicht unterstützt. Bitte wählen Sie ein JPEG oder "
+"PNG Photos aus."
+
+#: static/js/ui/UIPhotoEditor.js:129
+msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
+msgstr "Keine Rotation mehr möglich, nachdem das Photo bearbeitet wurde."
+
+#: static/js/util/ClientServer.js:169
+msgid "GET_ALBUM_ERROR"
+msgstr "Beim Laden des Albums trat folgender Fehler auf: "
+
+#: static/js/zeroclipboard/jquery.zclip.js:87
+msgid "COPIED_TO_CLIPBOARD"
+msgstr "Text wurde in die Zwischenablage kopiert!"

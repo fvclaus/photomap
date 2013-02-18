@@ -158,7 +158,7 @@ UIInput.prototype = {
          },
          error: function (error) {
             //TODO we need to change the type of the dialog to INPUT_DIALOG to prevent the buttons from showing
-            html = "A network error has occured. Please check back later.";
+            html = gettext("NETWORK_ERROR");
          }
       });
       return html;
@@ -209,7 +209,7 @@ UIInput.prototype = {
                },
                error : function (error) {
                   // instance.close();
-                  message.showFailure("A network error has occured. Please check back later.");
+                  message.showFailure(gettext("NETWORK_ERROR"));
                   $buttons.button("enable");
                }
             });

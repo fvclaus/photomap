@@ -19,6 +19,11 @@ DEFAULT_PROFILE_PICTURE = os.path.join(IMAGES_PATH, "default-profile-picture.png
 RES_PATH = os.path.join(PROJECT_PATH, "res")
 TEST_PATH = os.path.join(RES_PATH, "test")
 
+# this is needed for django to discover the javascript translations
+LOCALE_PATHS = ( 
+    os.path.join(PROJECT_PATH, "locale"),
+    )
+
 CSS_PATH = os.path.join(STATIC_PATH, "css")
 
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")

@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-17 17:38+0100\n"
+"POT-Creation-Date: 2013-02-18 14:23+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,3 +27,28 @@ msgstr "No"
 #: static/js/ui/UIInput.js:93
 msgid "SAVE"
 msgstr "Save"
+
+#: static/js/ui/UIInput.js:161 static/js/ui/UIInput.js.c:212
+#: static/js/util/ClientServer.js:121 static/js/util/ClientServer.js.c:173
+msgid "NETWORK_ERROR"
+msgstr "A network error occurred. Please try again later."
+
+#: static/js/ui/UIPhotoEditor.js:72
+msgid "TOO_MANY_PHOTOS"
+msgstr "Please only select one photo at a time."
+
+#: static/js/ui/UIPhotoEditor.js:75
+msgid "EXTENSION_NOT_SUPPORTED"
+msgstr "Currently there is support for only JPEG and PNG photos."
+
+#: static/js/ui/UIPhotoEditor.js:129
+msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
+msgstr "No rotation possible, after the photo was modified."
+
+#: static/js/util/ClientServer.js:169
+msgid "GET_ALBUM_ERROR"
+msgstr "The following error occurred while loading the album:  "
+
+#: static/js/zeroclipboard/jquery.zclip.js:87
+msgid "COPIED_TO_CLIPBOARD"
+msgstr "Text was copied successfully to your clipboard!"

@@ -65,7 +65,7 @@ UIPhotoListener.prototype = {
                $("input[type='file']").trigger("change", event);
                $("input[type='file'],label[name='file-upload']").remove();
             },
-            url : "/insert-photo?place=" + place.id
+            url : "/insert-photo"
          });
       }
    },

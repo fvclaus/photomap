@@ -1,4 +1,4 @@
-/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image */
+/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image, ngettext, gettext */
 
 "use strict";
 
@@ -69,10 +69,10 @@ UIPhotoEditor.prototype = {
       var files = event.target.files;
 
       if (files.length > 1) {
-         alert("Please select only one photo");
+         alert(gettext("TOO_MANY_PHOTOS"));
          return null;
       } else if (!files[0].type || $.inArray(files[0].type.toLowerCase(), ["image/jpeg", "image/png"]) === -1) {
-         alert("Extension "+ files[0].type+ " not allowed. Please select either PNG or JPEG files.");
+         alert(gettext("EXTENSION_NOT_SUPPORTED"));
          return null;
       }
 
@@ -126,10 +126,9 @@ UIPhotoEditor.prototype = {
          if (!instance.isRotateDisabled){
             //TODO the disabled here does not seem to work
             instance.$rotate.button({
-               text : "No rotation possible after pixel operation."
+               text : gettext("UIPHOTOEDITOR_ROTATION_DISABLED")
             });
             instance.$rotate.button("disable");
-            console.log("added disabled");
             instance.isRotateDisabled = true;
          }
          instance.apply(instance.ORIG_SELECTOR, operation, this);
@@ -151,7 +150,6 @@ UIPhotoEditor.prototype = {
          //enable rotate button again
          if (instance.isRotateDisabled){
             instance.$rotate.button("enable");
-            console.log("removed disabled");
             instance.isRotateDisabled = false;
          }
          instance.enable();
