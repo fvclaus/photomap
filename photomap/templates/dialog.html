@@ -1,5 +1,5 @@
 {% load i18n %}
-<div class="mp-nodisplay">
+<div>
   <h2 class="mp-input-title">{% block title %}Untitled{% endblock%}</h2>
   {% block content %}
   {% endblock %}
@@ -12,7 +12,7 @@
       </p>
     </div>
     
-    <div class="ui-state-highlight ui-corner-all" id="mp-dialog-message-success">
+    <div class="ui-state-highlight ui-corner-all mp-nodisplay" id="mp-dialog-message-success">
       <p>
         <span class="ui-icon ui-icon-check mp-inline-block"></span>
         <strong>{% trans "SUCCESS" %}</strong>
