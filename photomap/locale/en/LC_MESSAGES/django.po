@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-16 16:21+0100\n"
+"POT-Creation-Date: 2013-02-18 14:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,25 +16,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base-interactive.html:63 templates/base-interactive.html.py:80
+#: templates/base-interactive.html:65 templates/base-interactive.html.py:82
 msgid "Schließen"
 msgstr "Close"
 
-#: templates/base-interactive.html:106
+#: templates/base-interactive.html:108
 msgid "Data Loading"
 msgstr "The requested data is now loading. Please be patient!"
 
-#: templates/base-interactive.html:112
+#: templates/base-interactive.html:114
 msgid "control-title delete"
 msgstr "Delete"
 
-#: templates/base-interactive.html:113
+#: templates/base-interactive.html:115
 msgid "control-title modify"
 msgstr "Edit"
 
 #: templates/base.html:105 templates/base.html.py:106
 msgid "Settings"
-msgstr ""
+msgstr "Settings"
 
 #: templates/base.html:109
 msgid "Abmelden"
@@ -134,7 +134,7 @@ msgstr "Data Use Policy"
 
 #: templates/contact.html:63 templates/debug/dialogdimension.html:24
 msgid "Speichern"
-msgstr ""
+msgstr "Save"
 
 #: templates/copyright.html:8
 msgid "Urheberrechtserklärung"
@@ -245,6 +245,18 @@ msgstr "Delete Place?"
 #: templates/delete-place.html:11
 msgid "DELETE_PLACE_QUESTION"
 msgstr "Do you really want to delete Place "
+
+#: templates/dialog.html:10
+msgid "FAILURE"
+msgstr "Failure"
+
+#: templates/dialog.html:18
+msgid "SUCCESS"
+msgstr "Success"
+
+#: templates/dialog.html:21
+msgid "CLOSE_ON_SUCCESS"
+msgstr "Automatically close on success?"
 
 #: templates/help.html:8
 msgid "Hilfe und Support"
@@ -697,22 +709,32 @@ msgid "INSERT_ALBUM"
 msgstr "Insert Album"
 
 #: templates/insert-album.html:10 templates/insert-photo.html:20
-#: templates/insert-place.html:10 templates/team.html:17
-#: templates/team.html.py:29 templates/team.html:41
-#: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:12 templates/debug/dialogdimension.html:14
-msgid "Name"
+#: templates/insert-place.html:10 templates/update-album.html:11
+#: templates/update-photo.html:12 templates/update-place.html:12
+msgid "NAME"
 msgstr "Name"
 
-#: templates/insert-album.html:14 templates/insert-photo.html:24
-#: templates/insert-place.html:14 templates/update-album.html:15
-#: templates/update-photo.html:16 templates/update-place.html:16
+#: templates/insert-album.html:10 templates/insert-photo.html:20
+#: templates/insert-photo.html.py:28 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-photo.html:12
+#: templates/update-place.html:12
+msgid "MANDATORY_FIELD"
+msgstr "This field is mandatory."
+
+#: templates/insert-album.html:14 templates/insert-photo.html:11
+#: templates/insert-photo.html.py:24 templates/insert-place.html:14
+#: templates/update-album.html:15 templates/update-photo.html:16
+#: templates/update-place.html:16
 msgid "DESCRIPTION"
 msgstr "Description"
 
 #: templates/insert-photo.html:5
 msgid "INSERT_PHOTO"
 msgstr "Insert Photo"
+
+#: templates/insert-photo.html:11
+msgid "TITLE"
+msgstr ""
 
 #: templates/insert-photo.html:28
 msgid "INSERT_PHOTO_UPLOAD"
@@ -725,6 +747,38 @@ msgstr "Insert Place"
 #: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
 msgstr "Login and Registration"
+
+#: templates/photo-editor.html:4
+msgid "SELECT_PHOTO"
+msgstr "Please select a photo."
+
+#: templates/photo-editor.html:13
+msgid "SHARPEN"
+msgstr "Sharpen"
+
+#: templates/photo-editor.html:19
+msgid "LIGHTEN"
+msgstr "Lighten"
+
+#: templates/photo-editor.html:23
+msgid "USE_AVERAGE"
+msgstr "Use average"
+
+#: templates/photo-editor.html:25
+msgid "DESATURATE"
+msgstr "Desaturate"
+
+#: templates/photo-editor.html:29
+msgid "REMOVE_NOISE"
+msgstr "Remove noise"
+
+#: templates/photo-editor.html:30
+msgid "ROTATE"
+msgstr "Rotate"
+
+#: templates/photo-editor.html:31
+msgid "REVERT"
+msgstr "Revert"
 
 #: templates/privacy.html:9
 msgid "Richtlinien zum Datenschutz"
@@ -901,6 +955,11 @@ msgid "privacy-topic Auskunftsrecht -> paragraph2"
 msgstr ""
 "We will send all the available and required information to you, in "
 "complaisance to your legal right to information."
+
+#: templates/team.html:17 templates/team.html.py:29 templates/team.html:41
+#: templates/debug/dialogdimension.html:14
+msgid "Name"
+msgstr "Name"
 
 #: templates/team.html:19 templates/team.html.py:31 templates/team.html:43
 msgid "Verantwortlich für"

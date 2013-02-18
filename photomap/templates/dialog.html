@@ -1,5 +1,5 @@
 {% load i18n %}
-<div>
+<div class="mp-nodisplay">
   <h2 class="mp-input-title">{% block title %}Untitled{% endblock%}</h2>
   {% block content %}
   {% endblock %}
@@ -7,7 +7,7 @@
     <div class="ui-state-error ui-corner-all" id="mp-dialog-message-failure">
       <p>
         <span class="ui-icon ui-icon-alert mp-inline-block"></span>
-        <strong>Failure</strong>
+        <strong>{% trans "FAILURE" %}</strong>
         <em></em>
       </p>
     </div>
@@ -15,10 +15,10 @@
     <div class="ui-state-highlight ui-corner-all" id="mp-dialog-message-success">
       <p>
         <span class="ui-icon ui-icon-check mp-inline-block"></span>
-        <strong>Success</strong>
+        <strong>{% trans "SUCCESS" %}</strong>
         <br/>
       <input type="checkbox" name="auto-close">
-      <label for="auto-close">Automatically close on success</label>
+      <label for="auto-close">{% trans "CLOSE_ON_SUCCESS" %}</label>
       </p>
     </div>
   </div>

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-16 16:21+0100\n"
+"POT-Creation-Date: 2013-02-18 14:46+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,21 +17,21 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:63 templates/base-interactive.html.py:80
+#: templates/base-interactive.html:65 templates/base-interactive.html.py:82
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:106
+#: templates/base-interactive.html:108
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:112
+#: templates/base-interactive.html:114
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:113
+#: templates/base-interactive.html:115
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
@@ -255,6 +255,18 @@ msgstr "Platz löschen?"
 #: templates/delete-place.html:11
 msgid "DELETE_PLACE_QUESTION"
 msgstr "Wollen Sie diesen Platz wirklich löschen?"
+
+#: templates/dialog.html:10
+msgid "FAILURE"
+msgstr "Fehler"
+
+#: templates/dialog.html:18
+msgid "SUCCESS"
+msgstr "Erfolg"
+
+#: templates/dialog.html:21
+msgid "CLOSE_ON_SUCCESS"
+msgstr "Bei Erfolg automatisch schließen?"
 
 #: templates/help.html:8
 msgid "Hilfe und Support"
@@ -730,22 +742,32 @@ msgid "INSERT_ALBUM"
 msgstr "Album hinzufügen"
 
 #: templates/insert-album.html:10 templates/insert-photo.html:20
-#: templates/insert-place.html:10 templates/team.html:17
-#: templates/team.html.py:29 templates/team.html:41
-#: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:12 templates/debug/dialogdimension.html:14
-msgid "Name"
+#: templates/insert-place.html:10 templates/update-album.html:11
+#: templates/update-photo.html:12 templates/update-place.html:12
+msgid "NAME"
 msgstr "Name"
 
-#: templates/insert-album.html:14 templates/insert-photo.html:24
-#: templates/insert-place.html:14 templates/update-album.html:15
-#: templates/update-photo.html:16 templates/update-place.html:16
+#: templates/insert-album.html:10 templates/insert-photo.html:20
+#: templates/insert-photo.html.py:28 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-photo.html:12
+#: templates/update-place.html:12
+msgid "MANDATORY_FIELD"
+msgstr "Dieses Feld ist ein Pflichtfeld."
+
+#: templates/insert-album.html:14 templates/insert-photo.html:11
+#: templates/insert-photo.html.py:24 templates/insert-place.html:14
+#: templates/update-album.html:15 templates/update-photo.html:16
+#: templates/update-place.html:16
 msgid "DESCRIPTION"
 msgstr "Beschreibung"
 
 #: templates/insert-photo.html:5
 msgid "INSERT_PHOTO"
 msgstr "Photo hinzufügen"
+
+#: templates/insert-photo.html:11
+msgid "TITLE"
+msgstr "Titel"
 
 #: templates/insert-photo.html:28
 msgid "INSERT_PHOTO_UPLOAD"
@@ -758,6 +780,38 @@ msgstr "Platz hinzufügen"
 #: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
 msgstr "Login und Registrierung"
+
+#: templates/photo-editor.html:4
+msgid "SELECT_PHOTO"
+msgstr "Bitte wählen Sie ein Photo aus."
+
+#: templates/photo-editor.html:13
+msgid "SHARPEN"
+msgstr "Schärfer stellen"
+
+#: templates/photo-editor.html:19
+msgid "LIGHTEN"
+msgstr "Aufhellen"
+
+#: templates/photo-editor.html:23
+msgid "USE_AVERAGE"
+msgstr "Mittelwert verwenden"
+
+#: templates/photo-editor.html:25
+msgid "DESATURATE"
+msgstr "Entsättigen"
+
+#: templates/photo-editor.html:29
+msgid "REMOVE_NOISE"
+msgstr "Rauschen entfernen"
+
+#: templates/photo-editor.html:30
+msgid "ROTATE"
+msgstr "Rotieren"
+
+#: templates/photo-editor.html:31
+msgid "REVERT"
+msgstr "Rückgängig machen"
 
 #: templates/privacy.html:9
 msgid "Richtlinien zum Datenschutz"
@@ -937,6 +991,11 @@ msgid "privacy-topic Auskunftsrecht -> paragraph2"
 msgstr ""
 "Wir werden Ihnen im Rahmen der gesetzlichen Auskunftsansprüche in Kürze alle "
 "verfügbaren Information zu schicken."
+
+#: templates/team.html:17 templates/team.html.py:29 templates/team.html:41
+#: templates/debug/dialogdimension.html:14
+msgid "Name"
+msgstr "Name"
 
 #: templates/team.html:19 templates/team.html.py:31 templates/team.html:43
 msgid "Verantwortlich für"
