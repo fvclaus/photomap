@@ -115,7 +115,7 @@ UIPhotoListener.prototype = {
          success : function (data) {
             photo.title = this._title;
             photo.description = this._description;
-            main.getUI().getInformation().updatePhoto();
+            main.getUI().getInformation().update(photo);
          },
          url : "/update-photo",
          context : this

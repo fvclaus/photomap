@@ -310,6 +310,9 @@ UIGallery.prototype =  {
             
             if (!ui.isDisabled()) {
                ui.getControls().getEditControls().hide(false);
+               //TODO navigating to a photo provides a better abstraction then navigation to a specific index
+               // navigating to an index means that we know implementation details of the slideshow, namely
+               // how many photos are displayed per page(!)
                ui.getSlideshow().navigateTo(instance._getIndexOfImage($el));
             }
          });

@@ -11,70 +11,33 @@
 var UIInformation, title, info, api;
 
 UIInformation = function () {
+   this.$explanationContainer = $("#mp-detail");
+   this.$teaserContainer = $("#mp-detail-teaser");
 
-   this.$wrapper = $("#mp-description");
-   this.$album = $("#mp-album");
-   this.$description = $(".mp-description-wrapper").find(".mp-description-body");
-   this.$imageNumber = $(".mp-image-number");
-   this.$descriptionTitle = $(".mp-description-title");
-   this.$fullDescription = $(".mp-full-description-body");
-   this.$fullDescriptionTitle = $(".mp-full-description-title");
-   this.noDescription = $("#mp-description-no-description").html();
+   this.$descriptionWrapper = $("#mp-detail-description-wrapper");
+   this.$description = this.$descriptionWrapper.children("p");
+   this.$title = $("#mp-detail-title");
+
+   this.$teaserDescription = $("#mp-detail-teaser-description");
+   this.$teaserTitle = $("#mp-detail-teaser-title");
+
+   this.noDescription = this.$description.html();
+   this.noTeaserDescription = this.$teaserDescription.html();
+
    this.oldModel = null;
+   this.currentPhoto = null;
+
+   this._bindListener();
+   // this.$teaserDescription.html("No Description available");
+   // this.$teaserTitle.html("No photo selected");
+      // var $innerWrapper = this.$description.parent();
+      // $innerWrapper.jScrollPane(); 
+      // var $innerWrapper = this.$title.siblings("div");
+   this.$descriptionWrapper.jScrollPane(); 
 };
 
 UIInformation.prototype = {
 
-   // _setTitle : function (title) {
-      
-   //    if (title !== null) {
-         
-   //       this.$descriptionTitle.text(title);
-   //       this.$fullDescriptionTitle.text(title);
-   //    }
-   // },
-   // _setDescription : function (fullDescription) {
-      
-   //    var description;
-   //    // the description is null (what the db says), the description is "" (what $description.val() says)
-   //    if (fullDescription !== null && fullDescription !== "") {
-   //       description = main.getUI().getTools().cutText(fullDescription, 350);
-   //    }
-   //    else{
-   //       description = this.noDescription;
-   //       fullDescription = this.noDescription;
-   //    }
-   //    this.$description.html(description);
-   //    this.$fullDescription.html(fullDescription);
-
-   //    if (description.length < fullDescription.length) {
-   //       this.$description.append("<span class='mp-control mp-cursor-pointer mp-open-full-description'> [...]</span>");
-   //    }
-
-   // },
-   removeDescription : function () {
-      this.$descriptionTitle.empty();
-      this.$description.empty();
-   },
-   _showDescription : function () {
-      
-      var $container, $innerWrapper, description, title;
-      $container = $("#mp-full-description");
-      $innerWrapper = $(".mp-full-description-wrapper");
-      $innerWrapper.jScrollPane();
-      
-      $container.removeClass("mp-nodisplay");
-      $innerWrapper
-         .data("jsp")
-         .reinitialise();
-   },
-   hideFullDescription : function () {
-      this._hideDescription(); 
-   },
-   _hideDescription : function () {
-      
-      $("#mp-full-description").addClass("mp-nodisplay");
-   },
    updateAlbum : function () {
       //no album selected yet
       var album = main.getUIState().getCurrentLoadedAlbum();
@@ -89,94 +52,104 @@ UIInformation.prototype = {
       // otherwise the scollpane won't initialize properly
       // this.showFullDescription();
    },
-
-   updatePlace : function () {
-      //no place loaded yet
-      var place = main.getUIState().getCurrentPlace();
-      if (place === null){
-         return;
-      }
-      this.update(place);
-      // // @see updateAlbum()
-      // this.showFullDescription();
-   },
-   updateImageNumber : function () {
-      var photos, state;
-      
-      state = main.getUIState();
-      photos = state.getPhotos();
-      //TODO I think Photo is fine in every language
-      this.$imageNumber.text("Photo "+(state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
-   },
-   emptyImageNumber : function () {
-      //TODO 0/0 is a little misguiding. I suggest nothing instead.
-      // this.$imageNumber.text("0/0");
-      this.$imageNumber.text("");
-   },
-   updatePhoto : function () {
-      //no photo loaded yet
-      var photo = main.getUIState().getCurrentLoadedPhoto();
-      if (photo === null) {
-         return;
-      }
-      this.update(photo);
-      this.updateImageNumber();
-   },
    update : function (model) {
       if (model instanceof Photo) {
-         this._updatePhotoDescription(model);
+         this.currentPhoto = model;
+         this._updateTeaser(model);
          if (!(this.oldModel instanceof Photo)) {
-            this._hideDescription();
+            this._hideDetail();
          }
-      } else {
-         this._updateDescription(model);
+      } else if (model instanceof Album || model instanceof Place) {
+         this._updateDetail(model);
          //TODO we only need to reinitialise the scrollpane, but for now:
-         this._showDescription();
+         this._showDetail();
          // if (this.oldModel === null || this.oldModel instanceof Photo) {
          //    this._showDescription();
          // }
+      } else {
+         throw new Error("Unknown class " + typeof model);
       }
       this.oldModel = model;
    },
-   _updateDescription : function (model) {
+   empty : function (model) {
+      if (model instanceof Photo) {
+         this.$teaserDescription.empty();
+         this.$teaserTitle.empty();
+      } else if (model instanceof Album || model instanceof Place) {
+         this.$description.empty();
+         this.$title.empty();
+      } else {
+         throw new Error("Unknown class " + typeof model);
+      }
+   },
+   _updateDetail : function (model) {
       var title = model.getModel()+": "+model.title,
           description = model.description;
-      this.$fullDescription.html(description);
-      this.$fullDescriptionTitle.text(title);
+      // use text() instead of html() to prevent script tag injection or similiar
+      this.$description.text(description);
+      this.$title.text(title);
    },
    /**
     * @summary Sets the description in the PhotoDescription and Description box (only if necessary)
     */
-   _updatePhotoDescription : function (photo) {
+   _updateTeaser : function (photo) {
       var shortDescription,
           title = "Photo: "+photo.title,
           description = photo.description;
       // the description is null (what the db says), the description is "" (what $description.val() says)
       if (description !== null && description !== "") {
          shortDescription = main.getUI().getTools().cutText(description, 350);
+         this.$teaserDescription.text(shortDescription);
       }
       else{
          shortDescription = this.noDescription;
+         // this is from a trusted source and might be html
+         this.$teaserDescription.html(shortDescription);
       }
 
+      this.$teaserTitle.text(title);
+      // description is too long just for the teaser
       if (shortDescription.length < description.length) {
-         this.$description.append("<span class='mp-control mp-cursor-pointer mp-open-full-description'> [...]</span>");
-         this._updateDescription(photo);
+         this.$teaserDescription.append("<span class='mp-control mp-cursor-pointer mp-open-full-description'> [...]</span>");
+         // do not update explanation yet
+         // update it only when user clicks on open explanation link
       }
-      this.$description.html(shortDescription);
-      this.$descriptionTitle.text(title);
    },
-   /* --- fullscreen photo --- */
-   
-   updateFullscreen : function () {
+   _showDetail : function () {
       
-      var photo = main.getUIState().getCurrentLoadedPhoto();
-      $("#mp-fullscreen-title").text(photo.title);
-      //$("#mp-fullscreen-image-description").text(photo.description);
+      var $innerWrapper = this.$title.siblings("div");
+      // $innerWrapper.jScrollPane(); 
+      
+      this.$explanationContainer.removeClass("mp-nodisplay");
+      this.$descriptionWrapper
+         .data("jsp")
+         .reinitialise();
    },
-   
-   /* ---- end Photo ---- */
-   
+   _hideDetail : function () {
+      this.$explanationContainer.addClass("mp-nodisplay");
+      this.$teaserContainer.removeClass("mp-nodisplay");
+   },
+   _bindListener : function () {
+      var instance = this;
+
+      this.$teaserContainer.on("click", ".mp-open-full-description", function (event) {
+         
+         if (!main.getUI().isDisabled()) {
+            // there is a open explanation link which means the description did not fit into the teaser completely
+            // update the explanation so it shows the photos description
+            // this is necessary because the user might have looked at a description of a place or album
+            // this would overwrite the photos description
+            instance._updateDetail(instance.currentPhoto);
+            instance._showDetail();
+         }
+      });
+      $(".mp-close-full-description").on("click", function (event) {
+         
+         if (!main.getUI().isDisabled()) {
+            instance._hideDetail();
+         }
+      });
+   },
    /* ---- other stuff ---- */
    updateUsedSpace : function () {
       

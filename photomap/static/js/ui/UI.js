@@ -101,7 +101,7 @@ UI.prototype = {
          this.getGallery().reset();
          // this.getSlideshow().removeCurrentImage();
          this.getSlideshow().reset();
-         this.getInformation().removeDescription();
+         this.getInformation().empty(place);
       }
       place.hide();
       this.getState().deletePlace(place);
@@ -132,7 +132,7 @@ UI.prototype = {
       
       if (photo === this.getState().getCurrentLoadedPhoto()) {
          
-         this.getInformation().removeDescription();
+         this.getInformation().empty(photo);
       }
       this.getSlideshow().deletePhoto(photo);
       this.getGallery().deletePhoto(photo);
@@ -164,7 +164,7 @@ UI.prototype = {
    deleteAlbum : function (album) {
       
       if (album === this.getState().getCurrentLoadedAlbum()) {
-         this.getInformation().removeDescription();
+         this.getInformation().empty(album);
       }
       album.hide();
       this.getState().deleteAlbum(album);

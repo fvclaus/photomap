@@ -99,7 +99,7 @@ Place.prototype._bindListener = function () {
       
       if (!main.getUI().isDisabled()) {
          state.setCurrentPlace(instance);
-         information.updatePlace();
+         information.update(instance);
       }
    });
    

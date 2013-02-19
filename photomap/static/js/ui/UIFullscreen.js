@@ -138,7 +138,7 @@ UIFullscreen.prototype = {
          photo = state.getCurrentLoadedPhoto(),
          instance = this;
       
-      description.updateFullscreen();
+      this._updateTitle(photo);
       
       if (this.visible) {
          
@@ -178,7 +178,13 @@ UIFullscreen.prototype = {
       this.$close.on("click.Fullscreen", function () {
          instance.close();
       });
-   }
+
+   },
+   _updateTitle : function (photo) {
+      
+      $("#mp-fullscreen-title").text(photo.title);
+      //$("#mp-fullscreen-image-description").text(photo.description);
+   },
       
 /*
    // displays zoomed version of current image as overlay

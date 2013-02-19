@@ -15,6 +15,8 @@ var UISlideshow = function () {
    this.$image = $("#mp-slideshow-image");
    this.$navLeft = $('#mp-slideshow-nav-prev');
    this.$navRight = $('#mp-slideshow-nav-next');
+
+   this.$photoNumber = $(".mp-image-number");
    
    this.carousel = null;
    this.fullscreen = new UIFullscreen(this);
@@ -87,9 +89,11 @@ UISlideshow.prototype = {
       if (this.isStarted){
          // does not move to the new photo, because photo cant be on current page
          this.carousel.insertPhoto(photo.photo);
+         // update the photo description
+         this._updateAndGetCurrentLoadedPhoto();
+         main.getUI().getInformation().update(photo);
          // update the photo counter
-         this._updateCurrentLoadedPhoto();
-         main.getUI().getInformation().updatePhoto();
+         
       }
    },
    /**
@@ -102,8 +106,8 @@ UISlideshow.prototype = {
          // automatically delete if photo is on current page
          this.carousel.deletePhoto(photo.photo);
          // update the photo counter
-         this._updateCurrentLoadedPhoto();
-         main.getUI().getInformation().updatePhoto();
+         var newPhoto = this._updateAndGetCurrentLoadedPhoto();
+         main.getUI().getInformation().update(newPhoto);
       }
    },
    /**
@@ -118,6 +122,7 @@ UISlideshow.prototype = {
          this.carousel = null;
       }
       this.imageSources = [];
+      this._emptyPhotoNumber();
       $(".mp-slideshow-loader");
       $(".mp-slideshow-no-image-msg").show();
    },
@@ -135,14 +140,17 @@ UISlideshow.prototype = {
          this.carousel.navigateTo(index);
       }
    },
+
    /**
     * @private
     * @description Executed after photos are updated (=displayed)
     */
    _update : function () {
-      this._updateCurrentLoadedPhoto();
+      var photo = this._updateAndGetCurrentLoadedPhoto();
       this.fullscreen.update();
-      main.getUI().getInformation().updatePhoto();
+      main.getUI().getInformation().update(photo);
+      this._updatePhotoNumber();
+      
       //TODO this event is best triggered on the UI object. This is more intuitive and less likely to change
       $("#mp-content").trigger("slideshowChanged");
    },
@@ -175,8 +183,9 @@ UISlideshow.prototype = {
    /**
     * @private
     * @description Synchronizes the current photo in the slideshow with the one in the UIState
+    * @returns {Photo} currentPhoto
     */
-   _updateCurrentLoadedPhoto : function () {
+   _updateAndGetCurrentLoadedPhoto : function () {
       
       var ui = main.getUI(),
          state = main.getUIState(),
@@ -188,6 +197,27 @@ UISlideshow.prototype = {
          state.setCurrentLoadedPhoto(currentPhoto);
          state.setCurrentLoadedPhotoIndex(currentIndex);
       }
+      return currentPhoto;
+   },
+   /**
+    * @private
+    * @description Updates current photo number
+    */
+   _updatePhotoNumber : function () {
+      var state = main.getUIState(),
+          photos = state.getPhotos();
+
+      //TODO I think Photo is fine in every language
+      this.$photoNumber.text("Photo "+(state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
+   },
+   /**
+    * @private
+    * @description Removes the current photo number
+    */
+   _emptyPhotoNumber : function () {
+      //TODO 0/0 is a little misguiding. I suggest nothing instead.
+      // this.$imageNumber.text("0/0");
+      this.$photoNumber.text("");
    },
    /**
     * @private 

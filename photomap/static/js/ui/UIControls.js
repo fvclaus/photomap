@@ -80,20 +80,7 @@ UIControls.prototype = {
 
    /* ---- Listeners ---- */
 
-   _bindFullDescriptionListener : function () {
-      $("#mp-description").on("click", ".mp-open-full-description", function (event) {
-         
-         if (!main.getUI().isDisabled()) {
-            main.getUI().getInformation().showFullDescription();
-         }
-      });
-      $(".mp-close-full-description").on("click", function (event) {
-         
-         if (!main.getUI().isDisabled()) {
-            main.getUI().getInformation().hideFullDescription();
-         }
-      });
-   },
+
    /**
     * @public
     * @see UIAlbum
@@ -207,7 +194,6 @@ UIControls.prototype = {
       this._bindUpdateListener();
       this._bindShareListener();
       this._bindInsertListener();
-      this._bindFullDescriptionListener();
       if (main.getUIState().isDashboardView()) {
          this.bindAlbumListener();
       } else if (main.getUIState().isAlbumView()) {

@@ -60,7 +60,7 @@ content="interactive"
 {% block content %}
 
 <section class="mp-left-column">
-  <section class="mp-full-column mp-nodisplay" id="mp-full-left-column">
+  <section class="mp-full-column mp-full-left-column mp-nodisplay" id="mp-full-left-column">
     <div class="mp-full-column-controls">
       <span class="mp-control mp-cursor-pointer mp-close-full-left-column">{% trans "Schließen" %}</span>
     </div>
@@ -75,26 +75,24 @@ content="interactive"
 <section class="mp-right-column">
   {% block slideshow/??? %}
   {% endblock %}
-  <section class="mp-description" id="mp-description">
 
-    <section class="mp-full-column mp-nodisplay" id="mp-full-description">
-      <div class="mp-full-column-controls">
-        <span class="mp-control mp-cursor-pointer mp-close-full-description">{% trans "Schließen" %}</span>
-      </div>
-      <div class="mp-full-description-wrapper">
-        <p class="mp-full-description-title"></p>
-        <p class="mp-full-description-body"></p>
-      </div>
-    </section>
 
-    <div class="mp-description-wrapper">
-      <p class="mp-description-title"></p>
-      <p class="mp-description-body"></p>
+  <section class="mp-full-column" id="mp-detail" >
+    <div class="mp-full-column-controls">
+      <span class="mp-control mp-cursor-pointer mp-close-full-description">{% trans "Schließen" %}</span>
     </div>
-
+    <div>
+      <p id="mp-detail-title">{% trans "SELECT_PLACE_OR_ALBUM" %}</p>
+      <div id="mp-detail-description-wrapper">
+        <p><em>{% trans "NO_DESCRIPTION" %}</em></p>
+      </div>
+    </div>
   </section>
-    
-  <p id="mp-description-no-description" class="mp-nodisplay"><em>No Descripition available</em></p>
+  
+  <section class="mp-description-wrapper mp-nodisplay" id="mp-detail-teaser">
+    <p id="mp-detail-teaser-title">{% trans "SELECT_PHOTO" %}</p>
+    <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p>
+  </section>
 
 </section>
 {% block content_interactive %}

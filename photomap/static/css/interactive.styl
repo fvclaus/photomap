@@ -16,18 +16,25 @@
   margin 0 1% 0 2%
   position relative
   float left
+  height 100% // i added this, because the explanation-box was messed up
 
 .mp-full-column
   width 100%
   height 100%
-  position relative // absolute is behind the map, unless z-index is specified. But: EditControls don't have z-index
-  // top 0 // top & left 0 are default values
-  // left 0
+  position absolute 
+  top 0 
+  left 0
   background-color $background-color
   //TODO mp-data is not a good name
   .mp-data
     width 100%
     height 90%
+
+/* this is needed for the full gallery */
+.mp-full-left-column
+  /* absolute is behind the map, unless z-index is specified. But: EditControls don't have z-index. */
+  position relative
+  
 
 .mp-full-column-controls
   width 100%
@@ -56,33 +63,29 @@
 /* ------------------------- */
 /* -- description styling -- */
 
-.mp-description
-  width 100%
-  height 43%
-  padding 2% 0 0 0
-  
-.mp-description-wrapper
+// .mp-description
+//   width 100%
+//   height 43%
+//   padding 2% 0 0 0
+//TODO the styling of the detail box is inconsistent. It is unclear why some elements are styled and why some others are not
+#mp-detail-teaser
   width 80%
   height 100%
   padding 0 10%
 
-.mp-full-description-title,
-.mp-description-title
-  padding 0
+#mp-detail-title,
+#mp-detail-teaser-title
   text-decoration underline
   font-weight bold
 
-.mp-full-description-body
-.mp-description-body
-  padding 0
-
-.mp-full-description-wrapper
+#mp-detail-description-wrapper
   width 100%
-  height 90%
-  .mp-full-description-title,
-  .mp-full-description-body
-    width 80%
-    padding 0 10%
+  height 80%
+
+#mp-detail-title,
+#mp-detail-description-wrapper
+  width 80%
+  padding 0 10%
 
 /* ---- end description ---- */
 

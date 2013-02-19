@@ -50,7 +50,7 @@ UIPlaceListener.prototype = {
          success : function () {
             place.title = this._title;
             place.description = this._description;
-            main.getUI().getInformation().updatePlace();
+            main.getUI().getInformation().update(place);
          },
          url : "/update-place",
          context : this
