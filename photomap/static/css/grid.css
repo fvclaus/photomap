@@ -33,7 +33,7 @@
 /* A container should group your entire grid. */
 .container {
 	min-width: 950px;
-	width: 90%;
+	width: 100%; /* this was 90% before */
 	margin: 0 auto;
 	overflow: hidden;
 }
