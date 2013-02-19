@@ -28,11 +28,7 @@ UIInformation = function () {
    this.currentPhoto = null;
 
    this._bindListener();
-   // this.$teaserDescription.html("No Description available");
-   // this.$teaserTitle.html("No photo selected");
-      // var $innerWrapper = this.$description.parent();
-      // $innerWrapper.jScrollPane(); 
-      // var $innerWrapper = this.$title.siblings("div");
+
    this.$descriptionWrapper.jScrollPane(); 
 };
 
@@ -56,9 +52,7 @@ UIInformation.prototype = {
       if (model instanceof Photo) {
          this.currentPhoto = model;
          this._updateTeaser(model);
-         if (!(this.oldModel instanceof Photo)) {
-            this._hideDetail();
-         }
+         this._hideDetail();
       } else if (model instanceof Album || model instanceof Place) {
          this._updateDetail(model);
          //TODO we only need to reinitialise the scrollpane, but for now:

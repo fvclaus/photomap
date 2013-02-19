@@ -21,11 +21,6 @@
 	<td>${currentPhotoFull}</td>
 	<td></td>
 </tr>
-<tr>
-	<td>assertVisible</td>
-	<td>css=.mp-image-overlay</td>
-	<td></td>
-</tr>
 </tbody></table>
 </body>
 </html>

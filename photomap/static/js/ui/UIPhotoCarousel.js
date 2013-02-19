@@ -39,9 +39,11 @@ UIPhotoCarousel.prototype = {
    /**
     * @description Loads all photos, or just current page depending on this.options.lazy (=true/false). 
     * When everything is loaded this.options.onLoad (optional)  is executed and the carousel is updated to show the current page.
-    * @param {int} from: Index of the first photo to update. Default is 0. 
+    * @param {int} from Index of the first photo element to update. Default is 0. 
+    * @param {int} to Index of the last photo element to update. Defaults to the length of the current Page
+    * This can be used when items get deleted in the middle of the page. The last elements would be ignored without the to parameter.
     */
-   _load : function (from) {
+   _load : function (from, to) {
       var i, j, loadHandler, loaded, maxLoad, currentPage, source, instance = this, imageSources, nSources;
       loaded = 0;
 
@@ -68,22 +70,23 @@ UIPhotoCarousel.prototype = {
          if (loaded === nSources) {
             // if there is a load-handler specified in the options, execute it first
             if (typeof instance.options.afterLoad === "function") {
-               //TODO call with elements loaded
-               instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, nSources));
+               // trigger the afterLoad event
+               instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nSources));
             }
-            instance._update(from, nSources);
+            // start updating the srcs
+            instance._update(from, to || nSources);
          }
       };
       nSources = imageSources.length;
 
       if (typeof this.options.beforeLoad === "function") {
-         //TODO nSources is not the last index but the length
-         this.options.beforeLoad.call(this.options.context, this.$items.slice(from, nSources));
+         // trigger the beforeLoad event
+         this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || nSources));
       }
-      
+
       if (nSources === 0){
          if (typeof this.options.afterLoad === "function") {
-            instance.options.afterLoad.call(instance.options.context, $());
+            this.options.afterLoad.call(this.options.context, $());
          }
       }
 
@@ -200,7 +203,9 @@ UIPhotoCarousel.prototype = {
             .fadeOut(500, function () {
                $(this).attr("src", null);
                instance.currentPage = instance.dataPage.getCurrentPage();
-               instance._load(from);
+               // we need to update everything from 'from' to the last entry of the oldPage
+               //TODO get the real length of the oldPage, currently this will always be this.size
+               instance._load(from, oldPage.length);
             });
       }
    },

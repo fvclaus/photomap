@@ -13,7 +13,7 @@
 </thead><tbody>
 <tr>
 	<td>click</td>
-	<td>css=.mp-image-nav-next</td>
+	<td>css=.mp-fullscreen-nav-next</td>
 	<td></td>
 </tr>
 <tr>
@@ -26,7 +26,6 @@
 	<td>${currentPhotoFull}</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

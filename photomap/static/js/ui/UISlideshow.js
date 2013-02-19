@@ -107,7 +107,11 @@ UISlideshow.prototype = {
          this.carousel.deletePhoto(photo.photo);
          // update the photo counter
          var newPhoto = this._updateAndGetCurrentLoadedPhoto();
-         main.getUI().getInformation().update(newPhoto);
+         if (newPhoto === null) {
+            this.reset();
+         } else {
+            main.getUI().getInformation().update(newPhoto);
+         }
       }
    },
    /**
@@ -116,12 +120,13 @@ UISlideshow.prototype = {
    reset : function () {
       
       this.isStarted = false;
-      if (this.carousel !== null) {
-         //TODO why do we reset it + set it to null?
-         this.carousel.reset();
-         this.carousel = null;
-      }
-      this.imageSources = [];
+      
+      //TODO if the last photo is deleted, it will fade out
+      // therefore we must not delete the carousel until the fading out is complete
+      // if (this.carousel !== null) {
+           // this.carousel.reset();
+         // this.carousel = null;
+      // }
       this._emptyPhotoNumber();
       $(".mp-slideshow-loader");
       $(".mp-slideshow-no-image-msg").show();
@@ -188,12 +193,17 @@ UISlideshow.prototype = {
    _updateAndGetCurrentLoadedPhoto : function () {
       
       var ui = main.getUI(),
-         state = main.getUIState(),
-         photos = state.getPhotos(),
-         currentPhoto = ui.getTools().getObjectByKey("photo", this.$image.attr("src"), photos),
+          state = main.getUIState(),
+          // this might be updated at a later point, we can't rely on that
+          photos = state.getPhotos(),
+          // but we can rely on the currentPage
+          imageSources = this.carousel.getAllImageSources(),
+          currentPhoto = null,
+          currentIndex = -1;
+      // if it is the only (empty) page the entry is null
+      if (imageSources.length > 0) {
+         currentPhoto = ui.getTools().getObjectByKey("photo", this.$image.attr("src"), photos);
          currentIndex = $.inArray(currentPhoto, photos);
-
-      if (currentPhoto !== null) {
          state.setCurrentLoadedPhoto(currentPhoto);
          state.setCurrentLoadedPhotoIndex(currentIndex);
       }

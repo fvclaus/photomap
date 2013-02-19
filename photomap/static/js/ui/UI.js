@@ -93,6 +93,7 @@ UI.prototype = {
     * @description Removes place fully from ui.
     */
    deletePlace : function (place) {
+      this.getState().deletePlace(place);
 
       if (place === this.getState().getCurrentLoadedPlace()) {
          
@@ -104,7 +105,7 @@ UI.prototype = {
          this.getInformation().empty(place);
       }
       place.hide();
-      this.getState().deletePlace(place);
+
    },
    /**
     * Adds photo fully to ui.
@@ -124,12 +125,14 @@ UI.prototype = {
       state.getCurrentLoadedPlace().insertPhoto(photo);
       this.getGallery().insertPhoto(photo);
       this.getSlideshow().insertPhoto(photo);
-      photo.openPhoto();
+      // openPhoto() does not work now, because photo is not loaded yet
    },
    /**
     * @description Removes photo fully from ui.
     */
    deletePhoto : function (photo) {
+      // we must update state first, all other components depend on it
+      this.getState().getCurrentLoadedPlace().deletePhoto(photo);
       
       if (photo === this.getState().getCurrentLoadedPhoto()) {
          
@@ -137,7 +140,7 @@ UI.prototype = {
       }
       this.getSlideshow().deletePhoto(photo);
       this.getGallery().deletePhoto(photo);
-      this.getState().getCurrentLoadedPlace().deletePhoto(photo);
+
    },
    /**
     * @description Propagates the addAlbum event to every UI component affected.
@@ -163,26 +166,26 @@ UI.prototype = {
     * @description Removes album fully from ui.
     */
    deleteAlbum : function (album) {
+      this.getState().deleteAlbum(album);
       
       if (album === this.getState().getCurrentLoadedAlbum()) {
          this.getInformation().empty(album);
       }
       album.hide();
-      this.getState().deleteAlbum(album);
    },
    // loader should (maybe) be placed over the ui-element which is currently loading.
    // loader is sometimes called twice in a row (slideshow.navigate followed by gallery.checkslider)
    // so loader might disappear and then suddenly milliseconds later appear again, which might confuse many users!
    //TODO place in individual class. this is likely to change
-   showLoading : function () {
-      this.getTools().loadOverlay($("#mp-ui-loading"), true);
-      this.getTools().fitMask();
-      $("body, a, .mp-logo img").css("cursor", "progress");
-   },
-   hideLoading : function () {
-      this.getTools().closeOverlay($("#mp-ui-loading"));
-      $("body, a, .mp-logo img").css("cursor", "");
-   },
+   // showLoading : function () {
+   //    this.getTools().loadOverlay($("#mp-ui-loading"), true);
+   //    this.getTools().fitMask();
+   //    $("body, a, .mp-logo img").css("cursor", "progress");
+   // },
+   // hideLoading : function () {
+   //    this.getTools().closeOverlay($("#mp-ui-loading"));
+   //    $("body, a, .mp-logo img").css("cursor", "");
+   // },
    disable : function () {
       var models = this._getModels();
 

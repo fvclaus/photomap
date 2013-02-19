@@ -198,13 +198,8 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=img.mp-current-image</td>
+	<td>css=img.mp-slideshow-image</td>
 	<td>currentPhoto</td>
-</tr>
-<tr>
-	<td>store</td>
-	<td>css=#mp-full-description</td>
-	<td>fullDescription</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -233,7 +228,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=.mp-image-full</td>
+	<td>css=.mp-fullscreen-image</td>
 	<td>currentPhotoFull</td>
 </tr>
 <tr>

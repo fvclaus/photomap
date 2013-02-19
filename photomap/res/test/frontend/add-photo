@@ -43,22 +43,17 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>${upload}</td>
+	<td>${submit}</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCssCount</td>
+	<td>${galleryPhotos}</td>
+	<td>2</td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>${loadingBlock}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForNotVisible</td>
-	<td>${loadingBlock}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>${showPhoto}</td>
+	<td>${teaserTitle}</td>
 	<td></td>
 </tr>
 </tbody></table>
