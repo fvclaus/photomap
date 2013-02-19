@@ -41,8 +41,7 @@ Album.prototype._bindListener = function () {
       if (!main.getUI().isDisabled()) {
          state.setCurrentAlbum(instance);
          state.setCurrentLoadedAlbum(instance);
-         information.updateAlbumDescription();
-         information.updateAlbumTitle();
+         information.updateAlbum();
       }
    });
    this.addListener("dblclick", function () {

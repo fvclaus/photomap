@@ -20,7 +20,7 @@ UIPhotoListener.prototype = {
                $("#insert-photo-tabs").tabs();
                $("input[name='place']").val(place.id);
                this.$title = $("input[name='title']");
-               this.$description = $("input[name='description']");
+               this.$description = $("textarea[name='description']");
                //start the editor
                $("#file-input").bind('change', function (event) {
                   instance.editor.edit.call(instance.editor, event);

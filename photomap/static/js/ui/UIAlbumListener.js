@@ -40,7 +40,8 @@ UIAlbumListener.prototype = {
          },
          submit : function () {
             //get album name + description
-            var title = $("[name=title]").val(), description = $("[name=description]").val();
+            var title = $("[name=title]").val(), 
+                description = $("[name=description]").val();
             //dont create album yet, server might return error
             instance.state.store(TEMP_TITLE_KEY, title);
             instance.state.store(TEMP_DESCRIPTION_KEY, description);

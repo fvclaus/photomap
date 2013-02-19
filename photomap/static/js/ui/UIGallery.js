@@ -20,20 +20,23 @@ var UIFullGallery = function () {
  * @requires UICarousel
  */
     UIGallery = function () {
-   this.$container = $('#mp-gallery');
-   this.$inner = $('#mp-gallery-inner');
-   // this.$hidden = $("#mp-gallery-thumbs");
-   this.$thumbs = $(".mp-gallery-tile");
-   this.$navLeft = $("#mp-gallery-nav-left");
-   this.$navRight = $("#mp-gallery-nav-right");
-   this.$photos = this.$thumbs.find(".mp-thumb");
-   
-   this.carousel = null;
-   
-   this.photos = null;
-   this.isStarted = false;
-  
-   this.fullGallery = new UIFullGallery();
+       this.$container = $('#mp-gallery');
+       this.$inner = $('#mp-gallery-inner');
+       // this.$hidden = $("#mp-gallery-thumbs");
+       this.$thumbs = $(".mp-gallery-tile");
+       this.$navLeft = $("#mp-gallery-nav-left");
+       this.$navRight = $("#mp-gallery-nav-right");
+       this.$photos = this.$thumbs.find(".mp-thumb");
+       
+       this.carousel = null;
+       
+       this.photos = null;
+       this.isStarted = false;
+       // set on insert photo to show the teaser of the photo after it is updated
+       this.showTeaser = false;
+       this.currentPhoto = null;
+       
+       this.fullGallery = new UIFullGallery();
     };
 
 
@@ -50,8 +53,17 @@ UIGallery.prototype =  {
       this._bindStartSlideshowListener();
       this._bindSlideshowNavigationListener();
    },
+   /**
+    * Triggers a click on the photo. Bypasses every listener, because they might be disabled
+    */
    triggerClickOnPhoto : function (photo) {
-      this.$photo.find("[src='" + photo.thumb + "']").trigger("click");
+      var $image = this.$photos.filter("[src='" + photo.thumb + "']"),
+          index = this._getIndexOfImage($image);
+      if (index !== -1){
+         main.getUI().getSlideshow().navigateTo(index);
+      } else {
+         console.log("Could not find photo %s in UIGallery. Maybe it is not loaded yet", photo.photo);
+      }
    },
    /**
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
@@ -76,6 +88,7 @@ UIGallery.prototype =  {
          effect : "foldIn",
          beforeLoad : this._beforeLoad,
          afterLoad : this._afterLoad,
+         onUpdate : this._update,
          context : this
       };
       photos.forEach(function (photo, index) {
@@ -98,7 +111,9 @@ UIGallery.prototype =  {
       // this.imageSources.push(photo.thumb);
       // automatically adds the photo if we are on last page
       this.carousel.insertPhoto(photo.thumb);
-
+      // show teaser after the photo is loaded
+      this.showTeaser = true;
+      this.currentPhoto = photo;
       // navigate to the picture if we are not on the last page
       if (this.isStarted && !this.carousel.isLastPage()) {
          this._navigateToLastPage();
@@ -155,7 +170,7 @@ UIGallery.prototype =  {
          $(this)
             .hide()
             .siblings(".mp-gallery-loader")
-            .show();
+            .removeClass("mp-nodisplay");
       });
       // hide loader
       // ui.hideLoading();
@@ -165,11 +180,26 @@ UIGallery.prototype =  {
       $photos.each(function () {
          $(this)
             .siblings(".mp-gallery-loader")
-            .hide();
+            .addClass("mp-nodisplay");
       });
       var ui = main.getUI();
       //enable ui
       ui.enable();
+   },
+   /**
+    * @private
+    * @description Check if the updated photo is a newly insert, if yes open teaser
+    */
+   _update : function () {
+      if (this.showTeaser) {
+         if (this.currentPhoto === null) {
+            throw new Error("Set showTeaser but no currentPhoto");
+         }
+         this.currentPhoto.openPhoto();
+         this.currentPhoto = null;
+         this.showTeaser = false;
+
+      } 
    },
    /**
     * @private

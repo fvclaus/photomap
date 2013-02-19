@@ -66,16 +66,15 @@ content="interactive"
     </div>
     <div class="mp-data"></div>
   </section>
-  <section class="mp-map" id="mp-map">
-    <div class="mp-map-wrapper" id="map"></div>
-  </section>
-  {% block gallery/news-feed %}
+
+  {% block left-column %}
   {% endblock %}
 </section>
+
+
 <section class="mp-right-column">
   {% block slideshow/??? %}
   {% endblock %}
-
 
   <section class="mp-full-column" id="mp-detail" >
     <div class="mp-full-column-controls">
@@ -93,8 +92,8 @@ content="interactive"
     <p id="mp-detail-teaser-title">{% trans "SELECT_PHOTO" %}</p>
     <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p>
   </section>
-
 </section>
+
 {% block content_interactive %}
 {% endblock %}
 

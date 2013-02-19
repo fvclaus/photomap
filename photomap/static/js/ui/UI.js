@@ -124,6 +124,7 @@ UI.prototype = {
       state.getCurrentLoadedPlace().insertPhoto(photo);
       this.getGallery().insertPhoto(photo);
       this.getSlideshow().insertPhoto(photo);
+      photo.openPhoto();
    },
    /**
     * @description Removes photo fully from ui.

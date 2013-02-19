@@ -208,28 +208,28 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=div#exposeMask</td>
-	<td>loadingBlock</td>
+	<td>css=.mp-gallery-loader</td>
+	<td>galleryLoader</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=.mp-full-description-body</td>
-	<td>fullDescriptionBody</td>
+	<td>css=#mp-detail-teaser-description</td>
+	<td>teaserDescription</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=.mp-full-description-title</td>
-	<td>fullDescriptionTitle</td>
+	<td>css=#mp-detail-teaser-title</td>
+	<td>teaserTitle</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=.mp-description-title</td>
-	<td>descriptionTitle</td>
+	<td>css=#mp-detail-title</td>
+	<td>detailTitle</td>
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=p.mp-description-body</td>
-	<td>descriptionBody</td>
+	<td>css=#mp-detail-description-wrapper</td>
+	<td>detailDescription</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -260,6 +260,11 @@
 	<td>store</td>
 	<td>css=button.mp-mouseover-place</td>
 	<td>showPlaceControls</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=.mp-thumb.mp-test-photo-used</td>
+	<td>galleryPhotos</td>
 </tr>
 </tbody></table>
 </body>

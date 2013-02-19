@@ -102,8 +102,23 @@ UIPhotoCarousel.prototype = {
     */
    _update : function (from, to) {
       
-      var showNew, instance = this, duration, imageSource,
-          $items = this.$items.slice(from, to);
+      var showNew, 
+          instance = this, 
+          duration, 
+          imageSource,
+          $items = this.$items.slice(from, to),
+          nItems = $items.length,
+          nUpdated = 0,
+          // we need to make sure we call update after all(!) photos are completely faded in/out
+          updated = function () {
+             nUpdated += 1;
+             if (nUpdated === nItems){
+                // execute onUpdate handler if defined in options
+                if (instance.options.onUpdate) {
+                   instance.options.onUpdate.call(instance.options.context, $items);
+                }
+             }
+          };
       
       // remove mp-animate classes
       $items.removeClass("mp-animate-02s mp-animate-08s");
@@ -117,22 +132,28 @@ UIPhotoCarousel.prototype = {
          duration = 500;
       }
 
+      
+
       window.setTimeout(function () {
          $items.each(function (index) {
-               imageSource = instance.currentPage[from + index];
-               if ( imageSource !== null) {
-                  $(this).fadeTo(duration, 1).attr("src", imageSource);
-               } else {
-                  $(this).fadeOut(0).removeAttr("src");
-               }
-            });
-            if (instance.options.effect === "foldIn") {
-               $items.removeClass("mp-scale-X-0");
+            imageSource = instance.currentPage[from + index];
+            if ( imageSource !== null) {
+               $(this).fadeTo(duration, 1, updated)
+                  .attr("src", imageSource)
+               // needed for frontend testing to select 'active' photos
+                  .addClass("mp-test-photo-used");
+            } else {
+               $(this).fadeOut(0, updated)
+                  .removeAttr("src")
+               // needed for frontend testing to select 'active' photos
+                  .removeClass("mp-test-photo-used");
             }
-            // execute onUpdate handler if defined in options
-            if (instance.options.onUpdate) {
-               instance.options.onUpdate.call(instance.options.context);
-            }
+
+         });
+         if (instance.options.effect === "foldIn") {
+            $items.removeClass("mp-scale-X-0");
+         }
+
       }, duration);
    },
    

@@ -103,6 +103,7 @@ UIInformation.prototype = {
       }
       else{
          shortDescription = this.noDescription;
+         description = this.noDescription;
          // this is from a trusted source and might be html
          this.$teaserDescription.html(shortDescription);
       }

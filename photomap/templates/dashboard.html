@@ -12,23 +12,13 @@
 {% endblock %}
 
 
+{% block left-column %}
+<section class="mp-map mp-map-dashboard" id="mp-map">
+  <div class="mp-map-wrapper" id="map"></div>
+</section>
+{% endblock %}
+
 {% block controls %}
 <img class="mp-cursor-pointer mp-control mp-option-share" src="/static/images/share.png" title='{% trans "control-title share" %}' />
-{% endblock %}
-{% block slideshow/??? %}
-   <section class="" >
-     <!-- <div class="mp-empty-box"> -->
-     <!--  <span>This box doesn't have a purpose yet!</span> -->
-     <!-- </div> -->
-   </section>
-{% endblock %}
-{% block gallery/news-feed %}
-{% endblock %}
-
-
-
-{% block content_interactive %}
-	<!-- helpers for selenium ide. remove from production system -->
-        {% include "tests.html" %}
 {% endblock %}
 

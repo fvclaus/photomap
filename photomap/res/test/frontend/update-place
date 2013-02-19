@@ -53,13 +53,13 @@
 </tr>
 <tr>
 	<td>assertText</td>
-	<td>${descriptionBody}</td>
+	<td>${detailDescription}</td>
 	<td>${lipsum2}</td>
 </tr>
 <tr>
-	<td>assertText</td>
-	<td>${descriptionTitle}</td>
-	<td>${placeNewTitle}</td>
+	<td>assertVisible</td>
+	<td>${detailTitle}</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

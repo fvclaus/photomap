@@ -6,13 +6,14 @@
 var state;
 
 function initializeAfterAjax() {
-   state = main.getUIState();
+   //TODO either we automatically select the first album in the dashboard or we don't select anything here
+   // state = main.getUIState();
 
-   $(".mp-page-title h1")
-      .css("cursor", "pointer")
-      .addClass("mp-control");
-   if (state && state.getPlaces()[0]) {
-      state.getPlaces()[0].triggerDoubleClick();
-   }
+   // $(".mp-page-title h1")
+   //    .css("cursor", "pointer")
+   //    .addClass("mp-control");
+   // if (state && state.getPlaces()[0]) {
+   //    state.getPlaces()[0].triggerDoubleClick();
+   // }
 }
 
