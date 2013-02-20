@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>${deleteDialog}</td>
+	<td>${inputForm}</td>
 	<td></td>
 </tr>
 <tr>
@@ -37,8 +37,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForNotVisible</td>
-	<td>${deleteDialog}</td>
+	<td>waitForElementNotPresent</td>
+	<td>${inputForm}</td>
 	<td></td>
 </tr>
 </tbody></table>

@@ -17,12 +17,12 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForNotVisible</td>
-	<td>${currentPhotoFull}</td>
-	<td></td>
+	<td>waitForText</td>
+	<td>${fullscreenTitle}</td>
+	<td>${photo1NewTitle}</td>
 </tr>
 <tr>
-	<td>waitForVisible</td>
+	<td>assertVisible</td>
 	<td>${currentPhotoFull}</td>
 	<td></td>
 </tr>

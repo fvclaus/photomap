@@ -93,8 +93,18 @@
 </tr>
 <tr>
 	<td>store</td>
+	<td>alb0mpassw0rd</td>
+	<td>albumPassword</td>
+</tr>
+<tr>
+	<td>store</td>
 	<td>css=input[name=&quot;photo&quot;]</td>
 	<td>photoInput</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=input[name='password']</td>
+	<td>passwordInput</td>
 </tr>
 <tr>
 	<td>store</td>
@@ -228,6 +238,11 @@
 </tr>
 <tr>
 	<td>store</td>
+	<td>css=#mp-fullscreen-title</td>
+	<td>fullscreenTitle</td>
+</tr>
+<tr>
+	<td>store</td>
 	<td>css=.mp-fullscreen-image</td>
 	<td>currentPhotoFull</td>
 </tr>
@@ -248,6 +263,11 @@
 </tr>
 <tr>
 	<td>store</td>
+	<td>css=.mp-option-share</td>
+	<td>shareButton</td>
+</tr>
+<tr>
+	<td>store</td>
 	<td>css=button.mp-mouseover-album</td>
 	<td>showAlbumControls</td>
 </tr>
@@ -260,6 +280,11 @@
 	<td>store</td>
 	<td>css=.mp-thumb.mp-test-photo-used</td>
 	<td>galleryPhotos</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=span.mp-open-full-description</td>
+	<td>openDetail</td>
 </tr>
 </tbody></table>
 </body>

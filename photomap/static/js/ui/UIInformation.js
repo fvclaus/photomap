@@ -80,7 +80,11 @@ UIInformation.prototype = {
       var title = model.getModel()+": "+model.title,
           description = model.description;
       // use text() instead of html() to prevent script tag injection or similiar
-      this.$description.text(description);
+      if (description === null) {
+         this.$description.html(this.noDescription);
+      } else {
+         this.$description.text(description);
+      }
       this.$title.text(title);
    },
    /**
@@ -90,13 +94,13 @@ UIInformation.prototype = {
       var shortDescription,
           title = "Photo: "+photo.title,
           description = photo.description;
-      // the description is null (what the db says), the description is "" (what $description.val() says)
-      if (description !== null && description !== "") {
+
+      if (description !== null) {
          shortDescription = main.getUI().getTools().cutText(description, 350);
          this.$teaserDescription.text(shortDescription);
       }
       else{
-         shortDescription = this.noDescription;
+         shortDescription = this.noTeaserDescription;
          description = this.noDescription;
          // this is from a trusted source and might be html
          this.$teaserDescription.html(shortDescription);

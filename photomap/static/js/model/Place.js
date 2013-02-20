@@ -136,5 +136,6 @@ Place.prototype.openPlace = function () {
    ui.getGallery().reset();
    ui.getSlideshow().reset();
    this._showGallery();
+   ui.getInformation().update(this);
 };
    

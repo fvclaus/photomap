@@ -23,23 +23,33 @@
 </tr>
 <tr>
 	<td>click</td>
-	<td>css=.mp-option-share</td>
-	<td></td>
-</tr>
-<tr>
-	<td>click</td>
-	<td>${showAlbumShare}</td>
+	<td>${shareButton}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>waitForVisible</td>
-	<td>${albumShare}</td>
+	<td>${inputForm}</td>
 	<td></td>
 </tr>
 <tr>
 	<td>storeValue</td>
-	<td>css=input#mp-share-link</td>
+	<td>css=input[name='share']</td>
 	<td>albumShareUrl</td>
+</tr>
+<tr>
+	<td>type</td>
+	<td>${passwordInput}</td>
+	<td>${albumPassword}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>${submit}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>${inputForm}</td>
+	<td></td>
 </tr>
 </tbody></table>
 </body>

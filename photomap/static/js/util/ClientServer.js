@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, Album, Place, Photo, gettext */
+/*global $, main, Album, Place, Photo, gettext, window */
 
 "use strict";
 
@@ -24,10 +24,10 @@ ClientServer.prototype = {
    init : function () {
       if (main.getUIState().isAlbumView()){
          this._getPlaces();
-      }
-      else{
+      } else if (main.getUIState().isDashboardView()) {
          this._getAlbums();
-
+      } else {
+         throw new Error("Unknown page " + window.location);
       }
    },
    /**
@@ -128,14 +128,15 @@ ClientServer.prototype = {
     */
    _getPlaces : function () {
       
-      var data, tools, id, secret, instance = this;
-      tools = main.getUI().getTools();
-      data = {
-         'id' : tools.getUrlId()
-      };
+      var idFromUrl = /-(\d+)$/,
+          data = {
+             "id" : idFromUrl.exec(window.location.pathname)[1]
+          }, 
+          tools = main.getUI().getTools(),  
+          instance = this;
 
       $.ajax({
-         "url" : "get-album",
+         "url" : "/get-album",
          "data" : data,
          success: function (albuminfo) {
 

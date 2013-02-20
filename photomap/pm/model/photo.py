@@ -27,13 +27,13 @@ class Photo(Description):
     
     def getphotourl(self):
         if settings.DEBUG:
-            return os.path.relpath(self.photo.path, settings.PROJECT_PATH)
+            return "/" + os.path.relpath(self.photo.path, settings.PROJECT_PATH)
         else:
             return build_url(self.photo)
         
     def getthumburl(self):
         if settings.DEBUG:
-            return os.path.relpath(self.thumb.path, settings.PROJECT_PATH)
+            return "/" + os.path.relpath(self.thumb.path, settings.PROJECT_PATH)
         else:
             return build_url(self.thumb)
     

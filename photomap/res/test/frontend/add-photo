@@ -24,7 +24,7 @@
 <tr>
 	<td>type</td>
 	<td>${titleInput}</td>
-	<td>${photo1Title}</td>
+	<td>${photo2Title}</td>
 </tr>
 <tr>
 	<td>type</td>

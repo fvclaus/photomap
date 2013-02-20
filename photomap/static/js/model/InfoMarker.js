@@ -13,7 +13,8 @@ var InfoMarker = function (data) {
    this.model = data.model;
    this.title = data.title;
    this.id = data.id;
-   this.description = data.description || null;
+   // reading from input elements will return '' if nothing has been entered
+   this.description = (data.description === "")? null : data.description;
    this.lat = data.lat;
    this.lng = data.lon;
 

@@ -27,9 +27,14 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForNotVisible</td>
-	<td>${deleteDialog}</td>
+	<td>waitForElementNotPresent</td>
+	<td>${inputForm}</td>
 	<td></td>
+</tr>
+<tr>
+	<td>waitForCssCount</td>
+	<td>${galleryPhotos}</td>
+	<td>1</td>
 </tr>
 </tbody></table>
 </body>

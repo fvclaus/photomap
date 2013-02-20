@@ -17,6 +17,11 @@
 	<td></td>
 </tr>
 <tr>
+	<td>waitForText</td>
+	<td>${fullscreenTitle}</td>
+	<td>${photo2Title}</td>
+</tr>
+<tr>
 	<td>waitForVisible</td>
 	<td>${currentPhotoFull}</td>
 	<td></td>

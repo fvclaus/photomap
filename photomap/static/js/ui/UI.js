@@ -153,7 +153,8 @@ UI.prototype = {
          lon: lon,
          id : data.id,
          title : this.getState().retrieve(TEMP_TITLE_KEY),
-         description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
+         description : this.getState().retrieve(TEMP_DESCRIPTION_KEY),
+         secret : data.secret
       });
       album.show();
       this.getState().insertAlbum(album);

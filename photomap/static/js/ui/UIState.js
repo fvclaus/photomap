@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, window, main, PAGE_MAPPING, DASHBOARD_VIEW, ALBUM_VIEW */
+/*global $, window, main, PAGE_MAPPING, DASHBOARD_VIEW, ALBUM_VIEW, String */
 
 "use strict";
 
@@ -24,7 +24,7 @@ UIState = function () {
    this.fontSize = null;
    this.fullscreen = null;
    //PAGE_MAPPING is defined in constants.js
-   this.page = PAGE_MAPPING[window.location.pathname];
+   this.page = window.location.pathname;
    this.data = {};
 };
 
@@ -130,10 +130,18 @@ UIState.prototype = {
       });
    },
    isDashboardView : function () {
-      return this.page === DASHBOARD_VIEW;
+      if (this.page.search(DASHBOARD_VIEW) !== -1) {
+         return true;
+      } else {
+         return false;
+      }
    },
    isAlbumView : function () {
-      return this.page === ALBUM_VIEW;
+      if (this.page.search(ALBUM_VIEW) !== -1) {
+         return true;
+      } else {
+         return false;
+      }
    },
    //--------------------------------------------------------------------
    //UI------------------------------------------------------------------

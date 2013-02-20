@@ -16,7 +16,16 @@
 	<td>${albumShareUrl}</td>
 	<td></td>
 </tr>
-
+<tr>
+	<td>type</td>
+	<td>${passwordInput}</td>
+	<td>${albumPassword}</td>
+</tr>
+<tr>
+	<td>clickAndWait</td>
+	<td>css=input[type='submit']</td>
+	<td></td>
+</tr>
 </tbody></table>
 </body>
 </html>

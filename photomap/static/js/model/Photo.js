@@ -16,7 +16,7 @@ Photo = function (data, index) {
    this.photo = data.photo;
    this.thumb = data.thumb;
    this.title = data.title;
-   this.description = data.description || null;
+   this.description = (data.description === "")? null : data.description;
    this.id = data.id;
    this.order = data.order;
    this.visited = main.getClientState().isVisitedPhoto(this.id);

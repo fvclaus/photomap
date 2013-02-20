@@ -15,6 +15,9 @@ Album = function (data) {
    
    data.model = 'Album';
    this.isOwner = data.isOwner || false;
+   if (!data.secret) {
+      throw new Error("Album " + data.title + " must have a secret");
+   }
    this.secret = data.secret;
    InfoMarker.call(this, data);
    
@@ -54,7 +57,7 @@ Album.prototype._bindListener = function () {
 };
 
 Album.prototype.openURL = function () {
-   window.location.href = '/view-album?id=' + this.id;
+   window.location.href = '/album/view/' + this.secret + '-' + this.id;
 };
 
 Album.prototype.checkIconStatus = function () {

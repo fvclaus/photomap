@@ -71,7 +71,8 @@ function initializeTest() {
 
       latLngAlbum = new google.maps.LatLng(Math.random() * 42, Math.random() * 42);
       center = gmap.getCenter();
-      latLngPlace = new google.maps.LatLng(center.lat() - Math.random(), center.lng() + Math.random());
+      // create a place that is close enough to the current viewport to be visible
+      latLngPlace = new google.maps.LatLng(center.lat() - Math.random() / 10, center.lng() + Math.random() / 10);
 
       bindTestListener();
       //give the ok to the selenium test suite

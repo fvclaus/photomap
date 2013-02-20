@@ -75,6 +75,8 @@ class AlbumControllerTest(ApiTestCase):
         (album, content) = self.assertCreates(data)
         self.assertTrue(album.secret != None)
         self.assertEqual(album.country, "oc")
+        self.assertTrue(content["id"])
+        self.assertTrue(content["secret"])
         #=======================================================================
         # insert something valid without description
         #=======================================================================

@@ -60,16 +60,16 @@ def update_password(request):
     else:
         return render_to_response("update-album-password.html")
 
-
-def view(request):
-#    if not request.user.is_authenticated():
-#        return HttpResponseRedirect('/login')
-    if request.method == "GET":
-        return render_to_response("view-album.html",
-                                  {"testphotopath": data.TEST_PHOTO},
-                                  context_instance = RequestContext(request))
-    else:
-        return HttpResponseBadRequest()
+#
+#def view(request):
+##    if not request.user.is_authenticated():
+##        return HttpResponseRedirect('/login')
+#    if request.method == "GET":
+#        return render_to_response("view-album.html",
+#                                  {"testphotopath": data.TEST_PHOTO},
+#                                  context_instance = RequestContext(request))
+#    else:
+#        return HttpResponseBadRequest()
 
 
 def share(request, secret, album_id):
@@ -86,19 +86,26 @@ def share(request, secret, album_id):
             return render_to_response("album-share-failure.html")
     
         if request.method == "GET":
+            # user owns the album
+            if request.user == album.user or request.session.get("album_%d" % album_id):
+                return render_to_response("view-album.html",
+                                  {"testphotopath": data.TEST_PHOTO},
+                                  context_instance = RequestContext(request))
             # album does not has a password yet
             if not hashers.is_password_usable(album.password):
                 logger.debug("Album does not has a password yet.")
                 return render_to_response("album-share-failure.html")
+            
             return render_to_response("album-share-login.html")
         else:
             password = request.POST["password"]
             
             if hashers.check_password(password, album.password):
                 request.session["album_%d" % album_id] = True
-                return redirect("/view-album?id=%d" % album_id)
+                return redirect("/album/view/%s-%d" % (album.secret, album_id))
             else:
-                return render_to_response("album-share-login.html", {error: "Passwort is not correct."})
+                logger.debug("Password %s is incorrect." % password)
+                return render_to_response("album-share-login.html", {"password_incorrect_error": "Passwort is not correct."})
     except Exception, e:
         logger.info(str(e))
         return render_to_response("album-share-failure.html")
@@ -117,6 +124,10 @@ def get(request):
             if user.is_anonymous():
                 if not request.session.get("album_%d" % album_id):
                     return error("You are not authorized to view this album.")
+                else:
+                    album  = Album.objects.get(pk = album_id)
+            else:
+                album = Album.objects.get(user = request.user, pk = album_id)
                 
 #            # no album_id -- try to take newest album of this user
 #            else:
@@ -126,7 +137,7 @@ def get(request):
 #                    logger.info("No ID has been specified. Returning album %d." % album.pk)
 #                else:
 #                   
-            album = Album.objects.get(user = request.user, pk = album_id)
+
                 
             data = album.toserializable()
             if album.user == user:
@@ -169,7 +180,7 @@ def insert(request):
             album.password = password
             album.save()
             logger.info("Album %d inserted." % album.pk)
-            return success(id = album.pk)
+            return success(id = album.pk, secret = album.secret)
         else:
             return error(str(form.errors))
     else:

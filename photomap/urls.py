@@ -29,7 +29,8 @@ urlpatterns = patterns("",
                        # main
                        #========================================================
                        url(r'^login$', authentication.login),
-                       url(r'^view-album$', album.view),
+                       # url(r'^view-album$', album.view),
+                       url(r'^album/view/(.+)-(\d+)$', album.share),
                        url(r'^get-all-albums$', dashboard.get),
                        url(r'^get-album$', album.get),
                        
@@ -66,7 +67,7 @@ urlpatterns = patterns("",
                        url(r'^update-album$', album.update),
                        url(r'^delete-album$', album.delete),
                        url(r'^update-album-password$', album.update_password),
-                       url(r'^album/share/(.*)-(\d)$', album.share),
+#                       url(r'^album/share/(.+)-(\d+)$', album.share),
                        #================================================================
                        # photo hooks
                        #================================================================

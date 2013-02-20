@@ -18,9 +18,9 @@
 <tr><td><a href="close-description">close-description</a></td></tr>
 <tr><td><a href="insert-another-photo">insert-another-photo</a></td></tr>
 <tr><td><a href="update-another-photo">update-another-photo</a></td></tr>
-<tr><td><a href="add-photo">add-photo</a></td></tr>
 <tr><td><a href="open-description">open-description</a></td></tr>
 <tr><td><a href="update-photo">update-photo</a></td></tr>
+<tr><td><a href="add-photo">add-photo</a></td></tr>
 <tr><td><a href="start-fullscreen">start-fullscreen</a></td></tr>
 <tr><td><a href="navigate-fullscreen">navigate-fullscreen</a></td></tr>
 <tr><td><a href="close-fullscreen">close-fullscreen</a></td></tr>
