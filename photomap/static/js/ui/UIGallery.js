@@ -145,6 +145,7 @@ UIGallery.prototype =  {
          this.carousel = null;
       }
    },
+
    /**
     * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
     */

@@ -37,7 +37,7 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
+	<td>waitForElementNotPresent</td>
 	<td>${inputForm}</td>
 	<td></td>
 </tr>

@@ -38,6 +38,7 @@ UIFullscreen = function (slideshow) {
    this.visible = false;
    this.started = false;
    this.zoomInitialized = false;
+   this.disabled = true;
 };
 
 UIFullscreen.prototype = {
@@ -158,13 +159,21 @@ UIFullscreen.prototype = {
       }
    },
    disable : function () {
-      
+      this.disabled = true;
       this.$navLeft.off(".Fullscreen");
       this.$navRight.off(".Fullscreen");
       this.$close.off(".Fullscreen");
    },
    enable : function () {
+      this.disabled = false;
       this._bindListener();
+   },
+   /**
+    * @public
+    * @description This is used by the frontend test to 'wait' for the fullscreen to become enabled again
+    */
+   isDisabled : function () {
+      return this.disabled;
    },
    _bindListener : function () {
       

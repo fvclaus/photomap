@@ -24,7 +24,6 @@
 <tr><td><a href="start-fullscreen">start-fullscreen</a></td></tr>
 <tr><td><a href="navigate-fullscreen">navigate-fullscreen</a></td></tr>
 <tr><td><a href="close-fullscreen">close-fullscreen</a></td></tr>
-<tr><td><a href="test-description">test-description</a></td></tr>
 <tr><td><a href="delete-photo">delete-photo</a></td></tr>
 <tr><td><a href="delete-place">delete-place</a></td></tr>
 <tr><td><a href="to-dashboard">to-dashboard</a></td></tr>

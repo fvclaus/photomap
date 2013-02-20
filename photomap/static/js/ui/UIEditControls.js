@@ -95,6 +95,12 @@ UIEditControls.prototype = {
       // gets the absolute pixel position
       pixel = main.getMap().getPositionInPixel(element);
       markerSize = element.getSize();
+      // this happens when the Icon representing the Marker is not loaded yet
+      // this should only happen during frontend tests
+      if (markerSize === undefined) {
+         //TODO find a better way to do this
+         markerSize = { width : 18 }; 
+      }
 
       // center box under marker
       pixel.left += markerSize.width / 2;

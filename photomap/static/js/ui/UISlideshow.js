@@ -22,7 +22,7 @@ var UISlideshow = function () {
    this.fullscreen = new UIFullscreen(this);
    
    this.isStarted = false;
-   this.isLoading = false;
+   this._isDisabled = true;
 };
 
 UISlideshow.prototype = {
@@ -145,7 +145,21 @@ UISlideshow.prototype = {
          this.carousel.navigateTo(index);
       }
    },
-
+   /**
+    * @public
+    * @description This is used to check if the Slideshow is still loading or updating the currentPhoto.
+    * This is also used by the frontend test to 'wait'.
+    */
+   isDisabled : function () {
+      return !this._isDisabled && !main.getUI().isDisabled();
+   },
+   /**
+    * @public
+    * @description @see UIFullscreen.isDisabled
+    */
+   isFullscreenDisabled : function () {
+      return this.fullscreen.isDisabled();
+   },
    /**
     * @private
     * @description Executed after photos are updated (=displayed)
@@ -158,13 +172,14 @@ UISlideshow.prototype = {
       
       //TODO this event is best triggered on the UI object. This is more intuitive and less likely to change
       $("#mp-content").trigger("slideshowChanged");
+      this._isDisabled = false;
    },
    /**
     * @private
     * @description Executed before photos are loaded
     */
    _beforeLoad : function ($photos) {
-      this.isLoading = true;
+      this._isDisabled = true;
       $photos.each(function () {
          $(this)
             .hide()
@@ -177,7 +192,6 @@ UISlideshow.prototype = {
     * @description Executed after photos are loaded
     */
    _afterLoad : function ($photos) {
-      this.isLoading = false;
       //TODO hide loading again
       $photos.each(function () {
          $(this)
@@ -230,13 +244,6 @@ UISlideshow.prototype = {
       this.$photoNumber.text("");
    },
    /**
-    * @private 
-    * @return true if interface is ready to accept new commands, false otherwise
-    */
-   _isReady : function () {
-      return !this.isLoading && !main.getUI().isDisabled();
-   },
-   /**
     * @private
     * @description Sets listener for both navigation elements and the image to start the fullscreen
     */
@@ -248,7 +255,7 @@ UISlideshow.prototype = {
       this.$navLeft.on("click", function () {
          
          console.log("?left?");
-         if (instance._isReady()) {
+         if (instance.isDisabled()) {
             if (!instance.isStarted) {
                //TODO @see $navRight.on("click",...)
                instance.start();
@@ -260,7 +267,7 @@ UISlideshow.prototype = {
       });
       this.$navRight.on("click", function () {
          // UIPhotoCarousel does not 'really' support aborting loading of the current photo and skipping to the next one
-         if (instance._isReady()) {
+         if (instance.isDisabled()) {
             if (!instance.isStarted) {
                //TODO we need to change the text in the empty slideshow to advertise this behaviour
                instance.start();
@@ -271,7 +278,7 @@ UISlideshow.prototype = {
       });
       this.$image.on("click.Slideshow", function () {
          
-         if (instance._isReady()) {
+         if (instance.isDisabled()) {
             instance.fullscreen.open();
          }
       });
