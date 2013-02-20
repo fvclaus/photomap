@@ -13,9 +13,10 @@ var latLngAlbum, latLngPlace, state, places, place, photos, photo, albums, album
 
 
 
-/*
-  @author: Frederik Claus
-  @summary: selects and returns the last place
+/**
+ * @author Frederik Claus
+ * @summary selects and returns the last place
+ * @note This class uses alert instead of errors or assertions. Most of the time the debugger is closed, while running the tests. Errors could be overlooked.
 */
 function selectPlace() {
    state = main.getUIState();
@@ -60,7 +61,7 @@ function selectPhoto() {
 function initializeTest() {
 
    if (typeof google.maps !== "object"){
-      throw new Error("gmaps does not seem to be used anymore. Please update ui-tests.");
+      alert("gmaps does not seem to be used anymore. Please update ui-tests.");
    }
 
    gmap = main.getMap().map;

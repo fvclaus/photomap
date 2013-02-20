@@ -1,23 +1,19 @@
 /*jslint */
-/*global $, main, InfoMarker, google, window */
+/*global $, main, InfoMarker, google, window, assertTrue */
 
 "use strict";
 
 /*
  * Album.js
  * @author Marc Roemer
- * @class Models an album that holds an unspecified amount of places
+ * @class Models an album that holds places
  */
 
-var Album;
-
-Album = function (data) {
+var Album = function (data) {
+   assertTrue(data.secret);
    
    data.model = 'Album';
    this.isOwner = data.isOwner || false;
-   if (!data.secret) {
-      throw new Error("Album " + data.title + " must have a secret");
-   }
    this.secret = data.secret;
    InfoMarker.call(this, data);
    
@@ -44,7 +40,7 @@ Album.prototype._bindListener = function () {
       if (!main.getUI().isDisabled()) {
          state.setCurrentAlbum(instance);
          state.setCurrentLoadedAlbum(instance);
-         information.updateAlbum();
+         information.update(instance);
       }
    });
    this.addListener("dblclick", function () {

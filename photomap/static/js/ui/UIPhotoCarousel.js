@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, CarouselPage */
+/*global $, main, CarouselPage, assert, assertTrue */
 
 "use strict";
 
@@ -11,9 +11,8 @@
 
    
 var UIPhotoCarousel = function ($photos, imageSources, options) {
-   
-   // make a deep copy of the imageSources so that the original aray won't get modified
-   
+   assertTrue($photos.size() > 0);
+
    this.defaults = {
       lazy : false,
       effect : "fade",
@@ -33,6 +32,10 @@ var UIPhotoCarousel = function ($photos, imageSources, options) {
 /**
  * @author Marc-Leon Roemer
  * @description defines handler to initialize and navigate through the carousel and to load images (supports lazy-loading)
+ * @note every callback will be called everytime no matter if there is something to load/update or not
+ * @param options.beforeLoad Called before the photos are loaded
+ * @param options.afterLoad Called after all photos are loaded (successful or not)
+ * @param options.onUpdate Called after all photos are updated
  */
 UIPhotoCarousel.prototype = {
    
@@ -83,18 +86,21 @@ UIPhotoCarousel.prototype = {
          // trigger the beforeLoad event
          this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || nSources));
       }
-
+      // this is called at startup when there are no photos present or after all photos are deleted
       if (nSources === 0){
          if (typeof this.options.afterLoad === "function") {
-            this.options.afterLoad.call(this.options.context, $());
+            this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || nSources));
+         }
+         if (typeof this.options.onUpdate === "function") {
+            this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nSources));
          }
       }
 
       for (i = 0; i < nSources; i++) {
          source = imageSources[i];
-
          $('<img/>')
             .load(loadHandler)
+            .error(loadHandler)
             .attr('src', source);
       }
 
@@ -103,6 +109,8 @@ UIPhotoCarousel.prototype = {
     * @description Updates carousel to show current page.
     * @param {int} from: The index of the first photo that gets updated. Default is 0
     */
+   //TODO this i called even when not all photo could be loaded (e.g network error)
+   // we need to indicate that a photo could not be loaded
    _update : function (from, to) {
       
       var showNew, 
@@ -122,7 +130,7 @@ UIPhotoCarousel.prototype = {
                 }
              }
           };
-      
+      assertTrue($items.size() > 0);
       // remove mp-animate classes
       $items.removeClass("mp-animate-02s mp-animate-08s");
       
@@ -134,8 +142,6 @@ UIPhotoCarousel.prototype = {
          $items.fadeTo(500, 0);
          duration = 500;
       }
-
-      
 
       window.setTimeout(function () {
          $items.each(function (index) {
@@ -218,11 +224,12 @@ UIPhotoCarousel.prototype = {
       this.options = null;
       this.currentPage = null;
       this.$items.each(function (index) {
-         
          $(this).hide().attr("src", "");
       });
    },
    navigateTo : function (to) {
+      assert(this.isStarted, true);
+
       switch (to) {
       case "start":
          this.currentPage = this.dataPage.getFirstPage();

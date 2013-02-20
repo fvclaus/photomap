@@ -48,7 +48,7 @@
 
       <!-- js -->
          <!-- for django js translation -->
-            <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+         <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
          <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->
          <script type="text/javascript" src="/static/js/lib/jquery-1.7.2-min.js"></script>
          <script type="text/javascript" src="/static/js/lib/jquery.tools.notabs.min.js"></script>
@@ -60,6 +60,7 @@
          <!-- <script type="text/javascript" src="/static/js/lib/jquery-ui-1.9.0.custom.min.js"></script> -->
          <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
          <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
+         <script type="text/javascript" src="/static/js/lib/assert.js"></script>
          <!-- javascript libraries -->
 
       {% compress js %}
@@ -85,7 +86,9 @@
 
          <header class="mp-page-header column span-24 last" id="mp-page-header">
             <section class="mp-logo column span-6">
-              <img src="/static/images/logo.png" class="mp-control mp-cursor-pointer mp-keiken-logo"/>
+              <a href="/">
+                <img src="/static/images/logo.png" class="mp-control mp-cursor-pointer mp-keiken-logo"/>
+              </a>
             </section>
 				<section class="mp-top-panel column span-8">
                <div class="mp-placeholder-fullheight column span-24"></div>

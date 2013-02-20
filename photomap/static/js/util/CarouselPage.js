@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main */
+/*global $, main, assertTrue */
 
 "use strict";
 
@@ -94,9 +94,7 @@ CarouselPage.prototype = {
     */
    _setCurrentPage : function (index) {
       //TODO setting currentPage is prone to error when we update the pages Array. Only store currentPageIndex
-      if (this.pages[index] === undefined){
-         throw new Error("Page "+index+" is undefined");
-      }
+      assertTrue(this.pages[index] !== undefined);
       this.currentPageIndex = index;
    },
    getCurrentPage : function () {

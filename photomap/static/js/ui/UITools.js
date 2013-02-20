@@ -23,6 +23,7 @@ UITools.prototype = {
       return ((x % y) + y) % y;
    },
    cutText : function (text, size) {
+
       if (text === null){
          return text;
       }
@@ -54,9 +55,6 @@ UITools.prototype = {
          }
       } else if (text.length <= size) {
          substring = text;
-      } else {
-         substring = null;
-         throw new Error("The text-string is null.");
       }
       
       return substring;

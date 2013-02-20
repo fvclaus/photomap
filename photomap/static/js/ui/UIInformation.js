@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, mpEvents, ALBUM_VIEW, Photo, Place, Album */
+/*global $, main, mpEvents, ALBUM_VIEW, Photo, Place, Album, InfoMarker, assert, assertTrue */
 
 "use strict";
 
@@ -8,7 +8,7 @@
  * @class shows description and titles of current Album/Place/Photo in several Places of the UI
  */
 
-var UIInformation, title, info, api;
+var UIInformation; 
 
 UIInformation = function () {
    this.$explanationContainer = $("#mp-detail");
@@ -24,56 +24,49 @@ UIInformation = function () {
    this.noDescription = this.$description.html();
    this.noTeaserDescription = this.$teaserDescription.html();
 
-   this.oldModel = null;
    this.currentPhoto = null;
-
+   this.currentPlaceOrAlbum = null;
    this._bindListener();
-
+   // initialize the scollpane
    this.$descriptionWrapper.jScrollPane(); 
 };
 
 UIInformation.prototype = {
-
-   updateAlbum : function () {
-      //no album selected yet
-      var album = main.getUIState().getCurrentLoadedAlbum();
-      if (album  === null){
-         return;
-      }
-      if (main.getUIState().isAlbumView()) {
-         $(".mp-page-title h1").text(album.title);
-      }
-      this.update(album);
-      // we need to show the full description after(!) the description has been updated
-      // otherwise the scollpane won't initialize properly
-      // this.showFullDescription();
-   },
+   /**
+    * @public
+    * @description This will show the details or the teaser for the details of the model in question.
+    * If the model is a Place or Album, the description & title will always be displayed in the detail box.
+    * If the model is a Photo, the description & title will always be displayed in the teaser box
+    * @param {Photo, Place, Album} model
+    */
    update : function (model) {
+      assertTrue(model instanceof Photo || model instanceof Place || model instanceof Album);
+
       if (model instanceof Photo) {
          this.currentPhoto = model;
          this._updateTeaser(model);
          this._hideDetail();
       } else if (model instanceof Album || model instanceof Place) {
+         this.currentPlaceOrAlbum = model;
          this._updateDetail(model);
-         //TODO we only need to reinitialise the scrollpane, but for now:
          this._showDetail();
-         // if (this.oldModel === null || this.oldModel instanceof Photo) {
-         //    this._showDescription();
-         // }
-      } else {
-         throw new Error("Unknown class " + typeof model);
       }
-      this.oldModel = model;
    },
+   /**
+    * @public
+    * @description Empties the teaser box if the input is the photo that is currently displayed in the teaser box.
+    * If the input is the current displayed place or album, the detail box is emptied.
+    * @param {Photo, Place, Album} model
+    */
    empty : function (model) {
-      if (model instanceof Photo) {
+      assertTrue(model instanceof Photo || model instanceof Place || model instanceof Album);
+      
+      if (model instanceof Photo && model === this.currentPhoto) {
          this.$teaserDescription.empty();
          this.$teaserTitle.empty();
-      } else if (model instanceof Album || model instanceof Place) {
+      } else if ((model instanceof Album || model instanceof Place) && model === this.currentPlaceOrAlbum ) {
          this.$description.empty();
          this.$title.empty();
-      } else {
-         throw new Error("Unknown class " + typeof model);
       }
    },
    _updateDetail : function (model) {
@@ -88,6 +81,7 @@ UIInformation.prototype = {
       this.$title.text(title);
    },
    /**
+    * @public
     * @summary Sets the description in the PhotoDescription and Description box (only if necessary)
     */
    _updateTeaser : function (photo) {
@@ -114,16 +108,22 @@ UIInformation.prototype = {
          // update it only when user clicks on open explanation link
       }
    },
+   /**
+    * @private
+    * @description Shows the detail box and reinitializes the scrollbar
+    */
    _showDetail : function () {
-      
-      var $innerWrapper = this.$title.siblings("div");
-      // $innerWrapper.jScrollPane(); 
-      
+      assertTrue(this.$descriptionWrapper.data("jsp") !== undefined);
+
       this.$explanationContainer.removeClass("mp-nodisplay");
       this.$descriptionWrapper
          .data("jsp")
          .reinitialise();
    },
+   /**
+    * @private
+    * @description Hides the detail box. The teaser box should be visible afterwards
+    */
    _hideDetail : function () {
       this.$explanationContainer.addClass("mp-nodisplay");
       this.$teaserContainer.removeClass("mp-nodisplay");

@@ -1,4 +1,4 @@
-/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image, ngettext, gettext */
+/*global $, document, FileReader,  Pixastic, parseInt, parseFloat, Image, ngettext, gettext, assert, assertTrue */
 
 "use strict";
 
@@ -23,9 +23,7 @@ UIPhotoEditor = function(){
 UIPhotoEditor.prototype = {
    edit : function (event) {
       //fail if markup is not present
-      if (!document.getElementById("ui-editor")){
-         throw new Error("Markup for UIPhotoEditor is not present. Please use the right template.");
-      }
+      assertTrue($("#ui-editor").size() > 0);
       
       this._init();
       instance = this;

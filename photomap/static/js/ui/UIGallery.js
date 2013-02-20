@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, fileUpload, UIPhotoCarousel */
+/*global $, main, fileUpload, UIPhotoCarousel, assert, assertTrue */
 
 "use strict";
 
@@ -37,6 +37,7 @@ var UIFullGallery = function () {
        this.currentPhoto = null;
        
        this.fullGallery = new UIFullGallery();
+       this.$insertPhoto = $(".mp-option-insert-photo");
     };
 
 
@@ -69,6 +70,7 @@ UIGallery.prototype =  {
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
    */
    start : function () {
+      assert(this.isStarted, false);
       
       var ui = main.getUI(),
           state = ui.getState(),
@@ -81,6 +83,9 @@ UIGallery.prototype =  {
       
       // reset FullGallery
       this.fullGallery.destroy();
+      // show insert photo button
+      this.$insertPhoto.removeClass("mp-nodisplay");
+
 
       // initialize and start carousel
       options = {
@@ -129,6 +134,8 @@ UIGallery.prototype =  {
     * remaining Photos to the left. If Photo was the last Photo, show an empty page.
     */
    deletePhoto : function (photo) {
+      // not possible to delete something without the gallery started
+      assert(this.isStarted, true);
       // automatically delete if photo is on current page
       // otherwise we dont care
       this.carousel.deletePhoto(photo.thumb);
@@ -140,6 +147,7 @@ UIGallery.prototype =  {
       
       this.isStarted = false;
       $(".mp-gallery-loader").hide();
+      this.$insertPhoto.addClass("mp-nodisplay");
       if (this.carousel !== null) {
          this.carousel.reset();
          this.carousel = null;
@@ -207,6 +215,7 @@ UIGallery.prototype =  {
     * @returns {int} Index of the $image element in all Photos of that Place, -1 if Photo does not belong to this place
     */
    _getIndexOfImage : function ($image) {
+      assertTrue($image.attr("src"));
       return this.carousel.getAllImageSources().indexOf($image.attr("src"));
    },
    /**
@@ -363,9 +372,8 @@ UIFullGallery.prototype = {
     * Therefore there is no need for messy array synchronisation or the like.
     */
    start : function () {
-      if (this.carousel === null) {
-         throw new Error("UIFullGallery needs a reference to a UIPhotoCarousel before starting");
-      }
+      assertTrue(this.carousel);
+
       this.$container
          .addClass("mp-full-gallery")
          .append(

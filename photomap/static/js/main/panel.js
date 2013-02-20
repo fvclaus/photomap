@@ -1,12 +1,17 @@
 /*jslint */
-/*global $, main, ALBUM_VIEW */
+/*global $, main, ALBUM_VIEW, window */
 
 "use strict";
 
 var initializePanels, bindLogoListener, bindTitleListener, resizeFooterFont, showDropupMenu, hideDropupMenu, menuEntered, bindUserMenuListener, menuHeight, menuTimeoutId;
-
+/**
+ * @description Redirects to dashboard if user is logged in, to landing page otherwise
+ */
 bindLogoListener = function () {
-   $(".mp-logo img").bind("click", function () {
+   $(".mp-logo img").bind("click", function (event) {
+      // prevent the default anchor forward action
+      // the anchor around the logo is needed in case js is disabled or failed
+      event.preventDefault();
       
       if (!main.getUI().isDisabled || (main.getUI && main.getUI().isDisabled && !main.getUI().isDisabled())) {
          if ($(".mp-user").size() > 0) {
@@ -22,10 +27,9 @@ bindTitleListener = function () {
    var instance = this;
       
    $(".mp-page-title h1").on('click', function () {
-      
+
       if (main.getUI && main.getUI().isDisabled && !main.getUI().isDisabled()) {
-         
-         main.getUI().getInformation().updateAlbum();
+         main.getUI().getInformation().update(main.getUIState().getCurrentLoadedAlbum());
       }
    });
 };

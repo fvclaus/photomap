@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, DASHBOARD_VIEW, ALBUM_VIEW, UIPhotoListener, UIPlaceListener, UIAlbumListener, window */
+/*global $, main, DASHBOARD_VIEW, ALBUM_VIEW, UIPhotoListener, UIPlaceListener, UIAlbumListener, window, Place, Album, assert, assertTrue */
 
 "use strict";
 
@@ -78,19 +78,18 @@ UIEditControls.prototype = {
     * @private
     */
    show : function (element) {
-      
+      assertTrue(element instanceof Album || element instanceof Place);
+
       var state = main.getUIState(), 
           controls = main.getUI().getControls(), 
           projection, pixel, markerSize, mapOffset;
 
-      if (element.getModel() === 'Album') {
+      if (element instanceof Album) {
          controls.setModifyAlbum(true);
          state.setCurrentAlbum(element);
-      } else if (element.getModel() === 'Place') {
+      } else if (element instanceof Place) {
          controls.setModifyPlace(true);
          state.setCurrentPlace(element);
-      } else {
-         throw new Error("Element must be one of Place or Album");
       }
       // gets the absolute pixel position
       pixel = main.getMap().getPositionInPixel(element);

@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, Album, Place, Photo, gettext, window */
+/*global $, main, Album, Place, Photo, gettext, window, assert, assertTrue */
 
 "use strict";
 
@@ -22,12 +22,12 @@ ClientServer = function () {
 
 ClientServer.prototype = {
    init : function () {
+      assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView());
+      
       if (main.getUIState().isAlbumView()){
          this._getPlaces();
       } else if (main.getUIState().isDashboardView()) {
          this._getAlbums();
-      } else {
-         throw new Error("Unknown page " + window.location);
       }
    },
    /**
@@ -84,9 +84,7 @@ ClientServer.prototype = {
           place = main.getUIState().getCurrentLoadedPlace();
       
       photos.forEach(function (photo) {
-         if (photo instanceof Photo) {
-            throw new Error("Please only use plain objects. Do not use the 'real' Photos");
-         }
+         assertTrue(photo instanceof Photo);
          
          // post request for each photo with updated order
          $.ajax({
@@ -146,8 +144,11 @@ ClientServer.prototype = {
                
                // set current album in UIState to have access on it for information, etc.
                main.getUIState().setCurrentLoadedAlbum(album);
+               // show album title in panel
+               $(".mp-page-title h1").text(album.title);
                // set album title & description
-               main.getUI().getInformation().updateAlbum();
+               main.getUI().getInformation().update(album);
+
 
                // in case there are no places yet show map around album marker
                if (!albuminfo.places || (albuminfo.places === null) || (albuminfo.places.length === 0)) {

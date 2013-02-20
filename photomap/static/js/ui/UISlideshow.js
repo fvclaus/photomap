@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UIPhotoCarousel, UIFullscreen */
+/*global $, main, UIPhotoCarousel, UIFullscreen, Photo, assert, assertTrue */
 
 "use strict";
 
@@ -35,6 +35,8 @@ UISlideshow.prototype = {
     * @description starts slideshow by initialising and starting the carousel (with given index)
     */
    start: function (index) {
+      assert(this.isStarted, false);
+
       var ui = main.getUI(),
           state = ui.getState(),
           photos = state.getPhotos(),
@@ -83,17 +85,15 @@ UISlideshow.prototype = {
     * @description Inserts a new Photo. This will not move the Carousel or do anything else.
     */
    insertPhoto : function (photo) {
+      assertTrue(photo instanceof Photo);
+
       // this is an unfortunate annoyance, but the gallery can be started without the slideshow
       // therefore we need to check if the gallery is started on an insert photo event
       // this is unfortunate, because the slideshow behaves differntly than the gallery
       if (this.isStarted){
          // does not move to the new photo, because photo cant be on current page
          this.carousel.insertPhoto(photo.photo);
-         // update the photo description
-         this._updateAndGetCurrentLoadedPhoto();
-         main.getUI().getInformation().update(photo);
-         // update the photo counter
-         
+         // updating description & photo number is handled in update
       }
    },
    /**
@@ -101,26 +101,21 @@ UISlideshow.prototype = {
     * If there is no previous Photo, nothing is shown.
     */
    deletePhoto : function (photo) {
+      assertTrue(photo instanceof Photo);
+
       // @see insertPhoto
       if (this.isStarted) {
          // automatically delete if photo is on current page
          this.carousel.deletePhoto(photo.photo);
-         // update the photo counter
-         var newPhoto = this._updateAndGetCurrentLoadedPhoto();
-         if (newPhoto === null) {
-            this.reset();
-         } else {
-            main.getUI().getInformation().update(newPhoto);
-         }
+         // update will take of resetting if it was the last one
       }
    },
    /**
-    * @description Resets the slideshow to a state before start() was called
+    * @description Resets the slideshow to a state before start() was called. 
+    * This can be called without ever starting the Slideshow
     */
    reset : function () {
-      
       this.isStarted = false;
-      
       //TODO if the last photo is deleted, it will fade out
       // therefore we must not delete the carousel until the fading out is complete
       // if (this.carousel !== null) {
@@ -128,7 +123,7 @@ UISlideshow.prototype = {
          // this.carousel = null;
       // }
       this._emptyPhotoNumber();
-      $(".mp-slideshow-loader");
+      $(".mp-slideshow-loader").hide();
       $(".mp-slideshow-no-image-msg").show();
    },
    /**
@@ -138,7 +133,6 @@ UISlideshow.prototype = {
    // This will shorten the code in other places and provides a more consistend abstraction.
    // All other public methods take photo as parameter.
    navigateTo : function (index) {
-      
       if (!this.isStarted) {
          this.start(index);
       } else {
@@ -162,17 +156,22 @@ UISlideshow.prototype = {
    },
    /**
     * @private
-    * @description Executed after photos are updated (=displayed)
+    * @description Executed after photo is updated (=displayed)
     */
    _update : function () {
+      this._isDisabled = false;
       var photo = this._updateAndGetCurrentLoadedPhoto();
-      this.fullscreen.update();
-      main.getUI().getInformation().update(photo);
-      this._updatePhotoNumber();
-      
+      // deleted last photo
+      if (photo  === null) {
+         this.reset();
+      } else {
+         this.fullscreen.update();
+         main.getUI().getInformation().update(photo);
+         this._updatePhotoNumber();
+      }
       //TODO this event is best triggered on the UI object. This is more intuitive and less likely to change
       $("#mp-content").trigger("slideshowChanged");
-      this._isDisabled = false;
+
    },
    /**
     * @private
@@ -205,7 +204,8 @@ UISlideshow.prototype = {
     * @returns {Photo} currentPhoto
     */
    _updateAndGetCurrentLoadedPhoto : function () {
-      
+      assert(this.isStarted, true);
+
       var ui = main.getUI(),
           state = main.getUIState(),
           // this might be updated at a later point, we can't rely on that

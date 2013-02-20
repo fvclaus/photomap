@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON, ZOOM_LEVEL_CENTERED */
+/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON, ZOOM_LEVEL_CENTERED, assert, assertTrue */
 
 "use strict";
 
@@ -74,37 +74,17 @@ UIMap.prototype = {
    },
    /**
     * @public
-    * @summary This will return a dictionary contain
-    * In the current implementation that means that the center has changed and the tiles already started loading.
-    */
-   generateRandomCoordinates : function (callback) {
-      if (this._onLoads){
-         throw new Error("onLoad can only be used once atm");
-      }
-      var mapOnLoadsListener = google.maps.event.addListener(this.map, "center_changed", function () {
-         callback();
-         google.maps.event.removeListener(mapOnLoadsListener);
-      });
-      this._onLoads = 1;
-   },
-
-   /**
-    * @public
     * @summary This roughly implements a Factory pattern. google.maps.Marker must only be instantiated through this method.
     * @returns {Marker}
     */
    createMarker : function (data) {
-      if (!(data.lat && (data.lng || data.lon) && data.title)) {
-         console.dir(data);
-         throw new Error("Data in createMarker does not seem to be complete");
-      }
+      assertTrue((data.lat && (data.lng || data.lon) && data.title));
       
       lat = parseFloat(data.lat);
       lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon);
 
-      if (!(isFinite(lat) && isFinite(lng))) {
-         throw new Error("lat or lng is not a float.");
-      }
+      assertTrue(isFinite(lat) && isFinite(lng));
+
       // lng = parseFloat(lng);
 
       gmarker =  new google.maps.Marker({
@@ -147,9 +127,8 @@ UIMap.prototype = {
     * @param {Function} callback
     */
    addListenerToMarker : function (marker, event, callback) {
-      if (!(event && callback)) {
-         throw new Error("You must specify event as well as callback");
-      }
+      assertTrue(event && callback);
+
       google.maps.event.addListener(marker.getImplementation(), event, callback);
    },
    /**
@@ -301,7 +280,7 @@ UIMap.prototype = {
       this.map.fitBounds(newBounds);
    },
    getInstance : function () {
-      throw new Error("Don't used this function anymore. Write a new member function on UIMap that enforces information hiding");
+      throw new Error("DoNotUseThisError");
    },
    getPanorama : function () {
       return this.streetview;

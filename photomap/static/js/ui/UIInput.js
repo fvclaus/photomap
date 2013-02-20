@@ -54,6 +54,7 @@ UIInput.prototype = {
             instance.setVisibility(false);
          },
          open: function () {
+            instance.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide();
             instance._submitHandler.call(instance);
             instance.setVisibility(true);
          }
@@ -118,8 +119,9 @@ UIInput.prototype = {
       //we must add a new dialog here
       this.$dialog.dialog({
          //this can only be called here, because we must create the dialog here
-         create: function () {
+         create: function (event, ui) {
             main.getUI().disable();
+
          },
          "title": title,
          //TODO height is a messy business. height includes the title bar (wtf?!)
@@ -186,6 +188,7 @@ UIInput.prototype = {
          errorPlacement : function () {}, //don't show any errors
          submitHandler : function () {
             $buttons.button("disable");
+            instance.$loader.show();
             instance._trigger(instance.options, "submit");
             //submit form with ajax call and close popup
             $.ajaxSetup({
@@ -201,6 +204,7 @@ UIInput.prototype = {
                   if (message.isAutoClose()){
                      instance.close();
                   } else {
+                     instance.$loader.hide();
                      message.showSuccess();
                      $close.button("enable");
                   }
@@ -209,6 +213,7 @@ UIInput.prototype = {
                },
                error : function (error) {
                   // instance.close();
+                  instance.$loader.hide();
                   message.showFailure(gettext("NETWORK_ERROR"));
                   $buttons.button("enable");
                }
