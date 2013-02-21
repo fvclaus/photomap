@@ -17,6 +17,10 @@ var UISlideshow = function () {
    this.$navRight = $('#mp-slideshow-nav-next');
 
    this.$photoNumber = $(".mp-image-number");
+   // need to indicate ready status to frontend tests
+   this.$ready = $("<div id=mp-slideshow-ready />")
+      .hide()
+      .appendTo(this.$container);
    
    this.carousel = null;
    this.fullscreen = new UIFullscreen(this);
@@ -148,18 +152,11 @@ UISlideshow.prototype = {
       return !this._isDisabled && !main.getUI().isDisabled();
    },
    /**
-    * @public
-    * @description @see UIFullscreen.isDisabled
-    */
-   isFullscreenDisabled : function () {
-      return this.fullscreen.isDisabled();
-   },
-   /**
     * @private
     * @description Executed after photo is updated (=displayed)
     */
    _update : function () {
-      this._isDisabled = false;
+      this._enable();
       var photo = this._updateAndGetCurrentLoadedPhoto();
       // deleted last photo
       if (photo  === null) {
@@ -178,7 +175,9 @@ UISlideshow.prototype = {
     * @description Executed before photos are loaded
     */
    _beforeLoad : function ($photos) {
-      this._isDisabled = true;
+      // we are expecting to receive a jquery element wrapper
+      assert(typeof $photos, "object");
+      this._disable();
       $photos.each(function () {
          $(this)
             .hide()
@@ -191,12 +190,32 @@ UISlideshow.prototype = {
     * @description Executed after photos are loaded
     */
    _afterLoad : function ($photos) {
+      // we are expecting to receive a jquery element wrapper
+      assert(typeof $photos, "object");
       //TODO hide loading again
       $photos.each(function () {
          $(this)
             .siblings(".mp-slideshow-loader")
             .hide();
       });
+   },
+   /**
+    * @private
+    * @description Disable Slideshow, e.g beforeLoad
+    */
+   _disable : function () {
+      this._isDisabled = true;
+      // need to indicate ready status to frontend tests
+      this.$ready.hide();
+   },
+   /**
+    * @private
+    * @description Enable Slideshow, e.g after update
+    */
+   _enable : function () {
+      this._isDisabled = false;
+      // need to indicate ready status to frontend tests
+      this.$ready.show();
    },
    /**
     * @private

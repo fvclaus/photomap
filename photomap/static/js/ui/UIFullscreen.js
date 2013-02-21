@@ -42,6 +42,10 @@ UIFullscreen = function (slideshow) {
    this.$description = $("#mp-fullscreen-image-description");
    this.$zoom = $(".mp-image-zoom");
    this.$load = $(".mp-dark-loader");
+   // need to indicate ready status to frontend tests
+   this.$ready = $("<div id=mp-fullscreen-ready />")
+      .hide()
+      .appendTo(this.$container);
    
    this.visible = false;
    this.started = false;
@@ -133,13 +137,16 @@ UIFullscreen.prototype = {
          this.$container.show();
          this.$imageWrapper.tzoom("imageSrc", state.getCurrentLoadedPhoto().photo);
          this.$imageWrapper.tzoom("enable");
+         this.$ready.show();
       }
       this.visible = true;
    },
    close : function () {
       
       this.$container.hide();
+      this.$ready.hide();
       this.$imageWrapper.tzoom("disable");
+
       this.visible = false;
    },
    update : function () {
@@ -172,6 +179,8 @@ UIFullscreen.prototype = {
    disable : function () {
       this.disabled = true;
       this.$controls.addClass("mp-disabled");
+      // needed to indicate ready status to frontend tests
+      this.$ready.hide();
       console.log("UIFullscreen: disabled");
       // this.$navLeft.off(".Fullscreen");
       // this.$navRight.off(".Fullscreen");
@@ -180,15 +189,10 @@ UIFullscreen.prototype = {
    enable : function () {
       this.disabled = false;
       this.$controls.removeClass("mp-disabled");
+      // needed to indicate ready status to frontend tests
+      this.$ready.show();
       console.log("UIFullscreen: enabled");
       // this._bindListener();
-   },
-   /**
-    * @public
-    * @description This is used by the frontend test to 'wait' for the fullscreen to become enabled again
-    */
-   isDisabled : function () {
-      return this.disabled;
    },
    _bindListener : function () {
       

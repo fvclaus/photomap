@@ -288,8 +288,13 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=.mp-fullscreen-nav-next.mp-disabled</td>
-	<td>fullscreenDisabled</td>
+	<td>css=#mp-fullscreen-ready</td>
+	<td>fullscreenReady</td>
+</tr>
+<tr>
+	<td>store</td>
+	<td>css=#mp-slideshow-ready</td>
+	<td>slideshowReady</td>
 </tr>
 </tbody></table>
 </body>

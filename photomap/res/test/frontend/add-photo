@@ -53,6 +53,11 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>${slideshowReady}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
 	<td>${teaserTitle}</td>
 	<td></td>
 </tr>

@@ -18,13 +18,8 @@
 </tr>
 <!--UIFullscreen will not respond as its loading. Therefore we have to wait till it is completely finished-->
 <tr>
-	<td>waitForElementPresent</td>
-	<td>${fullscreenDisabled}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementNotPresent</td>
-	<td>${fullscreenDisabled}</td>
+	<td>waitForVisible</td>
+	<td>${fullscreenReady}</td>
 	<td></td>
 </tr>
 <tr>
@@ -43,13 +38,8 @@
 	<td></td>
 </tr>
 <tr>
-	<td>waitForElementPresent</td>
-	<td>${fullscreenDisabled}</td>
-	<td></td>
-</tr>
-<tr>
-	<td>waitForElementNotPresent</td>
-	<td>${fullscreenDisabled}</td>
+	<td>waitForVisible</td>
+	<td>${fullscreenReady}</td>
 	<td></td>
 </tr>
 <tr>
