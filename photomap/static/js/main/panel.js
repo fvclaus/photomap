@@ -13,38 +13,12 @@ bindLogoListener = function () {
       // the anchor around the logo is needed in case js is disabled or failed
       event.preventDefault();
       
-      if (!main.getUI().isDisabled || (main.getUI && main.getUI().isDisabled && !main.getUI().isDisabled())) {
-         if ($(".mp-user").size() > 0) {
-            window.location.href = "/dashboard";
-         } else {
-            window.location.href = "/";
-         }
+      if ($(".mp-user").size() > 0) {
+         window.location.href = "/dashboard";
+      } else {
+         window.location.href = "/";
       }
    });
-};
-bindTitleListener = function () {
-   
-   var instance = this;
-      
-   $(".mp-page-title h1").on('click', function () {
-
-      if (main.getUI && main.getUI().isDisabled && !main.getUI().isDisabled()) {
-         main.getUI().getInformation().update(main.getUIState().getCurrentLoadedAlbum());
-      }
-   });
-};
-resizeFooterFont = function () {
-   
-   var $footer, text, width, height, tools, size;
-   
-   $footer = $("footer#mp-page-footer");
-   text = $footer.find(".mp-internal-links a").first().text();
-   width = $(".mp-internal-links").width();
-   height = $footer.height();
-   tools = main.getUI().getTools();
-   size = tools.calculateFontSize(text, width, height);
-   
-   $footer.css("fontSize", size + "px");
 };
 
 showDropupMenu = function () {
@@ -55,7 +29,7 @@ showDropupMenu = function () {
    width = $("#mp-user-mail").width() + $("#mp-user-mail").next().width();
    
    if (!$menu.is(":visible")) {
-      
+      $menu.show();
       $menu
          .css({
             top: offset.top,
@@ -99,6 +73,20 @@ hideDropupMenu = function (timer) {
       hideMenu();
    }
 };
+resizeFooterFont = function () {
+   
+   var $footer, text, width, height, tools, size;
+   
+   $footer = $("footer#mp-page-footer");
+   text = $footer.find(".mp-internal-links a").first().text();
+   width = $(".mp-internal-links").width();
+   height = $footer.height();
+   tools = main.getUI().getTools();
+   size = tools.calculateFontSize(text, width, height);
+   
+   $footer.css("fontSize", size + "px");
+};
+
 bindUserMenuListener = function () {
    
    $("#mp-user-mail")
@@ -130,13 +118,11 @@ initializePanels = function () {
    menuHeight = $("#mp-user-menu").outerHeight();
 
    bindLogoListener();
-   resizeFooterFont();
+   // this will probably not work in ie or similiar
+   // css3 allows resizing the font in % of the viewport height
+   // this is currently not supported by ff
+   // source: http://dev.w3.org/csswg/css3-values/#vw-unit
+   // vh is supported in ff 19 and chrome 20
    bindUserMenuListener();
    main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
-   if (main.getUIState && main.getUIState().isAlbumView()) {
-      bindTitleListener();
-      $(".mp-page-title").trigger("click");
-   }
-
-
 };

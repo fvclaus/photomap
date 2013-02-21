@@ -90,7 +90,7 @@ UIInformation.prototype = {
           description = photo.description;
 
       if (description !== null) {
-         shortDescription = main.getUI().getTools().cutText(description, 350);
+         shortDescription = main.getUI().getTools().cutText(description, 250);
          this.$teaserDescription.text(shortDescription);
       }
       else{

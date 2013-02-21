@@ -219,7 +219,7 @@ def handle_upload(user, place, original, thumb):
 def upload_photo(photo, filename):
     bucket = getbucket()
     key = bucket.new_key(filename)
-    key.set_contents_from_file(photo)
+    key.set_contents_from_file(photo, headers = {"content_type" : "image/jpeg"})
     key.set_acl("public-read")
     
 

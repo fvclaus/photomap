@@ -5,140 +5,140 @@
 
 <!DOCTYPE html>
 <html lang="de" >
-   <head>
-      <meta charset="UTF-8" />
-      <title>keiken | {% block title %}{% endblock %}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <title>keiken | {% block title %}{% endblock %}</title>
 
-      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-      <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
 
-      <!-- displays information when link is shared on FB or similiar -->
-      <meta property="og:title" content="keiken" />
-      <meta property="og:type" content="website" />
-      <!--
-         <meta property="og:image" content="#{imgurl}" />
-         <meta property="og:url" content="#{url}" />
-      -->
-      <meta property="mp:map" {% block mode %}{% endblock %} />
-      <meta property="og:description" content="Karte mit Photos und Beschreibungen" />
-      {% block meta %}
-      {% endblock %}
+    <!-- displays information when link is shared on FB or similiar -->
+    <meta property="og:title" content="keiken" />
+    <meta property="og:type" content="website" />
+    <!--
+        <meta property="og:image" content="#{imgurl}" />
+        <meta property="og:url" content="#{url}" />
+        -->
+    <meta property="mp:map" {% block mode %}{% endblock %} />
+    <meta property="og:description" content="Karte mit Photos und Beschreibungen" />
+    {% block meta %}
+    {% endblock %}
 
-      <!-- styles -->
+    <!-- styles -->
 
 
-      <!-- THE IMAGE LINKS BREAK WHEN COMPRESSED -->
-      <link rel="stylesheet" type="text/css" href="/static/css/lib/smoothness/jquery-ui-1.10.1.custom.css" />
-      <link rel="stylesheet" type="text/css" href="/static/css/grid.css" />
-      <link rel="stylesheet" type="text/css" href="/static/css/lib/jquery.jscrollpane.css" />
+    <!-- THE IMAGE LINKS BREAK WHEN COMPRESSED -->
+    <link rel="stylesheet" type="text/css" href="/static/css/lib/smoothness/jquery-ui-1.10.1.custom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/grid.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/lib/jquery.jscrollpane.css" />
 
-      {% load compress %}
-      <!-- {% compress css file %} -->
+    {% load compress %}
+    <!-- {% compress css file %} -->
 
-      <!-- {% endcompress %} -->
-      {% compress css %}
-         <link rel="stylesheet" type="text/css" href="/static/css/lib/sans.narrow.css" />
-         <link href="/static/css/lib/droid.sans.css" rel="stylesheet" type="text/css"/>
-         <link rel="stylesheet" type="text/css" href="/static/css/lib/tzoom.css" />
-         {% block css %}
-         {% endblock %}
-      {% endcompress %}
+    <!-- {% endcompress %} -->
+    {% compress css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/lib/sans.narrow.css" />
+    <link href="/static/css/lib/droid.sans.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/lib/tzoom.css" />
+    {% block css %}
+    {% endblock %}
+    {% endcompress %}
 
-      <!-- end styles -->
+    <!-- end styles -->
 
-      <!-- js -->
-         <!-- for django js translation -->
-         <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
-         <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->
-         <script type="text/javascript" src="/static/js/lib/jquery-1.7.2-min.js"></script>
-         <script type="text/javascript" src="/static/js/lib/jquery.tools.notabs.min.js"></script>
-         <script type="text/javascript" src="/static/js/lib/flexie.min.js"></script>
-         <!-- removed tabs from fucking broken jquery tools  -->
-         <!-- <script type="text/javascript" src="/static/js/lib/jquery.tools.no-jquery.min.js"></script> -->
-         <script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.min.js"></script>
-         <!-- added tabs to jquery ui -->
-         <!-- <script type="text/javascript" src="/static/js/lib/jquery-ui-1.9.0.custom.min.js"></script> -->
-         <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
-         <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
-         <script type="text/javascript" src="/static/js/lib/assert.js"></script>
-         <!-- javascript libraries -->
+    <!-- js -->
+    <!-- for django js translation -->
+    <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+    <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->
+    <script type="text/javascript" src="/static/js/lib/jquery-1.7.2-min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.tools.notabs.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/flexie.min.js"></script>
+    <!-- removed tabs from fucking broken jquery tools  -->
+    <!-- <script type="text/javascript" src="/static/js/lib/jquery.tools.no-jquery.min.js"></script> -->
+    <script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.min.js"></script>
+    <!-- added tabs to jquery ui -->
+    <!-- <script type="text/javascript" src="/static/js/lib/jquery-ui-1.9.0.custom.min.js"></script> -->
+    <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
+    <script type="text/javascript" src="/static/js/lib/assert.js"></script>
+    <!-- javascript libraries -->
 
-      {% compress js %}
+    {% compress js %}
 
-            <script type="text/javascript" src="/static/js/lib/date.js" ></script>
-            <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.min.js" ></script>
-            <script type="text/javascript" src="/static/js/lib/jquery.cookie.js" ></script>
-            <script type="text/javascript" src="/static/js/lib/ie.js" ></script>
-            <script type="text/javascript" src="/static/js/lib/formdata.js"></script>
-	    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.min.js" ></script>
-	    <script type="text/javascript" src="/static/js/util/constants.js"></script>
-	    <script type="text/javascript" src="/static/js/main/panel.js"></script>
-	    {% block js %}
-	    {% endblock %}
-         {% endcompress %}
+    <script type="text/javascript" src="/static/js/lib/date.js" ></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.min.js" ></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.cookie.js" ></script>
+    <script type="text/javascript" src="/static/js/lib/ie.js" ></script>
+    <script type="text/javascript" src="/static/js/lib/formdata.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.min.js" ></script>
+    <script type="text/javascript" src="/static/js/util/constants.js"></script>
+    <script type="text/javascript" src="/static/js/main/panel.js"></script>
+    {% block js %}
+    {% endblock %}
+    {% endcompress %}
 
-         {% block mapjs %}
-		   {% endblock %}
-   </head>
-   <body>
+    {% block mapjs %}
+    {% endblock %}
+  </head>
+  <body>
 
-      <div class="mp-container container" id="mp-container">
+    <div class="mp-container container" id="mp-container">
 
-         <header class="mp-page-header column span-24 last" id="mp-page-header">
-            <section class="mp-logo column span-6">
-              <a href="/">
-                <img src="/static/images/logo.png" class="mp-control mp-cursor-pointer mp-keiken-logo"/>
-              </a>
-            </section>
-				<section class="mp-top-panel column span-8">
-               <div class="mp-placeholder-fullheight column span-24"></div>
-				</section>
-		      <section class="mp-page-title column span-10">
-               <h1>{% block name %} {% endblock %}</h1>
-            </section>
-			</header>
+      <header class="mp-page-header column span-24 last" id="mp-page-header">
+        <section class="mp-logo column span-6">
+          <a href="/">
+            <img src="/static/images/logo.png" class="mp-control mp-cursor-pointer mp-keiken-logo"/>
+          </a>
+        </section>
+	<section class="mp-top-panel column span-8">
+          <div class="mp-placeholder-fullheight column span-24"></div>
+	</section>
+	<section class="mp-page-title column span-10">
+          <h1>{% block name %} {% endblock %}</h1>
+        </section>
+      </header>
 
-         <section class="mp-content column span-24 last" id="mp-content">
-			   {% block content %}
-			   {% endblock %}
-			</section>
+      <section class="mp-content column span-24 last" id="mp-content">
+	{% block content %}
+	{% endblock %}
+      </section>
 
-			<section class="mp-dropup-menu" id="mp-user-menu">
-           <div class="mp-dropup-menu-inner">
-             <a href="#" title='{% trans "Settings" %}'>
-               <span>{% trans "Settings" %}</span>
-             </a>
-				 <a href="/logout" title="Logout">
-               <span>{% trans "Abmelden" %}</span>
-             </a>
-           </div>
-         </section>
+      <section class="mp-dropup-menu" id="mp-user-menu">
+        <div class="mp-dropup-menu-inner">
+          <a href="#" title='{% trans "Settings" %}'>
+            <span>{% trans "Settings" %}</span>
+          </a>
+	  <a href="/logout" title="Logout">
+            <span>{% trans "Abmelden" %}</span>
+          </a>
+        </div>
+      </section>
 
-			<footer class="mp-page-footer column span-24 last" id="mp-page-footer">
-			   {% if user.is_authenticated %}
-				   <section class="mp-user column span-9" id="mp-user">
-						<span class="mp-control mp-cursor-pointer" id="mp-user-mail">{{user.email}}</span>
-                  <span>|</span>
-                  <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
-					</section>
-				{% else %}
-					<section class="mp-login-link column span-8">
-						<span>
-							<a href="/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
-						</span>
-					</section>
-				{% endif %}
-            <section class="mp-internal-links column span-15 last">
-			      <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
-					<a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
-					<a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
-					<a href="/copyright" title='{% trans "link-title-copyright" %}'>|{% trans "Urheberrecht" %} </a>
-					<a href="/help" title='{% trans "link-title-help" %}'>|{% trans "Hilfe" %} </a>
-					<a href="/impressum" title='{% trans "link-title-impressum" %}'>|{% trans "Impressum" %} </a>
-				</section>
-			</footer>
-		</div>
+      <footer class="mp-page-footer column span-24 last" id="mp-page-footer">
+	{% if user.is_authenticated %}
+	<section class="mp-user column span-9" id="mp-user">
+	  <span class="mp-control mp-cursor-pointer" id="mp-user-mail">{{user.email}}</span>
+          <span>|</span>
+          <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
+	</section>
+	{% else %}
+	<section class="mp-login-link column span-8">
+	  <span>
+	    <a href="/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
+	  </span>
+	</section>
+	{% endif %}
+        <section class="mp-internal-links column span-15 last">
+	  <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
+	  <a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
+	  <a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
+	  <a href="/copyright" title='{% trans "link-title-copyright" %}'>|{% trans "Urheberrecht" %} </a>
+	  <a href="/help" title='{% trans "link-title-help" %}'>|{% trans "Hilfe" %} </a>
+	  <a href="/impressum" title='{% trans "link-title-impressum" %}'>|{% trans "Impressum" %} </a>
+	</section>
+      </footer>
+    </div>
 
-		<script type="text/javascript" src="/static/js/main/init.js" ></script>
-	</body>
+    <script type="text/javascript" src="/static/js/main/init.js" ></script>
+  </body>
 </html>
