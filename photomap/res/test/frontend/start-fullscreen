@@ -16,6 +16,17 @@
 	<td>${currentPhoto}</td>
 	<td></td>
 </tr>
+<!--UIFullscreen will not respond as its loading. Therefore we have to wait till it is completely finished-->
+<tr>
+	<td>waitForCondition</td>
+	<td>&quot;main.getUI().getGallery().isFullscreenDisabled()&quot;</td>
+	<td>5000</td>
+</tr>
+<tr>
+	<td>waitForCondition</td>
+	<td>&quot;!main.getUI().getGallery().isFullscreenDisabled()&quot;</td>
+	<td>5000</td>
+</tr>
 <tr>
 	<td>waitForText</td>
 	<td>${fullscreenTitle}</td>

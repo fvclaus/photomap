@@ -11,12 +11,6 @@
 <thead>
 <tr><td rowspan="1" colspan="3">navigate-fullscreen</td></tr>
 </thead><tbody>
-<!--UIFullscreen will not respond as its loading. Therefore we have to wait till it is completely finished-->
-<tr>
-	<td>waitForCondition</td>
-	<td>&quot;!main.getUI().getGallery().isFullscreenDisabled()&quot;</td>
-	<td>5000</td>
-</tr>
 <tr>
 	<td>click</td>
 	<td>css=.mp-fullscreen-nav-next</td>

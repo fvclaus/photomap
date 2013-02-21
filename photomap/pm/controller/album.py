@@ -89,8 +89,8 @@ def share(request, secret, album_id):
             # user owns the album
             if request.user == album.user or request.session.get("album_%d" % album_id):
                 return render_to_response("view-album.html",
-                                  {"test_photo_julian" : data.TEST_PHOTO_JULIAN,
-                                   "test_photo_tom" : data.TEST_PHOTO_TOM},
+                                  {"test_photo_mountain" : data.TEST_PHOTO_MOUNTAIN,
+                                   "test_photo_water" : data.TEST_PHOTO_WATER},
                                   context_instance = RequestContext(request))
             # album does not has a password yet
             if not hashers.is_password_usable(album.password):

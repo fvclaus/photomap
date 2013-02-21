@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, window, Image, UI */
+/*global $, main, window, Image, UI, assert */
 
 "use strict";
 
@@ -48,10 +48,12 @@ UIFullscreen.prototype = {
       this._bindListener();
    },
    start : function () {
-      
+      assert(this.started, false);
+
       var instance = this,
          state = main.getUIState();
        
+      this.disable();
       this.$container.show();
       
       this.$imageWrapper.css({
@@ -106,6 +108,7 @@ UIFullscreen.prototype = {
                left: 0
             });
             instance.$inner.css("visibility", "visible");
+            instance.enable();
          }
       });
       this.started = true;
