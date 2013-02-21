@@ -286,6 +286,11 @@
 	<td>css=span.mp-open-full-description</td>
 	<td>openDetail</td>
 </tr>
+<tr>
+	<td>store</td>
+	<td>css=.mp-fullscreen-nav-next.mp-disabled</td>
+	<td>fullscreenDisabled</td>
+</tr>
 </tbody></table>
 </body>
 </html>

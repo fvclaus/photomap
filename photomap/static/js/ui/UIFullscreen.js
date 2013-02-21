@@ -25,9 +25,17 @@ UIFullscreen = function (slideshow) {
  */
    this.$container = $("#mp-fullscreen");
    this.$inner = $("#mp-fullscreen-main");
+
    this.$navLeft = $("#mp-fullscreen-nav-prev");
    this.$navRight = $("#mp-fullscreen-nav-next");
    this.$close = $("#mp-fullscreen-close");
+   this.$controls = $()
+      .add(this.$navLeft)
+      .add(this.$navRight)
+      .add(this.$close);
+
+   assert(this.$controls.size(), 3);
+
    this.$title = $("#mp-fullscreen-title");
    this.$imageWrapper = $("#mp-fullscreen-image-wrapper");
    this.$image = $("#mp-fullscreen-image");
@@ -163,13 +171,17 @@ UIFullscreen.prototype = {
    },
    disable : function () {
       this.disabled = true;
-      this.$navLeft.off(".Fullscreen");
-      this.$navRight.off(".Fullscreen");
-      this.$close.off(".Fullscreen");
+      this.$controls.addClass("mp-disabled");
+      console.log("UIFullscreen: disabled");
+      // this.$navLeft.off(".Fullscreen");
+      // this.$navRight.off(".Fullscreen");
+      // this.$close.off(".Fullscreen");
    },
    enable : function () {
       this.disabled = false;
-      this._bindListener();
+      this.$controls.removeClass("mp-disabled");
+      console.log("UIFullscreen: enabled");
+      // this._bindListener();
    },
    /**
     * @public
@@ -182,12 +194,25 @@ UIFullscreen.prototype = {
       
       var instance = this;
       this.$navLeft.on("click.Fullscreen", function () {
+         console.log("UIFullscreen: navigating left");
+         assert(instance.disabled, false);
+
+         // we need to disable it here, because the update coming from the slideshow might take awhile
+         instance.disable();
          instance.slideshow.navigateLeft();
       });
       this.$navRight.on("click.Fullscreen", function () {
+         console.log("UIFullscreen: navigating right");
+         assert(instance.disabled, false);
+
+         // we need to disable it here, because the update coming from the slideshow might take awhile
+         instance.disable();
          instance.slideshow.navigateRight();
       });
       this.$close.on("click.Fullscreen", function () {
+         console.log("UIFullscreen: close");
+         assert(instance.disabled, false);
+
          instance.close();
       });
 

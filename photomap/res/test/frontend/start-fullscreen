@@ -18,14 +18,14 @@
 </tr>
 <!--UIFullscreen will not respond as its loading. Therefore we have to wait till it is completely finished-->
 <tr>
-	<td>waitForCondition</td>
-	<td>&quot;main.getUI().getGallery().isFullscreenDisabled()&quot;</td>
-	<td>5000</td>
+	<td>waitForElementPresent</td>
+	<td>${fullscreenDisabled}</td>
+	<td></td>
 </tr>
 <tr>
-	<td>waitForCondition</td>
-	<td>&quot;!main.getUI().getGallery().isFullscreenDisabled()&quot;</td>
-	<td>5000</td>
+	<td>waitForElementNotPresent</td>
+	<td>${fullscreenDisabled}</td>
+	<td></td>
 </tr>
 <tr>
 	<td>waitForText</td>
@@ -34,6 +34,41 @@
 </tr>
 <tr>
 	<td>waitForVisible</td>
+	<td>${currentPhotoFull}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=.mp-fullscreen-nav-next</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementPresent</td>
+	<td>${fullscreenDisabled}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForElementNotPresent</td>
+	<td>${fullscreenDisabled}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForVisible</td>
+	<td>${currentPhotoFull}</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForText</td>
+	<td>${fullscreenTitle}</td>
+	<td>${photo1NewTitle}</td>
+</tr>
+<tr>
+	<td>click</td>
+	<td>css=#mp-fullscreen-close</td>
+	<td></td>
+</tr>
+<tr>
+	<td>waitForNotVisible</td>
 	<td>${currentPhotoFull}</td>
 	<td></td>
 </tr>

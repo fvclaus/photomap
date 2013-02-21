@@ -8,7 +8,6 @@
 body 
   height 100%
   padding 0
-  font-size 3.5vh
   
 html
   height 100%
@@ -54,6 +53,9 @@ a
 
 .mp-placeholder-fullheight
   height 100%
+
+.mp-disabled
+  opacity 0.5
 
 .mp-content
  height 80%
@@ -137,8 +139,9 @@ a
 .mp-page-title
   height 100%
   max-height 100%
+  overflow auto // prevent long album titles from being cut
   h1
-    font-size 6.5vh // former 200%
+    font-size 5vh // former 200%
     text-align right
     padding-right 10px
 /* ------------ end header ------------- */
