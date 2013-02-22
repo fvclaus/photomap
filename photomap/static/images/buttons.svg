@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="744.09448819"
+   height="1052.3622047"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.48.3.1 r9886"
+   sodipodi:docname="buttons.svg">
+  <defs
+     id="defs4" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.7"
+     inkscape:cx="290.17014"
+     inkscape:cy="624.50608"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="1230"
+     inkscape:window-height="995"
+     inkscape:window-x="0"
+     inkscape:window-y="1"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       orientation="0,1"
+       position="159.85664,897.77308"
+       id="guide2990" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="167.18025,767.96847"
+       id="guide2992" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="206.42857,1216.7857"
+       id="guide3785" />
+    <sodipodi:guide
+       orientation="0,1"
+       position="213.03571,1187.5"
+       id="guide3787" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata7">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <path
+       style="fill:#1e0000;fill-opacity:1;stroke:#000000;stroke-width:1.76097286;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 196.69708,154.5891 c -38.55254,4.9145 -110.276624,37.28671 -110.019024,63.43039 0.23264,23.60983 73.643484,58.68179 110.019024,64.85897 40.4286,6.86546 40.65797,-133.47225 0,-128.28936 z"
+       id="rect2985"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssss"
+       inkscape:export-filename="/home/fredo/photomap/static/images/album-arrow-right.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.36945653;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 145.83234,180.88846 57.66791,36.05284 -57.66791,36.03306 z"
+       id="rect2996"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/fredo/photomap/static/images/album-arrow-right.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       style="fill:#1e0000;fill-opacity:1;stroke:#000000;stroke-width:1.76097286;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 327.52538,156.10436 c 38.55254,4.9145 110.27662,37.28671 110.01902,63.43039 -0.23264,23.60983 -73.64348,58.68178 -110.01902,64.85896 -40.4286,6.86546 -40.65797,-133.47224 0,-128.28935 z"
+       id="rect2985-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssss"
+       inkscape:export-filename="/home/fredo/photomap/static/images/album-arrow-left.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.36945653;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 378.39012,182.40372 -57.66791,36.05284 57.66791,36.03306 z"
+       id="rect2996-8"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/fredo/photomap/static/images/album-arrow-left.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.29999995;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path3829"
+       sodipodi:cx="525.78442"
+       sodipodi:cy="465.96863"
+       sodipodi:rx="67.175148"
+       sodipodi:ry="67.175148"
+       d="m 592.95957,465.96863 a 67.175148,67.175148 0 1 1 -134.35029,0 67.175148,67.175148 0 1 1 134.35029,0 z"
+       transform="matrix(0.70583668,0,0,0.73142344,199.30148,78.096001)"
+       inkscape:export-filename="/home/fredo/photomap/static/images/add.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.48961782;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 404.78545,371.55181 c 22.06745,0.56389 39.46038,0.56389 71.12428,0 20.68096,-0.3683 20.68072,85.27013 0,85.66339 -25.35045,0.48206 -48.80429,-0.21524 -71.12428,0 -20.68218,0.19944 -20.67914,-86.1918 0,-85.66339 z"
+       id="rect3831"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="sssss"
+       inkscape:export-filename="/home/fredo/photomap/static/images/openEdit.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:#000000;stroke-width:2.00491405;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 417.10419,388.40957 56.66785,26.26822 -56.66785,26.25383 z"
+       id="rect2996-8-5"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/fredo/photomap/static/images/openEdit.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       sodipodi:type="arc"
+       style="fill:#c14848;fill-opacity:1;stroke:#000000;stroke-width:2.29999995;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none;stroke-dashoffset:0"
+       id="path3870"
+       sodipodi:cx="455.71429"
+       sodipodi:cy="547.7193"
+       sodipodi:rx="62.857143"
+       sodipodi:ry="52.5"
+       d="m 518.57144,547.7193 a 62.857143,52.5 0 1 1 -125.71429,0 62.857143,52.5 0 1 1 125.71429,0 z"
+       transform="matrix(0.36679365,0,0,0.46707775,403.92273,163.72934)"
+       inkscape:export-filename="/home/fredo/photomap/static/images/add.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       style="fill:#1e0000;fill-opacity:1;stroke:#000000;stroke-width:1.76097286;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 491.62248,611.02272 c 38.55254,4.9145 110.27662,37.28672 110.01902,63.4304 -0.23264,23.60983 -73.64348,58.68177 -110.01902,64.85895 -40.4286,6.86546 -40.65797,-133.47224 0,-128.28935 z"
+       id="rect2985-9-9"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="ssss"
+       inkscape:export-filename="/home/fredo/photomap/static/images/album-arrow-left.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+    <path
+       style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.36945653;stroke-linecap:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dashoffset:0"
+       d="m 542.48722,637.32209 -57.66791,36.05284 57.66791,36.03306 z"
+       id="rect2996-8-7"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccc"
+       inkscape:export-filename="/home/fredo/photomap/static/images/album-arrow-left.png"
+       inkscape:export-xdpi="148.05232"
+       inkscape:export-ydpi="148.05232" />
+  </g>
+</svg>

@@ -28,3 +28,5 @@ CACHE/
 .sass-cache
 debug/
 .settings
+*.sqlite3
+.#*
