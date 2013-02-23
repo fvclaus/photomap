@@ -42,6 +42,8 @@ urlpatterns = patterns("",
                        url(r'^help$', direct_to_template, {"template": "help.html"}),
                        url(r'^team$', direct_to_template, {"template": "team.html"}),
                        
+                       url(r'^demo$', album.demo),
+                       
 
                        url(r'^logout$', authentication.logout),
                        url(r'^$', direct_to_template, {"template": "index.html"}),

@@ -8,7 +8,8 @@ from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadReque
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
-from django.contrib.auth import models
+from django.contrib.auth.models import User
+
 
 from django.utils import crypto
 from django.contrib.auth import hashers
@@ -71,6 +72,15 @@ def update_password(request):
 #    else:
 #        return HttpResponseBadRequest()
 
+
+def demo(request):
+    if request.method == "GET":
+        demo = User.objects.get(username="demo")
+        album = Album.objects.get(user = demo)
+        request.session["album_%d" % album.pk] = True
+        return redirect("/album/view/%s-%d" % (album.secret, album.pk))
+    else:
+        return HttpResponseBadRequest()
 
 def share(request, secret, album_id):
     try:
