@@ -30,7 +30,7 @@ urlpatterns = patterns("",
                        #========================================================
                        url(r'^login$', authentication.login),
                        # url(r'^view-album$', album.view),
-                       url(r'^album/view/(.+)-(\d+)$', album.share),
+                       url(r'^album/view/(.+)-(\d+)$', album.view),
                        url(r'^get-all-albums$', dashboard.get),
                        url(r'^get-album$', album.get),
                        
