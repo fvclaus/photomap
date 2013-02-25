@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, B */
+/*global $, main, B, assert, assertTrue */
 
 "use strict";
 
@@ -66,23 +66,23 @@ UITools.prototype = {
     * @param direction {String} defines in which direction the element should be centered - can be "vertical", "horizontal" or empty
     */
    centerElement : function ($parent, $element, direction) {
+      assertTrue(direction === "vertical" || direction === "horizontal");
+
+      var margin, 
+          heightDifference = $parent.height() - $element.height(),
+          widthDifference = $parent.width() - $element.width();
       
-      var margin, heightDifference, widthDifference;
-      
-      heightDifference = $parent.height() - $element.height();
-      widthDifference = $parent.width() - $element.width();
-      console.log(widthDifference);
       switch (direction) {
       
       case "vertical":
-         if (heightDifference <= 0) {
-            margin = 0;
-         } else {
-            margin = heightDifference / 2;
-         }
-         margin += "px 0px";
+         assertTrue(heightDifference > 0);
+         // this is better than setting margin top and bottom
+         // margin top and bottom in combination with overflow : auto will often display vertical scrollbars
+         $element.css("margin-top", heightDifference / 2 + "px");
          break;
       case "horizontal":
+         //TODO this needs a rework
+         assertTrue(widthDifference > 0);
          margin = "0px ";
          if (widthDifference <= 0) {
             margin += 0;
@@ -90,8 +90,10 @@ UITools.prototype = {
             margin += widthDifference / 2;
          }
          margin += "px";
+         $element.css("margin", margin);
          break;
       default:
+         //TODO this also needs to be redone
          if (heightDifference <= 0) {
             margin = 0;
          } else {
@@ -104,10 +106,9 @@ UITools.prototype = {
             margin += widthDifference / 2;
          }
          margin += "px";
+         $element.css("margin", margin);
          break;
       }
-      
-      $element.css("margin", margin);
    },
    /**
     * @param Array

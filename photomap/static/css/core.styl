@@ -5,17 +5,14 @@
 /* --------------------------------------- */
 /* -- styling of the core html elements -- */
 
-body 
-  height 100%
-  padding 0
-  
+
+/* Styling the size (including margin) in this stylesheet does not work.
+ * This is, because it is not present, when the site is first displayed. 
+ * The style must go into the head of the html document as inline css(!).
+ */
 html
-  height 100%
-  margin 0
-  padding 0  
   font-family $font-family // "Droid Sans"
-  color $font-color
-  
+
 aside
   width 80%
   padding 5px
@@ -58,8 +55,8 @@ a
   opacity 0.5
 
 .mp-content
- height 80%
- padding 1% 0
+ height 79% // 80% - 1% padding. Padding 1% will make the element 1% bigger and vertical scrollbars will appear
+ padding 1% 0 
 
 .mp-zoom
   cursor -moz-zoom-in
@@ -143,6 +140,7 @@ a
   h1
     font-size 5vh // former 200%
     text-align right
+    margin 0 // reset browser stylesheets
     padding-right 10px
 /* ------------ end header ------------- */
 

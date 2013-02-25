@@ -19,12 +19,6 @@ var main = null;
  * @description Initializes main constructor. Needs document ready!
  */
 $(document).ready(function () {
-   
-   $("body").css({
-      height : $("body").height() - 10 + "px",
-      margin: "5px 0"
-   });
-   
    main = new Main();
    // initialise js-classes
    if (main && main.initWithoutAjax) {

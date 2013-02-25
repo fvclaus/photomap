@@ -9,6 +9,11 @@
     <meta charset="UTF-8" />
     <title>keiken | {% block title %}{% endblock %}</title>
 
+    <!-- This only works here! Putting this in core.styl will not work, because core.styl is not present, when the document gets displayed. -->
+    <style type="text/css">
+      body,html { margin : 0px; padding : 0px; min-height : 100%  }
+    </style>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <link rel="shortcut icon" href="/static/images/favicon.ico" />
 
@@ -80,7 +85,7 @@
     {% block mapjs %}
     {% endblock %}
   </head>
-  <body>
+  <body id="body">
 
     <div class="mp-container container" id="mp-container">
 
