@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON, ZOOM_LEVEL_CENTERED, assert, assertTrue */
+/*global $, google, main, Place, Album, ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON, ZOOM_LEVEL_CENTERED, SHADOW_ICON, MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT, MARKER_ICON_SHADOW_WIDTH, assert, assertTrue */
 
 "use strict";
 
@@ -90,7 +90,16 @@ UIMap.prototype = {
       gmarker =  new google.maps.Marker({
          position : new google.maps.LatLng(lat, lng),
          map : this.map,
-         icon : new google.maps.MarkerImage(MARKER_DEFAULT_ICON),
+         // icon :  new google.maps.MarkerImage(MARKER_DEFAULT_ICON),
+         icon : {
+            url : MARKER_DEFAULT_ICON,
+            scaledSize : new google.maps.Size(MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT, "px", "px")
+         },
+         shadow : {
+            url : SHADOW_ICON,
+            anchor : new google.maps.Point(MARKER_ICON_SHADOW_WIDTH - MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT),
+            scaledSize : new google.maps.Size(MARKER_ICON_SHADOW_WIDTH, MARKER_ICON_HEIGHT, "px", "px")
+         },
          title : data.title
       });
       // marker.setImplementation(gmarker);
