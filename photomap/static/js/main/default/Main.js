@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, UI, initialize, initializePage, initializePanels */
+/*global $, UI, initialize, initializePage, initializePanels, window */
 
 "use strict";
 
@@ -18,9 +18,6 @@ Main = function () {
 Main.prototype = {
    init: function () {
       this.ui.init();
-      if (window && window.initializePanels) {
-         initializePanels();
-      }
       if (window && window.initialize) {
          initialize();
       }

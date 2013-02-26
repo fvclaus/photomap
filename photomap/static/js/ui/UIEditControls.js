@@ -53,21 +53,23 @@ UIEditControls.prototype = {
       // don't resize the icons all the time to save performance
       if (!this.$controls.isScaled) {
          // change factor depending on the page (-> number of controls in control-box)
-         if (main.getUIState().isDashboardView()) {
-            factor = 1.5;
-         } else {
-            factor = 1;
-         }
-         this.$controls
-            .width(this.$controls.width() * factor);
-         this.$controls.isScaled = true;
+         // if (main.getUIState().isDashboardView()) {
+         //    factor = 1.5;
+         // } else {
+         //    factor = 1;
+         // }
+         // this.$controls
+         //    .width(this.$controls.width() * factor);
+         // this.$controls.isScaled = true;
       }
 
       // offset had a weird problem where it was pushing the controls down with every 2 consecutive offset calls
       this.$controls.css({
          top: center.top,
-         left: center.left
-      }).show();
+         left: center.left,
+         display : "inline-block"
+      });
+         // .show();
    },
 
 

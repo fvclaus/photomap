@@ -28,7 +28,7 @@ UIInformation = function () {
    this.currentPlaceOrAlbum = null;
    this._bindListener();
    // initialize the scollpane
-   this.$descriptionWrapper.jScrollPane(); 
+   // this.$descriptionWrapper.jScrollPane(); 
 };
 
 UIInformation.prototype = {
@@ -113,12 +113,13 @@ UIInformation.prototype = {
     * @description Shows the detail box and reinitializes the scrollbar
     */
    _showDetail : function () {
-      assertTrue(this.$descriptionWrapper.data("jsp") !== undefined);
-
+      // assertTrue(this.$descriptionWrapper.data("jsp") !== undefined);
+      //TODO this does not work right now
       this.$explanationContainer.removeClass("mp-nodisplay");
       this.$descriptionWrapper
-         .data("jsp")
-         .reinitialise();
+         .css("overflow", "auto");
+         // .data("jsp")
+         // .reinitialise();
    },
    /**
     * @private

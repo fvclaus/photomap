@@ -5,10 +5,9 @@
 
 /**
  * @author Frederik Claus
- * @class Contains data divided into any number of pages
+ * @class Contains data divided into any number of pages. The pages will wrap-around dynamically.
+ * Also if the data is empty, the Page will provide an empty page.
  */
-
-
 var CarouselPage  = function (entries, entriesPerPage) {
    
    this._createPages(entries, entriesPerPage);
