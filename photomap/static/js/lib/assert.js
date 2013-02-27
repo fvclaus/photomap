@@ -15,3 +15,21 @@ function assertTrue (actual) {
       croak(actual, true);
    }
 }
+
+function assertFalse (actual) {
+   if (actual) {
+      croak(actual, false);
+   }
+}
+
+function assertNumber (actual) {
+   if (!(typeof actual === "number")) {
+      croak(typeof actual, "number");
+   }
+}
+
+function assertString (actual) {
+   if (!(typeof actual === "string")){
+      croak(typeof actual, "string");
+   }
+}

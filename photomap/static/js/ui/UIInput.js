@@ -26,6 +26,8 @@ UIInput = function () {
    //ui.dialog does not play well with that
    this.$dialog.removeAttr("id");
    this.visible = false;
+   // indicates if the user submitted the form
+   this.abort = true;
 };
 
 UIInput.INPUT_DIALOG = 0;
@@ -52,6 +54,10 @@ UIInput.prototype = {
             instance.$dialog.empty();
             instance.$dialog.dialog("destroy");
             instance.setVisibility(false);
+            // in case the user did not submit
+            if (instance.abort) {
+               instance._trigger(instance.options, "abort");
+            }
          },
          open: function () {
             instance.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide();
@@ -194,6 +200,8 @@ UIInput.prototype = {
             $.ajaxSetup({
                type : $form.attr("method"),
                success : function (data, textStatus) {
+                  instance.abort = false;
+
                   if (data.error) {
                      message.showFailure(data.error);
                      $buttons.button("enable");

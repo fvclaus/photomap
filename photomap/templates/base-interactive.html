@@ -24,6 +24,7 @@ content="interactive"
 
 <script type="text/javascript" src="/static/js/util/CarouselPage.js" ></script>
 
+<script type="text/javascript" src="/static/js/ui/UIStatusMessage.js"></script>
 <script type="text/javascript" src="/static/js/ui/UIPhotoCarousel.js" ></script>
 <script type="text/javascript" src="/static/js/ui/UIState.js" ></script>
 <script type="text/javascript" src="/static/js/ui/UIInput.js" ></script>
@@ -58,6 +59,10 @@ content="interactive"
 {% endblock %}
 
 {% block content %}
+<span class="ui-state-highlight ui-corner-all ui-button-text-icon-primary mp-nodisplay" id="mp-status-message">
+  <span class="ui-button-icon-primary ui-icon ui-icon-info "></span>
+  <strong class="ui-button-text"></strong>
+</span>
 
 <section class="mp-left-column">
   <section class="mp-full-column mp-full-left-column mp-nodisplay" id="mp-full-left-column">

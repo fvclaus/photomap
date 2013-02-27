@@ -207,7 +207,7 @@ def update_multiple(request):
         return success()
         
     else:
-        return HttpResponseBadRequest()
+        return render_to_response("update-photos.html")
 
 
 @login_required
