@@ -20,7 +20,7 @@ from django.core import files
 
 from StringIO import StringIO
 from PIL import Image
-
+import json, types
 import  logging, sys, uuid
 
 
@@ -163,6 +163,52 @@ def update(request):
             return error(str(form.errors))
     else:
         return render_to_response("update-photo.html")
+
+
+@login_required
+def update_multiple(request):
+    if request.method == "POST":
+        try:
+            json_photos = json.loads(request.POST["photos"])
+        except Exception:
+            return error("The json does not look like an array of photos")
+        
+        if len(json_photos) == 0:
+            return error("The array of photo is empty")
+        
+        # 2-tuple of original photo and fields that must be updated
+        photos_dirty = []
+        # check all photos_dirty
+        for updated_fields in json_photos:
+            form = PhotoUpdateForm(updated_fields)
+            # fields are incomplete or invalid
+            if not form.is_valid():
+                return error(str(form.errors))
+            id = form.cleaned_data["id"]
+            try:
+                photo = Photo.objects.get(pk = id)
+            except Photo.DoesNotExist:
+                logger.warn("Photo %d does not exist. Aborting." % id)
+                return error("photo does not exist")
+            # photo does not belong to the user
+            if not is_authorized(photo, request.user):
+                logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, id))
+                return error("not your photo")
+            photos_dirty.append((photo, updated_fields))
+        
+        # update photo order
+        for (photo, updated_fields) in photos_dirty:
+            logger.info("User %d is trying to update Photo %d." % (request.user.pk, photo.pk))
+            form = PhotoUpdateForm(updated_fields, instance = photo)
+            assert form.is_valid() # we checked this before. this must be valid
+            form.save()
+            logger.info("Photo %d updated." % photo.pk)
+        
+        return success()
+        
+    else:
+        return HttpResponseBadRequest()
+
 
 @login_required
 def delete(request):
