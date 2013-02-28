@@ -31,7 +31,7 @@ var UISlideshow = function () {
 
 UISlideshow.prototype = {
 
-   initWithoutAjax : function () {
+   preinit : function () {
       var tools = main.getUI().getTools();
       tools.centerElement(this.$navLeft.parent(), this.$navLeft, "vertical");
       tools.centerElement(this.$navRight.parent(), this.$navRight, "vertical");

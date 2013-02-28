@@ -115,6 +115,13 @@ UIGallery.prototype =  {
       ui.disable();
       // ui.showLoading();
       this.carousel.start();
+      // show/hide correct message
+      $(".mp-gallery-not-started-msg").hide();
+      if (photos.length === 0) {
+         $(".mp-gallery-no-image-msg").show();
+      } else {
+         $(".mp-gallery-no-image-msg").hide();
+      }
    },
    /**
     * @description adds new photo to gallery.
@@ -160,6 +167,8 @@ UIGallery.prototype =  {
          this.carousel.reset();
          this.carousel = null;
       }
+      // show no image message
+      $(".mp-gallery-no-image-msg").show();
    },
 
    /**

@@ -34,6 +34,8 @@
     {% endif %}
   </div>
   <div class="mp-gallery-inner column" id="mp-gallery-inner">
+    <div class="mp-gallery-not-started-msg">{% trans "GALLERY_NOT_STARTED" %}</div>
+    <div class="mp-gallery-no-image-msg">{% trans "GALLERY_IS_EMPTY" %}</div>
     <!-- loop exactly 5 times. this iterates through every character of the string -->
     {% for index in "12345" %}
     <div class="mp-gallery-tile">

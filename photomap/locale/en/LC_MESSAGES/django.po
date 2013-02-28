@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-28 16:35+0100\n"
+"POT-Creation-Date: 2013-02-28 18:49+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,20 +17,18 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/base-interactive.html:70 templates/base-interactive.html.py:86
-#: templates/view-album.html:96
+#: templates/view-album.html:98
 msgid "Schließen"
 msgstr "Close"
 
 #: templates/base-interactive.html:89
-#, fuzzy
 msgid "SELECT_PLACE_OR_ALBUM"
-msgstr "Delete Album?"
+msgstr "When selecting a Place or an Album you will view the description of the selected object in this box."
 
 #: templates/base-interactive.html:91 templates/base-interactive.html.py:99
 #: templates/base-interactive.html:101
-#, fuzzy
 msgid "NO_DESCRIPTION"
-msgstr "Description"
+msgstr "No description"
 
 #: templates/base-interactive.html:97 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
@@ -925,9 +923,8 @@ msgid "Motivation am Projekt"
 msgstr "Motivation for the project"
 
 #: templates/update-album-password.html:5
-#, fuzzy
 msgid "UPDATE_ALBUM_PASSWORD"
-msgstr "Update Album"
+msgstr "TODO: DER TITEL SOLLTE KLARMACHEN DASS ES UMS TEILEN GEHT!"
 
 #: templates/update-album-password.html:11
 msgid "mp-copy-link-title"
@@ -940,13 +937,7 @@ msgstr "How to share the link?"
 #: templates/update-album-password.html:24
 msgid "How to Share -> description"
 msgstr ""
-"To share this link you need to copy and paste it wherever you would want to "
-"share (Social networks, Email, Blogs,etc). You may copy the link by simply "
-"clicking on the 'Copy Link' button, but for this , you need to have flash "
-"enabled. So in case it doesn't work due to your browser security settings, "
-"you need to copy the highlighted link manually. You can do that with 'Ctrl + "
-"C' (Windows) or 'Command + C' (Mac OS X) or by right clicking on the link "
-"and choosing 'Copy'."
+"TODO: HIER SOLLTE STEHEN WIE MAN TEILT UND WAS DAS MIT DEM PASSWORT SOLL"
 
 #: templates/update-album-password.html:27
 msgid "How to Share -> attention!"
@@ -963,14 +954,12 @@ msgid "UPDATE_PHOTO"
 msgstr "Update Photo"
 
 #: templates/update-photos.html:5
-#, fuzzy
 msgid "UPDATE_PHOTOS"
-msgstr "Update Photo"
+msgstr "Update order of photos"
 
 #: templates/update-photos.html:11
-#, fuzzy
 msgid "UPDATE_PHOTOS_CONFIRMATION"
-msgstr "Update Photo"
+msgstr "Do you really want to update the photo order?"
 
 #: templates/update-place.html:5
 msgid "UPDATE_PLACE"
@@ -984,113 +973,39 @@ msgstr "Previous Page"
 msgid "Open Full Gallery"
 msgstr "Open Full Gallery"
 
-#: templates/view-album.html:48
+#: templates/view-album.html:37
+msgid "GALLERY_NOT_STARTED"
+msgstr ""
+"Please select a place by clicking on a marker on the map above in order "
+"to start the gallery."
+
+#: templates/view-album.html:38
+msgid "GALLERY_IS_EMPTY"
+msgstr ""
+"The selected place does not contain photos yet. You can add a photo by "
+"dropping it into the gallery or using the 'Add Photo'-Button on the right side."
+
+#: templates/view-album.html:50
 msgid "Next Page"
 msgstr "Next Page"
 
-#: templates/view-album.html:52
+#: templates/view-album.html:54
 msgid "Add Image"
 msgstr "Add Image"
 
-#: templates/view-album.html:65
+#: templates/view-album.html:67
 msgid "Previous Image"
 msgstr "Previous Image"
 
-#: templates/view-album.html:71
+#: templates/view-album.html:73
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr "Please choose a photo in your gallery to start the slideshow."
 
-#: templates/view-album.html:75
+#: templates/view-album.html:77
 msgid "Next Image"
 msgstr "Next Image"
 
-#: templates/view-album.html:78
+#: templates/view-album.html:80
 msgid "Bild"
 msgstr "Image"
 
-#~ msgid "impressum-liability Haftung für Inhalte"
-#~ msgstr "Liability for content published by makers of this website"
-
-#~ msgid "impressum-liability Haftung für Inhalte list-item-1"
-#~ msgstr ""
-#~ "The makers of the website are a team of aspiring members whose profiles "
-#~ "you can find on the „Team“-page."
-
-#~ msgid "impressum-liability Haftung für Inhalte list-item-2"
-#~ msgstr ""
-#~ "Content published by the makers of this web-application is carefully "
-#~ "checked before putting it online. Nevertheless we cannot guarantee the "
-#~ "completeness and full integrity and up-to-datedness."
-
-#~ msgid "impressum-liability Haftung für Inhalte list-item-3"
-#~ msgstr ""
-#~ "Compliant to § 7 Abs.1 TMG we as service providers, are responsible for "
-#~ "our contents. But compliant to § 8 to § 10 TMG we are not obliged to "
-#~ "perpetually monitoring all content uploads and check them for the "
-#~ "possibility of supporting illegal activities."
-
-#~ msgid "impressum-liability Haftung für Inhalte list-item-4"
-#~ msgstr ""
-#~ "Obligation to remove and block the usage of information, according to the "
-#~ "general law are not touched by this. A liability concerning this matter "
-#~ "is possible, provided that a concrete infringement of the law is known."
-
-#~ msgid "impressum-liability Haftung für Inhalte list-item-5"
-#~ msgstr ""
-#~ "We will not hesitate to remove the content and even block or notify the "
-#~ "user in this case."
-
-#~ msgid "impressum-liability Haftung für Links"
-#~ msgstr "Liability for links to external websites"
-
-#~ msgid "impressum-liability Haftung für Links list-item-1"
-#~ msgstr ""
-#~ "The makers of this website cannot control or safe-guard the content of "
-#~ "websites that are linked on this website."
-
-#~ msgid "impressum-liability Haftung für Links list-item-2"
-#~ msgstr ""
-#~ "The responsibility of the data published on this website is within the "
-#~ "discretion of the owners."
-
-#~ msgid "impressum-liability Haftung für Links list-item-3"
-#~ msgstr ""
-#~ "Any linked website gets checked by us and we would not link a website, if "
-#~ "there are any infringements to the law obvious to us. Without concrete "
-#~ "indications a perpetual monitoring of the websites’ content is not "
-#~ "possible though."
-
-#~ msgid "impressum-liability Haftung für Links list-item-4"
-#~ msgstr ""
-#~ "In case we gain knowledge of an infringement will make sure to remove the "
-#~ "links of the concerned website immediately."
-
-#~ msgid "Es ist noch kein Album ausgewählt!"
-#~ msgstr "No album selected"
-
-#~ msgid "Do you really want to delete"
-#~ msgstr "Do you really want to delete:"
-
-#~ msgid "YES"
-#~ msgstr "Yes"
-
-#~ msgid "NO"
-#~ msgstr "No"
-
-#~ msgid "SAVE"
-#~ msgstr "Save"
-
-#~ msgid "insert-dialogue-title update-album"
-#~ msgstr "Edit album"
-
-#~ msgid "insert-dialogue-title update-photo"
-#~ msgstr "Edit photo"
-
-#~ msgid "insert-dialogue-title update-place"
-#~ msgstr "Edit place"
-
-#~ msgid "Speichern und weitere hinzufügen"
-#~ msgstr "Save and add another"
-
-#~ msgid "No image selected."
-#~ msgstr "No image selected."

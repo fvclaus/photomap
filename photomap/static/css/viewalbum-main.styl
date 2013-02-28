@@ -44,7 +44,7 @@
   span
     height 40%
     width 90%
-    padding 1%
+    padding 10%
     display block
   img.mp-control
     width 65%
@@ -56,6 +56,24 @@
   padding 1.2% 0 //padding refers to width of containing box -> the 1.2% are about 7% of the height
   padding-left 1.3%
   overflow hidden
+  position relative
+
+.mp-gallery-no-image-msg,
+.mp-gallery-not-started-msg
+  width 90%
+  height 80%
+  margin-top -40%
+  margin-left 5%
+  position absolute
+  top 50%
+  background-color #dadada
+  box-shadow(5px 5px 25px #333)
+  border-radius 5px
+  text-align center
+  overflow auto
+
+.mp-gallery-no-image-msg
+  display none
 
 .mp-gallery-tile
   width 16.86% //18.46% - 2 * .8 (-> 5px) 
