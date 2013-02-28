@@ -60,7 +60,7 @@ function bindUserMenuListener () {
             var isMenu = event.target.id === "menu" || $.contains($menu[0], event.target),
                 // jquery ui button adds several spans inside the button, therefore the $.contains is necessary
                 isButton = event.target.id === "mp-user-mail" || $.contains($button[0], event.target);
-            if (!isMenu && !isButton){
+            if (!isMenu && !isButton && $menu.is(":visible")){
                toggle();
             }
          });
