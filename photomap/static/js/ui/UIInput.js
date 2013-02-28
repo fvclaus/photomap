@@ -54,7 +54,7 @@ UIInput.prototype = {
             instance.$dialog.empty();
             instance.$dialog.dialog("destroy");
             instance.setVisibility(false);
-            // in case the user did not submit
+            // in case the user did not submit or a network/server error occurred and the dialog is closed
             if (instance.abort) {
                instance._trigger(instance.options, "abort");
             }
@@ -177,7 +177,7 @@ UIInput.prototype = {
    _submitHandler : function () {
       var instance = this,
           $widget = this.$dialog.dialog("widget"),
-          $form = $widget.find("form.mp-dialog-content"),
+          $form = $widget.find("form"),
           $close = $widget.find("ui-dialog-titlebar-close"),
           $buttons = $form
              .find("button, input[type='submit']")
@@ -185,7 +185,7 @@ UIInput.prototype = {
              .add($("#mp-dialog-button-no"))
              .add($("#mp-dialog-button-save"))
              .add($close),
-          message = new UIInputMessage($("#mp-dialog-message"));
+          message = new UIInputMessage($widget);
       
 
       //called when data is valid
@@ -200,19 +200,23 @@ UIInput.prototype = {
             $.ajaxSetup({
                type : $form.attr("method"),
                success : function (data, textStatus) {
-                  instance.abort = false;
 
-                  if (data.error) {
+                  if (!data.success) {
+                     instance.$loader.hide();
+                     instance._scrollToMessage(message);
                      message.showFailure(data.error);
                      $buttons.button("enable");
                      return;
                   }
+                  // set only when the request did not produce an error
+                  instance.abort = false;
                   instance._trigger(instance.options, "success", data);
 
                   if (message.isAutoClose()){
                      instance.close();
                   } else {
                      instance.$loader.hide();
+                     instance._scrollToMessage(message);
                      message.showSuccess();
                      $close.button("enable");
                   }
@@ -222,6 +226,7 @@ UIInput.prototype = {
                error : function (error) {
                   // instance.close();
                   instance.$loader.hide();
+                  instance._scrollToMessage(message);
                   message.showFailure(gettext("NETWORK_ERROR"));
                   $buttons.button("enable");
                }
@@ -247,13 +252,18 @@ UIInput.prototype = {
       });
       this._trigger(this.options, "load");
    },
+   _scrollToMessage : function (message) {
+      this.$dialog.stop().animate({
+         scrollTop : message.getOffset().top
+      }, 300);
+   },
    _trigger : function (options, name, args){
       if (typeof options[name] === "function"){
          options[name].call(options.context, args);
       }
    },
    _submitForm : function () {
-      this.$dialog.dialog("widget").find("form.mp-dialog-content").trigger("submit");
+      this.$dialog.dialog("widget").find("form").trigger("submit");
    },
    setVisibility : function (bool) {
       this.visible = bool;
@@ -268,6 +278,7 @@ UIInput.prototype = {
 
 UIInputMessage = function ($el) {
    this.$el = $el;
+   this.$container = this.$el.find("#mp-dialog-message");
    this.$success = this.$el.find("#mp-dialog-message-success").hide();
    this.$failure = this.$el.find("#mp-dialog-message-failure").hide();
    this.$error = this.$failure.find("em");
@@ -291,7 +302,7 @@ UIInputMessage.prototype = {
       return this.autoClose;
    },
    /**
-    @private
+    * @private
     */
    _bindListener : function () {
       this.$autoClose.click(function () {
@@ -302,6 +313,9 @@ UIInputMessage.prototype = {
          main.getUIState().setDialogAutoClose(autoClose);
          this.autoClose = autoClose;
       });
+   },
+   getOffset : function () {
+      return this.$container.offset();
    },
 };
       

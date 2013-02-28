@@ -114,7 +114,7 @@ content="interactive"
 
 <!-- ff does not change the width of the conrols wrapper, unless it is a span tag -->
 <!-- changing the display to inline-block alone does not do the trick -->
-<span class="mp-controls-wrapper mp-nodisplay">
+<span class="mp-controls-wrapper ui-corner-all mp-nodisplay">
   <img class="mp-option-delete mp-control mp-cursor-pointer" src="/static/images/delete.png" title='{% trans "control-title delete" %}' />
   <img class="mp-option-modify mp-control mp-cursor-pointer" src="/static/images/modify.png" title='{% trans "control-title modify" %}' />
   {% block controls %}{% endblock %}

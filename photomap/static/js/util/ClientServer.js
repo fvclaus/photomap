@@ -71,56 +71,7 @@ ClientServer.prototype = {
       
       main.initAfterAjax();
    },
-   /**
-    * @description Updates the order of all Photos of a single place and notifies the Gallery. 
-    * The actual Photo objects will get updated, once the server sends a positive confirmation.
-    * @param {Array} photos Must be an array of plain objects with photo, id, title, order attributes.
-    * This must not an array of instances of Photos that are in use. 
-    */
-   savePhotoOrder : function (photos) {
-      
-      var nPhotos = photos.length,
-          place = main.getUIState().getCurrentLoadedPlace();
-      
-      photos.forEach(function (photo) {
-         // photo must be a photo dto not the actual photo
-         // the actual photo is changed when the request is successfull
-         assertFalse(photo instanceof Photo);
-         assertNumber(photo.order);
-         assertNumber(photo.id);
-         assertString(photo.title);
-      });
-         
-      // post request for each photo with updated order
-      $.ajax({
-         url : "/update-photos",
-         type : "post",
-         data : {
-            "photos" : JSON.stringify(photos)
-         },
-         success : function (response) {
-            if (response.success) {
 
-               // update the 'real' photo order
-               photos.forEach(function (photo, index) {
-                  place.getPhoto(photo.photo).order = photo.order;
-                  console.log("Update order of photo %d successful.", index);
-               });
-                              
-               console.log("All Photos updated. Updating Gallery.");
-               place.sortPhotos();
-               // notify other ui components, that the order changed
-               $(main.getUI()).trigger("photosupdate", place);
-            }
-            else {
-               console.log("Update order of Photos failed. Error: %s", index, response.error);
-            }
-         },
-         error : function () {
-            alert(gettext("NETWORK_ERROR"));
-         }
-      });
-   },
    /**
     * @private
     */
