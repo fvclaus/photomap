@@ -85,7 +85,7 @@ content="interactive"
     <div class="mp-full-column-controls">
       <span class="mp-control mp-cursor-pointer mp-close-full-description">{% trans "Schließen" %}</span>
     </div>
-    <div>
+    <div id="mp-detail-wrapper">
       <p id="mp-detail-title">{% trans "SELECT_PLACE_OR_ALBUM" %}</p>
       <div id="mp-detail-description-wrapper">
         <p><em>{% trans "NO_DESCRIPTION" %}</em></p>
@@ -95,7 +95,10 @@ content="interactive"
   
   <section class="mp-description-wrapper mp-nodisplay" id="mp-detail-teaser">
     <p id="mp-detail-teaser-title">{% trans "SELECT_PHOTO" %}</p>
-    <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p>
+    <div id="mp-detail-teaser-description-wrapper">
+      <p><em>{% trans "NO_DESCRIPTION" %}</em></p>
+    </div>
+    <!-- <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p> -->
   </section>
 </section>
 
