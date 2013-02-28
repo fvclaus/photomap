@@ -9,7 +9,7 @@ import re
 import sys
 from django.shortcuts import render_to_response
 from django.conf import settings
-from pm.controller import album, dashboard
+from pm.controller import album, dashboard, authentication
 
 
 class NoSupportMiddleware():
@@ -24,7 +24,7 @@ class NoSupportMiddleware():
     def process_view(self, request, view_func, view_args, view_kwargs):
         logger = logging.getLogger(__name__)
         # dashboard and album view are only tested with ff & chrome
-        if view_func == album.view or view_func == dashboard.view:
+        if view_func == album.view or view_func == dashboard.view or view_func == authentication.login:
             try:
                 user_agent = request.META["HTTP_USER_AGENT"]
             except:
