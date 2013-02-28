@@ -165,10 +165,10 @@ UIMap.prototype = {
    },
 
 
-   initWithoutAjax : function () {
+   preinit : function () {
       this._create();
    },
-   initAfterAjax : function () {
+   init : function () {
       
       var authorized;
       

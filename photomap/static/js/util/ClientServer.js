@@ -21,10 +21,10 @@ ClientServer = function () {
  */
 
 ClientServer.prototype = {
-   init : function () {
+   preinit : function () {
       assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView());
       
-      if (main.getUIState().isAlbumView()){
+      if (main.getUIState().isAlbumView()) {
          this._getPlaces();
       } else if (main.getUIState().isDashboardView()) {
          this._getAlbums();
@@ -46,7 +46,7 @@ ClientServer.prototype = {
             // in case there are no albums yet show world map
             if (albumsinfo.length === 0) {
                map.showWorld();
-               main.initAfterAjax();
+               main.init();
                return;
             }
 
@@ -69,7 +69,7 @@ ClientServer.prototype = {
       var map = main.getMap();
       map.showAsMarker(albums);
       
-      main.initAfterAjax();
+      main.init();
    },
 
    /**
@@ -104,7 +104,7 @@ ClientServer.prototype = {
                // in case there are no places yet show map around album marker
                if (!albuminfo.places || (albuminfo.places === null) || (albuminfo.places.length === 0)) {
                   main.getMap().expandBounds(album);
-                  main.initAfterAjax();
+                  main.init();
                   return;
                }
 
@@ -137,7 +137,7 @@ ClientServer.prototype = {
       places = this._sortPhotos(places);
       map.showAsMarker(places);
 
-      main.initAfterAjax();
+      main.init();
    },
    /**
     * @private

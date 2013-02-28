@@ -31,6 +31,10 @@ UIInformation = function () {
 };
 
 UIInformation.prototype = {
+   
+   init : function () {
+      this._bindUIListener();
+   },
    /**
     * @public
     * @description This will show the details or the teaser for the details of the model in question.
@@ -139,11 +143,24 @@ UIInformation.prototype = {
          }
       });
       $(".mp-close-full-description").on("click", function (event) {
-         
          if (!main.getUI().isDisabled()) {
             instance._hideDetail();
          }
       });
+   },
+   /**
+    * @private
+    * @description adds Listener to UI. To react to events fired by other classes such as UISlideshow
+    */
+   _bindUIListener : function () {
+      var instance = this;
+      
+      $(main.getUI()).on("click.SlideshowBeforeLoad", function (event) {
+         if (!main.getUI().isDisabled()) {
+            instance._hideDetail();
+         }
+      });
+      
    },
    /* ---- other stuff ---- */
    updateUsedSpace : function () {

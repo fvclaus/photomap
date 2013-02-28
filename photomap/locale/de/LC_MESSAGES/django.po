@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-26 21:35+0100\n"
+"POT-Creation-Date: 2013-02-28 16:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,35 +17,37 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:65 templates/base-interactive.html.py:81
+#: templates/base-interactive.html:70 templates/base-interactive.html.py:86
+#: templates/view-album.html:96
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:84
+#: templates/base-interactive.html:89
 #, fuzzy
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr "Album löschen?"
 
-#: templates/base-interactive.html:86 templates/base-interactive.html.py:93
+#: templates/base-interactive.html:91 templates/base-interactive.html.py:99
+#: templates/base-interactive.html:101
 #, fuzzy
 msgid "NO_DESCRIPTION"
 msgstr "Beschreibung"
 
-#: templates/base-interactive.html:92 templates/photo-editor.html:4
+#: templates/base-interactive.html:97 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Bitte wählen Sie ein Photo aus."
 
-#: templates/base-interactive.html:105
+#: templates/base-interactive.html:113
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:113
+#: templates/base-interactive.html:121
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:114
+#: templates/base-interactive.html:122
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
@@ -954,15 +956,20 @@ msgstr "Design"
 msgid "Motivation am Projekt"
 msgstr "Motivation am Projekt"
 
-#: templates/update-album-password.html:7
+#: templates/update-album-password.html:5
+#, fuzzy
+msgid "UPDATE_ALBUM_PASSWORD"
+msgstr "Album bearbeiten"
+
+#: templates/update-album-password.html:11
 msgid "mp-copy-link-title"
 msgstr "Link kopieren"
 
-#: templates/update-album-password.html:17
+#: templates/update-album-password.html:21
 msgid "How to Share"
 msgstr "Wie teilt man den Link?"
 
-#: templates/update-album-password.html:20
+#: templates/update-album-password.html:24
 msgid "How to Share -> description"
 msgstr ""
 "Um das Album mit anderen zu teilen müssen Sie den Link kopieren, dann können "
@@ -974,7 +981,7 @@ msgstr ""
 "'Command + C' (Mac OS X) oder per 'Kopieren' in dem Menü, welches sich bei "
 "Rechtsklick auf den Link öffnet, kopieren."
 
-#: templates/update-album-password.html:23
+#: templates/update-album-password.html:27
 msgid "How to Share -> attention!"
 msgstr ""
 "Bitte beachten Sie, dass, was auch immer Sie momentan im Zwischenspeicher "
@@ -987,6 +994,16 @@ msgstr "Album bearbeiten"
 
 #: templates/update-photo.html:5
 msgid "UPDATE_PHOTO"
+msgstr "Photo bearbeiten"
+
+#: templates/update-photos.html:5
+#, fuzzy
+msgid "UPDATE_PHOTOS"
+msgstr "Photo bearbeiten"
+
+#: templates/update-photos.html:11
+#, fuzzy
+msgid "UPDATE_PHOTOS_CONFIRMATION"
 msgstr "Photo bearbeiten"
 
 #: templates/update-place.html:5

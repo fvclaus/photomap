@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-26 21:36+0100\n"
+"POT-Creation-Date: 2013-02-28 16:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,24 +16,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: static/js/main/init.js:29
+msgid "INITIALISATION_NOT_POSSIBLE"
+msgstr ""
+"The application failed to start. Please contact the support. We apologize for "
+"any inconvenience this might cause!"
+
 #: static/js/ui/UIFullscreen.js:108
 msgid "PHOTO_LOADING_ERROR"
 msgstr "The requested image couldn't be loaded. Please try again later."
 
-#: static/js/ui/UIInput.js:71
+#: static/js/ui/UIGallery.js:456
+msgid "PHOTOS_DIRTY"
+msgstr ""
+
+#: static/js/ui/UIInput.js:77
 msgid "YES"
 msgstr "Yes"
 
-#: static/js/ui/UIInput.js:79
+#: static/js/ui/UIInput.js:85
 msgid "NO"
 msgstr "No"
 
-#: static/js/ui/UIInput.js:94
+#: static/js/ui/UIInput.js:100
 msgid "SAVE"
 msgstr "Save"
 
-#: static/js/ui/UIInput.js:163 static/js/ui/UIInput.js.c:217
-#: static/js/util/ClientServer.js:119 static/js/util/ClientServer.js.c:175
+#: static/js/ui/UIInput.js:169 static/js/ui/UIInput.js.c:230
+#: static/js/util/ClientServer.js:126
 msgid "NETWORK_ERROR"
 msgstr "A network error occurred. Please try again later."
 
@@ -49,7 +59,7 @@ msgstr "Currently there is support for only JPEG and PNG photos."
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "No rotation possible, after the photo was modified."
 
-#: static/js/util/ClientServer.js:171
+#: static/js/util/ClientServer.js:122
 msgid "GET_ALBUM_ERROR"
 msgstr "The following error occurred while loading the album:  "
 

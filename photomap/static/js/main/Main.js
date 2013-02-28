@@ -1,5 +1,5 @@
 /*jslint */
-/*global ClientState, ClientServer, UI, UIMap , initializeNonInteractive, initialize, initializeAfterAjax, initializeTest, window */
+/*global ClientState, ClientServer, UI, UIMap, preinit, init, initializeTest, window */
 
 "use strict";
 
@@ -23,29 +23,30 @@ Main = function () {
 };
 
 Main.prototype = {
-   initWithoutAjax : function () {
+   
+   preinit : function () {
 
       this.map = new UIMap();
-      this.map.initWithoutAjax();
+      this.map.preinit();
       // load markers on map
-      this.clientServer.init();
+      this.clientServer.preinit();
       // initialise parts of UI that don't need the data loaded from the server
-      this.ui.initWithoutAjax();
+      this.ui.preinit();
 
       // do some page specific stuff
-      if (typeof initialize === "function") {
-         initialize();
+      if (window && window.preinit) {
+         preinit();
       }
 
    },
-   initAfterAjax: function () {
-      this.map.initAfterAjax();
-      this.ui.initAfterAjax();
-      this.clientState.initAfterAjax();
+   init: function () {
+      this.map.init();
+      this.ui.init();
+      this.clientState.init();
 
       // do some page specific stuff
-      if (window && window.initializeAfterAjax) {
-         initializeAfterAjax();
+      if (window && window.init) {
+         init();
       }
       //initialize test, if they are present
       if (window && window.initializeTest) {

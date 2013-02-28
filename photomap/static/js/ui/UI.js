@@ -37,16 +37,17 @@ UI.prototype = {
     * @author Frederik Claus
     * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
     */
-   initWithoutAjax : function () {
-      this.controls.initWithoutAjax();
+   preinit : function () {
+      this.controls.preinit();
       if (this.state.isAlbumView()){
-         this.slideshow.initWithoutAjax();
+         this.slideshow.preinit();
       }
    },
-   initAfterAjax : function () {
-      this.controls.initAfterAjax();
+   init : function () {
+      this.controls.init();
+      this.information.init();
       if (this.state.isAlbumView()){
-         this.gallery.initAfterAjax();
+         this.gallery.init();
       }
    },
    getGallery : function () {

@@ -25,14 +25,14 @@ UIControls = function (maxHeight) {
 
 UIControls.prototype = {
 
-   initWithoutAjax : function () {
+   preinit : function () {
       this.photoListener = new UIPhotoListener();
       this.placeListener = new UIPlaceListener();
       this.albumListener = new UIAlbumListener();
       this.editControls = new UIEditControls();
 
    },
-   initAfterAjax : function () {
+   init : function () {
       
       var state, clientstate, page;
       state = main.getUIState();

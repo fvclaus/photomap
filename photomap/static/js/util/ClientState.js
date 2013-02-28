@@ -30,7 +30,7 @@ ClientState = function () {
 
 ClientState.prototype = {
    
-   initAfterAjax : function () {
+   init : function () {
       this.quota = main.getUI().getTools().bytesToMbyte($.cookie("quota"));
       this.updateUsedSpace();
    },

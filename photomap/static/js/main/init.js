@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, Main, document */
+/*global $, Main, document, gettext */
 
 "use strict";
 
@@ -21,10 +21,12 @@ var main = null;
 $(document).ready(function () {
    main = new Main();
    // initialise js-classes
-   if (main && main.initWithoutAjax) {
-      main.initWithoutAjax();
-   } else {
+   if (main && main.preinit) {
+      main.preinit();
+   } else if (main && main.init) {
       main.init();
+   } else {
+      alert(gettext("INITIALISATION_NOT_POSSIBLE"));
    }
 });
 

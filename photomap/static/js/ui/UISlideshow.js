@@ -181,6 +181,9 @@ UISlideshow.prototype = {
    _beforeLoad : function ($photos) {
       // we are expecting to receive a jquery element wrapper
       assert(typeof $photos, "object");
+      // trigger event to tell UI that slideshow is about to change
+      // @see UIInformation 
+      $(main.getUI()).trigger("click.SlideshowBeforeLoad");
       this._disable();
       $photos.each(function () {
          $(this)

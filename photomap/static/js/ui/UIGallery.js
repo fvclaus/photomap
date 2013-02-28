@@ -8,48 +8,50 @@
  * @class UIFullGallery displays all Photos of the current Place as thumbnails to allow easy editing and D'n'D.
  * @requires ClientServer
  */
-var UIFullGallery = function () {
+var UIFullGallery, UIGallery
+       
+UIFullGallery = function () {
    this.loaded = false;
    this.carousel = null;
    this.$container = $("#mp-full-left-column").find(".mp-data");
    this.$column = $("#mp-full-left-column");
-},
+};
 /**
  * @author Marc Roemer
  * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
  * @requires UICarousel
  */
-    UIGallery = function () {
-       this.$container = $('#mp-gallery');
-       this.$inner = $('#mp-gallery-inner');
-       // this.$hidden = $("#mp-gallery-thumbs");
-       this.$thumbs = $(".mp-gallery-tile");
-       this.$navLeft = $("#mp-gallery-nav-left");
-       this.$navRight = $("#mp-gallery-nav-right");
-       this.$photos = this.$thumbs.find(".mp-thumb");
-       
-       this.carousel = null;
-       
-       this.photos = null;
-       this.isStarted = false;
-       // set on insert photo to show the teaser of the photo after it is updated
-       this.showTeaser = false;
-       this.currentPhoto = null;
-       
-       this.fullGallery = new UIFullGallery();
-       this.$controls = $()
-          .add($(".mp-option-insert-photo"))
-          .add($(".mp-open-full-gallery"));
-
-       // set to true if the order of the photos is changed
-       this.isDirty = false;
-       this.$dirtyWarning = $();
-    };
+UIGallery = function () {
+   this.$container = $('#mp-gallery');
+   this.$inner = $('#mp-gallery-inner');
+   // this.$hidden = $("#mp-gallery-thumbs");
+   this.$thumbs = $(".mp-gallery-tile");
+   this.$navLeft = $("#mp-gallery-nav-left");
+   this.$navRight = $("#mp-gallery-nav-right");
+   this.$photos = this.$thumbs.find(".mp-thumb");
+   
+   this.carousel = null;
+   
+   this.photos = null;
+   this.isStarted = false;
+   // set on insert photo to show the teaser of the photo after it is updated
+   this.showTeaser = false;
+   this.currentPhoto = null;
+   
+   this.fullGallery = new UIFullGallery();
+   this.$controls = $()
+      .add($(".mp-option-insert-photo"))
+      .add($(".mp-open-full-gallery"));
+   
+   // set to true if the order of the photos is changed
+   this.isDirty = false;
+   this.$dirtyWarning = $();
+};
 
 
 UIGallery.prototype =  {
 
-   initAfterAjax : function () {
+   init : function () {
       var controls = main.getUI().getControls();
       if (main.getClientState().isAdmin()) {
          this.$container.bind('dragover.FileUpload', controls.handleGalleryDragover);
