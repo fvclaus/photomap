@@ -75,10 +75,13 @@ UITools.prototype = {
       switch (direction) {
       
       case "vertical":
-         assertTrue(heightDifference > 0);
-         // this is better than setting margin top and bottom
-         // margin top and bottom in combination with overflow : auto will often display vertical scrollbars
-         $element.css("margin-top", heightDifference / 2 + "px");
+         if (heightDifference > 0){
+            // this is better than setting margin top and bottom
+            // margin top and bottom in combination with overflow : auto will often display vertical scrollbars
+            $element.css("margin-top", heightDifference / 2 + "px");
+         } else {
+            $element.css("margin-top", "0px");
+         }
          break;
       case "horizontal":
          //TODO this needs a rework

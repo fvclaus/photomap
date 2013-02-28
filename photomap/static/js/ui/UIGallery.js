@@ -205,7 +205,8 @@ UIGallery.prototype =  {
     * @private
     * @description Check if the updated photo is a newly insert, if yes open teaser
     */
-   _update : function () {
+   _update : function ($photos) {
+
       if (this.showTeaser) {
          if (this.currentPhoto === null) {
             throw new Error("Set showTeaser but no currentPhoto");

@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, CarouselPage, assert, assertTrue */
+/*global $, main, CarouselPage, window, assert, assertTrue */
 
 "use strict";
 
@@ -146,11 +146,19 @@ UIPhotoCarousel.prototype = {
       window.setTimeout(function () {
          $items.each(function (index) {
             imageSource = instance.currentPage[from + index];
+            // center element
+            // give the element its later height
+            $(this).attr("src", imageSource);
+            // set margin-top accordingly.
+            main.getUI().getTools().centerElement($(this).parent(), $(this), "vertical");
+            // remove the img again to fade it in nicely
+            $(this).removeAttr("src");
             if ( imageSource !== null) {
                $(this).fadeTo(duration, 1, updated)
                   .attr("src", imageSource)
                // needed for frontend testing to select 'active' photos
                   .addClass("mp-test-photo-used");
+
             } else {
                $(this).fadeOut(0, updated)
                   .removeAttr("src")
