@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-18 14:46+0100\n"
+"POT-Creation-Date: 2013-02-26 21:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,88 +17,102 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:65 templates/base-interactive.html.py:82
+#: templates/base-interactive.html:65 templates/base-interactive.html.py:81
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:108
+#: templates/base-interactive.html:84
+#, fuzzy
+msgid "SELECT_PLACE_OR_ALBUM"
+msgstr "Album löschen?"
+
+#: templates/base-interactive.html:86 templates/base-interactive.html.py:93
+#, fuzzy
+msgid "NO_DESCRIPTION"
+msgstr "Beschreibung"
+
+#: templates/base-interactive.html:92 templates/photo-editor.html:4
+msgid "SELECT_PHOTO"
+msgstr "Bitte wählen Sie ein Photo aus."
+
+#: templates/base-interactive.html:105
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:114
+#: templates/base-interactive.html:113
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:115
+#: templates/base-interactive.html:114
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base.html:105 templates/base.html.py:106
+#: templates/base.html:114 templates/base.html.py:115
 msgid "Settings"
 msgstr ""
 
-#: templates/base.html:109
+#: templates/base.html:118
 msgid "Abmelden"
 msgstr "Abmelden"
 
-#: templates/base.html:124
+#: templates/base.html:143
 msgid "Login or Register"
 msgstr "Anmelden oder Registrieren"
 
-#: templates/base.html:124
+#: templates/base.html:143
 msgid "Anmelden/Registrierung"
 msgstr "Anmeldung und Registrierung"
 
-#: templates/base.html:129 templates/not-supported-old.html:64
+#: templates/base.html:148 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:129 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:148 templates/team.html:6 templates/team.html.py:8
 #: templates/team.html.py:11
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:130 templates/not-supported-old.html:62
+#: templates/base.html:149 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:130 templates/contact.html:6
+#: templates/base.html:149 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:131 templates/not-supported-old.html:60
+#: templates/base.html:150 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:131 templates/privacy.html:5
+#: templates/base.html:150 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:132 templates/not-supported-old.html:61
+#: templates/base.html:151 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:132 templates/copyright.html:6
+#: templates/base.html:151 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:133 templates/not-supported-old.html:63
+#: templates/base.html:152 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:133 templates/help.html:6
+#: templates/base.html:152 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:134 templates/not-supported-old.html:59
+#: templates/base.html:153 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:134 templates/impressum.html:6
+#: templates/base.html:153 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
@@ -116,7 +130,7 @@ msgid "contact-intro-article1-line2"
 msgstr ""
 ", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail an"
 
-#: templates/contact.html:20 templates/impressum.html:39
+#: templates/contact.html:20 templates/impressum.html:40
 msgid "email just in javascript"
 msgstr ""
 "-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und laden "
@@ -136,7 +150,7 @@ msgstr "Bitte beachten Sie die hierfür gültigen"
 msgid "contact-linkto-privacy"
 msgstr "Datenschutzgrundsätze"
 
-#: templates/contact.html:63 templates/debug/dialogdimension.html:24
+#: templates/contact.html:63
 msgid "Speichern"
 msgstr ""
 
@@ -228,7 +242,7 @@ msgstr ""
 "Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
 "Autors."
 
-#: templates/dashboard.html:16
+#: templates/dashboard.html:22
 msgid "control-title share"
 msgstr "Teilen"
 
@@ -594,7 +608,7 @@ msgstr ""
 "Sie können die Bilder neu anordnen, indem Sie innerhalb der Gallerie ein "
 "Photo an die gewünschte Stelle ziehen."
 
-#: templates/help.html:111 templates/debug/dialogdimension.html:18
+#: templates/help.html:111
 msgid "Beschreibung"
 msgstr ""
 
@@ -635,23 +649,23 @@ msgstr "Anschrift wie oben"
 msgid "impressum Vertreten durch"
 msgstr "Vertreten durch"
 
-#: templates/impressum.html:32
+#: templates/impressum.html:32 templates/impressum.html.py:33
 msgid "Telefon"
 msgstr "Telefon"
 
-#: templates/impressum.html:32
+#: templates/impressum.html:32 templates/impressum.html.py:33
 msgid "Handy"
 msgstr "Handy"
 
-#: templates/impressum.html:33
+#: templates/impressum.html:34
 msgid "Email-Adresse"
 msgstr "Email-Adresse"
 
-#: templates/impressum.html:44
+#: templates/impressum.html:45
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Missbrauch von Kontaktdaten"
 
-#: templates/impressum.html:45
+#: templates/impressum.html:46
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
@@ -660,78 +674,6 @@ msgstr ""
 "Missbrauch wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten "
 "behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
 "Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
-
-#: templates/impressum.html:49
-msgid "impressum-liability Haftung für Inhalte"
-msgstr "Haftung für Inhalte"
-
-#: templates/impressum.html:52
-msgid "impressum-liability Haftung für Inhalte list-item-1"
-msgstr ""
-"Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
-"Erstellung der Website verantwortlich ist. Ihre Profile sind auf der 'Team'-"
-"Seite zu finden."
-
-#: templates/impressum.html:53
-msgid "impressum-liability Haftung für Inhalte list-item-2"
-msgstr ""
-"Inhalte, die von den Entwicklern der Website veröffentlicht werden, wurden "
-"vorher mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit "
-"und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen."
-
-#: templates/impressum.html:54
-msgid "impressum-liability Haftung für Inhalte list-item-3"
-msgstr ""
-"Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf "
-"diesen Seiten nach den allgemeinen Gesetzen verantwortlich.  Nach §§ 8 bis "
-"10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, übermittelte "
-"oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu "
-"forschen, die auf eine rechtswidrige Tätigkeit hinweisen."
-
-#: templates/impressum.html:55
-msgid "impressum-liability Haftung für Inhalte list-item-4"
-msgstr ""
-"Verpflichtungen zur Entfernung oder Sperrung der Nutzung von Informationen "
-"nach den allgemeinen Gesetzen bleiben hiervon unberührt. Eine diesbezügliche "
-"Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis einer konkreten "
-"Rechtsverletzung möglich."
-
-#: templates/impressum.html:56
-msgid "impressum-liability Haftung für Inhalte list-item-5"
-msgstr ""
-"Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese "
-"Inhalte umgehend entfernen."
-
-#: templates/impressum.html:59
-msgid "impressum-liability Haftung für Links"
-msgstr "Haftung für Links zu externen Websiten"
-
-#: templates/impressum.html:62
-msgid "impressum-liability Haftung für Links list-item-1"
-msgstr ""
-"Die Entwickler dieser Website können keine Gewährleistung für die Inhalte "
-"von Websites Dritter, die auf dieser Website verlinkt sind, übernehmen."
-
-#: templates/impressum.html:63
-msgid "impressum-liability Haftung für Links list-item-2"
-msgstr ""
-"Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter oder "
-"Betreiber der Seite verantwortlich."
-
-#: templates/impressum.html:64
-msgid "impressum-liability Haftung für Links list-item-3"
-msgstr ""
-"Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche "
-"Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der "
-"Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der "
-"verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer "
-"Rechtsverletzung nicht zumutbar."
-
-#: templates/impressum.html:65
-msgid "impressum-liability Haftung für Links list-item-4"
-msgstr ""
-"Bei Bekanntwerden von Rechtsverletzungen werden wir Links zu der "
-"entsprechenden Website umgehend entfernen."
 
 #: templates/index.html:6 templates/index.html.py:8
 msgid "Willkommen"
@@ -780,10 +722,6 @@ msgstr "Platz hinzufügen"
 #: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
 msgstr "Login und Registrierung"
-
-#: templates/photo-editor.html:4
-msgid "SELECT_PHOTO"
-msgstr "Bitte wählen Sie ein Photo aus."
 
 #: templates/photo-editor.html:13
 msgid "SHARPEN"
@@ -993,7 +931,6 @@ msgstr ""
 "verfügbaren Information zu schicken."
 
 #: templates/team.html:17 templates/team.html.py:29 templates/team.html:41
-#: templates/debug/dialogdimension.html:14
 msgid "Name"
 msgstr "Name"
 
@@ -1017,15 +954,15 @@ msgstr "Design"
 msgid "Motivation am Projekt"
 msgstr "Motivation am Projekt"
 
-#: templates/update-album-password.html:14
+#: templates/update-album-password.html:7
 msgid "mp-copy-link-title"
 msgstr "Link kopieren"
 
-#: templates/update-album-password.html:18
+#: templates/update-album-password.html:17
 msgid "How to Share"
 msgstr "Wie teilt man den Link?"
 
-#: templates/update-album-password.html:21
+#: templates/update-album-password.html:20
 msgid "How to Share -> description"
 msgstr ""
 "Um das Album mit anderen zu teilen müssen Sie den Link kopieren, dann können "
@@ -1037,7 +974,7 @@ msgstr ""
 "'Command + C' (Mac OS X) oder per 'Kopieren' in dem Menü, welches sich bei "
 "Rechtsklick auf den Link öffnet, kopieren."
 
-#: templates/update-album-password.html:24
+#: templates/update-album-password.html:23
 msgid "How to Share -> attention!"
 msgstr ""
 "Bitte beachten Sie, dass, was auch immer Sie momentan im Zwischenspeicher "
@@ -1056,38 +993,101 @@ msgstr "Photo bearbeiten"
 msgid "UPDATE_PLACE"
 msgstr "Platz bearbeiten"
 
-#: templates/view-album.html:24
+#: templates/view-album.html:28
+msgid "Previous Page"
+msgstr "Vorherige Seite"
+
+#: templates/view-album.html:32
+msgid "Open Full Gallery"
+msgstr "Vollstädige Galerie öffnen"
+
+#: templates/view-album.html:48
+msgid "Next Page"
+msgstr "Nächste Seite"
+
+#: templates/view-album.html:52
+msgid "Add Image"
+msgstr "Bild hinzufügen"
+
+#: templates/view-album.html:65
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: templates/view-album.html:30
+#: templates/view-album.html:71
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr ""
 "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
 
-#: templates/view-album.html:34
+#: templates/view-album.html:75
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: templates/view-album.html:37
+#: templates/view-album.html:78
 msgid "Bild"
 msgstr "Bild"
 
-#: templates/view-album.html:74
-msgid "Previous Page"
-msgstr "Vorherige Seite"
+#~ msgid "impressum-liability Haftung für Inhalte"
+#~ msgstr "Haftung für Inhalte"
 
-#: templates/view-album.html:78
-msgid "Open Full Gallery"
-msgstr "Vollstädige Galerie öffnen"
+#~ msgid "impressum-liability Haftung für Inhalte list-item-1"
+#~ msgstr ""
+#~ "Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
+#~ "Erstellung der Website verantwortlich ist. Ihre Profile sind auf der "
+#~ "'Team'-Seite zu finden."
 
-#: templates/view-album.html:94
-msgid "Next Page"
-msgstr "Nächste Seite"
+#~ msgid "impressum-liability Haftung für Inhalte list-item-2"
+#~ msgstr ""
+#~ "Inhalte, die von den Entwicklern der Website veröffentlicht werden, "
+#~ "wurden vorher mit größter Sorgfalt erstellt. Für die Richtigkeit, "
+#~ "Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr "
+#~ "übernehmen."
 
-#: templates/view-album.html:98
-msgid "Add Image"
-msgstr "Bild hinzufügen"
+#~ msgid "impressum-liability Haftung für Inhalte list-item-3"
+#~ msgstr ""
+#~ "Als Diensteanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf "
+#~ "diesen Seiten nach den allgemeinen Gesetzen verantwortlich.  Nach §§ 8 "
+#~ "bis 10 TMG sind wir als Diensteanbieter jedoch nicht verpflichtet, "
+#~ "übermittelte oder gespeicherte fremde Informationen zu überwachen oder "
+#~ "nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit "
+#~ "hinweisen."
+
+#~ msgid "impressum-liability Haftung für Inhalte list-item-4"
+#~ msgstr ""
+#~ "Verpflichtungen zur Entfernung oder Sperrung der Nutzung von "
+#~ "Informationen nach den allgemeinen Gesetzen bleiben hiervon unberührt. "
+#~ "Eine diesbezügliche Haftung ist jedoch erst ab dem Zeitpunkt der Kenntnis "
+#~ "einer konkreten Rechtsverletzung möglich."
+
+#~ msgid "impressum-liability Haftung für Inhalte list-item-5"
+#~ msgstr ""
+#~ "Bei Bekanntwerden von entsprechenden Rechtsverletzungen werden wir diese "
+#~ "Inhalte umgehend entfernen."
+
+#~ msgid "impressum-liability Haftung für Links"
+#~ msgstr "Haftung für Links zu externen Websiten"
+
+#~ msgid "impressum-liability Haftung für Links list-item-1"
+#~ msgstr ""
+#~ "Die Entwickler dieser Website können keine Gewährleistung für die Inhalte "
+#~ "von Websites Dritter, die auf dieser Website verlinkt sind, übernehmen."
+
+#~ msgid "impressum-liability Haftung für Links list-item-2"
+#~ msgstr ""
+#~ "Für die Inhalte der verlinkten Seiten ist stets der jeweilige Anbieter "
+#~ "oder Betreiber der Seite verantwortlich."
+
+#~ msgid "impressum-liability Haftung für Links list-item-3"
+#~ msgstr ""
+#~ "Die verlinkten Seiten wurden zum Zeitpunkt der Verlinkung auf mögliche "
+#~ "Rechtsverstöße überprüft. Rechtswidrige Inhalte waren zum Zeitpunkt der "
+#~ "Verlinkung nicht erkennbar. Eine permanente inhaltliche Kontrolle der "
+#~ "verlinkten Seiten ist jedoch ohne konkrete Anhaltspunkte einer "
+#~ "Rechtsverletzung nicht zumutbar."
+
+#~ msgid "impressum-liability Haftung für Links list-item-4"
+#~ msgstr ""
+#~ "Bei Bekanntwerden von Rechtsverletzungen werden wir Links zu der "
+#~ "entsprechenden Website umgehend entfernen."
 
 #~ msgid "Es ist noch kein Album ausgewählt!"
 #~ msgstr "Es ist noch kein Album ausgewählt!"

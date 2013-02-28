@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-18 14:39+0100\n"
+"POT-Creation-Date: 2013-02-26 21:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,40 +18,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: static/js/ui/UIInput.js:70
+#: static/js/ui/UIFullscreen.js:108
+msgid "PHOTO_LOADING_ERROR"
+msgstr ""
+"Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren Sie es zu einem späteren "
+"Zeitpunkt noch einmal."
+
+#: static/js/ui/UIInput.js:71
 msgid "YES"
 msgstr "Ja"
 
-#: static/js/ui/UIInput.js:78
+#: static/js/ui/UIInput.js:79
 msgid "NO"
 msgstr "Nein"
 
-#: static/js/ui/UIInput.js:93
+#: static/js/ui/UIInput.js:94
 msgid "SAVE"
 msgstr "Speichern"
 
-#: static/js/ui/UIInput.js:161 static/js/ui/UIInput.js.c:212
-#: static/js/util/ClientServer.js:121 static/js/util/ClientServer.js.c:173
+#: static/js/ui/UIInput.js:163 static/js/ui/UIInput.js.c:217
+#: static/js/util/ClientServer.js:119 static/js/util/ClientServer.js.c:175
 msgid "NETWORK_ERROR"
 msgstr ""
-"Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einen späteren "
+"Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
 
-#: static/js/ui/UIPhotoEditor.js:72
+#: static/js/ui/UIPhotoEditor.js:70
 msgid "TOO_MANY_PHOTOS"
 msgstr "Bitte wählen Sie nur ein Photo auf einmal aus."
 
-#: static/js/ui/UIPhotoEditor.js:75
+#: static/js/ui/UIPhotoEditor.js:73
 msgid "EXTENSION_NOT_SUPPORTED"
 msgstr ""
 "Dieses Format wird leider nicht unterstützt. Bitte wählen Sie ein JPEG oder "
 "PNG Photos aus."
 
-#: static/js/ui/UIPhotoEditor.js:129
+#: static/js/ui/UIPhotoEditor.js:127
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "Keine Rotation mehr möglich, nachdem das Photo bearbeitet wurde."
 
-#: static/js/util/ClientServer.js:169
+#: static/js/util/ClientServer.js:171
 msgid "GET_ALBUM_ERROR"
 msgstr "Beim Laden des Albums trat folgender Fehler auf: "
 

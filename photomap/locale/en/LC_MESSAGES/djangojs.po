@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-18 14:37+0100\n"
+"POT-Creation-Date: 2013-02-26 21:36+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,36 +16,40 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/ui/UIInput.js:70
+#: static/js/ui/UIFullscreen.js:108
+msgid "PHOTO_LOADING_ERROR"
+msgstr "The requested image couldn't be loaded. Please try again later."
+
+#: static/js/ui/UIInput.js:71
 msgid "YES"
 msgstr "Yes"
 
-#: static/js/ui/UIInput.js:78
+#: static/js/ui/UIInput.js:79
 msgid "NO"
 msgstr "No"
 
-#: static/js/ui/UIInput.js:93
+#: static/js/ui/UIInput.js:94
 msgid "SAVE"
 msgstr "Save"
 
-#: static/js/ui/UIInput.js:161 static/js/ui/UIInput.js.c:212
-#: static/js/util/ClientServer.js:121 static/js/util/ClientServer.js.c:173
+#: static/js/ui/UIInput.js:163 static/js/ui/UIInput.js.c:217
+#: static/js/util/ClientServer.js:119 static/js/util/ClientServer.js.c:175
 msgid "NETWORK_ERROR"
 msgstr "A network error occurred. Please try again later."
 
-#: static/js/ui/UIPhotoEditor.js:72
+#: static/js/ui/UIPhotoEditor.js:70
 msgid "TOO_MANY_PHOTOS"
 msgstr "Please only select one photo at a time."
 
-#: static/js/ui/UIPhotoEditor.js:75
+#: static/js/ui/UIPhotoEditor.js:73
 msgid "EXTENSION_NOT_SUPPORTED"
 msgstr "Currently there is support for only JPEG and PNG photos."
 
-#: static/js/ui/UIPhotoEditor.js:129
+#: static/js/ui/UIPhotoEditor.js:127
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "No rotation possible, after the photo was modified."
 
-#: static/js/util/ClientServer.js:169
+#: static/js/util/ClientServer.js:171
 msgid "GET_ALBUM_ERROR"
 msgstr "The following error occurred while loading the album:  "
 
