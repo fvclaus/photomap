@@ -75,6 +75,7 @@ urlpatterns = patterns("",
                        #================================================================
                        url(r'^insert-photo$', photo.insert),
                        url(r'^update-photo$', photo.update),
+                       url(r'^update-photos$', photo.update_multiple),
                        url(r'^delete-photo$', photo.delete),
                        #================================================================
                        # place hooks

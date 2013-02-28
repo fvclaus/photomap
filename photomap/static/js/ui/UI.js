@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UIMap, UITools,  UIState, UIControls, UIGallery, UISlideshow, UIInput, UIInformation, DASHBOARD_VIEW, ALBUM_VIEW, Album, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, Photo, Place */
+/*global $, main, UIMap, UITools,  UIState, UIControls, UIGallery, UISlideshow, UIInput, UIInformation, UIStatusMessage, DASHBOARD_VIEW, ALBUM_VIEW, Album, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, Photo, Place */
 
 "use strict";
 
@@ -18,6 +18,7 @@ UI = function () {
    this.input = new UIInput();
    this.state = new UIState(this);
    this.information = new UIInformation();
+   this.message = new UIStatusMessage();
 
    if (this.state.isAlbumView()) {
       this.gallery = new UIGallery();
@@ -68,6 +69,9 @@ UI.prototype = {
    },
    getInformation: function () {
       return this.information;
+   },
+   getMessage : function () {
+      return this.message;
    },
    /**
     * @description Adds place fully to ui.

@@ -18,7 +18,8 @@ UIInformation = function () {
    this.$description = this.$descriptionWrapper.children("p");
    this.$title = $("#mp-detail-title");
 
-   this.$teaserDescription = $("#mp-detail-teaser-description");
+   this.$teaserDescriptionWrapper = $("#mp-detail-teaser-description-wrapper");
+   this.$teaserDescription = this.$teaserDescriptionWrapper.children("p");
    this.$teaserTitle = $("#mp-detail-teaser-title");
 
    this.noDescription = this.$description.html();
@@ -27,8 +28,6 @@ UIInformation = function () {
    this.currentPhoto = null;
    this.currentPlaceOrAlbum = null;
    this._bindListener();
-   // initialize the scollpane
-   // this.$descriptionWrapper.jScrollPane(); 
 };
 
 UIInformation.prototype = {
@@ -110,16 +109,12 @@ UIInformation.prototype = {
    },
    /**
     * @private
-    * @description Shows the detail box and reinitializes the scrollbar
+    * @description Shows the detail box
     */
    _showDetail : function () {
       // assertTrue(this.$descriptionWrapper.data("jsp") !== undefined);
       //TODO this does not work right now
       this.$explanationContainer.removeClass("mp-nodisplay");
-      this.$descriptionWrapper
-         .css("overflow", "auto");
-         // .data("jsp")
-         // .reinitialise();
    },
    /**
     * @private

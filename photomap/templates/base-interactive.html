@@ -24,6 +24,7 @@ content="interactive"
 
 <script type="text/javascript" src="/static/js/util/CarouselPage.js" ></script>
 
+<script type="text/javascript" src="/static/js/ui/UIStatusMessage.js"></script>
 <script type="text/javascript" src="/static/js/ui/UIPhotoCarousel.js" ></script>
 <script type="text/javascript" src="/static/js/ui/UIState.js" ></script>
 <script type="text/javascript" src="/static/js/ui/UIInput.js" ></script>
@@ -58,6 +59,10 @@ content="interactive"
 {% endblock %}
 
 {% block content %}
+<span class="ui-state-highlight ui-corner-all ui-button-text-icon-primary mp-nodisplay" id="mp-status-message">
+  <span class="ui-button-icon-primary ui-icon ui-icon-info "></span>
+  <strong class="ui-button-text"></strong>
+</span>
 
 <section class="mp-left-column">
   <section class="mp-full-column mp-full-left-column mp-nodisplay" id="mp-full-left-column">
@@ -80,7 +85,7 @@ content="interactive"
     <div class="mp-full-column-controls">
       <span class="mp-control mp-cursor-pointer mp-close-full-description">{% trans "Schließen" %}</span>
     </div>
-    <div>
+    <div id="mp-detail-wrapper">
       <p id="mp-detail-title">{% trans "SELECT_PLACE_OR_ALBUM" %}</p>
       <div id="mp-detail-description-wrapper">
         <p><em>{% trans "NO_DESCRIPTION" %}</em></p>
@@ -90,7 +95,10 @@ content="interactive"
   
   <section class="mp-description-wrapper mp-nodisplay" id="mp-detail-teaser">
     <p id="mp-detail-teaser-title">{% trans "SELECT_PHOTO" %}</p>
-    <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p>
+    <div id="mp-detail-teaser-description-wrapper">
+      <p><em>{% trans "NO_DESCRIPTION" %}</em></p>
+    </div>
+    <!-- <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p> -->
   </section>
 </section>
 
@@ -109,7 +117,7 @@ content="interactive"
 
 <!-- ff does not change the width of the conrols wrapper, unless it is a span tag -->
 <!-- changing the display to inline-block alone does not do the trick -->
-<span class="mp-controls-wrapper mp-nodisplay">
+<span class="mp-controls-wrapper ui-corner-all mp-nodisplay">
   <img class="mp-option-delete mp-control mp-cursor-pointer" src="/static/images/delete.png" title='{% trans "control-title delete" %}' />
   <img class="mp-option-modify mp-control mp-cursor-pointer" src="/static/images/modify.png" title='{% trans "control-title modify" %}' />
   {% block controls %}{% endblock %}

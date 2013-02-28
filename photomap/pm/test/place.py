@@ -97,12 +97,12 @@ class PlaceControllerTest(ApiTestCase):
 #        assert on delete cascade
         for photo in photos:
             self.assertPhotoDeleted(photo)
-        self.assertEqual(self.user.userprofile.used_space, 164898)
+        self.assertEqual(self.user.userprofile.used_space, 329796)
         #=======================================================================
         # not yours
         #=======================================================================
-        self.assertError({"id":1})
+        self.assertError({"id" : 2})
         #=======================================================================
         # not valid
         #=======================================================================
-        self.assertError({"id": 9999})
+        self.assertError({"id" : 9999})

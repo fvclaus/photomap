@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, Album, Place, Photo, gettext, window, assert, assertTrue */
+/*global $, main, Album, Place, Photo, gettext, window, assert, assertTrue, assertFalse, assertNumber, assertString */
 
 "use strict";
 
@@ -71,56 +71,7 @@ ClientServer.prototype = {
       
       main.initAfterAjax();
    },
-   /**
-    * @description Updates the order of all Photos of a single place and notifies the Gallery. 
-    * The actual Photo objects will get updated, once the server sends a positive confirmation.
-    * @param {Array} photos Must be an array of plain objects with photo, id, title, order attributes.
-    * This must not an array of instances of Photos that are in use. 
-    */
-   savePhotoOrder : function (photos) {
-      
-      var index = 0,
-          nPhotos = photos.length,
-          place = main.getUIState().getCurrentLoadedPlace();
-      
-      photos.forEach(function (photo) {
-         assertTrue(photo instanceof Photo);
-         
-         // post request for each photo with updated order
-         $.ajax({
-            url : "/update-photo",
-            type : "post",
-            data : {
-               id : photo.id,
-               title : photo.title,
-               order : photo.order
-            },
-            success : function (response) {
-               if (response.success) {
-                  index += 1;
-                  // update the 'real' photo order
-                  // server might return an error, so we have to wait till the confirmation
-                  place.getPhoto(photo.photo).order = photo.order;
 
-                  console.log("Update order of photo %d successful.", index);
-
-                  if (index >= nPhotos){
-                     console.log("All Photos updated. Updating Gallery.");
-                     place.sortPhotos();
-                     //TODO we should also notice the Slideshow(!)
-                     main.getUI().getGallery().start();
-                  }
-               }
-               else {
-                  console.log("Update order of Photo %d failed. Error: %s", index, response.error);
-               }
-            },
-            error : function () {
-               alert(gettext("NETWORK_ERROR"));
-            }
-         });
-      });
-   },
    /**
     * @private
     */

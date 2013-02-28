@@ -14,7 +14,8 @@ from datetime import datetime
 from time import mktime
 from pm.model.photo import Photo
 from django.contrib.auth.models import User
-import os
+from pm.model.userprofile import UserProfile
+import os, types
 from urllib import urlopen
 
 class ApiTestCase(TestCase):
@@ -46,7 +47,8 @@ class ApiTestCase(TestCase):
         """ makes a request and checks if the json return is defined according to web api specification. returns content """
         content = self.json(data)
         self.assertTrue(content != None)
-        self.assertTrue(content["success"])
+        if not content["success"]:
+            self.assertTrue(content["success"], "Request is supposed to be successful but returned error: %s" % content["error"])
         self.assertRaises(KeyError, content.__getitem__, "error")
         return content
         
@@ -104,12 +106,16 @@ class ApiTestCase(TestCase):
         length = len(model.objects.all())
         now = self.getunixtime()
         content = self.assertSuccess(data)
-        
         self.assertEqual(len(model.objects.all()), length)
-        instance = model.objects.get(pk = data["id"])
-        updated = mktime(instance.date.timetuple())
-        self.assertNotAlmostEqual(now, updated, delta = self.TIME_DELTA, msg = "date is probably included in the form")
-        return (instance, content)
+        
+        if data.has_key("id"):
+            updated_instances = model.objects.get(pk = data["id"])
+            updated = mktime(updated_instances.date.timetuple())
+            self.assertNotAlmostEqual(now, updated, delta = self.TIME_DELTA, msg = "date is probably included in the form")
+        else:
+            updated_instances = None
+            
+        return (updated_instances, content)
     
     def assertDeletes(self, data, model = None):
         if not model:
@@ -148,7 +154,7 @@ class ApiTestCase(TestCase):
     
     def assertPhotoComplete(self, photo):
         self.assertTrue(photo["photo"])
-        self.assertTrue(int(photo["order"]) > 0)
+        self.assertTrue(int(photo["order"]) >= 0)
         self.assertTrue(photo["thumb"])
         self.assertTrue(photo["photo"] != photo["thumb"])
             
@@ -167,7 +173,9 @@ class ApiTestCase(TestCase):
     def get_user(self):
         return User.objects.all().get(username = TEST_USER)
     
-    
+    @property
+    def userprofile(self):
+        return UserProfile.objects.get(user = self.user)
         
     def json(self, data = {} , url = None, method = "POST", loggedin = True):
         """ 

@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, fileUpload, UIPhotoCarousel, assert, assertTrue */
+/*global $, main, fileUpload, UIPhotoCarousel, assert, assertTrue, assertString, assertFalse, assertNumber, Photo, gettext, UIInput */
 
 "use strict";
 
@@ -37,7 +37,13 @@ var UIFullGallery = function () {
        this.currentPhoto = null;
        
        this.fullGallery = new UIFullGallery();
-       this.$insertPhoto = $(".mp-option-insert-photo");
+       this.$controls = $()
+          .add($(".mp-option-insert-photo"))
+          .add($(".mp-open-full-gallery"));
+
+       // set to true if the order of the photos is changed
+       this.isDirty = false;
+       this.$dirtyWarning = $();
     };
 
 
@@ -84,7 +90,7 @@ UIGallery.prototype =  {
       // reset FullGallery
       this.fullGallery.destroy();
       // show insert photo button
-      this.$insertPhoto.removeClass("mp-nodisplay");
+      this.$controls.removeClass("mp-nodisplay");
 
 
       // initialize and start carousel
@@ -147,7 +153,7 @@ UIGallery.prototype =  {
       
       this.isStarted = false;
       $(".mp-gallery-loader").hide();
-      this.$insertPhoto.addClass("mp-nodisplay");
+      this.$controls.addClass("mp-nodisplay");
       if (this.carousel !== null) {
          this.carousel.reset();
          this.carousel = null;
@@ -199,7 +205,8 @@ UIGallery.prototype =  {
     * @private
     * @description Check if the updated photo is a newly insert, if yes open teaser
     */
-   _update : function () {
+   _update : function ($photos) {
+
       if (this.showTeaser) {
          if (this.currentPhoto === null) {
             throw new Error("Set showTeaser but no currentPhoto");
@@ -278,6 +285,14 @@ UIGallery.prototype =  {
          photo = null,
          instance = this;
       
+      // this is triggered by the fullgallery
+      $(ui).on("photosOrderUpdate.mp", function (place) {
+         if (place === main.getUIState().getCurrentLoadedPlace()) {
+            instance.isDirty = true;
+            instance.$dirtyWarning.removeClass("mp-nodisplay");
+         }
+      });
+
       //bind events on anchors
       // bind them to thumbs in the Gallery & FullGallery
       $(".mp-left-column")
@@ -401,24 +416,53 @@ UIFullGallery.prototype = {
       this.$column.addClass("mp-nodisplay");
       this.loaded = false;
    },
-   //TODO start & show currently not in use
-//    show : function () {
+   /**
+    * @private
+    * @description Updates the order of all Photos of a single place and notifies the Gallery. 
+    * The actual Photo objects will get updated, once the server sends a positive confirmation.
+    * @param {Array} photos Must be an array of plain objects with photo, id, title, order attributes.
+    * This must not an array of instances of Photos that are in use. 
+    */
+   _savePhotos : function (photos) {
       
-//       if (!this.loaded) {
-//          this.start();
-//          //TODO Das geht noch nicht.
-// //         $(".mp-full-gallery").jScrollPane();
-//       }
-//       this.$column.removeClass("mp-nodisplay");
-//    },
-//    hide : function () {
-//       this.$column.addClass("mp-nodisplay");
+      var place = main.getUIState().getCurrentLoadedPlace(),
+          instance = this;
+      
+      photos.forEach(function (photo) {
+         // photo must be a photo dto not the actual photo
+         // the actual photo is changed when the request is successfull
+         assertFalse(photo instanceof Photo);
+         assertNumber(photo.order);
+         assertNumber(photo.id);
+         assertString(photo.title);
+      });
 
-//       if (this.changed) {
-//          main.getUIState().getCurrentPlace().triggerDoubleClick();
-//          this.changed = false;
-//       }
-//    },
+      main.getUI().getInput().show({
+         load : function () {
+            $("input[name='photos']").val(JSON.stringify(photos));
+         },
+         success : function () {
+            // update the 'real' photo order
+            photos.forEach(function (photo, index) {
+               place.getPhoto(photo.photo).order = photo.order;
+               console.log("Update order of photo %d successful.", index);
+            });
+            
+            console.log("All Photos updated. Updating Gallery.");
+            place.sortPhotos();
+            // indicate that the order in gallery & slideshow is off now
+            main.getUI().getMessage().update(gettext("PHOTOS_DIRTY"));
+         },
+         abort : function () {
+            console.log("UIFullGallery: Aborted updating order. Restoring old order");
+            //TODO this could be done better
+            instance.destroy();
+            instance.start();
+         },
+         type : UIInput.CONFIRM_DIALOG,
+         url : "/update-photos"
+      });
+   },
    /**
     * @private
     */
@@ -450,12 +494,30 @@ UIFullGallery.prototype = {
                   console.log("Changing order of Photo %s from %d to %d", photo.title, photo.order, jsonPhoto.order);
                   jsonPhotos.push(jsonPhoto);
                   // when all photos with new order are in jsonPhotos, save the order
-                  if (index === photos.length - 1) {
-                     main.getClientServer().savePhotoOrder(jsonPhotos);
+                  if (jsonPhotos.length === photos.length) {
+                     instance._savePhotos(jsonPhotos);
                   }
                });
             }
          });
    },
+   //TODO start & show currently not in use
+//    show : function () {
+      
+//       if (!this.loaded) {
+//          this.start();
+//          //TODO Das geht noch nicht.
+// //         $(".mp-full-gallery").jScrollPane();
+//       }
+//       this.$column.removeClass("mp-nodisplay");
+//    },
+//    hide : function () {
+//       this.$column.addClass("mp-nodisplay");
+
+//       if (this.changed) {
+//          main.getUIState().getCurrentPlace().triggerDoubleClick();
+//          this.changed = false;
+//       }
+//    },
 
 };

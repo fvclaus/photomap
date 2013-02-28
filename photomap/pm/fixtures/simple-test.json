@@ -50,7 +50,7 @@
       "model": "pm.userprofile",
       "fields": {
          "picture": "",
-         "used_space": 329796,
+         "used_space": 659592,
          "user": 1, 
          "quota": 367001600
       }
@@ -125,7 +125,20 @@
       "pk": 1,
       "model": "pm.photo",
       "fields": {
-         "title": "EO",
+         "title": "First photo of first place",
+         "photo": "test/1.jpeg",
+         "place": 1,
+         "date": "2012-07-27T18:04:37.794",
+         "order": 0,
+         "thumb": "test/1.0.jpeg",
+         "size": 164898
+      }
+   },
+   {
+      "pk": 2,
+      "model": "pm.photo",
+      "fields": {
+         "title": "Second photo of second place",
          "photo": "test/1.jpeg",
          "place": 1,
          "date": "2012-07-27T18:04:37.794",
@@ -135,7 +148,20 @@
       }
    },
    {
-      "pk": 3,
+      "pk": 10,
+      "model": "pm.photo",
+      "fields": {
+         "title": "EO",
+         "photo": "test/1.jpeg",
+         "place": 3,
+         "date": "2012-07-27T18:04:37.794",
+         "order": 0,
+         "thumb": "test/1.0.jpeg",
+         "size": 164898
+      }
+   },
+   {
+      "pk": 11,
       "model": "pm.photo",
       "fields": {
          "title": "EO",
@@ -148,14 +174,14 @@
       }
    },
    {
-      "pk": 2,
+      "pk": 100,
       "model": "pm.photo",
       "fields": {
          "title": "EO",
          "photo": "test/2.jpeg",
          "place": 2,
          "date": "2012-07-27T18:05:33.175",
-         "order": 1,
+         "order": 0,
          "thumb": "test/2.0.jpeg",
          "size": 164898
       }

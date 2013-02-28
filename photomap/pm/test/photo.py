@@ -29,10 +29,11 @@ class PhotoControllerTest(ApiTestCase):
         # delete something that exists
         #=======================================================================
         photo = Photo.objects.get(pk = 1)
+        photo_size = photo.size
         photo = (photo.pk, photo.getphotourl(), photo.getthumburl())
         self.assertDeletes({"id" : 1})
         self.assertPhotoDeleted(photo)
-        self.assertEqual(self.user.userprofile.used_space, 164898)
+        self.assertEqual(self.userprofile.used_space, 659592 - photo_size)
         #=======================================================================
         # delete something that does not exist
         #=======================================================================
@@ -40,7 +41,7 @@ class PhotoControllerTest(ApiTestCase):
         #=======================================================================
         # something that does not belong to you
         #=======================================================================
-        self.assertError({"id":2})
+        self.assertError({"id":100})
         #=======================================================================
         # use wrong paramater
         #=======================================================================
@@ -59,11 +60,11 @@ class PhotoControllerTest(ApiTestCase):
         self._openphoto(data)
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
-        self.assertEqual(photo.order, 1)
+        self.assertEqual(photo.order, 2)
         self.assertPublicAccess(content["url"])
         self.assertThumbSize(content["thumb"])
         self.assertEqual(photo.size, self._get_photo_size())
-        self.assertEqual(self.user.userprofile.used_space, 3 * self._get_photo_size())
+        self.assertEqual(self.userprofile.used_space, 4 * 164898 + self._get_photo_size())
         #=======================================================================
         # insert something valid with description
         #=======================================================================
@@ -71,17 +72,18 @@ class PhotoControllerTest(ApiTestCase):
         data["description"] = u'Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>'
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
-        self.assertEqual(photo.order, 2)
+        self.assertEqual(photo.order, 3)
         self.assertEqual(photo.size, self._get_photo_size())
         self.assertPublicAccess(content["url"])
         self.assertThumbSize(content["thumb"])
-        self.assertEqual(self.user.userprofile.used_space, 3 * self._get_photo_size())
+        self.assertEqual(self.userprofile.used_space, 4 * 164898 + 2 *self._get_photo_size())
         #=======================================================================
         # try to upload over the limit
         #=======================================================================
         self._openphoto(data)
-        self.user.userprofile.used_space = self.UPLOAD_LIMIT - 20
-        self.user.userprofile.save()
+        userprofile = self.userprofile
+        userprofile.used_space = self.UPLOAD_LIMIT - 20
+        userprofile.save()
         self.assertError(data)
         #=======================================================================
         # insert somthing that is not valid
@@ -122,7 +124,7 @@ class PhotoControllerTest(ApiTestCase):
                 "order" : 1}
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.title, data["title"])
-        self.assertEqual(self.user.userprofile.used_space, 2 * self._get_photo_size())
+        self.assertEqual(self.userprofile.used_space, 4 * 164898)
         #=======================================================================
         # with description
         #=======================================================================
@@ -138,13 +140,62 @@ class PhotoControllerTest(ApiTestCase):
         #=======================================================================
         # somebody elses photo
         #=======================================================================
-        data["id"] = 2
+        data["id"] = 100
         self.assertError(data)
         #=======================================================================
         # wrong id test
         #=======================================================================
         data["id"] = 999  # does not exist
         self.assertError(data)
+        
+    def test_update_multiple(self):
+        self.url = "/update-photos"
+        #=======================================================================
+        # something valid
+        #=======================================================================
+        data = [{"id" : 1,
+                 "title" : "New title 1",
+                 "order" : 1 },
+                {"id" : 2,
+                 "title" : "New title 2",
+                 "order" : 0 }]
+        ids = [1,2]
+                
+        (photos, content) = self.assertUpdates({"photos" : json.dumps(data)})
+        photos = self._get_photos(ids)
+        self.assertEqual(photos[0].title, data[0]["title"])
+        self.assertEqual(photos[0].order, data[0]["order"])
+        self.assertEqual(photos[1].title, data[1]["title"])
+        self.assertEqual(photos[1].order, data[1]["order"])
+        self.assertEqual(self.userprofile.used_space, 4 * 164898)
+        #=======================================================================
+        # with description
+        #=======================================================================
+        data[0]["description"] = "The description changed"
+        (photos, content) = self.assertUpdates({"photos" : json.dumps(data)})
+        photos = self._get_photos(ids)
+        self.assertEqual(photos[0].description, data[0]["description"])
+        #=======================================================================
+        # somebody elses photo
+        #=======================================================================
+        data[0]["id"] = 100
+        self.assertError({"photos" : json.dumps(data)})
+        #=======================================================================
+        # wrong id test
+        #=======================================================================
+        data[0]["id"] = 999  # does not exist
+        self.assertError({"photos" : json.dumps(data)})
+        #=======================================================================
+        # invalid json test
+        #=======================================================================
+        data = "This is {aa; not Js0n"
+        self.assertError({"photos" : data})
+
+    def _get_photos(self, ids):
+        photos = []
+        for id in ids:
+            photos.append(Photo.objects.get(pk = id))
+        return photos
     
     def assertThumbSize(self, thumb_url):
         from PIL import Image

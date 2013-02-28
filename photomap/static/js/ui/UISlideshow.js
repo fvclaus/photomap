@@ -32,8 +32,12 @@ var UISlideshow = function () {
 UISlideshow.prototype = {
 
    initWithoutAjax : function () {
+      var tools = main.getUI().getTools();
+      tools.centerElement(this.$navLeft.parent(), this.$navLeft, "vertical");
+      tools.centerElement(this.$navRight.parent(), this.$navRight, "vertical");
       this.fullscreen.init();
       this._bindListener();
+
    },
    /**
     * @description starts slideshow by initialising and starting the carousel (with given index)
