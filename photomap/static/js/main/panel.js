@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, window, document, assert, assertTrue, DASHBOARD_VIEW */
+/*global $, window, document, assert, assertTrue, assertNumber, DASHBOARD_VIEW */
 
 "use strict";
 
@@ -20,30 +20,53 @@ function bindLogoListener () {
    });
 }
 
+function setFontSizeInVH ($el, vh) {
+   assertTrue($el.size() > 0);
+   var fontSize =  (vh / 100) * $("body").height();
+   assertNumber(fontSize);
+   $el.css("font-size", fontSize + "px");
+   return fontSize;
+}
 
 function bindUserMenuListener () {
    var $menu = $("#menu").menu(),
-       offset = $("#mp-user").offset(),
+       $button = $("#mp-user"),
+       offset = $button.offset(),
        //TODO width is not used right now
        width = $("#mp-user-mail").width() + $("#mp-user-mail").next().width(),
-       $user = $("#mp-user-mail");
+       $user = $("#mp-user-mail"),
+       toggle = function () {
+          $menu.toggle("slide", { direction : "down" });   
+       };
 
+   // user is logged in
+   if (offset !== null) {
+      setFontSizeInVH($("#mp-user-mail"), 2);
+      assertTrue(offset.top >= 0 && offset.left >= 0);
+      $menu
+         .css({
+            top : offset.top - $menu.outerHeight(),
+            left : offset.left
+         });
 
-   assertTrue(offset.top >= 0 && offset.left >= 0);
+      $user
+         .button({ icons : { primary : "ui-icon-triangle-1-n" } })
+         .on("click", function () {
+            toggle();
+         });
+      // hide the button when something else is clicked
+      $("body")
+         .on("click", function (event) {
+            var isMenu = event.target.id === "menu" || $.contains($menu[0], event.target),
+                // jquery ui button adds several spans inside the button, therefore the $.contains is necessary
+                isButton = event.target.id === "mp-user-mail" || $.contains($button[0], event.target);
+            if (!isMenu && !isButton){
+               toggle();
+            }
+         });
 
-   $menu
-      .css({
-         top : offset.top - $menu.outerHeight(),
-         left : offset.left
-      });
-
-   $user
-      .button({ icons : { primary : "ui-icon-triangle-1-n" } })
-      .on("click", function () {
-         $menu.toggle("slide", { direction : "down" });   
-      });
-
-   $menu.width($user.width());
+      $menu.width($user.width());
+   }
    //    .on("mouseenter", function () {
    //       window.clearTimeout(menuTimeoutId);
    //       menuTimeoutId = null;
@@ -70,6 +93,9 @@ function bindUserMenuListener () {
 
 
 $(document).ready(function () {
+   setFontSizeInVH($("#mp-page-footer"), 2.4);
+   setFontSizeInVH($(".mp-page-title > h1"), 5);
+
    bindLogoListener();
    // this will probably not work in ie or similiar
    // css3 allows resizing the font in % of the viewport height
@@ -79,6 +105,8 @@ $(document).ready(function () {
    bindUserMenuListener();
    // main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
 });
+
+
 
 
 // showDropupMenu = function () {

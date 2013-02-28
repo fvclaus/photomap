@@ -144,7 +144,8 @@ a
   max-height 100%
   overflow auto // prevent long album titles from being cut
   h1
-    font-size 5vh // former 200%
+    /* for compatiblities sake, the font-size is set via js */
+    // font-size 5vh // former 200%
     margin 0 // reset browser stylesheets
     margin-top 4% // (13% (header) - 5% (font height)) / 2
     text-align right
@@ -156,7 +157,7 @@ a
 .mp-dropup-menu
   // width 10% 
   // height 15%
-  padding 10px 10px 0 10px 
+  padding 10px
   position absolute
   background-color $background-color //#dadada
   box-shadow(5px 5px 25px #A4A4A4)
@@ -194,7 +195,8 @@ a
 
 .mp-page-footer
   height 5%
-  font-size 2.4vh /* source: http://dev.w3.org/csswg/css3-values/#vw-unit. Scales to 2% of the viewport height */
+  /* this is done with js now */
+  // font-size 2.4vh /* source: http://dev.w3.org/csswg/css3-values/#vw-unit. Scales to 2% of the viewport height */
   border-top 1px solid black
   position relative
   letter-spacing 2px

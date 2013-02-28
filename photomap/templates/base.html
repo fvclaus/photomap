@@ -122,7 +122,7 @@
 
       <ul id="menu" class="mp-nodisplay mp-dropup-menu">
         <li><a href="/logout">Logout</a></li>
-        <li><a href="/settings">Settings</a></li>
+        <li class="ui-state-disabled"><a href="/settings">Settings</a></li>
       </ul>
 
 
@@ -133,7 +133,7 @@
           <!--   <span class="ui-button-text">{{user.email}}</span> -->
           <!--   <span class="ui-button-icon-secondary ui-icon ui-icon-triangle-1-s"></span> -->
           <!-- </button> -->
-          <button style="font-size : 2vh; " id="mp-user-mail">{{user.email}}</button>
+          <button id="mp-user-mail">{{user.email}}</button>
           <span>|</span>
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
 	</section>
