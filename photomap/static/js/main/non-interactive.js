@@ -36,7 +36,7 @@ function initialize() {
       });
 
    $container = $("#mp-non-interactive-content");
-
+   
    if ($(".mp-email-jsenabled").size() !== 0) {
       
       size = $(".mp-email-jsenabled").size();
@@ -51,7 +51,8 @@ function initialize() {
     */
 
    hash  = window.location.hash;
-   if (hash && hash.length !== 0) {
+   if (window.location.pathname !== "/login" && hash && hash.length !== 0) {
+      console.log("scrolling");
       $("html, body").animate({
          scrollTop: $(hash).offset().top
       }, 0, "swing", function () {
@@ -63,6 +64,6 @@ function initialize() {
             }, 1000);
          });
       });
-   }                                        
+   }
 }
 

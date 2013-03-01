@@ -13,15 +13,16 @@
 
 {% block non_interactive_content %}
 
+   <noscript class="mp-noscript-warning"><p>{% trans "JS_DISABLED_WARNING" %}</p></noscript>
    <section class="mp-nodisplay" id="mp-login-register">
      <ul class="mp-login-register-tabs">
-       <li><a href="#mp-login">{% trans "Login" %}</a></li>
-       <li><a href="#mp-test">{% trans "Test-Account" %}</a></li>
-       <li><a href="#mp-demo">{% trans "Demo-Account" %}</a></li>
-       <li><a href="#mp-register">{% trans "Registration" %}</a></li>
-       <li><a href="#mp-guest">{% trans "Guest-Login" %}</a></li>
+       <li><a href="#mp-login-tab">{% trans "Login" %}</a></li>
+       <li><a href="#mp-test-tab">{% trans "Test-Account" %}</a></li>
+       <li><a href="#mp-demo-tab">{% trans "Demo-Account" %}</a></li>
+       <li><a href="#mp-register-tab">{% trans "Registration" %}</a></li>
+       <li><a href="#mp-guest-tab">{% trans "Guest-Login" %}</a></li>
      </ul>
-	  <section class="mp-login-tab" id="mp-login">
+	  <section class="mp-login-tab" id="mp-login-tab">
 	    <h2 class="mp-font">{% trans "Login" %}</h2>
        <form action="" method="post">
 	      <p>
@@ -37,7 +38,7 @@
 	      </p>
 	    </form>
 	  </section>
-	  <section class="mp-login-tab" id="mp-test">
+	  <section class="mp-login-tab" id="mp-test-tab">
 	    <h2 class="mp-font">{% trans "Test-Account" %}</h2>
        <article class="mp-test-description"></article>
        <form action="" method="post">
@@ -52,7 +53,7 @@
 	      </p>
 	    </form>
 	  </section>
-	  <section class="mp-login-tab" id="mp-demo">
+	  <section class="mp-login-tab" id="mp-demo-tab">
 	    <h2 class="mp-font">{% trans "Demo-Account" %}</h2>
        <article class="mp-demo-description"></article>
        <form action="" method="post">
@@ -67,7 +68,7 @@
 	      </p>
 	    </form>
 	  </section>
-	  <section class="mp-login-tab" id="mp-register">
+	  <section class="mp-login-tab" id="mp-register-tab">
 	    <h2 class="mp-font">{% trans "Registration" %}</h2>
 	    <form action="" method="post">
          <p>
@@ -95,7 +96,7 @@
 	      </p>
 	    </form>
 	  </section>
-	  <section class="mp-login-tab" id="mp-guest">
+	  <section class="mp-login-tab" id="mp-guest-tab">
 	    <h2 class="mp-font">{% trans "Guest-Login" %}</h2>
        <form action="" method="post">
          <form class="jquery-validator" method="post" action="" >
