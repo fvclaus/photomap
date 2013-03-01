@@ -15,19 +15,6 @@ html
   // width // see comment above!
   // height // see comment above!
 
-aside
-  width 80%
-  padding 5px
-  border 2px dashed black
-  margin 10px auto
-  font-size 95%
-  border-radius 5px
-  h3
-    padding 0
-    margin 0
-    margin-top 5px
-    font-size 100%
-
 a
   cursor pointer
 
@@ -43,6 +30,13 @@ a
   height 100%
   min-height 100%
 
+.mp-noscript-warning p
+  width 70%
+  margin 20px auto
+  background-color yellow
+  color red
+  border-radius 5px
+  box-shadow(5px 5px 25px black)
 // .mp-alignment-div
 //   min-width 100%
 //   width 100%
@@ -60,7 +54,8 @@ a
 
 .mp-content
  height 77% // 80% - 1% padding. Padding 1% will make the element 1% bigger and vertical scrollbars will appear
- padding 1% 0 
+ padding 1% 0
+ overflow auto
 
 .mp-zoom
   cursor -moz-zoom-in
@@ -208,8 +203,9 @@ a
     margin 0 .16%
     padding 0
 
-.mp-internal-links
+#mp-page-footer .mp-internal-links
   height 100%
+  float right
   a
     margin-top 1% // buffer for other margins and varying glyphs
     float right
@@ -224,6 +220,7 @@ a
   height 100%
   text-align left
   a
+    margin-top 1% // buffer for other margins and varying glyphs
     float right
     text-decoration none
     color $font-color

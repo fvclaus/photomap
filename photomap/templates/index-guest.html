@@ -28,6 +28,7 @@ content="non-interactive"
 
 {% block content %}
 <section class="mp-guest-welcome">
+  <noscript class="mp-noscript-warning"><p>{% trans "JS_DISABLED_WARNING" %}</p></noscript>
   <h1>{% trans "Welcome to Keiken" %}</h1>
   <p>{% trans "LOGIN_GUEST_WELCOME_1" %}</p>
   <p>{% trans "LOGIN_GUEST_WELCOME_2" %}<img width="50%" style="float:right;" src="/static/images/hierarchy.png">{% trans "LOGIN_GUEST_WELCOME_3" %}</p>

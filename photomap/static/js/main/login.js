@@ -29,7 +29,7 @@ function init() {
    }
    $("#mp-login-register").tabs({
       heightStyle : "fill",
-      disabled : [1, 2, 3],
+      disabled : [3],
       active : index
    });
 }

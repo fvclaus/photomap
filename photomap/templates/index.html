@@ -28,6 +28,7 @@ content="non-interactive"
 
 {% block content %}
 <section style="font-size: 1.3em; padding-left: 5%; width: 95%">
+  <noscript class="mp-noscript-warning"><p>{% trans "JS_DISABLED_WARNING" %}</p></noscript>
   <p style="text-align: center; font-size: 1.4em">Illustrate your experiences abroad for your family and friends</p>
   <br/>
   <p>Before we found KEIKEN, we had a hard time reporting about our exchange semester:</p>
@@ -55,13 +56,5 @@ content="non-interactive"
    {% endif %}
 </section>
 
-
-
-  
-   <!-- <p style="text-align: center"> Die Seite ist noch in Bearbeitung. Der Login-Link für Beta-Tester befindet sich in der linken unteren Ecke.</p> -->
-   <!-- <p style="text-align: center">Viel Spaß wünscht Euch das keiken-Team!</p> -->
-   <!-- {% if user.is_authenticated %} -->
-   <!--   <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p> -->
-   <!-- {% endif %} -->
 {% endblock %}
 

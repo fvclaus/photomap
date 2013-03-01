@@ -3,6 +3,10 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
+{% block extrajs %}
+	<script type="text/javascript" src="/static/js/main/impressum.js" ></script>
+{% endblock %}
+
 {% block title %}{% trans "Impressum" %}{% endblock %}
 
 {% block name %}{% trans "Impressum" %}{% endblock %}
@@ -28,23 +32,23 @@
 			<a href="/team#marc-leon-roemer">Marc-Leon Römer</a> <br />
 		</p>
 		<h3>{% trans "Kontakt" %}</h3>
-		<p>
-			{% trans "Telefon" %} - 1: +49 176 96181399 ({% trans "Handy" %})<br />
-			{% trans "Telefon" %} - 2: +49 152 29569610 ({% trans "Handy" %})<br />
-			{% trans "Email-Adresse" %}: 
-         <span class="mp-bold mp-nodisplay" id="mp-email-jsenabled">
-			 er2Ts20-8ußrt1plkjdppüi5oolhqrtwpdt flw@dsT.kökd.esutii28tikzPkkewWw1n.net.kitedlklie
-         </span>
-         <noscript>
-           <span class="mp-bold" id="mp-email-cssenabled">
-             {% trans "email just in javascript" %}
-           </span>
-         </noscript>
-		</p>
-		<aside>
-			<h3>{% trans "impressum-sidenote Missbrauch von Kontaktdaten" %}</h3>
-			<p>{% trans "impressum-sidenote Missbrauch von Kontaktdaten -> description" %}</p>
-		</aside>
+		<div class="mp-impressum-contact">
+        <div>
+			 {% trans "Telefon" %} - 1: +49 176 96181399 ({% trans "Handy" %})<br />
+			 {% trans "Telefon" %} - 2: +49 152 29569610 ({% trans "Handy" %})<br />
+			 {% trans "Email-Adresse" %}:
+          <span class="mp-bold mp-nodisplay mp-email-jsenabled" id="mp-email-jsenabled">er2Ts20-8ußrt1plkjdppüi5oolhqrtwpdt flw@dsT.kökd.esutii28tikzPkkewWw1n.net.kitedlklie
+          </span> <br />
+          <noscript>
+            {% trans "EMAIL_ONLY_WITH_JS" %}
+          </noscript>
+          <span class="mp-nodisplay" id="mp-email-contactform-msg">{% trans "Or use the" %}</span> <a href="/contact" style="text-decoration: underline">{% trans "Kontaktformular" %}</a>
+		  </div>
+		  <aside>
+			 <h4>{% trans "Hinweis" %}: {% trans "impressum-sidenote Missbrauch von Kontaktdaten" %}</h4>
+			 <p>{% trans "impressum-sidenote Missbrauch von Kontaktdaten -> description" %}</p>
+		  </aside>
+      </div>
 	</article>
 	
 {% endblock %}

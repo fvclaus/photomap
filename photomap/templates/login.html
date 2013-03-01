@@ -39,14 +39,13 @@
 	  </section>
 	  <section class="mp-login-tab" id="mp-test">
 	    <h2 class="mp-font">{% trans "Test-Account" %}</h2>
+       <article class="mp-test-description"></article>
        <form action="" method="post">
 	      <p>
-           <label for="test_email">{% trans "Email" %}:</label><br />
-           <input type="text" name="email" id="test_email" autofocus="autofocus"/>
+           <input type="hidden" name="email" id="test_email" autofocus="autofocus" value="test@keiken.app"/>
          </p>
          <p>
-           <label for="test_password">{% trans "Password" %}:</label><br />
-           <input type="password" name="password" id="test_password" />
+           <input type="hidden" name="password" id="test_password" value="test"/>
          </p>
 	      <p>
 		     <input class="ui-widget" type="submit" name="login" value='{% trans "Sign in" %}' />
@@ -55,14 +54,13 @@
 	  </section>
 	  <section class="mp-login-tab" id="mp-demo">
 	    <h2 class="mp-font">{% trans "Demo-Account" %}</h2>
+       <article class="mp-demo-description"></article>
        <form action="" method="post">
 	      <p>
-           <label for="demo_email">{% trans "Email" %}:</label><br />
-           <input type="text" name="email" id="id_email" autofocus="autofocus"/>
+           <input type="hidden" name="email" id="id_email" autofocus="autofocus" value="demo@keiken.app"/>
          </p>
          <p>
-           <label for="demo_password">{% trans "Password" %}:</label><br />
-           <input type="password" name="password" id="id_password" />
+           <input type="hidden" name="password" id="id_password" value="demo"/>
          </p>
 	      <p>
 		     <input class="ui-widget" type="submit" name="login" value='{% trans "Sign in" %}' />

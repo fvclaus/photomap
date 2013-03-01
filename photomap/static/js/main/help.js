@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, reinitialiseScrollPane */
+/*global $, main */
 
 "use strict";
 
@@ -15,7 +15,6 @@ function toggleFAQAnswers($question) {
       $answer.slideUp(150);
    } else {
       $answer.slideDown(300);
-      reinitialiseScrollPane();
    }
 }
 
@@ -32,18 +31,14 @@ function toggleTutorialDesc($topic) {
       $desc.slideUp(150);
    } else {
       $desc.slideDown(300);
-      reinitialiseScrollPane();
    }
 }
 
 
 var trigger;
 
-function initializePage() {
+function init() {
    
-   main.getUI().getTools().setCursor($(".mp-faq-question"), "pointer");
-   main.getUI().getTools().setCursor($(".mp-tutorial-subtopic"), "pointer");
-
    $(".mp-faq-question").bind('click', function () {
       trigger = $(this);
       toggleFAQAnswers(trigger);
