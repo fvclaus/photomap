@@ -3,28 +3,30 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block mode %}
-content="non-interactive"
-{% endblock %}
-
 {% block css %}
-	<link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
+<link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
 {% endblock %}
 
 {% block js %}
-	<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
-
-	<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
-	<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
-   <script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
-	{% block extrajs %}
-	{% endblock %}
-
+<!-- pull in the compressed javascript from base.html -->
+{{ block.super }}
+{% load compress %}
+{% compress js inline %}
+<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
+<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
+<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
+<script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
+{% endcompress %}
 {% endblock %}
 
+{% block extrajs %}
+{% endblock %}
+
+
+
 {% block content %}
-		<section class="mp-non-interactive-content span-16" id="mp-non-interactive-content">
-			{% block non_interactive_content %}
-			{% endblock %}
-	   </section>
+<section class="mp-non-interactive-content span-16" id="mp-non-interactive-content">
+  {% block non_interactive_content %}
+  {% endblock %}
+</section>
 {% endblock %}

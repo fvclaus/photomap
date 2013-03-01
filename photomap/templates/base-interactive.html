@@ -8,6 +8,10 @@ content="interactive"
 {% endblock %}
 
 {% block js %}
+<!-- pull in the compressed javascript from base.html -->
+{{ block.super }}
+{% load compress %}
+{% compress js inline %}
 <script type="text/javascript" src="/static/js/lib/tzoom.min.js" ></script>
 <script type="text/javascript" src="/static/js/util/noconsole.js" ></script>
 <script type="text/javascript" src="/static/js/lib/jquery.jqote2.min.js" ></script>
@@ -48,10 +52,7 @@ content="interactive"
 <script type="text/javascript" src="/static/js/util/ClientServer.js" ></script>
 
 <script type="text/javascript" src="/static/js/main/Main.js" ></script>
-
-{% block js_interactive %}
-{% endblock %}
-
+{% endcompress %}
 {% endblock %}
 
 {% block mapjs %}

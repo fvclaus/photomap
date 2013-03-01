@@ -11,8 +11,13 @@
 <link rel="stylesheet" type="text/x-stylus" href="/static/css/dashboard-main.styl" />
 {% endblock %}
 
-{% block js_interactive %}
+{% block js %}
+<!-- pull in the compressed javascript from base-interactive.html -->
+{{ block.super }}
+{% load compress %}
+{% compress js inline %}
 <script type="text/javascript" src="/static/js/main/dashboard.js" ></script>
+{% endcompress %}
 {% endblock %}
 
 {% block left-column %}

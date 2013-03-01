@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-non-interactive.html" %}
 
 <!-- for the translation with django -->
 {% load i18n %}
@@ -7,27 +7,9 @@
 
 {% block name %}{% trans "Willkommen" %}{% endblock %}
 
-{% block mode %}
-content="non-interactive"
-{% endblock %}
 
-{% block css %}
-<link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
-{% endblock %}
-
-{% block js %}
-<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
-
-<script type="text/javascript" src="/static/js/main/landingpage.js" ></script>
-
-<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
-<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
-
-<script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
-{% endblock %}
-
-{% block content %}
-<section style="font-size: 1.3em; padding-left: 5%; width: 95%">
+{% block non_interactive_content %}
+<section style="font-size: 1.3em">
   <p style="text-align: center; font-size: 1.4em">Illustrate your experiences abroad for your family and friends</p>
   <br/>
   <p>Before we found KEIKEN, we had a hard time reporting about our exchange semester:</p>
@@ -55,13 +37,5 @@ content="non-interactive"
    {% endif %}
 </section>
 
-
-
-  
-   <!-- <p style="text-align: center"> Die Seite ist noch in Bearbeitung. Der Login-Link für Beta-Tester befindet sich in der linken unteren Ecke.</p> -->
-   <!-- <p style="text-align: center">Viel Spaß wünscht Euch das keiken-Team!</p> -->
-   <!-- {% if user.is_authenticated %} -->
-   <!--   <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p> -->
-   <!-- {% endif %} -->
 {% endblock %}
 

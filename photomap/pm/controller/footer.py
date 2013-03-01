@@ -27,7 +27,8 @@ def contact(request):
                           )
                 return redirect("/contact-success") 
             except Exception, e:
-                return render_to_response("contact.html", {"form": form, "mail-error": str(e)})
+                form.errors["__all__"] = form.error_class([str(e)])
+                return render_to_response("contact.html", {"form": form})
                 
         else:
             return render_to_response("contact.html", {"form": form})

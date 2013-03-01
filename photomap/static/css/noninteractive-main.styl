@@ -15,7 +15,8 @@
 /* -------- core stylings -------- */
 
 .mp-non-interactive-content
-  width 90%
+  overflow auto
+  width 95% // 100% - 5% padding
   height 100%
   // margin 0 20%
   padding-left 5%
@@ -26,13 +27,29 @@
   a:hover
     background-color $border-color
     text-decoration underline
-  h2,
-  h3
-    text-decoration underline
   li
     margin 5px
 
+
+
+.mp-form
+  .mp-form-submit
+    margin-left 25% // position under last input field
+  label
+    margin 1% 0
+    float left
+    width 25% 
+  input, textarea
+    margin 1% 0
+    width 72% // 1% is buffer for browser stylesheets like border 1px...
+
+// this is djangos css class for errors
+.errorlist
+  color red
+
 /* --------- end core --------- */
+
+
 
 
 /* ---------------------------- */
@@ -40,7 +57,10 @@
 
 .mp-login-tab
   overflow auto
- 
+
+ #mp-login-register
+  width 50%
+  margin-left 25%
 /* -------- end login -------- */    
 
 
@@ -84,8 +104,10 @@
 /* -- styling for team page -- */
 
 .mp-profile
-  clear both
-  text-align left
+  // clear both
+  display inline-block
+  width 20%
+  text-align center
   ul
     float left
   li
@@ -95,9 +117,9 @@
     margin-left 15px
     margin-bottom 10px
   img
-    float left
-    margin 15px
-    margin-right 30px
+    height 30% // this is necessary to level all profiles on a horizontal line
+    // margin 15px
+    // margin-right 30px
 
 /* -------- end team -------- */
 
@@ -108,3 +130,10 @@
   height 50%
   min-height 50%
 /* ------ end landing page ------ */
+
+/* ------------------------------ */
+/* -- styling for contact page -- */
+
+#mp-contact
+  width 50%
+  margin-left 10%

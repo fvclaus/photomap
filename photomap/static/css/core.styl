@@ -155,38 +155,10 @@ a
 /* ------------ drop up menu ------------- */
 
 .mp-dropup-menu
-  // width 10% 
-  // height 15%
   padding 10px
   position absolute
-  background-color $background-color //#dadada
+  background-color $background-color // #dadada
   box-shadow(5px 5px 25px #A4A4A4)
-
-// menu uses jquery ui menu widget now, which does all the styling
-// .mp-dropup-menu-inner
-//   width  98%
-//   height 99%
-//   border 1px solid black
-//   border-bottom none
-//   background-color $background-color
-//   a
-//     width 99%
-//     height 50%
-//     position relative
-//     display block
-//     text-align center
-//   a:hover
-//     border-left 1px solid black
-//     background-color #dadada
-//   span
-//     width 80%
-//     height 50%
-//     margin -25% 0 0 -40%
-//     position absolute
-//     top 50%
-//     height 50%
-//     text-decoration none
-//     color black
 
 /* ------------ end drop up -------------- */
 
@@ -195,44 +167,33 @@ a
 
 .mp-page-footer
   height 5%
+  padding-top 0.5% // buffer for other margins and varying glyphs
   /* this is done with js now */
   // font-size 2.4vh /* source: http://dev.w3.org/csswg/css3-values/#vw-unit. Scales to 2% of the viewport height */
   border-top 1px solid black
   position relative
   letter-spacing 2px
-  vertical-align middle
-  // z-index 50
-  overflow hidden
-  background-color $background-color
-  section
-    margin 0 .16%
-    padding 0
+  z-index 50 // cover menu
+  background-color $background-color // other menu will be visible through transparent menu
 
 .mp-internal-links
-  height 100%
+  display inline-block
+  float right
   a
-    margin-top 1% // buffer for other margins and varying glyphs
-    float right
     text-decoration none
     color $font-color
     padding-right 5px
   a:hover
     background-color $border-color
 
-/* .mp-user, */
+.mp-user,
 .mp-login-link
-  height 100%
-  text-align left
+  margin-left 1%
   a
-    float right
     text-decoration none
     color $font-color
-    padding 2px 5px 2px 0
   a:hover
     background-color $border-color
-  span
-    height 100%
-    margin-left 1%
-    float left 
+
 
 /* ------------- end footer ------------- */

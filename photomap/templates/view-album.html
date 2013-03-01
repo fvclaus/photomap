@@ -9,8 +9,13 @@
 <link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl" />
 {% endblock %}
 
-{% block js_interactive %}
+{% block js %}
+<!-- pull in the compressed javascript from base.html & base-interactive.html -->
+{{ block.super }}
+{% load compress %}
+{% compress js inline %}
 <script type="text/javascript" src="/static/js/main/view-album.js" ></script>
+{% endcompress %}
 {% endblock %}
 
 {% block options %}

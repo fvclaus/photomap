@@ -305,71 +305,6 @@ msgstr ""
 "instead of a more or less strange alias. Old fashioned? Not at all! For a "
 "Photo-book real names are much more informative and nice to look at."
 
-#: templates/help.html:26
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
-msgstr "What is a strong password?"
-
-#: templates/help.html:28
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
-msgstr ""
-"We're not checking your password, so basically you can choose whatever "
-"password you like. Yet, it's smarter and secure to have a unique strong "
-"password for every online service, further which we advise you to make a "
-"strong password. Now, what is a strong password? Even though the number of "
-"people using weak passwords like 'aragorn01' is decreasing gradually, people "
-"start using short complex passwords like 'arA-g0Rn.$1'. Now this password is "
-"certainly harder to guess than 'aragorn01', yet it is not really a strong "
-"password, even worse, it's hard to remember! The key to having a strong "
-"password is itslength rather than complexity. 'potatomirroranimalawesome' is "
-"a far stronger password than 'c72)lx.2Ihf,O' and it is so much more easier "
-"to remember and faster to type too. There is "
-
-#: templates/help.html:29
-msgid "link-title passwort security comic"
-msgstr "Comic to illustrate password strength"
-
-#: templates/help.html:29
-msgid "link to password security comic"
-msgstr "a short comic"
-
-#: templates/help.html:30
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
-msgstr ""
-"illustrating this. In case you want to use a password consisting of 4 or "
-"more random words, make sure they really are random and not in any way "
-"connected to you, or else one could just guess your password without any "
-"computer. Of course you may use numbers and symbols in your password and it "
-"indeed makes your password stronger - as long as it is long enough - but "
-"make sure you can easily remember the password for your own convenience. "
-"Another way to make strong passwords is to use mnemotechniques. Eg. take the "
-"initial letters of the first lines of the children’s song 'Kookaburra', "
-"transform all the 'i's into 1 and also take the punctuation -> 'Ks1togt.M,"
-"mkotb1h.' and you get a fairly safe password, on top of which, it is easy to "
-"remember. The only problem might be that it takes a while to type, so in "
-"case you don't like that, you should consider taking a 4-word password as "
-"described above. Of course this was just an example - we used it, because "
-"many people know this rhyme; when creating your own password you should also "
-"create your own rhyme, if you don't want people to guess it. In case you "
-"want to try out when a password is safe and when  it is not, the following "
-"two links might be of help: "
-
-#: templates/help.html:31
-msgid "link-title steve gibson password haystack reference guide"
-msgstr ""
-"The password as needle in the haystack - https://www.grc.com/haystack.htm"
-
-#: templates/help.html:31
-msgid "link to steve gibson password haystack reference guide"
-msgstr ""
-"1. Steve Gibson password 'haystack' reference guide with password-tester"
-
-#: templates/help.html:32
-msgid "link-title howsecureismypassword"
-msgstr "Simple password-test  - http://howsecureismypassword.net/"
-
-#: templates/help.html:32
-msgid "link to howsecureismypassword"
-msgstr "2. Simple password-tester with feedback"
 
 #: templates/help.html:37
 msgid "help-tutorial-title"
@@ -435,18 +370,14 @@ msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "description"
 msgstr ""
-"In NAME OF THE PROJECT we give you the possibility of shareing all albums of "
+"We give you the possibility of shareing all albums of "
 "yours. This means we will provide you with a link, which you can share with "
 "others on social networks or via emails or any other way you like. By "
 "clicking on this link, others can view your album with all the places and "
-"pictures you uploaded, read your descriptions, use Street-view or satellite "
-"view to checkout places you have been to and witness your experience. To "
-"Share an album, you may click on the 'share' option in the controls box, "
+"pictures you uploaded and read your descriptions."
+"To share an album, you may click on the 'share' option in the controls box, "
 "which opens by moving the mouse over the album-markers, a window will open "
-"with the generated link. You can copy the link by highlighting it with your "
-"mouse and pressing 'Ctrl + C' (Windows) or 'Command + C' (Mac OS X) or by "
-"right clicking on the highlighted link and choosing the 'Copy' option. After "
-"copying the link you can paste it anywhere in order to share it with others."
+"with the generated link."
 
 #: templates/help.html:61
 msgid ""
