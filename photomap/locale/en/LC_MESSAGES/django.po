@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-01 15:17+0100\n"
+"POT-Creation-Date: 2013-03-01 18:31+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,103 +16,100 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: templates/base-interactive.html:70 templates/base-interactive.html.py:86
-#: templates/view-album.html:98
+#: templates/base-interactive.html:71 templates/base-interactive.html.py:87
+#: templates/view-album.html:103
 msgid "Schließen"
 msgstr "Close"
 
-#: templates/base-interactive.html:89
+#: templates/base-interactive.html:90
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr ""
 "When selecting a Place or an Album you will view the description of the "
 "selected object in this box."
 
-#: templates/base-interactive.html:91 templates/base-interactive.html.py:99
-#: templates/base-interactive.html:101
+#: templates/base-interactive.html:92 templates/base-interactive.html:100
+#: templates/base-interactive.html:102
 msgid "NO_DESCRIPTION"
 msgstr "No description"
 
-#: templates/base-interactive.html:97 templates/photo-editor.html:4
+#: templates/base-interactive.html:98 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Please select a photo."
 
-#: templates/base-interactive.html:113
+#: templates/base-interactive.html:114
 msgid "Data Loading"
 msgstr "The requested data is now loading. Please be patient!"
 
-#: templates/base-interactive.html:121
+#: templates/base-interactive.html:122
 msgid "control-title delete"
 msgstr "Delete"
 
-#: templates/base-interactive.html:122
+#: templates/base-interactive.html:123
 msgid "control-title modify"
 msgstr "Edit"
 
-#: templates/base.html:114 templates/base.html.py:115
-msgid "Settings"
-msgstr "Settings"
+#: templates/base.html:107 templates/index-guest.html:30
+msgid "JS_DISABLED_WARNING"
+msgstr ""
+"You have disabled javascript in your browser settings. KEIKEN makes heavy "
+"use of javascript, so in order to use KEIKEN you have to activate it. "
 
-#: templates/base.html:118
-msgid "Abmelden"
-msgstr "Logout"
-
-#: templates/base.html:143
+#: templates/base.html:128
 msgid "Login or Register"
 msgstr "Login or Register"
 
-#: templates/base.html:143
+#: templates/base.html:128
 msgid "Anmelden/Registrierung"
 msgstr "Login and Registration"
 
-#: templates/base.html:148 templates/not-supported-old.html:64
+#: templates/base.html:132 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Introduction of the project and core team members"
 
-#: templates/base.html:148 templates/team.html:6 templates/team.html.py:8
-#: templates/team.html.py:11
+#: templates/base.html:132 templates/team.html:6 templates/team.html.py:8
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:149 templates/not-supported-old.html:62
+#: templates/base.html:133 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Contact, Support, Ask a Question"
 
-#: templates/base.html:149 templates/contact.html:6
-#: templates/contact.html.py:8 templates/impressum.html:34
+#: templates/base.html:133 templates/contact.html:6
+#: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Contact"
 
-#: templates/base.html:150 templates/not-supported-old.html:60
+#: templates/base.html:134 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "View Data Use Policy"
 
-#: templates/base.html:150 templates/privacy.html:5
+#: templates/base.html:134 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Privacy"
 
-#: templates/base.html:151 templates/not-supported-old.html:61
+#: templates/base.html:135 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "View Copyright Statement"
 
-#: templates/base.html:151 templates/copyright.html:6
+#: templates/base.html:135 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:152 templates/not-supported-old.html:63
+#: templates/base.html:136 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "View FAQ, Tutorial and help-page"
 
-#: templates/base.html:152 templates/help.html:6
+#: templates/base.html:136 templates/help.html:6
 msgid "Hilfe"
 msgstr "Help"
 
-#: templates/base.html:153 templates/not-supported-old.html:59
+#: templates/base.html:137 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "View Legal Terms of NAME OF PROJECT"
 
-#: templates/base.html:153 templates/impressum.html:10
-#: templates/impressum.html.py:12
+#: templates/base.html:137 templates/impressum.html:6
+#: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Legal Terms"
 
@@ -130,25 +127,54 @@ msgstr "help-page"
 msgid "contact-intro-article1-line2"
 msgstr ", kindly write us an email to "
 
-#: templates/contact.html:19
+#: templates/contact.html:20
 msgid "email just in javascript"
 msgstr ""
 "-- Please activate JavaScript in your browser settings and reload the page "
 "in order to view the email-address. --"
 
-#: templates/contact.html:23
+#: templates/contact.html:24
 msgid "contact-intro-article1-line3"
 msgstr "You may also use the following contact-form. (Soon available!)"
 
-#: templates/contact.html:24
+#: templates/contact.html:25
 msgid "contact-intro-article1-line4"
 msgstr "Kindly refer to the valid "
 
-#: templates/contact.html:24
+#: templates/contact.html:25
 msgid "contact-linkto-privacy"
 msgstr "Data Use Policy"
 
-#: templates/contact.html:62
+#: templates/contact.html:33 templates/insert-album.html:10
+#: templates/insert-photo.html:20 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-photo.html:12
+#: templates/update-place.html:12
+msgid "NAME"
+msgstr "Name"
+
+#: templates/contact.html:34 templates/contact.html.py:42
+#: templates/contact.html:50 templates/contact.html.py:58
+#: templates/insert-album.html:10 templates/insert-photo.html:20
+#: templates/insert-photo.html.py:28 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-photo.html:12
+#: templates/update-place.html:12
+msgid "MANDATORY_FIELD"
+msgstr "This field is mandatory."
+
+#: templates/contact.html:41 templates/login.html:23
+#: templates/login.html.py:51
+msgid "Email"
+msgstr "Email"
+
+#: templates/contact.html:49
+msgid "SUBJECT"
+msgstr ""
+
+#: templates/contact.html:57
+msgid "MESSAGE"
+msgstr ""
+
+#: templates/contact.html:64 templates/debug/dialogdimension.html:24
 msgid "Speichern"
 msgstr "Save"
 
@@ -234,7 +260,7 @@ msgstr ""
 "Duplication, distribution, as well as usage beyond the copyright law, "
 "requires written permission by the author."
 
-#: templates/dashboard.html:25
+#: templates/dashboard.html:30
 msgid "control-title share"
 msgstr "Share"
 
@@ -278,7 +304,7 @@ msgstr "Automatically close on success?"
 msgid "Hilfe und Support"
 msgstr "Help and Support"
 
-#: templates/help.html:17
+#: templates/help.html:22
 msgid "help-intro-paragraph"
 msgstr ""
 "At the moment there is no extensive help page available, since we are "
@@ -286,15 +312,15 @@ msgstr ""
 "functions available. If you have unanswered questions or problems, please "
 "write us an email and we will contact you soon."
 
-#: templates/help.html:20
+#: templates/help.html:25
 msgid "help-faq-title"
 msgstr "FAQ"
 
-#: templates/help.html:22
+#: templates/help.html:27
 msgid "help-faq topic 'Warum Klarnamen?' question"
 msgstr "Why full names?"
 
-#: templates/help.html:23
+#: templates/help.html:28
 msgid "help-faq topic 'Warum Klarnamen?' answer"
 msgstr ""
 "Some users might be uncomfortable using their real name on the internet, and "
@@ -306,27 +332,36 @@ msgstr ""
 "Photo-book real names are much more informative and nice to look at."
 
 
-#: templates/help.html:37
+#: templates/help.html:34
+msgid "link-title passwort security comic"
+msgstr ""
+
+#: templates/help.html:34
+msgid "link to password security comic"
+msgstr ""
+
+
+#: templates/help.html:40
 msgid "help-tutorial-title"
 msgstr "Tutorial"
 
-#: templates/help.html:29
+#: templates/help.html:42
 msgid "help-tutorial topic: Dashboard"
 msgstr "Dashboard"
 
-#: templates/help.html:31
+#: templates/help.html:44
 msgid "help-tutorial topic: Dashboard -> description"
 msgstr "The Map on your dashboard contains all your albums."
 
-#: templates/help.html:33
+#: templates/help.html:46
 msgid "Alben"
 msgstr "Albums"
 
-#: templates/help.html:36
+#: templates/help.html:49
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
 msgstr "Add Album"
 
-#: templates/help.html:37
+#: templates/help.html:50
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
 msgstr ""
@@ -335,12 +370,12 @@ msgstr ""
 "submitting your request, the album will be saved and shown on the map as a "
 "little marker in the shape of a camera."
 
-#: templates/help.html:40
+#: templates/help.html:53
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
 msgstr "Delete/Edit Album"
 
-#: templates/help.html:41
+#: templates/help.html:54
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
 "description"
@@ -348,11 +383,11 @@ msgstr ""
 "When moving the mouse over an album marker, a small control-box will appear "
 "below the marker. There you can select: delete, edit or share."
 
-#: templates/help.html:44
+#: templates/help.html:57
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
 msgstr "Select Album/Open Albumview"
 
-#: templates/help.html:45
+#: templates/help.html:58
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
 "description"
@@ -361,25 +396,24 @@ msgstr ""
 "redirected to the album-view of this album, in which you can view all the "
 "places and pictures."
 
-#: templates/help.html:48
+#: templates/help.html:61
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Share"
 msgstr "Share Album"
 
-#: templates/help.html:50
+#: templates/help.html:63
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "description"
 msgstr ""
-"We give you the possibility of shareing all albums of "
-"yours. This means we will provide you with a link, which you can share with "
-"others on social networks or via emails or any other way you like. By "
-"clicking on this link, others can view your album with all the places and "
-"pictures you uploaded and read your descriptions."
-"To share an album, you may click on the 'share' option in the controls box, "
-"which opens by moving the mouse over the album-markers, a window will open "
-"with the generated link."
+"We give you the possibility of shareing all albums of yours. This means we "
+"will provide you with a link, which you can share with others on social "
+"networks or via emails or any other way you like. By clicking on this link, "
+"others can view your album with all the places and pictures you uploaded and "
+"read your descriptions.To share an album, you may click on the 'share' "
+"option in the controls box, which opens by moving the mouse over the album-"
+"markers, a window will open with the generated link."
 
-#: templates/help.html:61
+#: templates/help.html:64
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "attention!"
@@ -389,11 +423,11 @@ msgstr ""
 "flash due to security reasons you have to copy the link by hand as described "
 "above. "
 
-#: templates/help.html:58 templates/view-album.html:6
+#: templates/help.html:72 templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumview"
 
-#: templates/help.html:60
+#: templates/help.html:74
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
 "In the album-view you can add places; subsequently you can upload pictures "
@@ -401,15 +435,15 @@ msgstr ""
 "You can also view the pictures in a small slideshow inside the gallery or "
 "even in a fullscreen mode."
 
-#: templates/help.html:62
+#: templates/help.html:76
 msgid "Plätze"
 msgstr "Places"
 
-#: templates/help.html:65
+#: templates/help.html:79
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
 msgstr "Add Place"
 
-#: templates/help.html:66
+#: templates/help.html:80
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
@@ -418,12 +452,12 @@ msgstr ""
 "you submit the dialogue in which you specify name and description, the "
 "places will be saved and shown on the map as little markers."
 
-#: templates/help.html:69
+#: templates/help.html:83
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
 msgstr "Delete/Edit Place"
 
-#: templates/help.html:70
+#: templates/help.html:84
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
@@ -431,11 +465,11 @@ msgstr ""
 "When moving the mouse over a place marker, the control-box in which you may "
 "select delete or edit will be shown below the marker."
 
-#: templates/help.html:73
+#: templates/help.html:87
 msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
 msgstr "Select Place/Open Gallery"
 
-#: templates/help.html:74
+#: templates/help.html:88
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
@@ -443,15 +477,15 @@ msgstr ""
 "To order to open the gallery to view the pictures that are assigned to a "
 "place, you may doubleclick on the marker."
 
-#: templates/help.html:77
+#: templates/help.html:91
 msgid "Gallerie"
 msgstr "Gallery"
 
-#: templates/help.html:80
+#: templates/help.html:94
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
 msgstr "Add Photo"
 
-#: templates/help.html:81
+#: templates/help.html:95
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
@@ -460,12 +494,12 @@ msgstr ""
 "browser into the gallery. You may also open the add-dialog by clicking on "
 "the 'record'-button on the right side of the gallery."
 
-#: templates/help.html:84
+#: templates/help.html:98
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
 msgstr "Delete/Edit Photo"
 
-#: templates/help.html:85
+#: templates/help.html:99
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
@@ -473,11 +507,11 @@ msgstr ""
 "Mouse over a picture will open the control-box, in which you can select Edit "
 "or Delete."
 
-#: templates/help.html:88
+#: templates/help.html:102
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
 msgstr "Select Photo/Start Slideshow"
 
-#: templates/help.html:89
+#: templates/help.html:103
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
@@ -486,11 +520,11 @@ msgstr ""
 "view the pictures in a little slideshow inside the gallery.  (Click on this "
 "picture)"
 
-#: templates/help.html:92
+#: templates/help.html:106
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
 msgstr "View Photo in Fullscreen"
 
-#: templates/help.html:93
+#: templates/help.html:107
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
@@ -498,12 +532,12 @@ msgstr ""
 "By clicking on the current picture in the slideshow, you can further view "
 "the picture in a full-screen mode."
 
-#: templates/help.html:96
+#: templates/help.html:110
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
 msgstr "Drag'n'Drop of Photos"
 
-#: templates/help.html:97
+#: templates/help.html:111
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
@@ -512,62 +546,71 @@ msgstr ""
 "side of the gallery, you can reorder the pictures in your gallery by "
 "dragging them to a favourable position and dropping them there."
 
-#: templates/impressum.html:17
+#: templates/help.html:114 templates/insert-album.html:14
+#: templates/insert-photo.html:11 templates/insert-photo.html.py:24
+#: templates/insert-place.html:14 templates/update-album.html:15
+#: templates/update-photo.html:16 templates/update-place.html:16
+msgid "DESCRIPTION"
+msgstr "Description"
+
+#: templates/help.html:117
+#, fuzzy
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Description, function: toggle "
+"visibility"
+msgstr "Select Place/Open Gallery"
+
+#: templates/help.html:118
+#, fuzzy
+msgid ""
+"help-tutorial topic: Albumview, subtopic: Description, function: toggle "
+"visibility -> description"
+msgstr ""
+"To order to open the gallery to view the pictures that are assigned to a "
+"place, you may doubleclick on the marker."
+
+#: templates/impressum.html:13
 msgid "impressum Angaben gemäß § 5 TMG"
 msgstr "Information compliant to § 5 TMG"
 
-#: templates/impressum.html:25
+#: templates/impressum.html:21
 msgid "impressum Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
 msgstr ""
 "Person responsible for correctness of the content compliant to § 55 Abs. 2 "
 "RStV"
 
-#: templates/impressum.html:26
+#: templates/impressum.html:22
 msgid "impressum Anschrift wie oben"
 msgstr "Address as above"
 
-#: templates/impressum.html:28
+#: templates/impressum.html:24
 msgid "impressum Vertreten durch"
 msgstr "Represented by"
 
-#: templates/impressum.html:37 templates/impressum.html.py:38
+#: templates/impressum.html:32 templates/impressum.html.py:33
 msgid "Telefon"
 msgstr "Telephone"
 
-#: templates/impressum.html:37 templates/impressum.html.py:38
+#: templates/impressum.html:32 templates/impressum.html.py:33
 msgid "Handy"
 msgstr "mobile phone"
 
-#: templates/impressum.html:39
+#: templates/impressum.html:34
 msgid "Email-Adresse"
 msgstr "email-address"
 
-#: templates/impressum.html:43 templates/team.html:24
-#: templates/team.html.py:39 templates/team.html:54
+#: templates/impressum.html:39
 msgid "EMAIL_ONLY_WITH_JS"
 msgstr ""
 "The email address is encoded to prevent crawlers to abuse the address. and "
 "therefor just viewable, if you have javascript enabled. Even without "
 "javascript you can reach us as easy by using the "
 
-#: templates/impressum.html:45
-msgid "Or use the"
-msgstr "Or use the "
-
-#: templates/impressum.html:45 templates/privacy.html:62
-#: templates/team.html:24 templates/team.html.py:39 templates/team.html:54
-msgid "Kontaktformular"
-msgstr "Contact Form"
-
-#: templates/impressum.html:48
-msgid "Hinweis"
-msgstr "Note"
-
-#: templates/impressum.html:48
+#: templates/impressum.html:43
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Abuse of contact data"
 
-#: templates/impressum.html:49
+#: templates/impressum.html:44
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "The usage of contact data published on this page, by a third party to send "
@@ -581,18 +624,12 @@ msgstr ""
 msgid "Willkommen"
 msgstr "Welcome"
 
-#: templates/index-guest.html:31 templates/index.html:31
-msgid "JS_DISABLED_WARNING"
-msgstr ""
-"You have disabled javascript in your browser settings. KEIKEN makes heavy "
-"use of javascript, so in order to use KEIKEN you have to activate it. "
-
-
 #: templates/index-guest.html:32 templates/index-guest.html.py:40
+#: templates/login.html:73 templates/login.html.py:81
 msgid "Welcome to Keiken"
 msgstr "Welcome to Keiken"
 
-#: templates/index-guest.html:33
+#: templates/index-guest.html:33 templates/login.html:74
 msgid "LOGIN_GUEST_WELCOME_1"
 msgstr ""
 "Keiken is not a place to upload photos of temporary interest and meaning. If "
@@ -601,13 +638,13 @@ msgstr ""
 "not about unpersonal sharing of experiences or overwhelming your friends and "
 "family by spamming them with photos."
 
-#: templates/index-guest.html:34
+#: templates/index-guest.html:34 templates/login.html:75
 msgid "LOGIN_GUEST_WELCOME_2"
 msgstr ""
 "Keiken structures your albums in places and photos. Each album can contain "
 "as many places as you wish and each place can contain any number of photos."
 
-#: templates/index-guest.html:34
+#: templates/index-guest.html:34 templates/login.html:75
 msgid "LOGIN_GUEST_WELCOME_3"
 msgstr ""
 "This may help you to experience the adventures and stories told by the album "
@@ -616,7 +653,7 @@ msgstr ""
 "as big as a country eg. when you travel around the world. Or it can be as "
 "small as an interesting sight when visiting a city."
 
-#: templates/index-guest.html:35
+#: templates/index-guest.html:35 templates/login.html:76
 msgid "LOGIN_GUEST_WELCOME_4"
 msgstr ""
 "Photos are.. well photos and not actual experiences. But nevertheless photos "
@@ -625,13 +662,13 @@ msgstr ""
 "at 'IMG_13072013_1718.JPG' - and of course it would be great if you would "
 "also use the optional description-box to tell about your own experiences."
 
-#: templates/index-guest.html:37
+#: templates/index-guest.html:37 templates/login.html:78
 msgid "LOGIN_GUEST_WELCOME_5"
 msgstr ""
 "We hope you still know photo-albums. That were those nice dusty big books, "
 "which you had to look at with your parents and family after big trips."
 
-#: templates/index-guest.html:38
+#: templates/index-guest.html:38 templates/login.html:79
 msgid "LOGIN_GUEST_WELCOME_6"
 msgstr ""
 "We did a little dusting and created a digital, dust-repelling, interactive "
@@ -643,29 +680,32 @@ msgstr ""
 msgid "Zum Login"
 msgstr "Sign in"
 
+msgid "KEIKEN_SHORT"
+msgstr "Illustrate your experiences abroad for your family and friends"
+
+#: templates/index.html:16
+msgid "KEIKEN_BEFORE"
+msgstr "Before we found KEIKEN, we had a hard time reporting about our exchange semester:"
+
+#: templates/index.html:19
+msgid "KEIKEN_ALTERNATIVE_EMAIL"
+msgstr "You can zip your photos and write a long description via email, but often a lot of pictures needs explaining to the unfamiliar eye"
+
+#: templates/index.html:23
+msgid "KEIKEN_ALTERNATIVE_PRESENTATION"
+msgstr "You can also give a presentation when you come back, but this will only reach the people close to you"
+
+#: templates/index.html:27
+msgid "KEIKEN_ALTERNATIVE_NETWORK"
+msgstr "You can also post the photos on your favourite social network, but not everyone you want to reach will be member there"
+
+#: templates/index.html:30
+msgid "KEIKEN_REASONS"
+msgstr "Therefore we called KEIKEN to life. We hope to provide you with the tools to give everyone of your friends a presentation they deserve."
+
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
 msgstr "Insert Album"
-
-#: templates/insert-album.html:10 templates/insert-photo.html:20
-#: templates/insert-place.html:10 templates/update-album.html:11
-#: templates/update-photo.html:12 templates/update-place.html:12
-msgid "NAME"
-msgstr "Name"
-
-#: templates/insert-album.html:10 templates/insert-photo.html:20
-#: templates/insert-photo.html.py:28 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:12
-msgid "MANDATORY_FIELD"
-msgstr "This field is mandatory."
-
-#: templates/insert-album.html:14 templates/insert-photo.html:11
-#: templates/insert-photo.html.py:24 templates/insert-place.html:14
-#: templates/update-album.html:15 templates/update-photo.html:16
-#: templates/update-place.html:16
-msgid "DESCRIPTION"
-msgstr "Description"
 
 #: templates/insert-photo.html:5
 msgid "INSERT_PHOTO"
@@ -673,7 +713,7 @@ msgstr "Insert Photo"
 
 #: templates/insert-photo.html:11
 msgid "TITLE"
-msgstr ""
+msgstr "Title"
 
 #: templates/insert-photo.html:28
 msgid "INSERT_PHOTO_UPLOAD"
@@ -687,55 +727,41 @@ msgstr "Insert Place"
 msgid "Login und Registrierung"
 msgstr "Login and Registration"
 
-#: templates/login.html:18 templates/login.html.py:25
+#: templates/login.html:14
 msgid "Login"
 msgstr "Login"
 
-#: templates/login.html:19 templates/login.html.py:41
-msgid "Test-Account"
-msgstr "Test-Account"
-
-#: templates/login.html:20 templates/login.html.py:56
-msgid "Demo-Account"
-msgstr "Demo-Account"
-
-#: templates/login.html:21 templates/login.html.py:71
+#: templates/login.html:15
 msgid "Registration"
 msgstr "Registration"
 
-#: templates/login.html:22 templates/login.html.py:99
-msgid "Guest-Login"
-msgstr "Guest-Login"
-
-#: templates/login.html:28 templates/login.html.py:82 templates/team.html:21
-#: templates/team.html.py:36 templates/team.html:51
-msgid "Email"
-msgstr "Email"
-
-#: templates/login.html:32 templates/login.html.py:86 templates/login.html:102
+#: templates/login.html:29 templates/login.html.py:55 templates/login.html:83
 msgid "Password"
 msgstr "Password"
 
-#: templates/login.html:36 templates/login.html.py:51 templates/login.html:66
-#: templates/login.html.py:105
+#: templates/login.html:35 templates/login.html.py:86
 msgid "Sign in"
 msgstr "Sign in"
 
-#: templates/login.html:74
+#: templates/login.html:43
 msgid "First name"
 msgstr "First name"
 
-#: templates/login.html:78
+#: templates/login.html:47
 msgid "Last name"
 msgstr "Last name"
 
-#: templates/login.html:90
+#: templates/login.html:59
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: templates/login.html:94
+#: templates/login.html:63
 msgid "Register"
 msgstr "Register"
+
+#: templates/login.html:71
+msgid "Guest-Login"
+msgstr "Guest-Login"
 
 #: templates/photo-editor.html:13
 msgid "SHARPEN"
@@ -865,41 +891,33 @@ msgstr ""
 "the user has completely checked out already, by changing the map-markers "
 "colour."
 
-#: templates/privacy.html:41
-msgid "privacy-topic Cookies - 'used-space/quota'-cookie"
-msgstr ""
-"'used-space'-/'quota'-Cookies: The 'used-space'-/'quota'-Cookies contain "
-"information about how much data storage space you have unlocked and how much "
-"you already use. You can check those informations at the bottom of the page "
-"next to your email-address."
-
-#: templates/privacy.html:45
+#: templates/privacy.html:44
 msgid "privacy-topic Cookies -> redirection to wiki"
 msgstr "For further information on cookies, we are re-directing you to the "
 
-#: templates/privacy.html:45
+#: templates/privacy.html:44
 msgid "privacy-topic Cookies -> link to wiki"
 msgstr "http://en.wikipedia.org/wiki/HTTP_cookie"
 
-#: templates/privacy.html:46
+#: templates/privacy.html:45
 msgid "link-title Wikipedia-Eintrag zu Cookies"
 msgstr "wikipedia entry concerning cookies"
 
-#: templates/privacy.html:46
+#: templates/privacy.html:45
 msgid "privacy-topic Cookies -> name of link to wiki"
 msgstr "wikipedia entry concerning http-cookies"
 
-#: templates/privacy.html:49
+#: templates/privacy.html:48
 msgid "privacy-topic Emails und Kontaktformulare"
 msgstr "Emails and contact forms"
 
-#: templates/privacy.html:52
+#: templates/privacy.html:51
 msgid "privacy-topic Emails und Kontaktformulare list-item-1"
 msgstr ""
 "Users and visitors can send questions or give feedback by using the contact "
 "form or writing an email."
 
-#: templates/privacy.html:53
+#: templates/privacy.html:52
 msgid "privacy-topic Emails und Kontaktformulare list-item-2"
 msgstr ""
 "Messages sent to us via the contact form or as email are saved for "
@@ -907,30 +925,30 @@ msgstr ""
 "includes all the data you send to us, e.g. the required fields in the "
 "contact form."
 
-#: templates/privacy.html:54
+#: templates/privacy.html:53
 msgid "privacy-topic Emails und Kontaktformulare list-item-3"
 msgstr ""
 "The use of pseudonyms is allowed but not recommended; it will make "
 "processing your request harder, and we might not be able to give you an in-"
 "depth help as we would like to."
 
-#: templates/privacy.html:55
+#: templates/privacy.html:54
 msgid "privacy-topic Emails und Kontaktformulare list-item-4"
 msgstr ""
 "Once your question is answered we will delete the message, unless you want "
 "us to save it for future reference."
 
-#: templates/privacy.html:56
+#: templates/privacy.html:55
 msgid "privacy-topic Emails und Kontaktformulare list-item-5"
 msgstr ""
 "In case we would like to save a message we will contact the writer and ask "
 "for permission."
 
-#: templates/privacy.html:59
+#: templates/privacy.html:58
 msgid "privacy-topic Auskunftsrecht"
 msgstr "Right to information"
 
-#: templates/privacy.html:61
+#: templates/privacy.html:60
 msgid "privacy-topic Auskunftsrecht -> paragraph1"
 msgstr ""
 "We would be happy to give you all the information about yourself that is "
@@ -939,31 +957,40 @@ msgstr ""
 "saved and how it is saved in our database, just send us your request for the "
 "same, via email or the "
 
-#: templates/privacy.html:63
+#: templates/privacy.html:61
+msgid "Kontaktformular"
+msgstr "Contact Form"
+
+#: templates/privacy.html:62
 msgid "privacy-topic Auskunftsrecht -> paragraph2"
 msgstr ""
 "We will send all the available and required information to you, in "
 "complaisance to your legal right to information."
 
-#: templates/team.html:17 templates/team.html.py:32 templates/team.html:47
+#: templates/team.html:32 templates/team.html.py:44 templates/team.html:56
+#: templates/debug/dialogdimension.html:14
 msgid "Name"
 msgstr "Name"
 
-#: templates/team.html:19 templates/team.html.py:34 templates/team.html:49
+#: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
 msgid "Verantwortlich für"
 msgstr "Responsible for"
 
-#: templates/team.html:20 templates/team.html.py:35
+#: templates/team.html:35 templates/team.html.py:47
 msgid "Back End"
 msgstr "Back End"
 
-#: templates/team.html:20 templates/team.html.py:50
+#: templates/team.html:35 templates/team.html.py:59
 msgid "Front End"
 msgstr "Front End"
 
-#: templates/team.html:20 templates/team.html.py:50
+#: templates/team.html:35 templates/team.html.py:59
 msgid "Design"
 msgstr "Design"
+
+#: templates/team.html:36 templates/team.html.py:48 templates/team.html:60
+msgid "Motivation am Projekt"
+msgstr "Motivation for the project"
 
 #: templates/update-album-password.html:5
 msgid "UPDATE_ALBUM_PASSWORD"
@@ -1008,50 +1035,76 @@ msgstr "Do you really want to update the photo order?"
 msgid "UPDATE_PLACE"
 msgstr "Update Place"
 
-#: templates/view-album.html:28
+#: templates/view-album.html:33
 msgid "Previous Page"
 msgstr "Previous Page"
 
-#: templates/view-album.html:32
+#: templates/view-album.html:37
 msgid "Open Full Gallery"
 msgstr "Open Full Gallery"
 
-#: templates/view-album.html:37
+#: templates/view-album.html:42
 msgid "GALLERY_NOT_STARTED"
 msgstr ""
 "Please select a place by clicking on a marker on the map above in order to "
 "start the gallery."
 
-#: templates/view-album.html:38
+#: templates/view-album.html:43
 msgid "GALLERY_IS_EMPTY"
 msgstr ""
 "The selected place does not contain photos yet. You can add a photo by "
 "dropping it into the gallery or using the 'Add Photo'-Button on the right "
 "side."
 
-#: templates/view-album.html:50
+#: templates/view-album.html:55
 msgid "Next Page"
 msgstr "Next Page"
 
-#: templates/view-album.html:54
+#: templates/view-album.html:59
 msgid "Add Image"
 msgstr "Add Image"
 
-#: templates/view-album.html:67
+#: templates/view-album.html:72
 msgid "Previous Image"
 msgstr "Previous Image"
 
-#: templates/view-album.html:73
+#: templates/view-album.html:78
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr "Please choose a photo in your gallery to start the slideshow."
 
-#: templates/view-album.html:77
+#: templates/view-album.html:82
 msgid "Next Image"
 msgstr "Next Image"
 
-#: templates/view-album.html:80
+#: templates/view-album.html:85
 msgid "Bild"
 msgstr "Image"
 
-#~ msgid "Motivation am Projekt"
-#~ msgstr "Motivation for the project"
+#: templates/debug/dialogdimension.html:18
+msgid "Beschreibung"
+msgstr ""
+
+#~ msgid "Settings"
+#~ msgstr "Settings"
+
+#~ msgid "Abmelden"
+#~ msgstr "Logout"
+
+#~ msgid "Or use the"
+#~ msgstr "Or use the "
+
+#~ msgid "Hinweis"
+#~ msgstr "Note"
+
+#~ msgid "Test-Account"
+#~ msgstr "Test-Account"
+
+#~ msgid "Demo-Account"
+#~ msgstr "Demo-Account"
+
+#~ msgid "privacy-topic Cookies - 'used-space/quota'-cookie"
+#~ msgstr ""
+#~ "'used-space'-/'quota'-Cookies: The 'used-space'-/'quota'-Cookies contain "
+#~ "information about how much data storage space you have unlocked and how "
+#~ "much you already use. You can check those informations at the bottom of "
+#~ "the page next to your email-address."

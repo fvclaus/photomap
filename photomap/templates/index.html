@@ -9,29 +9,25 @@
 
 
 {% block non_interactive_content %}
-<section style="font-size: 1.3em">
-  <p style="text-align: center; font-size: 1.4em">Illustrate your experiences abroad for your family and friends</p>
-  <br/>
-  <p>Before we found KEIKEN, we had a hard time reporting about our exchange semester:</p>
-  <div class="span-7 mp-inline-block">
-    <!-- <img src="/static/images/zip.png" /> -->
-    <!-- <p style="font-size: 1.4em; color: red">ZIP</p> -->
-    <p>You can zip your photos and write a long description via email, but often a lot of pictures
-      needs explaining to the unfamiliar eye</p>
+<section id="mp-intro">
+
+  <h2>{% trans "KEIKEN_SHORT" %}</h2>
+
+  <p>{% trans "KEIKEN_BEFORE" %}</p>
+  <div id="mp-intro-alternative">
+    <div class="span-7 mp-inline-block">
+      <span>{% trans "KEIKEN_ALTERNATIVE_EMAIL" %}</span>
+    </div>
+    <div class="span-1 mp-inline-block" ></div>
+    <div class="span-7 mp-inline-block">
+      <span>{% trans "KEIKEN_ALTERNATIVE_PRESENTATION" %}</span>
+    </div>
+    <div class="span-1 mp-inline-block" ></div>
+    <div class="span-7 mp-inline-block">
+      <span>{% trans "KEIKEN_ALTERNATIVE_NETWORK" %}</span>
+    </div>
   </div>
-  <div class="span-1 mp-inline-block" ></div>
-  <div class="span-7 mp-inline-block">
-    <!-- <img src="/static/images/presentation.png"/> -->
-    <p>You can also give a presentation when you come back, but this will only reach the people close to you</p>
-  </div>
-  <div class="span-1 mp-inline-block" ></div>
-  <div class="span-7 mp-inline-block">
-    <!-- <img src="/static/images/network.png"> -->
-    <p>You can also post the photos on your favourite social network, but not everyone you want to reach
-      will be member there</p>
-  </div>
-  <p>Therefore we called KEIKEN to life. We hope to provide you with the tools to give everyone of your friends
-    a presentation they deserve.</p>
+  <p>{% trans "KEIKEN_REASONS" %}</p>
    {% if user.is_authenticated %}
      <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p>
    {% endif %}
