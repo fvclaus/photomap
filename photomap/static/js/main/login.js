@@ -30,7 +30,10 @@ function init() {
    $("#mp-login-register").tabs({
       heightStyle : "fill",
       disabled : [3],
-      active : index
+      active : index,
+      create : function () {
+         $("#mp-login-register").removeClass("mp-nodisplay");
+      }
    });
 }
 
