@@ -5,11 +5,6 @@
 
 var map, state, tools, $container, email, emailEnabled, i;
 
-function reinitialiseScrollPane() {
-   if ($container.data("jsp")) {
-      $container.data("jsp").reinitialise();
-   }
-}
 
 function initialize() {
 
@@ -23,15 +18,6 @@ function initialize() {
    });
 
    $container = $("#mp-non-interactive-content");
-
-   if (window.location.pathname !== "/login") {
-      $container.jScrollPane();
-   }
-
-   // if window is resized content container needs to be repositioned
-   $(window).resize(function () {
-      reinitialiseScrollPane();
-   });
 
    /**
     * @description When linked to a certain part of a page, scroll to that part.
@@ -52,13 +38,13 @@ function initialize() {
          .text(emailEnabled)
          .removeClass("mp-nodisplay");
    }
-   
-   var hash, api;
+   // TODO: try the scrolling with .animate()
+/*   var hash, api;
 
    hash = window.location.hash;
    if (hash) {
       api = $container.jScrollPane().data('jsp');
       api.scrollToElement(hash, true, true);
-   }
+   }*/
 }
 

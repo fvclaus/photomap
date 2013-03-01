@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-28 18:49+0100\n"
+"POT-Creation-Date: 2013-03-01 11:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,9 @@ msgstr "Close"
 
 #: templates/base-interactive.html:89
 msgid "SELECT_PLACE_OR_ALBUM"
-msgstr "When selecting a Place or an Album you will view the description of the selected object in this box."
+msgstr ""
+"When selecting a Place or an Album you will view the description of the "
+"selected object in this box."
 
 #: templates/base-interactive.html:91 templates/base-interactive.html.py:99
 #: templates/base-interactive.html:101
@@ -232,7 +234,7 @@ msgstr ""
 "Duplication, distribution, as well as usage beyond the copyright law, "
 "requires written permission by the author."
 
-#: templates/dashboard.html:22
+#: templates/dashboard.html:25
 msgid "control-title share"
 msgstr "Share"
 
@@ -646,9 +648,43 @@ msgstr ""
 "this website reserve the right to take legal action in case of an abuse of "
 "contact data."
 
+#: templates/index-guest.html:6 templates/index-guest.html.py:8
 #: templates/index.html:6 templates/index.html.py:8
 msgid "Willkommen"
 msgstr "Welcome"
+
+#: templates/index-guest.html:31 templates/index-guest.html.py:39
+#: templates/login.html:103 templates/login.html.py:111
+msgid "Welcome to Keiken"
+msgstr ""
+
+#: templates/index-guest.html:32 templates/login.html:104
+msgid "LOGIN_GUEST_WELCOME_1"
+msgstr ""
+
+#: templates/index-guest.html:33 templates/login.html:105
+msgid "LOGIN_GUEST_WELCOME_2"
+msgstr ""
+
+#: templates/index-guest.html:33 templates/login.html:105
+msgid "LOGIN_GUEST_WELCOME_3"
+msgstr ""
+
+#: templates/index-guest.html:34 templates/login.html:106
+msgid "LOGIN_GUEST_WELCOME_4"
+msgstr ""
+
+#: templates/index-guest.html:36 templates/login.html:108
+msgid "LOGIN_GUEST_WELCOME_5"
+msgstr ""
+
+#: templates/index-guest.html:37 templates/login.html:109
+msgid "LOGIN_GUEST_WELCOME_6"
+msgstr ""
+
+#: templates/index-guest.html:40
+msgid "Zum Login"
+msgstr ""
 
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
@@ -693,6 +729,58 @@ msgstr "Insert Place"
 #: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
 msgstr "Login and Registration"
+
+#: templates/login.html:18 templates/login.html.py:25
+msgid "Login"
+msgstr ""
+
+#: templates/login.html:19 templates/login.html.py:41
+msgid "Test-Account"
+msgstr ""
+
+#: templates/login.html:20 templates/login.html.py:57
+msgid "Demo-Account"
+msgstr ""
+
+#: templates/login.html:21 templates/login.html.py:73
+msgid "Registration"
+msgstr ""
+
+#: templates/login.html:22 templates/login.html.py:101
+msgid "Guest-Login"
+msgstr ""
+
+#: templates/login.html:28 templates/login.html.py:44 templates/login.html:60
+#: templates/login.html.py:84
+msgid "Email"
+msgstr ""
+
+#: templates/login.html:32 templates/login.html.py:48 templates/login.html:64
+#: templates/login.html.py:88 templates/login.html:113
+msgid "Password"
+msgstr ""
+
+#: templates/login.html:36 templates/login.html.py:52 templates/login.html:68
+#: templates/login.html.py:116
+msgid "Sign in"
+msgstr ""
+
+#: templates/login.html:76
+msgid "First name"
+msgstr ""
+
+#: templates/login.html:80
+msgid "Last name"
+msgstr ""
+
+#: templates/login.html:92
+msgid "Confirm Password"
+msgstr ""
+
+#: templates/login.html:96
+#, fuzzy
+msgid "Register"
+msgstr "Login or Register"
 
 #: templates/photo-editor.html:13
 msgid "SHARPEN"
@@ -976,14 +1064,15 @@ msgstr "Open Full Gallery"
 #: templates/view-album.html:37
 msgid "GALLERY_NOT_STARTED"
 msgstr ""
-"Please select a place by clicking on a marker on the map above in order "
-"to start the gallery."
+"Please select a place by clicking on a marker on the map above in order to "
+"start the gallery."
 
 #: templates/view-album.html:38
 msgid "GALLERY_IS_EMPTY"
 msgstr ""
 "The selected place does not contain photos yet. You can add a photo by "
-"dropping it into the gallery or using the 'Add Photo'-Button on the right side."
+"dropping it into the gallery or using the 'Add Photo'-Button on the right "
+"side."
 
 #: templates/view-album.html:50
 msgid "Next Page"
@@ -1008,4 +1097,3 @@ msgstr "Next Image"
 #: templates/view-album.html:80
 msgid "Bild"
 msgstr "Image"
-

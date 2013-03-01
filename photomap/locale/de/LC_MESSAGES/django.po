@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-28 18:49+0100\n"
+"POT-Creation-Date: 2013-03-01 11:21+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,8 +25,8 @@ msgstr "Schließen"
 #: templates/base-interactive.html:89
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr ""
-"Wenn Sie einen Platz oder ein Album auswählen, wird die Beschreibung des ausgewählten "
-"Objekts hier angezeigt."
+"Wenn Sie einen Platz oder ein Album auswählen, wird die Beschreibung des "
+"ausgewählten Objekts hier angezeigt."
 
 #: templates/base-interactive.html:91 templates/base-interactive.html.py:99
 #: templates/base-interactive.html:101
@@ -244,7 +244,7 @@ msgstr ""
 "Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
 "Autors."
 
-#: templates/dashboard.html:22
+#: templates/dashboard.html:25
 msgid "control-title share"
 msgstr "Teilen"
 
@@ -677,9 +677,69 @@ msgstr ""
 "behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
 "Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
 
+#: templates/index-guest.html:6 templates/index-guest.html.py:8
 #: templates/index.html:6 templates/index.html.py:8
 msgid "Willkommen"
 msgstr "Willkommen"
+
+#: templates/index-guest.html:31 templates/index-guest.html.py:39
+#: templates/login.html:103 templates/login.html.py:111
+msgid "Welcome to Keiken"
+msgstr "Hezlich Willkommen zu Keiken"
+
+#: templates/index-guest.html:32 templates/login.html:104
+msgid "LOGIN_GUEST_WELCOME_1"
+msgstr ""
+"Keiken ist kein Ort, an dem man Bilder von vergänglichem Interesse. Sollte "
+"man so etwas suchen, gibt es bereits genug Websites dafür. Keiken ist auch "
+"nicht dafür da ganze Ordner voll mit Bildern einfach ins Web hochzuladen. Es "
+"geht bei Keiken weder um unpersönliches Teilen von Erfahrungen, noch um das "
+"Überwältigen der Bekannten und Verwandten, in dem man sie mit einer Unmenge "
+"an Bildern überschwemmt."
+
+#: templates/index-guest.html:33 templates/login.html:105
+msgid "LOGIN_GUEST_WELCOME_2"
+msgstr ""
+"Bei Keiken werden Alben in Plätze und Photos strukturiert. Jedes Album kann "
+"beliebig viele Plätze beinhalten und jeder Platz beliebig viele Photos.."
+
+#: templates/index-guest.html:33 templates/login.html:105
+msgid "LOGIN_GUEST_WELCOME_3"
+msgstr ""
+"Das kann dabei helfen die Abenteuer und Geschichten, welche durch das Album "
+"erzählt werden besser zu erfahren. Ja wir meinen DICH überladener DCIM-"
+"Ordner auf der Digitalkamera! ;) Aber natürlich ist jedes Abenteuer anders! "
+"Ein Platz kann die Größe eines ganzen Landes haben, wenn man beispielsweise "
+"auf einer Weltreise ist. Und bei einer Städtetour kann ein Platz auch nur so "
+"groß wie eine besondere Sehenswürdigkeit sein."
+
+#: templates/index-guest.html:34 templates/login.html:106
+msgid "LOGIN_GUEST_WELCOME_4"
+msgstr ""
+"Photos sind.. naja nur Photos halt und keine tatsächlich spürbare Erfahrung. "
+"Trotzdem erzählen Bilder von Erfahrungen und wir versuchen die Bedeutung der "
+"Bilder hervorzuheben. Darum ist es verpflichtend jedem Bild einen Titel zu "
+"geben - nachdrücklicher Blick auf 'IMG_13072013_1718.JPG' - und natürlich "
+"wäre es super, wenn man auch das optionale Beschreibungsfeld ausnutzt um von "
+"seiner Reise zu erzählen. "
+
+#: templates/index-guest.html:36 templates/login.html:108
+msgid "LOGIN_GUEST_WELCOME_5"
+msgstr ""
+"Wir hoffen Sie kennen noch Photo-Alben. Das sind die netten verstaubten "
+"großen Bücher, die man sich als Kind immer mit den Eltern anschauen musste."
+
+#: templates/index-guest.html:37 templates/login.html:109
+msgid "LOGIN_GUEST_WELCOME_6"
+msgstr ""
+"Wir haben ein bisschen Staub gewischt und eine digitale nicht verstaubbare, "
+"interaktive Version dieser Alben erstellt und ermöglichen Ihnen hier all "
+"Ihre Reisen festzuhalten und jedem dem Ihr Eure Geschichten erzählen wollt "
+"die Möglichkeit zu geben 'zuzuhören' und die Geschichte selbst zu erkunden."
+
+#: templates/index-guest.html:40
+msgid "Zum Login"
+msgstr "Zur Anmeldung"
 
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
@@ -724,6 +784,57 @@ msgstr "Platz hinzufügen"
 #: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
 msgstr "Login und Registrierung"
+
+#: templates/login.html:18 templates/login.html.py:25
+msgid "Login"
+msgstr "Anmeldung"
+
+#: templates/login.html:19 templates/login.html.py:41
+msgid "Test-Account"
+msgstr "Test-Account"
+
+#: templates/login.html:20 templates/login.html.py:57
+msgid "Demo-Account"
+msgstr "Demo-Account"
+
+#: templates/login.html:21 templates/login.html.py:73
+msgid "Registration"
+msgstr "Registration"
+
+#: templates/login.html:22 templates/login.html.py:101
+msgid "Guest-Login"
+msgstr "Gast-Login"
+
+#: templates/login.html:28 templates/login.html.py:44 templates/login.html:60
+#: templates/login.html.py:84
+msgid "Email"
+msgstr "Email"
+
+#: templates/login.html:32 templates/login.html.py:48 templates/login.html:64
+#: templates/login.html.py:88 templates/login.html:113
+msgid "Password"
+msgstr "Passwort"
+
+#: templates/login.html:36 templates/login.html.py:52 templates/login.html:68
+#: templates/login.html.py:116
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: templates/login.html:76
+msgid "First name"
+msgstr "Vorname"
+
+#: templates/login.html:80
+msgid "Last name"
+msgstr "Nachname"
+
+#: templates/login.html:92
+msgid "Confirm Password"
+msgstr "Passwort bestätigen"
+
+#: templates/login.html:96
+msgid "Register"
+msgstr "Registrieren"
 
 #: templates/photo-editor.html:13
 msgid "SHARPEN"
@@ -1011,14 +1122,15 @@ msgstr "Vollstädige Galerie öffnen"
 #: templates/view-album.html:37
 msgid "GALLERY_NOT_STARTED"
 msgstr ""
-"Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der Karte klicken, "
-"um die Galerie zu starten."
+"Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der Karte "
+"klicken, um die Galerie zu starten."
 
 #: templates/view-album.html:38
 msgid "GALLERY_IS_EMPTY"
 msgstr ""
-"Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, ziehen Sie diese in die Galerie "
-"oder nutzen Sie den 'Bild hinzufügen'-Button rechts der Galerie."
+"Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, "
+"ziehen Sie diese in die Galerie oder nutzen Sie den 'Bild hinzufügen'-Button "
+"rechts der Galerie."
 
 #: templates/view-album.html:50
 msgid "Next Page"
@@ -1045,3 +1157,5 @@ msgstr "Nächstes Bild"
 msgid "Bild"
 msgstr "Bild"
 
+#~ msgid "LOGIN_GUEST_WELCOME_7"
+#~ msgstr "Willkommen zu Keiken!"
