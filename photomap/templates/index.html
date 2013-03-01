@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base-non-interactive.html" %}
 
 <!-- for the translation with django -->
 {% load i18n %}
@@ -7,28 +7,9 @@
 
 {% block name %}{% trans "Willkommen" %}{% endblock %}
 
-{% block mode %}
-content="non-interactive"
-{% endblock %}
 
-{% block css %}
-<link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
-{% endblock %}
-
-{% block js %}
-<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
-
-<script type="text/javascript" src="/static/js/main/landingpage.js" ></script>
-
-<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
-<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
-
-<script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
-{% endblock %}
-
-{% block content %}
-<noscript class="mp-noscript-warning"><p>{% trans "JS_DISABLED_WARNING" %}</p></noscript>
-<section style="font-size: 1.3em; padding-left: 5%; width: 95%">
+{% block non_interactive_content %}
+<section style="font-size: 1.3em">
   <p style="text-align: center; font-size: 1.4em">Illustrate your experiences abroad for your family and friends</p>
   <br/>
   <p>Before we found KEIKEN, we had a hard time reporting about our exchange semester:</p>
@@ -51,11 +32,6 @@ content="non-interactive"
   </div>
   <p>Therefore we called KEIKEN to life. We hope to provide you with the tools to give everyone of your friends
     a presentation they deserve.</p>
-  <p>You can try our app by viewing the demo-account or using the test-account to check out all our features.</p>
-  <p style="text-align: center">
-    <a href="/login#mp-test" title='{% trans "Test-Account" %}'>{% trans "Test-Account" %}</a>
-    <a href="/login#mp-demo" title='{% trans "Demo-Account" %}'>{% trans "Demo-Account" %}</a>
-  </p>
    {% if user.is_authenticated %}
      <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p>
    {% endif %}

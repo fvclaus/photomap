@@ -53,26 +53,28 @@ UIPhotoListener.prototype = {
       event.stopPropagation();
       event.preventDefault();
 
-      var file = this.editor._checkFile(event),
-         instance = this,
-         place = this.state.getCurrentLoadedPlace();
+      //TODO nobody ever tests this feature -> disabled
+      // var file = this.editor._checkFile(event),
+      //    instance = this,
+      //    place = this.state.getCurrentLoadedPlace();
       
-      if (file) {
-         this.input.show({
-            submitHandler : function () {
-               //hide input fields
-               instance._submitHandler.apply(instance);
-               $("input[type='file']").trigger("change", event);
-               $("input[type='file'],label[name='file-upload']").remove();
-            },
-            url : "/insert-photo"
-         });
-      }
+      // if (file) {
+      //    this.input.show({
+      //       submitHandler : function () {
+      //          //hide input fields
+      //          instance._submitHandler.apply(instance);
+      //          $("input[type='file']").trigger("change", event);
+      //          $("input[type='file'],label[name='file-upload']").remove();
+      //       },
+      //       url : "/insert-photo"
+      //    });
+      // }
    },
    handleDrag : function (event) {
       event.stopPropagation();
       event.preventDefault();
-      event.originalEvent.dataTransfer.dropEffect = 'copy';
+      //TODO nobody ever tests this feature -> disabled
+      // event.originalEvent.dataTransfer.dropEffect = 'copy';
    },
    _submitHandler : function () {
       var instance = this;

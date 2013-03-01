@@ -12,7 +12,8 @@
 <article class="mp-textbox">
   {% trans "contact-intro-article1-line1" %} <a href="/help">{% trans "contact-linkto-help" %}</a>
   {% trans "contact-intro-article1-line2" %}
-  <span class="mp-bold mp-nodisplay mp-email-jsenabled" id="mp-email-jsenabled">er2Ts20-8ußrt1plkjdppüi5oolhqrtwpdt flw@dsT.kökd.esutii28tikzPkkewWw1n.net.kitedlklie
+  <span class="mp-bold mp-nodisplay" id="mp-email-jsenabled">
+    er2Ts20-8ußrt1plkjdppüi5oolhqrtwpdt flw@dsT.kökd.esutii28tikzPkkewWw1n.net.kitedlklie
   </span>
   <noscript>
     <span class="mp-bold" id="mp-email-cssenabled">
@@ -25,40 +26,41 @@
 </article>
 
 
-<!-- sup screws up the layout -->
-<form class="jquery-validator mp-dialog-content" method="post">
-  <div>
-    {{ form.name.errors }}
-    <label for="name">Name 
-      <!-- <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup> -->
+<form class="mp-form" id="mp-contact" method="post">
+  <!-- network error during mail delivery, etc.. -->
+  {{ form.non_field_errors}}
+  <p>
+    <label for="name">{% trans "NAME" %}
+      <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
     <input type="text" name="name" required="required" />
-  </div>
+    {{ form.name.errors }}
+  </p>
 
-  <div>
-    {{ form.email.errors }}
-    <label for="email">Email 
-      <!-- <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup> -->
+  <p>
+    <label for="email">{% trans "Email" %}
+      <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
     <input type="email" name="email" required="required" />
-  </div>
+    {{ form.email.errors }}
+  </p>
 
-  <div>
-    {{ form.subject.errors }}
-    <label for="subject">Betreff 
-      <!-- <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup> -->
+  <p>
+    <label for="subject">{% trans "SUBJECT" %} 
+      <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
     <input type="text" name="subject" required="required" />
-  </div>
+    {{ form.subject.errors }}
+  </p>
 
-  <div>
-    {{ form.message.errors }}
-    <label for="message">Nachricht 
-      <!-- <sup title="Dieses Feld ist ein Pflichtfeld.">*</sup> -->
+  <p>
+    <label for="message">{% trans "MESSAGE" %}
+      <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
     <textarea name="message" required="required" rows="10"> </textarea>
-  </div>
+    {{ form.message.errors }}
+  </p>
 
-  <input type="submit" class="mp-button mp-single-upload" value="{% trans 'Speichern' %}" />
+  <input type="submit" class="mp-form-submit" value="{% trans 'Speichern' %}" />
 </form>
 {% endblock %}

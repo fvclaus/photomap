@@ -39,8 +39,7 @@ def login(request):
                 set_cookie(response, "used_space", user.userprofile.used_space)
                 return response
             else:
-                loginform.errors["email"] = ["Please recheck the username"]
-                loginform.errors["password"] = ["Please recheck the password"]
+                loginform.errors["__all__"] = loginform.error_class([u'Please recheck the email and password'])
                 return render_to_response("login.html", data)
             
         else:
