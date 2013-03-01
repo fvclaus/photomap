@@ -584,10 +584,9 @@ msgstr "Welcome"
 #: templates/index-guest.html:31 templates/index.html:31
 msgid "JS_DISABLED_WARNING"
 msgstr ""
-"You have disabled javascript in your browser settings. Keiken makes heavy "
-"use of javascript, so in order to use keiken you have to activate it. "
-"Without javascript enabled you can just view the non-interactive pages such "
-"as Legal Terms, Contact, Team, ..."
+"You have disabled javascript in your browser settings. KEIKEN makes heavy "
+"use of javascript, so in order to use KEIKEN you have to activate it. "
+
 
 #: templates/index-guest.html:32 templates/index-guest.html.py:40
 msgid "Welcome to Keiken"
