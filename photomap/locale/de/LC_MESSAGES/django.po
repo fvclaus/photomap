@@ -612,7 +612,7 @@ msgstr ""
 
 #: templates/help.html:111
 msgid "Beschreibung"
-msgstr ""
+msgstr "Beschreibung"
 
 #: templates/help.html:114
 msgid ""
@@ -707,7 +707,7 @@ msgstr ""
 msgid "LOGIN_GUEST_WELCOME_3"
 msgstr ""
 "Das kann dabei helfen die Abenteuer und Geschichten, welche durch das Album "
-"erzählt werden besser zu erfahren. Ja wir meinen DICH überladener DCIM-"
+"erzählt werden, besser zu erfahren. Ja wir meinen DICH überladener DCIM-"
 "Ordner auf der Digitalkamera! ;) Aber natürlich ist jedes Abenteuer anders! "
 "Ein Platz kann die Größe eines ganzen Landes haben, wenn man beispielsweise "
 "auf einer Weltreise ist. Und bei einer Städtetour kann ein Platz auch nur so "
@@ -732,10 +732,10 @@ msgstr ""
 #: templates/index-guest.html:37 templates/login.html:109
 msgid "LOGIN_GUEST_WELCOME_6"
 msgstr ""
-"Wir haben ein bisschen Staub gewischt und eine digitale nicht verstaubbare, "
+"Wir haben ein bisschen Staub gewischt und eine digitale, nicht verstaubbare, "
 "interaktive Version dieser Alben erstellt und ermöglichen Ihnen hier all "
 "Ihre Reisen festzuhalten und jedem dem Ihr Eure Geschichten erzählen wollt "
-"die Möglichkeit zu geben 'zuzuhören' und die Geschichte selbst zu erkunden."
+"die Möglichkeit zu geben 'zuzuhören' und Eure Erfahrungen selbst zu erfahren."
 
 #: templates/index-guest.html:40
 msgid "Zum Login"

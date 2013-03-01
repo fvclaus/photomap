@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block title %}{% trans "Willkommen" %}{% endblock %}
+
+{% block name %}{% trans "Willkommen" %}{% endblock %}
+
+{% block mode %}
+content="non-interactive"
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
+
+<script type="text/javascript" src="/static/js/main/landingpage.js" ></script>
+
+<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
+<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
+
+<script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
+{% endblock %}
+
+{% block content %}
+<section class="mp-guest-welcome">
+  <h1>{% trans "Welcome to Keiken" %}</h1>
+  <p>{% trans "LOGIN_GUEST_WELCOME_1" %}</p>
+  <p>{% trans "LOGIN_GUEST_WELCOME_2" %}<img width="50%" style="float:right;" src="/static/images/hierarchy.png">{% trans "LOGIN_GUEST_WELCOME_3" %}</p>
+  <p>{% trans "LOGIN_GUEST_WELCOME_4" %}</p>
+  <p>
+    {% trans "LOGIN_GUEST_WELCOME_5" %}<br />
+    {% trans "LOGIN_GUEST_WELCOME_6" %}
+  </p>
+  <p>{% trans "Welcome to Keiken" %}</p>
+  <p><a href="/login#mp-guest">{% trans "Zum Login" %}</a></p>
+</section>
+
+{% endblock %}
+

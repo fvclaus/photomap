@@ -584,7 +584,7 @@ msgstr ""
 
 #: templates/help.html:111
 msgid "Beschreibung"
-msgstr ""
+msgstr "Description"
 
 #: templates/help.html:114
 msgid ""
@@ -656,35 +656,56 @@ msgstr "Welcome"
 #: templates/index-guest.html:31 templates/index-guest.html.py:39
 #: templates/login.html:103 templates/login.html.py:111
 msgid "Welcome to Keiken"
-msgstr ""
+msgstr "Welcome to Keiken"
 
 #: templates/index-guest.html:32 templates/login.html:104
 msgid "LOGIN_GUEST_WELCOME_1"
 msgstr ""
+"Keiken is not a place to upload photos of temporary interest and meaning. "
+"If you are looking for that, there are lots of social networks to do such things. "
+"Keiken is also not the place to upload whole photo-folders. It is not about unpersonal "
+"sharing of experiences or overwhelming your friends and family by spamming them with "
+"photos."
 
 #: templates/index-guest.html:33 templates/login.html:105
 msgid "LOGIN_GUEST_WELCOME_2"
 msgstr ""
+"Keiken structures your albums in places and photos. Each album can contain as many "
+"places as you wish and each place can contain any number of photos."
 
 #: templates/index-guest.html:33 templates/login.html:105
 msgid "LOGIN_GUEST_WELCOME_3"
 msgstr ""
+"This may help you to experience the adventures and stories told by the album "
+"more easily. Yes we are talking to you overloaded DCIM-Folder on our digital camera. ;) "
+"Of course every adventure is different.! Therefor a place can be as big as a country eg. when "
+"you travel around the world. Or it can be as small as an interesting sight when visiting a city."
 
 #: templates/index-guest.html:34 templates/login.html:106
 msgid "LOGIN_GUEST_WELCOME_4"
 msgstr ""
+"Photos are.. well photos and not actual experiences. But nevertheless photos do tell "
+"of experiences and we try to give those photos the meaning they actually have. This is why "
+"a title is mandatory for all photos - firm look at 'IMG_13072013_1718.JPG' - and of course "
+"it would be great if you would also use the optional description-box to tell about your own experiences."
 
 #: templates/index-guest.html:36 templates/login.html:108
 msgid "LOGIN_GUEST_WELCOME_5"
 msgstr ""
+"We hope you still know photo-albums. That were those nice dusty big books, which you "
+"had to look at with your parents and family after big trips."
 
 #: templates/index-guest.html:37 templates/login.html:109
 msgid "LOGIN_GUEST_WELCOME_6"
 msgstr ""
+"We did a little dusting and created a digital, dust-repelling, interactive "
+"version of those albums and give you the opportunity to document your journeys "
+"and to give everybody you want to share them with the chance to 'listen' and "
+"experience your experiences."
 
 #: templates/index-guest.html:40
 msgid "Zum Login"
-msgstr ""
+msgstr "Sign in"
 
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
