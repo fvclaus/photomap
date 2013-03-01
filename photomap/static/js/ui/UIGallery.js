@@ -8,7 +8,7 @@
  * @class UIFullGallery displays all Photos of the current Place as thumbnails to allow easy editing and D'n'D.
  * @requires ClientServer
  */
-var UIFullGallery, UIGallery
+var UIFullGallery, UIGallery;
        
 UIFullGallery = function () {
    this.loaded = false;
@@ -30,6 +30,10 @@ UIGallery = function () {
    this.$navRight = $("#mp-gallery-nav-right");
    this.$photos = this.$thumbs.find(".mp-thumb");
    
+
+   this.$isEmpty = $(".mp-gallery-no-image-msg");
+   this.$isNotStarted = $(".mp-gallery-not-started-msg");
+
    this.carousel = null;
    
    this.photos = null;
@@ -43,9 +47,7 @@ UIGallery = function () {
       .add($(".mp-option-insert-photo"))
       .add($(".mp-open-full-gallery"));
    
-   // set to true if the order of the photos is changed
-   this.isDirty = false;
-   this.$dirtyWarning = $();
+
 };
 
 
@@ -115,12 +117,13 @@ UIGallery.prototype =  {
       ui.disable();
       // ui.showLoading();
       this.carousel.start();
+
       // show/hide correct message
-      $(".mp-gallery-not-started-msg").hide();
+      this.$isNotStarted.hide();
       if (photos.length === 0) {
-         $(".mp-gallery-no-image-msg").show();
+         this.$isEmpty.show();
       } else {
-         $(".mp-gallery-no-image-msg").hide();
+         this.$isEmpty.hide();
       }
    },
    /**
@@ -154,6 +157,7 @@ UIGallery.prototype =  {
       // automatically delete if photo is on current page
       // otherwise we dont care
       this.carousel.deletePhoto(photo.thumb);
+      this.fullGallery.deletePhoto(photo);
    },
    /**
     * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
@@ -168,7 +172,7 @@ UIGallery.prototype =  {
          this.carousel = null;
       }
       // show no image message
-      $(".mp-gallery-no-image-msg").show();
+      this.$isEmpty.show();
    },
 
    /**
@@ -428,6 +432,26 @@ UIFullGallery.prototype = {
       this.loaded = false;
    },
    /**
+    * @public
+    * @description Removes the photo from the Gallery if open.
+    */
+   deletePhoto : function (photo) {
+      assertTrue(photo instanceof Photo);
+      // something has been deleted from the gallery
+      if (this.loaded) {
+         this.refresh();
+      }
+   },
+   /**
+    * @private
+    * @description This will refresh the Gallery.
+    */
+   _refresh : function () {
+      //TODO currently this just restarts the whole thing. this could be done better
+      this.destroy();
+      this.start();
+   },
+   /**
     * @private
     * @description Updates the order of all Photos of a single place and notifies the Gallery. 
     * The actual Photo objects will get updated, once the server sends a positive confirmation.
@@ -467,8 +491,7 @@ UIFullGallery.prototype = {
          abort : function () {
             console.log("UIFullGallery: Aborted updating order. Restoring old order");
             //TODO this could be done better
-            instance.destroy();
-            instance.start();
+            instance._refresh();
          },
          type : UIInput.CONFIRM_DIALOG,
          url : "/update-photos"
