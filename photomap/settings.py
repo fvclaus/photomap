@@ -190,7 +190,7 @@ COMPRESS_PRECOMPILERS = (
                          ("text/x-stylus", "stylus < {infile} > {outfile} --include " + CSS_PATH),
                          )
 
-COMPRESS_JS_FILTERS = ["compressor.filters.closure.ClosureCompilerFilter"]
+# COMPRESS_JS_FILTERS = ["compressor.filters.closure.ClosureCompilerFilter"]
 COMPRESS_CLOSURE_COMPILER_BINARY = os.path.join(PROJECT_PATH, "lib", "compiler.jar")
 COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_level SIMPLE_OPTIMIZATIONS"
 # COMPRESS_ENABLED = True

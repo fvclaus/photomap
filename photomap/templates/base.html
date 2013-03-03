@@ -48,14 +48,13 @@
     {% endblock %}
     {% endcompress %}
 
-    <!-- end styles -->
+    <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->    
     <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
-    {% block js %}
-    {% compress js inline%}
-    <!-- js -->
-    <!-- for django js translation -->
-    <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->
     <script type="text/javascript" src="/static/js/lib/jquery-1.7.2-min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
+
+    {% block js %}
+    {% compress js %}
     <script type="text/javascript" src="/static/js/lib/jquery.tools.notabs.min.js"></script>
     <script type="text/javascript" src="/static/js/lib/flexie.min.js"></script>
     <!-- removed tabs from fucking broken jquery tools  -->
@@ -64,7 +63,7 @@
     <!-- added tabs to jquery ui -->
     <!-- <script type="text/javascript" src="/static/js/lib/jquery-ui-1.9.0.custom.min.js"></script> -->
     <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
-    <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
+
     <script type="text/javascript" src="/static/js/lib/assert.js"></script>
     <!-- javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/date.js" ></script>
