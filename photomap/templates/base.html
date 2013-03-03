@@ -7,7 +7,7 @@
 <html lang="de" >
   <head>
     <meta charset="UTF-8" />
-    <title>keiken | {% block title %}{% endblock %}</title>
+    <title>KEIKEN | {% block title %}{% endblock %}</title>
 
     <!-- This only works here! Putting this in core.styl will not work, because core.styl is not present, when the document gets displayed. -->
     <style type="text/css">
@@ -18,13 +18,11 @@
     <link rel="shortcut icon" href="/static/images/favicon.ico" />
 
     <!-- displays information when link is shared on FB or similiar -->
-    <meta property="og:title" content="keiken" />
+    <meta property="og:title" content="KEIKEN" />
     <meta property="og:type" content="website" />
-    <!--
-        <meta property="og:image" content="#{imgurl}" />
-        <meta property="og:url" content="#{url}" />
-        -->
-    <meta property="og:description" content="Karte mit Photos und Beschreibungen" />
+    <meta property="og:image" content="http://www.keiken.de/static/images/icon.png" />
+    <meta property="og:url" content="http://www.keiken.de" />
+    <meta property="og:description" content="{{ KEIKEN_SHORT }}" />
     {% block meta %}
     {% endblock %}
 
@@ -75,6 +73,7 @@
 
     <script type="text/javascript" src="/static/js/util/constants.js"></script>
     <script type="text/javascript" src="/static/js/main/panel.js"></script>
+    <script type="text/javascript" src="/static/js/main/init.js" ></script>
     {% endcompress %}
     {% endblock %}
 
@@ -138,6 +137,6 @@
       </footer>
     </div>
 
-    <script type="text/javascript" src="/static/js/main/init.js" ></script>
+
   </body>
 </html>
