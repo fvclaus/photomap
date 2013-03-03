@@ -35,9 +35,10 @@ UISlideshow.prototype = {
    preinit : function () {
       var tools = main.getUI().getTools(),
           instance = this;
-      this._resize();
+      this._center();
+      // everything that gets centered manually must be corrected on a resize event
       $(window).resize(function () {
-         instance._resize();
+         instance._center();
       });
       this.fullscreen.init();
       this._bindListener();
@@ -171,6 +172,8 @@ UISlideshow.prototype = {
          this.reset();
       } else {
          this.fullscreen.update();
+         // right now this is the first time we can update the description
+         // on the other events, beforeLoad & afterLoad, the photo src is not set yet
          main.getUI().getInformation().update(photo);
          this._updatePhotoNumber();
       }
@@ -199,7 +202,7 @@ UISlideshow.prototype = {
    /**
     * @private
     * @description Executed after photos are loaded
-    */
+    */ 
    _afterLoad : function ($photos) {
       // we are expecting to receive a jquery element wrapper
       assert(typeof $photos, "object");
@@ -315,9 +318,10 @@ UISlideshow.prototype = {
    },
    /**
     * @private
-    * @description When the viewport is resized, the centered elements must be recentered
+    * @description Center elements that cannot be centered with css right now
     */
-   _resize  : function () {
+   _center  : function () {
+      //TODO is it really not possible to center those elements with css?
       var tools = main.getUI().getTools();
       tools.centerElement(this.$navLeft, "vertical");
       tools.centerElement(this.$navRight, "vertical");

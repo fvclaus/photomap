@@ -58,19 +58,21 @@
   overflow hidden
   position relative
 
-.mp-gallery-no-image-msg,
-.mp-gallery-not-started-msg
+#mp-gallery-no-image,
+#mp-gallery-not-started
   width 90%
   height 80%
-  margin-top -40%
-  margin-left 5%
-  position absolute
-  top 50%
-  background-color #dadada
-  box-shadow(5px 5px 25px #333)
-  border-radius 5px
   text-align center
   overflow auto
+  p 
+    display table-cell
+    vertical-align middle
+
+#mp-gallery-no-image
+  display none
+
+#mp-gallery-not-started
+  display table
 
 .mp-gallery-no-image-msg
   display none

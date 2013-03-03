@@ -61,6 +61,8 @@ UIPhotoCarousel.prototype = {
          imageSources = this.currentPage.filter(function (e, i) {
             return e !== null;
          });
+         // regardless of whats actually on a page, we must update all entries to remove the old ones
+         to = this.size;
       }
       // load everything
       else {

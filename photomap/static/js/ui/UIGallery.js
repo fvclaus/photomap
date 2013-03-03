@@ -31,8 +31,8 @@ UIGallery = function () {
    this.$photos = this.$thumbs.find(".mp-thumb");
    
 
-   this.$isEmpty = $(".mp-gallery-no-image-msg");
-   this.$isNotStarted = $(".mp-gallery-not-started-msg");
+   this.$isEmpty = $("#mp-gallery-no-image");
+   this.$isNotStarted = $("#mp-gallery-not-started");
 
    this.carousel = null;
    
@@ -121,7 +121,8 @@ UIGallery.prototype =  {
       // show/hide correct message
       this.$isNotStarted.hide();
       if (photos.length === 0) {
-         this.$isEmpty.show();
+         // display table is necessary to center the message
+         this.$isEmpty.css("display", "table");
       } else {
          this.$isEmpty.hide();
       }
@@ -171,8 +172,8 @@ UIGallery.prototype =  {
          this.carousel.reset();
          this.carousel = null;
       }
-      // show no image message
-      this.$isEmpty.show();
+      // display table is necessary to center the message
+      this.$isEmpty.css("display", "table");
    },
 
    /**
