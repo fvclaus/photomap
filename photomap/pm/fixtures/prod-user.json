@@ -22,7 +22,7 @@
       "model": "pm.userprofile",
       "fields": {
          "picture": "",
-         "used_space": 0,
+         "used_space": 54169903,
          "user": 3,
          "quota": 367001600
       }
@@ -50,7 +50,7 @@
       "model": "pm.userprofile",
       "fields": {
          "picture": "",
-         "used_space": 164898,
+         "used_space": 0,
          "user": 2, 
          "quota": 367001600
       }
@@ -78,7 +78,7 @@
       "model": "pm.userprofile",
       "fields": {
          "picture": "",
-         "used_space": 164898,
+         "used_space": 0,
          "user": 1, 
          "quota": 367001600
       }

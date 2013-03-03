@@ -162,12 +162,14 @@ if parser.reset:
 # this should trigger a delete_cascade on Album, Place & Photo    
 
 delete_user()
+# adds user + userprofile. production data has more complicated passwords
 load_user()
 if not parser.production:
+    # test album 
     load_debug_data()
 else:
-    pass
-    # load_production_data()
+    # album for demo user
+    load_production_data()
 
 # print sub.check_output(SYNCDB, shell = True)
 #
