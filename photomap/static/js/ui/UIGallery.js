@@ -440,7 +440,7 @@ UIFullGallery.prototype = {
       assertTrue(photo instanceof Photo);
       // something has been deleted from the gallery
       if (this.loaded) {
-         this.refresh();
+         this._refresh();
       }
    },
    /**

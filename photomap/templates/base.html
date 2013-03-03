@@ -1,10 +1,6 @@
-<!-- <div class="mp-alignment-div"></div> -->
-
-<!-- for the translation with django -->
-{% load i18n %}
-
 <!DOCTYPE html>
-<html lang="de" >
+<html>
+{% load i18n %}
   <head>
     <meta charset="UTF-8" />
     <title>KEIKEN | {% block title %}{% endblock %}</title>
@@ -63,6 +59,7 @@
     <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
 
     <script type="text/javascript" src="/static/js/lib/assert.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.safe.js"></script>
     <!-- javascript libraries -->
     <script type="text/javascript" src="/static/js/lib/date.js" ></script>
     <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.min.js" ></script>
@@ -86,7 +83,7 @@
 
       <header class="mp-page-header column span-24 last" id="mp-page-header">
         <section class="mp-logo column span-6">
-          <a href="/">
+          <a style="height : 100%" href="/">
             <img src="/static/images/logo.png" class="mp-control mp-cursor-pointer mp-keiken-logo"/>
           </a>
         </section>

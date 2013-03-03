@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, Main, document, gettext */
+/*global $, $$, Main, document, gettext */
 
 "use strict";
 
@@ -19,6 +19,18 @@ var main = null;
  * @description Initializes main constructor. Needs document ready!
  */
 $(document).ready(function () {
+   // $$("body").css({
+   //    "max-height" :  "500px",
+   //    "min-height" : "0px",
+   // });
+   // // $$(".mp-page-title").css({
+   // //    "200);
+   // $$(".mp-logo").css({
+   //    "width" : "20px",
+   //    "height" : "30px"
+   // })
+   //    .remove();
+      
    main = new Main();
    // initialise js-classes
    if (main && main.preinit) {
