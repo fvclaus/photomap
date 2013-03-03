@@ -21,6 +21,12 @@ var UIPhotoCarousel = function ($photos, imageSources, options) {
    this.options = $.extend({}, this.defaults, options);
    
    this.$items = $photos;
+   // recalculate margins when window is resized
+   $(window).resize(function () {
+      $photos.each(function () {
+         main.getUI().getTools().centerElement($(this), "vertical");
+      });
+   });
    this.size = this.$items.length;
 
    this.dataPage = new CarouselPage(imageSources, this.size);
