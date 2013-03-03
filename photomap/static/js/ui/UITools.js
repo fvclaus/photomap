@@ -65,10 +65,11 @@ UITools.prototype = {
     * @param $element {jQuery-Object} element that is supposed to be centered
     * @param direction {String} defines in which direction the element should be centered - can be "vertical", "horizontal" or empty
     */
-   centerElement : function ($parent, $element, direction) {
+   centerElement : function ($element, direction) {
       assertTrue(direction === "vertical" || direction === "horizontal");
 
-      var margin, 
+      var margin = 0, 
+          $parent = $element.parent(),
           heightDifference = $parent.height() - $element.height(),
           widthDifference = $parent.width() - $element.width();
       

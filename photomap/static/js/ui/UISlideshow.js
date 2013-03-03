@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UIPhotoCarousel, UIFullscreen, Photo, assert, assertTrue */
+/*global $, main, window, UIPhotoCarousel, UIFullscreen, Photo, assert, assertTrue */
 
 "use strict";
 
@@ -15,6 +15,7 @@ var UISlideshow = function () {
    this.$image = $("#mp-slideshow-image");
    this.$navLeft = $('#mp-slideshow-nav-prev');
    this.$navRight = $('#mp-slideshow-nav-next');
+   this.$loader = this.$container.find(".mp-slideshow-loader");
 
    this.$photoNumber = $(".mp-image-number");
    // need to indicate ready status to frontend tests
@@ -32,9 +33,12 @@ var UISlideshow = function () {
 UISlideshow.prototype = {
 
    preinit : function () {
-      var tools = main.getUI().getTools();
-      tools.centerElement(this.$navLeft.parent(), this.$navLeft, "vertical");
-      tools.centerElement(this.$navRight.parent(), this.$navRight, "vertical");
+      var tools = main.getUI().getTools(),
+          instance = this;
+      this._resize();
+      $(window).resize(function () {
+         instance._resize();
+      });
       this.fullscreen.init();
       this._bindListener();
 
@@ -308,6 +312,15 @@ UISlideshow.prototype = {
             instance.fullscreen.open();
          }
       });
+   },
+   /**
+    * @private
+    * @description When the viewport is resized, the centered elements must be recentered
+    */
+   _resize  : function () {
+      var tools = main.getUI().getTools();
+      tools.centerElement(this.$navLeft, "vertical");
+      tools.centerElement(this.$navRight, "vertical");
+      tools.centerElement(this.$loader, "vertical");
    }
-
 };

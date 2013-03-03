@@ -150,7 +150,7 @@ UIPhotoCarousel.prototype = {
             // give the element its later height
             $(this).attr("src", imageSource);
             // set margin-top accordingly.
-            main.getUI().getTools().centerElement($(this).parent(), $(this), "vertical");
+            main.getUI().getTools().centerElement($(this), "vertical");
             // remove the img again to fade it in nicely
             $(this).removeAttr("src");
             if ( imageSource !== null) {
