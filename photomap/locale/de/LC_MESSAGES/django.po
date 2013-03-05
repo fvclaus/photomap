@@ -756,13 +756,13 @@ msgstr "Zur Anmeldung"
 
 #: templates/index.html:14
 msgid "KEIKEN_SHORT"
-msgstr "Kommuniziere deine Erfahrungen im Ausland für Freunde und Familie!"
+msgstr "Erzähle deinen Freunde und der Familie von deinen Erfahrungen im Ausland!"
 
 #: templates/index.html:16
 msgid "KEIKEN_BEFORE"
 msgstr ""
 "Bevor wir KEIKEN entwickelt haben, hatten wir Schwierigkeiten unsere "
-"Auslandserfahrungen anderen nahe zu Bringen."
+"Auslandserfahrungen anderen nahe zu bringen."
 
 #: templates/index.html:19
 msgid "KEIKEN_ALTERNATIVE_EMAIL"
@@ -945,7 +945,7 @@ msgstr "Nutzung des vollen Namens"
 msgid "privacy-subtopic Nutzung des Namens -> description"
 msgstr ""
 "Ihr Name wird als Benutzername verwendet und ist momentan noch nicht "
-"vongroßer Bedeutung. (Später bei kommenden Features wie Kommentaren und News-"
+"von großer Bedeutung. (Später bei kommenden Features wie Kommentaren und News-"
 "Feeds zu den von Ihnen abbonierten Alben wird der Ihr Name bei registrierten "
 "Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, bei "
 "Informationen die Ihnen zugehörig sind angezeigt."
