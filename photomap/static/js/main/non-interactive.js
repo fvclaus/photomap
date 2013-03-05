@@ -67,5 +67,7 @@ $(document).ready(function () {
    // tabs are hidden during page load, so they don't move around
       .find("section")
       .removeClass("mp-nodisplay");
+   // display all tags that are marked as buttons as ui-buttons
+   $(".mp-button").button();
 });
 

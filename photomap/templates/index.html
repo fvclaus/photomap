@@ -7,7 +7,6 @@
 
 {% block name %}{% trans "Willkommen" %}{% endblock %}
 
-
 {% block non_interactive_content %}
 <section id="mp-intro">
 
@@ -28,16 +27,20 @@
     </div>
   </div>
   <p>{% trans "KEIKEN_REASONS" %}</p>
-  {% if user.is_authenticated %}
-  <p style="text-align: center"> <a href="/dashboard" title="dashboard">Zum Dashboard</a> </p>
-  {% else %}
-  <p> 
-    <a href="/demo" title="demo">View my album</a>
-  </p>
-  <p>
-    <a href="/test" title="test">Try it yourself</a>
-  </p>
-  {% endif %}
+  <div class="mp-landing-page-links">
+    {% if user.is_authenticated %}
+    <p class="mp-dashboard-button">
+      <a class="mp-button" href="/dashboard" title='{% trans "Zum Dashboard" %}'>{% trans "Zum Dashboard" %}</a>
+    </p>
+    {% else %}
+    <p class="mp-demo-button"> 
+      <a class="mp-button" href="/demo" title='{% trans "View a sample album" %}'>{% trans "View my album" %}</a>
+    </p>
+    <p class="mp-test-button">
+      <a class="mp-button" href="/test" title='{% trans "Try the app yourself" %}'>{% trans "Try it yourself" %}</a>
+    </p>
+    {% endif %}
+  </div>
 </section>
 
 {% endblock %}
