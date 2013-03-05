@@ -58,7 +58,7 @@
     <textarea name="message" required="required" rows="10"> </textarea>
     {{ form.message.errors }}
   </p>
-
-  <input type="submit" class="mp-form-submit" value="{% trans 'Speichern' %}" />
+  <p style="font-size: 0.8em; text-align: right;">{% trans "MANDATORY_FIELDS_NOTE" %}</p>
+  <input type="submit" class="mp-form-submit" value="{% trans 'Senden' %}" />
 </form>
 {% endblock %}

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-05 11:00+0100\n"
+"POT-Creation-Date: 2013-03-05 13:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -130,35 +130,33 @@ msgid "contact-intro-article1-line2"
 msgstr ""
 ", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail an"
 
-#: templates/contact.html:20
+#: templates/contact.html:18
 msgid "email just in javascript"
 msgstr ""
 "-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und laden "
 "Sie die Seite erneut, um die Email-Adresse lesen zu können. --"
 
-#: templates/contact.html:24
+#: templates/contact.html:22
 msgid "contact-intro-article1-line3"
-msgstr ""
-"Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen. (Bald "
-"verfügbar!)"
+msgstr "Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen."
 
-#: templates/contact.html:25
+#: templates/contact.html:23
 msgid "contact-intro-article1-line4"
 msgstr "Bitte beachten Sie die hierfür gültigen"
 
-#: templates/contact.html:25
+#: templates/contact.html:23
 msgid "contact-linkto-privacy"
 msgstr "Datenschutzgrundsätze"
 
-#: templates/contact.html:33 templates/insert-album.html:10
+#: templates/contact.html:31 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-place.html:10
 #: templates/update-album.html:11 templates/update-photo.html:12
 #: templates/update-place.html:12
 msgid "NAME"
 msgstr "Name"
 
-#: templates/contact.html:34 templates/contact.html.py:42
-#: templates/contact.html:50 templates/contact.html.py:58
+#: templates/contact.html:32 templates/contact.html.py:40
+#: templates/contact.html:48 templates/contact.html.py:56
 #: templates/insert-album.html:10 templates/insert-photo.html:20
 #: templates/insert-photo.html.py:28 templates/insert-place.html:10
 #: templates/update-album.html:11 templates/update-photo.html:12
@@ -166,22 +164,26 @@ msgstr "Name"
 msgid "MANDATORY_FIELD"
 msgstr "Dieses Feld ist ein Pflichtfeld."
 
-#: templates/contact.html:41 templates/login.html:23
+#: templates/contact.html:39 templates/login.html:23
 #: templates/login.html.py:51
 msgid "Email"
 msgstr "Email"
 
-#: templates/contact.html:49
+#: templates/contact.html:47
 msgid "SUBJECT"
-msgstr ""
+msgstr "Betreff"
 
-#: templates/contact.html:57
+#: templates/contact.html:55
 msgid "MESSAGE"
-msgstr ""
+msgstr "Nachricht"
 
-#: templates/contact.html:64
-msgid "Speichern"
-msgstr ""
+#: templates/contact.html:61
+msgid "MANDATORY_FIELDS_NOTE"
+msgstr "* Diese Felder sind Pflichtfelder."
+
+#: templates/contact.html:62
+msgid "Senden"
+msgstr "Senden"
 
 #: templates/copyright.html:8
 msgid "Urheberrechtserklärung"
@@ -195,8 +197,8 @@ msgstr "Urheberrecht der Entwickler der Website"
 msgid "Urheberrecht bei internen Inhalten list-item-1"
 msgstr ""
 "Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
-"Erstellung der Website verantwortlich ist. Ihre Profile sind auf der 'Team'-"
-"Seite zu finden."
+"Erstellung der Website verantwortlich ist. Ihre Namen sind im Impressum "
+"aufgeführt."
 
 #: templates/copyright.html:17
 msgid "Urheberrecht bei internen Inhalten list-item-2"
@@ -226,7 +228,8 @@ msgstr "Urheberrecht der Nutzer"
 msgid "Urheberrecht der Nutzer list-item-1"
 msgstr ""
 "Inhalte die von Nutzern der Website geschaffen und veröffentlicht werden, "
-"kann aus Bildern und Texten als Titel, Beschreibung und Kommentaren bestehen."
+"können aus Bildern und Texten als Titel, Beschreibung und Kommentaren "
+"bestehen."
 
 #: templates/copyright.html:26
 msgid "Urheberrecht der Nutzer list-item-2"
@@ -345,12 +348,10 @@ msgstr ""
 "nicht nur praktischer, sondern auch schöner."
 
 #: templates/help.html:31
-#, fuzzy
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
 msgstr "Warum Klarnamen?"
 
 #: templates/help.html:33
-#, fuzzy
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
 msgstr ""
 "Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
@@ -371,7 +372,6 @@ msgid "link to password security comic"
 msgstr ""
 
 #: templates/help.html:35
-#, fuzzy
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
 msgstr ""
 "Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
@@ -464,7 +464,6 @@ msgstr ""
 "die URL in der Albumsansicht kopieren, um das Album zu teilen."
 
 #: templates/help.html:64
-#, fuzzy
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "attention!"
@@ -623,14 +622,12 @@ msgid "DESCRIPTION"
 msgstr "Beschreibung"
 
 #: templates/help.html:117
-#, fuzzy
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility"
 msgstr "Platz auswählen/Öffnen der Gallerie"
 
 #: templates/help.html:118
-#, fuzzy
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility -> description"
@@ -667,7 +664,7 @@ msgstr "Handy"
 msgid "Email-Adresse"
 msgstr "Email-Adresse"
 
-#: templates/impressum.html:39
+#: templates/impressum.html:37
 msgid "EMAIL_ONLY_WITH_JS"
 msgstr ""
 "Die email-Adresse ist verschlüsselt damit man sie nicht von Crawlern für "
@@ -676,11 +673,11 @@ msgstr ""
 "leicht erreichen, indem Sie das nachfolgend verlinkte Kontaktformular "
 "nutzen. "
 
-#: templates/impressum.html:43
+#: templates/impressum.html:41
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Missbrauch von Kontaktdaten"
 
-#: templates/impressum.html:44
+#: templates/impressum.html:42
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
@@ -754,59 +751,60 @@ msgstr ""
 msgid "Zum Login"
 msgstr "Zur Anmeldung"
 
-#: templates/index.html:14
+#: templates/index.html:13
 msgid "KEIKEN_SHORT"
-msgstr "Erzähle deinen Freunde und der Familie von deinen Erfahrungen im Ausland!"
+msgstr ""
+"Erzähle deinen Freunde und der Familie von deinen Erfahrungen im Ausland!"
 
-#: templates/index.html:16
+#: templates/index.html:15
 msgid "KEIKEN_BEFORE"
 msgstr ""
 "Bevor wir KEIKEN entwickelt haben, hatten wir Schwierigkeiten unsere "
 "Auslandserfahrungen anderen nahe zu bringen."
 
-#: templates/index.html:19
+#: templates/index.html:18
 msgid "KEIKEN_ALTERNATIVE_EMAIL"
 msgstr ""
 "Sie können ihre Photos und die Beschreibung per Email verschicken, aber es "
 "ist schwierig das passende Bild zur Beschreibung zu finden."
 
-#: templates/index.html:23
+#: templates/index.html:22
 msgid "KEIKEN_ALTERNATIVE_PRESENTATION"
 msgstr ""
 "Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
 "Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
 "einen kleinen Kreis."
 
-#: templates/index.html:27
+#: templates/index.html:26
 msgid "KEIKEN_ALTERNATIVE_NETWORK"
 msgstr ""
 "Sie können die Photos in das soziale Netzwerk ihrer Wahl hochladen, aber "
 "dadurch werden oft Leute (zB. Großeltern) ausgeschlossen."
 
-#: templates/index.html:30
+#: templates/index.html:29
 msgid "KEIKEN_REASONS"
 msgstr ""
 "Darum haben wir uns entschlossen KEIKEN zu starten. Wir hoffen Ihnen die "
 "Möglichkeit zu bieten, ihre Erfahrungen mit allen Freunden & Verwandten "
 "jederzeit teilen zu können."
 
-#: templates/index.html:32
+#: templates/index.html:33
 msgid "Zum Dashboard"
 msgstr "Zum Dashboard"
 
-#: templates/index.html:35
+#: templates/index.html:37
 msgid "View a sample album"
 msgstr "Schauen Sie sich ein Musteralbum an"
 
-#: templates/index.html:35
+#: templates/index.html:37
 msgid "View my album"
 msgstr "Erkunden Sie ein Musteralbum"
 
-#: templates/index.html:38
+#: templates/index.html:40
 msgid "Try the app yourself"
 msgstr "Probieren Sie die App selbst aus"
 
-#: templates/index.html:38
+#: templates/index.html:40
 msgid "Try it yourself"
 msgstr "Probieren Sie es aus"
 
@@ -944,8 +942,8 @@ msgstr "Nutzung des vollen Namens"
 #: templates/privacy.html:24
 msgid "privacy-subtopic Nutzung des Namens -> description"
 msgstr ""
-"Ihr Name wird als Benutzername verwendet und ist momentan noch nicht "
-"von großer Bedeutung. (Später bei kommenden Features wie Kommentaren und News-"
+"Ihr Name wird als Benutzername verwendet und ist momentan noch nicht von "
+"großer Bedeutung. (Später bei kommenden Features wie Kommentaren und News-"
 "Feeds zu den von Ihnen abbonierten Alben wird der Ihr Name bei registrierten "
 "Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, bei "
 "Informationen die Ihnen zugehörig sind angezeigt."
@@ -1077,27 +1075,27 @@ msgstr ""
 "Wir werden Ihnen im Rahmen der gesetzlichen Auskunftsansprüche in Kürze alle "
 "verfügbaren Information zu schicken."
 
-#: templates/team.html:32 templates/team.html.py:44 templates/team.html:56
+#: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
 msgid "Name"
 msgstr "Name"
 
-#: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
+#: templates/team.html:36 templates/team.html.py:48 templates/team.html:60
 msgid "Verantwortlich für"
 msgstr "Verantwortlich für"
 
-#: templates/team.html:35 templates/team.html.py:47
+#: templates/team.html:37 templates/team.html.py:49
 msgid "Back End"
 msgstr "Back End"
 
-#: templates/team.html:35 templates/team.html.py:59
+#: templates/team.html:37 templates/team.html.py:61
 msgid "Front End"
 msgstr "Front End"
 
-#: templates/team.html:35 templates/team.html.py:59
+#: templates/team.html:37 templates/team.html.py:61
 msgid "Design"
 msgstr "Design"
 
-#: templates/team.html:36 templates/team.html.py:48 templates/team.html:60
+#: templates/team.html:38 templates/team.html.py:50 templates/team.html:62
 msgid "Motivation am Projekt"
 msgstr "Motivation am Projekt"
 
@@ -1190,6 +1188,9 @@ msgstr "Nächstes Bild"
 #: templates/view-album.html:95
 msgid "Bild"
 msgstr "Bild"
+
+#~ msgid "Speichern"
+#~ msgstr "Save"
 
 #~ msgid "Settings"
 #~ msgstr "Einstellungen"

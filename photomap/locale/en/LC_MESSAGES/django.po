@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-05 11:00+0100\n"
+"POT-Creation-Date: 2013-03-05 13:43+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -111,7 +111,7 @@ msgstr "View Legal Terms of NAME OF PROJECT"
 #: templates/base.html:132 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
-msgstr "Legal Terms"
+msgstr "Legal Terms (Impressum)"
 
 #: templates/contact.html:13
 msgid "contact-intro-article1-line1"
@@ -127,33 +127,33 @@ msgstr "help-page"
 msgid "contact-intro-article1-line2"
 msgstr ", kindly write us an email to "
 
-#: templates/contact.html:20
+#: templates/contact.html:18
 msgid "email just in javascript"
 msgstr ""
 "-- Please activate JavaScript in your browser settings and reload the page "
 "in order to view the email-address. --"
 
-#: templates/contact.html:24
+#: templates/contact.html:22
 msgid "contact-intro-article1-line3"
-msgstr "You may also use the following contact-form. (Soon available!)"
+msgstr "You may also use the following contact-form."
 
-#: templates/contact.html:25
+#: templates/contact.html:23
 msgid "contact-intro-article1-line4"
 msgstr "Kindly refer to the valid "
 
-#: templates/contact.html:25
+#: templates/contact.html:23
 msgid "contact-linkto-privacy"
 msgstr "Data Use Policy"
 
-#: templates/contact.html:33 templates/insert-album.html:10
+#: templates/contact.html:31 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-place.html:10
 #: templates/update-album.html:11 templates/update-photo.html:12
 #: templates/update-place.html:12
 msgid "NAME"
 msgstr "Name"
 
-#: templates/contact.html:34 templates/contact.html.py:42
-#: templates/contact.html:50 templates/contact.html.py:58
+#: templates/contact.html:32 templates/contact.html.py:40
+#: templates/contact.html:48 templates/contact.html.py:56
 #: templates/insert-album.html:10 templates/insert-photo.html:20
 #: templates/insert-photo.html.py:28 templates/insert-place.html:10
 #: templates/update-album.html:11 templates/update-photo.html:12
@@ -161,22 +161,26 @@ msgstr "Name"
 msgid "MANDATORY_FIELD"
 msgstr "This field is mandatory."
 
-#: templates/contact.html:41 templates/login.html:23
+#: templates/contact.html:39 templates/login.html:23
 #: templates/login.html.py:51
 msgid "Email"
 msgstr "Email"
 
-#: templates/contact.html:49
+#: templates/contact.html:47
 msgid "SUBJECT"
-msgstr ""
+msgstr "Subject"
 
-#: templates/contact.html:57
+#: templates/contact.html:55
 msgid "MESSAGE"
-msgstr ""
+msgstr "Message"
 
-#: templates/contact.html:64
-msgid "Speichern"
-msgstr "Save"
+#: templates/contact.html:61
+msgid "MANDATORY_FIELDS_NOTE"
+msgstr "* These fields are mandatory."
+
+#: templates/contact.html:62
+msgid "Senden"
+msgstr "Send"
 
 #: templates/copyright.html:8
 msgid "Urheberrechtserklärung"
@@ -189,8 +193,8 @@ msgstr "Copyrights of the makers of this website"
 #: templates/copyright.html:16
 msgid "Urheberrecht bei internen Inhalten list-item-1"
 msgstr ""
-"The makers of the website are a team of aspiring members whose profiles you "
-"can find on the 'Team'-page."
+"The makers of the website are a team of aspiring members whose names "
+"arelisted on the Legal Terms page."
 
 #: templates/copyright.html:17
 msgid "Urheberrecht bei internen Inhalten list-item-2"
@@ -332,12 +336,10 @@ msgstr ""
 "Photo-book real names are much more informative and nice to look at."
 
 #: templates/help.html:31
-#, fuzzy
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
 msgstr "Why full names?"
 
 #: templates/help.html:33
-#, fuzzy
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
 msgstr ""
 "Some users might be uncomfortable using their real name on the internet, and "
@@ -357,7 +359,6 @@ msgid "link to password security comic"
 msgstr ""
 
 #: templates/help.html:35
-#, fuzzy
 msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
 msgstr ""
 "Some users might be uncomfortable using their real name on the internet, and "
@@ -581,14 +582,12 @@ msgid "DESCRIPTION"
 msgstr "Description"
 
 #: templates/help.html:117
-#, fuzzy
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility"
 msgstr "Select Place/Open Gallery"
 
 #: templates/help.html:118
-#, fuzzy
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility -> description"
@@ -626,18 +625,18 @@ msgstr "mobile phone"
 msgid "Email-Adresse"
 msgstr "email-address"
 
-#: templates/impressum.html:39
+#: templates/impressum.html:37
 msgid "EMAIL_ONLY_WITH_JS"
 msgstr ""
 "The email address is encoded to prevent crawlers to abuse the address. and "
 "therefor just viewable, if you have javascript enabled. Even without "
 "javascript you can reach us as easy by using the "
 
-#: templates/impressum.html:43
+#: templates/impressum.html:41
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Abuse of contact data"
 
-#: templates/impressum.html:44
+#: templates/impressum.html:42
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "The usage of contact data published on this page, by a third party to send "
@@ -707,57 +706,57 @@ msgstr ""
 msgid "Zum Login"
 msgstr "Sign in"
 
-#: templates/index.html:14
+#: templates/index.html:13
 msgid "KEIKEN_SHORT"
 msgstr "Illustrate your experiences abroad for your family and friends"
 
-#: templates/index.html:16
+#: templates/index.html:15
 msgid "KEIKEN_BEFORE"
 msgstr ""
 "Before we found KEIKEN, we had a hard time reporting about our exchange "
 "semester:"
 
-#: templates/index.html:19
+#: templates/index.html:18
 msgid "KEIKEN_ALTERNATIVE_EMAIL"
 msgstr ""
 "You can zip your photos and write a long description via email, but often a "
 "lot of pictures needs explaining to the unfamiliar eye"
 
-#: templates/index.html:23
+#: templates/index.html:22
 msgid "KEIKEN_ALTERNATIVE_PRESENTATION"
 msgstr ""
 "You can also give a presentation when you come back, but this will only "
 "reach the people close to you"
 
-#: templates/index.html:27
+#: templates/index.html:26
 msgid "KEIKEN_ALTERNATIVE_NETWORK"
 msgstr ""
 "You can also post the photos on your favourite social network, but not "
 "everyone you want to reach will be member there"
 
-#: templates/index.html:30
+#: templates/index.html:29
 msgid "KEIKEN_REASONS"
 msgstr ""
 "Therefore we called KEIKEN to life. We hope to provide you with the tools to "
 "give everyone of your friends a presentation they deserve."
 
-#: templates/index.html:32
+#: templates/index.html:33
 msgid "Zum Dashboard"
 msgstr "To Dashboard"
 
-#: templates/index.html:35
+#: templates/index.html:37
 msgid "View a sample album"
 msgstr "View a sample album"
 
-#: templates/index.html:35
+#: templates/index.html:37
 msgid "View my album"
 msgstr "View my album"
 
-#: templates/index.html:38
+#: templates/index.html:40
 msgid "Try the app yourself"
 msgstr "Try the app yourself"
 
-#: templates/index.html:38
+#: templates/index.html:40
 msgid "Try it yourself"
 msgstr "Try it yourself"
 
@@ -1025,27 +1024,27 @@ msgstr ""
 "We will send all the available and required information to you, in "
 "complaisance to your legal right to information."
 
-#: templates/team.html:32 templates/team.html.py:44 templates/team.html:56
+#: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
 msgid "Name"
 msgstr "Name"
 
-#: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
+#: templates/team.html:36 templates/team.html.py:48 templates/team.html:60
 msgid "Verantwortlich für"
 msgstr "Responsible for"
 
-#: templates/team.html:35 templates/team.html.py:47
+#: templates/team.html:37 templates/team.html.py:49
 msgid "Back End"
 msgstr "Back End"
 
-#: templates/team.html:35 templates/team.html.py:59
+#: templates/team.html:37 templates/team.html.py:61
 msgid "Front End"
 msgstr "Front End"
 
-#: templates/team.html:35 templates/team.html.py:59
+#: templates/team.html:37 templates/team.html.py:61
 msgid "Design"
 msgstr "Design"
 
-#: templates/team.html:36 templates/team.html.py:48 templates/team.html:60
+#: templates/team.html:38 templates/team.html.py:50 templates/team.html:62
 msgid "Motivation am Projekt"
 msgstr "Motivation for the project"
 
@@ -1136,6 +1135,9 @@ msgstr "Next Image"
 #: templates/view-album.html:95
 msgid "Bild"
 msgstr "Image"
+
+#~ msgid "Speichern"
+#~ msgstr "Save"
 
 #~ msgid "Settings"
 #~ msgstr "Settings"
