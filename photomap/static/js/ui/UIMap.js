@@ -78,12 +78,12 @@ UIMap.prototype = {
     * @returns {Marker}
     */
    createMarker : function (data) {
-      assertTrue((data.lat && (data.lng || data.lon) && data.title));
+      assertTrue((data.lat && (data.lng || data.lon) && data.title), "UIMap.js", "createMarker", "testing data");
       
       lat = parseFloat(data.lat);
       lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon);
 
-      assertTrue(isFinite(lat) && isFinite(lng));
+      assertTrue(isFinite(lat) && isFinite(lng), "UIMap.js", "createMarker", "testing lat/lng about infinity");
 
       // lng = parseFloat(lng);
 
@@ -136,7 +136,7 @@ UIMap.prototype = {
     * @param {Function} callback
     */
    addListenerToMarker : function (marker, event, callback) {
-      assertTrue(event && callback);
+      assertTrue(event && callback, "UIMap.js", "addListenerToMarker", "testing event & callback");
 
       google.maps.event.addListener(marker.getImplementation(), event, callback);
    },

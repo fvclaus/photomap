@@ -80,7 +80,7 @@ UIGallery.prototype =  {
    * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
    */
    start : function () {
-      assert(this.isStarted, false);
+      assert(this.isStarted, false, "UIGallery.js", "start", "testing starting status");
       
       var ui = main.getUI(),
           state = ui.getState(),
@@ -154,7 +154,7 @@ UIGallery.prototype =  {
     */
    deletePhoto : function (photo) {
       // not possible to delete something without the gallery started
-      assert(this.isStarted, true);
+      assert(this.isStarted, true, "UIGallery.js", "deletePhoto", "testing starting status");
       // automatically delete if photo is on current page
       // otherwise we dont care
       this.carousel.deletePhoto(photo.thumb);
@@ -238,7 +238,7 @@ UIGallery.prototype =  {
     * @returns {int} Index of the $image element in all Photos of that Place, -1 if Photo does not belong to this place
     */
    _getIndexOfImage : function ($image) {
-      assertTrue($image.attr("src"));
+      assertTrue($image.attr("src"), "UIGallery.js", "_getIndexOfImage", "testing <img> source");
       return this.carousel.getAllImageSources().indexOf($image.attr("src"));
    },
    /**
@@ -403,7 +403,7 @@ UIFullGallery.prototype = {
     * Therefore there is no need for messy array synchronisation or the like.
     */
    start : function () {
-      assertTrue(this.carousel);
+      assertTrue(this.carousel, "UIFullGallery.js", "start", "testing carousel");
 
       this.$container
          .addClass("mp-full-gallery")
@@ -437,7 +437,7 @@ UIFullGallery.prototype = {
     * @description Removes the photo from the Gallery if open.
     */
    deletePhoto : function (photo) {
-      assertTrue(photo instanceof Photo);
+      assertTrue(photo instanceof Photo, "UIFullGallery.js", "deletePhoto", "testing photo");
       // something has been deleted from the gallery
       if (this.loaded) {
          this._refresh();
@@ -467,10 +467,10 @@ UIFullGallery.prototype = {
       photos.forEach(function (photo) {
          // photo must be a photo dto not the actual photo
          // the actual photo is changed when the request is successfull
-         assertFalse(photo instanceof Photo);
-         assertNumber(photo.order);
-         assertNumber(photo.id);
-         assertString(photo.title);
+         assertFalse(photo instanceof Photo, "UIFullGallery.js", "_savePhotos", "testing photo");
+         assertNumber(photo.order, "UIFullGallery.js", "_savePhotos", "testing photo order");
+         assertNumber(photo.id, "UIFullGallery.js", "_savePhotos", "testing photo id");
+         assertString(photo.title, "UIFullGallery.js", "_savePhotos", "testing photo title");
       });
 
       main.getUI().getInput().show({

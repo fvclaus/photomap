@@ -1,35 +1,35 @@
 "use strict";
 
-function croak (actual, expected) {
-   throw new Error(actual + " is not " + expected);
+function croak(actual, expected, file, method, subject) {
+   throw new Error(file + " > " + method + " : " + subject + " : " + actual + " is not " + expected);
 }
 
-function assert (actual, expected, message) {
+function assert(actual, expected, file, method, subject) {
    if (actual !== expected) {
-      croak(actual, expected);
+      croak(actual, expected, file, method, subject);
    }
 }
 
-function assertTrue (actual) {
+function assertTrue(actual, file, method, subject) {
    if (!actual) {
-      croak(actual, true);
+      croak(actual, true, file, method, subject);
    }
 }
 
-function assertFalse (actual) {
+function assertFalse(actual, file, method, subject) {
    if (actual) {
-      croak(actual, false);
+      croak(actual, false, file, method, subject);
    }
 }
 
-function assertNumber (actual) {
+function assertNumber(actual, file, method, subject) {
    if (!(typeof actual === "number")) {
-      croak(typeof actual, "number");
+      croak(typeof actual, "number", file, method, subject);
    }
 }
 
-function assertString (actual) {
+function assertString(actual, file, method, subject) {
    if (!(typeof actual === "string")){
-      croak(typeof actual, "string");
+      croak(typeof actual, "string", file, method, subject);
    }
 }

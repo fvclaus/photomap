@@ -80,7 +80,7 @@ UIEditControls.prototype = {
     * @private
     */
    show : function (element) {
-      assertTrue(element instanceof Album || element instanceof Place);
+      assertTrue(element instanceof Album || element instanceof Place, "UIEditControls.js", "show", "testing element model");
 
       var state = main.getUIState(), 
           controls = main.getUI().getControls(), 

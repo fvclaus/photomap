@@ -10,7 +10,7 @@
  */
 
 var Album = function (data) {
-   assertTrue(data.secret);
+   assertTrue(data.secret, "Album.js", "Constructor", "testing secret");
    
    data.model = 'Album';
    this.isOwner = data.isOwner || false;
@@ -22,7 +22,7 @@ var Album = function (data) {
 
 };
 
-Album.prototype = $.extend({},InfoMarker.prototype);
+Album.prototype = $.extend({}, InfoMarker.prototype);
 
 /*
  * @private

@@ -11,7 +11,7 @@
 
    
 var UIPhotoCarousel = function ($photos, imageSources, options) {
-   assertTrue($photos.size() > 0);
+   assertTrue($photos.size() > 0, "UIPhotoCarousel.js", "Constructor", "testing existence of photos");
 
    this.defaults = {
       lazy : false,
@@ -138,7 +138,7 @@ UIPhotoCarousel.prototype = {
                 }
              }
           };
-      assertTrue($items.size() > 0);
+      assertTrue($items.size() > 0, "UIPhotoCarousel.js", "_update", "testing existence of items");
       // remove mp-animate classes
       $items.removeClass("mp-animate-02s mp-animate-08s");
       

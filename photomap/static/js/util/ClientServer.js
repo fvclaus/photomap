@@ -22,7 +22,7 @@ ClientServer = function () {
 
 ClientServer.prototype = {
    preinit : function () {
-      assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView());
+      assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView(), "ClientServer.js", "preinit", "testing view");
       
       if (main.getUIState().isAlbumView()) {
          this._getPlaces();

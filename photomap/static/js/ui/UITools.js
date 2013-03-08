@@ -66,7 +66,7 @@ UITools.prototype = {
     * @param direction {String} defines in which direction the element should be centered - can be "vertical", "horizontal" or empty
     */
    centerElement : function ($element, direction) {
-      assertTrue(direction === "vertical" || direction === "horizontal");
+      assertTrue(direction === "vertical" || direction === "horizontal", "UITools.js", "centerElement", "testing direction");
 
       var margin = 0, 
           $parent = $element.parent(),
@@ -86,7 +86,7 @@ UITools.prototype = {
          break;
       case "horizontal":
          //TODO this needs a rework
-         assertTrue(widthDifference > 0);
+         assertTrue(widthDifference > 0, "UITools.js", "centerElement", "testing widthDifference");
          margin = "0px ";
          if (widthDifference <= 0) {
             margin += 0;

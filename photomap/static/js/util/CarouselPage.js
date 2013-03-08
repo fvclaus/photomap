@@ -93,7 +93,7 @@ CarouselPage.prototype = {
     */
    _setCurrentPage : function (index) {
       //TODO setting currentPage is prone to error when we update the pages Array. Only store currentPageIndex
-      assertTrue(this.pages[index] !== undefined);
+      assertTrue(this.pages[index] !== undefined, "CarouselPage.js", "_setCurrentPage", "testing index");
       this.currentPageIndex = index;
    },
    getCurrentPage : function () {

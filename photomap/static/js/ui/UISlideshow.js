@@ -98,7 +98,7 @@ UISlideshow.prototype = {
     * @description Inserts a new Photo. This will not move the Carousel or do anything else.
     */
    insertPhoto : function (photo) {
-      assertTrue(photo instanceof Photo);
+      assertTrue(photo instanceof Photo, "UISlideshow.js", "insertPhoto", "testing photo");
 
       // this is an unfortunate annoyance, but the gallery can be started without the slideshow
       // therefore we need to check if the gallery is started on an insert photo event
@@ -114,7 +114,7 @@ UISlideshow.prototype = {
     * If there is no previous Photo, nothing is shown.
     */
    deletePhoto : function (photo) {
-      assertTrue(photo instanceof Photo);
+      assertTrue(photo instanceof Photo, "UISlideshow.js", "deletePhoto", "testing photo");
 
       // @see insertPhoto
       if (this.isStarted) {

@@ -21,9 +21,9 @@ function bindLogoListener () {
 }
 
 function setFontSizeInVH ($el, vh) {
-   assertTrue($el.size() > 0);
+   assertTrue($el.size() > 0, "panel.js", "setFontSizeInVH", "testing existence of element");
    var fontSize =  (vh / 100) * $("body").height();
-   assertNumber(fontSize);
+   assertNumber(fontSize, "panel.js", "setFontSizeInVH", "testing fontsize");
    $el.css("font-size", fontSize + "px");
    return fontSize;
 }
@@ -50,7 +50,7 @@ function bindUserMenuListener () {
       $(window).resize(function () {
          setFontSizeInVH($user, 2);
       });
-      assertTrue(offset.top >= 0 && offset.left >= 0);
+      assertTrue(offset.top >= 0 && offset.left >= 0, "panel.js", "setFontSizeInVH", "testing offset");
       $menu
          .css({
             top : offset.top - $menu.outerHeight(),
@@ -83,6 +83,7 @@ $(window).on("resize", function () {
 });
 
 $(document).ready(function () {
+   
    resizeFont();
 
    bindLogoListener();

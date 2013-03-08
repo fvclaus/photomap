@@ -37,7 +37,7 @@ Main.prototype = {
       if (window && window.preinit) {
          preinit();
       }
-
+      alert("in preinit");
    },
    init: function () {
       this.map.init();
@@ -52,6 +52,7 @@ Main.prototype = {
       if (window && window.initializeTest) {
          initializeTest();
       }
+      alert("in init");
    },
    getUIState : function () {
       return this.getUI().getState();

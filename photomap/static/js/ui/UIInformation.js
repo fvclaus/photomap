@@ -43,7 +43,7 @@ UIInformation.prototype = {
     * @param {Photo, Place, Album} model
     */
    update : function (model) {
-      assertTrue(model instanceof Photo || model instanceof Place || model instanceof Album);
+      assertTrue(model instanceof Photo || model instanceof Place || model instanceof Album, "UIInformation.js", "update", "testing model");
 
       if (model instanceof Photo) {
          this.currentPhoto = model;
@@ -62,7 +62,7 @@ UIInformation.prototype = {
     * @param {Photo, Place, Album} model
     */
    empty : function (model) {
-      assertTrue(model instanceof Photo || model instanceof Place || model instanceof Album);
+      assertTrue(model instanceof Photo || model instanceof Place || model instanceof Album, "UIInformation.js", "empty", "testing model");
       
       if (model instanceof Photo && model === this.currentPhoto) {
          this.$teaserDescription.empty();
@@ -116,7 +116,7 @@ UIInformation.prototype = {
     * @description Shows the detail box
     */
    _showDetail : function () {
-      // assertTrue(this.$descriptionWrapper.data("jsp") !== undefined);
+      // assertTrue(this.$descriptionWrapper.data("jsp") !== undefined, "UIInformation.js", "_showDetail", "testing jsp");
       //TODO this does not work right now
       this.$explanationContainer.removeClass("mp-nodisplay");
    },
