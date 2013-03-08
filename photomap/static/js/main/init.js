@@ -30,7 +30,6 @@ $(document).ready(function () {
    //    "height" : "30px"
    // })
    //    .remove();
-   alert("document ready - init.js starts initialization");
    main = new Main();
    // initialise js-classes
    if (main && main.preinit) {
