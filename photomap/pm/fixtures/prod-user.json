@@ -1,30 +1,20 @@
 [
    {
-      "pk": 3,
+      "pk": 1,
       "model": "auth.user",
       "fields": {
-         "username": "demo",
+         "username": "admin",
          "first_name": "",
          "last_name": "",
          "is_active": true,
-         "is_superuser": false,
-         "is_staff": false,
+         "is_superuser": true,
+         "is_staff": true,
          "last_login": "2012-07-27T18:01:47.672",
          "groups": [],
          "user_permissions": [],
-         "password": "pbkdf2_sha256$10000$HUuJBmwOc6Mx$4DZYZ4hvPcvixBxaTr+7+ooSP0/8WET3vxbpuQiXCEs=",
-         "email": "demo@keiken.app",
+         "password": "pbkdf2_sha256$10000$eRDCihSB3YmN$C5jfQtJ5mYqnfUEWM7+NrrMfpLCuLzFozmDA8n/vf4c=",
+         "email": "admin@keiken.app",
          "date_joined": "2012-07-27T18:01:47.672"
-      }
-   },
-   {
-      "pk": 3,
-      "model": "pm.userprofile",
-      "fields": {
-         "picture": "",
-         "used_space": 54169903,
-         "user": 3,
-         "quota": 367001600
       }
    },
    {
@@ -46,44 +36,24 @@
       }
    },
    {
-      "pk": 2,
-      "model": "pm.userprofile",
-      "fields": {
-         "picture": "",
-         "used_space": 0,
-         "user": 2, 
-         "quota": 367001600
-      }
-   },
-   {
-      "pk": 1,
+      "pk": 3,
       "model": "auth.user",
       "fields": {
-         "username": "admin",
+         "username": "demo",
          "first_name": "",
          "last_name": "",
          "is_active": true,
-         "is_superuser": true,
-         "is_staff": true,
+         "is_superuser": false,
+         "is_staff": false,
          "last_login": "2012-07-27T18:01:47.672",
          "groups": [],
          "user_permissions": [],
-         "password": "pbkdf2_sha256$10000$eRDCihSB3YmN$C5jfQtJ5mYqnfUEWM7+NrrMfpLCuLzFozmDA8n/vf4c=",
-         "email": "admin@keiken.app",
+         "password": "pbkdf2_sha256$10000$HUuJBmwOc6Mx$4DZYZ4hvPcvixBxaTr+7+ooSP0/8WET3vxbpuQiXCEs=",
+         "email": "demo@keiken.app",
          "date_joined": "2012-07-27T18:01:47.672"
       }
    },
    {
-      "pk": 1,
-      "model": "pm.userprofile",
-      "fields": {
-         "picture": "",
-         "used_space": 0,
-         "user": 1, 
-         "quota": 367001600
-      }
-   },
-	{
       "pk": 4, 
       "model": "auth.user", 
       "fields": {
@@ -99,16 +69,6 @@
          "password": "pbkdf2_sha256$10000$WfPxk3egkOHk$R1U3icb2G2wb8MJ9VqbxNXXOnEtyvaJL/4RUcMVSam4=", 
          "email": "anna.lena.hoenig@gmail.com", 
          "date_joined": "2012-09-05T13:48:55.966"
-      }
-   },
-   {
-      "pk": 4,
-      "model": "pm.userprofile",
-      "fields": {
-         "picture": "",
-         "used_space": 8838685,
-         "user": 4, 
-         "quota": 367001600
       }
    }
 ] 
