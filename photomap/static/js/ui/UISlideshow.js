@@ -158,14 +158,13 @@ UISlideshow.prototype = {
     * This is also used by the frontend test to 'wait'.
     */
    isDisabled : function () {
-      return !this._isDisabled && !main.getUI().isDisabled();
+      return this._isDisabled; //|| main.getUI().isDisabled();
    },
    /**
     * @private
     * @description Executed after photo is updated (=displayed)
     */
    _update : function () {
-      this._enable();
       var photo = this._updateAndGetCurrentLoadedPhoto();
       // deleted last photo
       if (photo  === null) {
@@ -179,7 +178,7 @@ UISlideshow.prototype = {
       }
       //TODO this event is best triggered on the UI object. This is more intuitive and less likely to change
       $("#mp-content").trigger("slideshowChanged");
-
+      this._enable();
    },
    /**
     * @private
@@ -288,7 +287,7 @@ UISlideshow.prototype = {
       this.$navLeft.on("click", function () {
          
          console.log("?left?");
-         if (instance.isDisabled()) {
+         if (!instance.isDisabled()) {
             if (!instance.isStarted) {
                //TODO @see $navRight.on("click",...)
                instance.start();
@@ -300,7 +299,7 @@ UISlideshow.prototype = {
       });
       this.$navRight.on("click", function () {
          // UIPhotoCarousel does not 'really' support aborting loading of the current photo and skipping to the next one
-         if (instance.isDisabled()) {
+         if (!instance.isDisabled()) {
             if (!instance.isStarted) {
                //TODO we need to change the text in the empty slideshow to advertise this behaviour
                instance.start();
@@ -310,8 +309,8 @@ UISlideshow.prototype = {
          }
       });
       this.$image.on("click.Slideshow", function () {
-         
-         if (instance.isDisabled()) {
+         if (!instance.isDisabled()) {
+            console.log("UISlideshow: Show Fullscreen");
             instance.fullscreen.open();
          }
       });

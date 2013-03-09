@@ -37,7 +37,8 @@ UIFullscreen = function (slideshow) {
    // need to indicate ready status to frontend tests
    this.$ready = $("<div id=mp-fullscreen-ready />")
       .hide()
-      .appendTo(this.$container);
+   // don't append to container. we need to signal readiness even when the UIFullscreen is not open yet.
+      .appendTo($("body"));
    
    this.visible = false;
    this.updating = false;
@@ -53,13 +54,13 @@ UIFullscreen.prototype = {
    open : function () {
       
       this.$container.show();
-      this.$ready.show();
-      
-      if (this.disabled && !this.updating) {
-         this.enable();
-      }
-      
       this.visible = true;
+      
+      //TODO should be enabled by the same function that disabled it in the first place
+      // if (this.disabled && !this.updating) {
+
+         // this.enable();
+      // }
    },
    close : function () {
       
@@ -68,16 +69,20 @@ UIFullscreen.prototype = {
 
       this.visible = false;
    },
+   /**
+    * @public
+    * @description Please add some description here
+    */
    update : function () {
-      
+      //TODO this function is badly designed. The UISlideshow will enable itself and trigger the update event of the UIFullscreen. The UIFullscreen will now update itself. During this time the Fullscreen cannot be loaded, because it is disabled. The UISlideshow must wait till the UIFullscreen is ready before enabling itself, because it is responsible for the UIFullscreen.
+      this.disable();      
       console.log("UIFullscreen: update started");
       var ui = main.getUI(),
          state = ui.getState(),
          description = ui.getInformation(),
          photo = state.getCurrentLoadedPhoto(),
          instance = this;
-      
-      this.disable();
+
       this.updating = true;
 
       $("<img/>")
@@ -94,14 +99,14 @@ UIFullscreen.prototype = {
                }, 300);
                // enable fullscreen controls again after new image is displayed (and animation is complete)
                window.setTimeout(function () {
-                  instance.enable();
                   instance.updating = false;
+                  instance.enable();
                }, 600);
                
             } else {
                instance.$image.attr("src", photo.photo);
-               instance.enable();
                instance.updating = false;
+               instance.enable();
             }
          })
          .error(function () {
@@ -127,26 +132,27 @@ UIFullscreen.prototype = {
       
       var instance = this;
       this.$navLeft.on("click.Fullscreen", function () {
-         console.log("UIFullscreen: navigating left");
-         assert(instance.disabled, false);
-
-         // we need to disable it here, because the update coming from the slideshow might take awhile
-         instance.disable();
-         instance.slideshow.navigateLeft();
+         if (!instance.disabled) {
+            console.log("UIFullscreen: navigating left");
+            // we need to disable it here, because the update coming from the slideshow might take awhile
+            instance.disable();
+            instance.slideshow.navigateLeft();
+         }
       });
       this.$navRight.on("click.Fullscreen", function () {
-         console.log("UIFullscreen: navigating right");
-         assert(instance.disabled, false);
-
-         // we need to disable it here, because the update coming from the slideshow might take awhile
-         instance.disable();
-         instance.slideshow.navigateRight();
+         if (!instance.disabled) {
+            console.log("UIFullscreen: navigating right");
+            // we need to disable it here, because the update coming from the slideshow might take awhile
+            instance.disable();
+            instance.slideshow.navigateRight();
+         }
       });
       this.$close.on("click.Fullscreen", function () {
-         console.log("UIFullscreen: close");
-         assert(instance.disabled, false);
-
-         instance.close();
+         if (!instance.disabled) {
+            console.log("UIFullscreen: close");
+            assert(instance.disabled, false);
+            instance.close();
+         }
       });
 
    },

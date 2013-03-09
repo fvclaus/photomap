@@ -138,6 +138,8 @@ UIGallery.prototype =  {
       // show teaser after the photo is loaded
       this.showTeaser = true;
       this.currentPhoto = photo;
+      // hide the 'no pictures yet' text
+      this.$isEmpty.hide();
       // navigate to the picture if we are not on the last page
       if (this.isStarted && !this.carousel.isLastPage()) {
          this._navigateToLastPage();
@@ -227,6 +229,8 @@ UIGallery.prototype =  {
          if (this.currentPhoto === null) {
             throw new Error("Set showTeaser but no currentPhoto");
          }
+         // warning: this will enable the UIGallery without the UISlideshow even started 'loading'. Quite shacky :)
+         //TODO maybe we should disable UIGallery/Slideshow/Fullscreen all at once. This make testing alot easier and the user won't even notice it
          this.currentPhoto.openPhoto();
          this.currentPhoto = null;
          this.showTeaser = false;
@@ -374,8 +378,10 @@ UIGallery.prototype =  {
       var ui = main.getUI(),
          instance = this;
       
-      this.$inner
-         .on('click.Gallery', ".mp-gallery-tile", function (event) {
+      //TODO move this selector in the constructor
+      $(".mp-left-column")
+      //TODO the .on selectors should be moved to a central location
+         .on('click.Gallery', ".mp-gallery-tile, .mp-sortable-tile", function (event) {
             
             var $el = $(this).children();
             
