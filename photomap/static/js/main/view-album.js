@@ -1,13 +1,13 @@
 /*jslint */
-/*global $, main, mpEvents */
+/*global $, $$, main, mpEvents */
 
 "use strict";
 
 var state;
 
-function initializeAfterAjax() {
+function init() {
    var album = main.getUIState().getCurrentLoadedAlbum();
-   $(".mp-page-title h1").on('click', function () {
+   $$(".mp-page-title h1").on('click', function () {
 
       if (!main.getUI().isDisabled()) {
          main.getUI().getInformation().update(album);
