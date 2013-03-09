@@ -16,18 +16,19 @@
   </ul>
   <!-- hide tabs to avoid ugly moving around during page load -->
   <section class="mp-login-tab mp-nodisplay" id="mp-login">
-    <form class="mp-form" action="" method="post">
+    <!-- action is necessary because this template is also populated by /test -->
+    <form class="mp-form" action="/login" method="post">
       <!-- displays the password || email wrong message -->
       {{ login.non_field_errors }}
       <p>
         <label for="login_email">{% trans "Email" %}:</label>
-        <input type="text" name="email" id="login_email" autofocus="autofocus" required="required"/>
+        <input type="text" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}"/>
         <!-- field required error -->
         {{ login.email.errors }}
       </p>
       <p>
         <label for="login_password">{% trans "Password" %}:</label>
-        <input type="password" name="password" id="login_password" required="required"/>
+        <input type="password" name="password" id="login_password" required="required" value="{{ password }}"/>
         <!-- field required error -->
         {{ login.password.errors }}
       </p>
@@ -38,7 +39,8 @@
   </section>
   <!-- hide tabs to avoid ugly moving around during page load -->
   <section class="mp-login-tab mp-nodisplay" id="mp-register">
-    <form action="" method="post">
+    <!-- action is necessary because this template is also populated by /test -->
+    <form action="/login" method="post">
       <p>
         <label for="register_first_name">{% trans "First name" %}:</label>
         <input disabled="disabled" type="text" name="first_name" id="register_first_name" />

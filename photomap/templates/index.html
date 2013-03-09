@@ -30,14 +30,14 @@
   <div class="mp-landing-page-links">
     {% if user.is_authenticated %}
     <p class="mp-dashboard-button">
-      <a class="mp-button" href="/dashboard" title='{% trans "Zum Dashboard" %}'>{% trans "Zum Dashboard" %}</a>
+      <a class="mp-button" href="/dashboard" title='{% trans "TO_DASHBOARD" %}'>{% trans "TO_DASHBOARD" %}</a>
     </p>
     {% else %}
     <p class="mp-demo-button"> 
-      <a class="mp-button" href="/demo" title='{% trans "View a sample album" %}'>{% trans "View my album" %}</a>
+      <a class="mp-button" href="/demo" title='{% trans "VIEW_ALBUM" %}'>{% trans "VIEW_ALBUM" %}</a>
     </p>
     <p class="mp-test-button">
-      <a class="mp-button" href="/test" title='{% trans "Try the app yourself" %}'>{% trans "Try it yourself" %}</a>
+      <a class="mp-button" href="/test" title='{% trans "TRY_KEIKEN" %}'>{% trans "TRY_KEIKEN" %}</a>
     </p>
     {% endif %}
   </div>
