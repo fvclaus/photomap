@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-05 13:43+0100\n"
+"POT-Creation-Date: 2013-03-09 13:35+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -48,67 +48,67 @@ msgstr "Delete"
 msgid "control-title modify"
 msgstr "Edit"
 
-#: templates/base.html:102 templates/index-guest.html:30
+#: templates/base.html:103 templates/index-guest.html:30
 msgid "JS_DISABLED_WARNING"
 msgstr ""
 "You have disabled javascript in your browser settings. KEIKEN makes heavy "
 "use of javascript, so in order to use KEIKEN you have to activate it. "
 
-#: templates/base.html:123
+#: templates/base.html:124
 msgid "Login or Register"
 msgstr "Login or Register"
 
-#: templates/base.html:123
+#: templates/base.html:124
 msgid "Anmelden/Registrierung"
 msgstr "Login and Registration"
 
-#: templates/base.html:127 templates/not-supported-old.html:64
+#: templates/base.html:128 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Introduction of the project and core team members"
 
-#: templates/base.html:127 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:128 templates/team.html:6 templates/team.html.py:8
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:128 templates/not-supported-old.html:62
+#: templates/base.html:129 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Contact, Support, Ask a Question"
 
-#: templates/base.html:128 templates/contact.html:6
+#: templates/base.html:129 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:30
 msgid "Kontakt"
 msgstr "Contact"
 
-#: templates/base.html:129 templates/not-supported-old.html:60
+#: templates/base.html:130 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "View Data Use Policy"
 
-#: templates/base.html:129 templates/privacy.html:5
+#: templates/base.html:130 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Privacy"
 
-#: templates/base.html:130 templates/not-supported-old.html:61
+#: templates/base.html:131 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "View Copyright Statement"
 
-#: templates/base.html:130 templates/copyright.html:6
+#: templates/base.html:131 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:131 templates/not-supported-old.html:63
+#: templates/base.html:132 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "View FAQ, Tutorial and help-page"
 
-#: templates/base.html:131 templates/help.html:6
+#: templates/base.html:132 templates/help.html:6
 msgid "Hilfe"
 msgstr "Help"
 
-#: templates/base.html:132 templates/not-supported-old.html:59
+#: templates/base.html:133 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "View Legal Terms of NAME OF PROJECT"
 
-#: templates/base.html:132 templates/impressum.html:6
+#: templates/base.html:133 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Legal Terms (Impressum)"
@@ -161,8 +161,8 @@ msgstr "Name"
 msgid "MANDATORY_FIELD"
 msgstr "This field is mandatory."
 
-#: templates/contact.html:39 templates/login.html:23
-#: templates/login.html.py:51
+#: templates/contact.html:39 templates/login.html:24
+#: templates/login.html.py:53
 msgid "Email"
 msgstr "Email"
 
@@ -651,11 +651,11 @@ msgid "Willkommen"
 msgstr "Welcome"
 
 #: templates/index-guest.html:32 templates/index-guest.html.py:40
-#: templates/login.html:73 templates/login.html.py:81
+#: templates/login.html:75 templates/login.html.py:83
 msgid "Welcome to Keiken"
 msgstr "Welcome to Keiken"
 
-#: templates/index-guest.html:33 templates/login.html:74
+#: templates/index-guest.html:33 templates/login.html:76
 msgid "LOGIN_GUEST_WELCOME_1"
 msgstr ""
 "Keiken is not a place to upload photos of temporary interest and meaning. If "
@@ -664,13 +664,13 @@ msgstr ""
 "not about unpersonal sharing of experiences or overwhelming your friends and "
 "family by spamming them with photos."
 
-#: templates/index-guest.html:34 templates/login.html:75
+#: templates/index-guest.html:34 templates/login.html:77
 msgid "LOGIN_GUEST_WELCOME_2"
 msgstr ""
 "Keiken structures your albums in places and photos. Each album can contain "
 "as many places as you wish and each place can contain any number of photos."
 
-#: templates/index-guest.html:34 templates/login.html:75
+#: templates/index-guest.html:34 templates/login.html:77
 msgid "LOGIN_GUEST_WELCOME_3"
 msgstr ""
 "This may help you to experience the adventures and stories told by the album "
@@ -679,7 +679,7 @@ msgstr ""
 "as big as a country eg. when you travel around the world. Or it can be as "
 "small as an interesting sight when visiting a city."
 
-#: templates/index-guest.html:35 templates/login.html:76
+#: templates/index-guest.html:35 templates/login.html:78
 msgid "LOGIN_GUEST_WELCOME_4"
 msgstr ""
 "Photos are.. well photos and not actual experiences. But nevertheless photos "
@@ -688,13 +688,13 @@ msgstr ""
 "at 'IMG_13072013_1718.JPG' - and of course it would be great if you would "
 "also use the optional description-box to tell about your own experiences."
 
-#: templates/index-guest.html:37 templates/login.html:78
+#: templates/index-guest.html:37 templates/login.html:80
 msgid "LOGIN_GUEST_WELCOME_5"
 msgstr ""
 "We hope you still know photo-albums. That were those nice dusty big books, "
 "which you had to look at with your parents and family after big trips."
 
-#: templates/index-guest.html:38 templates/login.html:79
+#: templates/index-guest.html:38 templates/login.html:81
 msgid "LOGIN_GUEST_WELCOME_6"
 msgstr ""
 "We did a little dusting and created a digital, dust-repelling, interactive "
@@ -741,24 +741,16 @@ msgstr ""
 "give everyone of your friends a presentation they deserve."
 
 #: templates/index.html:33
-msgid "Zum Dashboard"
-msgstr "To Dashboard"
+msgid "TO_DASHBOARD"
+msgstr ""
 
 #: templates/index.html:37
-msgid "View a sample album"
-msgstr "View a sample album"
-
-#: templates/index.html:37
-msgid "View my album"
-msgstr "View my album"
+msgid "VIEW_ALBUM"
+msgstr "View our first album"
 
 #: templates/index.html:40
-msgid "Try the app yourself"
-msgstr "Try the app yourself"
-
-#: templates/index.html:40
-msgid "Try it yourself"
-msgstr "Try it yourself"
+msgid "TRY_KEIKEN"
+msgstr "Try KEIKEN yourself"
 
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
@@ -792,31 +784,31 @@ msgstr "Login"
 msgid "Registration"
 msgstr "Registration"
 
-#: templates/login.html:29 templates/login.html.py:55 templates/login.html:83
+#: templates/login.html:30 templates/login.html.py:57 templates/login.html:85
 msgid "Password"
 msgstr "Password"
 
-#: templates/login.html:35 templates/login.html.py:86
+#: templates/login.html:36 templates/login.html.py:88
 msgid "Sign in"
 msgstr "Sign in"
 
-#: templates/login.html:43
+#: templates/login.html:45
 msgid "First name"
 msgstr "First name"
 
-#: templates/login.html:47
+#: templates/login.html:49
 msgid "Last name"
 msgstr "Last name"
 
-#: templates/login.html:59
+#: templates/login.html:61
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: templates/login.html:63
+#: templates/login.html:65
 msgid "Register"
 msgstr "Register"
 
-#: templates/login.html:71
+#: templates/login.html:73
 msgid "Guest-Login"
 msgstr "Guest-Login"
 
@@ -1025,6 +1017,7 @@ msgstr ""
 "complaisance to your legal right to information."
 
 #: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
+#: templates/debug/dialogdimension.html:14
 msgid "Name"
 msgstr "Name"
 
@@ -1136,30 +1129,11 @@ msgstr "Next Image"
 msgid "Bild"
 msgstr "Image"
 
-#~ msgid "Speichern"
-#~ msgstr "Save"
+#: templates/debug/dialogdimension.html:18
+msgid "Beschreibung"
+msgstr ""
 
-#~ msgid "Settings"
-#~ msgstr "Settings"
+#: templates/debug/dialogdimension.html:24
+msgid "Speichern"
+msgstr "Save"
 
-#~ msgid "Abmelden"
-#~ msgstr "Logout"
-
-#~ msgid "Or use the"
-#~ msgstr "Or use the "
-
-#~ msgid "Hinweis"
-#~ msgstr "Note"
-
-#~ msgid "Test-Account"
-#~ msgstr "Test-Account"
-
-#~ msgid "Demo-Account"
-#~ msgstr "Demo-Account"
-
-#~ msgid "privacy-topic Cookies - 'used-space/quota'-cookie"
-#~ msgstr ""
-#~ "'used-space'-/'quota'-Cookies: The 'used-space'-/'quota'-Cookies contain "
-#~ "information about how much data storage space you have unlocked and how "
-#~ "much you already use. You can check those informations at the bottom of "
-#~ "the page next to your email-address."
