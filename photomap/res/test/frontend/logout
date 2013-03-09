@@ -13,10 +13,9 @@
 </thead><tbody>
 <tr>
 	<td>clickAndWait</td>
-	<td>${logout}</td>
+	<td>css=a[href='/logout']</td>
 	<td></td>
 </tr>
-
 </tbody></table>
 </body>
 </html>

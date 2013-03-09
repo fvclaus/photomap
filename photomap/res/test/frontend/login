@@ -28,7 +28,7 @@
 </tr>
 <tr>
 	<td>clickAndWait</td>
-	<td>css=input[value=&quot;Login&quot;]</td>
+	<td>css=input[type=&quot;submit&quot;]</td>
 	<td></td>
 </tr>
 </tbody></table>

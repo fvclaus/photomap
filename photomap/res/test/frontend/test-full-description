@@ -113,7 +113,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=form.mp-dialog-content</td>
+	<td>css=.ui-dialog&nbsp;&nbsp;form</td>
 	<td>inputForm</td>
 </tr>
 <tr>
@@ -188,7 +188,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=a[title=&quot;Logout&quot;]</td>
+	<td>css=a[href='/logout']</td>
 	<td>logout</td>
 </tr>
 <tr>
@@ -218,7 +218,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=#mp-detail-teaser-description</td>
+	<td>css=#mp-detail-teaser-description-wrapper</td>
 	<td>teaserDescription</td>
 </tr>
 <tr>
@@ -243,7 +243,7 @@
 </tr>
 <tr>
 	<td>store</td>
-	<td>css=.mp-fullscreen-image</td>
+	<td>css=#mp-fullscreen-image</td>
 	<td>currentPhotoFull</td>
 </tr>
 <tr>
