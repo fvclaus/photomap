@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, window, document, assert, assertTrue, assertNumber, DASHBOARD_VIEW */
+/*global $, $$, window, document, assert, assertTrue, assertNumber, DASHBOARD_VIEW */
 
 "use strict";
 
@@ -7,12 +7,12 @@
  * @description Redirects to dashboard if user is logged in, to landing page otherwise
  */
 function bindLogoListener () {
-   $(".mp-logo img").bind("click", function (event) {
+   $$(".mp-logo img").bind("click", function (event) {
       // prevent the default anchor forward action
       // the anchor around the logo is needed in case js is disabled or failed
       event.preventDefault();
       
-      if ($(".mp-user").size() > 0) {
+      if ($$("#mp-user").size() > 0) {
          window.location.href = DASHBOARD_VIEW;
       } else {
          window.location.href = "/";
