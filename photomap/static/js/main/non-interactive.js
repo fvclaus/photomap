@@ -62,7 +62,7 @@ $(document).ready(function () {
    $("#mp-login-register")
       .tabs({
          // disable registaration for now
-         disabled : [1],
+         disabled : [1]
       })
    // tabs are hidden during page load, so they don't move around
       .find("section")
