@@ -101,7 +101,11 @@ else:
             'PASSWORD': 'django',  # Not used with sqlite3.
             'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
             'PORT': '5432',  # Set to empty string for default. Not used with sqlite3.
-        }
+        },
+        "export": {
+                   "ENGINE" : 'django.db.backends.sqlite3',
+                   "NAME" : os.path.join(PROJECT_PATH, "export.sqlite3")
+                   }
     }
 
 AWS_ACCESS_KEY_ID = "AKIAIC6WYCFDZIOOIWZA"

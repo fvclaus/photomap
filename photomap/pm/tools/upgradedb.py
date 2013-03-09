@@ -30,7 +30,10 @@ EXPORT_FOLDER = os.path.join(settings.RES_PATH, "export")
 MIN_SIZE = 1024
 
 client = Client(HTTP_USER_AGENT = "Firefox/15")
-assert client.login(username = "anna.lena.hoenig@gmail.com", password = "Yaish8"), "Login data seems to be wrong!"
+
+from django.conf import settings
+assert settings.DEBUG is False, "Make sure settings_prod is used."
+
 
 def unescape(data):
     if not data:
@@ -48,7 +51,12 @@ def download_photo(url, id):
     
     url = s3.build_url(url)
     print "Downloading photo %s..." % url
-    response = urllib2.urlopen(url)
+    try:
+        response = urllib2.urlopen(url)
+    except Exception, e:
+        print "Could not fetch %s: %s" % (url, str(e))
+        return False
+     
     print "Done."
     photo = open(original, "wb")
     photo.write(response.read())
@@ -79,21 +87,30 @@ def download_photo(url, id):
 
 
 def convert(path, data):
+    assert os.path.isfile(path)
     user = data["user"]
     conn = sqlite3.connect(path)
     conn.row_factory = sqlite3.Row
     base = os.path.split(path)[0]
     c = conn.cursor()
-    albums = c.execute("select * from pm_album").fetchall()
+    albums = c.execute("select * from pm_album where user_id = ?", (data["id"],)).fetchall()
     
     for albumdb in albums:
-        album = Album(lat = decimal.Decimal(albumdb["lat"]),
-                      lon = decimal.Decimal(albumdb["lon"]),
-                      title = unescape(albumdb['title']),
-                      description = unescape(albumdb['description']),
-                      user = user)
-        album.save()
-        print "Saved album %s" % str(album)
+        
+        album_data = {"lat" : decimal.Decimal(albumdb["lat"]),
+                "lon" : decimal.Decimal(albumdb["lon"]),
+                "title" : unescape(albumdb['title']),
+                "description" : unescape(albumdb['description'])}
+                    
+                
+        response = client.post("/insert-album", data = album_data)
+        content = json.loads(response.content)
+        if content["success"]:
+            print "Saved album %s." % str(unescape(album_data["title"]))
+            album = Album.objects.latest("pk")
+        else:
+            raise RuntimeError, "Expected success, got error %s instead." % str(content["error"])
+        
         
         places = c.execute("select * from pm_place where album_id = ?", (albumdb['id'],)).fetchall()
         
@@ -111,8 +128,10 @@ def convert(path, data):
             
             for photodb in photos:
                 source = download_photo(photodb["photo"], photodb["id"])
+                if not source:
+                    continue
                 order = photodb['order'] or counter 
- #                thumb = open(photopath, "rb")
+                
                 data = {"title": unescape(photodb['title']),
                         "description": unescape(photodb['description']),
                         "photo": File(source),
@@ -130,5 +149,6 @@ def convert(path, data):
             
 
 if __name__ == "__main__":
-    data = {"user": User.objects.get(email = "anna.lena.hoenig@gmail.com")}
-    convert(os.path.join(settings.PROJECT_PATH, "export.sqlite"), data)
+    assert client.login(username = "anna.lena.hoenig@gmail.com", password = "Yaish8"), "Login data seems to be wrong!"
+    data = {"user": User.objects.get(email = "anna.lena.hoenig@gmail.com"), "id" : 4}
+    convert(os.path.join(settings.PROJECT_PATH, "export.sqlite3"), data)
