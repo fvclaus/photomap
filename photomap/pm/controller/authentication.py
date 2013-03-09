@@ -3,7 +3,7 @@ Created on Jul 10, 2012
 
 @author: fredo
 '''
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.contrib.auth import  authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User, check_password
@@ -18,6 +18,17 @@ from pm.controller import set_cookie
 import logging
 
 logger = logging.getLogger(__name__)
+
+
+
+def test(request):
+    if request.method == "GET":
+        return render_to_response("login.html", {"email" : "test@keiken.app",
+                                                "password" : "test"})
+    else:
+        return HttpResponseBadRequest()
+    
+
 
 def login(request):
     if request.method == "GET":
