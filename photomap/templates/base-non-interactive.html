@@ -4,7 +4,12 @@
 {% load i18n %}
 
 {% block css %}
+<!-- pull in the compiled css from base.html -->
+{{ block.super }}
+{% load compress %}
+{% compress css %}
 <link rel="stylesheet" type="text/x-stylus" href="/static/css/noninteractive-main.styl" />
+{% endcompress %}
 {% endblock %}
 
 {% block js %}

@@ -6,14 +6,19 @@
 {% block title %}{% trans "Albumsansicht" %}{% endblock %}
 
 {% block css %}
+<!-- pull in the compiled css from base.html -->
+{{ block.super }}
+{% load compress %}
+{% compress css %}
 <link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl" />
+{% endcompress %}
 {% endblock %}
 
 {% block js %}
 <!-- pull in the compressed javascript from base.html & base-interactive.html -->
 {{ block.super }}
 {% load compress %}
-{% compress js inline %}
+{% compress js %}
 <script type="text/javascript" src="/static/js/main/view-album.js" ></script>
 {% endcompress %}
 {% endblock %}
