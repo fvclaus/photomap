@@ -13,10 +13,24 @@ use django-admin.py COMMAND --settings=settings_prod --insecure instead of anyth
 """
 
 from settings import *
+import os
 
 DEBUG = False
 TEMPLATE_DEBUG = False
 COMPRESS_ENABLED = True
+COMPRESS_OFFLINE_CONTEXT = {
+    "STATIC_URL" : STATIC_URL
+    }
+
+
+# not NOT_ is a little confusing
+if not os.environ.has_key("DJANGO_NO_COMPRESS_OFFLINE") or not os.environ["DJANGO_NO_COMPRESS_OFFLINE"]:
+    COMPRESS_OFFLINE = True
+    COMPRESS_JS_FILTERS = ["compressor.filters.closure.ClosureCompilerFilter"]
+
+COMPRESS_CLOSURE_COMPILER_BINARY = os.path.join(PROJECT_PATH, "lib", "compiler.jar")
+COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_level SIMPLE_OPTIMIZATIONS --language_in=ECMASCRIPT5"
+
 
 
 temp_app = tuple()
