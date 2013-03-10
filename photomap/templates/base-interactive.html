@@ -3,15 +3,11 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block mode %}
-content="interactive"
-{% endblock %}
-
 {% block js %}
 <!-- pull in the compressed javascript from base.html -->
 {{ block.super }}
 {% load compress %}
-{% compress js inline %}
+{% compress js %}
 <script type="text/javascript" src="/static/js/lib/tzoom.min.js" ></script>
 <script type="text/javascript" src="/static/js/util/noconsole.js" ></script>
 <script type="text/javascript" src="/static/js/lib/jquery.jqote2.min.js" ></script>
@@ -53,6 +49,8 @@ content="interactive"
 
 <script type="text/javascript" src="/static/js/main/Main.js" ></script>
 {% endcompress %}
+<!-- mapjs does not work here. why? -->
+<!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script> -->
 {% endblock %}
 
 {% block mapjs %}

@@ -11,7 +11,7 @@
 <!-- pull in the compressed javascript from base.html & base-non-interactive.html -->
 {{ block.super }}
 {% load compress %}
-{% compress js inline%}
+{% compress js %}
 <script type="text/javascript" src="/static/js/main/help.js" ></script>
 {% endcompress %}
 {% endblock %}

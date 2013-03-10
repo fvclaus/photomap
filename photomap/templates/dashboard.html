@@ -8,14 +8,19 @@
 {% block name %}Dashboard{% endblock %}
 
 {% block css %}
+<!-- pull in the compiled css from base.html -->
+{{ block.super }}
+{% load compress %}
+{% compress css %}
 <link rel="stylesheet" type="text/x-stylus" href="/static/css/dashboard-main.styl" />
+{% endcompress %}
 {% endblock %}
 
 {% block js %}
 <!-- pull in the compressed javascript from base-interactive.html -->
 {{ block.super }}
 {% load compress %}
-{% compress js inline %}
+{% compress js %}
 <script type="text/javascript" src="/static/js/main/dashboard.js" ></script>
 {% endcompress %}
 {% endblock %}

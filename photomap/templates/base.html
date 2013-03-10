@@ -34,13 +34,14 @@
     <!-- {% compress css file %} -->
 
     <!-- {% endcompress %} -->
+    {% block css %}
     {% compress css %}
     <link rel="stylesheet" type="text/css" href="/static/css/lib/sans.narrow.css" />
     <link href="/static/css/lib/droid.sans.css" rel="stylesheet" type="text/css"/>
     <link rel="stylesheet" type="text/css" href="/static/css/lib/tzoom.css" />
-    {% block css %}
-    {% endblock %}
     {% endcompress %}
+    {% endblock %}
+
 
     <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->    
     <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
