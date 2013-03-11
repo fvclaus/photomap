@@ -23,7 +23,7 @@ UIPhotoEditor = function(){
 UIPhotoEditor.prototype = {
    edit : function (event) {
       //fail if markup is not present
-      assertTrue($("#ui-editor").size() > 0, "UIPhotoEditor.js", "edit", "testing existence of editor");
+      assertTrue($("#ui-editor").size() > 0, "DOM element for the editor must not be undefined");
       
       this._init();
       instance = this;

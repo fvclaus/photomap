@@ -10,7 +10,7 @@
  */
 
 var Album = function (data) {
-   assertTrue(data.secret, "Album.js", "Constructor", "testing secret");
+   assertTrue(data.secret, "album secret must not be undefined");
    
    data.model = 'Album';
    this.isOwner = data.isOwner || false;

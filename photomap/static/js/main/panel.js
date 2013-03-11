@@ -21,9 +21,9 @@ function bindLogoListener () {
 }
 
 function setFontSizeInVH ($el, vh) {
-   assertTrue($el.size() > 0, "panel.js", "setFontSizeInVH", "testing existence of element");
+   assertTrue($el.size() > 0, "input parameter $el must not be undefined");
    var fontSize =  (vh / 100) * $("body").height();
-   assertNumber(fontSize, "panel.js", "setFontSizeInVH", "testing fontsize");
+   assertNumber(fontSize, "font-size has to be a number");
    $el.css("font-size", fontSize + "px");
    return fontSize;
 }
@@ -50,7 +50,7 @@ function bindUserMenuListener () {
       $(window).resize(function () {
          setFontSizeInVH($user, 2);
       });
-      assertTrue(offset.top >= 0 && offset.left >= 0, "panel.js", "setFontSizeInVH", "testing offset");
+      assertTrue(offset.top >= 0 && offset.left >= 0, "offset of $user must not be negative");
       $menu
          .css({
             top : offset.top - $menu.outerHeight(),

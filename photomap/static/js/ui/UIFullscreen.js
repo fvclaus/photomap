@@ -26,7 +26,7 @@ UIFullscreen = function (slideshow) {
       .add(this.$navRight)
       .add(this.$close);
 
-   assert(this.$controls.size(), 3);
+   assert(this.$controls.size(), 3, "there have to be 3 controls");
 
    this.$title = $("#mp-fullscreen-title");
    this.$imageWrapper = $("#mp-fullscreen-image-wrapper");
@@ -150,7 +150,7 @@ UIFullscreen.prototype = {
       this.$close.on("click.Fullscreen", function () {
          if (!instance.disabled) {
             console.log("UIFullscreen: close");
-            assert(instance.disabled, false);
+            assert(instance.disabled, false, "closing button must not be disabled");
             instance.close();
          }
       });
