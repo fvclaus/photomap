@@ -11,7 +11,7 @@
 
    
 var UIPhotoCarousel = function ($photos, imageSources, options) {
-   assertTrue($photos.size() > 0, "UIPhotoCarousel.js", "Constructor", "testing existence of photos");
+   assertTrue($photos.size() > 0, "input parameter $photos has to contain at least one photo tag");
 
    this.defaults = {
       lazy : false,
@@ -138,7 +138,7 @@ UIPhotoCarousel.prototype = {
                 }
              }
           };
-      assertTrue($items.size() > 0, "UIPhotoCarousel.js", "_update", "testing existence of items");
+      assertTrue($items.size() > 0, "$items has to contain at least one item");
       // remove mp-animate classes
       $items.removeClass("mp-animate-02s mp-animate-08s");
       
@@ -244,7 +244,7 @@ UIPhotoCarousel.prototype = {
       });
    },
    navigateTo : function (to) {
-      assert(this.isStarted, true);
+      assert(this.isStarted, true, "carousel has to be started already");
 
       switch (to) {
       case "start":

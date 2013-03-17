@@ -48,7 +48,7 @@ UISlideshow.prototype = {
     * @description starts slideshow by initialising and starting the carousel (with given index)
     */
    start: function (index) {
-      assert(this.isStarted, false);
+      assert(this.isStarted, false, "slideshow must not be started yet");
 
       var ui = main.getUI(),
           state = ui.getState(),
@@ -98,7 +98,7 @@ UISlideshow.prototype = {
     * @description Inserts a new Photo. This will not move the Carousel or do anything else.
     */
    insertPhoto : function (photo) {
-      assertTrue(photo instanceof Photo, "UISlideshow.js", "insertPhoto", "testing photo");
+      assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
 
       // this is an unfortunate annoyance, but the gallery can be started without the slideshow
       // therefore we need to check if the gallery is started on an insert photo event
@@ -114,7 +114,7 @@ UISlideshow.prototype = {
     * If there is no previous Photo, nothing is shown.
     */
    deletePhoto : function (photo) {
-      assertTrue(photo instanceof Photo, "UISlideshow.js", "deletePhoto", "testing photo");
+      assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
 
       // @see insertPhoto
       if (this.isStarted) {
@@ -186,7 +186,7 @@ UISlideshow.prototype = {
     */
    _beforeLoad : function ($photos) {
       // we are expecting to receive a jquery element wrapper
-      assert(typeof $photos, "object");
+      assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
       // trigger event to tell UI that slideshow is about to change
       // @see UIInformation 
       $(main.getUI()).trigger("click.SlideshowBeforeLoad");
@@ -204,7 +204,7 @@ UISlideshow.prototype = {
     */ 
    _afterLoad : function ($photos) {
       // we are expecting to receive a jquery element wrapper
-      assert(typeof $photos, "object");
+      assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
       //TODO hide loading again
       $photos.each(function () {
          $(this)
@@ -236,7 +236,7 @@ UISlideshow.prototype = {
     * @returns {Photo} currentPhoto
     */
    _updateAndGetCurrentLoadedPhoto : function () {
-      assert(this.isStarted, true);
+      assert(this.isStarted, true, "slideshow has to be started already");
 
       var ui = main.getUI(),
           state = main.getUIState(),

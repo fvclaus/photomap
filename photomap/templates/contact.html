@@ -28,34 +28,34 @@
   <!-- network error during mail delivery, etc.. -->
   {{ form.non_field_errors}}
   <p>
-    <label for="name">{% trans "NAME" %}
+    <label for="contactform-name">{% trans "NAME" %}
       <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
-    <input type="text" name="name" required="required" />
+    <input type="text" name="name" id="contactform-name" required="required" autofocus="autofocus" />
     {{ form.name.errors }}
   </p>
 
   <p>
-    <label for="email">{% trans "Email" %}
+    <label for="contactform-email">{% trans "Email" %}
       <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
-    <input type="email" name="email" required="required" />
+    <input type="email" name="email" id="contactform-email" required="required" />
     {{ form.email.errors }}
   </p>
 
   <p>
-    <label for="subject">{% trans "SUBJECT" %} 
+    <label for="contactform-subject">{% trans "SUBJECT" %} 
       <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
-    <input type="text" name="subject" required="required" />
+    <input type="text" name="subject" id="contactform-subject" required="required" />
     {{ form.subject.errors }}
   </p>
 
   <p>
-    <label for="message">{% trans "MESSAGE" %}
+    <label for="contactform-message">{% trans "MESSAGE" %}
       <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>
     </label>
-    <textarea name="message" required="required" rows="10"> </textarea>
+    <textarea name="message" id="contactform-message" required="required" rows="10"> </textarea>
     {{ form.message.errors }}
   </p>
   <p style="font-size: 0.8em; text-align: right;">{% trans "MANDATORY_FIELDS_NOTE" %}</p>
