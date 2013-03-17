@@ -14,6 +14,12 @@ use django-admin.py COMMAND --settings=settings_prod --insecure instead of anyth
 
 from settings import *
 import os
+import logging
+
+logger = logging.getLogger(__name__)
+WARNING = '\033[93m'
+ENDC = '\033[0m'
+
 
 DEBUG = False
 TEMPLATE_DEBUG = False
@@ -27,6 +33,8 @@ COMPRESS_OFFLINE_CONTEXT = {
 if not os.environ.has_key("DJANGO_NO_COMPRESS_OFFLINE") or not os.environ["DJANGO_NO_COMPRESS_OFFLINE"]:
     COMPRESS_OFFLINE = True
     COMPRESS_JS_FILTERS = ["compressor.filters.closure.ClosureCompilerFilter"]
+else:
+    print WARNING + "You are using offline compressed files. Changes will not be reflected until you execute python manage.py compress" + ENDC
 
 COMPRESS_CLOSURE_COMPILER_BINARY = os.path.join(PROJECT_PATH, "lib", "compiler.jar")
 COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_level SIMPLE_OPTIMIZATIONS --language_in=ECMASCRIPT5"
