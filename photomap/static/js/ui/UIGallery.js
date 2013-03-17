@@ -168,7 +168,7 @@ UIGallery.prototype =  {
    reset : function () {
       
       this.isStarted = false;
-      $(".mp-gallery-loader").hide();
+      $(".mp-gallery-loader").addClass("mp-nodisplay");
       this.$controls.addClass("mp-nodisplay");
       if (this.carousel !== null) {
          this.carousel.reset();
