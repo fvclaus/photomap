@@ -742,7 +742,7 @@ msgstr ""
 
 #: templates/index.html:33
 msgid "TO_DASHBOARD"
-msgstr ""
+msgstr "Go to dashboard"
 
 #: templates/index.html:37
 msgid "VIEW_ALBUM"
