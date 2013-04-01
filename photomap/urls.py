@@ -55,6 +55,7 @@ urlpatterns = patterns("",
 
 
                        url(r'^debug/(.+)$', debug.view),
+                       url(r'^test/(.+)$', debug.test),
                        
                        #========================================================
                        # 3rd party apps

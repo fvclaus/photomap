@@ -33,3 +33,9 @@ function assertString(actual, message) {
       croak(typeof actual, "string", message);
    }
 }
+
+function assertInstance(instance, clazz, message) {
+   if (!(instance instanceof clazz)){
+      croak(typeof instance, clazz, message);
+   }
+}
