@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, CarouselPage, window, assert, assertTrue */
+/*global $, main, PhotoPages, window, assert, assertTrue, assertString, Photo*/
 
 "use strict";
 
@@ -10,8 +10,13 @@
  */
 
    
-var UIPhotoCarousel = function ($photos, imageSources, options) {
-   assertTrue($photos.size() > 0, "input parameter $photos has to contain at least one photo tag");
+var UIPhotoCarousel = function ($photos, photos, srcPropertyName, options) {
+   assertTrue($photos.size() > 0, "Can't build a Carousel without placeholder for photos.");
+
+   photos.forEach(function (photo) {
+      assertTrue(photo instanceof Photo);
+      assertString(photo[srcPropertyName]);
+   });
 
    this.defaults = {
       lazy : false,
@@ -19,6 +24,7 @@ var UIPhotoCarousel = function ($photos, imageSources, options) {
       context : this,
    };
    this.options = $.extend({}, this.defaults, options);
+   this.srcPropertyName = srcPropertyName;
    
    this.$items = $photos;
    // recalculate margins when window is resized
@@ -29,14 +35,14 @@ var UIPhotoCarousel = function ($photos, imageSources, options) {
    });
    this.size = this.$items.length;
 
-   this.dataPage = new CarouselPage(imageSources, this.size);
+   this.dataPage = new PhotoPages(photos, this.size, this.srcPropertyName);
    
    this.currentPage = null;
    this.isStarted = false;
 };
 
 /**
- * @author Marc-Leon Roemer
+ * @author Frederik Claus
  * @description defines handler to initialize and navigate through the carousel and to load images (supports lazy-loading)
  * @note every callback will be called everytime no matter if there is something to load/update or not
  * @param options.beforeLoad Called before the photos are loaded
@@ -72,7 +78,7 @@ UIPhotoCarousel.prototype = {
       }
       // load everything
       else {
-         imageSources = this.dataPage.getAllEntries();
+         imageSources = this.getAllImageSources();
       }
       // handler is called after all images are loaded
       loadHandler = function () {
@@ -192,39 +198,43 @@ UIPhotoCarousel.prototype = {
          this.navigateTo(index);
          this.currentPageIndex = index;
       } else {
-         this.currentPage = this.dataPage.getFirstPage();
+         this.currentPage = this.dataPage.getPage("first");
          this.currentPageIndex = 0;
          this._load();
       }
    },
-   insertPhoto : function (imageSource) {
-      console.log("Adding new photo "+imageSource+" to Carousel");
+   insertPhoto : function (photo) {
+      assertTrue(photo instanceof Photo);
+      
+      console.log("UIPhotoCarousel: Inserting new photo %s to Carousel.", photo);
       // update page
-      this.dataPage.insertEntry(imageSource);
-      var from = this.dataPage.getIndexOfEntry(imageSource);
+      this.dataPage.insertPhoto(photo);
+      var from = this.dataPage.getIndexOfPhoto(photo);
      
       // Did we insert on the current page? Then we need to update it
       if (this.isLastPage()){
-         console.log("New photo is inserted on current page. Reload current page from index %d.", from);
-         this.currentPage = this.dataPage.getCurrentPage();
+         console.log("UIPhotoCarousel: New photo is inserted on current page. Reload current page from index %d.", from);
+         this.currentPage = this.dataPage.getPage("current");
          this._load(from);
       }
    },
-   deletePhoto : function (imageSource) {
+   deletePhoto : function (photo) {
+      assertTrue(photo instanceof Photo);
 
       var instance = this, 
-          from = this.dataPage.getCurrentPage().indexOf(imageSource),
-          oldPage = this.dataPage.getCurrentPage();
+          oldPage = this.dataPage.getPage("current"),
+          // the oldPage consists of sources
+          from = oldPage.indexOf(photo[this.srcPropertyName]);
 
-      this.dataPage.deleteEntry(imageSource);
+      this.dataPage.deletePhoto(photo);
 
       // Did we delete on the current page?
-      if ($.inArray(imageSource, oldPage) !== -1) {
+      if (from !== -1) {
          this.$items
-            .filter("img[src='" + imageSource + "']")
+            .filter("img[src='" + photo[this.srcPropertyName] + "']")
             .fadeOut(500, function () {
                $(this).attr("src", null);
-               instance.currentPage = instance.dataPage.getCurrentPage();
+               instance.currentPage = instance.dataPage.getPage("current");
                // we need to update everything from 'from' to the last entry of the oldPage
                //TODO get the real length of the oldPage, currently this will always be this.size
                instance._load(from, oldPage.length);
@@ -248,10 +258,10 @@ UIPhotoCarousel.prototype = {
 
       switch (to) {
       case "start":
-         this.currentPage = this.dataPage.getFirstPage();
+         this.currentPage = this.dataPage.getPage("first");
          break;
       case "end":
-         this.currentPage = this.dataPage.getLastPage();
+         this.currentPage = this.dataPage.getPage("last");
          break;
       default:
          this.currentPage = this.dataPage.getPage(to);
@@ -260,18 +270,18 @@ UIPhotoCarousel.prototype = {
       this._load();
    },
    navigateLeft : function () {
-      this.currentPage = this.dataPage.getPreviousPage();
+      this.currentPage = this.dataPage.getPage("previous");
       this._load();
    },
    navigateRight : function () {
-      this.currentPage = this.dataPage.getNextPage();
+      this.currentPage = this.dataPage.getPage("next");
       this._load();
    },
    isLastPage : function () {
       return this.dataPage.isLastPage();
    },
    getAllImageSources : function () {
-      return this.dataPage.getAllEntries();
+      return this.dataPage.getAllImageSources();
    }
 };
    

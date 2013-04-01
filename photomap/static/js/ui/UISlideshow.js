@@ -71,7 +71,7 @@ UISlideshow.prototype = {
          imageSources.push(photo.photo);
       });
       // initialize carousel
-      this.carousel = new UIPhotoCarousel(this.$inner.find("img.mp-slideshow-image"), imageSources, options);
+      this.carousel = new UIPhotoCarousel(this.$inner.find("img.mp-slideshow-image"), photos, "photo", options);
       
       if (photos.length !== 0) {
          $(".mp-slideshow-no-image-msg").hide();
@@ -105,7 +105,7 @@ UISlideshow.prototype = {
       // this is unfortunate, because the slideshow behaves differntly than the gallery
       if (this.isStarted){
          // does not move to the new photo, because photo cant be on current page
-         this.carousel.insertPhoto(photo.photo);
+         this.carousel.insertPhoto(photo);
          // updating description & photo number is handled in update
       }
    },
@@ -119,7 +119,7 @@ UISlideshow.prototype = {
       // @see insertPhoto
       if (this.isStarted) {
          // automatically delete if photo is on current page
-         this.carousel.deletePhoto(photo.photo);
+         this.carousel.deletePhoto(photo);
          // update will take of resetting if it was the last one
       }
    },

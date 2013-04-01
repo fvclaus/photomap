@@ -43,6 +43,14 @@ Photo.prototype = {
    openPhoto : function () {
       main.getUIState().setCurrentLoadedPhoto(this);
       main.getUI().getGallery().triggerClickOnPhoto(this);
+   },
+   equals : function (other) {
+      if (other instanceof Photo) {
+         return other.id === this.id;
+      } else {
+         return false;
+      }
    }
+   
 };
 

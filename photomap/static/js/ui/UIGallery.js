@@ -109,7 +109,7 @@ UIGallery.prototype =  {
       photos.forEach(function (photo, index) {
          imageSources.push(photo.thumb);
       });
-      this.carousel = new UIPhotoCarousel(this.$inner.find("img.mp-thumb"), imageSources, options);
+      this.carousel = new UIPhotoCarousel(this.$inner.find("img.mp-thumb"), photos, "thumb", options);
       this.fullGallery.setCarousel(this.carousel);
 
       // disable ui while loading & show loader
@@ -134,7 +134,7 @@ UIGallery.prototype =  {
       
       // this.imageSources.push(photo.thumb);
       // automatically adds the photo if we are on last page
-      this.carousel.insertPhoto(photo.thumb);
+      this.carousel.insertPhoto(photo);
       // show teaser after the photo is loaded
       this.showTeaser = true;
       this.currentPhoto = photo;
@@ -159,7 +159,7 @@ UIGallery.prototype =  {
       assert(this.isStarted, true, "gallery has to be started already");
       // automatically delete if photo is on current page
       // otherwise we dont care
-      this.carousel.deletePhoto(photo.thumb);
+      this.carousel.deletePhoto(photo);
       this.fullGallery.deletePhoto(photo);
    },
    /**
