@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, InfoMarker, Photo, main, ZOOM_LEVEL_CENTERED, google */
+/*global $, InfoMarker, Photo, main, ZOOM_LEVEL_CENTERED, google  */
 
 "use strict";
 

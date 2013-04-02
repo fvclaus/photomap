@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, UIMap, UITools,  UIState, UIControls, UIGallery, UISlideshow, UIInput, UIInformation, UIStatusMessage, DASHBOARD_VIEW, ALBUM_VIEW, Album, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, Photo, Place */
+/*global $, main, UIMap, UITools,  UIState, ModelFunctionView, GalleryView, UISlideshow, UIInput, UIInformation, UIStatusMessage, DASHBOARD_VIEW, ALBUM_VIEW, Album, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, Photo, Place, PlacePresenter */
 
 "use strict";
 
@@ -14,16 +14,17 @@ var UI, state, albums;
 
 UI = function () {
    this.tools = new UITools();
-   this.controls = new UIControls();
+   this.controls = new ModelFunctionView();
    this.input = new UIInput();
    this.state = new UIState(this);
    this.information = new UIInformation();
    this.message = new UIStatusMessage();
 
    if (this.state.isAlbumView()) {
-      this.gallery = new UIGallery();
+      this.gallery = new GalleryView();
       this.slideshow = new UISlideshow();
    }
+
    this._isDisabled = false;
 };
 
@@ -38,12 +39,12 @@ UI.prototype = {
     * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
     */
    preinit : function () {
-      this.controls.preinit();
       if (this.state.isAlbumView()){
          this.slideshow.preinit();
       }
    },
    init : function () {
+      // decide which listener to bind
       this.controls.init();
       this.information.init();
       if (this.state.isAlbumView()){
@@ -90,7 +91,6 @@ UI.prototype = {
       });
       place.show();
       this.getState().insertPlace(place);
-      this.getControls().bindPlaceListener(place);
       //TODO triggerDoubleClick does not respond, because the UI is still disabled at that point
       place.openPlace();
    },
@@ -163,7 +163,6 @@ UI.prototype = {
       });
       album.show();
       this.getState().insertAlbum(album);
-      this.getControls().bindAlbumListener(album);
       //redirect to new albumview
       //triggerDoubleClick does not work on the time, because the UI is still disabled from UIInput
       album.openURL();

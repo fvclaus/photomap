@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, google, Marker, ZOOM_LEVEL_CENTERED, PLACE_VISITED_ICON, PLACE_SELECTED_ICON, PLACE_UNSELECTED_ICON, PLACE_DISABLED_ICON */
+/*global $, main, google, Marker, ZOOM_LEVEL_CENTERED, PLACE_VISITED_ICON, PLACE_SELECTED_ICON, PLACE_UNSELECTED_ICON, PLACE_DISABLED_ICON, MarkerPresenter */
 
 "use strict";
 
@@ -23,7 +23,8 @@ var InfoMarker = function (data) {
    this.setImplementation(this.map.createMarker(data));
    // show only when requested
    this.hide();
-
+   this.presenter = new MarkerPresenter(this);
+   this._bindMarkerListener();
 };
 
 InfoMarker.prototype = {
@@ -116,7 +117,7 @@ InfoMarker.prototype = {
       this.map.triggerDblClickOnMarker(this);
    },
    triggerMouseOver : function () {
-      this.map.triggerMouseOverOnMarker(this);
+      this.presenter.mouseOver();
    },
    showVisitedIcon : function () {
       this._setOption({icon: PLACE_VISITED_ICON});
@@ -142,4 +143,17 @@ InfoMarker.prototype = {
          this.MapMarker.setZIndex(options.zindex);
       }
    },
+   /**
+    * @private
+    */
+   _bindMarkerListener : function () {
+      var instance = this;
+
+      this.addListener("mouseover", function () {
+         instance.presenter.mouseOver();
+      });
+      this.addListener("mouseout", function () {
+         instance.presenter.mouseOut();
+      });
+   }
 };

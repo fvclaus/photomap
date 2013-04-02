@@ -1,5 +1,5 @@
 /*jslint */
-/*global ClientState, ClientServer, UI, UIMap, preinit, init, initializeTest, window */
+/*global ClientState, ClientServer, UI, MapView, preinit, init, initializeTest, window */
 
 "use strict";
 
@@ -26,8 +26,7 @@ Main.prototype = {
    
    preinit : function () {
 
-      this.map = new UIMap();
-      this.map.preinit();
+      this.map = new MapView();
       // load markers on map
       this.clientServer.preinit();
       // initialise parts of UI that don't need the data loaded from the server

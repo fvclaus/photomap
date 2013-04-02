@@ -87,28 +87,6 @@ AlbumPresenter.prototype = {
          },
          context : this,
       });
-   },
-   bindListener : function (album) {
-            
-      var instance = this, albums, state,
-          editControls = main.getUI().getControls().getEditControls();
-      state = main.getUIState();
-      
-      if (album !== undefined) {
-         albums = [album];
-      } else {
-         albums = state.getAlbums();
-      }
-      albums.forEach(function (album) {
-         album.addListener("mouseover", function () {
-            if (!main.getUI().isDisabled()) {
-               editControls.show(album);
-            }
-         });
-         album.addListener("mouseout", function () {
-            editControls.hide(true);
-         });
-      });
-   },
+   }
 };
             

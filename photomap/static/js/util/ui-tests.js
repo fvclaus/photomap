@@ -29,7 +29,8 @@ function selectPlace() {
 
    state.setCurrentPlace(place);
    state.setCurrentLoadedPlace(place);
-   main.getUI().getControls().setModifyPlace(true);
+   //TODO accessing private member!!!! 
+   main.getUI().getControls().presenter.setModifyPlace(true);
    return place;
 }
 
@@ -42,7 +43,8 @@ function selectAlbum() {
    albums = main.getUIState().getAlbums();
    album = albums[albums.length - 1];
    main.getUIState().setCurrentAlbum(album);
-   main.getUI().getControls().setModifyAlbum(true);
+   //TODO accessing private member!!!!
+   main.getUI().getControls().presenter.setModifyAlbum(true);
    return album;
 }
 
@@ -54,7 +56,8 @@ function selectPhoto() {
    photos = main.getUIState().getPhotos();
    photo = photos[0];
    main.getUIState().setCurrentPhoto(photo);
-   main.getUI().getControls().setModifyPhoto(true);
+   //TODO accessing private member!!!!
+   main.getUI().getControls().presenter.setModifyPhoto(true);
    return photo;
 }
 
