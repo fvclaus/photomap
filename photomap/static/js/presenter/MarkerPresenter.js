@@ -19,4 +19,4 @@ MarkerPresenter.prototype = {
       // the place is never seamlessly connected to a place, so we need to give the user some time
       main.getUI().getControls().hide(true);
    }
-}
+};
