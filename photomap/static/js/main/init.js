@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, $$, Main, document, gettext */
+/*global $, $$, gettext */
 
 "use strict";
 
@@ -18,7 +18,8 @@ var main = null;
 /**
  * @description Initializes main constructor. Needs document ready!
  */
-$(document).ready(function () {
+require(["main/Main", "dojo/domReady!"], function (Main) {
+
    // $$("body").css({
    //    "max-height" :  "500px",
    //    "min-height" : "0px",
@@ -32,12 +33,6 @@ $(document).ready(function () {
    //    .remove();
    main = new Main();
    // initialise js-classes
-   if (main && main.preinit) {
-      main.preinit();
-   } else if (main && main.init) {
-      main.init();
-   } else {
-      alert(gettext("INITIALISATION_NOT_POSSIBLE"));
-   }
+   main.preinit();
 });
 

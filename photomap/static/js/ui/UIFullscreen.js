@@ -79,7 +79,6 @@ UIFullscreen.prototype = {
       console.log("UIFullscreen: update started");
       var ui = main.getUI(),
          state = ui.getState(),
-         description = ui.getInformation(),
          photo = state.getCurrentLoadedPhoto(),
          instance = this;
 
@@ -159,7 +158,6 @@ UIFullscreen.prototype = {
    _updateTitle : function (photo) {
       
       $("#mp-fullscreen-title").text(photo.title);
-      //$("#mp-fullscreen-image-description").text(photo.description);
    }
 };
 

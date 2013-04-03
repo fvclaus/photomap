@@ -1,61 +1,63 @@
 /*jslint */
-/*global $, main, InfoMarker, google, window, assertTrue */
+/*global $, define, main, InfoMarker, google, window, assertTrue */
 
 "use strict";
 
 /*
  * Album.js
- * @author Marc Roemer
+ * @author Frederik Claus
  * @class Models an album that holds places
  */
 
-var Album = function (data) {
-   assertTrue(data.secret, "album secret must not be undefined");
-   
-   data.model = 'Album';
-   this.isOwner = data.isOwner || false;
-   this.secret = data.secret;
-   InfoMarker.call(this, data);
-   
-   this.checkIconStatus();
-   this._bindListener();
 
-};
+define(["dojo/_base/declare", "model/InfoMarker", ],
+       function (declare, InfoMarker, detail) {
+          console.log("Album: start");
+          return declare(InfoMarker, {
+             constructor : function (data) {
+                assertTrue(data.secret, "album secret Must not be undefined");
+                
+                data.model = 'Album';
+                this.isOwner = data.isOwner || false;
+                this.secret = data.secret;
+                
+                this.checkIconStatus();
+                this._bindListener();
 
-Album.prototype = $.extend({}, InfoMarker.prototype);
-
-/*
- * @private
- */
-Album.prototype._bindListener = function () {
-   
-   var state, information, instance = this;
-   state = main.getUIState();
-   information = main.getUI().getInformation();
-   /*
-    * @description Redirects on albumview of selected album.
-    */
-   this.addListener("click", function () {
-      
-      if (!main.getUI().isDisabled()) {
-         state.setCurrentAlbum(instance);
-         state.setCurrentLoadedAlbum(instance);
-         information.update(instance);
-      }
-   });
-   this.addListener("dblclick", function () {
-      //TODO this is problematique. it gets fired when a new album is added
-      //but the ui is still disabled at that moment
-      if (!main.getUI().isDisabled()) {
-         instance.openURL();
-      }
-   });
-};
-
-Album.prototype.openURL = function () {
-   window.location.href = '/album/view/' + this.secret + '-' + this.id;
-};
-
-Album.prototype.checkIconStatus = function () {
-   this.showVisitedIcon();
-};
+             },
+             /*
+              * @private
+              */
+             _bindListener : function () {
+                
+                var state = main.getUIState(), 
+                    instance = this;
+                /*
+                 * @description Redirects on albumview of selected album.
+                 */
+                this.addListener("click", function () {
+                   
+                   if (!main.getUI().isDisabled()) {
+                      state.setCurrentAlbum(instance);
+                      state.setCurrentLoadedAlbum(instance);
+                      require(["view/DetailView"], function (detail) {
+                         detail.update(instance);
+                      });
+                   }
+                });
+                this.addListener("dblclick", function () {
+                   //TODO this is problematique. it gets fired when a new album is added
+                   //but the ui is still disabled at that moment
+                   if (!main.getUI().isDisabled()) {
+                      instance.openURL();
+                   }
+                });
+             },
+             openURL : function () {
+                window.location.href = '/album/view/' + this.secret + '-' + this.id;
+             },
+             checkIconStatus : function () {
+                this.showVisitedIcon();
+             }
+          });
+       });

@@ -30,7 +30,9 @@ function selectPlace() {
    state.setCurrentPlace(place);
    state.setCurrentLoadedPlace(place);
    //TODO accessing private member!!!! 
-   main.getUI().getControls().presenter.setModifyPlace(true);
+   require(["view/ModelFunctionView"], function (modelFunctionView) {
+         modelFunctionView.presenter.setModifyPlace(true);
+   });
    return place;
 }
 
@@ -42,9 +44,10 @@ function selectPlace() {
 function selectAlbum() {
    albums = main.getUIState().getAlbums();
    album = albums[albums.length - 1];
-   main.getUIState().setCurrentAlbum(album);
    //TODO accessing private member!!!!
-   main.getUI().getControls().presenter.setModifyAlbum(true);
+   require(["view/ModelFunctionView"], function (modelFunctionView) {
+         modelFunctionView.presenter.setModifyAlbum(true);
+   });
    return album;
 }
 
@@ -56,8 +59,10 @@ function selectPhoto() {
    photos = main.getUIState().getPhotos();
    photo = photos[0];
    main.getUIState().setCurrentPhoto(photo);
-   //TODO accessing private member!!!!
-   main.getUI().getControls().presenter.setModifyPhoto(true);
+   //TODO accessing private member!!!!   
+   require(["view/ModelFunctionView"], function (modelFunctionView) {
+         modelFunctionView.presenter.setModifyPhoto(true);
+   });
    return photo;
 }
 
@@ -87,52 +92,55 @@ function initializeTest() {
 }
 
 function bindTestListener() {
-   var controls = main.getUI().getControls();
+   require(["view/ModelFunctionView"], function (modelFunctionView) {
+      
+      var controls = modelFunctionView;
+      
 
-
-   $("button.mp-insert-place").click(function () {
-      event = {
-         latLng : latLngPlace
-      };
-      google.maps.event.trigger(gmap, "click", event);
-   });
-   $("button.mp-insert-photo").click(function () {
-      controls.$insert.trigger("click");
-   });
-   $("button.mp-show-place").click(function () {
-      place = selectPlace();
-      place.triggerClick();
-   });
-   $("button.mp-show-photo").click(function () {
-      photo = selectPhoto();
-      photo.triggerClick();
-   });
-   $("button.mp-update-photo").click(function () {
-      selectPhoto();
-      controls.$update.trigger("click");
-   });
-   $("button.mp-delete-photo").click(function () {
-      selectPhoto();
-      controls.$delete.trigger("click");
-   });
-   $("button.mp-mouseover-place").click(function () {
-      selectPlace().triggerMouseOver();
-   });
-   $("button.mp-confirm-delete").click(function () {
-      main.getUI().getInput().confirmDelete();
-   });
-   $("button.mp-insert-album").click(function () {
-      event = {
-         latLng : latLngAlbum
-      };
-      google.maps.event.trigger(gmap, "click", event);
-   });
-   $("button.mp-mouseover-album").click(function () {
-      selectAlbum().triggerMouseOver();
-   });
-   $("button#mp-test-reset").click(function () {
-      // hack to prevent the dialog from closing
-      main.getClientState().write("UIState", "dialogAutoClose", false);
+      $("button.mp-insert-place").click(function () {
+         event = {
+            latLng : latLngPlace
+         };
+         google.maps.event.trigger(gmap, "click", event);
+      });
+      $("button.mp-insert-photo").click(function () {
+         controls.$insert.trigger("click");
+      });
+      $("button.mp-show-place").click(function () {
+         place = selectPlace();
+         place.triggerClick();
+      });
+      $("button.mp-show-photo").click(function () {
+         photo = selectPhoto();
+         photo.triggerClick();
+      });
+      $("button.mp-update-photo").click(function () {
+         selectPhoto();
+         controls.$update.trigger("click");
+      });
+      $("button.mp-delete-photo").click(function () {
+         selectPhoto();
+         controls.$delete.trigger("click");
+      });
+      $("button.mp-mouseover-place").click(function () {
+         selectPlace().triggerMouseOver();
+      });
+      $("button.mp-confirm-delete").click(function () {
+         main.getUI().getInput().confirmDelete();
+      });
+      $("button.mp-insert-album").click(function () {
+         event = {
+            latLng : latLngAlbum
+         };
+         google.maps.event.trigger(gmap, "click", event);
+      });
+      $("button.mp-mouseover-album").click(function () {
+         selectAlbum().triggerMouseOver();
+      });
+      $("button#mp-test-reset").click(function () {
+         // hack to prevent the dialog from closing
+         main.getClientState().write("UIState", "dialogAutoClose", false);
+      });
    });
 }
 

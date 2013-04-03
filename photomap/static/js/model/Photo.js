@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main */
+/*global $, main, define */
 
 "use strict";
 
@@ -8,49 +8,56 @@
  * @class is stored in a place object, encapsulation of an marker
  */
 
-var Photo;
 
-Photo = function (data, index) {
-   
-   this.model = 'Photo';
-   this.photo = data.photo;
-   this.thumb = data.thumb;
-   this.title = data.title;
-   this.description = (data.description === "")? null : data.description;
-   this.id = data.id;
-   this.order = data.order;
-   this.visited = main.getClientState().isVisitedPhoto(this.id);
-};
-
-Photo.prototype = {
-   getModel : function () {
-      return this.model;
-   },
-   checkBorder : function () {
-      //need reselection because anchors change
-      if (this.visited) {
-         $("img[src='" + this.thumb + "']").addClass("visited");
-      }
-   },
-   showBorder : function (bool) {
-      this.visited = bool;
-      main.getClientState().addPhoto(this.id);
-      this.checkBorder();
-   },
-   triggerClick : function () {
-      this.openPhoto();
-   },
-   openPhoto : function () {
-      main.getUIState().setCurrentLoadedPhoto(this);
-      main.getUI().getGallery().triggerClickOnPhoto(this);
-   },
-   equals : function (other) {
-      if (other instanceof Photo) {
-         return other.id === this.id;
-      } else {
-         return false;
-      }
-   }
-   
-};
+define(["dojo/_base/declare", "model/InfoMarker"],
+       function (declare, InfoMarker) {
+          
+          return declare(null ,{
+             constructor : function (data, index) {
+                
+                this.model = 'Photo';
+                this.photo = data.photo;
+                this.thumb = data.thumb;
+                this.title = data.title;
+                this.description = (data.description === "")? null : data.description;
+                this.id = data.id;
+                this.order = data.order;
+                this.visited = main.getClientState().isVisitedPhoto(this.id);
+             },
+             getModel : function () {
+                return this.model;
+             },
+             checkBorder : function () {
+                //need reselection because anchors change
+                if (this.visited) {
+                   $("img[src='" + this.thumb + "']").addClass("visited");
+                }
+             },
+             showBorder : function (bool) {
+                this.visited = bool;
+                main.getClientState().addPhoto(this.id);
+                this.checkBorder();
+             },
+             triggerClick : function () {
+                this.openPhoto();
+             },
+             openPhoto : function () {
+                main.getUIState().setCurrentLoadedPhoto(this);
+                //TODO events?
+                var instance = this; 
+                require(["view/GalleryView"], function (gallery) {
+                   gallery.triggerClickOnPhoto(instance);
+                });
+             },
+             equals : function (other) {
+                //TODO how does the instanceof check work with Dojo?
+                if (other instanceof this.constructor) {
+                   return other.id === this.id;
+                } else {
+                   return false;
+                }
+             }
+             
+          });
+       });
 
