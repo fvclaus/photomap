@@ -11,8 +11,9 @@
 
 define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
        function (declare, Photo, Place, Album) {
-          var DetailView = declare(null, {
+          return declare(null, {
              constructor : function () {
+                this.$pageTitle = $("#mp-page-title h1");
                 this.$explanationContainer = $("#mp-detail");
                 this.$teaserContainer = $("#mp-detail-teaser");
 
@@ -31,10 +32,8 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 this.currentPlaceOrAlbum = null;
                 this._bindListener();
              },
-
-             
-             init : function () {
-                this._bindUIListener();
+             initialize : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
              },
              /**
               * @public
@@ -45,8 +44,10 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
               */
              update : function (model) {
                 assertTrue(model instanceof Photo || model instanceof Place || model instanceof Album, "input parameter model has to be instance of Photo or Place or Album");
-
+                
+                console.log(model);
                 if (model instanceof Photo) {
+                   console.log("updating teaser");
                    this.currentPhoto = model;
                    this._updateTeaser(model);
                    this._hideDetail();
@@ -68,13 +69,33 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 if (model instanceof Photo && model === this.currentPhoto) {
                    this.$teaserDescription.empty();
                    this.$teaserTitle.empty();
-                } else if ((model instanceof Album || model instanceof Place) && model === this.currentPlaceOrAlbum ) {
+                } else if ((model instanceof Album || model instanceof Place) && model === this.currentPlaceOrAlbum) {
                    this.$description.empty();
                    this.$title.empty();
                 }
              },
+             _finalizeInitialization : function () {
+                var communicator = main.getCommunicator();
+                
+                if (main.getUIState().isAlbumView()) {
+                   this._updatePageTitle();
+                   this.update(main.getUIState().getCurrentLoadedAlbum());
+                   this._bindPageTitleListener();
+                }
+                
+                this._bindUIListener();
+                communicator.subscribe("change:photo change:place change:album", this.update, this);
+                communicator.subscribe("delete:photo delete:place delete:album", this.empty, this);
+                communicator.subscribe("change:usedSpace", this._updateUsedSpace, this);
+             },
+             _updatePageTitle : function () {
+                assertTrue(main.getUIState().isAlbumView(), "page-title is just supposed to be changed in albumview");
+                
+                console.log(main.getUIState().getCurrentLoadedAlbum().title);
+                this.$pageTitle.text(main.getUIState().getCurrentLoadedAlbum().title);
+             },
              _updateDetail : function (model) {
-                var title = model.getModel()+": "+model.title,
+                var title = model.getModel() + ": " + model.title,
                     description = model.description;
                 // use text() instead of html() to prevent script tag injection or similiar
                 if (description === null) {
@@ -90,14 +111,13 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
               */
              _updateTeaser : function (photo) {
                 var shortDescription,
-                    title = "Photo: "+photo.title,
+                    title = "Photo: " + photo.title,
                     description = photo.description;
 
                 if (description !== null) {
-                   shortDescription = main.getUI().getTools().cutText(description, 250);
+                   shortDescription = main.getTools().cutText(description, 250);
                    this.$teaserDescription.text(shortDescription);
-                }
-                else{
+                } else {
                    shortDescription = this.noTeaserDescription;
                    description = this.noDescription;
                    // this is from a trusted source and might be html
@@ -149,6 +169,16 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                    }
                 });
              },
+             _bindPageTitleListener : function () {
+                assertTrue(main.getUIState().isAlbumView(), "besides in albumview, page-title isn't supposed to have a listener");
+                
+                this.$pageTitle.on('click', function () {
+
+                   if (!main.getUI().isDisabled()) {
+                      main.getUI().getInformation().update(main.getUIState().getCurrentLoadedAlbum());
+                   }
+                });
+             },
              /**
               * @private
               * @description adds Listener to UI. To react to events fired by other classes such as UISlideshow
@@ -164,16 +194,9 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 
              },
              /* ---- other stuff ---- */
-             updateUsedSpace : function () {
+             _updateUsedSpace : function (data) {
                 
-                var used, total;
-                used = main.getClientState().getUsedSpace();
-                total = main.getClientState().getQuota();
-                
-                $("#mp-user-limit").text(used + "/" + total + " MB");
+                $("#mp-user-limit").text(data.used + "/" + data.total + " MB");
              }
-          }),
-              _instance = new DetailView();
-
-          return _instance;
-       });
+          });
+      });

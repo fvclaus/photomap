@@ -9,16 +9,15 @@
  * @requires ClientServer
  */
        
-define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", "view/ModelFunctionView", "presenter/PhotoPresenter", "dojo/domReady!"],
-       function (declare, PhotoCarouselView, fullGallery, modelFunction, PhotoPresenter) {
+define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", "presenter/PhotoPresenter", "dojo/domReady!"],
+       function (declare, PhotoCarouselView, FullGalleryView, PhotoPresenter) {
 
-          /**
-           * @author Marc Roemer
-           * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
-           * @requires UICarousel
-           */
-          var GalleryView = declare(null, {
-                                    
+/**
+ * @author Marc Roemer
+ * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
+ * @requires UICarousel
+ */
+          return declare(null, {
              constructor : function () {
                 this.$container = $('#mp-gallery');
                 this.$inner = $('#mp-gallery-inner');
@@ -40,32 +39,20 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 this.showTeaser = false;
                 this.currentPhoto = null;
                 
-                this.fullGallery = fullGallery;
+                this.fullGallery = new FullGalleryView();
                 this.$controls = $()
                    .add($(".mp-option-insert-photo"))
                    .add($(".mp-open-full-gallery"));
 
                 // not present in guest mode
                 this.$insert = $(".mp-option-insert-photo");
-                this.modelFunction = modelFunction;
 
                 this.presenter = new PhotoPresenter();
              },
 
 
-
-
-             init : function () {
-
-                if (main.getClientState().isAdmin()) {
-                   //TODO remove dnd
-                   // this.$container.bind('dragover.FileUpload', modelFunction.handleGalleryDragover);
-                   // this.$container.bind('drop.FileUpload', modelFunction.handleGalleryDrop);
-                   this._bindListener();
-                }
-                this._bindNavigationListener();
-                this._bindStartSlideshowListener();
-                this._bindSlideshowNavigationListener();
+             initialize : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
              },
              /**
               * Triggers a click on the photo. Bypasses every listener, because they might be disabled
@@ -73,10 +60,8 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
              triggerClickOnPhoto : function (photo) {
                 var $image = this.$photos.filter("[src='" + photo.thumb + "']"),
                     index = this._getIndexOfImage($image);
-                if (index !== -1){
-                   require(["view/SlideshowView"], function (slideshow) {
-                      slideshow.navigateTo(index);
-                   });
+                if (index !== -1) {
+                   main.getUI().getSlideshow().navigateTo(index);
                 } else {
                    console.log("Could not find photo %s in UIGallery. Maybe it is not loaded yet", photo.photo);
                 }
@@ -133,9 +118,41 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 }
              },
              /**
+              * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
+              */
+             reset : function () {
+                
+                this.isStarted = false;
+                $(".mp-gallery-loader").addClass("mp-nodisplay");
+                this.$controls.addClass("mp-nodisplay");
+                if (this.carousel !== null) {
+                   this.carousel.reset();
+                   this.carousel = null;
+                }
+                // display table is necessary to center the message
+                this.$isEmpty.css("display", "table");
+             },
+             _finalizeInitialization : function () {
+                var controls = main.getUI().getControls(),
+                    communicator = main.getCommunicator();
+                
+                if (main.getClientState().isAdmin()) {
+                   this.$container.bind('dragover.FileUpload', controls.handleGalleryDragover);
+                   this.$container.bind('drop.FileUpload', controls.handleGalleryDrop);
+                   this._bindListener();
+                }
+                this._bindNavigationListener();
+                this._bindStartSlideshowListener();
+                this._bindSlideshowNavigationListener();
+                
+                communicator.subscribe("delete:photo", this._deletePhoto, this);
+                communicator.subscribe("processed:photo", this._insertPhoto, this);
+                communicator.subscribe("delete:place", this._placeDeleteReset, this);
+             },
+             /**
               * @description adds new photo to gallery.
               */
-             insertPhoto : function (photo) {
+             _insertPhoto : function (photo) {
                 
                 // this.imageSources.push(photo.thumb);
                 // automatically adds the photo if we are on last page
@@ -159,7 +176,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
               * @description Deletes an existing Photo. If the Photo was on the current page, fade it out and move all
               * remaining Photos to the left. If Photo was the last Photo, show an empty page.
               */
-             deletePhoto : function (photo) {
+             _deletePhoto : function (photo) {
                 // not possible to delete something without the gallery started
                 assert(this.isStarted, true, "gallery has to be started already");
                 // automatically delete if photo is on current page
@@ -168,21 +185,13 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 this.fullGallery.deletePhoto(photo);
              },
              /**
-              * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
+              * @description Resets the Gallery if the deleted place was the one that is currently open
               */
-             reset : function () {
-                
-                this.isStarted = false;
-                $(".mp-gallery-loader").addClass("mp-nodisplay");
-                this.$controls.addClass("mp-nodisplay");
-                if (this.carousel !== null) {
-                   this.carousel.reset();
-                   this.carousel = null;
+             _placeDeleteReset : function (place) {
+                if (main.getUIState().getCurrentPlace() === place) {
+                   this.reset();
                 }
-                // display table is necessary to center the message
-                this.$isEmpty.css("display", "table");
              },
-
              /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
               */
@@ -304,7 +313,8 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
 
                 var ui = main.getUI(),
                     state = ui.getState(),
-                    tools = ui.getTools(),
+                    tools = main.getTools(),
+                    controls = ui.getControls(),
                     authorized = main.getClientState().isAdmin(),
                     photo = null,
                     instance = this;
@@ -333,8 +343,8 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                          
                          if (authorized) {
                             //TODO accessing private member!!!!
-                            instance.modelFunction.presenter.setModifyPhoto(true);
-                            instance.modelFunction.showPhotoControls($el);
+                            controls.presenter.setModifyPhoto(true);
+                            controls.showPhotoControls($el);
                          }
                       }
                    })
@@ -344,7 +354,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                       if (!ui.isDisabled()) {
                          
                          if (authorized) {
-                            instance.modelFunction.hide(true);
+                            controls.hide(true);
                          }
                       }
                    });
@@ -402,18 +412,16 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                       var $el = $(this).children();
                       
                       if (!ui.isDisabled()) {
-                         instance.modelFunction.hide(false);
+                         ui.getControls().hide(false);
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)
-                         require(["view/SlideshowView"], function (slideshow) {
-                            slideshow.navigateTo(instance._getIndexOfImage($el));
-                         });
+                         ui.getSlideshow().navigateTo(instance._getIndexOfImage($el));
                       }
                    });
              },
-          }),
-              _instance = new GalleryView();
-          //singleton
-          return _instance;
+          });
+          //     _instance = new GalleryView();
+          // //singleton
+          // return _instance;
        });

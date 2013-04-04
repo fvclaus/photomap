@@ -37,12 +37,9 @@ function toggleTutorialDesc($topic) {
 
 var trigger;
 
-// no need wait for anything else than document ready
+
 $(document).ready(function () {
    
-   // main.getUI().getTools().setCursor($(".mp-faq-question"), "pointer");
-   // main.getUI().getTools().setCursor($(".mp-tutorial-subtopic"), "pointer");
-
    $(".mp-faq-question").bind('click', function () {
       trigger = $(this);
       toggleFAQAnswers(trigger);

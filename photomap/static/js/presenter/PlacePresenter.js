@@ -1,10 +1,19 @@
-/*global main, $, define, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput*/
+/*global main, define, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput*/
 "use strict";
 
 
-define(["dojo/_base/declare", "view/DetailView"], 
-       function (declare, detailView) {
+
+define(["dojo/_base/declare"],
+       function (declare) {
+
           return declare(null, {
+             initialize : function () {
+                var communicator = main.getCommunicator();
+                communicator.subscribe("processed:photo", this._insertPhoto, this);
+                communicator.subscribe("delete:photo", this._deletePhoto, this);
+                communicator.subscribe("processed:place", this._insertPlace, this);
+                communicator.subscribe("delete:place", this._deletePlace, this);
+             },
              insert : function (event) {
                 var instance = this,
                     state = main.getUIState(),
@@ -28,7 +37,9 @@ define(["dojo/_base/declare", "view/DetailView"],
                       state.store(TEMP_DESCRIPTION_KEY, instance.description);
                    },
                    success : function (data) {
-                      main.getUI().insertPlace(event.lat, event.lng, data);      
+                      data.lng = lng;
+                      data.lat = lat;
+                      main.getCommunicator().publish("insert:place", data);
                    },
                    url : "/insert-place",
                    context : this
@@ -50,7 +61,7 @@ define(["dojo/_base/declare", "view/DetailView"],
                    success : function () {
                       place.title = this._title;
                       place.description = this._description;
-                      detailView.update(place);
+                      main.getCommunicator().publish("change:place", place);
                    },
                    url : "/update-place",
                    context : this
@@ -62,15 +73,28 @@ define(["dojo/_base/declare", "view/DetailView"],
                    type : UIInput.CONFIRM_DIALOG,
                    load : function () {
                       $("input[name='id']").val(place.id);
-                      $("span#mp-dialog-place-title").text(place.title+"?");
+                      $("span#mp-dialog-place-title").text(place.title + "?");
                    },
                    success : function () {
-                      main.getUI().deletePlace(place);
+                      main.getCommunicator().publish("delete:place", place);
                    },
                    url: "/delete-place",
-                   context : this,
+                   context : this
                 });
+             },
+             _insertPhoto : function (photo) {
+                main.getUIState().getCurrentLoadedPlace().insertPhoto(photo);
+             },
+             _deletePhoto : function (photo) {
+                main.getUIState().getCurrentLoadedPlace().deletePhoto(photo);
+             },
+             _insertPlace : function (place) {
+                place.show();
+                place.openPlace();
+             },
+             _deletePlace : function (place) {
+                place.hide();
+                main.getUIState().deletePlace(place);
              }
           });
        });
-                         

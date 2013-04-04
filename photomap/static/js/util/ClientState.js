@@ -8,12 +8,10 @@
  * @description Defines methods to check whether user is admin or not and reads/writes cookies, describing the state of the client (visited photos, storage-space left, ...)
  */
 
-define(["dojo/_base/declare", "view/DetailView"], 
-       function (declare, detailView) {
-          
-          var ClientState =  declare(null,  {
+define(["dojo/_base/declare"], 
+       function (declare) {
+          var ClientState = declare(null,  {
              constructor : function () {
-                
                 var value = $.cookie("visited") || "";
 
                 this._parseValue(value);
@@ -25,9 +23,17 @@ define(["dojo/_base/declare", "view/DetailView"],
                 this.usedSpace = null;
                 this.quota = null;
              },
-             
-             init : function () {
-                this.quota = main.getUI().getTools().bytesToMbyte($.cookie("quota"));
+
+             /**
+              * @author Marc-Leon Römer
+              * @description Defines methods to check whether user is admin or not and reads/writes cookies, describing the state of the client (visited photos, storage-space left, ...)
+              */
+
+             initialize : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this.finalizeInitialization, this);
+             },
+             finalizeInitialization : function () {
+                this.quota = main.getTools().bytesToMbyte($.cookie("quota"));
                 this.updateUsedSpace();
              },
              /**
@@ -92,10 +98,14 @@ define(["dojo/_base/declare", "view/DetailView"],
              },
              updateUsedSpace : function () {
                 
-                this.usedSpace =  main.getUI().getTools().bytesToMbyte($.cookie("used_space"));
-                detailView.updateUsedSpace();
+                var instance = this;
+                this.usedSpace =  main.getTools().bytesToMbyte($.cookie("used_space"));
+                main.getCommunicator().publish("change:usedSpace", {
+                   used: instance.usedSpace,
+                   total: instance.quota
+                });
              },
-             write : function (ns, key, value){
+             write : function (ns, key, value) {
                 var data = $.cookie(ns);
 
                 if (data === null) {
@@ -105,10 +115,10 @@ define(["dojo/_base/declare", "view/DetailView"],
 
                 data[key] = value;
 
-                try{
+                try {
                    data = JSON.stringify(data);
                 } catch (stringifyError) {
-                   console.log("Could not stringify value %s. Reiceved error %s.", value, stringifyError.toString());
+                   console.log("Could not stringify value %s. Received error %s.", value, stringifyError.toString());
                    return;
                 }
                 
@@ -118,7 +128,7 @@ define(["dojo/_base/declare", "view/DetailView"],
              read : function (ns, key, defaultValue) {
                 var data = $.cookie(ns);
                 
-                try{
+                try {
                    data = JSON.parse(data);
                 } catch (parseError) {
                    console.log("Ns %s seems to have invalid data %s.", ns, data);
@@ -137,6 +147,6 @@ define(["dojo/_base/declare", "view/DetailView"],
                 }
              }
           }),
-              _instance = new ClientState();
+          _instance = new ClientState();
           return _instance;
        });

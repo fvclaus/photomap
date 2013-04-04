@@ -21,7 +21,7 @@ define(["dojo/_base/declare", "presenter/MarkerPresenter"],
                 // reading from input elements will return '' if nothing has been entered
                 this.description = (data.description === "")? null : data.description;
                 this.lat = data.lat;
-                this.lng = data.lon;
+                this.lng = data.lng;
 
                 this.map = main.getMap();
                 // generate a new Marker from the Map object
@@ -45,6 +45,12 @@ define(["dojo/_base/declare", "presenter/MarkerPresenter"],
               */
              hide : function () {
                 this.map.hideMarker(this);
+             },
+             activate : function () {
+                this.active = true;
+             },
+             deactivate : function () {
+                this.active = false;
              },
              /**
               * @public

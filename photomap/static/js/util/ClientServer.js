@@ -76,7 +76,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view
                     data = {
                        "id" : idFromUrl.exec(window.location.pathname)[1]
                     }, 
-                    tools = main.getUI().getTools(),  
+                    tools = main.getTools(),  
                     instance = this;
 
                 $.ajax({

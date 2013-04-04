@@ -1,9 +1,9 @@
 /*jslint */
-/*global $, window, main */
+/*global $, document, window, main */
 
 "use strict";
 
-function init() {
+$(document).ready(function () {
    
    var index = 0,
        hash = window.location.hash;
@@ -24,5 +24,5 @@ function init() {
       disabled : [1],
       active : index
    });
-}
+});
 

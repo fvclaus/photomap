@@ -92,7 +92,7 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
                 
                 var instance = this,
                     state = main.getUIState(), 
-                    tools = main.getUI().getTools(), url, id;
+                    tools = main.getTools(), url, id;
                 
 
                 if (!main.getUI().isDisabled()) {

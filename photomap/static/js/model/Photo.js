@@ -45,9 +45,8 @@ define(["dojo/_base/declare", "model/InfoMarker"],
                 main.getUIState().setCurrentLoadedPhoto(this);
                 //TODO events?
                 var instance = this; 
-                require(["view/GalleryView"], function (gallery) {
-                   gallery.triggerClickOnPhoto(instance);
-                });
+
+                main.getUI().getGallery().triggerClickOnPhoto(instance);
              },
              equals : function (other) {
                 //TODO how does the instanceof check work with Dojo?

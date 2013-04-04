@@ -93,6 +93,5 @@ $(document).ready(function () {
    // source: http://dev.w3.org/csswg/css3-values/#vw-unit
    // vh is supported in ff 19 and chrome 20
    bindUserMenuListener();
-   // main.getUI().getTools().centerElement($(".mp-page-title"), $(".mp-page-title h1"), "vertical");
 });
 

@@ -41,7 +41,7 @@ define(["dojo/_base/declare", "model/Photo", "util/PhotoPages"],
                 // recalculate margins when window is resized
                 $(window).resize(function () {
                    $photos.each(function () {
-                      main.getUI().getTools().centerElement($(this), "vertical");
+                      main.getTools().centerElement($(this), "vertical");
                    });
                 });
                 this.size = this.$items.length;
@@ -163,8 +163,8 @@ define(["dojo/_base/declare", "model/Photo", "util/PhotoPages"],
                       // center element
                       // give the element its later height
                       $(this).attr("src", imageSource);
-                      // set margin-top accordingly.
-                      main.getUI().getTools().centerElement($(this), "vertical");
+                      // set margin-top accordingly. 
+                      main.getTools().centerElement($(this), "vertical"); 
                       // remove the img again to fade it in nicely
                       $(this).removeAttr("src");
                       if ( imageSource !== null) {
