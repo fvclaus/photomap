@@ -33,7 +33,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                 this._isDisabled = true;
              },
 
-             initialize : function () {
+             init : function () {
                 var tools = main.getTools(),
                     communicator = main.getCommunicator(),
                     instance = this;

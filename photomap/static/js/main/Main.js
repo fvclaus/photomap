@@ -9,8 +9,8 @@
  * @class Starts the application. Retrieves all objects from server and intialises the rest afterwards. The constructor must be called after dom is ready.
  */
 
-define(["dojo/_base/declare", "ui/UI", "view/MapView", "util/ClientServer", "util/ClientState", "util/Communicator", "util/DataProcessor"],
-       function (declare, ui, MapView, ClientServer, clientState, communicator, dataProcessor) {
+define(["dojo/_base/declare", "ui/UI", "view/MapView", "util/ClientServer", "util/ClientState", "util/Communicator", "util/DataProcessor", "util/Tools"],
+       function (declare, ui, MapView, ClientServer, clientState, communicator, dataProcessor, tools) {
 
           return declare(null , {
              
@@ -23,10 +23,10 @@ define(["dojo/_base/declare", "ui/UI", "view/MapView", "util/ClientServer", "uti
                 this.dataProcessor = dataProcessor;
                 // instance of Menu
                 this.ui = ui;
-                this.tools = new Tools();
+                this.tools = tools;
              },
    
-             initialize : function () {
+             init : function () {
                 this.map = new MapView();
              },
              getUIState : function () {

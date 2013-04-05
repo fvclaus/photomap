@@ -32,8 +32,8 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 this.currentPlaceOrAlbum = null;
                 this._bindListener();
              },
-             initialize : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
+             init : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
              },
              /**
               * @public
@@ -74,7 +74,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                    this.$title.empty();
                 }
              },
-             _finalizeInitialization : function () {
+             _finalizeInit : function () {
                 var communicator = main.getCommunicator();
                 
                 if (main.getUIState().isAlbumView()) {

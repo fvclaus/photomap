@@ -11,9 +11,9 @@ define(["dojo/_base/declare", "presenter/PlacePresenter", "presenter/AlbumPresen
                 this.placePresenter = new PlacePresenter();
                 this.albumPresenter = new AlbumPresenter();
              },
-             initialize : function () {
-                this.placePresenter.initialize();
-                this.albumPresenter.initialize();
+             init : function () {
+                this.placePresenter.init();
+                this.albumPresenter.init();
              },
              click : function (event) {
                 var instance = this, 

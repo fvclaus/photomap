@@ -1,3 +1,4 @@
+
 /*jslint */
 /*global $, define, $$, main, DASHBOARD_VIEW, ALBUM_VIEW, window, assert, assertTrue */
 
@@ -24,8 +25,8 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
 
                 this.presenter = new ModelFunctionPresenter();
              },
-             initialize : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
+             init : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
              },
              /**
               * @description Displays modify control under a photo
@@ -48,7 +49,7 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                 }
                 this._showMarkerControls(center);
              },
-             _finalizeInitialization : function () {
+             _finalizeInit : function () {
                 var state =  main.getUIState(),
                     clientstate = main.getClientState();
 

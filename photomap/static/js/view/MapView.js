@@ -58,8 +58,8 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
 
 
 
-             initialize : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
+             init : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
              },
              /**
               * @public
@@ -266,7 +266,7 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
              createLatLng : function (lat, lng) {
                 return new google.maps.LatLng(lat, lng);
              },
-             _finalizeInitialization : function () {
+             _finalizeInit : function () {
                 
                 var authorized;
                 
@@ -294,7 +294,7 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
                 // set map options if interactive
                 this.map.setOptions(this.mapOptions);
                 this._setMapCursor();
-                this.presenter.initialize();
+                this.presenter.init();
              },
              _showAsMarker : function (instances) {
 

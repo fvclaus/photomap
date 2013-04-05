@@ -6,7 +6,7 @@ define(["dojo/_base/declare"],
         function (declare) {
            return declare(null, {
 
-              initialize : function () {
+              init : function () {
                  var communicator = main.getCommunicator();
                  communicator.subscribe("processed:album", this._insertAlbum, this);
                  communicator.subscribe("delete:album", this._deleteAlbum, this);

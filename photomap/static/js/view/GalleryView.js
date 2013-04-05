@@ -51,8 +51,8 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
              },
 
 
-             initialize : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
+             init : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
              },
              /**
               * Triggers a click on the photo. Bypasses every listener, because they might be disabled
@@ -132,7 +132,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 // display table is necessary to center the message
                 this.$isEmpty.css("display", "table");
              },
-             _finalizeInitialization : function () {
+             _finalizeInit : function () {
                 var controls = main.getUI().getControls(),
                     communicator = main.getCommunicator();
                 

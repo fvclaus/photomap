@@ -29,10 +29,10 @@ define(["dojo/_base/declare"],
               * @description Defines methods to check whether user is admin or not and reads/writes cookies, describing the state of the client (visited photos, storage-space left, ...)
               */
 
-             initialize : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this.finalizeInitialization, this);
+             init : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
              },
-             finalizeInitialization : function () {
+             _finalizeInit : function () {
                 this.quota = main.getTools().bytesToMbyte($.cookie("quota"));
                 this.updateUsedSpace();
              },

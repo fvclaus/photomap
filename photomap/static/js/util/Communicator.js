@@ -179,7 +179,7 @@ define(["dojo/_base/declare"],
                 }
              }
           }),
-              _instance = new Communicator();
-
+         
+          _instance = new Communicator();
           return _instance;
        });

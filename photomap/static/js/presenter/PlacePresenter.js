@@ -7,7 +7,7 @@ define(["dojo/_base/declare"],
        function (declare) {
 
           return declare(null, {
-             initialize : function () {
+             init : function () {
                 var communicator = main.getCommunicator();
                 communicator.subscribe("processed:photo", this._insertPhoto, this);
                 communicator.subscribe("delete:photo", this._deletePhoto, this);

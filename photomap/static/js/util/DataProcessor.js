@@ -14,7 +14,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
           
           var DataProcessor = declare(null, {
              
-             initialize : function () {
+             init : function () {
                 var communicator = main.getCommunicator();
                 
                 communicator.subscribe("insert:photo", this._processInsertPhoto, this);
