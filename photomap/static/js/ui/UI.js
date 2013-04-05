@@ -24,12 +24,14 @@ define(["dojo/_base/declare",
         "view/StatusMessageView",
         "view/SlideshowView",
         "view/GalleryView",
+        "view/DialogView",
+        "ui/UIState",
         "dojo/domReady!"],
-       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, GalleryView) {
+       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, GalleryView, DialogView, UIState) {
            var UI = declare(null, {
               constructor : function () {
                  this.controls = new ModelFunctionView();
-                 this.input = new UIInput();
+                 this.input = new DialogView();
                  this.state = new UIState(this);
                  this.information = new DetailView();
                  this.message = new StatusMessageView();

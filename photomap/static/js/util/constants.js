@@ -21,5 +21,8 @@ var DASHBOARD_VIEW = "/dashboard",
     TEMP_TITLE_KEY = "temp_title",
     TEMP_DESCRIPTION_KEY = "temp_description",
 
-    ZOOM_LEVEL_CENTERED = 13;
+    ZOOM_LEVEL_CENTERED = 13,
+    
+    INPUT_DIALOG = 0,
+    CONFIRM_DIALOG = 1;
 

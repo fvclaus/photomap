@@ -1,4 +1,4 @@
-/*global main, define, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput, FormData */
+/*global main, define, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, CONFIRM_DIALOG, FormData */
 "use strict";
 
 
@@ -129,7 +129,7 @@ define(["dojo/_base/declare", "view/PhotoEditorView" ],
              delete : function (photo) {
                 var input = main.getUI().getInput();
                 input.show({
-                   type : UIInput.CONFIRM_DIALOG,
+                   type : CONFIRM_DIALOG,
                    load : function () {
                       $("input[name='id']").val(photo.id);
                       $("span#mp-dialog-photo-title").text(photo.title+"?");

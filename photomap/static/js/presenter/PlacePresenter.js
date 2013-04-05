@@ -1,4 +1,4 @@
-/*global main, define, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput*/
+/*global main, define, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, CONFIRM_DIALOG*/
 "use strict";
 
 
@@ -70,7 +70,7 @@ define(["dojo/_base/declare"],
              delete : function (place) {
                 var input = main.getUI().getInput();
                 input.show({
-                   type : UIInput.CONFIRM_DIALOG,
+                   type : CONFIRM_DIALOG,
                    load : function () {
                       $("input[name='id']").val(place.id);
                       $("span#mp-dialog-place-title").text(place.title + "?");

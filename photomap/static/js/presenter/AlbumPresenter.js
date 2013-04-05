@@ -1,4 +1,4 @@
-/*global main, define, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, UIInput, window*/
+/*global main, define, $, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, CONFIRM_DIALOG, window*/
 "use strict";
 
 
@@ -67,7 +67,7 @@ define(["dojo/_base/declare"],
                  var input = main.getUI().getInput();
 
                  input.show({
-                    type : UIInput.CONFIRM_DIALOG,
+                    type : CONFIRM_DIALOG,
                     load : function () {
                        $("input[name='id']").val(album.id);
                        $("span#mp-dialog-album-title").text(album.title + "?");

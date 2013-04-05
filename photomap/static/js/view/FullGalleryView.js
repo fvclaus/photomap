@@ -119,7 +119,7 @@ define(["dojo/_base/declare", "model/Photo", "dojo/domReady!"],
                       //TODO this could be done better
                       instance._refresh();
                    },
-                   type : UIInput.CONFIRM_DIALOG,
+                   type : CONFIRM_DIALOG,
                    url : "/update-photos"
                 });
              },
