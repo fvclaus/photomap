@@ -5,7 +5,7 @@
 define(["dojo/_base/declare", "model/Photo", "dojo/domReady!"], 
        function (declare, Photo, statusMessage) {
           
-          var FullGalleryView = declare(null, {
+          return  declare(null, {
              constructor : function () {
                 this.loaded = false;
                 this.carousel = null;
@@ -180,7 +180,5 @@ define(["dojo/_base/declare", "model/Photo", "dojo/domReady!"],
              //       }
              //    },
 
-          }),
-              _instance = new FullGalleryView();
-          return _instance;
+          });
        });

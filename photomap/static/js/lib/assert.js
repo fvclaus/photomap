@@ -1,13 +1,9 @@
 "use strict";
 
-
-/**
- * @author Frederik Claus
- * @description This is best kept the current way. Using dojo you would get syntax like:
- *          assert.assertFalse
- */
-
 function croak(actual, expected, message) {
+   if (message === undefined || typeof message !== "string") {
+      throw new Error("AssertMustProvideMessage");
+   }
    throw new Error(actual + " is not " + expected + " -- " + message);
 }
 

@@ -5,7 +5,7 @@
 
 define(["dojo/_base/declare"], 
        function (declare) {
-          var UIStatusMessage = declare(null,  {
+          return declare(null,  {
              constructor : function () {
                 this.$container = $("#mp-status-message");
                 this.$message = this.$container.find("strong");
@@ -28,9 +28,6 @@ define(["dojo/_base/declare"],
                    this._toggle();
                 } 
              },
-          }),
-              _instance = new UIStatusMessage();
-          //singleton
-          return _instance;
+          });
        });
    

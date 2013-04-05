@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main,  UITools,  UIState,  UIInput, DASHBOARD_VIEW, ALBUM_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
+/*global $, define, main,   UIState,  UIInput, DASHBOARD_VIEW, ALBUM_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY */
 
 "use strict";
 
@@ -15,55 +15,68 @@
  * @description Defines Getter to retrieve the UI classes wrapped, handler to add/remove object to/from ui and to en-/disable the ui completely
  */
 
-define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "dojo/domReady!"],
-       function(declare, Photo, Place, Album) {
+define(["dojo/_base/declare", 
+        "model/Photo", 
+        "model/Place", 
+        "model/Album", 
+        "view/ModelFunctionView",
+        "view/DetailView",
+        "view/StatusMessageView",
+        "view/SlideshowView",
+        "view/GalleryView",
+        "dojo/domReady!"],
+       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, GalleryView) {
            var UI = declare(null, {
               constructor : function () {
-                 this.tools = new UITools();
+                 this.controls = new ModelFunctionView();
                  this.input = new UIInput();
                  this.state = new UIState(this);
+                 this.information = new DetailView();
+                 this.message = new StatusMessageView();
+
+                 if (this.state.isAlbumView()) {
+                    this.gallery = new GalleryView();
+                    this.slideshow = new SlideshowView();
+                 }
                  this._isDisabled = false;
               },
-              /**
-               * @author Frederik Claus
-               * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
-               */
-              preinit : function () {
-                 if (this.state.isAlbumView()){
-                    // don't use events here
-                    require(["view/SlideshowView"], function (slideshow) {
-                       slideshow.preinit();
-                    });
-                 }
-              },
-              init : function () {
-                 // decide which listener to bind
-                 //TODO events!
-                 require(["view/ModelFunctionView"], function (modelFunction) {
-                    modelFunction.init();
-                 });
-                 //TODO events please
-                 require(["view/DetailView"], function (detail) {
-                    detail.init();
-                 });
-                 if (this.state.isAlbumView()){
-                    // don't use events here
-                    require(["view/GalleryView"], function (gallery) {
-                       gallery.init();
-                    });
-                 }
-              },
+              // /**
+              //  * @author Frederik Claus
+              //  * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
+              //  */
+              // preinit : function () {
+              //    if (this.state.isAlbumView()){
+              //       // don't use events here
+              //       require(["view/SlideshowView"], function (slideshow) {
+              //          slideshow.preinit();
+              //       });
+              //    }
+              // },
+              // init : function () {
+              //    // decide which listener to bind
+              //    //TODO events!
+              //    require(["view/ModelFunctionView"], function (modelFunction) {
+              //       modelFunction.init();
+              //    });
+              //    //TODO events please
+              //    require(["view/DetailView"], function (detail) {
+              //       detail.init();
+              //    });
+              //    if (this.state.isAlbumView()){
+              //       // don't use events here
+              //       require(["view/GalleryView"], function (gallery) {
+              //          gallery.init();
+              //       });
+              //    }
+              // },
               getGallery : function () {
-                 throw new Error("Gallery is a singleton. Require it yourself");
+                 return this.gallery;
               },
               getSlideshow : function () {
-                 throw new Error("Slideshow is a singleton. Require it yourself");
-              },
-              getTools : function () {
-                 return this.tools;
+                 return this.slideshow;
               },
               getControls : function () {
-                 return new Error("ModelFunction is a singleton. Require it yourself");
+                 return this.controls;
               },
               getInput : function () {
                  return this.input;
@@ -72,10 +85,10 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "dojo
                  return this.state;
               },
               getInformation: function () {
-                 throw new Error("Detail is a singleton. Require it yourself");
+                 return this.information;
               },
               getMessage : function () {
-                 return new Error("StatusMessage is a singleton. Require it youreself");
+                 return this.message;
               },
               /**
                * @description Adds place fully to ui.

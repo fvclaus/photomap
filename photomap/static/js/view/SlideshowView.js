@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main, window, UIPhotoCarousel, UIFullscreen, assert, assertTrue */
+/*global $, define, main, window, UIFullscreen, assert, assertTrue */
 
 "use strict";
 
@@ -11,7 +11,7 @@
 
 define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/domReady!"],
        function (declare, PhotoCarouselView, Photo) {
-          var UISlideshow = declare(null, {
+          return declare(null, {
              constructor : function () {
                 this.$container = $('#mp-slideshow');
                 this.$inner = $("#mp-slideshow-image-wrapper");
@@ -33,8 +33,9 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                 this._isDisabled = true;
              },
 
-             preinit : function () {
-                var tools = main.getUI().getTools(),
+             initialize : function () {
+                var tools = main.getTools(),
+                    communicator = main.getCommunicator(),
                     instance = this;
                 this._center();
                 // everything that gets centered manually must be corrected on a resize event
@@ -43,7 +44,9 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                 });
                 this.fullscreen.init();
                 this._bindListener();
-
+                communicator.subscribe("delete:photo", this._deletePhoto, this);
+                communicator.subscribe("processed:photo", this._insertPhoto, this);
+                communicator.subscribe("delete:place", this._placeDeleteReset, this);
              },
              /**
               * @description starts slideshow by initialising and starting the carousel (with given index)
@@ -96,35 +99,6 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                 this.$navRight.trigger("click");
              },
              /**
-              * @description Inserts a new Photo. This will not move the Carousel or do anything else.
-              */
-             insertPhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-
-                // this is an unfortunate annoyance, but the gallery can be started without the slideshow
-                // therefore we need to check if the gallery is started on an insert photo event
-                // this is unfortunate, because the slideshow behaves differntly than the gallery
-                if (this.isStarted){
-                   // does not move to the new photo, because photo cant be on current page
-                   this.carousel.insertPhoto(photo);
-                   // updating description & photo number is handled in update
-                }
-             },
-             /**
-              * @description Deletes an existing Photo. If Photo is the current Photo the previous Photo is shown.
-              * If there is no previous Photo, nothing is shown.
-              */
-             deletePhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-
-                // @see insertPhoto
-                if (this.isStarted) {
-                   // automatically delete if photo is on current page
-                   this.carousel.deletePhoto(photo);
-                   // update will take of resetting if it was the last one
-                }
-             },
-             /**
               * @description Resets the slideshow to a state before start() was called. 
               * This can be called without ever starting the Slideshow
               */
@@ -162,6 +136,43 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                 return this._isDisabled; //|| main.getUI().isDisabled();
              },
              /**
+              * @description Inserts a new Photo. This will not move the Carousel or do anything else.
+              */
+             _insertPhoto : function (photo) {
+                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
+
+                // this is an unfortunate annoyance, but the gallery can be started without the slideshow
+                // therefore we need to check if the gallery is started on an insert photo event
+                // this is unfortunate, because the slideshow behaves differntly than the gallery
+                if (this.isStarted){
+                   // does not move to the new photo, because photo cant be on current page
+                   this.carousel.insertPhoto(photo);
+                   // updating description & photo number is handled in update
+                }
+             },
+             /**
+              * @description Deletes an existing Photo. If Photo is the current Photo the previous Photo is shown.
+              * If there is no previous Photo, nothing is shown.
+              */
+             _deletePhoto : function (photo) {
+                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
+
+                // @see insertPhoto
+                if (this.isStarted) {
+                   // automatically delete if photo is on current page
+                   this.carousel.deletePhoto(photo);
+                   // update will take of resetting if it was the last one
+                }
+             },
+             /**
+              * @description Resets the Gallery if the deleted place was the one that is currently open
+              */
+             _placeDeleteReset : function (place) {
+                if (main.getUIState().getCurrentPlace() === place) {
+                   this.reset();
+                }
+             },
+             /**
               * @private
               * @description Executed after photo is updated (=displayed)
               */
@@ -174,10 +185,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                    this.fullscreen.update();
                    // right now this is the first time we can update the description
                    // on the other events, beforeLoad & afterLoad, the photo src is not set yet
-                   //TODO events please
-                   require(["view/DetailView"], function (detail) {
-                      detail.update(photo);
-                   });
+                   main.getUI().getInformation().update(photo);
                    this._updatePhotoNumber();
                 }
                 //TODO this event is best triggered on the UI object. This is more intuitive and less likely to change
@@ -252,7 +260,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                     currentIndex = -1;
                 // if it is the only (empty) page the entry is null
                 if (imageSources.length > 0) {
-                   currentPhoto = ui.getTools().getObjectByKey("photo", this.$image.attr("src"), photos);
+                   currentPhoto = main.getTools().getObjectByKey("photo", this.$image.attr("src"), photos);
                    currentIndex = $.inArray(currentPhoto, photos);
                    state.setCurrentLoadedPhoto(currentPhoto);
                    state.setCurrentLoadedPhotoIndex(currentIndex);
@@ -325,13 +333,10 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
               */
              _center  : function () {
                 //TODO is it really not possible to center those elements with css?
-                var tools = main.getUI().getTools();
+                var tools = main.getTools();
                 tools.centerElement(this.$navLeft, "vertical");
                 tools.centerElement(this.$navRight, "vertical");
                 tools.centerElement(this.$loader, "vertical");
              }
-          }),
-              _instance = new UISlideshow();
-          // return singleton
-          return _instance;
+          });
        });

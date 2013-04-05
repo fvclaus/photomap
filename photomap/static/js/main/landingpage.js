@@ -1,7 +1,7 @@
 /*jslint */
-/*global $ */
+/*global $, document */
 
 "use strict";
-
-function init() {
-}
+//TODO what is that for?
+$(document).ready(function () {
+});

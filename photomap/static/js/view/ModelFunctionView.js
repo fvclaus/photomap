@@ -6,7 +6,7 @@
 
 define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
        function (declare, ModelFunctionPresenter) {
-          var ModelFunctionView =  declare(null, {
+          return  declare(null, {
              constructor : function () {
                 this.$controls = $$(".mp-controls-wrapper");
                 this.$controls.hide();
@@ -24,13 +24,8 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
 
                 this.presenter = new ModelFunctionPresenter();
              },
-             init : function () {
-                var state =  main.getUIState(),
-                    clientstate = main.getClientState();
-
-                if (state.isDashboardView() || (state.isAlbumView() && clientstate.isAdmin())) {
-                   this._bindListener();
-                }
+             initialize : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
              },
              /**
               * @description Displays modify control under a photo
@@ -42,7 +37,7 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                 var center, tools;
                 
                 center = $el.offset();
-                tools = main.getUI().getTools();
+                tools = main.getTools();
                 center.left += tools.getRealWidth($el) / 2;
                 center.top -= (tools.getRealHeight($(".mp-controls-wrapper")) + 5);
 
@@ -52,6 +47,14 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                    this.hideControlsTimeoutId = null;
                 }
                 this._showMarkerControls(center);
+             },
+             _finalizeInitialization : function () {
+                var state =  main.getUIState(),
+                    clientstate = main.getClientState();
+
+                if (state.isDashboardView() || (state.isAlbumView() && clientstate.isAdmin())) {
+                   this._bindListener();
+                }
              },
 
              /**
@@ -64,7 +67,7 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                 var tools, factor;
                 
                 // calculate the offset
-                tools = main.getUI().getTools();
+                tools = main.getTools();
                 // center the controls below the center
                 center.left -= tools.getRealWidth(this.$controls) / 2;
 
@@ -183,8 +186,5 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                       instance.$controls.isEntered = true;
                    });
              }
-          }),
-              _instance = new ModelFunctionView();
-          
-          return _instance;
+          });
        });

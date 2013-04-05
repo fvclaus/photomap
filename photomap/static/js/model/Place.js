@@ -30,15 +30,16 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
                 this._bindListener();
              },
              _showGallery : function () {
-                require(["view/GalleryView"], function (gallery) {
-                   gallery.start();
-                });
+                main.getUI().getGallery().start();
+
              },
              /**
               * @description adds photo and restarts gallery
               */
              insertPhoto : function (photo) {
-                this.photos.push(photo);
+                if (this.active) {
+                   this.photos.push(photo);
+                }
              },
              deletePhoto : function (photo) {
                 this.photos = this.photos.filter(function (element, index) {
@@ -97,9 +98,7 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
                    
                    if (!main.getUI().isDisabled()) {
                       state.setCurrentPlace(instance);
-                      require(["view/DetailView"], function (detailView) {
-                         detailView.update(instance);
-                      });
+                      main.getUI().getInformation().update(instance);
                    }
                 });
                 
@@ -137,16 +136,16 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
                 }
 
                 //TODO this should be triggered by events
-                require(["view/GalleryView", "view/SlideshowView", "view/StatusMessageView"], 
-                        function (gallery, slideshow, statusMessage) {
-                           gallery.reset();
-                           slideshow.reset();
-                           instance._showGallery();
-                           statusMessage.hide();
-                           require(["view/DetailView"], function (detailView) {
-                              detailView.update(instance);
-                           });
-                        });
+
+
+                main.getUI().getGallery().reset();
+                main.getUI().getSlideshow().reset();
+                instance._showGallery();
+                main.getUI().getMessage().hide();
+
+                main.getUI().getInformation().update(instance);
+
+
              }
           });
        });

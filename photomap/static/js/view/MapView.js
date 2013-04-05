@@ -10,9 +10,8 @@
 
 define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
        function (declare, MapPresenter) {
-
           var MapView = declare(null, {
-             preinit : function () {
+             constructor : function () {
                 // google.maps.Map
                 this.map = null;
                 // google.maps.StreetViewstreetview
@@ -54,6 +53,13 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
                 this.mode = 'normal';
                 this.presenter = new MapPresenter();
                 this._create();
+             },
+
+
+
+
+             initialize : function () {
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization, this);
              },
              /**
               * @public
@@ -155,70 +161,6 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
              triggerMouseOverOnMarker : function (marker) {
                 this._triggerEventOnMarker(marker, "mouseover");
              },
-             /**
-              * @private
-              */
-             _triggerEventOnMarker : function (marker, event) {
-                google.maps.event.trigger(marker.getImplementation(), event);
-             },
-             init : function () {
-                
-                var authorized;
-                
-                if (main.getUIState().isAlbumView()) {
-                   authorized = main.getClientState().isAdmin();
-                   //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
-                   if (authorized) {
-                      this._bindClickListener();
-                   }
-                } else {
-                   this._bindClickListener();
-                }
-                // set map options if interactive
-                this.map.setOptions(this.mapOptions);
-                this._setMapCursor();
-             },
-             /**
-              * @description Initialize the google maps instance with streetview.
-              * @private
-              */
-             _create : function () {
-
-                this.map = new google.maps.Map(this.$mapEl[0], this.mapOptions);
-                this.maptype = google.maps.MapTypeId.ROADMAP;
-                this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
-                this.ROADMAP = google.maps.MapTypeId.ROADMAP;
-                // get hold of the default google.maps.StreetView object
-                this.streetview = this.map.getStreetView();
-                //define overlay to retrieve pixel position on mouseover event
-                this.overlay = new google.maps.OverlayView();
-                this.overlay.draw = function () {};
-                this.overlay.setMap(this.map);
-                this._bindClickListener();
-             },
-             /**
-              * @description Wraps the google.maps.LatLng constructor
-              */
-             createLatLng : function (lat, lng) {
-                return new google.maps.LatLng(lat, lng);
-             },
-             _setMapCursor : function (style) {
-                
-                var cursor;
-                
-                if (style) {
-                   cursor = style;
-                } else if (main && main.getUIState) {
-                   // if no style is defined -> cross on interactive pages, else grabber
-                   cursor = "cross";
-                } else {
-                   cursor = "move";
-                }
-                this.map.setOptions({
-                   draggableCursor: cursor,
-                   draggingCursor: "move"
-                });
-             },
              setZoom : function (level) {
 
                 var instance, zoomListener;
@@ -228,38 +170,6 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
                    instance.map.setZoom(level);
                    google.maps.event.removeListener(zoomListener);
                 });
-             },
-             showAsMarker : function (instances) {
-
-                var markersInfo = [];
-
-                if (instances.length === 1) {
-                   instances[0].show();
-                   console.log('_-------------------_');
-                   console.log(instances[0]);
-                   this.expandBounds(instances[0]);
-                } else {
-                   instances.forEach(function (instance) {
-                      instance.show();
-                      markersInfo.push({
-                         lat : instance.getLat(),
-                         lng : instance.getLng()
-                      });
-                   });
-                   this.fit(markersInfo);
-                }
-             },
-             /**
-              * @description Set google map bounds to show a big part of the world.
-              */
-             showWorld : function () {
-
-                var lowerLatLng, upperLatLng, newBounds;
-
-                lowerLatLng = new google.maps.LatLng(-50, -90);
-                upperLatLng = new google.maps.LatLng(50, 90);
-                newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
-                this.map.fitBounds(newBounds);
              },
              zoomOut : function (lat, lng) {
                 var center = new google.maps.LatLng(lat, lng);
@@ -350,7 +260,115 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
                    //        streetViewControl : false
                 });
              },
+             /**
+              * @description Wraps the google.maps.LatLng constructor
+              */
+             createLatLng : function (lat, lng) {
+                return new google.maps.LatLng(lat, lng);
+             },
+             _finalizeInitialization : function () {
+                
+                var authorized;
+                
+                if (main.getUIState().isAlbumView()) {
+                   authorized = main.getClientState().isAdmin();
+                   
+                   if (main.getUIState().getPlaces().length <= 0) {
+                      this.expandBounds(main.getUIState().getCurrentLoadedAlbum());
+                   } else {
+                      this._showAsMarker(main.getUIState().getPlaces());
+                   }
+                   
+                   //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
+                   if (authorized) {
+                      this._bindClickListener();
+                   }
+                } else if (main.getUIState().isDashboardView()) {
+                   if (main.getUIState().getAlbums().length <= 0) {
+                      this._showWorld();
+                   } else {
+                      this._showAsMarker(main.getUIState().getAlbums());
+                   }
+                   this._bindClickListener();
+                }
+                // set map options if interactive
+                this.map.setOptions(this.mapOptions);
+                this._setMapCursor();
+                this.presenter.initialize();
+             },
+             _showAsMarker : function (instances) {
 
+                var markersInfo = [];
+
+                if (instances.length === 1) {
+                   instances[0].show();
+                   console.log('_-------------------_');
+                   console.log(instances[0]);
+                   this.expandBounds(instances[0]);
+                } else {
+                   instances.forEach(function (instance) {
+                      instance.show();
+                      markersInfo.push({
+                         lat : instance.getLat(),
+                         lng : instance.getLng()
+                      });
+                   });
+                   this.fit(markersInfo);
+                }
+             },
+             /**
+              * @description Set google map bounds to show a big part of the world.
+              */
+             _showWorld : function () {
+
+                var lowerLatLng, upperLatLng, newBounds;
+
+                lowerLatLng = new google.maps.LatLng(-50, -90);
+                upperLatLng = new google.maps.LatLng(50, 90);
+                newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
+                this.map.fitBounds(newBounds);
+             },
+             /**
+              * @private
+              */
+             _triggerEventOnMarker : function (marker, event) {
+                google.maps.event.trigger(marker.getImplementation(), event);
+             },
+             /**
+              * @description Initialize the google maps instance with streetview.
+              * @private
+              */
+             _create : function () {
+
+                this.map = new google.maps.Map(this.$mapEl[0], this.mapOptions);
+                this.maptype = google.maps.MapTypeId.ROADMAP;
+                this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
+                this.ROADMAP = google.maps.MapTypeId.ROADMAP;
+                // get hold of the default google.maps.StreetView object
+                this.streetview = this.map.getStreetView();
+                //define overlay to retrieve pixel position on mouseover event
+                this.overlay = new google.maps.OverlayView();
+                this.overlay.draw = function () {};
+                this.overlay.setMap(this.map);
+                this._bindClickListener();
+             },
+             _setMapCursor : function (style) {
+                
+                var cursor;
+                
+                if (style) {
+                   cursor = style;
+                } else if (main && main.getUIState) {
+                   // if no style is defined -> cross on interactive pages, else grabber
+                   cursor = "cross";
+                } else {
+                   cursor = "move";
+                }
+                this.map.setOptions({
+                   draggableCursor: cursor,
+                   draggingCursor: "move"
+                });
+             },
              _bindClickListener : function (callback) {
                 var instance = this;
 
@@ -361,8 +379,9 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
                    });
                 });
              }
-          }),
-              _instance = new MapView();
+          });
+                                
+              // _instance = new MapView();
           // singleton
-          return _instance;
+          return MapView;
        });

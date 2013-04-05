@@ -4,7 +4,7 @@
 
 
 define(["dojo/_base/declare", ],
-       function (declare, modelFunctionView) {
+       function (declare) {
           return declare(null , {
              constructor : function (view) {
                 this.view = view;
@@ -14,18 +14,14 @@ define(["dojo/_base/declare", ],
                 if (!main.getUI().isDisabled()) {
                    var instance = this;
                    //TODO circular reference starting at the models
-                   require(["view/ModelFunctionView"], function (modelFunctionView) {
-                      modelFunctionView.show(instance.view);
-                   });
+                   main.getUI().getControls().show(instance.view);
                 }
              },
              mouseOut : function () {
                 // hide EditControls after a small timeout, when the EditControls are not entered
                 // the place is never seamlessly connected to a place, so we need to give the user some time
                    //TODO circular reference starting at the models
-                   require(["view/ModelFunctionView"], function (modelFunctionView) {
-                      modelFunctionView.hide(true);
-                   });
+                main.getUI().getControls().hide(true);
              }
           });
        });

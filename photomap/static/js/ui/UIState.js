@@ -86,7 +86,11 @@ UIState.prototype = {
       return this.currentPlace;
    },
    setCurrentLoadedPlace : function (place) {
+      if (this.currentLoadedPlace) {
+         this.currentLoadedPlace.deactivate();
+      }
       this.currentLoadedPlace = place;
+      this.currentLoadedPlace.activate();
    },
    getCurrentLoadedPlace : function () {
       return this.currentLoadedPlace;

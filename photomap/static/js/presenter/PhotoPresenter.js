@@ -2,7 +2,7 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "view/PhotoEditorView", "view/DetailView"], 
+define(["dojo/_base/declare", "view/PhotoEditorView" ], 
        function (declare, PhotoEditorView, detailView) {
           return declare(null, {
              constructor : function () {
@@ -41,7 +41,7 @@ define(["dojo/_base/declare", "view/PhotoEditorView", "view/DetailView"],
                          return data;
                       },
                       success : function (data) {
-                         main.getUI().insertPhoto(data);
+                         main.getCommunicator().publish("insert:photo", data);
                       },
                       url : "/insert-photo",
                       context : this
@@ -119,7 +119,8 @@ define(["dojo/_base/declare", "view/PhotoEditorView", "view/DetailView"],
                    success : function (data) {
                       photo.title = this._title;
                       photo.description = this._description;
-                      detailView.update(photo);
+                      main.getCommunicator().publish("change:photo", photo);
+                      // detailView.update(photo);
                    },
                    url : "/update-photo",
                    context : this
@@ -134,7 +135,8 @@ define(["dojo/_base/declare", "view/PhotoEditorView", "view/DetailView"],
                       $("span#mp-dialog-photo-title").text(photo.title+"?");
                    },
                    success : function (data) {
-                      main.getUI().deletePhoto(photo);
+                      main.getCommunicator().publish("delete:photo", photo);
+                      // main.getUI().deletePhoto(photo);
                    },
                    url: "/delete-photo",
                    context : this
