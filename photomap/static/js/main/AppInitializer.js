@@ -27,7 +27,7 @@ define(["dojo/_base/declare", "main/Main", "model/Place", "model/Album"],
                 if (window && window.init) {
                    init();
                 }
-                
+                main.getCommunicator().subscribeOnce("init", this._finalizeInit, this);
                 if (main.getUIState().isAlbumView()) {
                    this._getPlaces();
                 } else if (main.getUIState().isDashboardView()) {
