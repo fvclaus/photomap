@@ -30,3 +30,4 @@ debug/
 .settings
 *.sqlite3
 .#*
+.pydevproject
