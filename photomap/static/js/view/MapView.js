@@ -59,7 +59,8 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
 
 
              init : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
+                this.presenter.init();
+                main.getCommunicator().subscribeOnce("init", this._finalizeInit, this);
              },
              /**
               * @public
@@ -294,7 +295,6 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
                 // set map options if interactive
                 this.map.setOptions(this.mapOptions);
                 this._setMapCursor();
-                this.presenter.init();
              },
              _showAsMarker : function (instances) {
 

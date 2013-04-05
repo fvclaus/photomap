@@ -30,7 +30,7 @@ define(["dojo/_base/declare"],
               */
 
              init : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
+                main.getCommunicator().subscribeOnce("init", this._finalizeInit, this);
              },
              _finalizeInit : function () {
                 this.quota = main.getTools().bytesToMbyte($.cookie("quota"));

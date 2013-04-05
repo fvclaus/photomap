@@ -52,7 +52,11 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
 
 
              init : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
+                var communicator = main.getCommunicator();
+                communicator.subscribe("delete:photo", this._deletePhoto, this);
+                communicator.subscribe("processed:photo", this._insertPhoto, this);
+                communicator.subscribe("delete:place", this._placeDeleteReset, this);
+                communicator.subscribeOnce("init", this._finalizeInit, this);
              },
              /**
               * Triggers a click on the photo. Bypasses every listener, because they might be disabled
@@ -133,8 +137,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 this.$isEmpty.css("display", "table");
              },
              _finalizeInit : function () {
-                var controls = main.getUI().getControls(),
-                    communicator = main.getCommunicator();
+                var controls = main.getUI().getControls();
                 
                 if (main.getClientState().isAdmin()) {
                    this.$container.bind('dragover.FileUpload', controls.handleGalleryDragover);
@@ -145,9 +148,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 this._bindStartSlideshowListener();
                 this._bindSlideshowNavigationListener();
                 
-                communicator.subscribe("delete:photo", this._deletePhoto, this);
-                communicator.subscribe("processed:photo", this._insertPhoto, this);
-                communicator.subscribe("delete:place", this._placeDeleteReset, this);
+
              },
              /**
               * @description adds new photo to gallery.

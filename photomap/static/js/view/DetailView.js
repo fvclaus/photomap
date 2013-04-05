@@ -33,7 +33,12 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 this._bindListener();
              },
              init : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
+                var communicator = main.getCommunicator();
+                
+                communicator.subscribe("change:photo change:place change:album", this.update, this);
+                communicator.subscribe("delete:photo delete:place delete:album", this.empty, this);
+                communicator.subscribe("change:usedSpace", this._updateUsedSpace, this);
+                communicator.subscribeOnce("init", this._finalizeInit, this);
              },
              /**
               * @public
@@ -75,7 +80,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 }
              },
              _finalizeInit : function () {
-                var communicator = main.getCommunicator();
                 
                 if (main.getUIState().isAlbumView()) {
                    this._updatePageTitle();
@@ -84,9 +88,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 }
                 
                 this._bindUIListener();
-                communicator.subscribe("change:photo change:place change:album", this.update, this);
-                communicator.subscribe("delete:photo delete:place delete:album", this.empty, this);
-                communicator.subscribe("change:usedSpace", this._updateUsedSpace, this);
              },
              _updatePageTitle : function () {
                 assertTrue(main.getUIState().isAlbumView(), "page-title is just supposed to be changed in albumview");

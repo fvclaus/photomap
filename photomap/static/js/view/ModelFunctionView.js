@@ -26,7 +26,7 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                 this.presenter = new ModelFunctionPresenter();
              },
              init : function () {
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit, this);
+                main.getCommunicator().subscribeOnce("init", this._finalizeInit, this);
              },
              /**
               * @description Displays modify control under a photo

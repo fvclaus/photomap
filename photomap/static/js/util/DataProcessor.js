@@ -66,7 +66,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 } else if (main.getUIState().isDashboardView()) {
                    processedData = this._createPlacesOrAlbums(data, "Album");
                 }
-                communicator.publish("processed:initialData", processedData);
+                communicator.publish("init", processedData);
              },
              /**
               * @private
