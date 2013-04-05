@@ -9,8 +9,8 @@
  * @requires UICarousel UIFullscreen
  */
 
-define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/domReady!"],
-       function (declare, PhotoCarouselView, Photo) {
+define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullscreenView", "model/Photo", "dojo/domReady!"],
+       function (declare, PhotoCarouselView, FullscreenView, Photo) {
           return declare(null, {
              constructor : function () {
                 this.$container = $('#mp-slideshow');
@@ -27,7 +27,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "model/Photo", "dojo/dom
                    .appendTo(this.$container);
                 
                 this.carousel = null;
-                this.fullscreen = new UIFullscreen(this);
+                this.fullscreen = new FullscreenView(this);
                 
                 this.isStarted = false;
                 this._isDisabled = true;
