@@ -9,14 +9,12 @@
  */
 
 
-define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
-       function(declare, Photo, Place, Album) {
+define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util/Communicator"],
+       function(declare, Photo, Place, Album, communicator) {
           
           var DataProcessor = declare(null, {
              
-             init : function () {
-                var communicator = main.getCommunicator();
-                
+             constructor : function () {
                 communicator.subscribe("insert:photo", this._processInsertPhoto, this);
                 communicator.subscribe("insert:place", this._processInsertPlace, this);
                 communicator.subscribe("insert:album", this._processInsertAlbum, this);
@@ -30,7 +28,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 
                 var photo = this._createPhoto(data);
                 
-                main.getCommunicator().publish("processed:photo", photo);
+                communicator.publish("processed:photo", photo);
              },
              /**
               * @private
@@ -39,7 +37,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 
                 var place = this._createPlace(data);
                 
-                main.getCommunicator().publish("processed:place", place);
+                communicator.publish("processed:place", place);
              },
              /**
               * @private
@@ -48,7 +46,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 
                 var album = this._createAlbum(data);
                 
-                main.getCommunicator().publish("processed:album", album);
+                communicator.publish("processed:album", album);
              },
              /**
               * @private
@@ -56,8 +54,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
              _processInitialData : function (data) {
                 assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView(), "current view has to be either albumview or dashboardview");
                 
-                var processedData,
-                    communicator = main.getCommunicator();
+                var processedData;
                 
                 if (main.getUIState().isAlbumView()) {
                    main.getUIState().setCurrentLoadedAlbum(this._createAlbum(data));
@@ -158,7 +155,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 return album;
              }
           }),
-              _instance = new DataProcessor();
-
+              
+          _instance = new DataProcessor();
           return _instance;
        });

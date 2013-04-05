@@ -9,8 +9,8 @@
  */
 
 
-define(["dojo/_base/declare", "main/Main", "model/Place", "model/Album"],
-       function (declare, Main, Place, Album) {
+define(["dojo/_base/declare", "main/Main", "util/Communicator"],
+       function (declare, Main, communicator) {
           return declare(null, {
 
 
@@ -27,7 +27,7 @@ define(["dojo/_base/declare", "main/Main", "model/Place", "model/Album"],
                 if (window && window.init) {
                    init();
                 }
-                main.getCommunicator().subscribeOnce("init", this._finalizeInit, this);
+                communicator.subscribeOnce("init", this._finalizeInit, this);
                 if (main.getUIState().isAlbumView()) {
                    this._getPlaces();
                 } else if (main.getUIState().isDashboardView()) {
@@ -64,7 +64,7 @@ define(["dojo/_base/declare", "main/Main", "model/Place", "model/Album"],
               * @private
               */
              _getAlbums : function () {
-                this._getInitialData("/get-all-albums", "dashboard");
+                this._getInitialData("/get-all-albums");
              },
              /**
               * @private
@@ -76,13 +76,12 @@ define(["dojo/_base/declare", "main/Main", "model/Place", "model/Album"],
                        "id" : idFromUrl.exec(window.location.pathname)[1]
                     };
                 
-                this._getInitialData("/get-album", "album", data);
+                this._getInitialData("/get-album", data);
              },
              /**
               * @private
               */
-             _getInitialData : function (url, view, data) {
-                assertTrue(view === "dashboard" || view=== "album", "view has to be either dashboard or album");
+             _getInitialData : function (url, data) {
 
                 var processedData,
                    instance = this;
@@ -94,15 +93,7 @@ define(["dojo/_base/declare", "main/Main", "model/Place", "model/Album"],
                       
                       //TODO "get-all-albums" does not return a data.success or data.error
                       if ((data && data.success) || (data && !data.success)) {
-                      /*
-                         if (view === "album") {
-                            processedData = instance._createPlacesOrAlbums(data.places, view);
-                         } else if (view === "dashboard") {
-                            processedData = instance._createPlacesOrAlbums(data, view);
-                         }
-                         instance._finalizeInit();
-                         */
-                         main.getCommunicator().publish("loaded:initialData", data);
+                         communicator.publish("loaded:initialData", data);
                       } else {
                          alert(gettext("GET_ALBUM_ERROR") + data.error);
                       }
@@ -112,45 +103,6 @@ define(["dojo/_base/declare", "main/Main", "model/Place", "model/Album"],
                    }
 
                 });
-             },
-             /**
-              * @private
-              */
-             _createPlacesOrAlbums : function (data, view) {
-                assertTrue(view === "dashboard" || view=== "album", "view has to be either dashboard or album");
-                
-                var placeOrAlbum,
-                   placesOrAlbums = [],
-                   instance = this;
-                
-                $.each(data, function (index, placeOrAlbumData) {
-                  if (view === "dashboard") {
-                     placeOrAlbum = new Album(placeOrAlbumData);
-                     main.getUIState().insertAlbum(placeOrAlbum);
-                  } else if (view === "album") {
-                     placeOrAlbum = new Place(placeOrAlbumData);
-                     main.getUIState().insertPlace(placeOrAlbum);
-                  }
-
-                  placesOrAlbums.push(placeOrAlbum);
-                   
-                });
-                
-                if (view === "album") {
-                   placesOrAlbums = this._sortPhotos(placesOrAlbums);
-                }
-                return placesOrAlbums;
-             },
-             /**
-              * @private
-              */
-             _sortPhotos : function (places) {
-
-                $.each(places, function (index, place) {
-                   place.sortPhotos();
-                });
-
-                return places;
              }
           });
        });

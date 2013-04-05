@@ -2,12 +2,11 @@
 "use strict";
 
 
-define(["dojo/_base/declare"],
-        function (declare) {
+define(["dojo/_base/declare", "util/Communicator"],
+        function (declare, communicator) {
            return declare(null, {
 
-              init : function () {
-                 var communicator = main.getCommunicator();
+              constructor : function () {
                  communicator.subscribe("processed:album", this._insertAlbum, this);
                  communicator.subscribe("delete:album", this._deleteAlbum, this);
               },
@@ -28,7 +27,7 @@ define(["dojo/_base/declare"],
                     success : function () {
                        album.title = this._title;
                        album.description = this._description;
-                       main.getCommunicator().publish("change:album", album);
+                       communicator.publish("change:album", album);
                     },
                     url : "/update-album",
                     context : this
@@ -57,7 +56,7 @@ define(["dojo/_base/declare"],
                     success : function (data) {
                        data.lng = lng;
                        data.lat = lat;
-                       main.getCommunicator().publish("insert:album", data);
+                       communicator.publish("insert:album", data);
                     },
                     url : "/insert-album",
                     context : this
@@ -73,7 +72,7 @@ define(["dojo/_base/declare"],
                        $("span#mp-dialog-album-title").text(album.title + "?");
                     },
                     success : function () {
-                       main.getCommunicator().publish("delete:album", album);
+                       communicator.publish("delete:album", album);
                     },
                     url : "/delete-album",
                     context : this

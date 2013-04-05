@@ -3,12 +3,11 @@
 
 
 
-define(["dojo/_base/declare"],
-       function (declare) {
+define(["dojo/_base/declare", "util/Communicator"],
+       function (declare, communicator) {
 
           return declare(null, {
-             init : function () {
-                var communicator = main.getCommunicator();
+             constructor : function () {
                 communicator.subscribe("processed:photo", this._insertPhoto, this);
                 communicator.subscribe("delete:photo", this._deletePhoto, this);
                 communicator.subscribe("processed:place", this._insertPlace, this);
@@ -39,7 +38,7 @@ define(["dojo/_base/declare"],
                    success : function (data) {
                       data.lng = lng;
                       data.lat = lat;
-                      main.getCommunicator().publish("insert:place", data);
+                      communicator.publish("insert:place", data);
                    },
                    url : "/insert-place",
                    context : this
@@ -61,7 +60,7 @@ define(["dojo/_base/declare"],
                    success : function () {
                       place.title = this._title;
                       place.description = this._description;
-                      main.getCommunicator().publish("change:place", place);
+                      communicator.publish("change:place", place);
                    },
                    url : "/update-place",
                    context : this
@@ -76,7 +75,7 @@ define(["dojo/_base/declare"],
                       $("span#mp-dialog-place-title").text(place.title + "?");
                    },
                    success : function () {
-                      main.getCommunicator().publish("delete:place", place);
+                      communicator.publish("delete:place", place);
                    },
                    url: "/delete-place",
                    context : this

@@ -9,8 +9,13 @@
  * @requires ClientServer
  */
        
-define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", "presenter/PhotoPresenter", "dojo/domReady!"],
-       function (declare, PhotoCarouselView, FullGalleryView, PhotoPresenter) {
+define(["dojo/_base/declare",
+        "view/PhotoCarouselView",
+        "view/FullGalleryView",
+        "presenter/PhotoPresenter",
+        "util/Communicator",
+        "dojo/domReady!"],
+       function (declare, PhotoCarouselView, FullGalleryView, PhotoPresenter, communicator) {
 
 /**
  * @author Marc Roemer
@@ -48,15 +53,11 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 this.$insert = $(".mp-option-insert-photo");
 
                 this.presenter = new PhotoPresenter();
-             },
-
-
-             init : function () {
-                var communicator = main.getCommunicator();
+                
                 communicator.subscribe("delete:photo", this._deletePhoto, this);
                 communicator.subscribe("processed:photo", this._insertPhoto, this);
                 communicator.subscribe("delete:place", this._placeDeleteReset, this);
-                communicator.subscribeOnce("init", this._finalizeInit, this);
+                communicator.subscribeOnce("init", this._init, this);
              },
              /**
               * Triggers a click on the photo. Bypasses every listener, because they might be disabled
@@ -136,7 +137,7 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullGalleryView", 
                 // display table is necessary to center the message
                 this.$isEmpty.css("display", "table");
              },
-             _finalizeInit : function () {
+             _init : function () {
                 var controls = main.getUI().getControls();
                 
                 if (main.getClientState().isAdmin()) {

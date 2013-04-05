@@ -5,8 +5,8 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
-       function (declare, ModelFunctionPresenter) {
+define(["dojo/_base/declare", "presenter/ModelFunctionPresenter", "util/Communicator"],
+       function (declare, ModelFunctionPresenter, communicator) {
           return  declare(null, {
              constructor : function () {
                 this.$controls = $$(".mp-controls-wrapper");
@@ -24,9 +24,8 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                 assertTrue(this.$delete.size() > 0 && this.$update.size() > 0);
 
                 this.presenter = new ModelFunctionPresenter();
-             },
-             init : function () {
-                main.getCommunicator().subscribeOnce("init", this._finalizeInit, this);
+                
+                communicator.subscribeOnce("init", this._init, this);
              },
              /**
               * @description Displays modify control under a photo
@@ -49,7 +48,7 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter"],
                 }
                 this._showMarkerControls(center);
              },
-             _finalizeInit : function () {
+             _init : function () {
                 var state =  main.getUIState(),
                     clientstate = main.getClientState();
 

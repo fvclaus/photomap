@@ -9,8 +9,8 @@
  * @requires UICarousel UIFullscreen
  */
 
-define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullscreenView", "model/Photo", "dojo/domReady!"],
-       function (declare, PhotoCarouselView, FullscreenView, Photo) {
+define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullscreenView", "model/Photo", "util/Communicator", "dojo/domReady!"],
+       function (declare, PhotoCarouselView, FullscreenView, Photo, communicator) {
           return declare(null, {
              constructor : function () {
                 this.$container = $('#mp-slideshow');
@@ -31,23 +31,13 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullscreenView", "
                 
                 this.isStarted = false;
                 this._isDisabled = true;
-             },
-
-             init : function () {
-                var tools = main.getTools(),
-                    communicator = main.getCommunicator(),
-                    instance = this;
-                this._center();
-                // everything that gets centered manually must be corrected on a resize event
-                $(window).resize(function () {
-                   instance._center();
-                });
-                this.fullscreen.init();
-                this._bindListener();
+                
                 communicator.subscribe("delete:photo", this._deletePhoto, this);
                 communicator.subscribe("processed:photo", this._insertPhoto, this);
                 communicator.subscribe("delete:place", this._placeDeleteReset, this);
+                communicator.subscribeOnce("init", this._init, this);
              },
+
              /**
               * @description starts slideshow by initialising and starting the carousel (with given index)
               */
@@ -134,6 +124,17 @@ define(["dojo/_base/declare", "view/PhotoCarouselView", "view/FullscreenView", "
               */
              isDisabled : function () {
                 return this._isDisabled; //|| main.getUI().isDisabled();
+             },
+             _init : function () {
+                var tools = main.getTools(),
+                    instance = this;
+                this._center();
+                // everything that gets centered manually must be corrected on a resize event
+                $(window).resize(function () {
+                   instance._center();
+                });
+                this.fullscreen.init();
+                this._bindListener();
              },
              /**
               * @description Inserts a new Photo. This will not move the Carousel or do anything else.

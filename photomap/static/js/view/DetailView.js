@@ -9,8 +9,8 @@
  */
 
 
-define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
-       function (declare, Photo, Place, Album) {
+define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util/Communicator"],
+       function (declare, Photo, Place, Album, communicator) {
           return declare(null, {
              constructor : function () {
                 this.$pageTitle = $("#mp-page-title h1");
@@ -31,14 +31,11 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                 this.currentPhoto = null;
                 this.currentPlaceOrAlbum = null;
                 this._bindListener();
-             },
-             init : function () {
-                var communicator = main.getCommunicator();
                 
                 communicator.subscribe("change:photo change:place change:album", this.update, this);
                 communicator.subscribe("delete:photo delete:place delete:album", this.empty, this);
                 communicator.subscribe("change:usedSpace", this._updateUsedSpace, this);
-                communicator.subscribeOnce("init", this._finalizeInit, this);
+                communicator.subscribeOnce("init", this._init, this);
              },
              /**
               * @public
@@ -79,7 +76,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album"],
                    this.$title.empty();
                 }
              },
-             _finalizeInit : function () {
+             _init : function () {
                 
                 if (main.getUIState().isAlbumView()) {
                    this._updatePageTitle();

@@ -8,8 +8,8 @@
  * @description: Facade for google maps
  */
 
-define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
-       function (declare, MapPresenter) {
+define(["dojo/_base/declare", "presenter/MapPresenter", "util/Communicator", "dojo/domReady!"],
+       function (declare, MapPresenter, communicator) {
           var MapView = declare(null, {
              constructor : function () {
                 // google.maps.Map
@@ -53,14 +53,7 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
                 this.mode = 'normal';
                 this.presenter = new MapPresenter();
                 this._create();
-             },
-
-
-
-
-             init : function () {
-                this.presenter.init();
-                main.getCommunicator().subscribeOnce("init", this._finalizeInit, this);
+                communicator.subscribeOnce("init", this._init, this);
              },
              /**
               * @public
@@ -267,7 +260,7 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "dojo/domReady!"],
              createLatLng : function (lat, lng) {
                 return new google.maps.LatLng(lat, lng);
              },
-             _finalizeInit : function () {
+             _init : function () {
                 
                 var authorized;
                 
