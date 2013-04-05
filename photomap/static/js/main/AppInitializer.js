@@ -1,11 +1,11 @@
 /*jslint */
-/*global $, define, initialize, initializeTest, finalizeInitialization, assertTrue, gettext */
+/*global $, define, init, initTest, finalizeInit, assertTrue, gettext */
 
 "use strict";
 
 /**
  * @author Marc-Leon Roemer
- * @class Initializes the app and fetches the initial data from the server.
+ * @class inits the app and fetches the initial data from the server.
  */
 
 
@@ -19,16 +19,16 @@ define(["dojo/_base/declare", "main/Main"],
                 main = new Main();
                 assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView(), "current view has to be either albumview or dashboardview");
                 
-                main.initialize();
+                main.init();
                 this._runInitializer(main);
                 this._runInitializer(main.getUI());
                 
                 // do some page specific stuff
-                if (window && window.initialize) {
-                   initialize();
+                if (window && window.init) {
+                   init();
                 }
                 // subscribe to processed:initialData event to continue with initialization afterwards..
-                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInitialization);
+                main.getCommunicator().subscribeOnce("processed:initialData", this._finalizeInit);
                 
                 if (main.getUIState().isAlbumView()) {
                    this._getPlaces();
@@ -36,24 +36,29 @@ define(["dojo/_base/declare", "main/Main"],
                    this._getAlbums();
                 }
              },
-             _finalizeInitialization : function () {
+             _finalizeInit : function () {
                 // finalize page specific initialization if needed
-                if (window && window.finalizeInitialization) {
-                   finalizeInitialization();
+                if (window && window.finalizeInit) {
+                   finalizeInit();
                 }
-                //initialize test, if they are present
-                if (window && window.initializeTest) {
-                   initializeTest();
+                //init test, if they are present
+                if (window && window.initTest) {
+                   initTest();
                 }
              },      
              /**
-              * @description Runs over all properties of the passed Object and calls the initialize-method if the property is a class that has an initialize-method
+              * @description Runs over all properties of the passed Object and calls the init-method if the property is a class that has an init-method
               * @param {Object} classFacade A class that contains other classes as properties.
               */
              _runInitializer : function (classFacade) {
-                $.each(classFacade, function (className, appClass) {
-                   if (appClass !== null && typeof appClass === "object" && appClass.initialize) {
-                      appClass.initialize();
+                $.each(classFacade, function (key, getter) {
+                   // test whether the key is a getter, else ignore
+                   if (/^get/.test(key) && !/Inherited$/.test(key)) {
+                      // test whether the class returned has a init method
+                      var appClass = getter.call(classFacade);
+                      if (appClass && appClass.init) {
+                         appClass.init.call(appClass);
+                      }
                    }
                 });
              },
