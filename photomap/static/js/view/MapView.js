@@ -51,7 +51,7 @@ define(["dojo/_base/declare", "presenter/MapPresenter", "util/Communicator", "do
 
                 // mode : fullscreen || normal
                 this.mode = 'normal';
-                this.presenter = new MapPresenter();
+                this.presenter = new MapPresenter(this);
                 this._create();
                 communicator.subscribeOnce("init", this._init, this);
              },

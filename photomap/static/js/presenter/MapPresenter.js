@@ -7,23 +7,48 @@
 define(["dojo/_base/declare", "presenter/PlacePresenter", "presenter/AlbumPresenter"],
        function (declare, PlacePresenter, AlbumPresenter) {
           return declare(null,  {
-             constructor : function () {
-                this.placePresenter = new PlacePresenter();
-                this.albumPresenter = new AlbumPresenter();
+             constructor : function (view) {
+                this.view = view;
              },
              click : function (event) {
-                var instance = this, 
-                    state = main.getUI().getState();      
 
                 if (!main.getUI().isDisabled()) {
                    //create new place with description and select it
-                   if (!state.isDashboardView()) {
-                      instance.placePresenter.insert(event);
+                   if (!main.getUIState().isDashboardView()) {
+                      this._insert(event, "place");
                    } else {
-                      instance.albumPresenter.insert(event);
+                      this._insert(event, "album");
                    }
                 }
-                
-             }
+             },
+             _insert : function (event, model) {
+                 var instance = this,
+                     input = main.getUI().getInput(),
+                     state = main.getUIState(),
+                     lat = event.lat,
+                     lng = event.lng;
+
+                 input.show({
+                    load : function () {
+                       $("input[name=lat]").val(lat);
+                       $("input[name=lon]").val(lng);
+                    },
+                    submit : function () {
+                       //get album name + description
+                       var title = $("[name=title]").val(),
+                           description = $("[name=description]").val();
+                       //dont create album yet, server might return error
+                       state.store(TEMP_TITLE_KEY, title);
+                       state.store(TEMP_DESCRIPTION_KEY, description);
+                    },
+                    success : function (data) {
+                       data.lng = lng;
+                       data.lat = lat;
+                       communicator.publish("insert:" + model, data);
+                    },
+                    url : "/insert-" + model,
+                    context : this
+                 });
+              }
           });
        });
