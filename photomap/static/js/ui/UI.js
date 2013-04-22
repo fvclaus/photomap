@@ -4,15 +4,10 @@
 "use strict";
 
 /**
- * @author Frederik Claus
+ * @author Frederik Claus, Marc Roemer
  * @class UI is a wrapper class for everything that is visible to the user
  * @requires UITools, UIControls, UIInput, UIState 
  *
- */
-
-/**
- * @author Marc Roemer
- * @description Defines Getter to retrieve the UI classes wrapped, handler to add/remove object to/from ui and to en-/disable the ui completely
  */
 
 define(["dojo/_base/declare", 

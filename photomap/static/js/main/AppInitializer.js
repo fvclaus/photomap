@@ -8,7 +8,6 @@
  * @class inits the app and fetches the initial data from the server.
  */
 
-
 define(["dojo/_base/declare", "main/Main", "util/Communicator"],
        function (declare, Main, communicator) {
           return declare(null, {

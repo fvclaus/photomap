@@ -16,11 +16,14 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
                 // this has to go
                 this.$logout = $(".mp-option-logout");
 
-
+                this.currentContext = null;
                 this.photoListener = new PhotoPresenter();
                 this.placeListener = new PlacePresenter();
                 this.albumListener = new AlbumPresenter();
 
+             },
+             setCurrentContext : function (context) {
+                this.currentContext = context;
              },
              /**
               * @public
@@ -51,18 +54,9 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
               * @public
               */
              update : function (event) {
-                
-                var instance = this,
-                    state = main.getUIState();
-                
+                  
                 if (!main.getUI().isDisabled()) {
-                   if (instance.isModifyPhoto) {
-                      instance.photoListener.update(state.getCurrentPhoto());
-                   } else if (instance.isModifyPlace) {
-                      instance.placeListener.update(state.getCurrentPlace());
-                   } else if (instance.isModifyAlbum) {
-                      instance.albumListener.update(state.getCurrentAlbum());
-                   }
+                  this.currentContext.presenter.update(event);
                 }
              },
 
@@ -70,18 +64,9 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
               * @public
               */
              delete : function (event) {
-
-                var instance = this,
-                    state = main.getUIState();
-                
+     
                 if (!main.getUI().isDisabled()) {
-                   if (instance.isModifyPhoto) {
-                      instance.photoListener.delete(state.getCurrentPhoto());
-                   } else if (instance.isModifyPlace) {
-                      instance.placeListener.delete(state.getCurrentPlace());
-                   } else if (instance.isModifyAlbum) {
-                      instance.albumListener.delete(state.getCurrentAlbum());
-                   }
+                   this.currentContext.presenter.delete(event);
                 }
              },
 
@@ -89,14 +74,9 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
               * @private
               */
              share : function (event) {
-                
-                var instance = this,
-                    state = main.getUIState(), 
-                    tools = main.getTools(), url, id;
-                
 
                 if (!main.getUI().isDisabled()) {
-                   instance.albumListener.share(state.getCurrentAlbum());
+                   this.currentContext.presenter.share();
                 }
              }
           });

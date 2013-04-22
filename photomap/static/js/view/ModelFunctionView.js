@@ -97,16 +97,20 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter", "util/Communic
               * @param {Album,Place} instance
               * @private
               */
-             show : function (element) {
+             show : function (context) {
                 var instance = this;
                 //TODO there is a circular reference place -> infomarker -> markerpresenter -> modelfunctionview -> modelfunctionpresenter -> place
                 require(["model/Photo", "model/Place", "model/Album"],
                         function (Photo, Place, Album) {
-                           assertTrue(element instanceof Album || element instanceof Place, "input parameter element must be instance of Album or Place");
-
-                           var state = main.getUIState(), 
+                           console.log(context);
+                           var state = main.getUIState(),
+                               element = context.view,
                                projection, pixel, markerSize, mapOffset;
-
+                          
+                           assertTrue(element instanceof Album || element instanceof Place, "input parameter element must be instance of Album or Place"); 
+                           
+                           instance.presenter.setCurrentContext(context);
+                           /*
                            if (element instanceof Album) {
                               instance.presenter.setModifyAlbum(true);
                               state.setCurrentAlbum(element);
@@ -114,6 +118,7 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter", "util/Communic
                               instance.presenter.setModifyPlace(true);
                               state.setCurrentPlace(element);
                            }
+                           */
                            // gets the absolute pixel position
                            pixel = main.getMap().getPositionInPixel(element);
                            markerSize = element.getSize();

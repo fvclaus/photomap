@@ -17,7 +17,7 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
              constructor : function (data) {
                 var i, len;
                 
-                data.model = 'Place';
+                this.model = 'Place';
 
                 this.photos = [];
                 if (data.photos) {

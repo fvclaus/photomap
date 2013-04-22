@@ -6,11 +6,21 @@
 
 /**
  * @author Frederik Claus
- * @class Starts the application. Retrieves all objects from server and intialises the rest afterwards. The constructor must be called after dom is ready.
+ * @class Initializes main classes.
  */
 
-define(["dojo/_base/declare", "ui/UI", "view/MapView", "util/ClientServer", "util/ClientState", "util/Communicator", "util/DataProcessor", "util/Tools"],
-       function (declare, ui, MapView, ClientServer, clientState, communicator, dataProcessor, tools) {
+define([
+         "dojo/_base/declare",
+         "ui/UI",
+         "view/MapView",
+         "util/ClientServer",
+         "util/ClientState",
+         "util/Communicator",
+         "util/DataProcessor",
+         "util/Tools",
+         "main/AppController"
+       ],
+       function (declare, ui, MapView, ClientServer, clientState, communicator, dataProcessor, tools, AppController) {
 
           return declare(null , {
              
@@ -24,6 +34,7 @@ define(["dojo/_base/declare", "ui/UI", "view/MapView", "util/ClientServer", "uti
                 // instance of Menu
                 this.ui = ui;
                 this.tools = tools;
+                this.appController = new AppController();
              },
    
              init : function () {

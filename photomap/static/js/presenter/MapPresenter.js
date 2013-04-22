@@ -34,10 +34,10 @@ define(["dojo/_base/declare", "presenter/PlacePresenter", "presenter/AlbumPresen
                        $("input[name=lon]").val(lng);
                     },
                     submit : function () {
-                       //get album name + description
+                       //get name + description
                        var title = $("[name=title]").val(),
                            description = $("[name=description]").val();
-                       //dont create album yet, server might return error
+                       //dont create yet, server might return error
                        state.store(TEMP_TITLE_KEY, title);
                        state.store(TEMP_DESCRIPTION_KEY, description);
                     },

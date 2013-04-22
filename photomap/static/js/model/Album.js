@@ -17,7 +17,7 @@ define(["dojo/_base/declare", "model/InfoMarker", ],
              constructor : function (data) {
                 assertTrue(data.secret, "album secret Must not be undefined");
                 
-                data.model = 'Album';
+                this.model = 'Album';
                 this.isOwner = data.isOwner || false;
                 this.secret = data.secret;
                 
