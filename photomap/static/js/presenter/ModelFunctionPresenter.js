@@ -17,39 +17,11 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
                 this.$logout = $(".mp-option-logout");
 
                 this.currentContext = null;
-                this.photoListener = new PhotoPresenter();
-                this.placeListener = new PlacePresenter();
-                this.albumListener = new AlbumPresenter();
 
              },
              setCurrentContext : function (context) {
                 this.currentContext = context;
              },
-             /**
-              * @public
-              */
-             setModifyAlbum : function (active) {
-                this.isModifyAlbum = active;
-                this.isModifyPlace = !active;
-                this.isModifyPhoto = !active;
-             },
-             /**
-              * @public
-              */
-             setModifyPlace : function (active) {
-                this.isModifyPlace = active;
-                this.isModifyAlbum = !active;
-                this.isModifyPhoto = !active;
-             },
-             /**
-              * @public
-              */
-             setModifyPhoto : function (active) {
-                this.isModifyPhoto = active;
-                this.isModifyPlace = !active;
-                this.isModifyAlbum = !active;
-             },
-
              /**
               * @public
               */

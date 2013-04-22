@@ -109,16 +109,9 @@ define(["dojo/_base/declare", "presenter/ModelFunctionPresenter", "util/Communic
                           
                            assertTrue(element instanceof Album || element instanceof Place, "input parameter element must be instance of Album or Place"); 
                            
+                           // set the context for the Controls-Dialog (current Album, Place, Photo)                           
                            instance.presenter.setCurrentContext(context);
-                           /*
-                           if (element instanceof Album) {
-                              instance.presenter.setModifyAlbum(true);
-                              state.setCurrentAlbum(element);
-                           } else if (element instanceof Place) {
-                              instance.presenter.setModifyPlace(true);
-                              state.setCurrentPlace(element);
-                           }
-                           */
+
                            // gets the absolute pixel position
                            pixel = main.getMap().getPositionInPixel(element);
                            markerSize = element.getSize();

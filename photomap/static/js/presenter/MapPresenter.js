@@ -4,8 +4,8 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "presenter/PlacePresenter", "presenter/AlbumPresenter"],
-       function (declare, PlacePresenter, AlbumPresenter) {
+define(["dojo/_base/declare", "util/Communicator"],
+       function (declare, communicator) {
           return declare(null,  {
              constructor : function (view) {
                 this.view = view;
@@ -42,6 +42,7 @@ define(["dojo/_base/declare", "presenter/PlacePresenter", "presenter/AlbumPresen
                        state.store(TEMP_DESCRIPTION_KEY, description);
                     },
                     success : function (data) {
+                       console.log("insert success");
                        data.lng = lng;
                        data.lat = lat;
                        communicator.publish("insert:" + model, data);
