@@ -2,8 +2,8 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "util/Communicator"],
-        function (declare, communicator) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
+        function (declare, communicator, state) {
            return declare(null, {
 
               constructor : function () {
@@ -36,7 +36,6 @@ define(["dojo/_base/declare", "util/Communicator"],
               insert : function (event) {
                  var instance = this,
                      input = main.getUI().getInput(),
-                     state = main.getUIState(),
                      lat = event.lat,
                      lng = event.lng;
 
@@ -102,7 +101,7 @@ define(["dojo/_base/declare", "util/Communicator"],
               },
               _deleteAlbum : function (album) {
                  album.hide();
-                 main.getUIState().deleteAlbum(album);
+                 state.deleteAlbum(album);
               }
            });
         });

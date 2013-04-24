@@ -16,8 +16,8 @@ $.extend($.ui.dialog.prototype.options, {
    closeOnEscape : false
 });
 
-define(["dojo/_base/declare", "view/DialogMessageView", "dojo/domReady!"], 
-   function (declare, DialogMessageView) {
+define(["dojo/_base/declare", "view/DialogMessageView", "util/ClientState", "dojo/domReady!"], 
+   function (declare, DialogMessageView, clientstate) {
       return declare(null, {
          constructor : function () {
             this.$dialog = $("#mp-dialog");
@@ -218,7 +218,7 @@ define(["dojo/_base/declare", "view/DialogMessageView", "dojo/domReady!"],
                            $close.button("enable");
                         }
                         // so we don't forget :)
-                        main.getClientState().updateUsedSpace();
+                        clientstate.updateUsedSpace();
                      },
                      error : function (error) {
                         // instance.close();

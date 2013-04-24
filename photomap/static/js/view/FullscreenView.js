@@ -8,8 +8,8 @@
  * @description Displays current slideshow-image as fullscreen, supports zooming into the image
  */
 
-define(["dojo/_base/declare", "dojo/domReady!"], 
-   function (declare, Photo) {
+define(["dojo/_base/declare", "model/Photo", "ui/UIState", "dojo/domReady!"], 
+   function (declare, Photo, state) {
       return declare(null, {
          constructor : function (slideshow) {
 
@@ -75,7 +75,6 @@ define(["dojo/_base/declare", "dojo/domReady!"],
             this.disable();      
             console.log("UIFullscreen: update started");
             var ui = main.getUI(),
-               state = ui.getState(),
                photo = state.getCurrentLoadedPhoto(),
                instance = this;
       

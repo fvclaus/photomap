@@ -8,15 +8,15 @@
  * @class inits the app and fetches the initial data from the server.
  */
 
-define(["dojo/_base/declare", "main/Main", "util/Communicator"],
-       function (declare, Main, communicator) {
+define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
+       function (declare, Main, communicator, state) {
           return declare(null, {
 
 
              start : function () {
 
                 main = new Main();
-                assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView(), "current view has to be either albumview or dashboardview");
+                assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview");
                 
                 main.init();
                 this._runInitializer(main);
@@ -27,9 +27,9 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator"],
                    init();
                 }
                 communicator.subscribeOnce("init", this._finalizeInit, this);
-                if (main.getUIState().isAlbumView()) {
+                if (state.isAlbumView()) {
                    this._getPlaces();
-                } else if (main.getUIState().isDashboardView()) {
+                } else if (state.isDashboardView()) {
                    this._getAlbums();
                 }
              },

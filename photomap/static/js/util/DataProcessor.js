@@ -9,8 +9,8 @@
  */
 
 
-define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util/Communicator"],
-       function(declare, Photo, Place, Album, communicator) {
+define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util/Communicator", "ui/UIState"],
+       function(declare, Photo, Place, Album, communicator, state) {
           
           var DataProcessor = declare(null, {
              
@@ -56,11 +56,11 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
                 
                 var processedData;
                 
-                if (main.getUIState().isAlbumView()) {
-                   main.getUIState().setCurrentLoadedAlbum(this._createAlbum(data));
+                if (state.isAlbumView()) {
+                   state.setCurrentLoadedAlbum(this._createAlbum(data));
                    processedData = this._createPlacesOrAlbums(data.places, "Place");
                    processedData = this._sortPhotos(processedData);
-                } else if (main.getUIState().isDashboardView()) {
+                } else if (state.isDashboardView()) {
                    processedData = this._createPlacesOrAlbums(data, "Album");
                 }
                 communicator.publish("init", processedData);
@@ -103,8 +103,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               */
              _createPhoto : function (data) {
                 
-                var state = main.getUIState(),
-                    photo = new Photo({
+                var photo = new Photo({
                        id : data.id,
                        photo : data.url,
                        thumb : data.thumb,
@@ -120,8 +119,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               */
              _createPlace : function (data) {
                 
-                var state = main.getUIState(),
-                    place = new Place({
+                var place = new Place({
                        lat: data.lat,
                        lng: data.lng || data.lon,
                        id : data.id,
@@ -130,7 +128,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
                        photos: data.photos || null
                     });
                 
-                main.getUIState().insertPlace(place);
+                state.insertPlace(place);
                 
                 return place;
              },
@@ -139,8 +137,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               */
              _createAlbum : function (data) {
                 
-                var state = main.getUIState(),
-                    album = new Album({
+                var album = new Album({
                        lat: data.lat,
                        lng: data.lng || data.lon,
                        id : data.id,
@@ -150,7 +147,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
                        isOwner : data.isOwner || false
                     });
                 
-                main.getUIState().insertAlbum(album);
+                state.insertAlbum(album);
                 
                 return album;
              }

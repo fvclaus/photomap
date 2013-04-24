@@ -2,20 +2,20 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "view/PhotoEditorView", "util/Communicator" ], 
-       function (declare, PhotoEditorView, detailView, communicator) {
+define(["dojo/_base/declare", "view/PhotoEditorView", "util/Communicator", "ui/UIState"], 
+       function (declare, PhotoEditorView, detailView, communicator, state) {
           return declare(null, {
              constructor : function () {
                 this.editor = new PhotoEditorView();
              },
              insert : function () {
                 var instance = this,
-                    state = main.getUIState(),
+                    state = state,
                     input = main.getUI().getInput(),
                     place = state.getCurrentLoadedPlace();
 
                 // if-clause to prevent method from being executed if there are no places yet
-                if (main.getUIState().getPlaces().length !== 0) {
+                if (state.getPlaces().length !== 0) {
                    input.show({
                       load : function () {      
                          $("#insert-photo-tabs").tabs();

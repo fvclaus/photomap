@@ -9,19 +9,19 @@
  */
 
 
-define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view/DetailView"],
-       function (declare, Photo, Place, Album, detailView) {
+define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view/DetailView", "util/Tools", "ui/UIState"],
+       function (declare, Photo, Place, Album, detailView, tools, state) {
           return declare(null, {
              constructor :  function () {
                 // array of albums
                 this.albums = [];
              },
              preinit : function () {
-                assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView(), "current view has to be either albumview or dashboardview");
+                assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview");
       
-                if (main.getUIState().isAlbumView()) {
+                if (state.isAlbumView()) {
                    this._getPlaces();
-                } else if (main.getUIState().isDashboardView()) {
+                } else if (state.isDashboardView()) {
                    this._getAlbums();
                 }
              },
@@ -50,7 +50,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view
                          instance.albums.push(album);
                       });
 
-                      main.getUIState().setAlbums(instance.albums);
+                      state.setAlbums(instance.albums);
 
                       instance._showAlbums(instance.albums);
 
@@ -75,8 +75,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view
                 var idFromUrl = /-(\d+)$/,
                     data = {
                        "id" : idFromUrl.exec(window.location.pathname)[1]
-                    }, 
-                    tools = main.getTools(),  
+                    },  
                     instance = this;
 
                 $.ajax({
@@ -89,7 +88,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view
                              album = new Album(albuminfo);
                          
                          // set current album in UIState to have access on it for information, etc.
-                         main.getUIState().setCurrentLoadedAlbum(album);
+                         state.setCurrentLoadedAlbum(album);
                          // show album title in panel
                          $(".mp-page-title h1").text(album.title);
                          // set album title & description
@@ -110,7 +109,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view
                             places.push(place);
                          });
                          // add to UIState
-                         main.getUIState().setPlaces(places);
+                         state.setPlaces(places);
 
                          instance._showPlaces(places);
                       } else {

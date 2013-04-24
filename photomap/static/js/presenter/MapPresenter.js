@@ -4,8 +4,8 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "util/Communicator"],
-       function (declare, communicator) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
+       function (declare, communicator, state) {
           return declare(null,  {
              constructor : function (view) {
                 this.view = view;
@@ -14,7 +14,7 @@ define(["dojo/_base/declare", "util/Communicator"],
 
                 if (!main.getUI().isDisabled()) {
                    //create new place with description and select it
-                   if (!main.getUIState().isDashboardView()) {
+                   if (!.isDashboardView()) {
                       this._insert(event, "place");
                    } else {
                       this._insert(event, "album");
@@ -24,7 +24,6 @@ define(["dojo/_base/declare", "util/Communicator"],
              _insert : function (event, model) {
                  var instance = this,
                      input = main.getUI().getInput(),
-                     state = main.getUIState(),
                      lat = event.lat,
                      lng = event.lng;
 

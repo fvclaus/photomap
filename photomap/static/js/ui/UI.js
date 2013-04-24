@@ -22,12 +22,12 @@ define(["dojo/_base/declare",
         "view/DialogView",
         "ui/UIState",
         "dojo/domReady!"],
-       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, GalleryView, DialogView, UIState) {
+       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, GalleryView, DialogView, state) {
            var UI = declare(null, {
               constructor : function () {
                  this.controls = new ModelFunctionView();
                  this.input = new DialogView();
-                 this.state = new UIState(this);
+                 this.state = state;
                  this.information = new DetailView();
                  this.message = new StatusMessageView();
 
@@ -79,7 +79,10 @@ define(["dojo/_base/declare",
                  return this.input;
               }, 
               getState: function () {
-                 return this.state;
+                 throw new Error("DoNotUseThisError");
+              },
+              getTools: function () {
+                 throw new Error("DoNotUseThisError"); 
               },
               getInformation: function () {
                  return this.information;
@@ -98,11 +101,11 @@ define(["dojo/_base/declare",
                     lat: lat,
                     lon: lon,
                     id : data.id,
-                    title : this.getState().retrieve(TEMP_TITLE_KEY),
-                    description : this.getState().retrieve(TEMP_DESCRIPTION_KEY)
+                    title : state.retrieve(TEMP_TITLE_KEY),
+                    description : state.retrieve(TEMP_DESCRIPTION_KEY)
                  });
                  place.show();
-                 this.getState().insertPlace(place);
+                 state.insertPlace(place);
                  //TODO triggerDoubleClick does not respond, because the UI is still disabled at that point
                  place.openPlace();
               },
@@ -110,9 +113,9 @@ define(["dojo/_base/declare",
                * @description Removes place fully from ui.
                */
               deletePlace : function (place) {
-                 this.getState().deletePlace(place);
+                 state.deletePlace(place);
 
-                 if (place === this.getState().getCurrentLoadedPlace()) {
+                 if (place === state.getCurrentLoadedPlace()) {
                     
 
                     //TODO this should be triggered by events
@@ -139,7 +142,7 @@ define(["dojo/_base/declare",
               insertPhoto : function (data) {
                  
                  // add received value to uploadedPhoto-Object, add the photo to current place and restart gallery
-                 var state = this.getState(),
+                 var state = state,
                      photo = new Photo({
                         id : data.id,
                         photo : data.url,
@@ -166,9 +169,9 @@ define(["dojo/_base/declare",
                */
               deletePhoto : function (photo) {
                  // we must update state first, all other components depend on it
-                 this.getState().getCurrentLoadedPlace().deletePhoto(photo);
+                 state.getCurrentLoadedPlace().deletePhoto(photo);
                  
-                 if (photo === this.getState().getCurrentLoadedPhoto()) {
+                 if (photo === state.getCurrentLoadedPhoto()) {
                     //TODO events please
                     require(["view/DetailView"], function (detail) {
                       detail.empty(photo);
@@ -194,12 +197,12 @@ define(["dojo/_base/declare",
                     lat: lat,
                     lon: lon,
                     id : data.id,
-                    title : this.getState().retrieve(TEMP_TITLE_KEY),
-                    description : this.getState().retrieve(TEMP_DESCRIPTION_KEY),
+                    title : state.retrieve(TEMP_TITLE_KEY),
+                    description : state.retrieve(TEMP_DESCRIPTION_KEY),
                     secret : data.secret
                  });
                  album.show();
-                 this.getState().insertAlbum(album);
+                 state.insertAlbum(album);
                  //redirect to new albumview
                  //triggerDoubleClick does not work on the time, because the UI is still disabled from UIInput
                  album.openURL();
@@ -208,9 +211,9 @@ define(["dojo/_base/declare",
                * @description Removes album fully from ui.
                */
               deleteAlbum : function (album) {
-                 this.getState().deleteAlbum(album);
+                 state.deleteAlbum(album);
                  
-                 if (album === this.getState().getCurrentLoadedAlbum()) {
+                 if (album === state.getCurrentLoadedAlbum()) {
                     //TODO events please
                     require(["view/DetailView"], function (detail) {
                       detail.empty(album);

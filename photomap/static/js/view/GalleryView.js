@@ -14,8 +14,12 @@ define(["dojo/_base/declare",
         "view/FullGalleryView",
         "presenter/PhotoPresenter",
         "util/Communicator",
-        "dojo/domReady!"],
-       function (declare, PhotoCarouselView, FullGalleryView, PhotoPresenter, communicator) {
+        "util/Tools",
+        "util/ClientState",
+        "ui/UIState",
+        "dojo/domReady!"
+       ],
+       function (declare, PhotoCarouselView, FullGalleryView, PhotoPresenter, communicator, tools, clientstate, state) {
 
 /**
  * @author Marc Roemer
@@ -78,7 +82,6 @@ define(["dojo/_base/declare",
                 assert(this.isStarted, false, "gallery must not be started yet");
                 
                 var ui = main.getUI(),
-                    state = ui.getState(),
                     photos = state.getPhotos(),
                     options,
                     instance = this,
@@ -190,7 +193,7 @@ define(["dojo/_base/declare",
               * @description Resets the Gallery if the deleted place was the one that is currently open
               */
              _placeDeleteReset : function (place) {
-                if (main.getUIState().getCurrentPlace() === place) {
+                if (state.getCurrentPlace() === place) {
                    this.reset();
                 }
              },
@@ -314,17 +317,15 @@ define(["dojo/_base/declare",
              _bindListener : function () {
 
                 var ui = main.getUI(),
-                    state = ui.getState(),
-                    tools = main.getTools(),
                     controls = ui.getControls(),
-                    authorized = main.getClientState().isAdmin(),
+                    authorized = clientstate.isAdmin(),
                     photo = null,
                     instance = this;
                 
                 
                 // this is triggered by the fullgallery
                 $(ui).on("photosOrderUpdate.mp", function (place) {
-                   if (place === main.getUIState().getCurrentLoadedPlace()) {
+                   if (place === state.getCurrentLoadedPlace()) {
                       instance.isDirty = true;
                       instance.$dirtyWarning.removeClass("mp-nodisplay");
                    }

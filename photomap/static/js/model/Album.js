@@ -10,8 +10,8 @@
  */
 
 
-define(["dojo/_base/declare", "model/InfoMarker", ],
-       function (declare, InfoMarker, detail) {
+define(["dojo/_base/declare", "model/InfoMarker", "ui/UIState"],
+       function (declare, InfoMarker, state, detail) {
           console.log("Album: start");
           return declare(InfoMarker, {
              constructor : function (data) {
@@ -30,8 +30,7 @@ define(["dojo/_base/declare", "model/InfoMarker", ],
               */
              _bindListener : function () {
                 
-                var state = main.getUIState(), 
-                    instance = this;
+                var instance = this;
                 /*
                  * @description Redirects on albumview of selected album.
                  */

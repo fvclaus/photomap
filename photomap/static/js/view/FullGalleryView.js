@@ -2,8 +2,8 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "model/Photo", "dojo/domReady!"], 
-       function (declare, Photo, statusMessage) {
+define(["dojo/_base/declare", "model/Photo", "ui/UIState", "view/StatusMessageView", "dojo/domReady!"], 
+       function (declare, Photo, state, statusMessage) {
           
           return  declare(null, {
              constructor : function () {
@@ -83,7 +83,7 @@ define(["dojo/_base/declare", "model/Photo", "dojo/domReady!"],
               */
              _savePhotos : function (photos) {
                 
-                var place = main.getUIState().getCurrentLoadedPlace(),
+                var place = state.getCurrentLoadedPlace(),
                     instance = this;
                 
                 photos.forEach(function (photo) {

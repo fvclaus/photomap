@@ -17,8 +17,8 @@
  * @param options.onUpdate Called after all photos are updated
  */
   
-define(["dojo/_base/declare", "model/Photo", "util/PhotoPages"], 
-       function (declare, Photo, PhotoPages) {
+define(["dojo/_base/declare", "model/Photo", "util/PhotoPages", "util/Tools"], 
+       function (declare, Photo, PhotoPages, tools) {
           
           return declare (null, {
              constructor : function ($photos, photos, srcPropertyName, options) {
@@ -164,7 +164,7 @@ define(["dojo/_base/declare", "model/Photo", "util/PhotoPages"],
                       // give the element its later height
                       $(this).attr("src", imageSource);
                       // set margin-top accordingly. 
-                      main.getTools().centerElement($(this), "vertical"); 
+                      tools.centerElement($(this), "vertical"); 
                       // remove the img again to fade it in nicely
                       $(this).removeAttr("src");
                       if ( imageSource !== null) {

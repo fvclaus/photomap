@@ -9,8 +9,8 @@
  */
 
 
-define(["dojo/_base/declare", "model/InfoMarker"],
-       function (declare, InfoMarker) {
+define(["dojo/_base/declare", "model/InfoMarker", "util/ClientState", "ui/UIState"],
+       function (declare, InfoMarker, clientstate, state) {
           
           return declare(null ,{
              constructor : function (data, index) {
@@ -22,7 +22,7 @@ define(["dojo/_base/declare", "model/InfoMarker"],
                 this.description = (data.description === "")? null : data.description;
                 this.id = data.id;
                 this.order = data.order;
-                this.visited = main.getClientState().isVisitedPhoto(this.id);
+                this.visited = clientstate.isVisitedPhoto(this.id);
              },
              getModel : function () {
                 return this.model;
@@ -35,14 +35,14 @@ define(["dojo/_base/declare", "model/InfoMarker"],
              },
              showBorder : function (bool) {
                 this.visited = bool;
-                main.getClientState().addPhoto(this.id);
+                clientstate.addPhoto(this.id);
                 this.checkBorder();
              },
              triggerClick : function () {
                 this.openPhoto();
              },
              openPhoto : function () {
-                main.getUIState().setCurrentLoadedPhoto(this);
+                state.setCurrentLoadedPhoto(this);
                 //TODO events?
                 var instance = this; 
 

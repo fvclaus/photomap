@@ -3,8 +3,6 @@
 
 "use strict";
 
-var state;
-
 //TODO this isn't necessary, as it can be all done in UIInformation
 function init() {
 //   var album = main.getUIState().getCurrentLoadedAlbum();

@@ -8,8 +8,8 @@
  * @description Defines methods to check whether user is admin or not and reads/writes cookies, describing the state of the client (visited photos, storage-space left, ...)
  */
 
-define(["dojo/_base/declare", "util/Communicator"], 
-       function (declare, communicator) {
+define(["dojo/_base/declare", "util/Communicator", "util/Tools"], 
+       function (declare, communicator, tools) {
           var ClientState = declare(null,  {
              constructor : function () {
                 var value = $.cookie("visited") || "";
@@ -61,7 +61,7 @@ define(["dojo/_base/declare", "util/Communicator"],
              updateUsedSpace : function () {
                 
                 var instance = this;
-                this.usedSpace =  main.getTools().bytesToMbyte($.cookie("used_space"));
+                this.usedSpace =  tools.bytesToMbyte($.cookie("used_space"));
                 communicator.publish("change:usedSpace", {
                    used: instance.usedSpace,
                    total: instance.quota
@@ -109,7 +109,7 @@ define(["dojo/_base/declare", "util/Communicator"],
                 }
              },
              _init : function () {
-                this.quota = main.getTools().bytesToMbyte($.cookie("quota"));
+                this.quota = tools.bytesToMbyte($.cookie("quota"));
                 this.updateUsedSpace();
              },
              /**

@@ -8,8 +8,8 @@
  * @class Shows the feedback (success or failure) in DialogView
  */
 
-define(["dojo/_base/declare", "dojo/domReady!"], 
-   function (declare) {
+define(["dojo/_base/declare", "ui/UIState", "dojo/domReady!"], 
+   function (declare, state) {
       return declare(null, {
          constructor : function ($el) {
             this.$el = $el;
@@ -43,7 +43,7 @@ define(["dojo/_base/declare", "dojo/domReady!"],
                if ($(this).is(":checked")){
                   autoClose = true;
                }
-               main.getUIState().setDialogAutoClose(autoClose);
+               state.setDialogAutoClose(autoClose);
                this.autoClose = autoClose;
             });
          },

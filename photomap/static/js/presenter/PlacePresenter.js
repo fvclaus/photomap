@@ -3,8 +3,8 @@
 
 
 
-define(["dojo/_base/declare", "util/Communicator"],
-       function (declare, communicator) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
+       function (declare, communicator, state) {
 
           return declare(null, {
              constructor : function () {
@@ -15,7 +15,6 @@ define(["dojo/_base/declare", "util/Communicator"],
              },
              insert : function (event) {
                 var instance = this,
-                    state = main.getUIState(),
                     input = main.getUI().getInput(),
                     lat = event.lat,
                     lng = event.lng;
@@ -25,7 +24,7 @@ define(["dojo/_base/declare", "util/Communicator"],
                       var title, description;
                       $("input[name=lat]").val(lat);
                       $("input[name=lon]").val(lng);
-                      $("input[name=album]").val(main.getUIState().getCurrentLoadedAlbum().id);
+                      $("input[name=album]").val(state.getCurrentLoadedAlbum().id);
                    },
                    submit : function () {
                       //get place name + description
@@ -82,10 +81,10 @@ define(["dojo/_base/declare", "util/Communicator"],
                 });
              },
              _insertPhoto : function (photo) {
-                main.getUIState().getCurrentLoadedPlace().insertPhoto(photo);
+                state.getCurrentLoadedPlace().insertPhoto(photo);
              },
              _deletePhoto : function (photo) {
-                main.getUIState().getCurrentLoadedPlace().deletePhoto(photo);
+                state.getCurrentLoadedPlace().deletePhoto(photo);
              },
              _insertPlace : function (place) {
                 place.show();
@@ -93,7 +92,7 @@ define(["dojo/_base/declare", "util/Communicator"],
              },
              _deletePlace : function (place) {
                 place.hide();
-                main.getUIState().deletePlace(place);
+                state.deletePlace(place);
              }
           });
        });

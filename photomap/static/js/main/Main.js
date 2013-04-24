@@ -26,7 +26,7 @@ define([
              
              constructor : function (args) {
 
-                this.clientState =  clientState;
+                this.clientState = clientState;
                 // instance of Map
                 this.clientServer = new ClientServer();
                 this.communicator = communicator;
@@ -41,10 +41,10 @@ define([
                 this.map = new MapView();
              },
              getUIState : function () {
-                return this.getUI().getState();
+                throw new Error("DoNotUseThisError");
              },
              getClientState : function () {
-                return this.clientState;
+                throw new Error("DoNotUseThisError");
              },
              getClientServer : function () {
                 return this.clientServer;
@@ -56,13 +56,13 @@ define([
                 return this.ui;
              },
              getCommunicator : function () {
-                return this.communicator;
+                throw new Error("DoNotUseThisError");
              },
              getDataProcessor : function () {
-                return this.dataProcessor;
+                throw new Error("DoNotUseThisError");
              },
              getTools : function () {
-                return this.tools;
+                throw new Error("DoNotUseThisError");
              }
           //    //TODO events?
           //    preinit : function () {

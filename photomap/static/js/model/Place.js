@@ -10,8 +10,8 @@
  */
 
 
-define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
-       function (declare, InfoMarker, Photo ) {
+define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "ui/UIState"],
+       function (declare, InfoMarker, Photo, state) {
           console.log("Place: start");
           return declare(InfoMarker, {
              constructor : function (data) {
@@ -74,7 +74,7 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
                    visited = visited && photo.visited;
                 });
 
-                if (main.getUIState().getCurrentLoadedPlace() === this) {
+                if (state.getCurrentLoadedPlace() === this) {
                    this.showSelectedIcon();
                 } else if (visited) {
                    this.showVisitedIcon();
@@ -87,18 +87,15 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
               */
              _bindListener : function () {
 
-                var instance, state, ui, controls;
-
-                instance = this;
-                state = main.getUIState();
-                ui = main.getUI();
-                controls = ui.getControls();
+                var instance = this,
+                    ui = main.getUI(),
+                    controls = ui.getControls();
                 
                 this.addListener("click", function () {
                    
-                   if (!main.getUI().isDisabled()) {
+                   if (!ui.isDisabled()) {
                       state.setCurrentPlace(instance);
-                      main.getUI().getInformation().update(instance);
+                      ui.getInformation().update(instance);
                    }
                 });
                 
@@ -118,7 +115,6 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
 
              openPlace : function () {
                 var ui = main.getUI(),
-                    state = ui.getState(),
                     oldPlace = state.getCurrentLoadedPlace(),
                     //TODO is instance really needed?
                     instance = this;
@@ -138,12 +134,12 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo" ],
                 //TODO this should be triggered by events
 
 
-                main.getUI().getGallery().reset();
-                main.getUI().getSlideshow().reset();
+                ui.getGallery().reset();
+                ui.getSlideshow().reset();
                 instance._showGallery();
-                main.getUI().getMessage().hide();
+                ui.getMessage().hide();
 
-                main.getUI().getInformation().update(instance);
+                ui.getInformation().update(instance);
 
 
              }
