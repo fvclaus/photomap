@@ -1,0 +1,55 @@
+{% extends "base-non-interactive.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block title %}{% trans "Spenden" %}{% endblock %}
+
+{% block name %}{% trans "Spenden und Zahlungsbedingungen" %}{% endblock %}
+
+{% block non_interactive_content %}
+
+<article>
+	<h2>{% trans "payment headline 'Projekt Vorstellung'" %}</h2>
+	<div>
+		<p>{% trans "payment text 'project intro' p1" %}</p>
+		<p>{% trans "payment text 'project intro' p2" %}</p>	
+		<p>{% trans "payment text 'project intro' p3" %}</p>
+	</div>
+	<h2>{% trans "payment headline 'Kosten und Spenden'" %}</h2>
+	<div>
+		<p>{% trans "payment text 'reason for donations'" %}</p>
+		<p>{% trans "payment text 'call for donations'" %}</p>
+	</div>
+</article>
+<article>
+	<header>
+		<h2>
+			{% trans "payment headline 'payment info'" %}
+		</h2>
+	</header>
+	<div>
+		<p>{% trans "payment text 'payment info'" %}</p>
+	</div>
+	<div class="mp-payment-info">
+		<p><span>{% trans "Kontoinhaber" %}</span>: Marc-Leon Roemer</p>
+		<p><span>{% trans "Kontonummer" %}</span>: 8481749</p>
+		<p><span>{% trans "BLZ" %}</span>: 20041155</p>
+		<p><span>{% trans "Kreditinstitut" %}</span>: comdirect bank AG</p>		
+	</div>
+	<div>
+		<p>
+			{% trans "payment 'thank you note'" %}
+			<span class="mp-bold mp-nodisplay" id="mp-email-jsenabled">er2Ts20-8ußrt1plkjdppüi5oolhqrtwpdt flw@dsT.kökd.esutii28tikzPkkewWw1n.net.kitedlkliesgi</span>
+	  		.
+	  	</p>
+	</div>
+
+  	<noscript>
+    	<span class="mp-bold" id="mp-email-cssenabled">
+      		{% trans "EMAIL_ONLY_WITH_JS" %}
+    	</span>
+  </noscript>
+</article>
+
+{% endblock %}

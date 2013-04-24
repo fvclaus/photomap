@@ -41,6 +41,7 @@ urlpatterns = patterns("",
                        url(r'^contact-success$', footer.contact_success),
                        url(r'^help$', direct_to_template, {"template": "help.html"}),
                        url(r'^team$', direct_to_template, {"template": "team.html"}),
+                       url(r'^payment$', direct_to_template, {"template": "payment.html"}),
                        
                        url(r'^demo$', album.demo),
                        url(r'^test$', authentication.test),

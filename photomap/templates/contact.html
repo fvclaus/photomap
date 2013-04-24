@@ -9,18 +9,21 @@
 
 {% block non_interactive_content %}
 
-<article class="mp-textbox">
-  {% trans "contact-intro-article1-line1" %} <a href="/help">{% trans "contact-linkto-help" %}</a>
-  {% trans "contact-intro-article1-line2" %}
-  <span class="mp-bold mp-nodisplay" id="mp-email-jsenabled">er2Ts20-8ußrt1plkjdppüi5oolhqrtwpdt flw@dsT.kökd.esutii28tikzPkkewWw1n.net.kitedlkliesgi</span>
-  <noscript>
-    <span class="mp-bold" id="mp-email-cssenabled">
-      {% trans "email just in javascript" %}
-    </span>
-  </noscript>
-  .
-  {% trans "contact-intro-article1-line3" %}<br />
-  {% trans "contact-intro-article1-line4" %} <a href="/privacy#mp-emails">{% trans "contact-linkto-privacy" %}</a>.
+<article>
+	<div>
+		<p>
+			{% trans "contact form intro" %}
+			<span class="mp-bold mp-nodisplay" id="mp-email-jsenabled">er2Ts20-8ußrt1plkjdppüi5oolhqrtwpdt flw@dsT.kökd.esutii28tikzPkkewWw1n.net.kitedlkliesgi</span>
+		</p>
+		  <noscript>
+		    <span class="mp-bold" id="mp-email-cssenabled">
+		      {% trans "EMAIL_ONLY_WITH_JS" %}
+		    </span>
+		  </noscript>
+		<p>
+			{% trans "contact privacy note" %}
+		</p>
+	</div>
 </article>
 
 

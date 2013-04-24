@@ -11,56 +11,63 @@
 {% block non_interactive_content %}
 
 	<article class="mp-textbox" id="privacy">
-		<h3>{% trans "privacy-topic Datenschutzerklärung" %}</h3>
-		<p>{% trans "privacy-topic Datenschutzerklärung -> description" %}</p>
-		<h3>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt" %}</h3>
-		<p>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> description" %}</p>
-		<p>
-			<strong>{% trans "privacy-subtopic Nutzung der email-Adresse" %}</strong>
-			{% trans "privacy-subtopic Nutzung der email-Adresse -> description" %}
-		</p>
 		<div>
-			<strong>{% trans "privacy-subtopic Nutzung des Namens" %}</strong>
-			{% trans "privacy-subtopic Nutzung des Namens -> description" %}
-			<aside>
-				<h3>{% trans "privacy-sidenote Pseudonyme" %}</h3>
-				{% trans "privacy-sidenote Pseudonyme -> description" %}
-			</aside>
+			<h2>{% trans "privacy-topic Datenschutzerklärung" %}</h2>
+			<p>{% trans "privacy-topic Datenschutzerklärung -> description" %}</p>
 		</div>
-		<p>
-			<strong>
-				{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee" %}
-			</strong>
-		</p>
-		<h3>{% trans "privacy-topic Cookies" %}</h3>
 		<div>
-			{% trans "privacy-topic Cookies -> cookie-introduction" %}
+			<h2>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt" %}</h2>
+			<p>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> description" %}</p>
+		</div>
+		<div>
+			<h3>{% trans "privacy-subtopic Nutzung der email-Adresse" %}</h3>
+			<p>
+				{% trans "privacy-subtopic Nutzung der email-Adresse -> description" %}
+			</p>
+			<h3>{% trans "privacy-subtopic Nutzung des Namens" %}</h3>
+			<p>
+				{% trans "privacy-subtopic Nutzung des Namens -> description" %}
+			</p>
+		</div>
+		<div>
+			<p>
+				<strong>
+					{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee" %}
+				</strong>
+			</p>	
+		</div>
+		<div>
+			<h2>{% trans "privacy-topic Cookies" %}</h2>
+			<p>	
+				{% trans "privacy-topic Cookies -> cookie-introduction" %}
+			</p>
 			<ol>
 				<li>{% trans "privacy-topic Cookies - sessioncookie" %}</li>
 				<li>{% trans "privacy-topic Cookies - 'visited'-cookie" %}</li>
+				<li>{% trans "privacy-topic Cookies - 'quota'- and 'used-space'-cookie" %}</li>
 			</ol>
+			<p>
+				{% trans "privacy-topic Cookies -> redirection to wiki" %} <a href='{% trans "privacy-topic Cookies -> link to wiki" %}'
+				title='{% trans "link-title Wikipedia-Eintrag zu Cookies" %}'>{% trans "privacy-topic Cookies -> name of link to wiki" %}</a>.
+			</p>
 		</div>
-		<p>
-			{% trans "privacy-topic Cookies -> redirection to wiki" %} <a href='{% trans "privacy-topic Cookies -> link to wiki" %}'
-			title='{% trans "link-title Wikipedia-Eintrag zu Cookies" %}'>{% trans "privacy-topic Cookies -> name of link to wiki" %}</a>.
-		</p>
-		
-		<h3 id="mp-emails">{% trans "privacy-topic Emails und Kontaktformulare" %}</h3>
 		<div>
+			<h2 id="mp-emails">{% trans "privacy-topic Emails und Kontaktformulare" %}</h2>
 			<ol>
 				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-1" %}</li>
 				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-2" %}</li>
-				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-3" %}</li>
 				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-4" %}</li>
 				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-5" %}</li>
 			</ol>
 		</div>
-		<h3>{% trans "privacy-topic Auskunftsrecht" %}</h3>
-		<p>
-			{% trans "privacy-topic Auskunftsrecht -> paragraph1" %}
-			<a href="/contact">{% trans "Kontaktformular" %}</a>.
-			{% trans "privacy-topic Auskunftsrecht -> paragraph2" %}
-		</p>
+		<div>
+			<h2>{% trans "privacy-topic Auskunftsrecht" %}</h2>
+			<p>
+				{% trans "privacy-topic Auskunftsrecht -> paragraph1" %}
+				<a href="/contact">{% trans "Kontaktformular" %}</a>.
+				{% trans "privacy-topic Auskunftsrecht -> paragraph2" %}
+			</p>
+		</div>
 	</article>
 
 {% endblock %}

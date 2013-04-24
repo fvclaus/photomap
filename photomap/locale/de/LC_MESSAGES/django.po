@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-09 13:35+0100\n"
+"POT-Creation-Date: 2013-04-24 17:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,146 +17,142 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:71 templates/base-interactive.html.py:87
-#: templates/view-album.html:113
+#: templates/base-interactive.html:79 templates/base-interactive.html.py:95
+#: templates/view-album.html:118
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:90
+#: templates/base-interactive.html:98
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr ""
 "Wenn Sie einen Platz oder ein Album auswählen, wird die Beschreibung des "
 "ausgewählten Objekts hier angezeigt."
 
-#: templates/base-interactive.html:92 templates/base-interactive.html:100
-#: templates/base-interactive.html:102
+#: templates/base-interactive.html:100 templates/base-interactive.html:108
+#: templates/base-interactive.html:110
 msgid "NO_DESCRIPTION"
 msgstr "Keine Beschreibung"
 
-#: templates/base-interactive.html:98 templates/photo-editor.html:4
+#: templates/base-interactive.html:106 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Bitte wählen Sie ein Photo aus."
 
-#: templates/base-interactive.html:114
+#: templates/base-interactive.html:122
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:122
+#: templates/base-interactive.html:130
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:123
+#: templates/base-interactive.html:131
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base.html:103 templates/index-guest.html:30
+#: templates/base.html:106 templates/index-guest.html:30
 msgid "JS_DISABLED_WARNING"
 msgstr ""
 "Sie haben Javascript in Ihren Browsereinstellungen deaktiviert. Um Keiken "
 "nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
 "die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
 
-#: templates/base.html:124
+#: templates/base.html:127
 msgid "Login or Register"
 msgstr "Anmelden oder Registrieren"
 
-#: templates/base.html:124
+#: templates/base.html:127
 msgid "Anmelden/Registrierung"
 msgstr "Anmeldung und Registrierung"
 
-#: templates/base.html:128 templates/not-supported-old.html:64
+#: templates/base.html:131 templates/payment.html:6
+msgid "Spenden"
+msgstr "Spenden"
+
+#: templates/base.html:132 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:128 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:132 templates/team.html:6 templates/team.html.py:8
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:129 templates/not-supported-old.html:62
+#: templates/base.html:133 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:129 templates/contact.html:6
-#: templates/contact.html.py:8 templates/impressum.html:30
+#: templates/base.html:133 templates/contact.html:6
+#: templates/contact.html.py:8 templates/impressum.html:35
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:130 templates/not-supported-old.html:60
+#: templates/base.html:134 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:130 templates/privacy.html:5
+#: templates/base.html:134 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:131 templates/not-supported-old.html:61
+#: templates/base.html:135 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:131 templates/copyright.html:6
+#: templates/base.html:135 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:132 templates/not-supported-old.html:63
+#: templates/base.html:136 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:132 templates/help.html:6
+#: templates/base.html:136 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:133 templates/not-supported-old.html:59
+#: templates/base.html:137 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:133 templates/impressum.html:6
+#: templates/base.html:137 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
 
-#: templates/contact.html:13
-msgid "contact-intro-article1-line1"
-msgstr "Sollten Sie Probleme, Anregungen oder Fragen, welche nicht auf der"
-
-#: templates/contact.html:13
-msgid "contact-linkto-help"
-msgstr "Hilfe-Seite"
-
-#: templates/contact.html:14
-msgid "contact-intro-article1-line2"
+#: templates/contact.html:15
+msgid "contact form intro"
 msgstr ""
-", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail an"
+"Sollten Sie Fragen oder Probleme haben, die nicht bereits auf der <a href='/"
+"help'>Hilfe-Seite</a> beantwortet oder gelöst werden konnten, nutzen Sie "
+"bitte das Kontaktformular oder schreiben Sie uns eine Email an "
 
-#: templates/contact.html:18
-msgid "email just in javascript"
+#: templates/contact.html:20 templates/impressum.html:42
+#: templates/payment.html:50
+msgid "EMAIL_ONLY_WITH_JS"
 msgstr ""
-"-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und laden "
-"Sie die Seite erneut, um die Email-Adresse lesen zu können. --"
+"Die email-Adresse ist verschlüsselt damit man sie nicht von Crawlern für "
+"Spam-Mails missbraucht wird, daher können Sie die Adresse nicht sehen "
+"solange Sie javascript nicht aktiviert haben. Sie können uns jedoch genauso "
+"leicht erreichen, indem Sie <a href='/contact' title='Schreiben Sie "
+"uns'>Kontaktformular</a> nutzen. "
 
-#: templates/contact.html:22
-msgid "contact-intro-article1-line3"
-msgstr "Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen."
+#: templates/contact.html:24
+msgid "contact privacy note"
+msgstr ""
+"Bitte beachten Sie dabei die hierfür gültigen <a href='/privacy#mp-"
+"emails'>Datenschutzgrundsätze</a>."
 
-#: templates/contact.html:23
-msgid "contact-intro-article1-line4"
-msgstr "Bitte beachten Sie die hierfür gültigen"
-
-#: templates/contact.html:23
-msgid "contact-linkto-privacy"
-msgstr "Datenschutzgrundsätze"
-
-#: templates/contact.html:31 templates/insert-album.html:10
+#: templates/contact.html:34 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-place.html:10
 #: templates/update-album.html:11 templates/update-photo.html:12
 #: templates/update-place.html:12
 msgid "NAME"
 msgstr "Name"
 
-#: templates/contact.html:32 templates/contact.html.py:40
-#: templates/contact.html:48 templates/contact.html.py:56
+#: templates/contact.html:35 templates/contact.html.py:43
+#: templates/contact.html:51 templates/contact.html.py:59
 #: templates/insert-album.html:10 templates/insert-photo.html:20
 #: templates/insert-photo.html.py:28 templates/insert-place.html:10
 #: templates/update-album.html:11 templates/update-photo.html:12
@@ -164,24 +160,24 @@ msgstr "Name"
 msgid "MANDATORY_FIELD"
 msgstr "Dieses Feld ist ein Pflichtfeld."
 
-#: templates/contact.html:39 templates/login.html:24
+#: templates/contact.html:42 templates/login.html:24
 #: templates/login.html.py:53
 msgid "Email"
 msgstr "Email"
 
-#: templates/contact.html:47
+#: templates/contact.html:50
 msgid "SUBJECT"
 msgstr "Betreff"
 
-#: templates/contact.html:55
+#: templates/contact.html:58
 msgid "MESSAGE"
 msgstr "Nachricht"
 
-#: templates/contact.html:61
+#: templates/contact.html:64
 msgid "MANDATORY_FIELDS_NOTE"
 msgstr "* Diese Felder sind Pflichtfelder."
 
-#: templates/contact.html:62
+#: templates/contact.html:65
 msgid "Senden"
 msgstr "Senden"
 
@@ -201,80 +197,74 @@ msgstr ""
 "aufgeführt."
 
 #: templates/copyright.html:17
-msgid "Urheberrecht bei internen Inhalten list-item-2"
-msgstr ""
-"'Code hinter der Website' beinhaltet alle serverseitigen Skripte, sowie den "
-"Javascript-Code im Front End."
-
-#: templates/copyright.html:18
 msgid "Urheberrecht bei internen Inhalten list-item-3"
 msgstr ""
 "Alle Inhalte die von der Entwicklern der Website veröffentlicht werden, "
-"genauso wie der Code hinter der Website sind durch das deutsche Urheberrecht "
-"geschützt."
+"genauso wie der von ihnen kreierte JavaScript und Python Code sind durch das "
+"deutsche Urheberrecht geschützt."
 
-#: templates/copyright.html:19
+#: templates/copyright.html:18
 msgid "Urheberrecht bei internen Inhalten list-item-4"
 msgstr ""
 "Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
 "Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
 "Autors."
 
-#: templates/copyright.html:22
+#: templates/copyright.html:21
 msgid "Urheberrecht der Nutzer"
 msgstr "Urheberrecht der Nutzer"
 
-#: templates/copyright.html:25
+#: templates/copyright.html:24
 msgid "Urheberrecht der Nutzer list-item-1"
 msgstr ""
 "Inhalte die von Nutzern der Website geschaffen und veröffentlicht werden, "
 "können aus Bildern und Texten als Titel, Beschreibung und Kommentaren "
 "bestehen."
 
-#: templates/copyright.html:26
+#: templates/copyright.html:25
 msgid "Urheberrecht der Nutzer list-item-2"
 msgstr "Solche Inhalte sind durch das Urheberrecht geschützt."
 
-#: templates/copyright.html:27
+#: templates/copyright.html:26
 msgid "Urheberrecht der Nutzer list-item-3"
 msgstr ""
 "Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
 "Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
 "Autors."
 
-#: templates/copyright.html:30
+#: templates/copyright.html:29
 msgid "Urheberrecht Dritter"
 msgstr "Urheberrecht Dritter"
 
-#: templates/copyright.html:33
+#: templates/copyright.html:32
 msgid "Urheberrecht Dritter list-item-1"
 msgstr ""
 "Code und Inhalte die auf dieser Website veröffentlicht bzw. genutzt werden "
 "und weder von den Entwicklern noch von Nutzern erstellt wurde sind Inhalte "
 "Dritter. "
 
-#: templates/copyright.html:34
+#: templates/copyright.html:33
 msgid "Urheberrecht Dritter list-item-2"
 msgstr "Inhalte Dritter müssen als solche gekennzeichnet werden."
 
-#: templates/copyright.html:35
+#: templates/copyright.html:34
 msgid "Urheberrecht Dritter list-item-3"
 msgstr "Inhalte Dritter sind durch das Urheberrecht geschützt."
 
-#: templates/copyright.html:36
+#: templates/copyright.html:35
 msgid "Urheberrecht Dritter list-item-4"
 msgstr ""
 "Die Urheberrechts-Informationen von veröffentlichten oder genutzten Inhalten "
 "Dritter müssen nahe beim Inhalt platziert sein."
 
-#: templates/copyright.html:37
+#: templates/copyright.html:36
 msgid "Urheberrecht Dritter list-item-5"
 msgstr ""
 "Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
 "Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
 "Autors."
 
-#: templates/dashboard.html:30
+#: templates/dashboard.html:35
 msgid "control-title share"
 msgstr "Teilen"
 
@@ -318,7 +308,7 @@ msgstr "Bei Erfolg automatisch schließen?"
 msgid "Hilfe und Support"
 msgstr "Hilfe und Support"
 
-#: templates/help.html:22
+#: templates/help.html:24
 msgid "help-intro-paragraph"
 msgstr ""
 "Momentan steht Ihnen leider noch keine sehr umfangreiche Hilfe-Seite zur "
@@ -327,83 +317,27 @@ msgstr ""
 "beantwortete Fragen haben, schreiben Sie uns doch gerne eine Email; wir "
 "werden bald mit Ihnen in Kontakt treten."
 
-#: templates/help.html:25
-msgid "help-faq-title"
-msgstr "FAQ"
-
-#: templates/help.html:27
-msgid "help-faq topic 'Warum Klarnamen?' question"
-msgstr "Warum Klarnamen?"
-
-#: templates/help.html:28
-msgid "help-faq topic 'Warum Klarnamen?' answer"
-msgstr ""
-"Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
-"Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
-"ganz persönliches digitales Online-Poesie-Album. Wir garantieren, dass nur "
-"die Personen, denen Sie Zugang zu einem ihrer Alben gestatten, das Album und "
-"Ihren Namen auch tatsächlich sehen können. Und unserer Meinung nach ist es "
-"viel ansprechender den Namen eines Freundes zusehen als ein mehr oder minder "
-"abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
-"nicht nur praktischer, sondern auch schöner."
-
-#: templates/help.html:31
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
-msgstr "Warum Klarnamen?"
-
-#: templates/help.html:33
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
-msgstr ""
-"Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
-"Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
-"ganz persönliches digitales Online-Poesie-Album. Wir garantieren, dass nur "
-"die Personen, denen Sie Zugang zu einem ihrer Alben gestatten, das Album und "
-"Ihren Namen auch tatsächlich sehen können. Und unserer Meinung nach ist es "
-"viel ansprechender den Namen eines Freundes zusehen als ein mehr oder minder "
-"abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
-"nicht nur praktischer, sondern auch schöner."
-
-#: templates/help.html:34
-msgid "link-title passwort security comic"
-msgstr ""
-
-#: templates/help.html:34
-msgid "link to password security comic"
-msgstr ""
-
-#: templates/help.html:35
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
-msgstr ""
-"Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
-"Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
-"ganz persönliches digitales Online-Poesie-Album. Wir garantieren, dass nur "
-"die Personen, denen Sie Zugang zu einem ihrer Alben gestatten, das Album und "
-"Ihren Namen auch tatsächlich sehen können. Und unserer Meinung nach ist es "
-"viel ansprechender den Namen eines Freundes zusehen als ein mehr oder minder "
-"abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
-"nicht nur praktischer, sondern auch schöner."
-
-#: templates/help.html:40
+#: templates/help.html:30
 msgid "help-tutorial-title"
 msgstr "Tutorial"
 
-#: templates/help.html:42
+#: templates/help.html:32
 msgid "help-tutorial topic: Dashboard"
 msgstr "Dashboard"
 
-#: templates/help.html:44
+#: templates/help.html:34
 msgid "help-tutorial topic: Dashboard -> description"
 msgstr "Im Dashboard werden alle Ihre Alben auf der Karte angezeigt."
 
-#: templates/help.html:46
+#: templates/help.html:36
 msgid "Alben"
 msgstr "Alben"
 
-#: templates/help.html:49
+#: templates/help.html:39
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
 msgstr "Album hinzufügen"
 
-#: templates/help.html:50
+#: templates/help.html:40
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
 msgstr ""
@@ -413,12 +347,12 @@ msgstr ""
 "ausgewählten Punkt ein neues Album erstellt, welches durch einen Marker "
 "(Kamera) auf der Karte gekennzeichnet ist."
 
-#: templates/help.html:53
+#: templates/help.html:43
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
 msgstr "Album löschen/bearbeiten"
 
-#: templates/help.html:54
+#: templates/help.html:44
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
 "description"
@@ -427,11 +361,11 @@ msgstr ""
 "kleines Fenster mit drei Symbolen. Durch Anklicken des entsprechenden "
 "Symbols wird ein Dialog zum Bearbeiten, Löschen oder Teilen aufgerufen."
 
-#: templates/help.html:57
+#: templates/help.html:47
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
 msgstr "Album auswählen/Öffnen der Albumsansicht"
 
-#: templates/help.html:58
+#: templates/help.html:48
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
 "description"
@@ -441,11 +375,11 @@ msgstr ""
 "Albums weitergeleitet, in welcher Sie die Plätze und Bilder des Albums sehen "
 "können."
 
-#: templates/help.html:61
+#: templates/help.html:51
 msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Share"
 msgstr "Album teilen"
 
-#: templates/help.html:63
+#: templates/help.html:53
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "description"
@@ -463,7 +397,7 @@ msgstr ""
 "können Sie, sollten Sie schon ein Passwort für ein Album definiert haben, "
 "die URL in der Albumsansicht kopieren, um das Album zu teilen."
 
-#: templates/help.html:64
+#: templates/help.html:54
 msgid ""
 "help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
 "attention!"
@@ -481,11 +415,11 @@ msgstr ""
 "können Sie, sollten Sie schon ein Passwort für ein Album definiert haben, "
 "die URL in der Albumsansicht kopieren, um das Album zu teilen."
 
-#: templates/help.html:72 templates/view-album.html:6
+#: templates/help.html:62 templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumsansicht"
 
-#: templates/help.html:74
+#: templates/help.html:64
 msgid "help-tutorial topic: Albumview -> description"
 msgstr ""
 "In der Albumsansicht können Sie einzelne Plätze zu ihrem Album hinzufügen. "
@@ -494,15 +428,15 @@ msgstr ""
 "noch die Möglichkeiten die Bilder in einer kleinen Slideshow innerhalb der "
 "Gallerie oder sogar als Vollbild anschauen zu können."
 
-#: templates/help.html:76
+#: templates/help.html:66
 msgid "Plätze"
 msgstr "Plätze"
 
-#: templates/help.html:79
+#: templates/help.html:69
 msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
 msgstr "Platz hinzufügen"
 
-#: templates/help.html:80
+#: templates/help.html:70
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
 "description"
@@ -513,12 +447,12 @@ msgstr ""
 "ausgewählten Punkt ein neuer Platz erstellt, welcher durch einen Marker auf "
 "der Karte gekennzeichnet ist."
 
-#: templates/help.html:83
+#: templates/help.html:73
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
 msgstr "Platz löschen/bearbeiten"
 
-#: templates/help.html:84
+#: templates/help.html:74
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
 "description"
@@ -527,11 +461,11 @@ msgstr ""
 "kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
 "Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:87
+#: templates/help.html:77
 msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
 msgstr "Platz auswählen/Öffnen der Gallerie"
 
-#: templates/help.html:88
+#: templates/help.html:78
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
 "description"
@@ -540,15 +474,15 @@ msgstr ""
 "bestimmten Platz aus. Daraufhin werden die Bilder des Platzes in der "
 "Gallerie unterhalb der Karte angezeigt."
 
-#: templates/help.html:91
+#: templates/help.html:81
 msgid "Gallerie"
 msgstr "Gallerie"
 
-#: templates/help.html:94
+#: templates/help.html:84
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
 msgstr "Photo hinzufügen"
 
-#: templates/help.html:95
+#: templates/help.html:85
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
 "description"
@@ -560,12 +494,12 @@ msgstr ""
 "dann dem ausgewählten Platz hinzugefügt. Sie können Bilder auch direkt aus "
 "den Bilder-Ordnern auf ihrem Computer in die Galerie ziehen."
 
-#: templates/help.html:98
+#: templates/help.html:88
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
 msgstr "Photo löschen/bearbeiten"
 
-#: templates/help.html:99
+#: templates/help.html:89
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
 "> description"
@@ -574,11 +508,11 @@ msgstr ""
 "Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden Symbols wird "
 "ein Dialog zum bearbeiten/löschen aufgerufen."
 
-#: templates/help.html:102
+#: templates/help.html:92
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
 msgstr "Photo auswählen/Slideshow starten"
 
-#: templates/help.html:103
+#: templates/help.html:93
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
 "description"
@@ -587,11 +521,11 @@ msgstr ""
 "rechten Seite der Karte gestartet. Sie können durch Anklicken der Pfeile die "
 "Bilder wechseln."
 
-#: templates/help.html:106
+#: templates/help.html:96
 msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
 msgstr "Bild im Vollbild-Modus ansehen"
 
-#: templates/help.html:107
+#: templates/help.html:97
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
 "description"
@@ -600,12 +534,12 @@ msgstr ""
 "Fullscreen angezeigt. Auch hier können Sie über die Pfeile die Bilder "
 "wechseln."
 
-#: templates/help.html:110
+#: templates/help.html:100
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
 msgstr "Drag'n'Drop der Photos"
 
-#: templates/help.html:111
+#: templates/help.html:101
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
 "description"
@@ -614,20 +548,20 @@ msgstr ""
 "links der Galerie), können Sie die Bilder neu anordnen, indem Sie innerhalb "
 "der Gallerie ein Photo an die gewünschte Stelle ziehen."
 
-#: templates/help.html:114 templates/insert-album.html:14
+#: templates/help.html:104 templates/insert-album.html:14
 #: templates/insert-photo.html:11 templates/insert-photo.html.py:24
 #: templates/insert-place.html:14 templates/update-album.html:15
 #: templates/update-photo.html:16 templates/update-place.html:16
 msgid "DESCRIPTION"
 msgstr "Beschreibung"
 
-#: templates/help.html:117
+#: templates/help.html:107
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility"
 msgstr "Platz auswählen/Öffnen der Gallerie"
 
-#: templates/help.html:118
+#: templates/help.html:108
 msgid ""
 "help-tutorial topic: Albumview, subtopic: Description, function: toggle "
 "visibility -> description"
@@ -636,48 +570,39 @@ msgstr ""
 "bestimmten Platz aus. Daraufhin werden die Bilder des Platzes in der "
 "Gallerie unterhalb der Karte angezeigt."
 
-#: templates/impressum.html:13
+#: templates/impressum.html:14
 msgid "impressum Angaben gemäß § 5 TMG"
 msgstr "Angaben gemäß § 5 TMG"
 
-#: templates/impressum.html:21
+#: templates/impressum.html:22
 msgid "impressum Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
 msgstr "Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
 
-#: templates/impressum.html:22
+#: templates/impressum.html:23
 msgid "impressum Anschrift wie oben"
 msgstr "Anschrift wie oben"
 
-#: templates/impressum.html:24
+#: templates/impressum.html:27
 msgid "impressum Vertreten durch"
 msgstr "Vertreten durch"
 
-#: templates/impressum.html:32 templates/impressum.html.py:33
+#: templates/impressum.html:37 templates/impressum.html.py:38
 msgid "Telefon"
 msgstr "Telefon"
 
-#: templates/impressum.html:32 templates/impressum.html.py:33
+#: templates/impressum.html:37 templates/impressum.html.py:38
 msgid "Handy"
 msgstr "Handy"
 
-#: templates/impressum.html:34
+#: templates/impressum.html:39
 msgid "Email-Adresse"
 msgstr "Email-Adresse"
 
-#: templates/impressum.html:37
-msgid "EMAIL_ONLY_WITH_JS"
-msgstr ""
-"Die email-Adresse ist verschlüsselt damit man sie nicht von Crawlern für "
-"Spam-Mails missbraucht wird,  daher können Sie die Adresse nicht sehen "
-"solange Sie javascript nicht aktiviert haben. Sie können uns jedoch genauso "
-"leicht erreichen, indem Sie das nachfolgend verlinkte Kontaktformular "
-"nutzen. "
-
-#: templates/impressum.html:41
+#: templates/impressum.html:46
 msgid "impressum-sidenote Missbrauch von Kontaktdaten"
 msgstr "Missbrauch von Kontaktdaten"
 
-#: templates/impressum.html:42
+#: templates/impressum.html:47
 msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
 msgstr ""
 "Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
@@ -860,6 +785,109 @@ msgstr "Registrieren"
 msgid "Guest-Login"
 msgstr "Gast-Login"
 
+#: templates/payment.html:8
+msgid "Spenden und Zahlungsbedingungen"
+msgstr "Projektvorstellung und Spendenaufruf"
+
+#: templates/payment.html:13
+msgid "payment headline 'Projekt Vorstellung'"
+msgstr "Projekt Vorstellung"
+
+#: templates/payment.html:15
+msgid "payment text 'project intro' p1"
+msgstr ""
+"Jedesmal wenn wir wegen Reiselust oder Auslandssemestern in weitentfernte  "
+"Länder reisten, wollten selbstverständlich viele unserer Freunde und "
+"Verwandten über unsere Erlebnisse informiert werden und nachdem wir "
+"zurückgekommen waren, eine ausführliche, bebilderte Erzählung von all "
+"unseren Erfahrungen und Abenteuern hören. Keine der aktuell verfügbaren Apps "
+"oder Online-Dienste/Sozialen Netzwerke konnte uns wirklich dabei helfen. Das "
+"liegt vor allem daran, dass nicht jeder im selben Netzwerk ist und manche "
+"sogar in gar keinem."
+
+#: templates/payment.html:16
+msgid "payment text 'project intro' p2"
+msgstr ""
+"Glücklicherweise haben wir eine Web-Applikation namens 'Photomap' gefunden "
+"die uns dabei half schon während unserer Reisen von unseren Erlebnissen zu "
+"erzählen und zwar so, dass jeder unserer Freunde und Verwandten Zugang dazu "
+"hatte. Das hat so gut funktioniert, dass wir viele Anfragen bekommen haben, "
+"ob wir nicht auch anderen helfen könnten diesen Service bei ihnen "
+"einzurichten. Wenn man Photomap nutzen wollte, kam man aber leider nicht "
+"darum herum ein wenig über HTML, CSS und Javascript zu lernen und ausserdem "
+"musste man sich Webspace besorgen, um die Photos und Beschreibungen "
+"hochzuladen. Darum kam uns die Idee, dass es viel praktischer wäre eine Web-"
+"App zu entwickeln, mit der jeder einen Account erstellen kann und dann seine "
+"eigenen Erlebnisse mit allen seinen Freunden und Verwandten teilen kann, "
+"ohne sich über Sachen wie 'Webspace' und 'Javascript' Gedanken machen zu "
+"müssen."
+
+#: templates/payment.html:17
+msgid "payment text 'project intro' p3"
+msgstr ""
+"Darum haben wir im Juni 2012 angefangen KEIKEN zu entwickeln. Die Nutzung "
+"von KEIKEN ist kostenlos und wir machen in keiner Weise Geld mit der App. "
+"Weder verkaufen wir die Daten der Nutzer, noch stopfen wir die Website voll "
+"mit Werbung. Wir haben eine Menge Spaß daran KEIKEN zu entwickeln und wollen "
+"auch weiterhin daran arbeiten die App zu verbessern."
+
+#: templates/payment.html:19
+msgid "payment headline 'Kosten und Spenden'"
+msgstr "Kosten und Spenden"
+
+#: templates/payment.html:21
+msgid "payment text 'reason for donations'"
+msgstr ""
+"Das Herz von KEIKEN ist das Hochladen von Bildern, das Organisieren "
+"derselben und die Verlinkung mit den Koordinaten. Der Großteil dieser "
+"Funktionen ist nicht sehr teuer und wir kommen gerne für diese Unkosten auf. "
+"Das Speichern der Bilder kostet uns jedoch ein bisschen mehr. Vor allem mit "
+"steigender Nutzerzahl und damit einer steigenden Größe des Onlinespeichers, "
+"den wir für die Lagerung der Bilder reservieren müssen, steigen auch die "
+"Kosten etwas über unser Limit. "
+
+#: templates/payment.html:22
+msgid "payment text 'call for donations'"
+msgstr ""
+"Wir möchten trotz dieser Kosten KEIKEN jedem frei zur Verfügung stellen! "
+"Wenn Sie also unsere App mögen und uns und die weitere Entwicklung "
+"unterstützen möchten, bitte tun Sie das mit einer kleinen Spende. Jeder noch "
+"so kleine Betrag ist bereits von großer Hilfe für uns!"
+
+#: templates/payment.html:28
+msgid "payment headline 'payment info'"
+msgstr "Zahlungsinformationen"
+
+#: templates/payment.html:32
+msgid "payment text 'payment info'"
+msgstr ""
+"Momentan können Sie uns nur per direkter Überweisung spenden. Nutzen Sie "
+"dazu folgende Daten: "
+
+#: templates/payment.html:35
+msgid "Kontoinhaber"
+msgstr "Kontoinhaber"
+
+#: templates/payment.html:36
+msgid "Kontonummer"
+msgstr "Kontonummer"
+
+#: templates/payment.html:37
+msgid "BLZ"
+msgstr "BLZ"
+
+#: templates/payment.html:38
+msgid "Kreditinstitut"
+msgstr "Kreditinstitut"
+
+#: templates/payment.html:42
+msgid "payment 'thank you note'"
+msgstr ""
+"Vielen Dank für Ihr Interesse an KEIKEN und für Ihre Unterstützung. Sollten "
+"Sie Fragen oder Anmerkungen/Ideen haben, laden wir sie dazu ein unser <a "
+"href='/contact' title='Kontaktformulat'>Kontaktformular</a> zu nutzen. Sie "
+"können uns natürlich auch eine Email schreiben, an: "
+
 #: templates/photo-editor.html:13
 msgid "SHARPEN"
 msgstr "Schärfer stellen"
@@ -892,11 +920,11 @@ msgstr "Rückgängig machen"
 msgid "Richtlinien zum Datenschutz"
 msgstr "Richtlinien zum Datenschutz"
 
-#: templates/privacy.html:14
+#: templates/privacy.html:15
 msgid "privacy-topic Datenschutzerklärung"
 msgstr "Datenschutzerklärung"
 
-#: templates/privacy.html:15
+#: templates/privacy.html:16
 msgid "privacy-topic Datenschutzerklärung -> description"
 msgstr ""
 "Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst und halten uns an "
@@ -904,57 +932,44 @@ msgstr ""
 "einen Überblick darüber, welche Art von Daten zu welchem Zweck erhoben "
 "werden und in welchem Umfang diese Daten Dritten zugänglich gemacht werden."
 
-#: templates/privacy.html:16
+#: templates/privacy.html:19
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt"
 msgstr "Datenverarbeitung bei diesem Projekt"
 
-#: templates/privacy.html:17
+#: templates/privacy.html:20
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> description"
 msgstr ""
-"Um ein eigenes Photoalbum zu bekommen, werden Sie bei der Registrierung "
+"Um ein eigenes Reisealbum zu bekommen, werden Sie bei der Registrierung "
 "gebeten, als persönliche Daten Ihre email-Adresse und Ihren vollen Namen - "
 "Nachname ist optional - anzugeben. Diese Daten werden in der Datenbank unter "
 "Ihrer automatisch generierten User-ID gespeichert. "
 
-#: templates/privacy.html:19
+#: templates/privacy.html:23
 msgid "privacy-subtopic Nutzung der email-Adresse"
 msgstr "Nutzung der email-Adresse"
 
-#: templates/privacy.html:20
+#: templates/privacy.html:25
 msgid "privacy-subtopic Nutzung der email-Adresse -> description"
 msgstr ""
 "Die email-Adresse wird nur für das einloggen, also das Bestätigen Ihrer "
 "Identität, benötigt. Sie wird unten links auf der Seite angezeigt, wenn Sie "
 "angemeldet sind, ist aber nur für Sie sichtbar."
 
-#: templates/privacy.html:23
+#: templates/privacy.html:27
 msgid "privacy-subtopic Nutzung des Namens"
 msgstr "Nutzung des vollen Namens"
 
-#: templates/privacy.html:24
+#: templates/privacy.html:29
 msgid "privacy-subtopic Nutzung des Namens -> description"
 msgstr ""
-"Ihr Name wird als Benutzername verwendet und ist momentan noch nicht von "
-"großer Bedeutung. (Später bei kommenden Features wie Kommentaren und News-"
-"Feeds zu den von Ihnen abbonierten Alben wird der Ihr Name bei registrierten "
-"Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, bei "
-"Informationen die Ihnen zugehörig sind angezeigt."
+"Ihr Name wird als Benutzername verwendet. Bitte überlegen Sie sich Ihren "
+"echten Namen anstatt eines Nicknames oder Pseudonyms zu verwenden. KEIKEN "
+"ist Ihr persönliches Reisealbum und es ist viel schöner für Ihre Freunde und "
+"Verwandten Ihren richtigen Namen zu sehen und nicht einen seltsames "
+"Pseudonym. Ausserdem sorgt KEIKEN dafür, dass keiner Ihre Informationen "
+"sehen kann, ausser Sie teilen sie mit dieser Person."
 
-#: templates/privacy.html:26
-msgid "privacy-sidenote Pseudonyme"
-msgstr "Notiz zu Pseudonymen"
-
-#: templates/privacy.html:27
-msgid "privacy-sidenote Pseudonyme -> description"
-msgstr ""
-"Wir kontrollieren die von Ihnen gewählten Namen nicht, d.h. Sie können auch "
-"Pseudonyme verwenden. Bedenken Sie jedoch das dies jediglich ein Online-"
-"Poesie-Album ist. Nur die Personen denen Sie Zugang zu einem ihrer Alben "
-"gestatten können das Album und ihren Namen auch tatsächlich sehen. Ein Photo-"
-"Album ist doch sehr viel persönlicher und ansprechender, wenn man einen "
-"richtigen Namen dabei hat anstatt eines abstrakten Pseudonyms."
-
-#: templates/privacy.html:32
+#: templates/privacy.html:35
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee"
 msgstr ""
 "Wir gewährleisten, dass die von Ihnen angegebenen Daten in keiner anderen, "
@@ -964,15 +979,15 @@ msgstr ""
 "Ihr Handeln; seien Sie also bitte achtsam mit ihren Daten, vor allem wenn "
 "sie Alben mit anderen Leuten teilen."
 
-#: templates/privacy.html:35
+#: templates/privacy.html:40
 msgid "privacy-topic Cookies"
 msgstr "Cookies"
 
-#: templates/privacy.html:37
+#: templates/privacy.html:42
 msgid "privacy-topic Cookies -> cookie-introduction"
 msgstr "Diese Website verwendet folgende Cookies:"
 
-#: templates/privacy.html:39
+#: templates/privacy.html:45
 msgid "privacy-topic Cookies - sessioncookie"
 msgstr ""
 "Sitzungs-Cookie: Der Sitzungs-Cookie enthält Ihre Sitzungs-ID, welche "
@@ -981,7 +996,7 @@ msgstr ""
 "Authentifikation zu validieren, besonders bei Aktionen wie dem Erstellen, "
 "Bearbeiten und Löschen von Alben, Plätzen und Bildern."
 
-#: templates/privacy.html:40
+#: templates/privacy.html:46
 msgid "privacy-topic Cookies - 'visited'-cookie"
 msgstr ""
 "'visited'-Cookie: der 'visited'-Cookie enthält Informationen dazu, welche "
@@ -990,85 +1005,83 @@ msgstr ""
 "und bei welchen Sie evtl. ein Photo übersehen haben oder ein neues "
 "hinzugekommen ist."
 
-#: templates/privacy.html:44
+#: templates/privacy.html:47
+msgid "privacy-topic Cookies - 'quota'- and 'used-space'-cookie"
+msgstr ""
+"‘Quota’- & ’Used-Space’-Cookies: Die ‘quota’- & ’used-space’-Cookies "
+"enthalten Informationen darüber, wie viel Speicherplatz Ihnen zur Verfügung "
+"steht und wie viel Sie bereits davon nutzen."
+
+#: templates/privacy.html:50
 msgid "privacy-topic Cookies -> redirection to wiki"
 msgstr ""
 "Für weitere Information zu Cookies und der Nutzung derselben würden wir Sie "
 "gerne zu folgendem Artikel weiterleiten: "
 
-#: templates/privacy.html:44
+#: templates/privacy.html:50
 msgid "privacy-topic Cookies -> link to wiki"
 msgstr "http://de.wikipedia.org/wiki/HTTP-Cookie"
 
-#: templates/privacy.html:45
+#: templates/privacy.html:51
 msgid "link-title Wikipedia-Eintrag zu Cookies"
 msgstr "Wikipedia-Eintrag zu Cookies"
 
-#: templates/privacy.html:45
+#: templates/privacy.html:51
 msgid "privacy-topic Cookies -> name of link to wiki"
 msgstr "Wikipedia-Artikel zu HTTP-Cookies"
 
-#: templates/privacy.html:48
+#: templates/privacy.html:55
 msgid "privacy-topic Emails und Kontaktformulare"
 msgstr "Emails und Kontaktformulare"
 
-#: templates/privacy.html:51
+#: templates/privacy.html:57
 msgid "privacy-topic Emails und Kontaktformulare list-item-1"
 msgstr ""
 "Nutzer und Besucher können dem Photomap-Team Fragen stellen oder Anregungen "
 "und Kritik anbringen, indem Sie eine Email schreiben oder das "
 "Kontaktformular benutzen."
 
-#: templates/privacy.html:52
+#: templates/privacy.html:58
 msgid "privacy-topic Emails und Kontaktformulare list-item-2"
 msgstr ""
 "Die von Ihnen an uns gesendeten Nachrichten werden zu Dokumentation und "
 "Weiterverarbeitung bei uns gespeichert. Dies beinhaltet sämtliche von Ihnen "
 "angegebenen und für die Verarbeitung notwendigen Daten."
 
-#: templates/privacy.html:53
-msgid "privacy-topic Emails und Kontaktformulare list-item-3"
-msgstr ""
-"Die Daten im Kontaktformular werden in keiner Weise überprüft, die "
-"Verwendung von Pseudonymen ist somit möglich, allerdings nicht "
-"empfehlenswerte da es die Verarbeitung erschwert und wir Ihnen dadurch "
-"eventuell nicht so präzise weiterhelfen können, wie wir es gerne würden."
-
-#: templates/privacy.html:54
+#: templates/privacy.html:59
 msgid "privacy-topic Emails und Kontaktformulare list-item-4"
 msgstr ""
 "Nach Abschluss des Dialogs mit Ihnen werden die Daten wieder gelöscht, es "
 "sei denn es wurde mit Ihnen ausgemacht die Daten zu speichern."
 
-#: templates/privacy.html:55
+#: templates/privacy.html:60
 msgid "privacy-topic Emails und Kontaktformulare list-item-5"
 msgstr ""
 "Wenn wir eine Nachricht längerfristig speichern wollen, werden wir das "
 "vorher mit Ihnen besprechen."
 
-#: templates/privacy.html:58
+#: templates/privacy.html:64
 msgid "privacy-topic Auskunftsrecht"
 msgstr "Auskunftsrecht"
 
-#: templates/privacy.html:60
+#: templates/privacy.html:66
 msgid "privacy-topic Auskunftsrecht -> paragraph1"
 msgstr ""
 "Gerne geben wir Ihnen alle Informationen die von Ihnen auf unserem Server "
 "gespeichert wurden. Wenn Sie diese Informationen abrufen wollen, schreiben "
 "Sie uns eine Email oder nutzen Sie das "
 
-#: templates/privacy.html:61
+#: templates/privacy.html:67
 msgid "Kontaktformular"
 msgstr "Kontaktformular"
 
-#: templates/privacy.html:62
+#: templates/privacy.html:68
 msgid "privacy-topic Auskunftsrecht -> paragraph2"
 msgstr ""
 "Wir werden Ihnen im Rahmen der gesetzlichen Auskunftsansprüche in Kürze alle "
 "verfügbaren Information zu schicken."
 
 #: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
-#: templates/debug/dialogdimension.html:14
 msgid "Name"
 msgstr "Name"
 
@@ -1136,57 +1149,138 @@ msgstr "Wollen Sie die neue Reihenfolge bestätigen?"
 msgid "UPDATE_PLACE"
 msgstr "Platz bearbeiten"
 
-#: templates/view-album.html:33
+#: templates/view-album.html:38
 msgid "Previous Page"
 msgstr "Vorherige Seite"
 
-#: templates/view-album.html:37
+#: templates/view-album.html:42
 msgid "Open Full Gallery"
 msgstr "Vollstädige Galerie öffnen"
 
-#: templates/view-album.html:44 templates/view-album.html.py:52
+#: templates/view-album.html:49 templates/view-album.html.py:57
 msgid "GALLERY_NOT_STARTED"
 msgstr ""
 "Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der Karte "
 "klicken, um die Galerie zu starten."
 
-#: templates/view-album.html:49 templates/view-album.html.py:53
+#: templates/view-album.html:54 templates/view-album.html.py:58
 msgid "GALLERY_IS_EMPTY"
 msgstr ""
 "Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, "
 "ziehen Sie diese in die Galerie oder nutzen Sie den 'Bild hinzufügen'-Button "
 "rechts der Galerie."
 
-#: templates/view-album.html:65
+#: templates/view-album.html:70
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/view-album.html:69
+#: templates/view-album.html:74
 msgid "Add Image"
 msgstr "Bild hinzufügen"
 
-#: templates/view-album.html:82
+#: templates/view-album.html:87
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: templates/view-album.html:88
+#: templates/view-album.html:93
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr ""
 "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
 
-#: templates/view-album.html:92
+#: templates/view-album.html:97
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: templates/view-album.html:95
+#: templates/view-album.html:100
 msgid "Bild"
 msgstr "Bild"
 
-#: templates/debug/dialogdimension.html:18
-msgid "Beschreibung"
-msgstr ""
+#~ msgid "privacy-sidenote Pseudonyme"
+#~ msgstr "Notiz zu Pseudonymen"
 
-#: templates/debug/dialogdimension.html:24
-msgid "Speichern"
-msgstr "Save"
+#~ msgid "privacy-sidenote Pseudonyme -> description"
+#~ msgstr ""
+#~ "Wir kontrollieren die von Ihnen gewählten Namen nicht, d.h. Sie können "
+#~ "auch Pseudonyme verwenden. Bedenken Sie jedoch das dies jediglich ein "
+#~ "Online-Poesie-Album ist. Nur die Personen denen Sie Zugang zu einem ihrer "
+#~ "Alben gestatten können das Album und ihren Namen auch tatsächlich sehen. "
+#~ "Ein Photo-Album ist doch sehr viel persönlicher und ansprechender, wenn "
+#~ "man einen richtigen Namen dabei hat anstatt eines abstrakten Pseudonyms."
 
+#~ msgid "email just in javascript"
+#~ msgstr ""
+#~ "-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und "
+#~ "laden Sie die Seite erneut, um die Email-Adresse lesen zu können. --"
+
+#~ msgid "help-faq-title"
+#~ msgstr "FAQ"
+
+#~ msgid "help-faq topic 'Warum Klarnamen?' question"
+#~ msgstr "Warum Klarnamen?"
+
+#~ msgid "help-faq topic 'Warum Klarnamen?' answer"
+#~ msgstr ""
+#~ "Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier "
+#~ "anzugeben. Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es "
+#~ "ist quasi Ihr ganz persönliches digitales Online-Poesie-Album. Wir "
+#~ "garantieren, dass nur die Personen, denen Sie Zugang zu einem ihrer Alben "
+#~ "gestatten, das Album und Ihren Namen auch tatsächlich sehen können. Und "
+#~ "unserer Meinung nach ist es viel ansprechender den Namen eines Freundes "
+#~ "zusehen als ein mehr oder minder abstraktes Pseudonym. Altmodisch? "
+#~ "Keineswegs! Für ein Poesie-Album ist dies nicht nur praktischer, sondern "
+#~ "auch schöner."
+
+#~ msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
+#~ msgstr "Warum Klarnamen?"
+
+#~ msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
+#~ msgstr ""
+#~ "Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier "
+#~ "anzugeben. Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es "
+#~ "ist quasi Ihr ganz persönliches digitales Online-Poesie-Album. Wir "
+#~ "garantieren, dass nur die Personen, denen Sie Zugang zu einem ihrer Alben "
+#~ "gestatten, das Album und Ihren Namen auch tatsächlich sehen können. Und "
+#~ "unserer Meinung nach ist es viel ansprechender den Namen eines Freundes "
+#~ "zusehen als ein mehr oder minder abstraktes Pseudonym. Altmodisch? "
+#~ "Keineswegs! Für ein Poesie-Album ist dies nicht nur praktischer, sondern "
+#~ "auch schöner."
+
+#~ msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
+#~ msgstr ""
+#~ "Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier "
+#~ "anzugeben. Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es "
+#~ "ist quasi Ihr ganz persönliches digitales Online-Poesie-Album. Wir "
+#~ "garantieren, dass nur die Personen, denen Sie Zugang zu einem ihrer Alben "
+#~ "gestatten, das Album und Ihren Namen auch tatsächlich sehen können. Und "
+#~ "unserer Meinung nach ist es viel ansprechender den Namen eines Freundes "
+#~ "zusehen als ein mehr oder minder abstraktes Pseudonym. Altmodisch? "
+#~ "Keineswegs! Für ein Poesie-Album ist dies nicht nur praktischer, sondern "
+#~ "auch schöner."
+
+#~ msgid "privacy-topic Emails und Kontaktformulare list-item-3"
+#~ msgstr ""
+#~ "Die Daten im Kontaktformular werden in keiner Weise überprüft, die "
+#~ "Verwendung von Pseudonymen ist somit möglich, allerdings nicht "
+#~ "empfehlenswerte da es die Verarbeitung erschwert und wir Ihnen dadurch "
+#~ "eventuell nicht so präzise weiterhelfen können, wie wir es gerne würden."
+
+#~ msgid "contact-intro-article1-line1"
+#~ msgstr "Sollten Sie Probleme, Anregungen oder Fragen, welche nicht auf der"
+
+#~ msgid "contact-linkto-help"
+#~ msgstr "Hilfe-Seite"
+
+#~ msgid "contact-intro-article1-line2"
+#~ msgstr ""
+#~ ", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail "
+#~ "an"
+
+#~ msgid "contact-intro-article1-line3"
+#~ msgstr ""
+#~ "Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen."
+
+#~ msgid "contact-intro-article1-line4"
+#~ msgstr "Bitte beachten Sie die hierfür gültigen"
+
+#~ msgid "Speichern"
+#~ msgstr "Save"

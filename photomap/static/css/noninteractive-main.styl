@@ -29,8 +29,17 @@
     text-decoration underline
   li
     margin 5px
+    
+article
+  p
+    width 90%
+    margin 8px auto
+    padding 0 0 0 10px
 
-
+address
+  width 90%
+  margin 8px auto
+  padding 0 0 0 10px
 
 .mp-form
   .mp-form-submit
@@ -49,8 +58,18 @@
 
 /* --------- end core --------- */
 
+/* ------------------------------ */
+/* -- styling for payment page -- */
 
+.mp-payment-info
+  width 40%
+  border 1px solid gray
+  margin 5px auto
+  border-radius 5px
+  span
+    font-weight bolder
 
+/* --------- end payment -------- */
 
 /* ---------------------------- */
 /* -- styling for login page -- */
@@ -61,34 +80,28 @@
  #mp-login-register
   width 50%
   margin-left 25%
+  
 /* -------- end login -------- */    
 
 
 /* --------------------------- */
 /* -- styling for help page -- */
 
-.mp-faq-entry
-  padding 5px
-  border 1px dashed black
-  margin 3px 0
-  .mp-faq-question
-    cursor pointer
-    font-weight bold
-  .mp-faq-answer
-    cursor pointer
-    display none
-    
 .mp-tutorial-wrapper
+  width 80%
   padding-top 10px
   border-top 4px solid $background-color-dark
-  margin-top 30px
+  margin 20px auto
+  h2
+    margin-left 5px
 .mp-tutorial-entry
   padding 5px
   border 1px dashed black
   margin 1px 0
   .mp-tutorial-description
     font-size 95%
-    h5
+    h4
+      margin-left 50px
       font-size 105%
     li
       border 1px dashed black
@@ -96,6 +109,7 @@
       list-style-type none
   .mp-tutorial-subtopic
     font-weight bold
+    cursor pointer
   .mp-tutorial-subtopic-desc
     display none
 

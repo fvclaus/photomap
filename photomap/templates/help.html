@@ -18,32 +18,22 @@
 
 {% block non_interactive_content %}
 
-<p>
-  {% trans "help-intro-paragraph" %}
-</p>
-<!-- <section id ="mp-faq" class="mp-faq-wrapper"> -->
-  <!-- <h3>{% trans "help-faq-title" %}</h3> -->
-  <!-- <article class="mp-faq-entry"> -->
-  <!--   <p class="mp-faq-question">{% trans "help-faq topic 'Warum Klarnamen?' question" %}</p> -->
-  <!--   <p class="mp-faq-answer">{% trans "help-faq topic 'Warum Klarnamen?' answer" %}</p> -->
-  <!-- </article> -->
-  <!-- <article class="mp-faq-entry"> -->
-  <!--   <p class="mp-faq-question">{% trans "help-faq topic 'Was ist ein sicheres Passwort?' question" %}</p> -->
-  <!--   <p class="mp-faq-answer"> -->
-  <!--     {% trans "help-faq topic 'Was ist ein sicheres Passwort?' answer part1" %} -->
-  <!--     <a href="http://xkcd.com/936/" title='{% trans "link-title passwort security comic" %}'>{% trans "link to password security comic" %}</a> -->
-  <!--     {% trans "help-faq topic 'Was ist ein sicheres Passwort?' answer part2" %} <br /><br /> -->
-  <!--   </p> -->
-  <!-- </article> -->
-<!-- </section> -->
+<article>
+	<div>
+		<p>
+		  {% trans "help-intro-paragraph" %}
+		</p>
+	</div>
+</article>
+
 <section id="mp-tutorial" class="mp-tutorial-wrapper">
-  <h3>{% trans "help-tutorial-title" %}</h3>
+  <h2>{% trans "help-tutorial-title" %}</h2>
   <article class="mp-tutorial-entry">
-    <h4 class="mp-tutorial-topic">{% trans "help-tutorial topic: Dashboard" %}</h4>
+    <h3 class="mp-tutorial-topic">{% trans "help-tutorial topic: Dashboard" %}</h3>
     <div class="mp-tutorial-description">
       <p>{% trans "help-tutorial topic: Dashboard -> description" %}</p>
       <div>
-	<h5>{% trans "Alben" %}</h5>
+	<h4>{% trans "Alben" %}</h4>
 	<ul>
 	  <li>
 	    <p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Dashboard, subtopic: Alben, function: Add" %}</p>
@@ -69,11 +59,11 @@
     </div>
   </article>
   <article class="mp-tutorial-entry">
-    <h4 class="mp-tutorial-topic">{% trans "Albumsansicht" %}</h4>
+    <h3 class="mp-tutorial-topic">{% trans "Albumsansicht" %}</h3>
     <div class="mp-tutorial-description">
       <p>{% trans "help-tutorial topic: Albumview -> description" %}</p>
       <div>
-	<h5>{% trans "Plätze" %}</h5>
+	<h4>{% trans "Plätze" %}</h4>
 	<ul>
 	  <li>
 	    <p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Places, function:Add" %}</p>
@@ -88,7 +78,7 @@
 	    <p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Places, function: Select -> description" %}</p>
 	  </li>
 	</ul>
-	<h5>{% trans "Gallerie" %}</h5>
+	<h4>{% trans "Gallerie" %}</h4>
 	<ul>
 	  <li>
 	    <p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Add" %}</p>
@@ -111,7 +101,7 @@
 	    <p class="mp-tutorial-subtopic-desc">{% trans "help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> description" %}</p>
 	  </li>
 	</ul>
-	<h5>{% trans "DESCRIPTION" %}</h5>
+	<h4>{% trans "DESCRIPTION" %}</h4>
 	<ul>
 	  <li>
 	    <p class="mp-tutorial-subtopic">{% trans "help-tutorial topic: Albumview, subtopic: Description, function: toggle visibility" %}</p>

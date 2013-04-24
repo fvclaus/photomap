@@ -18,7 +18,7 @@ html
 aside
   width 80%
   padding 5px
-  border 2px dashed black
+  border 2px solid gray
   margin 10px auto
   font-size 95%
   border-radius 5px
@@ -60,9 +60,11 @@ a
 .mp-content
  height 77% // 80% - 1% padding. Padding 1% will make the element 1% bigger and vertical scrollbars will appear
  padding 1% 0 .5% 0
- h2
+ h2, h3, ol
   max-width 90%
   margin 5px auto
+ ol
+  padding-left 50px
 
 .mp-zoom
   cursor -moz-zoom-in
@@ -117,6 +119,9 @@ a
 
 .mp-scale-X-1
   transform(scaleX(1))
+  
+.mp-clearing
+  clear both
 
 /* ---------- end core classes ----------- */
 
