@@ -17,32 +17,29 @@ define(["dojo/_base/declare"],
              },
              /**
               * @public
-              * @description Subscribe to one or multiple events
-              * @param {String} name Name(s) of the event(s). Should have the following structure: "change:photo" or "change:photo change:place change:album"
-              * @param {Function} handler Function to be executed when the event is triggered
-              * @param {Object} context thisReference for the handler
-              * @param {Number} counter counter to limit activation times of passed handler
+              * @description Subscribe to one or multiple events. You can specify the event(s) as string and assign a handler, a context and a counter to all of them,
+              * or you specify an event-object containing event-name as key and event-handler as value and specify a general context and counter for all of them
+              * or you specify an event-object containing event-name as key and as value an object containing handler and an individual context and counter for the named event
+              * @param {String/Object} events Name(s) of the event(s) or event-object. Should have the following structure: 
+              * "change:photo" or "change:photo change:place change:album" (=> input-param handler has to be defined! it'll be assigned to all the given events) or
+              * {"change:photo": function () {...}, "change:place": function () {...}} or 
+              * {"change:photo": {"handler": function () {...}, "context": this.view, "counter": 3}}
+              * -> context&counter can be specified individually for each event and also generally for all events outside the object
+              * eg. ({"change:photo": {"handler": function () {...}, "counter": 3}, "delete:photo": function () {...}}, this.view, 10)
+              * => "change:photo" has individual counter but gets 'this.view' as context and "delete:photo" has no individual values -> takes general context (=this.view) and counter (= 10)
+              * @param {Function} handler Function to be executed when the event is triggered (not needed if input param "events" is object)
+              * @param {Object} context thisReference for the handler (optional)
+              * @param {Number} counter counter to limit activation times of passed handler (optional)
               */
-             subscribe : function (name, handler, context, counter) {
-                assertTrue(name !== undefined && handler !== undefined, "Eventname and handler have to be specified");
+             subscribe : function (events, handler, context, counter) {
+                assertTrue(events !== undefined && (typeof events === "object" || handler !== undefined), "event has to be object or else event-name and handler have to be specified");
                 
-                var instance = this,
-                    events = this._parse(name);
+                var instance = this;
+              
+                events = this._parse(events, handler, context, counter);
                 
-                if (context && typeof context === "number") {
-                   counter = context;
-                   context = null;
-                } else {
-                   context = context || null;
-                   if (counter) {
-                      assertNumber(counter, "event-counter has to be a number");
-                   } else {
-                      counter = null;
-                   }
-                }
-                
-                $.each(events, function (index, event) {
-                   instance._insertHandler(event, handler, context, counter);
+                $.each(events, function (name, info) {
+                   instance._insertHandler(name, info);
                 });
                 
              },
@@ -65,7 +62,7 @@ define(["dojo/_base/declare"],
                 assertTrue(name !== undefined && handler !== undefined, "Eventname and handler have to be specified");
                 
                 var instance = this,
-                    events = this._parse(name);
+                    events = this._parseEventString(name);
                 
                 $.each(events, function (index, event) {
                    instance._deleteHandler(event, handler);
@@ -83,9 +80,76 @@ define(["dojo/_base/declare"],
              },
              /**
               * @private
+              * @description Creates an event-object with all given events in order to unify the event inputs
+              */
+             _parse :function (events, handler, context, counter) {
+                
+                var eventObject = {},
+                   instance = this;
+                
+                // if input is (events{, context}{, counter}) -> no handler specified
+                if (handler && typeof handler !== "function") {
+                   counter = context || null;
+                   context = handler;
+                }
+                
+                // if input is (events{, handler}, counter) -> no context specified but counter (and maybe handler)
+                if (context && typeof context === "number") {
+                   counter = context;
+                   context = null;
+                   
+                // if input is (events{, handler}{, context}{, counter}) -> if counter is specified, then handler and context have to be specified as well
+                } else {
+                   context = context || null;
+                   if (counter) {
+                      assertNumber(counter, "event-counter has to be a number");
+                   } else {
+                      counter = null;
+                   }
+                }
+                
+                // create eventObject if input is event-string with a single handler: (events, handler{, context}{, counter})
+                if (typeof events === "string") {
+                   
+                   events = this._parseEventString(events);
+                   console.log(events);
+                   $.each(events, function (index, name) {
+                      console.log(name);
+                      eventObject[name] = {
+                         "handler": handler,
+                         "context": context || null,
+                         "counter": counter || null
+                      }
+                   });
+                } else if (typeof events === "object") {
+                   
+                   $.each(events, function (name, info) {
+                      
+                      // create eventObject if input is ({event-name: event-handler, ...}, context, counter)
+                      if (typeof info === "function") {
+                         eventObject[name] = {
+                            "handler": info,
+                            "context": context || null,
+                            "counter": counter || null
+                         }
+                      } else if (typeof info === "object") {
+                        //create eventObject if input is already event-object; take individual context/counter if defined, else take the general context/counter or else define it as null
+                         eventObject[name] = {
+                            "handler": info.handler,
+                            "context": info.context || context || null,
+                            "counter": info.counter || counter || null
+                         }
+                      }
+                   });
+                }
+                
+                return eventObject;
+             },
+             /**
+              * @private
               * @description creates an array out of the given string
               */
-             _parse : function (events) {
+             _parseEventString : function (events) {
                 
                 var separator = /\s+/;
                 
@@ -101,12 +165,11 @@ define(["dojo/_base/declare"],
               * @private
               */
              _insertEvent : function (name) {
-                
-                var event = {
+               
+                this.events[name] = {
                    "name": name,
                    "treatments": []
                 };
-                this.events[name] = event;
                 
                 return this.events[name];
              },
@@ -125,15 +188,11 @@ define(["dojo/_base/declare"],
              /**
               * @private
               */
-             _insertHandler : function (name, handler, context, counter) {
+             _insertHandler : function (name, treatment) {
                 
                 var event = this.events[name] || this._insertEvent(name);
                 
-                event.treatments.push({
-                   "handler": handler,
-                   "context": context,
-                   "counter": counter
-                });
+                event.treatments.push(treatment);
                 console.log("Started listening to '" + name + "'.");
              },
              /**
