@@ -18,7 +18,7 @@ define(["dojo/_base/declare", "ui/UIState", "dojo/domReady!"],
             this.$failure = this.$el.find("#mp-dialog-message-failure").hide();
             this.$error = this.$failure.find("em");
             this.$autoClose = this.$el.find("input[name='auto-close']");
-            this.autoClose = main.getUIState().getDialogAutoClose();
+            this.autoClose = state.getDialogAutoClose();
             this._bindListener();
          },
          showSuccess : function () {

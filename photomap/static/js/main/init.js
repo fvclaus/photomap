@@ -23,7 +23,7 @@ require(["main/AppInitializer", "dojo/domReady!"], function (AppInitializer) {
    // main = new Main();
    // // initialise js-classes
    // main.preinit();
-   var app = new AppInitializer();
-   app.start();
+   var appInit = new AppInitializer();
+   appInit.start();
 });
 

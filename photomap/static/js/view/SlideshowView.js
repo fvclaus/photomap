@@ -14,12 +14,13 @@ define([
    "view/PhotoCarouselView",
    "view/FullscreenView",
    "model/Photo",
+   "presenter/SlideshowPresenter",
    "util/Communicator",
    "util/Tools",
    "ui/UIState",
    "dojo/domReady!"
    ],
-    function (declare, PhotoCarouselView, FullscreenView, Photo, communicator, tools, state) {
+    function (declare, PhotoCarouselView, FullscreenView, Photo, SlideshowPresenter, communicator, tools, state) {
        return declare(null, {
           constructor : function () {
              this.$container = $('#mp-slideshow');
@@ -37,16 +38,15 @@ define([
              
              this.carousel = null;
              this.fullscreen = new FullscreenView(this);
+             this.presenter = new SlideshowPresenter(this);
              
              this.isStarted = false;
              this._isDisabled = true;
              
-             communicator.subscribe("delete:photo", this._deletePhoto, this);
-             communicator.subscribe("processed:photo", this._insertPhoto, this);
-             communicator.subscribe("delete:place", this._placeDeleteReset, this);
-             communicator.subscribeOnce("init", this._init, this);
           },
-
+          getPresenter : function () {
+             return this.presenter;
+          },
           /**
            * @description starts slideshow by initialising and starting the carousel (with given index)
            */
@@ -132,7 +132,7 @@ define([
           isDisabled : function () {
              return this._isDisabled; //|| main.getUI().isDisabled();
           },
-          _init : function () {
+          init : function () {
              var instance = this;
              
              this._center();
@@ -146,7 +146,7 @@ define([
           /**
            * @description Inserts a new Photo. This will not move the Carousel or do anything else.
            */
-          _insertPhoto : function (photo) {
+          insertPhoto : function (photo) {
              assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
 
              // this is an unfortunate annoyance, but the gallery can be started without the slideshow
@@ -162,7 +162,7 @@ define([
            * @description Deletes an existing Photo. If Photo is the current Photo the previous Photo is shown.
            * If there is no previous Photo, nothing is shown.
            */
-          _deletePhoto : function (photo) {
+          deletePhoto : function (photo) {
              assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
 
              // @see insertPhoto
@@ -175,7 +175,7 @@ define([
           /**
            * @description Resets the Gallery if the deleted place was the one that is currently open
            */
-          _placeDeleteReset : function (place) {
+          placeDeleteReset : function (place) {
              if (state.getCurrentPlace() === place) {
                 this.reset();
              }
@@ -193,11 +193,9 @@ define([
                 this.fullscreen.update();
                 // right now this is the first time we can update the description
                 // on the other events, beforeLoad & afterLoad, the photo src is not set yet
-                main.getUI().getInformation().update(photo);
                 this._updatePhotoNumber();
              }
-             //TODO this event is best triggered on the UI object. This is more intuitive and less likely to change
-             $("#mp-content").trigger("slideshowChanged");
+             communicator.publish("update:slideshow", photo);
              this._enable();
           },
           /**
@@ -209,7 +207,7 @@ define([
              assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
              // trigger event to tell UI that slideshow is about to change
              // @see UIInformation 
-             $(main.getUI()).trigger("click.SlideshowBeforeLoad");
+             communicator.publish("beforeLoad:slideshow");
              this._disable();
              $photos.each(function () {
                 $(this)

@@ -11,8 +11,8 @@ define(["dojo/_base/declare", "util/Communicator"],
                 this.view = view;
                 
              },
-             checkSlider : function () {
-                this.view.checkSlider();
+             init : function () {
+                this.view.init();
              },
              insertPhoto : function (photo) {
                 this.view.insertPhoto(photo);

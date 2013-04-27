@@ -210,7 +210,7 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
                delete this.data[key];
                return;
             }
-         });
+         }),
          
          _instance = new UIState();
          return _instance;

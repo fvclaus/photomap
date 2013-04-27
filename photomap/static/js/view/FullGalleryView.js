@@ -130,8 +130,7 @@ define(["dojo/_base/declare", "model/Photo", "ui/UIState", "view/StatusMessageVi
                 
                 var $currentTile = null,
                     jsonPhotos = [], 
-                    jsonPhoto = null, 
-                    state = main.getUIState(),
+                    jsonPhoto = null,
                     instance = this;
                 
                 $(".mp-sortable-tile").on("click.UIDisabled", function () {
@@ -175,7 +174,7 @@ define(["dojo/_base/declare", "model/Photo", "ui/UIState", "view/StatusMessageVi
              //       this.$column.addClass("mp-nodisplay");
 
              //       if (this.changed) {
-             //          main.getUIState().getCurrentPlace().triggerDoubleClick();
+             //          state.getCurrentPlace().triggerDoubleClick();
              //          this.changed = false;
              //       }
              //    },

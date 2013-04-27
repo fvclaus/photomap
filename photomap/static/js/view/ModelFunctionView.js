@@ -77,7 +77,7 @@ define([
              // don't resize the icons all the time to save performance
              if (!this.$controls.isScaled) {
                 // change factor depending on the page (-> number of controls in control-box)
-                // if (main.getUIState().isDashboardView()) {
+                // if (state.isDashboardView()) {
                 //    factor = 1.5;
                 // } else {
                 //    factor = 1;

@@ -14,11 +14,12 @@ define([
    "model/Photo",
    "model/Place",
    "model/Album",
+   "presenter/DetailPresenter",
    "util/Communicator",
    "util/Tools",
    "ui/UIState"
    ],
-    function (declare, Photo, Place, Album, communicator, tools, state) {
+    function (declare, Photo, Place, Album, DetailPresenter, communicator, tools, state) {
        return declare(null, {
           constructor : function () {
              this.$pageTitle = $("#mp-page-title h1");
@@ -40,10 +41,11 @@ define([
              this.currentPlaceOrAlbum = null;
              this._bindListener();
              
-             communicator.subscribe("change:photo change:place change:album", this.update, this);
-             communicator.subscribe("delete:photo delete:place delete:album", this.empty, this);
-             communicator.subscribe("change:usedSpace", this._updateUsedSpace, this);
-             communicator.subscribeOnce("init", this._init, this);
+             this.presenter = new DetailPresenter(this);
+            
+          },
+          getPresenter : function () {
+             return this.presenter;
           },
           /**
            * @public
@@ -60,7 +62,7 @@ define([
                 console.log("updating teaser");
                 this.currentPhoto = model;
                 this._updateTeaser(model);
-                this._hideDetail();
+                this.hideDetail();
              } else if (model instanceof Album || model instanceof Place) {
                 this.currentPlaceOrAlbum = model;
                 this._updateDetail(model);
@@ -84,21 +86,30 @@ define([
                 this.$title.empty();
              }
           },
-          _init : function () {
+          init : function () {
              
              if (state.isAlbumView()) {
-                this._updatePageTitle();
+                this.updatePageTitle();
                 this.update(state.getCurrentLoadedAlbum());
-                this._bindPageTitleListener();
+                this.bindPageTitleListener();
              }
-             
-             this._bindUIListener();
           },
-          _updatePageTitle : function () {
+          updatePageTitle : function () {
              assertTrue(state.isAlbumView(), "page-title is just supposed to be changed in albumview");
              
              console.log(state.getCurrentLoadedAlbum().title);
              this.$pageTitle.text(state.getCurrentLoadedAlbum().title);
+          },
+          /**
+           * @description Hides the detail box. The teaser box should be visible afterwards
+           */
+          hideDetail : function () {
+             this.$explanationContainer.addClass("mp-nodisplay");
+             this.$teaserContainer.removeClass("mp-nodisplay");
+          },
+          updateUsedSpace : function (data) {
+             
+             $("#mp-user-limit").text(data.used + "/" + data.total + " MB");
           },
           _updateDetail : function (model) {
              var title = model.getModel() + ": " + model.title,
@@ -147,14 +158,7 @@ define([
              //TODO this does not work right now
              this.$explanationContainer.removeClass("mp-nodisplay");
           },
-          /**
-           * @private
-           * @description Hides the detail box. The teaser box should be visible afterwards
-           */
-          _hideDetail : function () {
-             this.$explanationContainer.addClass("mp-nodisplay");
-             this.$teaserContainer.removeClass("mp-nodisplay");
-          },
+
           _bindListener : function () {
              var instance = this;
 
@@ -171,38 +175,21 @@ define([
              });
              $(".mp-close-full-description").on("click", function (event) {
                 if (!main.getUI().isDisabled()) {
-                   instance._hideDetail();
+                   instance.hideDetail();
                 }
              });
           },
-          _bindPageTitleListener : function () {
+          bindPageTitleListener : function () {
              assertTrue(state.isAlbumView(), "besides in albumview, page-title isn't supposed to have a listener");
+             
+             var instance = this;
              
              this.$pageTitle.on('click', function () {
 
                 if (!main.getUI().isDisabled()) {
-                   main.getUI().getInformation().update(main.getUIState().getCurrentLoadedAlbum());
+                   instance.update(state.getCurrentLoadedAlbum());
                 }
              });
-          },
-          /**
-           * @private
-           * @description adds Listener to UI. To react to events fired by other classes such as UISlideshow
-           */
-          _bindUIListener : function () {
-             var instance = this;
-             
-             $(main.getUI()).on("click.SlideshowBeforeLoad", function (event) {
-                if (!main.getUI().isDisabled()) {
-                   instance._hideDetail();
-                }
-             });
-             
-          },
-          /* ---- other stuff ---- */
-          _updateUsedSpace : function (data) {
-             
-             $("#mp-user-limit").text(data.used + "/" + data.total + " MB");
           }
        });
    });

@@ -52,7 +52,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               * @private
               */
              _processInitialData : function (data) {
-                assertTrue(main.getUIState().isAlbumView() || main.getUIState().isDashboardView(), "current view has to be either albumview or dashboardview");
+                assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview");
                 
                 var processedData;
                 

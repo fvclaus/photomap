@@ -14,13 +14,13 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
 
 
              start : function () {
-
+                console.log("AppInitializer started");
                 main = new Main();
                 assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview");
                 
                 main.init();
-                this._runInitializer(main);
-                this._runInitializer(main.getUI());
+                //this._runInitializer(main);
+                //this._runInitializer(main.getUI());
                 
                 // do some page specific stuff
                 if (window && window.init) {

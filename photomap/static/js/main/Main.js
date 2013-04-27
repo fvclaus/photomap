@@ -40,11 +40,15 @@ define([
              init : function () {
                 this.map = new MapView();
              },
+             //TODO This shouldn't be used as UIState is a singleton and should be accessed in a static way (@ui-tests.js!)
              getUIState : function () {
-                throw new Error("DoNotUseThisError");
-             },
+                return this.ui.getState();
+                //throw new Error("DoNotUseThisError");
+             }, 
+              //TODO This shouldn't be used as UIState is a singleton and should be accessed in a static way (@ui-tests.js!)
              getClientState : function () {
-                throw new Error("DoNotUseThisError");
+                return this.clientstate;
+                //throw new Error("DoNotUseThisError");
              },
              getClientServer : function () {
                 return this.clientServer;
@@ -55,8 +59,10 @@ define([
              getUI : function () {
                 return this.ui;
              },
+             //TODO This shouldn't be used as UIState is a singleton and should be accessed in a static way
              getCommunicator : function () {
-                throw new Error("DoNotUseThisError");
+                return this.communicator;
+                //throw new Error("DoNotUseThisError");
              },
              getDataProcessor : function () {
                 throw new Error("DoNotUseThisError");
@@ -64,51 +70,6 @@ define([
              getTools : function () {
                 throw new Error("DoNotUseThisError");
              }
-          //    //TODO events?
-          //    preinit : function () {
-
-          //       this.map.preinit();
-          //       // load markers on map
-          //       this.clientServer.preinit();
-          //       // initialise parts of UI that don't need the data loaded from the server
-          //       this.ui.preinit();
-
-          //       // do some page specific stuff
-          //       if (window && window.preinit) {
-          //          preinit();
-          //       }
-          //    },
-          //    //TODO events?
-          //    init: function () {
-          //       this.map.init();
-          //       this.ui.init();
-          //       this.clientState.init();
-
-          //       // do some page specific stuff
-          //       if (window && window.init) {
-          //          init();
-          //       }
-          //       //initialize test, if they are present
-          //       if (window && window.initializeTest) {
-          //          initializeTest();
-          //       }
-          //    },
-          //    getUIState : function () {
-          //       return this.getUI().getState();
-          //    },
-          //    getClientState : function () {
-          //       return this.clientState;
-          //    },
-          //    getClientServer : function () {
-          //       return this.clientServer;
-          //    },
-          //    getMap : function () {
-          //       return this.map;
-          //    },
-          //    getUI : function () {
-          //       return this.ui;
-          //    }
-          // });
           });
 
        });

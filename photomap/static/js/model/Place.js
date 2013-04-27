@@ -10,8 +10,8 @@
  */
 
 
-define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "ui/UIState"],
-       function (declare, InfoMarker, Photo, state) {
+define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "util/Communicator", "ui/UIState"],
+       function (declare, InfoMarker, Photo, communicator, state) {
           console.log("Place: start");
           return declare(InfoMarker, {
              constructor : function (data) {
@@ -95,7 +95,7 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "ui/UIState"],
                    
                    if (!ui.isDisabled()) {
                       state.setCurrentPlace(instance);
-                      ui.getInformation().update(instance);
+                      communicator.publish("update:place", instance);
                    }
                 });
                 
@@ -139,7 +139,7 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "ui/UIState"],
                 instance._showGallery();
                 ui.getMessage().hide();
 
-                ui.getInformation().update(instance);
+                communicator.publish("update:place", instance);
 
 
              }

@@ -45,7 +45,7 @@ define(["dojo/_base/declare"],
                return string;
             };
             
-            if (text !== null && text.length > size) {
+            if (text.length > size) {
                substring = createSubstring(text, size, endingPunctuation);
                if (substring === null) {
                   substring = createSubstring(text, size, [" ", ","]);

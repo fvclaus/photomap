@@ -14,7 +14,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
 
                 if (!main.getUI().isDisabled()) {
                    //create new place with description and select it
-                   if (!.isDashboardView()) {
+                   if (!state.isDashboardView()) {
                       this._insert(event, "place");
                    } else {
                       this._insert(event, "album");

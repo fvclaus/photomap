@@ -10,7 +10,8 @@
  *
  */
 
-define(["dojo/_base/declare", 
+define([
+        "dojo/_base/declare", 
         "model/Photo", 
         "model/Place", 
         "model/Album", 
@@ -21,7 +22,8 @@ define(["dojo/_base/declare",
         "view/GalleryView",
         "view/DialogView",
         "ui/UIState",
-        "dojo/domReady!"],
+        "dojo/domReady!"
+       ],
        function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, GalleryView, DialogView, state) {
            var UI = declare(null, {
               constructor : function () {
@@ -37,40 +39,11 @@ define(["dojo/_base/declare",
                  }
                  this._isDisabled = false;
               },
-              // /**
-              //  * @author Frederik Claus
-              //  * @description Initializes all UI Classes that need initialization after(!) every object is instantiated
-              //  */
-              // preinit : function () {
-              //    if (this.state.isAlbumView()){
-              //       // don't use events here
-              //       require(["view/SlideshowView"], function (slideshow) {
-              //          slideshow.preinit();
-              //       });
-              //    }
-              // },
-              // init : function () {
-              //    // decide which listener to bind
-              //    //TODO events!
-              //    require(["view/ModelFunctionView"], function (modelFunction) {
-              //       modelFunction.init();
-              //    });
-              //    //TODO events please
-              //    require(["view/DetailView"], function (detail) {
-              //       detail.init();
-              //    });
-              //    if (this.state.isAlbumView()){
-              //       // don't use events here
-              //       require(["view/GalleryView"], function (gallery) {
-              //          gallery.init();
-              //       });
-              //    }
-              // },
               getGallery : function () {
-                 return this.gallery;
+                 return this.gallery.getPresenter();
               },
               getSlideshow : function () {
-                 return this.slideshow;
+                 return this.slideshow.getPresenter();
               },
               getControls : function () {
                  return this.controls;
@@ -78,14 +51,16 @@ define(["dojo/_base/declare",
               getInput : function () {
                  return this.input;
               }, 
+              //TODO This shouldn't be used as UIState is a singleton and should be accessed in a static way (@ui-tests.js!)
               getState: function () {
-                 throw new Error("DoNotUseThisError");
+                 return this.state;
+                 //throw new Error("DoNotUseThisError");
               },
               getTools: function () {
                  throw new Error("DoNotUseThisError"); 
               },
               getInformation: function () {
-                 return this.information;
+                 return this.information.getPresenter();
               },
               getMessage : function () {
                  return this.message;
