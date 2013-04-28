@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-28 16:35+0100\n"
+"POT-Creation-Date: 2013-04-28 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,59 +18,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: static/js/main/init.js:29
-msgid "INITIALISATION_NOT_POSSIBLE"
-msgstr ""
-"Die Applikation konnte leider nicht gestartet werden. Bitte wenden Sie sich an den "
-"Kundensupport. Wir entschuldigen uns für das Ärgernis."
+#: static/js/main/AppInitializer.js:97 static/js/util/ClientServer.js:116
+msgid "GET_ALBUM_ERROR"
+msgstr "Beim Laden des Albums trat folgender Fehler auf: "
 
-#: static/js/ui/UIFullscreen.js:108
-msgid "PHOTO_LOADING_ERROR"
-msgstr ""
-"Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren Sie "
-"es zu einem späteren Zeitpunkt noch einmal."
-
-#: static/js/ui/UIGallery.js:456
-msgid "PHOTOS_DIRTY"
-msgstr ""
-
-#: static/js/ui/UIInput.js:77
-msgid "YES"
-msgstr "Ja"
-
-#: static/js/ui/UIInput.js:85
-msgid "NO"
-msgstr "Nein"
-
-#: static/js/ui/UIInput.js:100
-msgid "SAVE"
-msgstr "Speichern"
-
-#: static/js/ui/UIInput.js:169 static/js/ui/UIInput.js.c:230
-#: static/js/util/ClientServer.js:126
+#: static/js/main/AppInitializer.js:101 static/js/util/ClientServer.js:120
+#: static/js/view/DialogView.js:166 static/js/view/DialogView.js.c:227
 msgid "NETWORK_ERROR"
 msgstr ""
 "Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
 
-#: static/js/ui/UIPhotoEditor.js:70
+#: static/js/view/DetailView.js:116 static/js/view/DetailView.js.c:132
+msgid "NO_DESCRIPTION"
+msgstr "Es ist keine Beschreibung vorhanden."
+
+#: static/js/view/DialogView.js:73
+msgid "YES"
+msgstr "Ja"
+
+#: static/js/view/DialogView.js:81
+msgid "NO"
+msgstr "Nein"
+
+#: static/js/view/DialogView.js:96
+msgid "SAVE"
+msgstr "Speichern"
+
+#: static/js/view/FullGalleryView.js:114
+msgid "PHOTOS_DIRTY"
+msgstr ""
+
+#: static/js/view/FullscreenView.js:108
+msgid "PHOTO_LOADING_ERROR"
+msgstr ""
+"Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren Sie "
+"es zu einem späteren Zeitpunkt noch einmal."
+
+#: static/js/view/PhotoEditorView.js:70
 msgid "TOO_MANY_PHOTOS"
 msgstr "Bitte wählen Sie nur ein Photo auf einmal aus."
 
-#: static/js/ui/UIPhotoEditor.js:73
+#: static/js/view/PhotoEditorView.js:73
 msgid "EXTENSION_NOT_SUPPORTED"
 msgstr ""
 "Dieses Format wird leider nicht unterstützt. Bitte wählen Sie ein JPEG oder "
 "PNG Photos aus."
 
-#: static/js/ui/UIPhotoEditor.js:127
+#: static/js/view/PhotoEditorView.js:127
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "Keine Rotation mehr möglich, nachdem das Photo bearbeitet wurde."
-
-#: static/js/util/ClientServer.js:122
-msgid "GET_ALBUM_ERROR"
-msgstr "Beim Laden des Albums trat folgender Fehler auf: "
 
 #: static/js/zeroclipboard/jquery.zclip.js:87
 msgid "COPIED_TO_CLIPBOARD"
 msgstr "Text wurde in die Zwischenablage kopiert!"
+
+#~ msgid "INITIALISATION_NOT_POSSIBLE"
+#~ msgstr ""
+#~ "Die Applikation konnte leider nicht gestartet werden. Bitte wenden Sie "
+#~ "sich an den Kundensupport. Wir entschuldigen uns für das Ärgernis."
