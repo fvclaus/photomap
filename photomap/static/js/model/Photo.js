@@ -9,13 +9,13 @@
  */
 
 
-define(["dojo/_base/declare", "model/InfoMarker", "util/ClientState", "ui/UIState"],
-       function (declare, InfoMarker, clientstate, state) {
+define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
+       function (declare, Model, clientstate, state) {
           
-          return declare(null ,{
+          return declare(Model ,{
              constructor : function (data, index) {
                 
-                this.model = 'Photo';
+                this.type = 'Photo';
                 this.photo = data.photo;
                 this.thumb = data.thumb;
                 this.title = data.title;
@@ -24,8 +24,31 @@ define(["dojo/_base/declare", "model/InfoMarker", "util/ClientState", "ui/UIStat
                 this.order = data.order;
                 this.visited = clientstate.isVisitedPhoto(this.id);
              },
-             getModel : function () {
-                return this.model;
+             getTitle : function () {
+                return this.title;
+             },
+             getDescription : function () {
+                return this.description;
+             },
+             setTitle : function (title) {
+                this.title = title;
+             },
+             setDescription : function (description) {
+                this.description = description;
+             },
+             /**
+              * @public
+              * @returns {String} Name of this model
+              */
+             getModelType : function () {
+                return this.type;
+             },
+             /**
+              * @public
+              * @returns {Integer} Id of this model
+              */
+             getId : function () {
+                return this.id;
              },
              checkBorder : function () {
                 //need reselection because anchors change

@@ -22,6 +22,9 @@ define(["dojo/_base/declare", "util/Communicator"],
              },
              placeDeleteReset : function (place) {
                 this.view.placeDeleteReset(place);
+             },
+             reset : function () {
+                this.view.reset();
              }
              
           });

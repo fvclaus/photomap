@@ -10,20 +10,37 @@
  */
 
 
-define(["dojo/_base/declare", "model/InfoMarker", "ui/UIState"],
-       function (declare, InfoMarker, state, detail) {
+define(["dojo/_base/declare", "model/MarkerModel", "ui/UIState"],
+       function (declare, MarkerModel, state, detail) {
           console.log("Album: start");
-          return declare(InfoMarker, {
+          return declare(MarkerModel, {
              constructor : function (data) {
                 assertTrue(data.secret, "album secret Must not be undefined");
                 
-                this.model = 'Album';
+                this.type = 'Album';
                 this.isOwner = data.isOwner || false;
                 this.secret = data.secret;
                 
-                this.checkIconStatus();
-                this._bindListener();
+                //this.checkIconStatus();
+                //this._bindListener();
 
+             },
+             /**
+              * @public
+              * @returns {String} Name of this model
+              */
+             getModelType : function () {
+                return this.type;
+             },
+             getSecret : function () {
+                return this.secret;
+             },
+             /**
+              * @public
+              * @returns {Number} Id of this model
+              */
+             getId : function () {
+                return this.id;
              },
              /*
               * @private

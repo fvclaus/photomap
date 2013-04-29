@@ -13,10 +13,11 @@ define([
    "presenter/MapPresenter",
    "util/Communicator",
    "util/ClientState",
+   "view/MarkerView",
    "ui/UIState",
    "dojo/domReady!"
    ],
-    function (declare, MapPresenter, communicator, clientstate, state) {
+    function (declare, MapPresenter, communicator, clientstate, MarkerView, state) {
        var MapView = declare(null, {
           constructor : function () {
              // google.maps.Map
@@ -58,6 +59,7 @@ define([
              // mode : fullscreen || normal
              this.mode = 'normal';
              this.presenter = new MapPresenter(this);
+             this.markers = [];
              this._create();
              communicator.subscribeOnce("init", this._init, this);
           },
@@ -77,6 +79,19 @@ define([
              pixel.y += offset.top;
              pixel.x += offset.left;
              return {top : pixel.y, left : pixel.x};
+          },
+          insertMarker : function (model, open) {
+             
+             this.presenter.insertMarker(model, open);
+             
+          },
+          /**
+           @public
+           @param {Marker} marker
+           */
+          centerMarker : function (marker) {
+             this.map.setZoom(ZOOM_LEVEL_CENTERED);
+             this.map.panTo(marker.getPosition());
           },
           /**
            * @public
@@ -108,30 +123,6 @@ define([
                 },
                 title : data.title
              });
-          },
-          /**
-           * @public
-           * @param {Marker} marker
-           */
-          hideMarker : function (marker) {
-             // marker.getImplementation().setMap(null);
-             marker.getImplementation().setVisible(false);
-          },
-          /**
-           @public
-           @param {Marker} marker 
-           */
-          showMarker : function (marker) {
-             // marker.getImplementation().setMap(this.map);
-             marker.getImplementation().setVisible(true);
-          },
-          /**
-           @public
-           @param {Marker} marker
-           */
-          centerMarker : function (marker) {
-             this.map.setZoom(ZOOM_LEVEL_CENTERED);
-             this.map.panTo(marker.getPosition());
           },
           /**
            * @public
@@ -266,50 +257,60 @@ define([
           createLatLng : function (lat, lng) {
              return new google.maps.LatLng(lat, lng);
           },
-          _init : function () {
+          //TODO this is a bit messy.. there must be a better way to do this!
+          _init : function (data) {
              
-             var authorized;
+             var authorized, init, instance = this;
              
-             if (state.isAlbumView()) {
-                authorized = clientstate.isAdmin();
+             init = function () {
                 
-                if (state.getPlaces().length <= 0) {
-                   this.expandBounds(state.getCurrentLoadedAlbum());
-                } else {
-                   this._showAsMarker(state.getPlaces());
-                }
-                
-                //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
-                if (authorized) {
+                console.log("in map init");
+                if (state.isAlbumView()) {
+                   authorized = clientstate.isAdmin();
+                   
+                   if (state.getMarkers().length <= 0) {
+                      this.expandBounds(state.getCurrentLoadedAlbum());
+                   } else {
+                      this._showMarkers(state.getMarkers());
+                   }
+                   
+                   //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
+                   if (authorized) {
+                      this._bindClickListener();
+                   }
+                } else if (state.isDashboardView()) {
+                   if (state.getMarkers().length <= 0) {
+                      this._showWorld();
+                   } else {
+                      this._showMarkers(state.getMarkers());
+                   }
                    this._bindClickListener();
                 }
-             } else if (state.isDashboardView()) {
-                if (state.getAlbums().length <= 0) {
-                   this._showWorld();
-                } else {
-                   this._showAsMarker(state.getAlbums());
-                }
-                this._bindClickListener();
-             }
-             // set map options if interactive
-             this.map.setOptions(this.mapOptions);
-             this._setMapCursor();
+                // set map options if interactive
+                this.map.setOptions(this.mapOptions);
+                this._setMapCursor();
+             };
+             
+             instance.presenter.insertMarkers(data, init);
           },
-          _showAsMarker : function (instances) {
+          //TODO this is a mess.. MapView is accessing MarkerView and MarkerPresenter.. changes to a View should be done only by its Presenter!
+          _showMarkers : function (markers) {
 
              var markersInfo = [];
+             
+             console.log(markers);
 
-             if (instances.length === 1) {
-                instances[0].show();
+             if (markers.length === 1) {
+                markers[0].show();
                 console.log('_-------------------_');
-                console.log(instances[0]);
-                this.expandBounds(instances[0]);
+                console.log(markers[0]);
+                this.expandBounds(markers[0]);
              } else {
-                instances.forEach(function (instance) {
-                   instance.show();
+                markers.forEach(function (marker) {
+                   marker.show();
                    markersInfo.push({
-                      lat : instance.getLat(),
-                      lng : instance.getLng()
+                      lat : marker.getLat(),
+                      lng : marker.getLng()
                    });
                 });
                 this.fit(markersInfo);

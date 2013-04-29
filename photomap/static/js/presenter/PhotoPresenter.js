@@ -126,7 +126,7 @@ define(["dojo/_base/declare", "view/PhotoEditorView", "util/Communicator", "ui/U
                    context : this
                 });
              },
-             delete : function (photo) {
+             "delete" : function (photo) {
                 var input = main.getUI().getInput();
                 input.show({
                    type : CONFIRM_DIALOG,
@@ -141,7 +141,7 @@ define(["dojo/_base/declare", "view/PhotoEditorView", "util/Communicator", "ui/U
                    url: "/delete-photo",
                    context : this
                 });
-             },
+             }
 
           });
        });

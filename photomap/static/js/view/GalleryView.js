@@ -77,11 +77,10 @@ define(["dojo/_base/declare",
              /**
               * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
               */
-             start : function () {
+             start : function (photos) {
                 assert(this.isStarted, false, "gallery must not be started yet");
                 
                 var ui = main.getUI(),
-                    photos = state.getPhotos(),
                     options,
                     instance = this,
                     imageSources = [];
@@ -140,11 +139,8 @@ define(["dojo/_base/declare",
                 this.$isEmpty.css("display", "table");
              },
              init : function () {
-                var controls = main.getUI().getControls();
                 
                 if (clientstate.isAdmin()) {
-                   this.$container.bind('dragover.FileUpload', controls.handleGalleryDragover);
-                   this.$container.bind('drop.FileUpload', controls.handleGalleryDrop);
                    this._bindListener();
                 }
                 this._bindNavigationListener();

@@ -105,18 +105,15 @@ define([
              //TODO there is a circular reference place -> infomarker -> markerpresenter -> modelfunctionview -> modelfunctionpresenter -> place
              require(["model/Photo", "model/Place", "model/Album"],
                      function (Photo, Place, Album) {
-                        console.log(context);
-                        var element = context.view,
-                            projection, pixel, markerSize, mapOffset;
-                       
-                        assertTrue(element instanceof Album || element instanceof Place, "input parameter element must be instance of Album or Place"); 
+                        assertTrue(context.getModel() instanceof Album || context.getModel() instanceof Place, "input parameter element must be instance of Album or Place");
+                        var projection, pixel, markerSize, mapOffset;
                         
                         // set the context for the Controls-Dialog (current Album, Place, Photo)                           
                         instance.presenter.setCurrentContext(context);
 
                         // gets the absolute pixel position
-                        pixel = main.getMap().getPositionInPixel(element);
-                        markerSize = element.getSize();
+                        pixel = main.getMap().getPositionInPixel(context);
+                        markerSize = context.getView().getSize();
                         // this happens when the Icon representing the Marker is not loaded yet
                         // this should only happen during frontend tests
                         if (markerSize === undefined) {

@@ -209,13 +209,14 @@ define([
               //    this.getTools().closeOverlay($("#mp-ui-loading"));
               //    $("body, a, .mp-logo img").css("cursor", "");
               // },
+              //TODO see .enable().. 
               disable : function () {
                  var models = this._getModels();
 
                  this._isDisabled = true;
                  models.forEach(function (model) {
-                    model.showDisabledIcon();
-                    model.setCursor("not-allowed");
+                    //model.showDisabledIcon();
+                    //model.setCursor("not-allowed");
                  });
                  $("a, .mp-control").css({
                     //         opacity: 0.4,
@@ -230,13 +231,15 @@ define([
               isDisabled : function () {
                  return this._isDisabled;
               },
+              //TODO This has to be done with events
+              //TODO Also there mustn't be any manipulation of the models.. ui-dis/enabling may just(!) affect the views!
               enable : function () {
                  var models = this._getModels();
 
                  this._isDisabled = false;
                  models.forEach(function (model) {
-                    model.checkIconStatus();
-                    model.setCursor("");
+                    //model.checkIconStatus(); //TODO this is done in MarkerPresenter now
+                    //model.setCursor(""); //TODO this is done in MarkerPresenter now
                  });
                  $("a, .mp-control").css({
                     //         opacity: 1,

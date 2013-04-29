@@ -20,6 +20,8 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
 
              },
              setCurrentContext : function (context) {
+                console.log("MFP setCurrentContext");
+                console.log(context);
                 this.currentContext = context;
              },
              /**
@@ -28,17 +30,17 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
              update : function (event) {
                   
                 if (!main.getUI().isDisabled()) {
-                  this.currentContext.presenter.update(event);
+                  this.currentContext.update(event);
                 }
              },
 
              /**
               * @public
               */
-             delete : function (event) {
+             "delete" : function (event) {
      
                 if (!main.getUI().isDisabled()) {
-                   this.currentContext.presenter.delete(event);
+                   this.currentContext.delete(event);
                 }
              },
 
@@ -48,7 +50,7 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
              share : function (event) {
 
                 if (!main.getUI().isDisabled()) {
-                   this.currentContext.presenter.share();
+                   this.currentContext.share();
                 }
              }
           });

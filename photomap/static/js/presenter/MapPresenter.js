@@ -4,8 +4,8 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
-       function (declare, communicator, state) {
+define(["dojo/_base/declare", "util/Communicator", "view/MarkerView", "ui/UIState"],
+       function (declare, communicator, MarkerView, state) {
           return declare(null,  {
              constructor : function (view) {
                 this.view = view;
@@ -21,6 +21,26 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    }
                 }
              },
+             insertMarker : function (model, open) {
+                var marker = this.view.createMarker(model),
+                   view = new MarkerView(this.view, marker, model);
+                
+                communicator.publish("insert:marker", {marker: view.getPresenter(), "open": open});
+             },
+             insertMarkers : function (models, handler) {
+                var instance = this;
+                
+                if (models.length === 0) {
+                   handler.call(instance.view);
+                } else {
+                   $.each(models, function (index, model) {
+                      instance.insertMarker(model, false);
+                      if (index === models.length - 1) {
+                         handler.call(instance.view);
+                      }
+                   });
+                }
+             },
              _insert : function (event, model) {
                  var instance = this,
                      input = main.getUI().getInput(),
@@ -31,6 +51,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                     load : function () {
                        $("input[name=lat]").val(lat);
                        $("input[name=lon]").val(lng);
+                       if ($("input[name=album]").size() > 0) {
+                          $("input[name=album]").val(state.getCurrentLoadedAlbum().id);
+                       }
                     },
                     submit : function () {
                        //get name + description

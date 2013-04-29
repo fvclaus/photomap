@@ -112,8 +112,8 @@ define([
              $("#mp-user-limit").text(data.used + "/" + data.total + " MB");
           },
           _updateDetail : function (model) {
-             var title = model.getModelType() + ": " + model.title,
-                 description = model.description || gettext("NO_DESCRIPTION");
+             var title = model.getModelType() + ": " + model.getTitle(),
+                 description = model.getDescription() || gettext("NO_DESCRIPTION");
              // use text() instead of html() to prevent script tag injection or similiar
              if (description === null) {
                 this.$description.html(this.noDescription);
@@ -128,8 +128,8 @@ define([
            */
           _updateTeaser : function (photo) {
              var shortDescription,
-                 title = "Photo: " + photo.title,
-                 description = photo.description || gettext("NO_DESCRIPTION");
+                 title = "Photo: " + model.getTitle(),
+                 description = model.getDescription() || gettext("NO_DESCRIPTION");
 
              if (description !== null) {
                 shortDescription = tools.cutText(description, 250);

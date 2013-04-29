@@ -274,7 +274,7 @@ msgstr "Album löschen?"
 
 #: templates/delete-album.html:11
 msgid "DELETE_ALBUM_QUESTION"
-msgstr "Wollen Sie dieses Album  wirklich löschen?"
+msgstr "Wollen Sie das folgende Album wirklich löschen:"
 
 #: templates/delete-photo.html:5
 msgid "DELETE_PHOTO"
@@ -282,7 +282,7 @@ msgstr "Photo löschen?"
 
 #: templates/delete-photo.html:11
 msgid "DELETE_PHOTO_QUESTION"
-msgstr "Wollen Sie dieses Photo wirklich löschen?"
+msgstr "Wollen Sie das folgende Photo wirklich löschen: "
 
 #: templates/delete-place.html:5
 msgid "DELETE_PLACE"
@@ -290,7 +290,7 @@ msgstr "Platz löschen?"
 
 #: templates/delete-place.html:11
 msgid "DELETE_PLACE_QUESTION"
-msgstr "Wollen Sie diesen Platz wirklich löschen?"
+msgstr "Wollen Sie den folgenden Platz wirklich löschen: "
 
 #: templates/dialog.html:10
 msgid "FAILURE"

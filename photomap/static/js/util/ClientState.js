@@ -23,6 +23,9 @@ define(["dojo/_base/declare", "util/Communicator", "util/Tools", "ui/UIState"],
                 this.usedSpace = null;
                 this.quota = null;
                 
+                
+                console.log("#####################################");
+                console.log(state);
                 communicator.subscribeOnce("init", this._init, this);
              },
              /**

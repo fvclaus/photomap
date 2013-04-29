@@ -10,14 +10,14 @@
  */
 
 
-define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "util/Communicator", "ui/UIState"],
-       function (declare, InfoMarker, Photo, communicator, state) {
+define(["dojo/_base/declare", "model/MarkerModel", "model/Photo", "util/Communicator", "ui/UIState"],
+       function (declare, MarkerModel, Photo, communicator, state) {
           console.log("Place: start");
-          return declare(InfoMarker, {
+          return declare(MarkerModel, {
              constructor : function (data) {
                 var i, len;
                 
-                this.model = 'Place';
+                this.type = 'Place';
 
                 this.photos = [];
                 if (data.photos) {
@@ -26,8 +26,8 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "util/Communica
                    }
                 }
 
-                this.checkIconStatus();
-                this._bindListener();
+                //this.checkIconStatus();
+                //this._bindListener();
              },
              _showGallery : function () {
                 main.getUI().getGallery().start();
@@ -67,7 +67,9 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "util/Communica
                    return photo[0];
                 }
              },
-             
+             getPhotos : function ()   {
+                return this.photos;
+             },
              checkIconStatus : function () {
                 var visited = true;
                 this.photos.forEach(function (photo) {
@@ -103,8 +105,6 @@ define(["dojo/_base/declare", "model/InfoMarker", "model/Photo", "util/Communica
                 // in the eventcallback this will be the gmap
                 // use instance as closurefunction to access the place object
                 this.addListener('dblclick', function () {
-
-                   var map, oldPlace;
 
                    if (!main.getUI().isDisabled()) {
                       //TODO confer Album.js. This does also not work during Place creation, because the UI is disabled

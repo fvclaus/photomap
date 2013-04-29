@@ -16,8 +16,8 @@ $.extend($.ui.dialog.prototype.options, {
    closeOnEscape : false
 });
 
-define(["dojo/_base/declare", "view/DialogMessageView", "util/ClientState", "dojo/domReady!"], 
-   function (declare, DialogMessageView, clientstate) {
+define(["dojo/_base/declare", "view/DialogMessageView", "util/ClientState", "view/PhotoEditorView", "dojo/domReady!"], 
+   function (declare, DialogMessageView, clientstate, PhotoEditorView) {
       return declare(null, {
          constructor : function () {
             this.$dialog = $("#mp-dialog");
@@ -29,6 +29,7 @@ define(["dojo/_base/declare", "view/DialogMessageView", "util/ClientState", "doj
             this.visible = false;
             // indicates if the user submitted the form
             this.abort = true;
+            this.editor = new PhotoEditorView();
             
          },
          /**

@@ -47,7 +47,7 @@ define([
              }, 
               //TODO This shouldn't be used as UIState is a singleton and should be accessed in a static way (@ui-tests.js!)
              getClientState : function () {
-                return this.clientstate;
+                return this.clientState;
                 //throw new Error("DoNotUseThisError");
              },
              getClientServer : function () {

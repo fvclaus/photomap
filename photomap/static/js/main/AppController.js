@@ -18,7 +18,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 
                 communicator.subscribe({
                    "mouseover:marker": this._markerMouseover,
-                   "mouseout:marker": this._markerMouseout
+                   "mouseout:marker": this._markerMouseout,
+                   "click:marker": this._markerClick,
+                   "insert:marker": this._markerInsert
                 });
                 
                 communicator.subscribe("change:photo change:place change:album", this._modelUpdate);
@@ -26,23 +28,26 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                
                 communicator.subscribe("delete:photo delete:place delete:album", this._modelDelete);
                 
+                communicator.subscribe("processed:album processed:place processed:photo", this._modelInsert);
+                
                 if (state.isAlbumView()) {
                    
                    communicator.subscribe("beforeLoad:slideshow", this._slideshowBeforeLoad);
-                  
                    communicator.subscribe("update:slideshow", this._slideshowUpdate);
-                   communicator.subscribe("update:place", this._placeUpdate);
                    
-                   communicator.subscribe("processed:photo", this._photoInsert);
+                   communicator.subscribe("open:place", this._placeOpen);
                    
-                   communicator.subscribe("delete:place", this._placeDelete);
-                   communicator.subscribe("delete:photo", this._photoDelete);
+                   communicator.subscribe({
+                      "delete:place": this._placeDelete,
+                      "delete:photo": this._photoDelete
+                   });
                 }
                 
                 
              },
              _init : function () {
                 main.getUI().getInformation().init();
+                //main.getMap().init();
                 
                 if (state.isAlbumView()) {
                    main.getUI().getGallery().init();
@@ -54,6 +59,17 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              },
              _markerMouseout : function () {
                 main.getUI().getControls().hide(true);
+             },
+             _markerClick : function (model) {
+                main.getUI().getInformation().update(model);
+             },
+             _markerInsert : function (data) {
+                
+                state.insertMarker(data.marker);
+                data.marker.show();
+                if (data.open) {
+                   data.marker.open();
+                }
              },
              _slideshowBeforeLoad : function () {
                 main.getUI().getInformation().hideDetail();
@@ -68,23 +84,45 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 main.getUI().getInformation().update(photo);
                 main.getUI().getGallery().checkSlider();
              },
-             _placeUpdate : function (place) {
-                main.getUI().getInformation().update(place);
-             },
-             _photoInsert : function (photo) {
-                main.getUI().getGallery().insertPhoto(photo);
-                main.getUI().getSlideshow().insertPhoto(photo);
+             _modelInsert : function (model) {
+                var type = model.getModelType();
+                
+                if (type === "Photo") {
+                   main.getUI().getGallery().insertPhoto(model);
+                   main.getUI().getSlideshow().insertPhoto(model);
+                } else if (type === "Album" || type === "Place") {
+                   main.getMap().insertMarker(model, true);
+                } else {
+                   throw new Error("UnknownModelError");
+                }
              },
              _modelDelete : function (model) {
+                var type = model.getModelType();
+                
                 main.getUI().getInformation().empty(model);
+                
+                if (type === "Photo") {
+                   main.getUI().getGallery().deletePhoto(photo);
+                   main.getUI().getSlideshow().deletePhoto(photo);
+                   state.getCurrentLoadedPlace().deletePhoto(photo);
+                } else if (type === "Place") {
+                   main.getUI().getGallery().placeDeleteReset(place);
+                   main.getUI().getSlideshow().placeDeleteReset(place);
+                }
+                
+                if (type === "Place" || type === "Album") {
+                   console.log(state.getMarker(model));
+                   state.getMarker(model).hide();
+                }
+                
+                
              },
-             _placeDelete : function (place) {
-                main.getUI().getGallery().placeDeleteReset(place);
-                main.getUI().getSlideshow().placeDeleteReset(place);
-             },
-             _photoDelete : function (photo) {
-                main.getUI().getGallery().deletePhoto(photo);
-                main.getUI().getSlideshow().deletePhoto(photo);
+             _placeOpen : function (place) {
+                main.getUI().getInformation().update(place);
+                main.getUI().getGallery().reset();
+                main.getUI().getGallery().start(place.getPhotos());
+                main.getUI().getSlideshow().reset();
+                main.getUI().getMessage().hide();
              }
           });
        });

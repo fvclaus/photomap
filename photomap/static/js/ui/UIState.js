@@ -22,12 +22,36 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
                this.currentLoadedAlbum = null;
                this.places = [];
                this.albums = [];
+               this.markers = [];
                this.albumLoaded = false;
                this.fontSize = null;
                this.fullscreen = null;
                //PAGE_MAPPING is defined in constants.js
                this.page = window.location.pathname;
                this.data = {};
+            },
+            //--------------------------------------------------------------------
+            //MARKER--------------------------------------------------------------
+            //--------------------------------------------------------------------
+            setMarkers : function (markers) {
+               this.markers = markers;
+            },
+            getMarkers : function () {
+               return this.markers;
+            },
+            insertMarker : function (marker) {
+               this.markers.push(marker);
+            },
+            getMarker : function (model) {
+               return this.markers.filter(function (marker, index) {
+                  return marker.getModel() === model;
+               })[0];
+            },
+            deleteMarker : function (marker) {
+               
+               this.markers = this.markers.filter(function (element, index) {
+                  return element !== marker;
+               });
             },
             //--------------------------------------------------------------------
             //PHOTO---------------------------------------------------------------
@@ -85,12 +109,13 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
             getCurrentPlace : function () {
                return this.currentPlace;
             },
+            //TODO what was activate used for?
             setCurrentLoadedPlace : function (place) {
                if (this.currentLoadedPlace) {
-                  this.currentLoadedPlace.deactivate();
+                  //this.currentLoadedPlace.deactivate();
                }
                this.currentLoadedPlace = place;
-               this.currentLoadedPlace.activate();
+               //this.currentLoadedPlace.activate();
             },
             getCurrentLoadedPlace : function () {
                return this.currentLoadedPlace;
@@ -176,18 +201,25 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
             isFullscreen : function (bool) {
                return this.fullscreen;
             },
+            //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
             getDialogAutoClose : function () {
+
+               console.log("UIState - getDialogAutoClose: ");
+               console.log(clientstate);
+               console.log(main.getClientState());
                if (this.dialogAutoClose === undefined){
-                  this.dialogAutoClose = clientstate.read(this._NS, "dialogAutoClose", false);
+                  this.dialogAutoClose = main.getClientState().read(this._NS, "dialogAutoClose", false);
                }
                return this.dialogAutoClose;
             },
+            //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
             setDialogAutoClose : function (autoClose) {
                this.dialogAutoClose = autoClose;
-               clientstate.write(this._NS, "dialogAutoClose", autoClose);
+               main.getClientState().write(this._NS, "dialogAutoClose", autoClose);
             },
+            //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
             _save : function () {
-               clientstate.writeCookie(this._COOKIE_KEY, {
+               main.getClientState().writeCookie(this._COOKIE_KEY, {
                   dialogAutoClose : this.dialogAutoClose
                });
             },
