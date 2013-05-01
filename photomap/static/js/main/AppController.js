@@ -32,6 +32,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 
                 if (state.isAlbumView()) {
                    
+                   communicator.subscribe({
+                      "mouseenter:galleryThumb": this._galleryThumbMouseenter,
+                      "mouseleave:galleryThumb": this._galleryThumbMouseleave,
+                      "click:galleryThumb": this._galleryThumbClick
+                   });
+                   
                    communicator.subscribe("beforeLoad:slideshow", this._slideshowBeforeLoad);
                    communicator.subscribe("update:slideshow", this._slideshowUpdate);
                    
@@ -54,6 +60,15 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    main.getUI().getSlideshow().init();
                 }
              },
+             _galleryThumbMouseenter : function (data) {
+                main.getUI().getControls().showPhotoControls(data);
+             },
+             _galleryThumbMouseleave : function () {
+                main.getUI().getControls().hide(true);
+             },
+             _galleryThumbClick : function (photo) {
+                main.getUI().getSlideshow().navigateTo(photo);
+             },
              _markerMouseover : function (context) {
                 main.getUI().getControls().show(context);
              },
@@ -71,9 +86,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    data.marker.open();
                 }
              },
-             _slideshowBeforeLoad : function () {
-                main.getUI().getInformation().hideDetail();
-             },
              _modelUpdate : function (model) {
                 main.getUI().getInformation().update(model);
              },
@@ -83,6 +95,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              _slideshowUpdate : function (photo) {
                 main.getUI().getInformation().update(photo);
                 main.getUI().getGallery().checkSlider();
+             },
+             _slideshowBeforeLoad : function () {
+                main.getUI().getInformation().hideDetail();
              },
              _modelInsert : function (model) {
                 var type = model.getModelType();

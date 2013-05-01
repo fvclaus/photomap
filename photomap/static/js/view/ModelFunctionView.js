@@ -39,12 +39,14 @@ define([
            * @param $el The photo element under which controls are placed
            * @public
            */
-          showPhotoControls : function ($el) {
+          showPhotoControls : function (data) {
              
              var center;
              
-             center = $el.offset();
-             center.left += tools.getRealWidth($el) / 2;
+             this.presenter.setCurrentContext(data.context);
+             
+             center = data.element.offset();
+             center.left += tools.getRealWidth(data.element) / 2;
              center.top -= (tools.getRealHeight($(".mp-controls-wrapper")) + 5);
 
              // clear any present timeout, as it will hide the controls while the mousepointer never left

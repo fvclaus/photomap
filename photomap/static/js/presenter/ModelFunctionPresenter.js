@@ -9,12 +9,10 @@
  */
 
 
-define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresenter", "presenter/AlbumPresenter"],
-       function (declare, PhotoPresenter, PlacePresenter, AlbumPresenter) {
+define(["dojo/_base/declare"],
+       function (declare) {
           return declare(null, {
              constructor : function (maxHeight) {
-                // this has to go
-                this.$logout = $(".mp-option-logout");
 
                 this.currentContext = null;
 
@@ -43,7 +41,6 @@ define(["dojo/_base/declare", "presenter/PhotoPresenter", "presenter/PlacePresen
                    this.currentContext.delete(event);
                 }
              },
-
              /**
               * @private
               */

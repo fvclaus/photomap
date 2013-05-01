@@ -14,6 +14,9 @@ define(["dojo/_base/declare", "util/Communicator"],
              init : function () {
                 this.view.init();
              },
+             navigateTo : function (photo) {
+                this.view.navigateTo(photo);
+             },
              insertPhoto : function (photo) {
                 this.view.insertPhoto(photo);
              },

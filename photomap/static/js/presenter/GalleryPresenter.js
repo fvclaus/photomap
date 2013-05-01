@@ -3,16 +3,25 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "util/Communicator"],
-       function (declare, communicator) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
+       function (declare, communicator, state) {
           return declare(null, {
              constructor : function (view) {
-                
                 this.view = view;
-                
+                this.model = null;
              },
              init : function () {
                 this.view.init();
+             },
+             mouseEnter : function ($el, photo) {
+                this.model = photo;
+                communicator.publish("mouseenter:galleryThumb", {context: this, element: $el});
+             },
+             mouseLeave : function () {
+                communicator.publish("mouseleave:galleryThumb");
+             },
+             click : function (photo) {
+                communicator.publish("click:galleryThumb", photo);
              },
              checkSlider : function () {
                 this.view.checkSlider();
@@ -31,6 +40,9 @@ define(["dojo/_base/declare", "util/Communicator"],
              },
              reset : function () {
                 this.view.reset();
+             },
+             triggerClickOnPhoto : function () {
+               this.view.triggerClickOnPhoto(); 
              },
              insert : function () {
                 var instance = this,
@@ -71,16 +83,18 @@ define(["dojo/_base/declare", "util/Communicator"],
                    });
                 }
              },
-             update : function (photo) {
-                var input = main.getUI().getInput();
+             update : function () {
+                var input = main.getUI().getInput(),
+                    model = this.model.getModelType().toLowerCase(),
+                    instance = this;
 
                 input.show({
                    load : function () {
                       //prefill with values from selected picture
-                      $("input[name=id]").val(photo.getId());
-                      $("input[name=order]").val(photo.order);
-                      this.$title = $("input[name=title]").val(photo.getTitle());
-                      this.$description = $("textarea[name=description]").val(photo.description);
+                      $("input[name=id]").val(instance.model.getId());
+                      $("input[name=order]").val(instance.model.getOrder());
+                      this.$title = $("input[name=title]").val(instance.model.getTitle());
+                      this.$description = $("textarea[name=description]").val(instance.model.getDescription());
                    },
                    submit : function () {
                       //store them
@@ -88,26 +102,29 @@ define(["dojo/_base/declare", "util/Communicator"],
                       this._description = this.$description.val();
                    },
                    success : function (data) {
-                      photo.setTitle(this._title);
-                      photo.setDescription(this._description);
-                      communicator.publish("change:photo", photo);
+                      instance.model.setTitle(this._title);
+                      instance.model.setDescription(this._description);
+                      communicator.publish("change:" + model, instance.model);
                    },
-                   url : "/update-photo",
+                   url : "/update-" + model,
                    context : this
                 });
              },
-             "delete" : function (photo) {
-                var input = main.getUI().getInput();
+             "delete" : function () {
+                var input = main.getUI().getInput(),
+                    model = this.model.getModelType().toLowerCase(),
+                    instance = this;
+                    
                 input.show({
                    type : CONFIRM_DIALOG,
                    load : function () {
-                      $("input[name='id']").val(photo.getId());
-                      $("span#mp-dialog-photo-title").text("'" + photo.getTitle() + "'?");
+                      $("input[name='id']").val(instance.model.getId());
+                      $("span#mp-dialog-" + model + "-title").text("'" + instance.model.getTitle() + "'?");
                    },
                    success : function (data) {
-                      communicator.publish("delete:photo", photo);
+                      communicator.publish("delete:" + model, instance.model);
                    },
-                   url: "/delete-photo",
+                   url: "/delete-" + model,
                    context : this
                 });
              }

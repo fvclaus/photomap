@@ -145,8 +145,6 @@ define(["dojo/_base/declare",
                 }
                 this._bindNavigationListener();
                 this._bindStartSlideshowListener();
-                this._bindSlideshowNavigationListener();
-                
 
              },
              /**
@@ -312,7 +310,6 @@ define(["dojo/_base/declare",
              _bindListener : function () {
 
                 var ui = main.getUI(),
-                    controls = ui.getControls(),
                     authorized = clientstate.isAdmin(),
                     photo = null,
                     instance = this;
@@ -340,9 +337,7 @@ define(["dojo/_base/declare",
                          state.setCurrentPhoto(photo);
                          
                          if (authorized) {
-                            //TODO accessing private member!!!!
-                            controls.presenter.setModifyPhoto(true);
-                            controls.showPhotoControls($el);
+                            instance.presenter.mouseEnter($el, photo);
                          }
                       }
                    })
@@ -352,7 +347,7 @@ define(["dojo/_base/declare",
                       if (!ui.isDisabled()) {
                          
                          if (authorized) {
-                            controls.hide(true);
+                            instance.presenter.mouseLeave();
                          }
                       }
                    });
@@ -383,19 +378,6 @@ define(["dojo/_base/declare",
              },
              /**
               * @private
-              * @description binds listener to custom event "slideshowChanged" which is triggered each time the slideshow is updated. In case the current image in
-              * the slideshow is not visible in the gallery anymore the gallery-carousel has to be updated as well!
-              */
-             _bindSlideshowNavigationListener : function () {
-                
-                var instance = this;
-                
-                $("#mp-content").on("slideshowChanged", function () {
-                   instance._checkSlider();
-                });
-             },
-             /**
-              * @private
               */
              _bindStartSlideshowListener : function () {
                 
@@ -414,13 +396,9 @@ define(["dojo/_base/declare",
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)
-                         ui.getSlideshow().navigateTo(instance._getIndexOfImage($el));
-                         communicator.publish("click:galleryThumb", instance._getIndexOfImage($el));
+                         instance.presenter.click(instance._getIndexOfImage($el));
                       }
                    });
-             },
+             }
           });
-          //     _instance = new GalleryView();
-          // //singleton
-          // return _instance;
        });

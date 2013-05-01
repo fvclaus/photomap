@@ -126,7 +126,7 @@ define([
            * @public
            * @summary Sets the description in the PhotoDescription and Description box (only if necessary)
            */
-          _updateTeaser : function (photo) {
+          _updateTeaser : function (model) {
              var shortDescription,
                  title = "Photo: " + model.getTitle(),
                  description = model.getDescription() || gettext("NO_DESCRIPTION");
