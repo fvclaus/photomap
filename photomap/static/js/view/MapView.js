@@ -63,6 +63,9 @@ define([
              this._create();
              communicator.subscribeOnce("init", this._init, this);
           },
+          getPresenter : function () {
+             return this.presenter;
+          },
           /**
            * @public
            * @summary Returns a object containing the absolute bottom and left position of the marker.
@@ -79,11 +82,6 @@ define([
              pixel.y += offset.top;
              pixel.x += offset.left;
              return {top : pixel.y, left : pixel.x};
-          },
-          insertMarker : function (model, open) {
-             
-             this.presenter.insertMarker(model, open);
-             
           },
           /**
            @public
@@ -134,23 +132,6 @@ define([
              assertTrue(event && callback, "input parameters event and callback must not be undefined");
 
              google.maps.event.addListener(marker.getImplementation(), event, callback);
-          },
-          /**
-           * @public
-           * @param {Marker} marker
-           */
-          triggerClickOnMarker : function (marker) {
-             this._triggerEventOnMarker(marker, "click");
-          },
-          /**
-           * @public
-           * @param {Marker} marker
-           */
-          triggerDblClickOnMarker : function (marker) {
-             this._triggerEventOnMarker(marker, "dblclick");
-          },
-          triggerMouseOverOnMarker : function (marker) {
-             this._triggerEventOnMarker(marker, "mouseover");
           },
           setZoom : function (level) {
 
@@ -257,6 +238,9 @@ define([
           createLatLng : function (lat, lng) {
              return new google.maps.LatLng(lat, lng);
           },
+          triggerEventOnMarker : function (marker, event) {
+             google.maps.event.trigger(marker.getImplementation(), event);
+          },
           //TODO this is a bit messy.. there must be a better way to do this!
           _init : function (data) {
              
@@ -329,12 +313,6 @@ define([
              this.map.fitBounds(newBounds);
           },
           /**
-           * @private
-           */
-          _triggerEventOnMarker : function (marker, event) {
-             google.maps.event.trigger(marker.getImplementation(), event);
-          },
-          /**
            * @description Initialize the google maps instance with streetview.
            * @private
            */
@@ -354,18 +332,11 @@ define([
           },
           _setMapCursor : function (style) {
              
-             var cursor;
-             
-             if (style) {
-                cursor = style;
-             } else if (main && main.getUIState) { //TODO what is this if clause supposed to check?
-                // if no style is defined -> cross on interactive pages, else grabber
-                cursor = "cross";
-             } else {
-                cursor = "move";
+             if (!style) {
+                style = "cross";
              }
              this.map.setOptions({
-                draggableCursor: cursor,
+                draggableCursor: style,
                 draggingCursor: "move"
              });
           },

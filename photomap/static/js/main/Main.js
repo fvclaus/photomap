@@ -54,7 +54,7 @@ define([
                 return this.clientServer;
              },
              getMap : function () {
-                return this.map;
+                return this.map.getPresenter();
              },
              getUI : function () {
                 return this.ui;

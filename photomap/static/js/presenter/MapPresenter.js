@@ -21,11 +21,37 @@ define(["dojo/_base/declare", "util/Communicator", "view/MarkerView", "ui/UIStat
                    }
                 }
              },
+             /**
+              * @public
+              * @param {Marker} marker
+              */
+             triggerClickOnMarker : function (marker) {
+                this.view.triggerEventOnMarker(marker, "click");
+             },
+             /**
+              * @public
+              * @param {Marker} marker
+              */
+             triggerDblClickOnMarker : function (marker) {
+                this.view.triggerEventOnMarker(marker, "dblclick");
+             },
+             triggerMouseOverOnMarker : function (marker) {
+                this.view.triggerEventOnMarker(marker, "mouseover");
+             },
              insertMarker : function (model, open) {
                 var marker = this.view.createMarker(model),
                    view = new MarkerView(this.view, marker, model);
                 
                 communicator.publish("insert:marker", {marker: view.getPresenter(), "open": open});
+             },
+             getPositionInPixel : function (element) {
+                return this.view.getPositionInPixel(element);
+             },
+             disable : function () {
+                this.view.disable();
+             },
+             enable : function () {
+                this.view.enable();
              },
              insertMarkers : function (models, handler) {
                 var instance = this;
