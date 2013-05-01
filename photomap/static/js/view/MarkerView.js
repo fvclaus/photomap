@@ -3,10 +3,10 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "presenter/MarkerPresenter"],
-       function (declare, MarkerPresenter) {
+define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
+       function (declare, View, MarkerPresenter) {
           
-          return declare(null,  {
+          return declare(View,  {
              constructor : function (map, marker, model) {
                 
                 this.map = map;

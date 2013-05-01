@@ -11,6 +11,7 @@
 
 define([
    "dojo/_base/declare",
+   "view/View",
    "view/PhotoCarouselView",
    "view/FullscreenView",
    "model/Photo",
@@ -20,8 +21,8 @@ define([
    "ui/UIState",
    "dojo/domReady!"
    ],
-    function (declare, PhotoCarouselView, FullscreenView, Photo, SlideshowPresenter, communicator, tools, state) {
-       return declare(null, {
+    function (declare, View, PhotoCarouselView, FullscreenView, Photo, SlideshowPresenter, communicator, tools, state) {
+       return declare(View, {
           constructor : function () {
              this.$container = $('#mp-slideshow');
              this.$inner = $("#mp-slideshow-image-wrapper");

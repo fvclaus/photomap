@@ -7,14 +7,15 @@
 
 define([
    "dojo/_base/declare",
+   "view/View",
    "presenter/ModelFunctionPresenter",
    "util/Communicator",
    "util/Tools",
    "util/ClientState",
    "ui/UIState"
    ],
-    function (declare, ModelFunctionPresenter, communicator, tools, clientstate, state) {
-       return  declare(null, {
+    function (declare, View, ModelFunctionPresenter, communicator, tools, clientstate, state) {
+       return  declare(View, {
           constructor : function () {
              this.$controls = $$(".mp-controls-wrapper");
              this.$controls.hide();

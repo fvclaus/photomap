@@ -10,6 +10,7 @@
 
 define([
    "dojo/_base/declare",
+   "view/View",
    "presenter/MapPresenter",
    "util/Communicator",
    "util/ClientState",
@@ -17,8 +18,8 @@ define([
    "ui/UIState",
    "dojo/domReady!"
    ],
-    function (declare, MapPresenter, communicator, clientstate, MarkerView, state) {
-       var MapView = declare(null, {
+    function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state) {
+       var MapView = declare(View, {
           constructor : function () {
              // google.maps.Map
              this.map = null;

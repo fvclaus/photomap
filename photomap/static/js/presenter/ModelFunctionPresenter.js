@@ -9,10 +9,10 @@
  */
 
 
-define(["dojo/_base/declare"],
-       function (declare) {
-          return declare(null, {
-             constructor : function (maxHeight) {
+define(["dojo/_base/declare", "presenter/Presenter"],
+       function (declare, Presenter) {
+          return declare(Presenter, {
+             constructor : function () {
 
                 this.currentContext = null;
 

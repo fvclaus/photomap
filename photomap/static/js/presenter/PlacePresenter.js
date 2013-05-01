@@ -3,10 +3,10 @@
 
 
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
-       function (declare, communicator, state) {
+define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UIState"],
+       function (declare, Presenter, communicator, state) {
 
-          return declare(null, {
+          return declare(Presenter, {
              constructor : function () {
                 communicator.subscribe("processed:photo", this._insertPhoto, this);
                 communicator.subscribe("delete:photo", this._deletePhoto, this);

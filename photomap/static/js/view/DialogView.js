@@ -16,9 +16,9 @@ $.extend($.ui.dialog.prototype.options, {
    closeOnEscape : false
 });
 
-define(["dojo/_base/declare", "view/DialogMessageView", "util/ClientState", "view/PhotoEditorView", "dojo/domReady!"], 
-   function (declare, DialogMessageView, clientstate, PhotoEditorView) {
-      return declare(null, {
+define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/ClientState", "view/PhotoEditorView", "dojo/domReady!"], 
+   function (declare, View, DialogMessageView, clientstate, PhotoEditorView) {
+      return declare(View, {
          constructor : function () {
             this.$dialog = $("#mp-dialog");
             this.width = this.$dialog.width();

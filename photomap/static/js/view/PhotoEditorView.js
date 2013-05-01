@@ -7,9 +7,9 @@ var UIPhotoEditor, instance, $orig, $preview, longest_side, canvas, context, $ca
 longest_side = 500;
 
 
-define(["dojo/_base/declare"],
-       function (declare) {
-          return declare(null, {
+define(["dojo/_base/declare", "view/View"],
+       function (declare, View) {
+          return declare(View, {
              constructor : function () {
                 this.PREVIEW_SELECTOR = "#ui-editor-preview";
                 this.ORIG_SELECTOR = "#ui-editor-original";

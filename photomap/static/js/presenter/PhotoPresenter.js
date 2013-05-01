@@ -2,9 +2,9 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "view/PhotoEditorView", "util/Communicator", "ui/UIState"], 
-       function (declare, PhotoEditorView, detailView, communicator, state) {
-          return declare(null, {
+define(["dojo/_base/declare", "presenter/Presenter", "view/PhotoEditorView", "util/Communicator", "ui/UIState"], 
+       function (declare, Presenter, PhotoEditorView, detailView, communicator, state) {
+          return declare(Presenter, {
              constructor : function () {
                 this.editor = new PhotoEditorView();
              },

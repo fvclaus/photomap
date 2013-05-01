@@ -11,6 +11,7 @@
 
 define([
    "dojo/_base/declare",
+   "view/View",
    "model/Photo",
    "model/Place",
    "model/Album",
@@ -19,8 +20,8 @@ define([
    "util/Tools",
    "ui/UIState"
    ],
-    function (declare, Photo, Place, Album, DetailPresenter, communicator, tools, state) {
-       return declare(null, {
+    function (declare, View, Photo, Place, Album, DetailPresenter, communicator, tools, state) {
+       return declare(View, {
           constructor : function () {
              this.$pageTitle = $("#mp-page-title h1");
              this.$explanationContainer = $("#mp-detail");

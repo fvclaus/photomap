@@ -8,9 +8,9 @@
  * @class Shows the feedback (success or failure) in DialogView
  */
 
-define(["dojo/_base/declare", "ui/UIState", "dojo/domReady!"], 
-   function (declare, state) {
-      return declare(null, {
+define(["dojo/_base/declare", "view/View", "ui/UIState", "dojo/domReady!"], 
+   function (declare, View, state) {
+      return declare(View, {
          constructor : function ($el) {
             this.$el = $el;
             this.$container = this.$el.find("#mp-dialog-message");

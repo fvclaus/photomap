@@ -2,10 +2,10 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "model/Photo", "ui/UIState", "view/StatusMessageView", "dojo/domReady!"], 
-       function (declare, Photo, state, statusMessage) {
+define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "view/StatusMessageView", "dojo/domReady!"], 
+       function (declare, View, Photo, state, statusMessage) {
           
-          return  declare(null, {
+          return  declare(View, {
              constructor : function () {
                 this.loaded = false;
                 this.carousel = null;

@@ -3,14 +3,9 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "util/Communicator"],
-       function (declare, communicator) {
-          return declare(null, {
-             constructor : function (view) {
-                
-                this.view = view;
-                
-             },
+define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
+       function (declare, Presenter, communicator) {
+          return declare(Presenter, {
              init : function () {
                 this.view.init();
              },

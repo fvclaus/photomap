@@ -4,12 +4,9 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "util/Communicator", "view/MarkerView", "ui/UIState"],
-       function (declare, communicator, MarkerView, state) {
-          return declare(null,  {
-             constructor : function (view) {
-                this.view = view;
-             },
+define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/MarkerView", "ui/UIState"],
+       function (declare, Presenter, communicator, MarkerView, state) {
+          return declare(Presenter,  {
              click : function (event) {
 
                 if (!main.getUI().isDisabled()) {

@@ -17,10 +17,10 @@
  * @param options.onUpdate Called after all photos are updated
  */
   
-define(["dojo/_base/declare", "model/Photo", "util/PhotoPages", "util/Tools"], 
-       function (declare, Photo, PhotoPages, tools) {
+define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "util/Tools"], 
+       function (declare, View, Photo, PhotoPages, tools) {
           
-          return declare (null, {
+          return declare (View, {
              constructor : function ($photos, photos, srcPropertyName, options) {
                 assertTrue($photos.size() > 0, "Can't build a Carousel without placeholder for photos.");
                 

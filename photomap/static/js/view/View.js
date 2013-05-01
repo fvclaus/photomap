@@ -3,6 +3,11 @@
 
 "use strict";
 
+/**
+ * @author Marc-Leon Römer
+ * @class Base class for all Presenter
+ */
+
 define(["dojo/_base/declare"],
        function (declare) {
           return declare(null, {
@@ -11,11 +16,8 @@ define(["dojo/_base/declare"],
                 
                 this.disabled = false;
              },
-             enable : function () {
-                this.disabled = false;
-             },
-             disable : function () {
-               this.disabled = true; 
+             setDisable : function (bool) {
+                this.disabled = bool;
              },
              isDisabled : function () {
                 return this.disabled;

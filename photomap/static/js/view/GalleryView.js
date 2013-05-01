@@ -10,6 +10,7 @@
  */
        
 define(["dojo/_base/declare",
+"view/View",
         "view/PhotoCarouselView",
         "view/FullGalleryView",
         "presenter/GalleryPresenter",
@@ -19,14 +20,14 @@ define(["dojo/_base/declare",
         "ui/UIState",
         "dojo/domReady!"
        ],
-       function (declare, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, clientstate, state) {
+       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, clientstate, state) {
 
 /**
  * @author Marc Roemer
  * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
  * @requires UICarousel
  */
-          return declare(null, {
+          return declare(View, {
              constructor : function () {
                 this.$container = $('#mp-gallery');
                 this.$inner = $('#mp-gallery-inner');

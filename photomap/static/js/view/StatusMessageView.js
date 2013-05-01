@@ -3,9 +3,9 @@
 "use strict";
 
 
-define(["dojo/_base/declare"], 
-       function (declare) {
-          return declare(null,  {
+define(["dojo/_base/declare", "view/View"], 
+       function (declare, View) {
+          return declare(View,  {
              constructor : function () {
                 this.$container = $("#mp-status-message");
                 this.$message = this.$container.find("strong");

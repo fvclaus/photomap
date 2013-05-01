@@ -8,9 +8,9 @@
  * @description Displays current slideshow-image as fullscreen, supports zooming into the image
  */
 
-define(["dojo/_base/declare", "model/Photo", "ui/UIState", "dojo/domReady!"], 
-   function (declare, Photo, state) {
-      return declare(null, {
+define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/domReady!"], 
+   function (declare, View, Photo, state) {
+      return declare(View, {
          constructor : function (slideshow) {
 
             this.slideshow = slideshow;

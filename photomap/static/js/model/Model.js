@@ -3,11 +3,10 @@
 
 "use strict";
 
-/*
+/**
  * @author Marc-Leon Römer
  * @class Base class for all models
  */
-
 
 define(["dojo/_base/declare"],
        function (declare) {
@@ -24,8 +23,14 @@ define(["dojo/_base/declare"],
              getTitle : function () {
                 return this.title;
              },
+             setTitle : function (title) {
+                this.title = title;
+             },
              getDescription : function () {
                 return this.description;
+             },
+             setDescription : function (description) {
+                this.description = description;
              },
              /**
               * @public
@@ -40,6 +45,14 @@ define(["dojo/_base/declare"],
               */
              getId : function () {
                 return this.id;
+             },
+             equals : function (other) {
+                //TODO how does the instanceof check work with Dojo?
+                if (other instanceof this.constructor) {
+                   return other.id === this.id;
+                } else {
+                   return false;
+                }
              }
           });
        });
