@@ -31,7 +31,7 @@ define([
 
              assertTrue(this.$delete.size() > 0 && this.$update.size() > 0);
 
-             this.presenter = new ModelFunctionPresenter();
+             this.presenter = new ModelFunctionPresenter(this);
              
              communicator.subscribeOnce("init", this._init, this);
           },

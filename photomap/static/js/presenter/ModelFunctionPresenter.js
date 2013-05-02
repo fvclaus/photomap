@@ -12,10 +12,8 @@
 define(["dojo/_base/declare", "presenter/Presenter"],
        function (declare, Presenter) {
           return declare(Presenter, {
-             constructor : function () {
-
+             constructor : function (view) {
                 this.currentContext = null;
-
              },
              setCurrentContext : function (context) {
                 console.log("MFP setCurrentContext");
@@ -27,7 +25,7 @@ define(["dojo/_base/declare", "presenter/Presenter"],
               */
              update : function (event) {
                   
-                if (!main.getUI().isDisabled()) {
+                if (!this.view.isDisabled()) {
                   this.currentContext.update(event);
                 }
              },
@@ -37,7 +35,7 @@ define(["dojo/_base/declare", "presenter/Presenter"],
               */
              "delete" : function (event) {
      
-                if (!main.getUI().isDisabled()) {
+                if (!this.view.isDisabled()) {
                    this.currentContext.delete(event);
                 }
              },
@@ -46,7 +44,7 @@ define(["dojo/_base/declare", "presenter/Presenter"],
               */
              share : function (event) {
 
-                if (!main.getUI().isDisabled()) {
+                if (!this.view.isDisabled()) {
                    this.currentContext.share();
                 }
              }

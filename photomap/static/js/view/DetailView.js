@@ -45,9 +45,6 @@ define([
              this.presenter = new DetailPresenter(this);
             
           },
-          getPresenter : function () {
-             return this.presenter;
-          },
           /**
            * @public
            * @description This will show the details or the teaser for the details of the model in question.
@@ -165,7 +162,7 @@ define([
 
              this.$teaserContainer.on("click", ".mp-open-full-description", function (event) {
                 
-                if (!main.getUI().isDisabled()) {
+                if (!instance.isDisabled()) {
                    // there is a open explanation link which means the description did not fit into the teaser completely
                    // update the explanation so it shows the photos description
                    // this is necessary because the user might have looked at a description of a place or album
@@ -175,7 +172,7 @@ define([
                 }
              });
              $(".mp-close-full-description").on("click", function (event) {
-                if (!main.getUI().isDisabled()) {
+                if (!instance.isDisabled()) {
                    instance.hideDetail();
                 }
              });
@@ -187,7 +184,7 @@ define([
              
              this.$pageTitle.on('click', function () {
 
-                if (!main.getUI().isDisabled()) {
+                if (!instance.isDisabled()) {
                    instance.update(state.getCurrentLoadedAlbum());
                 }
              });

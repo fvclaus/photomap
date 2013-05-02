@@ -15,6 +15,11 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              constructor : function () {
                 
                 communicator.subscribeOnce("init", this._init);
+                communicator.subscribe("load:dialog", this._dialogLoad);
+                communicator.subscribe({
+                   "enable:ui": this._uiEnable,
+                   "disable:ui": this._uiDisable
+                }, this);
                 
                 communicator.subscribe({
                    "mouseover:marker": this._markerMouseover,
@@ -28,7 +33,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 communicator.subscribe("processed:album processed:place processed:photo", this._modelInsert);
                 
                 communicator.subscribe("change:usedSpace", this._usedSpaceUpdate);
-                communicator.subscribe("load:dialog", this._dialogLoad)
                 
                 if (state.isAlbumView()) {
                    
@@ -40,13 +44,13 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    
                    communicator.subscribe({
                       "beforeLoad:slideshow": this._slideshowBeforeLoad,
-                      "update:slideshow": this._slideshowUpdate
+                      "update:slideshow": this._slideshowUpdate,
+                      "enable:slideshow": this._slideshowEnable,
+                      "disable:slideshow": this._slideshowDisable
                    });
                    
                    communicator.subscribe("open:place", this._placeOpen);
                 }
-                
-                
              },
              _init : function () {
                 main.getUI().getInformation().init();
@@ -56,6 +60,57 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    main.getUI().getGallery().init();
                    main.getUI().getSlideshow().init();
                 }
+             },
+             _uiEnable : function () {
+                this._setUIDisabled(false);
+             },
+             _uiDisable : function () {
+                this._setUIDisabled(true);
+             },
+             _setUIDisabled : function (disable) {
+                assertTrue(disable !== undefined, "disable mustn't be undefined");
+                
+                var ui = main.getUI(),
+                    markers = state.getMarkers();
+                    
+                ui.getGallery().setDisabled(disable);
+                ui.getSlideshow().setDisabled(disable);
+                ui.getControls().setDisabled(disable);
+                ui.getInformation().setDisabled(disable);
+                main.getMap().setDisabled(disable);
+                $.each(markers, function (index, marker) {
+                      marker.setDisabled(disable);
+                });
+                
+                if (!disable) {
+                   this._enableLinks();
+                } else {
+                   this._disableLinks();
+                }
+             },
+             _slideshowDisable : function () {
+                main.getUI().getSlideshow().setDisabled(true);
+             },
+             _slideshowEnable : function () {
+                main.getUI().getSlideshow().setDisabled(false);
+             },
+             _disableLinks : function () {
+               
+                 $("a, .mp-control").css({
+                    cursor: "not-allowed"
+                 });
+                 $("a").on("click.Disabled", function (event) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                 }); 
+             },
+             _enableLinks : function () {
+                 
+                 console.log("in _enableLinks");
+                 $("a, .mp-control").css({
+                    cursor: ""
+                 });
+                 $("a").off(".Disabled");
              },
              _dialogLoad : function (options) {
                 main.getUI().getInput().show(options);
@@ -67,6 +122,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 main.getUI().getControls().hide(true);
              },
              _galleryThumbClick : function (photo) {
+                main.getUI().getControls().hide(false);
                 main.getUI().getSlideshow().navigateTo(photo);
              },
              _markerMouseover : function (context) {

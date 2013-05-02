@@ -210,47 +210,39 @@ define([
               //    $("body, a, .mp-logo img").css("cursor", "");
               // },
               //TODO see .enable().. 
-              disable : function () {
-                 var models = this._getModels();
-
-                 this._isDisabled = true;
-                 models.forEach(function (model) {
-                    //model.showDisabledIcon();
-                    //model.setCursor("not-allowed");
-                 });
-                 $("a, .mp-control").css({
-                    //         opacity: 0.4,
-                    cursor: "not-allowed"
-                 });
-                 $("a").on("click.Disabled", function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                 });
-                 main.getMap().disable();
-              },
-              isDisabled : function () {
-                 return this._isDisabled;
-              },
-              //TODO This has to be done with events
-              //TODO Also there mustn't be any manipulation of the models.. ui-dis/enabling may just(!) affect the views!
-              enable : function () {
-                 var models = this._getModels();
-
-                 this._isDisabled = false;
-                 models.forEach(function (model) {
-                    //model.checkIconStatus(); //TODO this is done in MarkerPresenter now
-                    //model.setCursor(""); //TODO this is done in MarkerPresenter now
-                 });
-                 $("a, .mp-control").css({
-                    //         opacity: 1,
-                    cursor: ""
-                 });
-                 $("a").off(".Disabled");
-                 main.getMap().enable();
-              },
-              _getModels : function () {
-                 return (this.state.isAlbumView())? this.state.getPlaces() : this.state.getAlbums();
-              }
+              // disable : function () {
+                 // var models = this._getModels();
+// 
+                 // this._isDisabled = true;
+                 // models.forEach(function (model) {
+                    // //model.showDisabledIcon();
+                    // //model.setCursor("not-allowed");
+                 // });
+                 // main.getMap().disable();
+              // },
+              // isDisabled : function () {
+                 // return this._isDisabled;
+              // },
+              // //TODO This has to be done with events
+              // //TODO Also there mustn't be any manipulation of the models.. ui-dis/enabling may just(!) affect the views!
+              // enable : function () {
+                 // var models = this._getModels();
+// 
+                 // this._isDisabled = false;
+                 // models.forEach(function (model) {
+                    // //model.checkIconStatus(); //TODO this is done in MarkerPresenter now
+                    // //model.setCursor(""); //TODO this is done in MarkerPresenter now
+                 // });
+                 // $("a, .mp-control").css({
+                    // //         opacity: 1,
+                    // cursor: ""
+                 // });
+                 // $("a").off(".Disabled");
+                 // main.getMap().enable();
+              // },
+              // _getModels : function () {
+                 // return (this.state.isAlbumView())? this.state.getPlaces() : this.state.getAlbums();
+              // }
            }),
                _instance = new UI();
            // singleton

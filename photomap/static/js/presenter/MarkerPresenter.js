@@ -20,7 +20,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 this.view.hide();
              },
              mouseOver : function () {
-                if (!main.getUI().isDisabled()) {
+                if (!this.view.isDisabled()) {
                    communicator.publish("mouseover:marker", this);
                 }
              },
@@ -30,17 +30,21 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 communicator.publish("mouseout:marker");
              },
              dblClick : function () {
-                this.open();
+                if (!this.view.isDisabled()) {
+                  this.open();
+                }
              },
              click : function () {
                 
-                if (state.isDashboardView()) {
-                   state.setCurrentAlbum(this.model);
-                   state.setCurrentLoadedAlbum(this.model);
-                } else if (state.isAlbumView()) {
-                   state.setCurrentPlace(this.model);
+                if (!this.view.isDisabled()) {
+                   if (state.isDashboardView()) {
+                      state.setCurrentAlbum(this.model);
+                      state.setCurrentLoadedAlbum(this.model);
+                   } else if (state.isAlbumView()) {
+                      state.setCurrentPlace(this.model);
+                   }
+                   communicator.publish("click:marker", this.model);
                 }
-                communicator.publish("click:marker", this.model);
              },
              update : function () {
                  var model = this.model.getModelType().toLowerCase(),
@@ -104,14 +108,14 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
               },
               checkIconStatus : function () {
                  
-                 if (state.isDashboardView()) {
+                 if (this.model.getModelType() === "Album") {
                     
                     this.showVisitedIcon();
                     
-                 } else if (state.isAlbumView()) {
+                 } else if (this.model.getModelType() === "Place") {
                     
                     var visited = true;
-                    this.photos.forEach(function (photo) {
+                    this.model.getPhotos().forEach(function (photo) {
                        visited = visited && photo.visited;
                     });
     
@@ -124,6 +128,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     }
                  }
                  
+              },
+              setCursor : function (style) {
+                 this.view.setCursor(style);
               },
               showVisitedIcon : function () {
                  this.view.setOption({icon: PLACE_VISITED_ICON});
@@ -158,12 +165,12 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              open : function () {
                 
                 // switch to albumview if album is opened
-                if (state.isDashboardView()) {
+                if (this.model.getModelType() === "Album") {
                    
                    window.location.href = '/album/view/' + this.model.getSecret() + '-' + this.model.getId();
                    
                 // reset ui and (re)start gallery when place is opened
-                } else if (state.isAlbumView()) {
+                } else if (this.model.getModelType() === "Place") {
                     
                    var oldPlace = state.getCurrentLoadedPlace();
                    

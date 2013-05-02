@@ -24,28 +24,13 @@ define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
              getOrder : function () {
                 return this.order;
              },
-             checkBorder : function () {
-                //need reselection because anchors change
-                if (this.visited) {
-                   $("img[src='" + this.thumb + "']").addClass("visited");
-                }
-             },
-             showBorder : function (bool) {
+             setVisited : function (bool) {
                 this.visited = bool;
                 clientstate.addPhoto(this.id);
-                this.checkBorder();
              },
-             triggerClick : function () {
-                this.openPhoto();
-             },
-             openPhoto : function () {
-                state.setCurrentLoadedPhoto(this);
-                //TODO events?
-                var instance = this; 
-
-                main.getUI().getGallery().triggerClickOnPhoto(instance);
+             isVisited : function () {
+                return this.visited;
              }
-             
           });
        });
 

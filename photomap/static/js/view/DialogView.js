@@ -16,8 +16,8 @@ $.extend($.ui.dialog.prototype.options, {
    closeOnEscape : false
 });
 
-define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/ClientState", "view/PhotoEditorView", "dojo/domReady!"], 
-   function (declare, View, DialogMessageView, clientstate, PhotoEditorView) {
+define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/ClientState", "view/PhotoEditorView", "util/Communicator", "dojo/domReady!"], 
+   function (declare, View, DialogMessageView, clientstate, PhotoEditorView, communicator) {
       return declare(View, {
          constructor : function () {
             this.$dialog = $("#mp-dialog");
@@ -47,7 +47,7 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
       
             this.$dialog.dialog("option",{
                close: function () {
-                  main.getUI().enable();
+                  communicator.publish("enable:ui");
                   instance.$dialog.empty();
                   instance.$dialog.dialog("destroy");
                   instance.setVisibility(false);
@@ -123,8 +123,7 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
             this.$dialog.dialog({
                //this can only be called here, because we must create the dialog here
                create: function (event, ui) {
-                  main.getUI().disable();
-      
+                  communicator.publish("disable:ui");
                },
                "title": title,
                //TODO height is a messy business. height includes the title bar (wtf?!)

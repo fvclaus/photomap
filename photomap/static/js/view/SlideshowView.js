@@ -45,9 +45,6 @@ define([
              this._isDisabled = true;
              
           },
-          getPresenter : function () {
-             return this.presenter;
-          },
           /**
            * @description starts slideshow by initialising and starting the carousel (with given index)
            */
@@ -125,14 +122,6 @@ define([
                 this.carousel.navigateTo(index);
              }
           },
-          /**
-           * @public
-           * @description This is used to check if the Slideshow is still loading or updating the currentPhoto.
-           * This is also used by the frontend test to 'wait'.
-           */
-          isDisabled : function () {
-             return this._isDisabled; //|| main.getUI().isDisabled();
-          },
           init : function () {
              var instance = this;
              
@@ -197,7 +186,7 @@ define([
                 this._updatePhotoNumber();
              }
              communicator.publish("update:slideshow", photo);
-             this._enable();
+             communicator.publish("enable:slideshow");
           },
           /**
            * @private
@@ -209,7 +198,8 @@ define([
              // trigger event to tell UI that slideshow is about to change
              // @see UIInformation 
              communicator.publish("beforeLoad:slideshow");
-             this._disable();
+             communicator.publish("disable:slideshow");
+             
              $photos.each(function () {
                 $(this)
                    .hide()
@@ -235,8 +225,7 @@ define([
            * @private
            * @description Disable Slideshow, e.g beforeLoad
            */
-          _disable : function () {
-             this._isDisabled = true;
+          disable : function () {
              // need to indicate ready status to frontend tests
              this.$ready.hide();
           },
@@ -244,8 +233,7 @@ define([
            * @private
            * @description Enable Slideshow, e.g after update
            */
-          _enable : function () {
-             this._isDisabled = false;
+          enable : function () {
              // need to indicate ready status to frontend tests
              this.$ready.show();
           },
@@ -265,7 +253,7 @@ define([
                  currentIndex = -1;
              // if it is the only (empty) page the entry is null
              if (imageSources.length > 0) {
-                currentPhoto = main.getTools().getObjectByKey("photo", this.$image.attr("src"), photos);
+                currentPhoto = tools.getObjectByKey("photo", this.$image.attr("src"), photos);
                 currentIndex = $.inArray(currentPhoto, photos);
                 state.setCurrentLoadedPhoto(currentPhoto);
                 state.setCurrentLoadedPhotoIndex(currentIndex);

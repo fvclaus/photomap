@@ -95,7 +95,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "view/St
                    assertString(photo.title, "photo title has to be a string");
                 });
 
-                main.getUI().getInput().show({
+                communicator.publish("load:dialog", {
                    load : function () {
                       $("input[name='photos']").val(JSON.stringify(photos));
                    },
@@ -134,7 +134,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "view/St
                     instance = this;
                 
                 $(".mp-sortable-tile").on("click.UIDisabled", function () {
-                   if (main.getUI().isDisabled()) {
+                   if (instance.isDisabled()) {
                       return false;
                    }
                 });

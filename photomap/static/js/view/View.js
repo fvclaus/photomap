@@ -16,7 +16,7 @@ define(["dojo/_base/declare"],
                 
                 this.disabled = false;
              },
-             setDisable : function (bool) {
+             setDisabled : function (bool) {
                 this.disabled = bool;
              },
              isDisabled : function () {

@@ -20,9 +20,6 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
              getMap : function () {
                return this.map; 
              },
-             getPresenter : function () {
-                return this.presenter;
-             },
              /**
               * @public
               * @description Shows the Marker on the Map
@@ -36,6 +33,14 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
               */
              hide : function () {
                 this.marker.setVisible(false);
+             },
+             enable : function () {
+                this.presenter.checkIconStatus();
+                this.setCursor("");
+             },
+             disable : function () {
+                this.presenter.showDisabledIcon();
+                this.setCursor("not-allowed");
              },
              activate : function () {
                 this.active = true;

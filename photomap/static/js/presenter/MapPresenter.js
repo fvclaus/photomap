@@ -44,12 +44,6 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
              getPositionInPixel : function (element) {
                 return this.view.getPositionInPixel(element);
              },
-             disable : function () {
-                this.view.disable();
-             },
-             enable : function () {
-                this.view.enable();
-             },
              insertMarkers : function (models, handler) {
                 var instance = this;
                 

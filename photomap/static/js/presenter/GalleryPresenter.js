@@ -11,13 +11,17 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              },
              mouseEnter : function ($el, photo) {
                 this.model = photo;
-                communicator.publish("mouseenter:galleryThumb", {context: this, element: $el});
+                if (!this.view.isDisabled()) {
+                  communicator.publish("mouseenter:galleryThumb", {context: this, element: $el});
+                }
              },
              mouseLeave : function () {
                 communicator.publish("mouseleave:galleryThumb");
              },
              click : function (photo) {
-                communicator.publish("click:galleryThumb", photo);
+                if (!this.view.isDisabled()) {
+                  communicator.publish("click:galleryThumb", photo);
+                }
              },
              checkSlider : function () {
                 this.view.checkSlider();

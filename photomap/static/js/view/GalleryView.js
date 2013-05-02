@@ -36,7 +36,7 @@ define(["dojo/_base/declare",
                 this.$navLeft = $("#mp-gallery-nav-left");
                 this.$navRight = $("#mp-gallery-nav-right");
                 this.$photos = this.$thumbs.find(".mp-thumb");
-                
+                this.$containerColumn = $("#mp-left-column");
 
                 this.$isEmpty = $("#mp-gallery-no-image");
                 this.$isNotStarted = $("#mp-gallery-not-started");
@@ -60,9 +60,6 @@ define(["dojo/_base/declare",
                 this.presenter = new GalleryPresenter(this);
 
              },
-             getPresenter : function () {
-                return this.presenter;
-             },
              /**
               * Triggers a click on the photo. Bypasses every listener, because they might be disabled
               */
@@ -70,7 +67,7 @@ define(["dojo/_base/declare",
                 var $image = this.$photos.filter("[src='" + photo.thumb + "']"),
                     index = this._getIndexOfImage($image);
                 if (index !== -1) {
-                   main.getUI().getSlideshow().navigateTo(index);
+                   this.presenter.click(index);
                 } else {
                    console.log("Could not find photo %s in UIGallery. Maybe it is not loaded yet", photo.photo);
                 }
@@ -81,8 +78,7 @@ define(["dojo/_base/declare",
              start : function (photos) {
                 assert(this.isStarted, false, "gallery must not be started yet");
                 
-                var ui = main.getUI(),
-                    options,
+                var options,
                     instance = this,
                     imageSources = [];
 
@@ -111,7 +107,7 @@ define(["dojo/_base/declare",
 
                 // disable ui while loading & show loader
                 state.setAlbumLoading(true);
-                ui.disable();
+                communicator.publish("disable:ui");
                 // ui.showLoading();
                 this.carousel.start();
 
@@ -194,7 +190,7 @@ define(["dojo/_base/declare",
              /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
               */
-             _checkSlider : function () {
+             checkSlider : function () {
                 
                 var currentIndex = state.getCurrentLoadedPhotoIndex(),
                     minIndex = this._getIndexOfFirstThumbnail(),
@@ -228,9 +224,8 @@ define(["dojo/_base/declare",
                       .siblings(".mp-gallery-loader")
                       .addClass("mp-nodisplay");
                 });
-                var ui = main.getUI();
                 //enable ui
-                ui.enable();
+                communicator.publish("enable:ui");
              },
              /**
               * @private
@@ -244,7 +239,7 @@ define(["dojo/_base/declare",
                    }
                    // warning: this will enable the UIGallery without the UISlideshow even started 'loading'. Quite shacky :)
                    //TODO maybe we should disable UIGallery/Slideshow/Fullscreen all at once. This make testing alot easier and the user won't even notice it
-                   this.currentPhoto.openPhoto();
+                   this.triggerClickOnPhoto(this.currentPhoto);
                    this.currentPhoto = null;
                    this.showTeaser = false;
 
@@ -291,18 +286,17 @@ define(["dojo/_base/declare",
              
              _bindNavigationListener : function () {
                 
-                var ui = main.getUI(),
-                    instance = this;
+                var instance = this;
                 
                 this.$navLeft.on("click", function () {
                    
-                   if (!ui.isDisabled()) {
+                   if (!instance.isDisabled()) {
                       instance.carousel.navigateLeft();
                    }
                 });
                 this.$navRight.on("click", function () {
                    
-                   if (!ui.isDisabled()) {
+                   if (!instance.isDisabled()) {
                       instance.carousel.navigateRight();
                    }
                 });
@@ -310,19 +304,19 @@ define(["dojo/_base/declare",
              
              _bindListener : function () {
 
-                var ui = main.getUI(),
-                    authorized = clientstate.isAdmin(),
+                var authorized = clientstate.isAdmin(),
                     photo = null,
                     instance = this;
                 
                 
-                // this is triggered by the fullgallery
-                $(ui).on("photosOrderUpdate.mp", function (place) {
-                   if (place === state.getCurrentLoadedPlace()) {
-                      instance.isDirty = true;
-                      instance.$dirtyWarning.removeClass("mp-nodisplay");
-                   }
-                });
+                //TODO this is not used atm, if it is actually needed please use AppController + Communicator + GalleryPresenter for the trigger/listen/handle chain
+                // // this is triggered by the fullgallery
+                // $(ui).on("photosOrderUpdate.mp", function (place) {
+                   // if (place === state.getCurrentLoadedPlace()) {
+                      // instance.isDirty = true;
+                      // instance.$dirtyWarning.removeClass("mp-nodisplay");
+                   // }
+                // });
 
                 //bind events on anchors
                 // bind them to thumbs in the Gallery & FullGallery
@@ -330,7 +324,7 @@ define(["dojo/_base/declare",
                    .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
                       var $el = $(this);
                       
-                      if (!ui.isDisabled()) {
+                      if (!instance.isDisabled()) {
                          
                          photo = $.grep(state.getPhotos(), function (e, i) {
                             return e.thumb === $el.attr("src");
@@ -345,7 +339,7 @@ define(["dojo/_base/declare",
                    .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
                       var $el = $(this);
                       
-                      if (!ui.isDisabled()) {
+                      if (!instance.isDisabled()) {
                          
                          if (authorized) {
                             instance.presenter.mouseLeave();
@@ -355,13 +349,13 @@ define(["dojo/_base/declare",
 
                 $(".mp-open-full-gallery").on("click", function (event) {
                    
-                   if (!main.getUI().isDisabled()) {
+                   if (!instance.isDisabled()) {
                       instance.fullGallery.start();
                    }
                 });
                 $(".mp-close-full-left-column").on("click", function (event) {
                    
-                   if (!main.getUI().isDisabled()) {
+                   if (!instance.isDisabled()) {
                       instance.fullGallery.destroy();
                    }
                 });
@@ -382,18 +376,14 @@ define(["dojo/_base/declare",
               */
              _bindStartSlideshowListener : function () {
                 
-                var ui = main.getUI(),
-                    instance = this;
+                var instance = this;
                 
-                //TODO move this selector in the constructor
-                $(".mp-left-column")
-                //TODO the .on selectors should be moved to a central location
+                this.$containerColumn
                    .on('click.Gallery', ".mp-gallery-tile, .mp-sortable-tile", function (event) {
                       
                       var $el = $(this).children();
                       
-                      if (!ui.isDisabled()) {
-                         ui.getControls().hide(false);
+                      if (!instance.isDisabled()) {
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)

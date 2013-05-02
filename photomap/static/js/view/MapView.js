@@ -64,9 +64,6 @@ define([
              this._create();
              communicator.subscribeOnce("init", this._init, this);
           },
-          getPresenter : function () {
-             return this.presenter;
-          },
           /**
            * @public
            * @summary Returns a object containing the absolute bottom and left position of the marker.
