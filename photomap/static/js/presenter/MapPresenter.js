@@ -66,11 +66,10 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
              },
              _insert : function (event, model) {
                  var instance = this,
-                     input = main.getUI().getInput(),
                      lat = event.lat,
                      lng = event.lng;
 
-                 input.show({
+                 communicator.publish("load:dialog", {
                     load : function () {
                        $("input[name=lat]").val(lat);
                        $("input[name=lon]").val(lng);

@@ -24,11 +24,11 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 });
                 
                 communicator.subscribe("change:photo change:place change:album", this._modelUpdate);
-                communicator.subscribe("change:usedSpace", this._usedSpaceUpdate);
-               
                 communicator.subscribe("delete:photo delete:place delete:album", this._modelDelete);
-                
                 communicator.subscribe("processed:album processed:place processed:photo", this._modelInsert);
+                
+                communicator.subscribe("change:usedSpace", this._usedSpaceUpdate);
+                communicator.subscribe("load:dialog", this._dialogLoad)
                 
                 if (state.isAlbumView()) {
                    
@@ -38,15 +38,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                       "click:galleryThumb": this._galleryThumbClick
                    });
                    
-                   communicator.subscribe("beforeLoad:slideshow", this._slideshowBeforeLoad);
-                   communicator.subscribe("update:slideshow", this._slideshowUpdate);
+                   communicator.subscribe({
+                      "beforeLoad:slideshow": this._slideshowBeforeLoad,
+                      "update:slideshow": this._slideshowUpdate
+                   });
                    
                    communicator.subscribe("open:place", this._placeOpen);
-                   
-                   communicator.subscribe({
-                      "delete:place": this._placeDelete,
-                      "delete:photo": this._photoDelete
-                   });
                 }
                 
                 
@@ -60,6 +57,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    main.getUI().getSlideshow().init();
                 }
              },
+             _dialogLoad : function (options) {
+                main.getUI().getInput().show(options);
+             },
              _galleryThumbMouseenter : function (data) {
                 main.getUI().getControls().showPhotoControls(data);
              },
@@ -70,7 +70,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 main.getUI().getSlideshow().navigateTo(photo);
              },
              _markerMouseover : function (context) {
-                main.getUI().getControls().show(context);
+                main.getUI().getControls().show({
+                   "context": context,
+                   pixel: main.getMap().getPositionInPixel(context)
+                });
              },
              _markerMouseout : function () {
                 main.getUI().getControls().hide(true);

@@ -43,11 +43,10 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 communicator.publish("click:marker", this.model);
              },
              update : function () {
-                 var input = main.getUI().getInput(),
-                     model = this.model.getModelType().toLowerCase(),
+                 var model = this.model.getModelType().toLowerCase(),
                      instance = this;
 
-                 input.show({
+                 communicator.publish("load:dialog", {
                     load : function () {
                        $("input[name=id]").val(instance.model.getId());
                        this.$title = $("input[name=title]").val(instance.model.getTitle());
@@ -68,11 +67,10 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                  });
               },
               "delete" : function () {
-                var input = main.getUI().getInput(),
-                    model = this.model.getModelType().toLowerCase(),
+                var model = this.model.getModelType().toLowerCase(),
                     instance = this;
                     
-                input.show({
+                communicator.publish("load:dialog", {
                    type : CONFIRM_DIALOG,
                    load : function () {
                       $("input[name='id']").val(instance.model.getId());
@@ -86,11 +84,10 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 });
              },
              share : function () {
-                 var input = main.getUI().getInput(),
-                     model = this.model.getModelType().toLowerCase(),
+                 var model = this.model.getModelType().toLowerCase(),
                      instance = this;
 
-                 input.show({
+                 communicator.publish("load:dialog", {
                     url : "/update-album-password",
                     load : function () {
                        $("input[name='album']").val(instance.model.getId());

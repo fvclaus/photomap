@@ -57,6 +57,61 @@ define([
              }
              this._showMarkerControls(center);
           },
+          /**
+           * @description This is used to select the model the user wants to change and to show the controls
+           * @param {Album,Place} instance
+           * @private
+           */
+          show : function (data) {
+             var instance = this;
+             //TODO there is a circular reference place -> infomarker -> markerpresenter -> modelfunctionview -> modelfunctionpresenter -> place
+             require(["model/Photo", "model/Place", "model/Album"],
+                     function (Photo, Place, Album) {
+                        assertTrue(data.context.getModel() instanceof Album || data.context.getModel() instanceof Place, "input parameter element must be instance of Album or Place");
+                        var projection, markerSize, mapOffset;
+                        
+                        // set the context for the Controls-Dialog (current Album, Place, Photo)                           
+                        instance.presenter.setCurrentContext(data.context);
+
+                        markerSize = data.context.getView().getSize();
+                        // this happens when the Icon representing the Marker is not loaded yet
+                        // this should only happen during frontend tests
+                        if (markerSize === undefined) {
+                           //TODO find a better way to do this
+                           markerSize = { width : 18 }; 
+                        }
+
+                        // center box under marker
+                        data.pixel.left += markerSize.width / 2;
+                        data.pixel.top *= 1.01;
+                        // show controls
+                        // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
+                        instance._showMarkerControls(data.pixel);
+                     });
+          },
+
+          /**
+           * @description hides the modify controls
+           * @param {Boolean} timeout if the controls should be hidden after a predefined timout, when the controls are not entered
+           * @private
+           */
+          hide : function (timeout) {
+             
+             var instance = this, hide;
+             
+             hide = function () {
+                if (instance.$controls.isEntered) {
+                   return;
+                }
+                instance.$controls.hide();
+             };
+
+             if (timeout) {
+                this.hideControlsTimeoutId = window.setTimeout(hide, 2000);
+             } else {
+                this.$controls.hide();
+             }
+          },
           _init : function () {
 
              if (state.isDashboardView() || (state.isAlbumView() && clientstate.isAdmin())) {
@@ -97,62 +152,6 @@ define([
                 display : "inline-block"
              });
              // .show();
-          },
-          /**
-           * @description This is used to select the model the user wants to change and to show the controls
-           * @param {Album,Place} instance
-           * @private
-           */
-          show : function (context) {
-             var instance = this;
-             //TODO there is a circular reference place -> infomarker -> markerpresenter -> modelfunctionview -> modelfunctionpresenter -> place
-             require(["model/Photo", "model/Place", "model/Album"],
-                     function (Photo, Place, Album) {
-                        assertTrue(context.getModel() instanceof Album || context.getModel() instanceof Place, "input parameter element must be instance of Album or Place");
-                        var projection, pixel, markerSize, mapOffset;
-                        
-                        // set the context for the Controls-Dialog (current Album, Place, Photo)                           
-                        instance.presenter.setCurrentContext(context);
-
-                        // gets the absolute pixel position
-                        pixel = main.getMap().getPositionInPixel(context);
-                        markerSize = context.getView().getSize();
-                        // this happens when the Icon representing the Marker is not loaded yet
-                        // this should only happen during frontend tests
-                        if (markerSize === undefined) {
-                           //TODO find a better way to do this
-                           markerSize = { width : 18 }; 
-                        }
-
-                        // center box under marker
-                        pixel.left += markerSize.width / 2;
-                        // show controls
-                        // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
-                        instance._showMarkerControls(pixel);
-                     });
-          },
-
-          /**
-           * @description hides the modify controls
-           * @param {Boolean} timeout if the controls should be hidden after a predefined timout, when the controls are not entered
-           * @private
-           */
-          hide : function (timeout) {
-             
-             var instance = this, hide;
-             
-             hide = function () {
-                if (instance.$controls.isEntered) {
-                   return;
-                }
-                instance.$controls.hide();
-             };
-
-             if (timeout) {
-                this.hideControlsTimeoutId = window.setTimeout(hide, 2000);
-             } else {
-                this.$controls.hide();
-             }
           },
           /**
            * @private

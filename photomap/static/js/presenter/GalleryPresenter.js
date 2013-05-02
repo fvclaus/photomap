@@ -42,12 +42,11 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              },
              insert : function () {
                 var instance = this,
-                    input = main.getUI().getInput(),
                     place = state.getCurrentLoadedPlace();
 
                 // if-clause to prevent method from being executed if there are no places yet
                 if (state.getPlaces().length !== 0) {
-                   input.show({
+                   communicator.publish("load:dialog", {
                       load : function () {      
                          $("#insert-photo-tabs").tabs();
                          $("input[name='place']").val(place.getId());
@@ -80,11 +79,10 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 }
              },
              update : function () {
-                var input = main.getUI().getInput(),
-                    model = this.model.getModelType().toLowerCase(),
+                var model = this.model.getModelType().toLowerCase(),
                     instance = this;
 
-                input.show({
+                communicator.publish("load:dialog", {
                    load : function () {
                       //prefill with values from selected picture
                       $("input[name=id]").val(instance.model.getId());
@@ -107,11 +105,10 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 });
              },
              "delete" : function () {
-                var input = main.getUI().getInput(),
-                    model = this.model.getModelType().toLowerCase(),
+                var model = this.model.getModelType().toLowerCase(),
                     instance = this;
                     
-                input.show({
+                communicator.publish("load:dialog", {
                    type : CONFIRM_DIALOG,
                    load : function () {
                       $("input[name='id']").val(instance.model.getId());
