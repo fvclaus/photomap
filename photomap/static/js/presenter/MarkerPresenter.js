@@ -36,6 +36,11 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              },
              click : function () {
                 
+                var instance = this,
+                    publish = function () {
+                       communicator.publish('click:marker', instance);
+                       };
+                
                 if (!this.view.isDisabled()) {
                    if (state.isDashboardView()) {
                       state.setCurrentAlbum(this.model);
@@ -43,8 +48,24 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                    } else if (state.isAlbumView()) {
                       state.setCurrentPlace(this.model);
                    }
-                   communicator.publish("click:marker", this.model);
+                   //timeout necessary to wait if user is actually dblclicking
+                   window.setTimeout(publish, 500);
                 }
+             },
+             center : function () {
+                this.view.center();
+             },
+             centerAndMoveLeft : function (percentage) {
+                this.view.centerAndMove(percentage, "left");
+             },
+             centerAndMoveRight : function (percentage) {
+                this.view.centerAndMove(percentage, "right");
+             },
+             setCentered : function (centered) {
+                this.view.setCentered(centered);
+             },
+             isCentered : function () {
+                return this.view.isCentered();
              },
              update : function () {
                  var model = this.model.getModelType().toLowerCase(),

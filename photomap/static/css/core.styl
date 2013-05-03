@@ -15,6 +15,16 @@ html
   // width // see comment above!
   // height // see comment above!
 
+/* make every element a border-box
+ * this makes styling the grid more easy, cause you can define the width one time
+ * without the need to adjust it every time you add paddings and such.
+ * Also you can now add paddings and borders with "px" even though the grid is defined with "%" widths
+ */
+*
+  -moz-box-sizing border-box
+  -webkit-box-sizing border-box
+  box-sizing border-box
+
 aside
   width 80%
   padding 5px
@@ -58,8 +68,8 @@ a
   opacity 0.5
 
 .mp-content
- height 77% // 80% - 1% padding. Padding 1% will make the element 1% bigger and vertical scrollbars will appear
- padding 1% 0 .5% 0
+ height 80%
+ padding 20px 10px 10px 10px
  h2, h3, ol
   max-width 90%
   margin 5px auto

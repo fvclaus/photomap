@@ -12,6 +12,7 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
                 this.map = map;
                 this.presenter = new MarkerPresenter(this, model);
                 this.marker = marker;
+                this.centered = false;
                 
                 // show only when requested
                 this.hide();
@@ -19,6 +20,12 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
              },
              getMap : function () {
                return this.map; 
+             },
+             setCentered : function (centered) {
+                this.centered = centered;
+             },
+             isCentered : function () {
+                return this.centered;
              },
              /**
               * @public
@@ -54,6 +61,20 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
               */
              center : function () {
                 this.map.centerMarker(this.marker);
+                this.centered = true;
+             },
+             centerAndMove : function (percentage, direction) {
+                
+               if (!this.centered) {
+                  this.map.storeCurrentState();
+                  this.center();
+                  
+                  if (direction === "left" || direction === "right") {
+                     this.map.moveHorizontal(percentage, direction);
+                  } else if (direction === "up" || direction === "down") {
+                     this.map.moveVertical(percentage, direction);
+                  }
+                }
              },
              getPosition : function () {
                 return this.marker.getPosition();

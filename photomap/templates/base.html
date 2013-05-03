@@ -20,6 +20,9 @@
     <meta property="og:image" content="http://www.keiken.de/static/images/icon.png" />
     <meta property="og:url" content="http://www.keiken.de" />
     <meta property="og:description" content="{{ KEIKEN_SHORT }}" />
+    
+    <!-- used for google verification, linking keiken search results to keike-google+ page and to generally improve search results -->
+    <meta name="google-site-verification" content="FfCsCzP68IIoV3bVbLsDAUoeUHBXQZl2EvbOD942AnE" />
     {% block meta %}
     {% endblock %}
 
@@ -81,7 +84,7 @@
     {% block mapjs %}
     {% endblock %}
   </head>
-  <body id="body">
+  <body id="{% block pageID %} {% endblock %}">
 
     <div class="mp-container container" id="mp-container">
 

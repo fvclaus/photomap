@@ -23,6 +23,7 @@ define([
     function (declare, View, Photo, Place, Album, DetailPresenter, communicator, tools, state) {
        return declare(View, {
           constructor : function () {
+             this.$container = $("#mp-right-column");
              this.$pageTitle = $("#mp-page-title h1");
              this.$explanationContainer = $("#mp-detail");
              this.$teaserContainer = $("#mp-detail-teaser");
@@ -102,12 +103,20 @@ define([
            * @description Hides the detail box. The teaser box should be visible afterwards
            */
           hideDetail : function () {
+             
              this.$explanationContainer.addClass("mp-nodisplay");
              this.$teaserContainer.removeClass("mp-nodisplay");
           },
           updateUsedSpace : function (data) {
              
              $("#mp-user-limit").text(data.used + "/" + data.total + " MB");
+          },
+          slideIn : function () {
+             var instance = this;
+             this.$container.animate({left: "50%"}, 300);
+          },
+          slideOut : function () {
+             this.$container.animate({left: "100%"}, 300);
           },
           _updateDetail : function (model) {
              var title = model.getModelType() + ": " + model.getTitle(),
@@ -173,7 +182,7 @@ define([
              });
              $(".mp-close-full-description").on("click", function (event) {
                 if (!instance.isDisabled()) {
-                   instance.hideDetail();
+                   instance.presenter.closeDetail();
                 }
              });
           },

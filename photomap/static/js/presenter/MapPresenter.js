@@ -9,7 +9,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
           return declare(Presenter,  {
              click : function (event) {
 
-                if (!main.getUI().isDisabled()) {
+                if (!this.view.isDisabled()) {
                    //create new place with description and select it
                    if (!state.isDashboardView()) {
                       this._insert(event, "place");
@@ -17,6 +17,15 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                       this._insert(event, "album");
                    }
                 }
+             },
+             centerChanged : function () {
+                communicator.publish("change:mapCenter");
+             },
+             storeCurrentState : function () {
+                this.view.storeCurrentState();
+             },
+             restoreSavedState : function () {
+                this.view.restoreSavedState();
              },
              /**
               * @public

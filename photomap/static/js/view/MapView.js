@@ -32,6 +32,11 @@ define([
                 originalHeight	: this.$mapEl.height()
              });
              this.ZOOM_OUT_LEVEL = 3;
+             this.storedState = {
+                zoom: null,
+                center: null,
+                type: null
+             };
              // map gets called as part of the Main.init() function, so everything is in place already
              // the map options
              this.mapOptions = {
@@ -64,6 +69,24 @@ define([
              this._create();
              communicator.subscribeOnce("init", this._init, this);
           },
+          storeCurrentState : function () {
+             var instance = this;
+             
+             this.storedState =  {
+                zoom: instance.map.getZoom(),
+                center: instance.map.getCenter(),
+                type: instance.map.getMapTypeId()
+             }
+          },
+          store : function (property, value) {
+            this.storedState[property] = value; 
+          },
+          restoreSavedState : function () {
+             
+             this.map.setMapTypeId(this.storedState.type);
+             this.map.setZoom(this.storedState.zoom);
+             this.map.panTo(this.storedState.center);
+          },
           /**
            * @public
            * @summary Returns a object containing the absolute bottom and left position of the marker.
@@ -86,8 +109,45 @@ define([
            @param {Marker} marker
            */
           centerMarker : function (marker) {
+             
              this.map.setZoom(ZOOM_LEVEL_CENTERED);
              this.map.panTo(marker.getPosition());
+          },
+          /**
+           * @public 
+           * @description moves map-center;
+           * @param percentage {Float} percentage of the map viewport by which the map center should be moved. Positive value => left 
+           * @param direction {String} Optional! You may choose to specify a direction. input param "percentage" should be positive then
+           */
+          moveHorizontal : function (percentage, direction) {
+             
+             if (direction && direction === "right") {
+                percentage *= -1;
+             }
+             
+             
+             this.move(this.$mapEl.width() * percentage, 0);
+          },
+          /**
+           * @public 
+           * @description moves map-center;
+           * @param percentage {Float} percentage of the map viewport by which the map center should be moved. Positive value => up 
+           * @param direction {String} Optional! You may choose to specify a direction. input param "percentage" should be positive then
+           */
+          moveVertical : function (percentage, direction) {
+             
+             if (direction && direction === "down") {
+                percentage *= -1;
+             }
+             
+             this.move(0, this.$mapEl.height() * percentage);
+          },
+          /**
+           * @public 
+           * @description wrapper for gmaps panBy to make it available to the public without being bound to gmaps API
+           */
+          move : function (x, y) {
+             this.map.panBy(x, y);
           },
           /**
            * @public
@@ -346,6 +406,13 @@ define([
                    lat : parseFloat(event.latLng.lat()),
                    lng : parseFloat(event.latLng.lng())
                 });
+             });
+          },
+          _bindCenterChangeListener : function () {
+             var instance = this;
+             
+             google.maps.event.addListener(this.map, "center_changed", function (event) {
+                instance.presenter.centerChanged();
              });
           }
        });

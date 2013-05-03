@@ -11,21 +11,29 @@
  left 50%
  z-index 10 //maybe we can get rid of that
  
+.mp-full-page
+  width 100%
+  height 80% // === content height
+  position absolute
+  display none
 
 .mp-left-column
-  width 47%
-  margin 0 0 0 1%
-  position relative
-  float left
-  height 100% // necessary because children are also still relative to height
+  width 50%
+  position absolute
+  top 13% // === header height
+  left 0 // nothing on left side
+  height 80% // === content height
   overflow hidden // full gallery pushes map down. this will hide the overflowing map
+  z-index -1
 
 .mp-right-column
-  width 49%
-  margin 0 1% 0 2%
-  position relative
-  float left
-  height 100% // necessary because children are also still relative to height
+  width 50%
+  padding-left 20px
+  position absolute
+  top 13% // === header height
+  left 50% // === left column width
+  height 80% // === content height
+  z-index -1
 
 .mp-full-column
   width 100%
@@ -56,14 +64,11 @@
 /* ------ map styling ------ */
 
 .mp-map
-  width 98%
-  height 79%
+  width 100%
+  height 80%
   padding 0
   border 5px solid #dadada
   margin 0
-
-.mp-map-dashboard
-   height 97%
 
 .mp-map-wrapper
   width 100%
@@ -109,7 +114,7 @@
 /* The detail title can take more less (in %) compared to the teaser title */
 #mp-detail-title
   height 5%
-  margin 5% 0 // overwrite browser stylesheets default of 1em
+  margin 5% auto // overwrite browser stylesheets default of 1em
 
 /* The teaser title must take up more space in order to be readable */
 #mp-detail-teaser-title
@@ -119,8 +124,9 @@
 /* Changes only the descriptions */
 #mp-detail-description-wrapper,
 #mp-detail-teaser-description-wrapper
-  height 80% // 100% - 5% (+ 4% margin of title)
+  height 70% // 100% - 5% (+ 4% margin of title)
   overflow auto // show scrollbars in case the description gets too long
+  margin 0 auto
 
 /* ---- end description ---- */
 

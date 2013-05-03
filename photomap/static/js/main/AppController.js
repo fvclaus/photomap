@@ -33,6 +33,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 communicator.subscribe("processed:album processed:place processed:photo", this._modelInsert);
                 
                 communicator.subscribe("change:usedSpace", this._usedSpaceUpdate);
+                communicator.subscribe("change:mapCenter", this._mapCenterChanged);
+                communicator.subscribe("close:detail", this._detailClose);
                 
                 if (state.isAlbumView()) {
                    
@@ -72,9 +74,11 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 
                 var ui = main.getUI(),
                     markers = state.getMarkers();
-                    
-                ui.getGallery().setDisabled(disable);
-                ui.getSlideshow().setDisabled(disable);
+                
+                if (state.isAlbumView()) {
+                   ui.getGallery().setDisabled(disable);
+                   ui.getSlideshow().setDisabled(disable);
+                }
                 ui.getControls().setDisabled(disable);
                 ui.getInformation().setDisabled(disable);
                 main.getMap().setDisabled(disable);
@@ -112,8 +116,18 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                  });
                  $("a").off(".Disabled");
              },
+             _detailClose : function () {
+                if (state.isDashboardView()) {
+                   main.getMap().restoreSavedState();
+                }
+             },
              _dialogLoad : function (options) {
                 main.getUI().getInput().show(options);
+             },
+             _mapCenterChanged : function () {
+                $.each(state.getMarkers(), function (index, marker) {
+                   marker.setCentered(false);
+                });
              },
              _galleryThumbMouseenter : function (data) {
                 main.getUI().getControls().showPhotoControls(data);
@@ -134,8 +148,17 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              _markerMouseout : function () {
                 main.getUI().getControls().hide(true);
              },
-             _markerClick : function (model) {
-                main.getUI().getInformation().update(model);
+             _markerClick : function (marker) {
+                
+                var detail = main.getUI().getInformation(),
+                    map = main.getMap();
+                
+                detail.update(marker.model);
+                
+                if (state.isDashboardView()) {
+                   marker.centerAndMoveLeft(.25);
+                   detail.slideIn();
+                }
              },
              _markerInsert : function (data) {
                 

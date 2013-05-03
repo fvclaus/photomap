@@ -64,7 +64,7 @@
 {% endblock %}
 
 {% block mapjs %}
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script>
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWnE-Kkl7ifiNjQVLv-N3UwY_KxuYqm_Q&sensor=false"> </script>
 {% endblock %}
 
 {% block content %}
@@ -72,6 +72,11 @@
   <span class="ui-button-icon-primary ui-icon ui-icon-info "></span>
   <strong class="ui-button-text"></strong>
 </span>
+
+<section id="mp-full-page" class="mp-full-page">
+	{% block full-page %}
+	{% endblock %}
+</section>
 
 <section id="mp-left-column" class="mp-left-column">
   <section class="mp-full-column mp-full-left-column mp-nodisplay" id="mp-full-left-column">

@@ -3,8 +3,8 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "presenter/Presenter", "ui/UIState"], 
-       function (declare, Presenter, state) {
+define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UIState"], 
+       function (declare, Presenter, communicator, state) {
           return declare (Presenter, {
              init : function () {
                 this.view.init();
@@ -20,6 +20,20 @@ define(["dojo/_base/declare", "presenter/Presenter", "ui/UIState"],
              },
              updateUsedSpace : function (data) {
                 this.view.updateUsedSpace(data);
+             },
+             slideIn : function () {
+                this.view.slideIn();
+             },
+             slideOut : function () {
+                this.view.slideOut();
+             },
+             closeDetail : function () {
+                if (state.isDashboardView()) {
+                   this.slideOut();
+                } else {
+                   this.hideDetail();
+                }
+                communicator.publish("close:detail");
              }
           });
        });
