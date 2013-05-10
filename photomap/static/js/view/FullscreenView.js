@@ -8,12 +8,12 @@
  * @description Displays current slideshow-image as fullscreen, supports zooming into the image
  */
 
-define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/domReady!"], 
-   function (declare, View, Photo, state) {
+define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "model/Photo", "util/Communicator", "ui/UIState", "dojo/domReady!"], 
+   function (declare, View, FullscreenPresenter, Photo, communicator, state) {
       return declare(View, {
-         constructor : function (slideshow) {
+         constructor : function () {
 
-            this.slideshow = slideshow;
+            this.presenter = new FullscreenPresenter(this);
 
             this.iconHelpCount = 5;
             this.$container = $("#mp-fullscreen");
@@ -41,7 +41,6 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/do
                .appendTo($("body"));
             
             this.visible = false;
-            this.updating = false;
             this.disabled = true;
          },
          init : function () {
@@ -53,11 +52,6 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/do
             this.$container.show();
             this.visible = true;
             
-            //TODO should be enabled by the same function that disabled it in the first place
-            // if (this.disabled && !this.updating) {
-      
-               // this.enable();
-            // }
          },
          close : function () {
             
@@ -70,15 +64,14 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/do
           * @public
           * @description Please add some description here
           */
-         update : function () {
+         update : function (photo) {
+            var instance = this;
+            
             //TODO this function is badly designed. The UISlideshow will enable itself and trigger the update event of the UIFullscreen. The UIFullscreen will now update itself. During this time the Fullscreen cannot be loaded, because it is disabled. The UISlideshow must wait till the UIFullscreen is ready before enabling itself, because it is responsible for the UIFullscreen.
-            this.disable();      
+            if (!this.disabled) {
+               communicator.publish("disable:fullscreen");
+            }
             console.log("UIFullscreen: update started");
-            var ui = main.getUI(),
-               photo = state.getCurrentLoadedPhoto(),
-               instance = this;
-      
-            this.updating = true;
       
             $("<img/>")
                .load(function () {
@@ -94,14 +87,12 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/do
                      }, 300);
                      // enable fullscreen controls again after new image is displayed (and animation is complete)
                      window.setTimeout(function () {
-                        instance.updating = false;
-                        instance.enable();
+                        communicator.publish("enable:fullscreen");
                      }, 600);
                      
                   } else {
                      instance.$image.attr("src", photo.photo);
-                     instance.updating = false;
-                     instance.enable();
+                     communicator.publish("enable:fullscreen");
                   }
                })
                .error(function () {
@@ -110,14 +101,12 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/do
                .attr("src", photo.photo);
          },
          disable : function () {
-            this.disabled = true;
             this.$controls.addClass("mp-disabled");
             // needed to indicate ready status to frontend tests
             this.$ready.hide();
             console.log("UIFullscreen: disabled");
          },
          enable : function () {
-            this.disabled = false;
             this.$controls.removeClass("mp-disabled");
             // needed to indicate ready status to frontend tests
             this.$ready.show();
@@ -129,24 +118,20 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "dojo/do
             this.$navLeft.on("click.Fullscreen", function () {
                if (!instance.disabled) {
                   console.log("UIFullscreen: navigating left");
-                  // we need to disable it here, because the update coming from the slideshow might take awhile
-                  instance.disable();
-                  instance.slideshow.navigateLeft();
+                  instance.presenter.navigate("left");
                }
             });
             this.$navRight.on("click.Fullscreen", function () {
                if (!instance.disabled) {
                   console.log("UIFullscreen: navigating right");
-                  // we need to disable it here, because the update coming from the slideshow might take awhile
-                  instance.disable();
-                  instance.slideshow.navigateRight();
+                  instance.presenter.navigate("right");
                }
             });
             this.$close.on("click.Fullscreen", function () {
                if (!instance.disabled) {
                   console.log("UIFullscreen: close");
                   assert(instance.disabled, false, "closing button must not be disabled");
-                  instance.close();
+                  instance.presenter.close();
                }
             });
       

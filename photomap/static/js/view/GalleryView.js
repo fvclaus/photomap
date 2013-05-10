@@ -60,6 +60,9 @@ define(["dojo/_base/declare",
                 this.presenter = new GalleryPresenter(this);
 
              },
+             getCarousel : function () {
+                return this.carousel;
+             },
              /**
               * Triggers a click on the photo. Bypasses every listener, because they might be disabled
               */

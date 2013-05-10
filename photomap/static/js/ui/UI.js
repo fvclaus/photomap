@@ -19,12 +19,13 @@ define([
         "view/DetailView",
         "view/StatusMessageView",
         "view/SlideshowView",
+        "view/FullscreenView",
         "view/GalleryView",
         "view/DialogView",
         "ui/UIState",
         "dojo/domReady!"
        ],
-       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, GalleryView, DialogView, state) {
+       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, FullscreenView, GalleryView, DialogView, state) {
            var UI = declare(null, {
               constructor : function () {
                  this.controls = new ModelFunctionView();
@@ -36,6 +37,7 @@ define([
                  if (this.state.isAlbumView()) {
                     this.gallery = new GalleryView();
                     this.slideshow = new SlideshowView();
+                    this.fullscreen = new FullscreenView();
                  }
                  this._isDisabled = false;
               },
@@ -44,6 +46,9 @@ define([
               },
               getSlideshow : function () {
                  return this.slideshow.getPresenter();
+              },
+              getFullscreen : function () {
+                 return this.fullscreen.getPresenter();
               },
               getControls : function () {
                  return this.controls;

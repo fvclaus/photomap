@@ -4,7 +4,7 @@
 "use strict";
 
 /**
- * @author Frederik Claus
+ * @author Frederik Claus, Marc-Leon Römer
  * @class creates an infinite carousel (for images) with given data using DataPage.
  * @requires DataPage
  */
@@ -50,6 +50,107 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 
                 this.currentPage = null;
                 this.isStarted = false;
+             },
+             update : function (photos) {
+               console.log(photos);
+               this.dataPage.update(photos);
+               this.currentPage = this.dataPage.getCurrentPage();
+               this._load();
+             },
+             /**
+              * @description Starts the carousel by loading the first or the requested page
+              */
+             start : function (index) {
+                
+                this.isStarted = true;
+                if (index) {
+                   this.navigateTo(index);
+                   this.currentPageIndex = index;
+                } else {
+                   this.currentPage = this.dataPage.getPage("first");
+                   this.currentPageIndex = 0;
+                   this._load();
+                }
+             },
+             insertPhoto : function (photo) {
+                assertTrue(photo instanceof Photo);
+                
+                console.log("UIPhotoCarousel: Inserting new photo %s to Carousel.", photo);
+                // update page
+                this.dataPage.insertPhoto(photo);
+                var from = this.dataPage.getIndexOfPhoto(photo);
+                
+                // Did we insert on the current page? Then we need to update it
+                if (this.isLastPage()){
+                   console.log("UIPhotoCarousel: New photo is inserted on current page. Reload current page from index %d.", from);
+                   this.currentPage = this.dataPage.getPage("current");
+                   this._load(from);
+                }
+             },
+             deletePhoto : function (photo) {
+                assertTrue(photo instanceof Photo);
+
+                var instance = this, 
+                    oldPage = this.dataPage.getPage("current"),
+                    // the oldPage consists of sources
+                    from = oldPage.indexOf(photo[this.srcPropertyName]);
+
+                this.dataPage.deletePhoto(photo);
+
+                // Did we delete on the current page?
+                if (from !== -1) {
+                   this.$items
+                      .filter("img[src='" + photo[this.srcPropertyName] + "']")
+                      .fadeOut(500, function () {
+                         $(this).attr("src", null);
+                         instance.currentPage = instance.dataPage.getPage("current");
+                         // we need to update everything from 'from' to the last entry of the oldPage
+                         //TODO get the real length of the oldPage, currently this will always be this.size
+                         instance._load(from, oldPage.length);
+                      });
+                }
+             },
+             /**
+              * @description resets carousel, so that no images are shown
+              */
+             reset : function () {
+                
+                this.dataPage = null;
+                this.options = null;
+                this.currentPage = null;
+                this.$items.each(function (index) {
+                   $(this).hide().attr("src", "");
+                });
+             },
+             navigateTo : function (to) {
+                assert(this.isStarted, true, "carousel has to be started already");
+
+                switch (to) {
+                case "start":
+                   this.currentPage = this.dataPage.getPage("first");
+                   break;
+                case "end":
+                   this.currentPage = this.dataPage.getPage("last");
+                   break;
+                default:
+                   this.currentPage = this.dataPage.getPage(to);
+                   break;
+                }
+                this._load();
+             },
+             navigateLeft : function () {
+                this.currentPage = this.dataPage.getPage("previous");
+                this._load();
+             },
+             navigateRight : function () {
+                this.currentPage = this.dataPage.getPage("next");
+                this._load();
+             },
+             isLastPage : function () {
+                return this.dataPage.isLastPage();
+             },
+             getAllImageSources : function () {
+                return this.dataPage.getAllImageSources();
              },
              /**
               * @description Loads all photos, or just current page depending on this.options.lazy (=true/false). 
@@ -186,102 +287,6 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                    }
 
                 }, duration);
-             },
-             
-             /**
-              * @description Starts the carousel by loading the first or the requested page
-              */
-             start : function (index) {
-                
-                this.isStarted = true;
-                if (index) {
-                   this.navigateTo(index);
-                   this.currentPageIndex = index;
-                } else {
-                   this.currentPage = this.dataPage.getPage("first");
-                   this.currentPageIndex = 0;
-                   this._load();
-                }
-             },
-             insertPhoto : function (photo) {
-                assertTrue(photo instanceof Photo);
-                
-                console.log("UIPhotoCarousel: Inserting new photo %s to Carousel.", photo);
-                // update page
-                this.dataPage.insertPhoto(photo);
-                var from = this.dataPage.getIndexOfPhoto(photo);
-                
-                // Did we insert on the current page? Then we need to update it
-                if (this.isLastPage()){
-                   console.log("UIPhotoCarousel: New photo is inserted on current page. Reload current page from index %d.", from);
-                   this.currentPage = this.dataPage.getPage("current");
-                   this._load(from);
-                }
-             },
-             deletePhoto : function (photo) {
-                assertTrue(photo instanceof Photo);
-
-                var instance = this, 
-                    oldPage = this.dataPage.getPage("current"),
-                    // the oldPage consists of sources
-                    from = oldPage.indexOf(photo[this.srcPropertyName]);
-
-                this.dataPage.deletePhoto(photo);
-
-                // Did we delete on the current page?
-                if (from !== -1) {
-                   this.$items
-                      .filter("img[src='" + photo[this.srcPropertyName] + "']")
-                      .fadeOut(500, function () {
-                         $(this).attr("src", null);
-                         instance.currentPage = instance.dataPage.getPage("current");
-                         // we need to update everything from 'from' to the last entry of the oldPage
-                         //TODO get the real length of the oldPage, currently this will always be this.size
-                         instance._load(from, oldPage.length);
-                      });
-                }
-             },
-             /**
-              * @description resets carousel, so that no images are shown
-              */
-             reset : function () {
-                
-                this.dataPage = null;
-                this.options = null;
-                this.currentPage = null;
-                this.$items.each(function (index) {
-                   $(this).hide().attr("src", "");
-                });
-             },
-             navigateTo : function (to) {
-                assert(this.isStarted, true, "carousel has to be started already");
-
-                switch (to) {
-                case "start":
-                   this.currentPage = this.dataPage.getPage("first");
-                   break;
-                case "end":
-                   this.currentPage = this.dataPage.getPage("last");
-                   break;
-                default:
-                   this.currentPage = this.dataPage.getPage(to);
-                   break;
-                }
-                this._load();
-             },
-             navigateLeft : function () {
-                this.currentPage = this.dataPage.getPage("previous");
-                this._load();
-             },
-             navigateRight : function () {
-                this.currentPage = this.dataPage.getPage("next");
-                this._load();
-             },
-             isLastPage : function () {
-                return this.dataPage.isLastPage();
-             },
-             getAllImageSources : function () {
-                return this.dataPage.getAllImageSources();
              }
           });
        });

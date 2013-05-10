@@ -20,11 +20,21 @@ define(["dojo/_base/declare", "model/Photo"],
                 assertTrue(photosPerPage >= 1);
                 assertString(srcPropertyName, "Need property name to reduce the photo later");
                 
+                this.pages = [];
                 this._createPages(photos, photosPerPage);
                 this.photos = $.extend(true, [], photos);
                 this._setCurrentPage(0);
                 this.photosPerPage = photosPerPage;
                 this.srcPropertyName = srcPropertyName;
+                this.currentPageIndex = null;
+             },
+             update : function (photos) {
+                this.pages = null;
+                this.photos = $.extend(true, [], photos);
+                this._createPages(photos, this.photosPerPage);
+             },
+             getCurrentPage : function () {
+                return this.getPage(this.currentPageIndex);
              },
              /**
               * @public
@@ -33,6 +43,8 @@ define(["dojo/_base/declare", "model/Photo"],
              getPage : function (index) {
                 assertTrue(typeof index === "string" || typeof index === "number");
                 assertString(this.srcPropertyName);
+                
+                this.currentPageIndex = index;
 
                 if (index === "first") {
                    this._setCurrentPage(0);

@@ -35,6 +35,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              placeDeleteReset : function (place) {
                 this.view.placeDeleteReset(place);
              },
+             restart : function (photos) {
+                this.view.getCarousel().update(photos);
+             },
              start : function (photos) {
                 this.view.start(photos);
              },

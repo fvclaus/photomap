@@ -48,10 +48,15 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                       "beforeLoad:slideshow": this._slideshowBeforeLoad,
                       "update:slideshow": this._slideshowUpdate,
                       "enable:slideshow": this._slideshowEnable,
-                      "disable:slideshow": this._slideshowDisable
+                      "disable:slideshow": this._slideshowDisable,
+                      "click:slideshowImage": this._slideshowClick
                    });
                    
+                   communicator.subscribe("navigate:fullscreen", this._fullscreenNavigate);
+                   
                    communicator.subscribe("open:place", this._placeOpen);
+                   
+                   communicator.subscribe("change:photoOrder", this._photoOrderChange);
                 }
              },
              _init : function () {
@@ -61,6 +66,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 if (state.isAlbumView()) {
                    main.getUI().getGallery().init();
                    main.getUI().getSlideshow().init();
+                   main.getUI().getFullscreen().init();
                 }
              },
              _uiEnable : function () {
@@ -78,6 +84,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 if (state.isAlbumView()) {
                    ui.getGallery().setDisabled(disable);
                    ui.getSlideshow().setDisabled(disable);
+                   ui.getFullscreen().setDisabled(disable);
                 }
                 ui.getControls().setDisabled(disable);
                 ui.getInformation().setDisabled(disable);
@@ -97,6 +104,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              },
              _slideshowEnable : function () {
                 main.getUI().getSlideshow().setDisabled(false);
+             },
+             _fullscreenDisable : function () {
+                main.getUI().getFullscreen().setDisabled(true);
+             },
+             _fullscreenEnable : function () {
+                main.getUI().getFullscreen().setDisabled(false);
              },
              _disableLinks : function () {
                
@@ -119,6 +132,23 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              _detailClose : function () {
                 if (state.isDashboardView()) {
                    main.getMap().restoreSavedState();
+                }
+             },
+             _photoOrderChange : function (photos) {
+                place = main.getUIState().getCurrentLoadedPlace();
+                // update the 'real' photo order
+                photos.forEach(function (photo, index) {
+                   place.getPhoto(photo.photo).order = photo.order;
+                   console.log("Update order of photo %d successful.", index);
+                });
+                
+                console.log("All Photos updated. Updating Gallery.");
+                place.sortPhotos();
+                
+                photos = place.getPhotos();
+                main.getUI().getGallery().restart(photos);
+                if (main.getUI().getSlideshow().isStarted()) {
+                   main.getUI().getSlideshow().restart(photos);
                 }
              },
              _dialogLoad : function (options) {
@@ -176,10 +206,17 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              },
              _slideshowUpdate : function (photo) {
                 main.getUI().getInformation().update(photo);
+                main.getUI().getFullscreen().update(photo);
                 main.getUI().getGallery().checkSlider();
              },
              _slideshowBeforeLoad : function () {
                 main.getUI().getInformation().hideDetail();
+             },
+             _slideshowClick : function () {
+                main.getUI().getFullscreen().open();
+             },
+             _fullscreenNavigate : function (direction) {
+                main.getUI().getSlideshow().navigate(direction);
              },
              _modelInsert : function (model) {
                 var type = model.getModelType();

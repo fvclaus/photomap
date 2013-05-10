@@ -78,7 +78,7 @@
 {% endblock %}
 
 
-{% block slideshow/??? %}
+{% block right-column %}
 <section class="mp-slideshow" id="mp-slideshow">
   <div class="mp-nodisplay" id="mp-slideshow-photos">
   </div>
@@ -100,6 +100,10 @@
     <span class="mp-image-number"><!-- 0/0 --></span>
   </div>
 </section>
+{% endblock %}
+
+{% block outside-of-columns %}
+
 <section class="mp-fullscreen" id="mp-fullscreen">
   <img class="mp-dark-loader" src="/static/images/dark-loader.gif" />
   <img class="mp-image-zoom" src="/static/images/zoom.png" />
@@ -130,8 +134,6 @@
   </div>
 </section>
 {% endblock %}
-
-
 
 {% block content_interactive %}
 

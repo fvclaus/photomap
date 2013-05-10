@@ -2,8 +2,8 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "view/StatusMessageView", "dojo/domReady!"], 
-       function (declare, View, Photo, state, statusMessage) {
+define(["dojo/_base/declare", "view/View", "model/Photo", "util/Communicator", "ui/UIState", "view/StatusMessageView", "dojo/domReady!"], 
+       function (declare, View, Photo, communicator, state, statusMessage) {
           
           return  declare(View, {
              constructor : function () {
@@ -31,7 +31,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "view/St
                    .addClass("mp-full-gallery")
                    .append(
                       $.jqote('#fullGalleryTmpl', {
-                         thumbSources: this.carousel.geAllImageSources()
+                         thumbSources: this.carousel.getAllImageSources()
                       }))
                    .removeClass("mp-nodisplay");
                 this._initializeSortable();
@@ -100,19 +100,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "ui/UIState", "view/St
                       $("input[name='photos']").val(JSON.stringify(photos));
                    },
                    success : function () {
-                      // update the 'real' photo order
-                      photos.forEach(function (photo, index) {
-                         place.getPhoto(photo.photo).order = photo.order;
-                         console.log("Update order of photo %d successful.", index);
-                      });
-                      
-                      console.log("All Photos updated. Updating Gallery.");
-                      place.sortPhotos();
-                      // indicate that the order in gallery & slideshow is off now
-                      // this is rarely used. rely on lazy amd loading
-                      require(["view/StatusMessageView"], function (statusMessage) {
-                         this.statusMessage.update(gettext("PHOTOS_DIRTY"));
-                      });
+                      communicator.publish("change:photoOrder", photos);
                    },
                    abort : function () {
                       console.log("UIFullGallery: Aborted updating order. Restoring old order");

@@ -38,18 +38,23 @@ define([
                 .appendTo(this.$container);
              
              this.carousel = null;
-             this.fullscreen = new FullscreenView(this);
              this.presenter = new SlideshowPresenter(this);
              
-             this.isStarted = false;
+             this.started = false;
              this._isDisabled = true;
              
+          },
+          isStarted : function () {
+             return this.started;
+          },
+          getCarousel : function () {
+             return this.carousel;
           },
           /**
            * @description starts slideshow by initialising and starting the carousel (with given index)
            */
           start: function (index) {
-             assert(this.isStarted, false, "slideshow must not be started yet");
+             assert(this.started, false, "slideshow must not be started yet");
 
              var photos = state.getPhotos(),
                  options = {
@@ -64,7 +69,7 @@ define([
                  //UISlideshow does not need to store imageSources
                  imageSources = [];
 
-             this.isStarted = true;
+             this.started = true;
              
              photos.forEach(function (photo, index) {
                 imageSources.push(photo.photo);
@@ -80,25 +85,11 @@ define([
 
           },
           /**
-           * @description This is used by the fullscreen to navigate the slideshow
-           */
-          //TODO maybe event based?
-          navigateLeft : function () {
-             this.$navLeft.trigger("click");
-          },
-          /**
-           * @description This is used by the fullscreen to navigate the slideshow
-           */
-          //TODO maybe event based?
-          navigateRight : function () {
-             this.$navRight.trigger("click");
-          },
-          /**
            * @description Resets the slideshow to a state before start() was called. 
            * This can be called without ever starting the Slideshow
            */
           reset : function () {
-             this.isStarted = false;
+             this.started = false;
              //TODO if the last photo is deleted, it will fade out
              // therefore we must not delete the carousel until the fading out is complete
              // if (this.carousel !== null) {
@@ -116,7 +107,7 @@ define([
           // This will shorten the code in other places and provides a more consistend abstraction.
           // All other public methods take photo as parameter.
           navigateTo : function (index) {
-             if (!this.isStarted) {
+             if (!this.started) {
                 this.start(index);
              } else {
                 this.carousel.navigateTo(index);
@@ -130,7 +121,6 @@ define([
              $(window).resize(function () {
                 instance._center();
              });
-             this.fullscreen.init();
              this._bindListener();
           },
           /**
@@ -142,7 +132,7 @@ define([
              // this is an unfortunate annoyance, but the gallery can be started without the slideshow
              // therefore we need to check if the gallery is started on an insert photo event
              // this is unfortunate, because the slideshow behaves differntly than the gallery
-             if (this.isStarted){
+             if (this.started){
                 // does not move to the new photo, because photo cant be on current page
                 this.carousel.insertPhoto(photo);
                 // updating description & photo number is handled in update
@@ -156,7 +146,7 @@ define([
              assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
 
              // @see insertPhoto
-             if (this.isStarted) {
+             if (this.started) {
                 // automatically delete if photo is on current page
                 this.carousel.deletePhoto(photo);
                 // update will take of resetting if it was the last one
@@ -180,7 +170,6 @@ define([
              if (photo  === null) {
                 this.reset();
              } else {
-                this.fullscreen.update();
                 // right now this is the first time we can update the description
                 // on the other events, beforeLoad & afterLoad, the photo src is not set yet
                 this._updatePhotoNumber();
@@ -243,7 +232,7 @@ define([
            * @returns {Photo} currentPhoto
            */
           _updateAndGetCurrentLoadedPhoto : function () {
-             assert(this.isStarted, true, "slideshow has to be started already");
+             assert(this.started, true, "slideshow has to be started already");
 
              // this might be updated at a later point, we can't rely on that
              var photos = state.getPhotos(),
@@ -291,30 +280,19 @@ define([
                 
                 console.log("?left?");
                 if (!instance.isDisabled()) {
-                   if (!instance.isStarted) {
-                      //TODO @see $navRight.on("click",...)
-                      instance.start();
-                   } else {
-                      console.log("left");
-                      instance.carousel.navigateLeft();
-                   }
+                   instance.presenter.navigate("left");
                 }
              });
              this.$navRight.on("click", function () {
                 // UIPhotoCarousel does not 'really' support aborting loading of the current photo and skipping to the next one
                 if (!instance.isDisabled()) {
-                   if (!instance.isStarted) {
-                      //TODO we need to change the text in the empty slideshow to advertise this behaviour
-                      instance.start();
-                   } else {
-                      instance.carousel.navigateRight();
-                   }
+                   instance.presenter.navigate("right");
                 }
              });
              this.$image.on("click.Slideshow", function () {
                 if (!instance.isDisabled()) {
                    console.log("UISlideshow: Show Fullscreen");
-                   instance.fullscreen.open();
+                   instance.presenter.click();
                 }
              });
           },
