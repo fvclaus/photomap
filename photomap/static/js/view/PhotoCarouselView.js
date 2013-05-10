@@ -17,8 +17,8 @@
  * @param options.onUpdate Called after all photos are updated
  */
   
-define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "util/Tools"], 
-       function (declare, View, Photo, PhotoPages, tools) {
+define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "util/Tools", "util/CarouselAnimation"], 
+       function (declare, View, Photo, PhotoPages, tools, carouselAnimation) {
           
           return declare (View, {
              constructor : function ($photos, photos, srcPropertyName, options) {
@@ -160,7 +160,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
               * This can be used when items get deleted in the middle of the page. The last elements would be ignored without the to parameter.
               */
              _load : function (from, to) {
-                var i, j, loadHandler, loaded, maxLoad, currentPage, source, instance = this, imageSources, nSources;
+                var i, j, loader, loadHandler, loaded, maxLoad, currentPage, source, instance = this, imageSources, nSources;
                 loaded = 0;
 
                 if (from === undefined || from === null) {
@@ -196,6 +196,29 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                    }
                 };
                 nSources = imageSources.length;
+                loader = function () {
+                   for (i = 0; i < nSources; i++) {
+                      source = imageSources[i];
+                      console.log(source);
+                      $('<img/>')
+                         .load(loadHandler)
+                         .error(loadHandler)
+                         .attr('src', source);
+                   }
+                }
+                if (this.options.effect === "fade") {
+                   
+                   carouselAnimation.start({
+                      items: instance.$items,
+                      loader: $(".mp-slideshow-loader"),
+                      animation: "fade",
+                      animationTime: 500,
+                      onStart : loader,
+                      onEnd: instance.options.onUpdate,
+                      context: instance.options.context
+                   });
+                   return;
+                }
 
                 if (typeof this.options.beforeLoad === "function") {
                    // trigger the beforeLoad event
@@ -210,15 +233,14 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                       this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nSources));
                    }
                 }
-
                 for (i = 0; i < nSources; i++) {
                    source = imageSources[i];
+                   console.log(source);
                    $('<img/>')
                       .load(loadHandler)
                       .error(loadHandler)
                       .attr('src', source);
                 }
-
              },
              /**
               * @description Updates carousel to show current page.
@@ -249,6 +271,24 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 // remove mp-animate classes
                 $items.removeClass("mp-animate-02s mp-animate-08s");
                 
+                if (this.options.effect === "fade") {
+                   
+                   imageSource = [];
+                   $items.each(function (index) {
+                      imageSource.push(instance.currentPage[from + index] || "");
+                   });
+                   carouselAnimation.end({
+                      items: $items,
+                      images: imageSource,
+                      loader: $(".mp-slideshow-loader"),
+                      animation: "fade",
+                      animationTime: 500,
+                      onEnd: instance.options.onUpdate,
+                      context: instance.options.context
+                   });
+                   return;
+                }
+                console.log("this shouldn't happen on fade");
                 
                 if (this.options.effect === "foldIn") {
                    $items.addClass("mp-animate-02s mp-scale-X-0");

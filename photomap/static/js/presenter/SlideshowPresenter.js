@@ -19,15 +19,15 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
                 this.view.navigateTo(photo);
              },
              navigate : function (direction) {
-                assert(direction === "left" || direction === "right", "slideshow can just navigate left or right");
+                assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
                 
                 if (!this.view.isStarted()) {
-                   instance.view.start();
+                   this.view.start();
                 } else {
                    if (direction === "left") {
-                      instance.view.getCarousel().navigateLeft();
+                      this.view.getCarousel().navigateLeft();
                    } else {
-                      instance.view.getCarousel().navigateRight();
+                      this.view.getCarousel().navigateRight();
                    }
                 }
              },

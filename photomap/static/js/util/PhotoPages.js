@@ -41,10 +41,8 @@ define(["dojo/_base/declare", "model/Photo"],
               * @description returns page with given index
               */
              getPage : function (index) {
-                assertTrue(typeof index === "string" || typeof index === "number");
-                assertString(this.srcPropertyName);
-                
-                this.currentPageIndex = index;
+                assertTrue(typeof index === "string" || typeof index === "number", "index has to be string or number");
+                assertString(this.srcPropertyName, "srcPropertyName has to be string");
 
                 if (index === "first") {
                    this._setCurrentPage(0);
@@ -239,7 +237,7 @@ define(["dojo/_base/declare", "model/Photo"],
               */
              _setCurrentPage : function (index) {
                 //TODO setting currentPage is prone to error when we update the pages Array. Only store currentPageIndex
-                assertTrue(this.pages[index] !== undefined);
+                assertTrue(this.pages[index] !== undefined, "There is no page with given index. You have to provide a valid index.");
                 console.log("PhotoPages: Current page is now %d.", index);
                 this.currentPageIndex = index;
              }
