@@ -58,15 +58,57 @@ $(document).ready(function () {
    // single point of control. we don't want to spread selectors throught the code
    decodeEmail($("#mp-email-jsenabled"));
    
-   // show tabs on login page
-   $("#mp-login-register")
-      .tabs({
-         // disable registaration for now
+   
+   if ($("body").attr("id") === "landingpage") {
+      // show tabs on login box
+      $("#keiken-login").tabs({
+         heightStyle : "fill",
+         active: 0,
          disabled : [1]
-      })
-   // tabs are hidden during page load, so they don't move around
-      .find("section")
-      .removeClass("mp-nodisplay");
+      });
+      //change href of login-link to prevent reloading of the page
+      $(".mp-login-link").find("a").attr("href", "#login");
+      // close login-box on click
+      $(".login-toggle").on("click", function (event) {
+         $("#keiken-login").fadeOut(300, function () {
+            $("#keiken-login").css({
+               visibility: "hidden",
+               display: "block",
+               left: "100%"
+            });
+         });
+      });
+      // automatically sign in when users selects "Try KEIKEN yourself"
+      $(".mp-test-button").on("click", function (event) {
+         $("#login-email").val("test@keiken.app");
+         $("#login-password").val("test");
+         $("#login-submit").trigger("click");
+      });
+      //check whether user is logged in or not
+      if ($(".mp-login-link").size() > 0) {
+         //open the login-box automatically when coming from another non-interactive by clicking on "Login/Registration"
+         if (window.location.hash === "#login") {
+            $(window).load(function () {
+               $(".mp-login-link").find("a").trigger("click");
+               $("#login_email").focus();
+            });
+         }
+         //slide-in login-box
+         $(".mp-login-link").find("a").on("click", function (event) {
+            //prevent page from reloading
+            if (event) {
+               event.preventDefault();
+            }
+            $("#keiken-login").css("visibility", "visible").animate({
+               left : "74%"
+            }, 400);
+            $("#keiken-login").tabs("option", "active", 0)
+            
+         });
+      }
+      
+      
+   }
    // display all tags that are marked as buttons as ui-buttons
    $(".mp-button").button();
 });

@@ -50,14 +50,15 @@ address
 
 .mp-form
   .mp-form-submit
-    margin-left 25% // position under last input field
+    margin-left 28% // position under last input field => 3% label margin-right + 25% label width
   label
     margin 1% 0
+    margin-right 3%
     float left
     width 25% 
   input, textarea
     margin 1% 0
-    width 72% // 1% is buffer for browser stylesheets like border 1px...
+    width 72% // 100% - 3% label margin right (= space between laveb and input) - 25% label width
 
 // this is djangos css class for errors
 .errorlist
@@ -155,7 +156,7 @@ address
 /* -- styling for landing page -- */
 
 #landingpage .mp-content
-  background-color #dadada
+  background-color #000 //#dadada
 
 #landingpage .background-image,
 #landingpage .background-overlay-black,
@@ -173,38 +174,65 @@ address
   
 #landingpage .background-overlay-black
   z-index 1
-  background-color rgba(0,0,0,0.2)
-  display none
-  
-#landingpage .mp-non-interactive-content
-  width 80%
-  height 70%
-  top 18% //13% header + 5% height difference
-  left 10% //10% width difference
-  z-index 2
   background-color rgba(0,0,0,0.6)
-  color #dadada
-  
-#mp-intro
-  font-size 1.3em // make it a little bigger
-  div 
-    margin 2% 0
+  display none
 
+#landingpage .mp-non-interactive-content
+  height 100%
+  position relative
+  top 0%
+  background none
+  font-size 1.2em
+  color #dadada
+  overflow hidden
+  section.keiken-intro
+    width 30%
+    height 80%
+    padding 50px
+    position absolute
+    top 5%
+    left 1%
+    background-color rgba(0,0,0,0.6)
+    text-align left
+    h2
+      margin-bottom 30px
+      margin-left 0
+      text-align left
+
+section#keiken-login
+  width 25%
+  height 80%
+  position absolute
+  top 5%
+  left 100%
+  font-size .8em
+  opacity 0.8
+  visibility hidden
+
+#keiken-login .login-toggle
+  padding 0
+  float right
+  cursor pointer
+  a
+    padding 0
+    text-align center
+  img
+    width 95%
+    height auto
+    max-width 27px
+    max-height 27px
+    margin 0
+    padding 0
+    
 .mp-landing-page-links
   width 100%
-  position relative
-  text-align center
 
-.mp-dashboard-button
-  max-width 50%
-  margin 0 auto
-
+.mp-dashboard-button,
 .mp-demo-button,
 .mp-test-button
-  width 50%
-  max-width 50%
-  float left
-  text-align center
+  width 100%
+  margin-top 30px
+  font-size .8em
 
 /* ------ end landing page ------ */
 

@@ -10,45 +10,109 @@
 {% block pageID %}landingpage{% endblock %}
 
 {% block background_image %}
-<img src="/static/images/bg1.jpg" alt="background couldn't be loaded" class="background-image"/>
+<img src="/static/images/backgrounds/bg2.jpg" alt="background couldn't be loaded" class="background-image"/>
 <div class="background-overlay-black"></div>
 {% endblock %}
 
 {% block non_interactive_content %}
-<section id="mp-intro">
+<!--
+  <h2><span>{% trans "KEIKEN_SHORT" %}</span></h2>
 
-  <h2>{% trans "KEIKEN_SHORT" %}</h2>
-
-  <p>{% trans "KEIKEN_BEFORE" %}</p>
-  <div id="mp-intro-alternative">
-    <div class="span-7 mp-inline-block">
-      <span>{% trans "KEIKEN_ALTERNATIVE_EMAIL" %}</span>
-    </div>
-    <div class="span-1 mp-inline-block" ></div>
-    <div class="span-7 mp-inline-block">
-      <span>{% trans "KEIKEN_ALTERNATIVE_PRESENTATION" %}</span>
-    </div>
-    <div class="span-1 mp-inline-block" ></div>
-    <div class="span-7 mp-inline-block">
-      <span>{% trans "KEIKEN_ALTERNATIVE_NETWORK" %}</span>
-    </div>
+  <p class="keiken-before">{% trans "KEIKEN_BEFORE" %}</p>
+  <div class="keiken-alternative">
+    <span>{% trans "KEIKEN_ALTERNATIVE_EMAIL" %}</span>
   </div>
-  <p>{% trans "KEIKEN_REASONS" %}</p>
-  <div class="mp-landing-page-links">
-    {% if user.is_authenticated %}
-    <p class="mp-dashboard-button">
-      <a class="mp-button" href="/dashboard" title='{% trans "TO_DASHBOARD" %}'>{% trans "TO_DASHBOARD" %}</a>
-    </p>
-    {% else %}
-    <p class="mp-demo-button"> 
-      <a class="mp-button" href="/demo" title='{% trans "VIEW_ALBUM" %}'>{% trans "VIEW_ALBUM" %}</a>
-    </p>
-    <p class="mp-test-button">
-      <a class="mp-button" href="/test" title='{% trans "TRY_KEIKEN" %}'>{% trans "TRY_KEIKEN" %}</a>
-    </p>
-    {% endif %}
+  <div class="keiken-alternative">
+    <span>{% trans "KEIKEN_ALTERNATIVE_PRESENTATION" %}</span>
+  </div>
+  <div class="keiken-alternative">
+    <span>{% trans "KEIKEN_ALTERNATIVE_NETWORK" %}</span>
+  </div>
+  <p class="keiken-reasons">{% trans "KEIKEN_REASONS" %}</p>
+-->
+  
+  <section class="keiken-intro">
+  	<h2><span>Welcome to KEIKEN!</span></h2>
+  	<span>
+  		KEIKEN is a free online photo-book designed to make sharing your adventures abroad and other interesting
+  		experiences easy and vivid!
+  	</span>
+    <div class="mp-landing-page-links">
+      {% if user.is_authenticated %}
+      <p class="mp-dashboard-button">
+        <a class="mp-button" href="/dashboard" title='{% trans "TO_DASHBOARD" %}'>{% trans "TO_DASHBOARD" %}</a>
+      </p>
+      {% else %}
+      <p class="mp-demo-button"> 
+        <a class="mp-button" href="/demo" title='{% trans "VIEW_ALBUM" %}'>{% trans "VIEW_ALBUM" %}</a>
+      </p>
+      <p class="mp-test-button">
+        <a class="mp-button" href="#test" title='{% trans "TRY_KEIKEN" %}'>{% trans "TRY_KEIKEN" %}</a>
+      </p>
+      {% endif %}
+    </div>
+  </section>
+  
+<section id="keiken-login">
+  <ul class="mp-login-register-tabs">
+    <li><a href="#mp-login">{% trans "Login" %}</a></li>
+    <li><a href="#mp-register">{% trans "Registration" %}</a></li>
+    <li class="login-toggle"><img src="/static/images/close-login.png" alt="Close" /></li>
+  </ul>
+  <!-- hide tabs to avoid ugly moving around during page load -->
+  <div class="mp-login-tab" id="mp-login">
+    <!-- action is necessary because this template is also populated by /test -->
+    <form class="mp-form" action="/login" method="post">
+      <!-- displays the password || email wrong message -->
+      {{ login.non_field_errors }}
+      <p>
+        <label for="login_email">{% trans "Email" %}:</label>
+        <input type="text" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}"/>
+        <!-- field required error -->
+        {{ login.email.errors }}
+      </p>
+      <p>
+        <label for="login_password">{% trans "Password" %}:</label>
+        <input type="password" name="password" id="login_password" required="required" value="{{ password }}"/>
+        <!-- field required error -->
+        {{ login.password.errors }}
+      </p>
+      <p>
+	<input id="login-submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
+      </p>
+    </form>
+  </div>
+  <!-- hide tabs to avoid ugly moving around during page load -->
+  <div class="mp-login-tab" id="mp-register">
+    <!-- action is necessary because this template is also populated by /test -->
+    <form class="mp-form" action="/login" method="post">
+      <p>
+        <label for="register_first_name">{% trans "First name" %}:</label>
+        <input disabled="disabled" type="text" name="first_name" id="register_first_name" autofocus="autofocus" />
+      </p>
+      <p>
+        <label for="register_last_name">{% trans "Last name" %}:</label>
+        <input disabled="disabled" type="text" name="last_name" id="register_last_name" />
+      </p>
+      <p>
+        <label for="register_email">{% trans "Email" %}:</label>
+        <input disabled="disabled" type="text" name="email" id="register_email" />
+      </p>
+      <p>
+        <label for="register_password">{% trans "Password" %}:</label>
+        <input disabled="disabled" type="password" name="password" id="register_password" />
+      </p>
+      <p>
+        <label for="id_confirm">{% trans "Confirm Password" %}:</label>
+        <input disabled="disabled" type="password" name="confirm" id="register_confirm" />
+      </p>
+      <p>
+	<input class="ui-widget mp-form-submit" type="submit" name="register" value='{% trans "Register" %}' disabled="disabled" />
+      </p>
+    </form>
   </div>
 </section>
+
 
 {% endblock %}
 
