@@ -155,6 +155,8 @@ address
 /* ------------------------------ */
 /* -- styling for landing page -- */
 
+/* ....... general styles ........*/
+
 #landingpage .mp-content
   background-color #000 //#dadada
 
@@ -185,9 +187,10 @@ address
   font-size 1.2em
   color #dadada
   overflow hidden
+
 section.keiken-intro
   width 30%
-  height 85%
+  max-height 85%
   padding 30px
   position absolute
   top 5%
@@ -201,6 +204,20 @@ section.keiken-intro
     text-align left
   div
     margin-bottom 10px
+
+/* ....... main styles ....... */
+.mp-landing-page-links
+  width 100%
+
+.mp-dashboard-button,
+.mp-demo-button,
+.mp-test-button
+  width 100%
+  margin-top 30px
+  font-size .8em
+
+/* ....... guest styles ..... */
+section.keiken-intro
   form input
     width 47%
     min-height 25px
@@ -213,15 +230,17 @@ section.keiken-intro
     margin-left 6%
     cursor pointer
     box-shadow(0px 0px 5px rgba(255,255,255,0.8))
+    
 .mp-guest-login-explain
   margin-top 30px
   font-size .8em
   font-style italic
-    
+
+/* ......... login styles ...... */ 
 
 section#keiken-login
   width 25%
-  height 85%
+  max-height 85%
   position absolute
   top 5%
   left 100%
@@ -243,16 +262,6 @@ section#keiken-login
     max-height 27px
     margin 0
     padding 0
-    
-.mp-landing-page-links
-  width 100%
-
-.mp-dashboard-button,
-.mp-demo-button,
-.mp-test-button
-  width 100%
-  margin-top 30px
-  font-size .8em
 
 /* ------ end landing page ------ */
 

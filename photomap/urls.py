@@ -48,7 +48,7 @@ urlpatterns = patterns("",
                        
 
                        url(r'^logout$', authentication.logout),
-                       url(r'^$', direct_to_template, {"template": "index.html"}),
+                       url(r'^$', direct_to_template, {"template": "index-main.html"}),
                        
                        url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
 

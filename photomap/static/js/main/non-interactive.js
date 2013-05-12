@@ -65,7 +65,7 @@ $(document).ready(function () {
       console.log($loginCloseWidth);
       // show tabs on login box
       $("#keiken-login").tabs({
-         heightStyle : "fill",
+         //heightStyle : "auto",
          active: 0,
          disabled : [1]
       });
