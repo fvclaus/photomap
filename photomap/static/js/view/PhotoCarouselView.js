@@ -32,6 +32,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 this.defaults = {
                    lazy : false,
                    effect : "fade",
+                   duration: 500,
                    context : this,
                 };
                 this.options = $.extend({}, this.defaults, options);
@@ -176,9 +177,8 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                    });
                    // regardless of whats actually on a page, we must update all entries to remove the old ones
                    to = this.size;
-                }
                 // load everything
-                else {
+                } else {
                    imageSources = this.getAllImageSources();
                 }
                 // handler is called after all images are loaded
@@ -206,19 +206,13 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                          .attr('src', source);
                    }
                 }
-                if (this.options.effect === "fade") {
-                   
-                   carouselAnimation.start({
-                      items: instance.$items,
-                      loader: $(".mp-slideshow-loader"),
-                      animation: "fade",
-                      animationTime: 500,
-                      onStart : loader,
-                      onEnd: instance.options.onUpdate,
-                      context: instance.options.context
-                   });
-                   return;
-                }
+                carouselAnimation.start({
+                   items: instance.$items,
+                   loader: this.options.loader,
+                   animation: this.options.effect,
+                   animationTime: this.options.duration,
+                   onStart : loader
+                });
 
                 if (typeof this.options.beforeLoad === "function") {
                    // trigger the beforeLoad event
@@ -233,14 +227,6 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                       this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nSources));
                    }
                 }
-                for (i = 0; i < nSources; i++) {
-                   source = imageSources[i];
-                   console.log(source);
-                   $('<img/>')
-                      .load(loadHandler)
-                      .error(loadHandler)
-                      .attr('src', source);
-                }
              },
              /**
               * @description Updates carousel to show current page.
@@ -250,83 +236,25 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
              // we need to indicate that a photo could not be loaded
              _update : function (from, to) {
                 
-                var showNew, 
-                    instance = this, 
-                    duration, 
-                    imageSource,
-                    $items = this.$items.slice(from, to),
-                    nItems = $items.length,
-                    nUpdated = 0,
-                    // we need to make sure we call update after all(!) photos are completely faded in/out
-                    updated = function () {
-                       nUpdated += 1;
-                       if (nUpdated === nItems){
-                          // execute onUpdate handler if defined in options
-                          if (instance.options.onUpdate) {
-                             instance.options.onUpdate.call(instance.options.context, $items);
-                          }
-                       }
-                    };
+                var instance = this, 
+                    imageSources = [],
+                    $items = this.$items.slice(from, to);
+                    
                 assertTrue($items.size() > 0, "$items has to contain at least one item");
-                // remove mp-animate classes
-                $items.removeClass("mp-animate-02s mp-animate-08s");
                 
-                if (this.options.effect === "fade") {
-                   
-                   imageSource = [];
-                   $items.each(function (index) {
-                      imageSource.push(instance.currentPage[from + index] || "");
-                   });
-                   carouselAnimation.end({
-                      items: $items,
-                      images: imageSource,
-                      loader: $(".mp-slideshow-loader"),
-                      animation: "fade",
-                      animationTime: 500,
-                      onEnd: instance.options.onUpdate,
-                      context: instance.options.context
-                   });
-                   return;
-                }
-                console.log("this shouldn't happen on fade");
+                $items.each(function (index) {
+                   imageSources.push(instance.currentPage[from + index] || "");
+                });
                 
-                if (this.options.effect === "foldIn") {
-                   $items.addClass("mp-animate-02s mp-scale-X-0");
-                   duration = 200;
-                } else {
-                   $items.fadeTo(500, 0);
-                   duration = 500;
-                }
-
-                window.setTimeout(function () {
-                   $items.each(function (index) {
-                      imageSource = instance.currentPage[from + index];
-                      // center element
-                      // give the element its later height
-                      $(this).attr("src", imageSource);
-                      // set margin-top accordingly. 
-                      tools.centerElement($(this), "vertical"); 
-                      // remove the img again to fade it in nicely
-                      $(this).removeAttr("src");
-                      if ( imageSource !== null) {
-                         $(this).fadeTo(duration, 1, updated)
-                            .attr("src", imageSource)
-                         // needed for frontend testing to select 'active' photos
-                            .addClass("mp-test-photo-used");
-
-                      } else {
-                         $(this).fadeOut(0, updated)
-                            .removeAttr("src")
-                         // needed for frontend testing to select 'active' photos
-                            .removeClass("mp-test-photo-used");
-                      }
-
-                   });
-                   if (instance.options.effect === "foldIn") {
-                      $items.removeClass("mp-scale-X-0");
-                   }
-
-                }, duration);
+                carouselAnimation.end({
+                   items: $items,
+                   images: imageSources,
+                   loader: this.options.loader,
+                   animation: this.options.effect,
+                   animationTime: this.options.duration,
+                   onEnd: instance.options.onUpdate,
+                   context: instance.options.context
+                });
              }
           });
        });

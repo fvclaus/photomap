@@ -37,6 +37,7 @@ define(["dojo/_base/declare",
                 this.$navRight = $("#mp-gallery-nav-right");
                 this.$photos = this.$thumbs.find(".mp-thumb");
                 this.$containerColumn = $("#mp-left-column");
+                this.$loader = this.$container.find(".mp-gallery-loader");
 
                 this.$isEmpty = $("#mp-gallery-no-image");
                 this.$isNotStarted = $("#mp-gallery-not-started");
@@ -82,6 +83,7 @@ define(["dojo/_base/declare",
                 assert(this.isStarted, false, "gallery must not be started yet");
                 
                 var options,
+                    effect,
                     instance = this,
                     imageSources = [];
 
@@ -94,9 +96,16 @@ define(["dojo/_base/declare",
 
 
                 // initialize and start carousel
+                if (navigator.sayswho[0] === "Firefox") {
+                   effect = "fade";
+                } else {
+                   effect = "flip";
+                }
                 options = {
                    lazy : !clientstate.isAdmin(),
-                   effect : "foldIn",
+                   "effect" : effect,
+                   duration: 300,
+                   loader : this.$loader,
                    beforeLoad : this._beforeLoad,
                    afterLoad : this._afterLoad,
                    onUpdate : this._update,
@@ -168,7 +177,6 @@ define(["dojo/_base/declare",
                    //TODO this does now show the new photo yet
                    this.start();
                 }
-                
              },
              /**
               * @description Deletes an existing Photo. If the Photo was on the current page, fade it out and move all
@@ -210,23 +218,9 @@ define(["dojo/_base/declare",
               * @description handler is called after gallery-thumbs are loaded
               */
              _beforeLoad : function ($photos) {
-                //TODO show loading
-                $photos.each(function () {
-                   $(this)
-                      .hide()
-                      .siblings(".mp-gallery-loader")
-                      .removeClass("mp-nodisplay");
-                });
-                // hide loader
-                // ui.hideLoading();
+                //TODO this is empty, loading-icon is taken care of in PhotoCarousel
              },
              _afterLoad : function ($photos) {
-                //TODO hide loading
-                $photos.each(function () {
-                   $(this)
-                      .siblings(".mp-gallery-loader")
-                      .addClass("mp-nodisplay");
-                });
                 //enable ui
                 communicator.publish("enable:ui");
              },

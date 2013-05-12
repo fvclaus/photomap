@@ -8,6 +8,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
           return declare(Presenter, {
              init : function () {
                 this.view.init();
+                communicator.subscribe("done:fullscreenImageFadeout", this.setFadeoutDone, this);
              },
              open : function () {
                 this.view.open();
@@ -21,8 +22,12 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
                 }
              },
              navigate : function (direction) {
+                this.view.update();
                 communicator.publish("disable:fullscreen");
                 communicator.publish("navigate:fullscreen", direction);
+             },
+             setFadeoutDone : function () {
+                this.view.setFadeoutDone(true);
              }
              
           });

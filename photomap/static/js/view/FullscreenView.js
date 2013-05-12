@@ -33,7 +33,7 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
             this.$image = $("#mp-fullscreen-image");
             this.$description = $("#mp-fullscreen-image-description");
             this.$zoom = $(".mp-image-zoom");
-            this.$load = $(".mp-dark-loader");
+            this.$loader = $(".mp-dark-loader");
             // need to indicate ready status to frontend tests
             this.$ready = $("<div id=mp-fullscreen-ready />")
                .hide()
@@ -72,33 +72,56 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
                communicator.publish("disable:fullscreen");
             }
             console.log("UIFullscreen: update started");
-      
-            $("<img/>")
-               .load(function () {
+            
+            // call update() without photo to start the animation (=hide the image and show loading)
+            if (photo === undefined && instance.visible) {
+               // image is fading out -> nothing may be updated yet
+               this.setFadeoutDone(false);
+               instance.$image.fadeOut(300, function () {
+                  instance.$loader.show();
+                  // image done fading out -> now updating may start
+                  communicator.publish("done:fullscreenImageFadeout");
+               });
+            } else if (photo) {
                
-                  instance._updateTitle(photo);
+               $("<img/>")
+                  .load(function () {
                   
-                  if (instance.visible) {
+                     instance._updateTitle(photo);
                      
-                     instance.$image.fadeOut(300);
-                     // change src and fade in after fading out is complete
-                     window.setTimeout(function () {
-                        instance.$image.fadeIn(300).attr("src", photo.photo);
-                     }, 300);
-                     // enable fullscreen controls again after new image is displayed (and animation is complete)
-                     window.setTimeout(function () {
+                     if (instance.visible) {
+                        
+                        var showImage = function () {
+                           console.log("Fullscreen: in showImage");
+                           instance.$loader.hide();
+                           // change src and fade in after fading out is complete
+                           window.setTimeout(function () {
+                              instance.$image.fadeIn(300).attr("src", photo.photo);
+                           }, 300);
+                           // enable fullscreen controls again after new image is displayed (and animation is complete)
+                           window.setTimeout(function () {
+                              communicator.publish("enable:fullscreen");
+                           }, 600);
+                        }
+                        // check if fading out is already over, if yes start updating
+                        if (instance.fadeoutDone) {
+                           showImage();
+                        // if not wait with updating until the fading out is done (=event is triggered) -- the image might be loaded faster than the fading out takes
+                        } else {
+                           communicator.subscribeOnce("done:fullscreenImageFadeout", showImage)
+                        }
+                        
+                     } else {
+                        instance.$image.attr("src", photo.photo);
                         communicator.publish("enable:fullscreen");
-                     }, 600);
-                     
-                  } else {
-                     instance.$image.attr("src", photo.photo);
-                     communicator.publish("enable:fullscreen");
-                  }
-               })
-               .error(function () {
-                  alert(gettext("PHOTO_LOADING_ERROR"));
-               })
-               .attr("src", photo.photo);
+                     }
+                  })
+                  .error(function () {
+                     alert(gettext("PHOTO_LOADING_ERROR"));
+                  })
+                  .attr("src", photo.photo);
+            }
+      
          },
          disable : function () {
             this.$controls.addClass("mp-disabled");
@@ -111,6 +134,9 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
             // needed to indicate ready status to frontend tests
             this.$ready.show();
             console.log("UIFullscreen: enabled");
+         },
+         setFadeoutDone : function (done) {
+            this.fadeoutDone = done;
          },
          _bindListener : function () {
             

@@ -59,7 +59,7 @@ define([
              var photos = state.getPhotos(),
                  options = {
                     lazy : true,
-                    effect : "fade",
+                    loader : this.$loader,
                     beforeLoad : this._beforeLoad,
                     afterLoad : this._afterLoad,
                     onUpdate : this._update,
@@ -185,16 +185,10 @@ define([
              // we are expecting to receive a jquery element wrapper
              assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
              // trigger event to tell UI that slideshow is about to change
-             // @see UIInformation 
+             // @see UIDetailView/Presenter
              communicator.publish("beforeLoad:slideshow");
              communicator.publish("disable:slideshow");
              
-             $photos.each(function () {
-                $(this)
-                   .hide()
-                   .siblings(".mp-slideshow-loader")
-                   .show();
-             });
           },
           /**
            * @private
