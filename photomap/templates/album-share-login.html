@@ -1,6 +1,33 @@
-{% extends "base-non-interactive.html" %}
+{% extends "index.html" %}
 
-{% block non_interactive_content %}
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block keiken_intro %}
+  <div class="mp-guest-login-explain">{% trans "KEIKEN_GUEST_LOGIN" %}</div>
+  <form class="mp-guest-login jquery-validator" method="post" action="">
+    <p>
+      <input type="password" id="guest-password" name="guest-password" placeholder='{% trans "Enter password..." %}' autofocus="autofocus"/>
+      <input class="submit-guest-password" type="submit" value='{% trans "View Album" %}' />
+    </p>
+    <p> {{ password_incorrect_error }} </p>
+  </form>
+{% endblock %}
+
+<!--
+<section class="mp-guest-welcome">
+  <h1>{% trans "Welcome to Keiken" %}</h1>
+  <p>{% trans "LOGIN_GUEST_WELCOME_1" %}</p>
+  <p>{% trans "LOGIN_GUEST_WELCOME_2" %}<img width="50%" style="float:right;" src="/static/images/hierarchy.png">{% trans "LOGIN_GUEST_WELCOME_3" %}</p>
+  <p>{% trans "LOGIN_GUEST_WELCOME_4" %}</p>
+  <p>
+    {% trans "LOGIN_GUEST_WELCOME_5" %}<br />
+    {% trans "LOGIN_GUEST_WELCOME_6" %}
+  </p>
+  <p>{% trans "Welcome to Keiken" %}</p>
+  <p><a href="/login#mp-guest">{% trans "Zum Login" %}</a></p>
+</section>
+
 <h1>Welcome to keiken</h1>
 <p>
 Keiken is no place to share pictures of … temporary social interest of whatever kind. Go to facebook if you are looking for the fast thrill. Keiken is also no place to drag and drop the whole picture folder into the web.</p>
@@ -13,4 +40,4 @@ Yes, we are looking at you big DCIM folder. But every adventure is different! A 
   <input type="submit">
   <p> {{ password_incorrect_error }} </p>
 </form>
-{% endblock %}
+-->

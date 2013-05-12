@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-12 12:25+0200\n"
+"POT-Creation-Date: 2013-05-12 18:26+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,164 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+#: templates/album-share-login.html:6 templates/album-share-login.html.py:8
+#: templates/index-guest.html:6 templates/index-guest.html.py:8
+#: templates/index.html:6 templates/index.html.py:8
+msgid "Willkommen"
+msgstr "Willkommen"
+
+#: templates/album-share-login.html:22 templates/base.html:109
+#: templates/index-guest.html:17
+msgid "JS_DISABLED_WARNING"
+msgstr ""
+"Sie haben Javascript in Ihren Browsereinstellungen deaktiviert. Um Keiken "
+"nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
+"die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
+
+#: templates/album-share-login.html:25 templates/index-guest.html:20
+#: templates/index.html:35
+msgid "Welcome to KEIKEN!"
+msgstr "Herzlich Willkommen bei KEIKEN!"
+
+#: templates/album-share-login.html:26 templates/index-guest.html:21
+#: templates/index.html:36
+msgid "KEIKEN_ABSTRACT"
+msgstr ""
+"KEIKEN ist ein kostenloses Online-Reise-Album dass Dir dabei helfen soll "
+"deine Auslandserfahrungen mit jedem zu teilen. Melde dich an und erzähle "
+"deinen Freunden und Bekannten jetzt von deinen Abenteuern!"
+
+#: templates/album-share-login.html:27 templates/index-guest.html:22
+msgid "KEIKEN_GUEST_LOGIN"
+msgstr ""
+"Bitte bestätigen Sie, dass Sie dazu berechtigt sind das Album anzusehen, "
+"indem Sie in das nachfolgende Eingabefeld das korrekte Passwort eintragen."
+
+#: templates/album-share-login.html:30 templates/album-share-login.html:59
+#: templates/album-share-login.html:86 templates/index-guest.html:24
+#: templates/index-guest.html.py:49 templates/index-guest.html:76
+#: templates/index.html:72 templates/index.html.py:99 templates/login.html:32
+#: templates/login.html.py:59 templates/login.html:87
+msgid "Password"
+msgstr "Passwort"
+
+#: templates/album-share-login.html:31
+msgid "Enter password..."
+msgstr "Passwort eingeben..."
+
+#: templates/album-share-login.html:34 templates/index-guest.html:26
+msgid "View Album"
+msgstr "Album ansehen"
+
+#: templates/album-share-login.html:42 templates/index-guest.html:32
+#: templates/index.html:55 templates/login.html:16
+msgid "Login"
+msgstr "Anmeldung"
+
+#: templates/album-share-login.html:43 templates/index-guest.html:33
+#: templates/index.html:56 templates/login.html:17
+msgid "Registration"
+msgstr "Registration"
+
+#: templates/album-share-login.html:53 templates/album-share-login.html:82
+#: templates/contact.html:49 templates/index-guest.html:43
+#: templates/index-guest.html.py:72 templates/index.html:66
+#: templates/index.html.py:95 templates/login.html:26
+#: templates/login.html.py:55
+msgid "Email"
+msgstr "Email"
+
+#: templates/album-share-login.html:65 templates/index-guest.html:55
+#: templates/index.html:78 templates/login.html:38 templates/login.html.py:90
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: templates/album-share-login.html:74 templates/index-guest.html:64
+#: templates/index.html:87 templates/login.html:47
+msgid "First name"
+msgstr "Vorname"
+
+#: templates/album-share-login.html:78 templates/index-guest.html:68
+#: templates/index.html:91 templates/login.html:51
+msgid "Last name"
+msgstr "Nachname"
+
+#: templates/album-share-login.html:90 templates/index-guest.html:80
+#: templates/index.html:103 templates/login.html:63
+msgid "Confirm Password"
+msgstr "Passwort bestätigen"
+
+#: templates/album-share-login.html:94 templates/index-guest.html:84
+#: templates/index.html:107 templates/login.html:67
+msgid "Register"
+msgstr "Registrieren"
+
+#: templates/album-share-login.html:102 templates/album-share-login.html:110
+#: templates/index-guest.html:92 templates/index-guest.html.py:100
+#: templates/login.html:77 templates/login.html.py:85
+msgid "Welcome to Keiken"
+msgstr "Hezlich Willkommen zu Keiken"
+
+#: templates/album-share-login.html:103 templates/index-guest.html:93
+#: templates/login.html:78
+msgid "LOGIN_GUEST_WELCOME_1"
+msgstr ""
+"Keiken ist kein Ort, an dem man Bilder von vergänglichem Interesse. Sollte "
+"man so etwas suchen, gibt es bereits genug Websites dafür. Keiken ist auch "
+"nicht dafür da ganze Ordner voll mit Bildern einfach ins Web hochzuladen. Es "
+"geht bei Keiken weder um unpersönliches Teilen von Erfahrungen, noch um das "
+"Überwältigen der Bekannten und Verwandten, in dem man sie mit einer Unmenge "
+"an Bildern überschwemmt."
+
+#: templates/album-share-login.html:104 templates/index-guest.html:94
+#: templates/login.html:79
+msgid "LOGIN_GUEST_WELCOME_2"
+msgstr ""
+"Bei Keiken werden Alben in Plätze und Photos strukturiert. Jedes Album kann "
+"beliebig viele Plätze beinhalten und jeder Platz beliebig viele Photos.."
+
+#: templates/album-share-login.html:104 templates/index-guest.html:94
+#: templates/login.html:79
+msgid "LOGIN_GUEST_WELCOME_3"
+msgstr ""
+"Das kann dabei helfen die Abenteuer und Geschichten, welche durch das Album "
+"erzählt werden, besser zu erfahren. Ja wir meinen DICH überladener DCIM-"
+"Ordner auf der Digitalkamera! ;) Aber natürlich ist jedes Abenteuer anders! "
+"Ein Platz kann die Größe eines ganzen Landes haben, wenn man beispielsweise "
+"auf einer Weltreise ist. Und bei einer Städtetour kann ein Platz auch nur so "
+"groß wie eine besondere Sehenswürdigkeit sein."
+
+#: templates/album-share-login.html:105 templates/index-guest.html:95
+#: templates/login.html:80
+msgid "LOGIN_GUEST_WELCOME_4"
+msgstr ""
+"Photos sind.. naja nur Photos halt und keine tatsächlich spürbare Erfahrung. "
+"Trotzdem erzählen Bilder von Erfahrungen und wir versuchen die Bedeutung der "
+"Bilder hervorzuheben. Darum ist es verpflichtend jedem Bild einen Titel zu "
+"geben - nachdrücklicher Blick auf 'IMG_13072013_1718.JPG' - und natürlich "
+"wäre es super, wenn man auch das optionale Beschreibungsfeld ausnutzt um von "
+"seiner Reise zu erzählen. "
+
+#: templates/album-share-login.html:107 templates/index-guest.html:97
+#: templates/login.html:82
+msgid "LOGIN_GUEST_WELCOME_5"
+msgstr ""
+"Wir hoffen Sie kennen noch Photo-Alben. Das sind die netten verstaubten "
+"großen Bücher, die man sich als Kind immer mit den Eltern anschauen musste."
+
+#: templates/album-share-login.html:108 templates/index-guest.html:98
+#: templates/login.html:83
+msgid "LOGIN_GUEST_WELCOME_6"
+msgstr ""
+"Wir haben ein bisschen Staub gewischt und eine digitale, nicht verstaubbare, "
+"interaktive Version dieser Alben erstellt und ermöglichen Ihnen hier all "
+"Ihre Reisen festzuhalten und jedem dem Ihr Eure Geschichten erzählen wollt "
+"die Möglichkeit zu geben 'zuzuhören' und Eure Erfahrungen selbst zu erfahren."
+
+#: templates/album-share-login.html:111 templates/index-guest.html:101
+msgid "Zum Login"
+msgstr "Zur Anmeldung"
 
 #: templates/base-interactive.html:84 templates/base-interactive.html:100
 #: templates/view-album.html:117
@@ -50,13 +208,6 @@ msgstr "Löschen"
 #: templates/base-interactive.html:136
 msgid "control-title modify"
 msgstr "Bearbeiten"
-
-#: templates/base.html:109 templates/index-guest.html:32
-msgid "JS_DISABLED_WARNING"
-msgstr ""
-"Sie haben Javascript in Ihren Browsereinstellungen deaktiviert. Um Keiken "
-"nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
-"die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
 
 #: templates/base.html:130
 msgid "Login or Register"
@@ -166,12 +317,6 @@ msgstr "Name"
 #: templates/update-place.html:12
 msgid "MANDATORY_FIELD"
 msgstr "Dieses Feld ist ein Pflichtfeld."
-
-#: templates/contact.html:49 templates/index.html:69
-#: templates/index.html.py:98 templates/login.html:26
-#: templates/login.html.py:55
-msgid "Email"
-msgstr "Email"
 
 #: templates/contact.html:57
 msgid "SUBJECT"
@@ -620,70 +765,6 @@ msgstr ""
 "behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
 "Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
 
-#: templates/index-guest.html:6 templates/index-guest.html.py:8
-#: templates/index.html:6 templates/index.html.py:8
-msgid "Willkommen"
-msgstr "Willkommen"
-
-#: templates/index-guest.html:34 templates/index-guest.html.py:42
-#: templates/login.html:77 templates/login.html.py:85
-msgid "Welcome to Keiken"
-msgstr "Hezlich Willkommen zu Keiken"
-
-#: templates/index-guest.html:35 templates/login.html:78
-msgid "LOGIN_GUEST_WELCOME_1"
-msgstr ""
-"Keiken ist kein Ort, an dem man Bilder von vergänglichem Interesse. Sollte "
-"man so etwas suchen, gibt es bereits genug Websites dafür. Keiken ist auch "
-"nicht dafür da ganze Ordner voll mit Bildern einfach ins Web hochzuladen. Es "
-"geht bei Keiken weder um unpersönliches Teilen von Erfahrungen, noch um das "
-"Überwältigen der Bekannten und Verwandten, in dem man sie mit einer Unmenge "
-"an Bildern überschwemmt."
-
-#: templates/index-guest.html:36 templates/login.html:79
-msgid "LOGIN_GUEST_WELCOME_2"
-msgstr ""
-"Bei Keiken werden Alben in Plätze und Photos strukturiert. Jedes Album kann "
-"beliebig viele Plätze beinhalten und jeder Platz beliebig viele Photos.."
-
-#: templates/index-guest.html:36 templates/login.html:79
-msgid "LOGIN_GUEST_WELCOME_3"
-msgstr ""
-"Das kann dabei helfen die Abenteuer und Geschichten, welche durch das Album "
-"erzählt werden, besser zu erfahren. Ja wir meinen DICH überladener DCIM-"
-"Ordner auf der Digitalkamera! ;) Aber natürlich ist jedes Abenteuer anders! "
-"Ein Platz kann die Größe eines ganzen Landes haben, wenn man beispielsweise "
-"auf einer Weltreise ist. Und bei einer Städtetour kann ein Platz auch nur so "
-"groß wie eine besondere Sehenswürdigkeit sein."
-
-#: templates/index-guest.html:37 templates/login.html:80
-msgid "LOGIN_GUEST_WELCOME_4"
-msgstr ""
-"Photos sind.. naja nur Photos halt und keine tatsächlich spürbare Erfahrung. "
-"Trotzdem erzählen Bilder von Erfahrungen und wir versuchen die Bedeutung der "
-"Bilder hervorzuheben. Darum ist es verpflichtend jedem Bild einen Titel zu "
-"geben - nachdrücklicher Blick auf 'IMG_13072013_1718.JPG' - und natürlich "
-"wäre es super, wenn man auch das optionale Beschreibungsfeld ausnutzt um von "
-"seiner Reise zu erzählen. "
-
-#: templates/index-guest.html:39 templates/login.html:82
-msgid "LOGIN_GUEST_WELCOME_5"
-msgstr ""
-"Wir hoffen Sie kennen noch Photo-Alben. Das sind die netten verstaubten "
-"großen Bücher, die man sich als Kind immer mit den Eltern anschauen musste."
-
-#: templates/index-guest.html:40 templates/login.html:83
-msgid "LOGIN_GUEST_WELCOME_6"
-msgstr ""
-"Wir haben ein bisschen Staub gewischt und eine digitale, nicht verstaubbare, "
-"interaktive Version dieser Alben erstellt und ermöglichen Ihnen hier all "
-"Ihre Reisen festzuhalten und jedem dem Ihr Eure Geschichten erzählen wollt "
-"die Möglichkeit zu geben 'zuzuhören' und Eure Erfahrungen selbst zu erfahren."
-
-#: templates/index-guest.html:43
-msgid "Zum Login"
-msgstr "Zur Anmeldung"
-
 #: templates/index.html:19
 msgid "KEIKEN_SHORT"
 msgstr ""
@@ -721,61 +802,17 @@ msgstr ""
 "Möglichkeit zu bieten, ihre Erfahrungen mit allen Freunden & Verwandten "
 "jederzeit teilen zu können."
 
-#: templates/index.html:35
-msgid "Welcome to KEIKEN!"
-msgstr "Herzlich Willkommen bei KEIKEN!"
-
-#: templates/index.html:36
-msgid "KEIKEN_ABSTRACT"
-msgstr ""
-"KEIKEN ist ein kostenloses Online-Reise-Album dass Dir dabei helfen soll "
-"deine Auslandserfahrungen mit jedem zu teilen. Melde dich an und erzähle deinen "
-"Freunden und Bekannten jetzt von deinen Abenteuern!"
-
-#: templates/index.html:43
+#: templates/index.html:40
 msgid "TO_DASHBOARD"
 msgstr "Zum Dashboard"
 
-#: templates/index.html:47
+#: templates/index.html:44
 msgid "VIEW_ALBUM"
 msgstr "Unser erstes Album betrachten"
 
-#: templates/index.html:50
+#: templates/index.html:47
 msgid "TRY_KEIKEN"
 msgstr "KEIKEN selber ausprobieren"
-
-#: templates/index.html:58 templates/login.html:16
-msgid "Login"
-msgstr "Anmeldung"
-
-#: templates/index.html:59 templates/login.html:17
-msgid "Registration"
-msgstr "Registration"
-
-#: templates/index.html:75 templates/index.html.py:102 templates/login.html:32
-#: templates/login.html.py:59 templates/login.html:87
-msgid "Password"
-msgstr "Passwort"
-
-#: templates/index.html:81 templates/login.html:38 templates/login.html.py:90
-msgid "Sign in"
-msgstr "Anmelden"
-
-#: templates/index.html:90 templates/login.html:47
-msgid "First name"
-msgstr "Vorname"
-
-#: templates/index.html:94 templates/login.html:51
-msgid "Last name"
-msgstr "Nachname"
-
-#: templates/index.html:106 templates/login.html:63
-msgid "Confirm Password"
-msgstr "Passwort bestätigen"
-
-#: templates/index.html:110 templates/login.html:67
-msgid "Register"
-msgstr "Registrieren"
 
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
