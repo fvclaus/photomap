@@ -32,11 +32,8 @@
 -->
   
   <section class="keiken-intro">
-  	<h2><span>Welcome to KEIKEN!</span></h2>
-  	<span>
-  		KEIKEN is a free online photo-book designed to make sharing your adventures abroad and other interesting
-  		experiences easy and vivid!
-  	</span>
+  	<h2><span>{% trans "Welcome to KEIKEN!" %}</span></h2>
+  	<span>{% trans "KEIKEN_ABSTRACT" %}</span>
     <div class="mp-landing-page-links">
       {% if user.is_authenticated %}
       <p class="mp-dashboard-button">

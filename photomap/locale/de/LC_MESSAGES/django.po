@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-03 16:20+0200\n"
+"POT-Creation-Date: 2013-05-12 12:25+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -51,72 +51,72 @@ msgstr "Löschen"
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
-#: templates/base.html:106 templates/index-guest.html:32
+#: templates/base.html:109 templates/index-guest.html:32
 msgid "JS_DISABLED_WARNING"
 msgstr ""
 "Sie haben Javascript in Ihren Browsereinstellungen deaktiviert. Um Keiken "
 "nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
 "die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
 
-#: templates/base.html:127
+#: templates/base.html:130
 msgid "Login or Register"
 msgstr "Anmelden oder Registrieren"
 
-#: templates/base.html:127
+#: templates/base.html:130
 msgid "Anmelden/Registrierung"
 msgstr "Anmeldung und Registrierung"
 
-#: templates/base.html:131 templates/payment.html:6
+#: templates/base.html:134 templates/payment.html:6
 msgid "Spenden"
 msgstr "Spenden"
 
-#: templates/base.html:132 templates/not-supported-old.html:64
+#: templates/base.html:135 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:132 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:135 templates/team.html:6 templates/team.html.py:8
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:133 templates/not-supported-old.html:62
+#: templates/base.html:136 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:133 templates/contact.html:6
+#: templates/base.html:136 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:37
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:134 templates/not-supported-old.html:60
+#: templates/base.html:137 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:134 templates/privacy.html:5
+#: templates/base.html:137 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:135 templates/not-supported-old.html:61
+#: templates/base.html:138 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:135 templates/copyright.html:6
+#: templates/base.html:138 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:136 templates/not-supported-old.html:63
+#: templates/base.html:139 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:136 templates/help.html:6
+#: templates/base.html:139 templates/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:137 templates/not-supported-old.html:59
+#: templates/base.html:140 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "Zum Impressum von NAME DES PROJEKTS"
 
-#: templates/base.html:137 templates/impressum.html:6
+#: templates/base.html:140 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
@@ -147,8 +147,9 @@ msgstr ""
 #: templates/contact.html:31
 msgid "contact form social networks info"
 msgstr ""
-"Sie können uns auch auf Facebook (<a href='https://www.facebook.com/keiken.webapp'>keiken.webapp</a>) "
-"oder auf Google+ (<a href='https://plus.google.com/111238553236963807299'>Keiken</a>) besuchen."
+"Sie können uns auch auf Facebook (<a href='https://www.facebook.com/keiken."
+"webapp'>keiken.webapp</a>) oder auf Google+ (<a href='https://plus.google."
+"com/111238553236963807299'>Keiken</a>) besuchen."
 
 #: templates/contact.html:41 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-place.html:10
@@ -166,7 +167,8 @@ msgstr "Name"
 msgid "MANDATORY_FIELD"
 msgstr "Dieses Feld ist ein Pflichtfeld."
 
-#: templates/contact.html:49 templates/login.html:26
+#: templates/contact.html:49 templates/index.html:69
+#: templates/index.html.py:98 templates/login.html:26
 #: templates/login.html.py:55
 msgid "Email"
 msgstr "Email"
@@ -682,31 +684,31 @@ msgstr ""
 msgid "Zum Login"
 msgstr "Zur Anmeldung"
 
-#: templates/index.html:15
+#: templates/index.html:19
 msgid "KEIKEN_SHORT"
 msgstr ""
 "Erzähle deinen Freunde und der Familie von deinen Erfahrungen im Ausland!"
 
-#: templates/index.html:17
+#: templates/index.html:21
 msgid "KEIKEN_BEFORE"
 msgstr ""
 "Bevor wir KEIKEN entwickelt haben, hatten wir Schwierigkeiten unsere "
 "Auslandserfahrungen anderen nahe zu bringen."
 
-#: templates/index.html:20
+#: templates/index.html:23
 msgid "KEIKEN_ALTERNATIVE_EMAIL"
 msgstr ""
 "Sie können ihre Photos und die Beschreibung per Email verschicken, aber es "
 "ist schwierig das passende Bild zur Beschreibung zu finden."
 
-#: templates/index.html:24
+#: templates/index.html:26
 msgid "KEIKEN_ALTERNATIVE_PRESENTATION"
 msgstr ""
 "Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
 "Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
 "einen kleinen Kreis."
 
-#: templates/index.html:28
+#: templates/index.html:29
 msgid "KEIKEN_ALTERNATIVE_NETWORK"
 msgstr ""
 "Sie können die Photos in das soziale Netzwerk ihrer Wahl hochladen, aber "
@@ -720,16 +722,60 @@ msgstr ""
 "jederzeit teilen zu können."
 
 #: templates/index.html:35
+msgid "Welcome to KEIKEN!"
+msgstr "Herzlich Willkommen bei KEIKEN!"
+
+#: templates/index.html:36
+msgid "KEIKEN_ABSTRACT"
+msgstr ""
+"KEIKEN ist ein kostenloses Online-Reise-Album dass Dir dabei helfen soll "
+"deine Auslandserfahrungen mit jedem zu teilen. Melde dich an und erzähle deinen "
+"Freunden und Bekannten jetzt von deinen Abenteuern!"
+
+#: templates/index.html:43
 msgid "TO_DASHBOARD"
 msgstr "Zum Dashboard"
 
-#: templates/index.html:39
+#: templates/index.html:47
 msgid "VIEW_ALBUM"
 msgstr "Unser erstes Album betrachten"
 
-#: templates/index.html:42
+#: templates/index.html:50
 msgid "TRY_KEIKEN"
 msgstr "KEIKEN selber ausprobieren"
+
+#: templates/index.html:58 templates/login.html:16
+msgid "Login"
+msgstr "Anmeldung"
+
+#: templates/index.html:59 templates/login.html:17
+msgid "Registration"
+msgstr "Registration"
+
+#: templates/index.html:75 templates/index.html.py:102 templates/login.html:32
+#: templates/login.html.py:59 templates/login.html:87
+msgid "Password"
+msgstr "Passwort"
+
+#: templates/index.html:81 templates/login.html:38 templates/login.html.py:90
+msgid "Sign in"
+msgstr "Anmelden"
+
+#: templates/index.html:90 templates/login.html:47
+msgid "First name"
+msgstr "Vorname"
+
+#: templates/index.html:94 templates/login.html:51
+msgid "Last name"
+msgstr "Nachname"
+
+#: templates/index.html:106 templates/login.html:63
+msgid "Confirm Password"
+msgstr "Passwort bestätigen"
+
+#: templates/index.html:110 templates/login.html:67
+msgid "Register"
+msgstr "Registrieren"
 
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
@@ -754,38 +800,6 @@ msgstr "Platz hinzufügen"
 #: templates/login.html:6 templates/login.html.py:8
 msgid "Login und Registrierung"
 msgstr "Login und Registrierung"
-
-#: templates/login.html:16
-msgid "Login"
-msgstr "Anmeldung"
-
-#: templates/login.html:17
-msgid "Registration"
-msgstr "Registration"
-
-#: templates/login.html:32 templates/login.html.py:59 templates/login.html:87
-msgid "Password"
-msgstr "Passwort"
-
-#: templates/login.html:38 templates/login.html.py:90
-msgid "Sign in"
-msgstr "Anmelden"
-
-#: templates/login.html:47
-msgid "First name"
-msgstr "Vorname"
-
-#: templates/login.html:51
-msgid "Last name"
-msgstr "Nachname"
-
-#: templates/login.html:63
-msgid "Confirm Password"
-msgstr "Passwort bestätigen"
-
-#: templates/login.html:67
-msgid "Register"
-msgstr "Registrieren"
 
 #: templates/login.html:75
 msgid "Guest-Login"

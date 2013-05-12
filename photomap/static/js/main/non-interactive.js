@@ -60,11 +60,26 @@ $(document).ready(function () {
    
    
    if ($("body").attr("id") === "landingpage") {
+      var $loginCloseWidth = $(".login-toggle").find("img").width() + 3 + "px";
+      console.log("---------------------------");
+      console.log($loginCloseWidth);
       // show tabs on login box
       $("#keiken-login").tabs({
          heightStyle : "fill",
          active: 0,
          disabled : [1]
+      });
+      $(".mp-login-link, .login-toggle").button();
+      $(".login-toggle .ui-button-text").css({
+         padding: 0
+      });
+      $(".mp-login-link .ui-button-text").css({
+         padding: "2px"
+      });
+      $(".login-toggle").css({
+         width: $loginCloseWidth,
+         height: $loginCloseWidth,
+         padding: "1.5px"
       });
       //change href of login-link to prevent reloading of the page
       $(".mp-login-link").find("a").attr("href", "#login");
