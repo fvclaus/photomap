@@ -58,6 +58,24 @@ $(document).ready(function () {
    // single point of control. we don't want to spread selectors throught the code
    decodeEmail($("#mp-email-jsenabled"));
    
+   if ($("body").attr("id") === "help") {
+      $("#help-navigation a").on("click", function (event) {
+         event.preventDefault();
+         var $link = $(this);
+         
+         $(".mp-active-link").removeClass("mp-active-link");
+         $link.addClass("mp-active-link");
+         $(".mp-active-section").fadeOut(200, function () {
+            $(".mp-active-section").removeClass("mp-active-section");
+            $($link.attr("href")).addClass("mp-active-section").fadeIn(200);
+         });
+      });
+      
+      $(".mp-tutorial-tabs-wrapper").tabs({
+         heightStyle: "filled"
+      });
+      $("#mp-tutorial").hide();
+   }
    
    if ($("body").attr("id") === "landingpage") {
       var $loginCloseWidth = $(".login-toggle").find("img").width() + 3 + "px";
