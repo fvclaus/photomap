@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-14 16:07+0200\n"
+"POT-Creation-Date: 2013-05-14 16:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -143,7 +143,7 @@ msgstr ""
 "bitte das Kontaktformular oder schreiben Sie uns eine Email an "
 
 #: templates/contact.html:22 templates/impressum.html:44
-#: templates/payment.html:52
+#: templates/payment.html:56
 msgid "EMAIL_ONLY_WITH_JS"
 msgstr ""
 "Die email-Adresse ist verschlüsselt damit man sie nicht von Crawlern für "
@@ -889,23 +889,28 @@ msgstr ""
 "Momentan können Sie uns nur per direkter Überweisung spenden. Nutzen Sie "
 "dazu folgende Daten: "
 
-#: templates/payment.html:37
+#: templates/payment.html:38
 msgid "Kontoinhaber"
 msgstr "Kontoinhaber"
 
-#: templates/payment.html:38
+#: templates/payment.html:39
 msgid "Kontonummer"
 msgstr "Kontonummer"
 
-#: templates/payment.html:39
+#: templates/payment.html:40
 msgid "BLZ"
 msgstr "BLZ"
 
-#: templates/payment.html:40
+#: templates/payment.html:41
 msgid "Kreditinstitut"
 msgstr "Kreditinstitut"
 
 #: templates/payment.html:44
+msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
+msgstr ""
+"Bitte <a href='/#login' title='Zur Anmeldung'>melden Sie sich an</a>, um die Bank-Daten zu sehen."
+
+#: templates/payment.html:48
 msgid "payment 'thank you note'"
 msgstr ""
 "Vielen Dank für Ihr Interesse an KEIKEN und für Ihre Unterstützung. Sollten "

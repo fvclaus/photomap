@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-14 16:07+0200\n"
+"POT-Creation-Date: 2013-05-14 16:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -139,7 +139,7 @@ msgstr ""
 "the contact form or by writing as an email to "
 
 #: templates/contact.html:22 templates/impressum.html:44
-#: templates/payment.html:52
+#: templates/payment.html:56
 msgid "EMAIL_ONLY_WITH_JS"
 msgstr ""
 "The email address is encoded to prevent crawlers to abuse the address and "
@@ -940,23 +940,28 @@ msgstr ""
 "Right now, the only way to donate money is a direct transfer to our bank "
 "account: "
 
-#: templates/payment.html:37
+#: templates/payment.html:38
 msgid "Kontoinhaber"
 msgstr "Account holder"
 
-#: templates/payment.html:38
+#: templates/payment.html:39
 msgid "Kontonummer"
 msgstr "Account number"
 
-#: templates/payment.html:39
+#: templates/payment.html:40
 msgid "BLZ"
 msgstr "Bank identification number"
 
-#: templates/payment.html:40
+#: templates/payment.html:41
 msgid "Kreditinstitut"
 msgstr "Bank"
 
 #: templates/payment.html:44
+msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
+msgstr ""
+"Please <a href='/#login' title='To Login'>sign in</a> to view the bank information."
+
+#: templates/payment.html:48
 msgid "payment 'thank you note'"
 msgstr ""
 "Thank you very much for supporting us. In case you have any questions or "
