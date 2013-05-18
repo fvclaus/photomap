@@ -135,7 +135,7 @@ msgstr "Legal Terms (Impressum)"
 msgid "contact form intro"
 msgstr ""
 "In case you have any questions or problems that couldn't be answered or "
-"solved on our <a href='/help'>help-page</a>, feel free to contact us, using "
+"solved on our <a href='/help#tutorial'>help-page</a>, feel free to contact us, using "
 "the contact form or by writing as an email to "
 
 #: templates/contact.html:22 templates/impressum.html:44
@@ -719,7 +719,8 @@ msgstr "Welcome to KEIKEN!"
 #: templates/index-guest.html:21 templates/index.html:21
 msgid "KEIKEN_ABSTRACT"
 msgstr ""
-"KEIKEN is a free online photo-book designed to make sharing your adventures "
+"KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='What is KEIKEN?'>[*]</a></sup> "
+"is a free online photo-book designed to make sharing your adventures "
 "abroad and other interesting experiences easy and vivid!"
 
 #: templates/index-guest.html:24 templates/index-guest.html.py:49

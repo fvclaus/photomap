@@ -139,7 +139,7 @@ msgstr "Impressum"
 msgid "contact form intro"
 msgstr ""
 "Sollten Sie Fragen oder Probleme haben, die nicht bereits auf der <a href='/"
-"help'>Hilfe-Seite</a> beantwortet oder gelöst werden konnten, nutzen Sie "
+"help#tutorial'>Hilfe-Seite</a> beantwortet oder gelöst werden konnten, nutzen Sie "
 "bitte das Kontaktformular oder schreiben Sie uns eine Email an "
 
 #: templates/contact.html:22 templates/impressum.html:44
@@ -738,7 +738,8 @@ msgstr "Herzlich Willkommen bei KEIKEN!"
 #: templates/index-guest.html:21 templates/index.html:21
 msgid "KEIKEN_ABSTRACT"
 msgstr ""
-"KEIKEN ist ein kostenloses Online-Reise-Album dass Dir dabei helfen soll "
+"KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='Was ist KEIKEN?'>[*]</a></sup> "
+"ist ein kostenloses Online-Reise-Album dass Dir dabei helfen soll "
 "deine Auslandserfahrungen mit jedem zu teilen. Melde dich an und erzähle "
 "deinen Freunden und Bekannten jetzt von deinen Abenteuern!"
 

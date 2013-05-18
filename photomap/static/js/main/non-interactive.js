@@ -45,6 +45,7 @@ function decodeEmail ($email) {
 // there is no need to use initialize here. initialize just bloats the whole application and starts later
 $(document).ready(function () {
 
+   var hash = window.location.hash.substring(1,window.location.hash.length);
    // adds a validator and button styling to all forms
    $(".mp-form")
       .find(".mp-form-submit")
@@ -63,18 +64,24 @@ $(document).ready(function () {
          event.preventDefault();
          var $link = $(this);
          
-         $(".mp-active-link").removeClass("mp-active-link");
-         $link.addClass("mp-active-link");
-         $(".mp-active-section").fadeOut(200, function () {
-            $(".mp-active-section").removeClass("mp-active-section");
-            $($link.attr("href")).addClass("mp-active-section").fadeIn(200);
-         });
+         if (!$link.hasClass("mp-active-link")) {
+            $(".mp-active-link").removeClass("mp-active-link");
+            $link.addClass("mp-active-link");
+            $(".mp-active-section").fadeOut(200, function () {
+               $(".mp-active-section").removeClass("mp-active-section");
+               $($link.attr("href")).addClass("mp-active-section").fadeIn(200);
+            });
+         }
       });
       
       $(".mp-tutorial-tabs-wrapper").tabs({
          heightStyle: "filled"
       });
+      
       $("#mp-tutorial").hide();
+      if (hash) {
+         $("#help-navigation").find("a[name='" + hash + "']").click();
+      }
    }
    
    if ($("body").attr("id") === "landingpage") {
