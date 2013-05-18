@@ -128,7 +128,7 @@ msgstr "Hilfe"
 
 #: templates/base.html:140 templates/not-supported-old.html:59
 msgid "link-title-impressum"
-msgstr "Zum Impressum von NAME DES PROJEKTS"
+msgstr "Zum Impressum von KEIKEN"
 
 #: templates/base.html:140 templates/impressum.html:6
 #: templates/impressum.html.py:8
@@ -333,11 +333,11 @@ msgstr "Hilfe und Support"
 
 #: templates/help.html:23
 msgid "Introduction"
-msgstr ""
+msgstr "Einführung"
 
 #: templates/help.html:24
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutorial"
 
 #: templates/help.html:28
 msgid "KEIKEN_SHORT"
@@ -377,232 +377,312 @@ msgstr ""
 "jederzeit teilen zu können."
 
 #: templates/help.html:44
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_NOT"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"KEIKEN ist kein Ort um Bilder von kurzfristigem Interesse zu zeigen. Es gibt "
+"bereits eine ganze Menge an Sozialen Netzwerken und ähnlichen Websites, die "
+"eine sehr gute Platform für so etwas bieten. KEIKEN ist auch nicht dafür gedacht "
+"ganze Bilderordner direkt von Ihrer Kamera oder Ihrem Computer ins Internet zu ziehen, "
+"um andere damit zu überschwemmen."
 
 #: templates/help.html:45
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_BUT_1"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"Als (digitales) Fotoalbum soll KEIKEN die Bilder und Geschichten Ihrer Reisen auf "
+"angenehme und kreative Art und Weise all jenen präsentieren, mit denen Sie diese "
+"teilen wollen. Diesem Anspruch lassen sich zwei zentrale Punkte entnehmen: "
 
 #: templates/help.html:46
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_BUT_2"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"(1) Alle Bilder müssen geordnet und mit Namen versehen werden. "
+"Darum sind Titel bei KEIKEN verpflichtend und Ihre Alben werden in Plätze "
+"unterteilt, die an bestimmte Punkte auf der Karte gebunden sind. "
 
 #: templates/help.html:47
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_BUT_3"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"(2) Alle Alben, die Sie teilen wollen müssen einfach zugänglich sein. Anders "
+"als bei vielen anderen Websites und Diensten müssen Sie nicht bei KEIKEN registriert "
+"sein um ein Album anschauen zu dürfen. Sie brauchen lediglich eine Internetverbindung, "
+"den Link zum Album und das Password, welches Ihnen der Autor des Albums geben muss. "
 
 #: templates/help.html:48
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_STRUCTURE_1"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"Zurück zum Design von KEIKEN. Wie schon erwähnt werden Alben in Plätze unterteilt. "
+"Diese wiederum enthalten dann die Photos. Diese Struktur soll Ihnen dabei helfen, "
+"eine Übersicht über Ihre Erlebnisse zu bekommen und es soll Ihren Bekannten helfen, Ihre "
+"Abenteuer selbst zu erkunden."
 
 #: templates/help.html:49
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_STRUCTURE_2"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"Nun ist aber jedes Abenteuer und jede Reise anders; darum haben Alben und "
+"Plätze keine Begrenzungen hinsichtlich der Größe. Ein Album kann also eine ganze "
+"Weltreise beinhalten und jeder Platz symbolisiert ein ganzes Land. Ein anderes Album "
+"kann eine Städtereise präsentieren, in dem jeder Platz eine Sehenswürdigkeit ist. "
 
 #: templates/help.html:50
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_STRUCTURE_3"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"Und die Fotos? Naja Fotos sind Fotos. Sie werden nicht mehr groß strukturiert, "
+"zu beachten ist, dass auch Fotos Titel haben, die angegeben werden müssen. "
+"KEIKEN nimmt dabei nicht die Bildnamen, die Sie auf Ihrem Computer sehen, sondern "
+"fordert Sie dazu auf selber einen Namen einzugeben und wir sind zuversichtlich, "
+"dass Ihnen schönere und aussagekräftigere Namen als IMG_20122708_2014.jpg "
+"einfallen. ;) "
 
 #: templates/help.html:51
-#, fuzzy
 msgid "KEIKEN_PRESENTATION_STRUCTURE_4"
 msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
+"Stellen Sie sich Ihr KEIKEN als ein Fotoalbum vor, in das man ein gutes Stück "
+"Zeit investiert, um es anschaulich zu gestalten; genauso wie die Fotoalben, die wir immer mit unseren "
+"Eltern anschauen mussten, als wir noch Kinder waren. "
 
 #: templates/help.html:60
 msgid "General"
-msgstr ""
+msgstr "Allgemeines"
 
 #: templates/help.html:61
 msgid "Dashboard"
-msgstr ""
+msgstr "Dashboard"
 
 #: templates/help.html:62
 msgid "Albumview"
-msgstr ""
+msgstr "Albumsansicht"
 
 #: templates/help.html:66
 msgid "Webspace"
-msgstr ""
+msgstr "Speicherplatz"
 
 #: templates/help.html:67
 msgid "Cookies"
-msgstr ""
+msgstr "Cookies"
 
 #: templates/help.html:68
-#, fuzzy
 msgid "Contact"
 msgstr "Kontakt"
 
 #: templates/help.html:69
 msgid "Sharing &amp; Security"
-msgstr ""
+msgstr "Sicherheit beim Teilen"
 
 #: templates/help.html:72
 msgid "TUTORIAL_WEBSPACE"
 msgstr ""
+"Momentan begrenzen wir den Speicherplatz auf 350Mb pro Nutzer. Das Erstellen "
+"von Alben und Plätzen ist dabei quasi gratis, da diese beinahe keinen Speicherplatz verbrauchen. "
+"Dadurch stehen Ihnen die 350Mb komplett für Bilder zur Verfügung. Je geringer die Qualität "
+"ihrer Fotos ist, desto mehr können Sie hochladen. Bedenken Sie, dass die meisten Kameras heutzutage "
+"Bilder in Größen ermöglichen, die auf Bildschirmen gar nicht darzustellen sind. 8MP (=MegaPixel, -> 3264 x 2448) "
+"sind vollkommen ausreichend. Sie könnten sich also überlegen, Ihre 12MP oder 14MP auf diese Größe runterzuskalieren. "
+"Ausserdem verbrauchen verschiedene Formate verschieden viel Speicherplatz. *.JPG (oder *.JPEG) komprimiert "
+"Fotos recht effektiv und ist daher ideal für das Internet. Die meisten Kameras speichern Fotos bereits im jpeg-Format; "
+"Sie können sich aber nochmals versichern, indem Sie die Dateiendung prüfen. "
+"Wir bieten in diesem Moment keine Erweiterungen des Speicherplatz an, sollten Sie jedoch doch mehr "
+"Platz brauchen schreiben Sie uns doch eine Email und wir werden versuchen Ihnen dabei zu helfen, den Speicherplatz "
+"besser auszunutzen, oder vielleicht doch überlegen Speicherplatzerweiterungen zu ermöglichen. "
 
 #: templates/help.html:75
-#, fuzzy
 msgid "TUTORIAL_COOKIES"
-msgstr "Platz hinzufügen"
+msgstr ""
+"Wir nutzen verschiedene Cookies, um die Sitzung zu authentizieren und "
+"Informationen über den bereits genutzten Speicherplatz, sowie darüber, "
+"welche Fotos bereits angesehen wurden <strong>(Funktion momentan nicht verfügbar)</strong> bereitzustellen. "
+"Bitte aktivieren Sie Cookies in Ihren Browsereinstellungen, um KEIKEN vollständig nutzen zu können. "
 
 #: templates/help.html:78
-#, fuzzy
 msgid "TUTORIAL_CONTACT"
-msgstr "Platz bearbeiten"
+msgstr ""
+"Wenn Sie Fragen oder Ideen haben, zögern Sie nicht <a href='/contact' title='Zum "
+"Kontaktformular'>uns zu kontaktieren</a>. Wir versuchen alle Nachrichten möglichst "
+"schnell zu beantworten. Da dieses Projekt jedoch mehr ein Hobby ist und wir alle "
+"Vollzeit-Studenten sind, kann es doch manchmal ein oder zwei Tage dauern. Wir "
+"bitten um Ihr Verständnis und hoffen, dass es keine allzu großen Umstände bereitet."
 
 #: templates/help.html:81
-#, fuzzy
 msgid "TUTORIAL_SHARESECURITY"
-msgstr "Schärfer stellen"
+msgstr ""
+"Jedes Album ist mit einem Passwort geschützt, welches Sie "
+"vor dem ersten Teilen festlegen müssen. Damit jemand also Ihr Album ansehen, kann "
+"braucht er die URL (=Adresse) ihres Albums und das entsprechende Passwort. "
+"Wir können aber natürlich nicht kontrollieren, was Sie mit diesen beiden Informationen "
+"machen bzw. wie und wo Sie diese teilen. Bitte bedenken Sie also, dass Informationen, die ohne Sichtbarkeits-Restriktionen auf "
+"öffentlich zugänglichen Seiten wie Blogs oder ihrem Facebook-Profil gepostet werden, vielen Leuten "
+"zugänglich sind, welche dann auch alle Zugriff auf Ihr Album haben. "
+"Auch wenn Besucher ihres Albums nichts ändern können, wollen Sie wahrscheinlich "
+"nicht jedes Ihrer Erlebnisse mit jedem auf ihrer 'Freundschafts'-liste teilen. "
+"Sollte Ihr Passwort in die falschen Hände geraten, können Sie dem Album ein "
+"neues Passwort bestimmen, in dem Sie den 'Teilen'-Dialog öffnen und ein neues "
+"Passwort abschicken. Sollten Sie Hilfe benötigen, zögern Sie nicht <a href='/contact' title='Zum "
+"Kontaktformular'>uns zu kontaktieren</a>."
 
 #: templates/help.html:86
-#, fuzzy
 msgid "Albums"
-msgstr "Albumsansicht"
+msgstr "Alben"
 
 #: templates/help.html:90 templates/help.html.py:124 templates/help.html:152
 msgid "What is this?"
-msgstr ""
+msgstr "Was ist das?"
 
 #: templates/help.html:91 templates/help.html.py:125 templates/help.html:153
 msgid "Insert"
-msgstr ""
+msgstr "Einfügen"
 
 #: templates/help.html:92 templates/help.html.py:126 templates/help.html:154
 msgid "Update"
-msgstr ""
+msgstr "Ändern"
 
 #: templates/help.html:93 templates/help.html.py:127 templates/help.html:155
 msgid "Delete"
-msgstr ""
+msgstr "Löschen"
 
 #: templates/help.html:94 templates/help.html.py:128 templates/help.html:156
 msgid "Share"
-msgstr ""
+msgstr "Teilen"
 
 #: templates/help.html:95 templates/help.html.py:129
 msgid "Open"
-msgstr ""
+msgstr "Öffnen"
 
 #: templates/help.html:98
 msgid "TUTORIAL_ALBUMS_EXPLANATION"
 msgstr ""
+"Bevor Sie Fotos hochladen und zu Plätzen hinzufügen können, müssen Sie ein "
+"Album erstellen. Alben sind an die Karte gebunden und repräsentieren damit bestimmte "
+"Koordinaten. Jedes Album kann eine unbegrenzte Anzahl an Plätzen und Photos enthalten(; "
+"diese müssen nicht am selben Ort auf der Karte, wie das Album, sein). "
+"Im Dashboard können Sie alle Ihre Alben, sehen und mit einem Doppelklick auf den "
+"Marker eines Albums öffnen Sie die Albumsansicht des zugehörigen Albums. "
+"Genau wie für alle anderen Objekte bei KEIKEN ist der Titel obligatorisch, die Beschreibung "
+"eines Albums ist optional; es mag jedoch hilfreich für Gäste sein, wenn sie das "
+"Album und die Erfahrungen, die das Album darstellt, mit ein paar Worten beschreiben. "
 
 #: templates/help.html:101 templates/help.html.py:135
-#, fuzzy
 msgid "TUTORIAL_INSERT_PA"
-msgstr "Platz hinzufügen"
+msgstr ""
+"Sie können ein Album oder einen Platz einfügen, in dem Sie auf die Karte klicken. "
+"Ein Dialog wird Sie durch den Rest des Einfüge-Prozesses leiten. Das Album wird an "
+"die Koordinaten gebunden, auf die Sie geklickt haben und durch einen Marker an diesem "
+"Punkt angezeigt."
 
 #: templates/help.html:104 templates/help.html.py:138 templates/help.html:168
-#, fuzzy
 msgid "TUTORIAL_UPDATE_PPA"
-msgstr "Platz bearbeiten"
+msgstr ""
+"Sie können Titel und Beschreibung von Album/Platz und Photo nachträglich ändern, "
+"in dem Sie den 'Ändern'-Dialog nutzen. Um diesen aufzurufen, müssen Sie mit der "
+"Maus über den entsprechenden Marker oder das entsprechende Bild in der Galerie "
+"bewegen. Dabei öffnet sich ein kleines Fenster in dem sie auswählen können, ob Sie "
+"das Objekt löschen oder verändern wollen."
+
 
 #: templates/help.html:107 templates/help.html.py:141 templates/help.html:171
-#, fuzzy
 msgid "TUTORIAL_DELETE_PPA"
-msgstr "Platz löschen?"
+msgstr ""
+"Sie können Titel und Beschreibung von Album/Platz und Photo wieder löschen, "
+"in dem Sie den 'Löschen'-Dialog nutzen. Um diesen aufzurufen, müssen Sie mit der "
+"Maus über den entsprechenden Marker oder das entsprechende Bild in der Galerie "
+"bewegen. Dabei öffnet sich ein kleines Fenster in dem sie auswählen können, ob Sie "
+"das Objekt löschen oder verändern wollen."
 
 #: templates/help.html:110
-#, fuzzy
 msgid "TUTORIAL_SHARE_ALBUM"
-msgstr "Album bearbeiten"
+msgstr ""
+"Das Öfnnen des 'Teilen'-Dialogs funktioniert genauso, wie beim 'Ändern'/'Löschen'-Dialog. "
+"Der 'Teilen'-Dialog zeigt Ihnen ein Inputfeld mit dem Link zu ihrem Album. Dieser ist identisch "
+"mit der URL des Albums, welche Sie in der Adresszeile der Albumsansicht sehen. Ausserdem "
+"können Sie ein Passwort für das Album festlegen, welches Gäste brauchen, um sich Ihr "
+"Album anzusehen. Sie müssen diese Passwort nur beim ersten Mal festlegen. Denken Sie daran, "
+"dass sie jedes Mal, wenn Sie das Passwort ändern, auch jedem Gast das neue Passwort mitzuteilen. "
+"Sobald Sie also zum ersten Mal ein Passwort festgelegt haben, können Sie den Link in Ihrem "
+"präferierten Sozialen Netzwerk, Blog, per Email, handschriftlich oder auf jede andere "
+"Art und Weise, die Ihnen einfällt, mit anderen teilen. "
 
 #: templates/help.html:113
-#, fuzzy
 msgid "TUTORIAL_OPEN_ALBUM"
-msgstr "Album bearbeiten"
+msgstr ""
+"Ein einfacher Klick auf einen Albummarker öffnet die Beschreibung des Albums und zentriert das Album "
+"in der linken Hälfte der Seite. Ein Doppelklick auf einen Albummarker öffnet die Albumsansicht "
+"des Albums, in welcher Sie Plätze und Photos hinzufügen können - Gäste können nur diese Albumsansicht sehen. "
 
 #: templates/help.html:119
 msgid "Places"
-msgstr ""
+msgstr "Plätze"
 
 #: templates/help.html:120
 msgid "Photos"
-msgstr ""
+msgstr "Fotos"
 
 #: templates/help.html:132
 msgid "TUTORIAL_PLACE_EXPLANATION"
 msgstr ""
+"Plätze gleichen Alben. Sie sind mit der Karte verbunden, werden durch einen "
+"Marker repräsentiert und haben einen Titel und optional auch eine Beschreibung. "
+"Sie müssen einen Platz erstellen, bevor Sie Bilder hochladen können. Jedes hochgeladene "
+"Foto wird zum aktuellen Platz hinzugefügt. Die Anzahl an Plätzen ist unbegrenzt, auch die "
+"Anzahl der Fotos die ein Platz halten kann ist theoretisch ungegrenzt. Wir limitieren, "
+"jedoch den Speicherplatz eines jeden Users , wodurch auch die Gesamtanzahl an "
+"Bildern begrenzt wird. (Näheres unter 'Allgemeines'>'Speicherplatz')"
 
 #: templates/help.html:144 templates/help.html.py:174
-#, fuzzy
 msgid "TUTORIAL_SHARE_PP"
-msgstr "Schärfer stellen"
+msgstr "Weder Plätze noch Fotos, können momentan geteilt werden."
 
 #: templates/help.html:147
-#, fuzzy
 msgid "TUTORIAL_OPEN_PLACE"
-msgstr "Platz bearbeiten"
+msgstr ""
+"Genau wie bei Alben öffnet ein einfacher Klick auf den Platzmarker die Beschreibung, "
+"während ein Doppelklick den Platz öffnet und die Galerie mit den Fotos, des Platzes öffnet."
 
 #: templates/help.html:157
 msgid "Start Slideshow"
-msgstr ""
+msgstr "Slideshow starten"
 
 #: templates/help.html:158
-#, fuzzy
 msgid "Open Fullscreen"
-msgstr "Vollstädige Galerie öffnen"
+msgstr "Vollbild öffnen"
 
 #: templates/help.html:159
-#, fuzzy
 msgid "Sort Photos/Open FullGallery"
-msgstr "Vollstädige Galerie öffnen"
+msgstr "Fotos sortieren"
 
 #: templates/help.html:162
 msgid "TUTORIAL_PHOTO_EXPLANATION"
 msgstr ""
+"Natürlich sind Fotos sehr wichtig bei KEIKEN, es ist ja schließlich ein "
+"Fotoalbum. Darum gibt es verschieden Darstellungsarten Ihrer Fotos. Zum einen gibt es "
+"die Galerie, unterhalb der Karte. Diese zeigt alle Fotos des aktuellen Platzes als kleine " 
+"Kacheln. Zum anderen gibt es die Slideshow, welche auf der rechten Seite der Karte positioniert "
+"ist. Diese kann gestartet werden in dem Sie auf ein Foto in der Galerie klicken. Ausserdem gibt es "
+"dann noch den Vollbild-Modus. Sie können jedes aktuelle Bild der Slideshow im Vollbild sehen, in dem Sie "
+"darauf klicken."
 
 #: templates/help.html:165
-#, fuzzy
 msgid "TUTORIAL_INSERT_PHOTO"
-msgstr "Photo hinzufügen"
+msgstr ""
+"Sie können Photos hochladen, in dem Sie auf den 'Aufnahme' Knopf rechts unten in der "
+"Galerie klicken, oder in dem Sie Bilder einfach von ihrem Desktop in das Browserfenster "
+"ziehen <strong>(Funktion momentan nicht verfügbar)</strong>."
 
 #: templates/help.html:177
 msgid "TUTORIAL_OPEN_SLIDESHOW"
 msgstr ""
+"Um die Slideshow zu Starten können sie entweder auf eine Foto-Kachel in der Galerie klicken, "
+"oder einfach die Navigationstasten der Slideshow nutzen. "
 
 #: templates/help.html:180
 msgid "TUTORIAL_OPEN_FULLSCREEN"
 msgstr ""
+"Beim Anklicken des aktuellen Fotos in der Slideshow wird die Vollbildansicht des Bildes gestartet." 
 
 #: templates/help.html:183
-#, fuzzy
 msgid "TUTORIAL_OPEN_FULLGALLERY"
-msgstr "Platz bearbeiten"
+msgstr ""
+"Sie haben die Möglichkeit Fotos nachträglich zu sortieren. Dazu müssen Sie auf den "
+"'Play' Knopf auf der linken unteren Seite der Galerie klicken. Dies öffnet die "
+"Vollansicht Ihrer Galerie. Das Sortieren funktioniert ganz einfach per Drag'n'Drop; d.h. "
+"Sie klicken auf ein Bild und ziehen es an die gewünschte Stelle."
 
 #: templates/impressum.html:16
 msgid "impressum Angaben gemäß § 5 TMG"
@@ -1097,7 +1177,7 @@ msgstr "Auskunftsrecht"
 #: templates/privacy.html:68
 msgid "privacy-topic Auskunftsrecht -> paragraph1"
 msgstr ""
-"Gerne geben wir Ihnen alle Informationen die von Ihnen auf unserem Server "
+"Gerne geben wir Ihnen alle Informationen, die von Ihnen auf unserem Server "
 "gespeichert wurden. Wenn Sie diese Informationen abrufen wollen, schreiben "
 "Sie uns eine Email oder nutzen Sie das "
 
@@ -1189,7 +1269,7 @@ msgstr "Vorherige Seite"
 
 #: templates/view-album.html:41
 msgid "Open Full Gallery"
-msgstr "Vollstädige Galerie öffnen"
+msgstr "Vollständige Galerie öffnen"
 
 #: templates/view-album.html:48 templates/view-album.html.py:56
 msgid "GALLERY_NOT_STARTED"

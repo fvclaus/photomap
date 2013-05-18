@@ -124,7 +124,7 @@ msgstr "Help"
 
 #: templates/base.html:140 templates/not-supported-old.html:59
 msgid "link-title-impressum"
-msgstr "View Legal Terms of NAME OF PROJECT"
+msgstr "View Legal Terms of KEIKEN"
 
 #: templates/base.html:140 templates/impressum.html:6
 #: templates/impressum.html.py:8
@@ -320,11 +320,11 @@ msgstr "Help and Support"
 
 #: templates/help.html:23
 msgid "Introduction"
-msgstr ""
+msgstr "Introduction"
 
 #: templates/help.html:24
 msgid "Tutorial"
-msgstr ""
+msgstr "Tutorial"
 
 #: templates/help.html:28
 msgid "KEIKEN_SHORT"
@@ -410,7 +410,7 @@ msgstr ""
 msgid "KEIKEN_PRESENTATION_STRUCTURE_3"
 msgstr ""
 "And the photos... well the photos are photos, but we try to make them more "
-"meaningful.Therefor photo-titles are mandatory, we don't control how you "
+"meaningful.Therefor as with everything else photo-titles are mandatory; we don't control how you "
 "name your photos but we are confident you find more interesting names than "
 "IMG_20122708_2014.jpg."
 
@@ -452,17 +452,17 @@ msgstr "Sharing & Security"
 #: templates/help.html:72
 msgid "TUTORIAL_WEBSPACE"
 msgstr ""
-"Currently we limit the total webspace of each user to 350Mb. Be aware this "
-"is a limit peraccount and not a limit by album.Since storing albums and "
+"Currently we limit the total webspace of each user to 350Mb. Since storing albums and "
 "places take no considerable space at all, the limit mainly affects the "
 "amount of photos you can upload. You can increase the amount by decreasing "
 "the quality of the photos. You might want to use a format like *.JPG, which "
-"compresses images quite effective. Also you probably won't need photos of a "
+"compresses images quite effective (most cameras already use this format!). Also you probably won't need photos of a "
 "size bigger than 8MP (=Megapixel) which is about 3264 x 2448. So you might "
-"want to think about scaling your pictures down to that size.If the 350Mb "
+"want to think about scaling your pictures down to that size. If the 350Mb "
 "limit changes we will notify all our users. Right now there is no option to "
 "increase the amount of webspace for an account. That said, if you do need "
-"more space, please contact us and we will see if we can sort out a deal ;)"
+"more space, please contact us and we will try to help you using your webspace more "
+"effectively or consider offering webspace-extensions after all."
 
 #: templates/help.html:75
 msgid "TUTORIAL_COOKIES"
@@ -494,7 +494,8 @@ msgstr ""
 "in your album, yet you might not want to share all your private experiences "
 "with everyone so share the information carefully. If your password has "
 "gotten into wrong hands you can change it by opening the share dialog and "
-"submitting a new one."
+"submitting a new one. If you need any help, feel free to <a href='/contact' title='To "
+"contactform'>contact us</a>."
 
 #: templates/help.html:86
 msgid "Albums"
@@ -529,17 +530,20 @@ msgid "TUTORIAL_ALBUMS_EXPLANATION"
 msgstr ""
 "Before you upload photos and link them to places you need to create an "
 "album. An album is fixed to a certain point on the map, it can contain an "
-"unlimited amount of places thich then hold the photos. You can view all your "
+"unlimited amount of places thich then hold the photos(; those don't need to be "
+"at the same point of the map as the album is). You can view all your "
 "albums on the Dashboard and each album has an own 'Albumview', which can be "
 "opened by double-clicking on the album-marker.As with all other things on "
-"KEIKEN the title is mandatory, while the description is optional. "
+"KEIKEN the title is mandatory, while the description is optional; it might be "
+"helpful for guests, if use the description to say a few things about your Album "
+"and the experiences presented in it. "
 
 #: templates/help.html:101 templates/help.html.py:135
 msgid "TUTORIAL_INSERT_PA"
 msgstr ""
 "You can insert an album or a place by simply clicking on the map. A dialog "
 "will open, which will lead you through the rest of the insert-process. The "
-"album/place will be linked to the coordinates you clicked on."
+"album/place will be linked to the coordinates you clicked on and is shown as a marker."
 
 #: templates/help.html:104 templates/help.html.py:138 templates/help.html:168
 msgid "TUTORIAL_UPDATE_PPA"
@@ -577,7 +581,7 @@ msgstr ""
 "A single click on an album will open the description of that album as well "
 "as center the album in the left side of the map and zoom in on it. A double "
 "click on the other hand will lead you to the 'Albumview' of the album in "
-"which you can add places to the album and upload photos."
+"which you can add places to the album and upload photos - guests will just see this 'Albumview'."
 
 #: templates/help.html:119
 msgid "Places"
@@ -594,9 +598,9 @@ msgstr ""
 "a marker, needs a title and has an option for a description. You need to "
 "create a place before being able to upload photos. All photos will get "
 "linked to the currently opened place. You can have as many places in an "
-"album as you want and there is no limit to the amount of photos a place can "
-"hold, besides the quota: Please note that we limit the web-space you may use "
-"to 350Mb/User."
+"album as you want and theoretically there is no limit to the amount of photos a place can "
+"hold. We do in fact limit the webspace of each user, which then again limits the total amount of "
+"images a user can upload. (More under 'General'>'Webspace')"
 
 #: templates/help.html:144 templates/help.html.py:174
 msgid "TUTORIAL_SHARE_PP"
