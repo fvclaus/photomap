@@ -84,6 +84,7 @@ define(["dojo/_base/declare",
                 
                 var options,
                     effect,
+                    duration,
                     instance = this,
                     imageSources = [];
 
@@ -98,13 +99,15 @@ define(["dojo/_base/declare",
                 // initialize and start carousel
                 if (navigator.sayswho[0] === "Firefox") {
                    effect = "fade";
+                   duration = 500;
                 } else {
                    effect = "flip";
+                   duration = 300;
                 }
                 options = {
                    lazy : !clientstate.isAdmin(),
                    "effect" : effect,
-                   duration: 300,
+                   "duration": duration,
                    loader : this.$loader,
                    beforeLoad : this._beforeLoad,
                    afterLoad : this._afterLoad,

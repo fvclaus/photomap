@@ -111,13 +111,19 @@ define(["dojo/_base/declare", "util/Tools"],
                 
                 console.log("CarouselAnimation: in flip");
                 var scaleX = function (value) {
-                   return "scaleX(" + value + ")";
-                };
+                      return "scaleX(" + value + ")";
+                    },
+                    matrix = function (value) {
+                       return "matrix(" + value + ")";
+                    };
+                
                 //begin animation
                 if (time === "start") {
                    console.log("CarouselAnimation: stat flipping");
                    // sets transition property browser-independently
                    options.items.addClass("mp-animate-" + options.animationTime);
+                   //options.items.addClass("mp-scaleX-0");
+                   
                    options.items.css({
                       "-o-transform": scaleX(0),
                       "-webkit-transform": scaleX(0),
@@ -165,6 +171,7 @@ define(["dojo/_base/declare", "util/Tools"],
                                "-webkit-transform": scaleX(1),
                                "transform": scaleX(1)
                             })
+                            //.removeClass("mp-scaleX-0")
                             // needed for frontend testing to select 'active' photos
                             .addClass("mp-test-photo-used");
 
