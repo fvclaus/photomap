@@ -37,6 +37,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/Communicator", "
                 this._initializeSortable();
                 this.$column.removeClass("mp-nodisplay");
                 this.loaded = true;
+                this.$container.find("img").css("visibility", "visible");
              },
              /**
               * @description Closes the Gallery. This will remove any Html previously created.
