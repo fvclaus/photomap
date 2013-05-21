@@ -25,6 +25,8 @@ define([
        return declare(View, {
           constructor : function () {
              this.$container = $('#mp-slideshow');
+             this.viewName = "Slideshow";
+             
              this.$inner = $("#mp-slideshow-image-wrapper");
              this.$image = $("#mp-slideshow-image");
              this.$navLeft = $('#mp-slideshow-nav-prev');
@@ -43,6 +45,7 @@ define([
              this.started = false;
              this._isDisabled = true;
              
+             this._bindActivationListener(this.$container, this.viewName);
           },
           isStarted : function () {
              return this.started;
@@ -283,12 +286,31 @@ define([
                    instance.presenter.navigate("right");
                 }
              });
-             this.$image.on("click.Slideshow", function () {
+             this.$image.on("click.Slideshow", function (event) {
+                /* 
+                 * bubbling of event has to be stopped to prevent click on slideshow to be triggered again 
+                 * after Fullscreen is already focused, which causes activation problems (-> keyboard events!)
+                 */
+                event.stopPropagation();
                 if (!instance.isDisabled()) {
                    console.log("UISlideshow: Show Fullscreen");
                    instance.presenter.click();
                 }
              });
+                
+             $("body")
+               .on("keyup.Slideshow", null, "left", function () {
+                  if (!instance.disabled && instance.active) {
+                     console.log("UISlideshow: navigating left");
+                     instance.presenter.navigate("left");
+                  }
+               })
+               .on("keyup.Slideshow", null, "right", function () {
+                  if (!instance.disabled && instance.active) {
+                     console.log("UISlideshow: navigating right");
+                     instance.presenter.navigate("right");
+                  }
+               });
           },
           /**
            * @private

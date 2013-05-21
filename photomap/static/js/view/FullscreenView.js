@@ -54,6 +54,8 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
             
             this.$container.show();
             this.visible = true;
+            // fullscreen is just active if mouse is moved or fullscreen is focused (needed for keyboard events)
+            this.$container.focus();
             
          },
          close : function () {

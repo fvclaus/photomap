@@ -27,7 +27,6 @@ var DASHBOARD_VIEW = "/dashboard",
     CONFIRM_DIALOG = 1,
     
     KEY_CODES = {
-       url: "https://github.com/jeresig/jquery.hotkeys/blob/master/jquery.hotkeys.js",
        8: "BACKSPACE",
        9: "TAB",
        13: "ENTER",

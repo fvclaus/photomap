@@ -30,6 +30,8 @@ define(["dojo/_base/declare",
           return declare(View, {
              constructor : function () {
                 this.$container = $('#mp-gallery');
+                this.viewName = "Gallery";
+                
                 this.$inner = $('#mp-gallery-inner');
                 // this.$hidden = $("#mp-gallery-thumbs");
                 this.$thumbs = $(".mp-gallery-tile");
@@ -59,6 +61,8 @@ define(["dojo/_base/declare",
                 this.$insert = $(".mp-option-insert-photo");
 
                 this.presenter = new GalleryPresenter(this);
+                
+                this._bindActivationListener(this.$container, this.viewName);
 
              },
              getCarousel : function () {
@@ -232,6 +236,17 @@ define(["dojo/_base/declare",
               * @description Check if the updated photo is a newly insert, if yes open teaser
               */
              _update : function ($photos) {
+                
+                var instance = this;
+                
+                $.each(this.$thumbs, function (index, thumb) {
+                   
+                   if ($(thumb).children("img.mp-thumb").attr("src") && $(thumb).children("img.mp-thumb").attr("src").length > 0) {
+                      $(thumb).removeClass("mp-empty-tile");
+                   } else {
+                      $(thumb).addClass("mp-empty-tile");
+                   }
+                })
 
                 if (this.showTeaser) {
                    if (this.currentPhoto === null) {
@@ -300,6 +315,20 @@ define(["dojo/_base/declare",
                       instance.carousel.navigateRight();
                    }
                 });
+                
+                $("body")
+                  .on("keyup.Gallery", null, "left", function () {
+                     if (!instance.disabled && instance.active) {
+                        console.log("UIGallery: navigating left");
+                        instance.carousel.navigateLeft();
+                     }
+                  })
+                  .on("keyup.Gallery", null, "right", function () {
+                     if (!instance.disabled && instance.active) {
+                        console.log("UIGallery: navigating right");
+                        instance.carousel.navigateRight();
+                     }
+                  });
              },
              
              _bindListener : function () {
@@ -383,7 +412,7 @@ define(["dojo/_base/declare",
                       
                       var $el = $(this).children(".mp-thumb");
                       
-                      if (!instance.isDisabled()) {
+                      if (!instance.isDisabled() && !$(this).hasClass(".mp-empty-tile")) {
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)

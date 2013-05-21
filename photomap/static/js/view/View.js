@@ -8,8 +8,8 @@
  * @class Base class for all Presenter
  */
 
-define(["dojo/_base/declare"],
-       function (declare) {
+define(["dojo/_base/declare", "util/Communicator"],
+       function (declare, communicator) {
           return declare(null, {
              constructor : function () {
                 this.presenter = null;
@@ -24,6 +24,9 @@ define(["dojo/_base/declare"],
                  * this will make sure that the view representing the currently focused element is 'active'
                  * especially needed for keyboard events
                  */
+             },
+             getName : function () {
+                return this.viewName;
              },
              setDisabled : function (disabled) {
                 this.disabled = disabled;
@@ -40,15 +43,12 @@ define(["dojo/_base/declare"],
              getPresenter : function () {
                 return this.presenter;
              },
-             _bindActivationListener: function ($container, element) {
+             _bindActivationListener: function ($container, view) {
                 var instance = this;
                 $container.on({
-                   "mouseenter.ActivateView": function () {
-                     instance.setActive(true);
-                     console.log(element + " is now active.");
-                   },
-                   "mouseleave.ActivateView": function () {
-                     instance.setActive(false);
+                   "click.ActivateView, focus.ActivateView": function () {
+                     communicator.publish("activate:view", view);
+                     console.log(view + " is now active.");
                    }
                });
              }

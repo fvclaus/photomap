@@ -20,6 +20,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    "enable:ui": this._uiEnable,
                    "disable:ui": this._uiDisable
                 }, this);
+                communicator.subscribe("activate:view", this._viewActivation)
                 
                 communicator.subscribe({
                    "mouseover:marker": this._markerMouseover,
@@ -128,6 +129,23 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                     cursor: ""
                  });
                  $("a").off(".Disabled");
+             },
+             _viewActivation : function (viewName) {
+               var ui = main.getUI(),
+                  possibleViews = {
+                     Slideshow: ui.getSlideshow(),
+                     Gallery: ui.getGallery(),
+                     Fullscreen: ui.getFullscreen(),
+                     Map: main.getMap(),
+                     Dialog: ui.getInput()
+                  }
+                  
+               possibleViews[viewName].setActive(true);
+               $.each(possibleViews, function (name, view) {
+                  if (name !== viewName) {
+                     view.setActive(false);
+                  }
+               });
              },
              _detailClose : function () {
                 if (state.isDashboardView()) {

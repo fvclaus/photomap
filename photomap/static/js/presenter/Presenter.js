@@ -8,8 +8,8 @@
  * @class Base class for all Presenter
  */
 
-define(["dojo/_base/declare"],
-       function (declare) {
+define(["dojo/_base/declare", "util/Communicator"],
+       function (declare, communicator) {
           return declare(null, {
              constructor : function (view, model) {
                 this.view = view || null;
@@ -18,7 +18,7 @@ define(["dojo/_base/declare"],
              setDisabled : function (disable) {
                 assertTrue(disable !== undefined, "disable mustn't be undefined");
                 
-                console.log("setDisabled: " + disable);
+                console.log(this.view.getName() + " setDisabled: " + disable);
                 
                 this.view.setDisabled(disable);
                 
@@ -30,6 +30,11 @@ define(["dojo/_base/declare"],
              },
              isDisabled : function () {
                 return this.view.isDisabled();
+             },
+             setActive : function (active) {
+                assertTrue(active !== undefined, "active mustn't be undefined");
+                
+                this.view.setActive(active);
              },
              isActive : function () {
                 return this.view.isActive();
