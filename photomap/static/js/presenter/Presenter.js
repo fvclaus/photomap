@@ -30,6 +30,9 @@ define(["dojo/_base/declare"],
              },
              isDisabled : function () {
                 return this.view.isDisabled();
+             },
+             isActive : function () {
+                return this.view.isActive();
              }
           });
        });

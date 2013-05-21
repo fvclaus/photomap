@@ -14,6 +14,7 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
          constructor : function () {
 
             this.presenter = new FullscreenPresenter(this);
+            this.viewName = "Fullscreen";
 
             this.iconHelpCount = 5;
             this.$container = $("#mp-fullscreen");
@@ -42,6 +43,8 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
             
             this.visible = false;
             this.disabled = true;
+            
+            this._bindActivationListener(this.$container, this.viewName);
          },
          init : function () {
             
@@ -160,6 +163,24 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
                   instance.presenter.close();
                }
             });
+            $("body")
+               .on("keyup.Fullscreen", null, "esc", function () {
+                  if (!instance.disabled && instance.active) {
+                     instance.presenter.close();
+                  }
+               })
+               .on("keyup.Fullscreen", null, "left", function () {
+                  if (!instance.disabled && instance.active) {
+                     console.log("UIFullscreen: navigating left");
+                     instance.presenter.navigate("left");
+                  }
+               })
+               .on("keyup.Fullscreen", null, "right", function () {
+                  if (!instance.disabled && instance.active) {
+                     console.log("UIFullscreen: navigating right");
+                     instance.presenter.navigate("right");
+                  }
+               });
       
          },
          _updateTitle : function (photo) {
