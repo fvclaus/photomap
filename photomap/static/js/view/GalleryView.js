@@ -381,7 +381,7 @@ define(["dojo/_base/declare",
                 this.$containerColumn
                    .on('click.Gallery', ".mp-gallery-tile, .mp-sortable-tile", function (event) {
                       
-                      var $el = $(this).children();
+                      var $el = $(this).children(".mp-thumb");
                       
                       if (!instance.isDisabled()) {
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index

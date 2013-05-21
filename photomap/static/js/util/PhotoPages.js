@@ -237,8 +237,9 @@ define(["dojo/_base/declare", "model/Photo"],
               */
              _setCurrentPage : function (index) {
                 //TODO setting currentPage is prone to error when we update the pages Array. Only store currentPageIndex
-                assertTrue(this.pages[index] !== undefined, "There is no page with given index. You have to provide a valid index.");
                 console.log("PhotoPages: Current page is now %d.", index);
+                assertTrue(this.pages[index] !== undefined, "There is no page with given index. You have to provide a valid index.");
+                
                 this.currentPageIndex = index;
              }
           });
