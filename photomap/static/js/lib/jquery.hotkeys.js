@@ -1,6 +1,7 @@
 //EDITED BY KEIKEN TEAM! BE AWARE OF THE CHANGES BEFORE UPDATING
 // The changes made by the KEIKEN Team are to prevent the incompatibility with jqueryui which is used ehavily on KEIKEN
-// it's an individual change only used on our app, for the original plugin visit the github repository mentioned below 
+// it's an individual change only used on our app, for the original plugin visit the github repository mentioned below
+// https://github.com/jeresig/jquery.hotkeys
 
 /*
 * jQuery Hotkeys Plugin

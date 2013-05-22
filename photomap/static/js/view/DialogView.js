@@ -20,6 +20,10 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
    function (declare, View, DialogMessageView, clientstate, PhotoEditorView, communicator) {
       return declare(View, {
          constructor : function () {
+            
+            this.$container = $("#mp-dialog");
+            this.viewName = "Dialog";
+            
             this.$dialog = $("#mp-dialog");
             this.width = this.$dialog.width();
             this.height = this.$dialog.height();
@@ -31,6 +35,8 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
             this.abort = true;
             this.editor = new PhotoEditorView();
             
+            this._bindActivationListener(this.$container, this.viewName);
+            this._bindListener();
          },
          /**
           * @author Frederik Claus, Marc Römer
@@ -51,6 +57,8 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                   instance.$dialog.empty();
                   instance.$dialog.dialog("destroy");
                   instance.setVisibility(false);
+                  instance.setActive(false);  
+                  console.log("Dialog closed.");
                   // in case the user did not submit or a network/server error occurred and the dialog is closed
                   if (instance.abort) {
                      instance._trigger(instance.options, "abort");
@@ -60,6 +68,8 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                   instance.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide();
                   instance._submitHandler.call(instance);
                   instance.setVisibility(true);
+                  // focus for activation
+                  instance.$container.focus();
                }
       
             });
@@ -107,6 +117,15 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
             //if we open the dialog earlier the open callback from above will never be called
             this.$dialog.dialog("open");
                   
+         },
+         setVisibility : function (bool) {
+            this.visible = bool;
+         },
+         isVisible : function () {
+            return this.visible;
+         },
+         close : function () {
+            this.$dialog.dialog("close");
          },
          _prepareDialog : function (url){
             var html = this._loadHtml(url),
@@ -262,14 +281,13 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
          _submitForm : function () {
             this.$dialog.dialog("widget").find("form").trigger("submit");
          },
-         setVisibility : function (bool) {
-            this.visible = bool;
-         },
-         isVisible : function () {
-            return this.visible;
-         },
-         close : function () {
-            this.$dialog.dialog("close");
+         _bindListener : function () {
+            var instance = this;
+            $("body").on("keyup.Dialog", null, "esc", function () {
+               if (!instance.disabled && instance.active) {
+                  instance.close();
+               }
+            });
          }
       });
    });
