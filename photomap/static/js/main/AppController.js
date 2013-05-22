@@ -198,11 +198,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              },
              _markerClick : function (marker) {
                 
-                var detail = main.getUI().getInformation(),
-                    map = main.getMap();
+                var detail = main.getUI().getInformation();
                 
                 detail.update(marker.getModel());
-                state.setCurrentMarker(marker);
                 
                 if (state.isDashboardView()) {
                    marker.centerAndMoveLeft(.25);
@@ -212,6 +210,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
              _markerInsert : function (data) {
                 
                 state.insertMarker(data.marker);
+                data.marker.checkIconStatus();
                 data.marker.show();
                 if (data.open) {
                    data.marker.open();

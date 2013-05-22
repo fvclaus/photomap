@@ -45,10 +45,11 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                 this.view.triggerEventOnMarker(marker, "mouseover");
              },
              insertMarker : function (model, open) {
-                var marker = this.view.createMarker(model),
-                   view = new MarkerView(this.view, marker, model);
+                var markerImplementation = this.view.createMarker(model),
+                   markerView = new MarkerView(this.view, markerImplementation, model),
+                   markerPresenter = markerView.getPresenter();
                 
-                communicator.publish("insert:marker", {marker: view.getPresenter(), "open": open});
+                communicator.publish("insert:marker", {marker: markerPresenter, "open": open});
              },
              getPositionInPixel : function (element) {
                 return this.view.getPositionInPixel(element);

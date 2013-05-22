@@ -233,15 +233,16 @@ define(["dojo/_base/declare",
                 
                 var instance = this;
                 
-                $.each(this.$thumbs, function (index, thumb) {
-                   
-                   if ($(thumb).children("img.mp-thumb").attr("src") && $(thumb).children("img.mp-thumb").attr("src").length > 0) {
-                      $(thumb).removeClass("mp-empty-tile");
-                   } else {
-                      $(thumb).addClass("mp-empty-tile");
-                   }
-                })
-
+                if (clientstate.isAdmin()) {
+                   $.each(this.$thumbs, function (index, thumb) {
+                      
+                      if ($(thumb).children("img.mp-thumb").attr("src") && $(thumb).children("img.mp-thumb").attr("src").length > 0) {
+                         $(thumb).removeClass("mp-empty-tile");
+                      } else {
+                         $(thumb).addClass("mp-empty-tile");
+                      }
+                   });
+                }
                 if (this.showTeaser) {
                    if (this.currentPhoto === null) {
                       throw new Error("Set showTeaser but no currentPhoto");

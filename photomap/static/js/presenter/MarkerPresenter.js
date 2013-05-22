@@ -31,26 +31,42 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              },
              dblClick : function () {
                 if (!this.view.isDisabled()) {
+                  this.switchCurrentLoadedMarker();
                   this.open();
                 }
              },
              click : function () {
                 
                 var instance = this,
-                    publish = function () {
-                       communicator.publish('click:marker', instance);
-                       };
+                   publish = function () {
+                     instance.switchCurrentMarker();
+                     communicator.publish('click:marker', instance);
+                   };
                 
                 if (!this.view.isDisabled()) {
-                   if (state.isDashboardView()) {
-                      state.setCurrentAlbum(this.model);
-                      state.setCurrentLoadedAlbum(this.model);
-                   } else if (state.isAlbumView()) {
-                      state.setCurrentPlace(this.model);
-                   }
                    //timeout necessary to wait if user is actually dblclicking
                    window.setTimeout(publish, 500);
                 }
+             },
+             switchCurrentMarker : function () {
+               
+               var oldMarker = state.getCurrentMarker();
+               
+               state.setCurrentMarker(this);
+               if (oldMarker) {
+                  oldMarker.checkIconStatus();
+               }
+               this.checkIconStatus();
+             },
+             switchCurrentLoadedMarker : function () {
+               
+               var oldMarker = state.getCurrentLoadedMarker();
+               
+               state.setCurrentLoadedMarker(this);
+               if (oldMarker) {
+                  oldMarker.checkIconStatus();
+               }
+               this.checkIconStatus();
              },
              center : function () {
                 this.view.center();
@@ -139,19 +155,33 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
               },
               checkIconStatus : function () {
                  
+                 var visited = true,
+                    loadedMarker = state.getCurrentLoadedMarker(),
+                    currentMarker = state.getCurrentMarker();
+                 
                  if (this.model.getModelType() === "Album") {
                     
-                    this.showVisitedIcon();
+                    if (this.isDisabled()) {
+                       this.showDisabledIcon();
+                    } else if (this === currentMarker) {
+                       this.showSelectedIcon();
+                    } else {
+                       this.showUnselectedIcon();
+                    }
                     
                  } else if (this.model.getModelType() === "Place") {
                     
-                    var visited = true;
+                        
                     this.model.getPhotos().forEach(function (photo) {
                        visited = visited && photo.visited;
                     });
-    
-                    if (state.getCurrentLoadedPlace() === this) {
+                    
+                    if (this.isDisabled()) {
+                       this.showDisabledIcon();
+                    } else if (this === currentMarker && this !== loadedMarker) {
                        this.showSelectedIcon();
+                    } else if (this === loadedMarker) {
+                       this.showLoadedIcon();
                     } else if (visited) {
                        this.showVisitedIcon();
                     } else {
@@ -164,16 +194,24 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                  this.view.setCursor(style);
               },
               showVisitedIcon : function () {
-                 this.view.setOption({icon: PLACE_VISITED_ICON});
+                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_VISITED_ICON : ALBUM_VISITED_ICON;
+                 this._showIcon(markerIcon);
+              },
+              showLoadedIcon : function () {
+                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_LOADED_ICON : ALBUM_LOADED_ICON;
+                 this._showIcon(markerIcon);
               },
               showSelectedIcon : function () {
-                 this.view.setOption({icon: PLACE_SELECTED_ICON});
+                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_SELECTED_ICON : ALBUM_SELECTED_ICON;
+                 this._showIcon(markerIcon);
               },
               showUnselectedIcon : function () {
-                 this.view.setOption({icon: PLACE_UNSELECTED_ICON});
+                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_UNSELECTED_ICON : ALBUM_UNSELECTED_ICON;
+                 this._showIcon(markerIcon);
               },
               showDisabledIcon : function () {
-                 this.view.setOption({icon: PLACE_DISABLED_ICON});
+                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_DISABLED_ICON : ALBUM_DISABLED_ICON;
+                 this._showIcon(markerIcon);
               },
               /**
               * @public
@@ -202,22 +240,19 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                    
                 // reset ui and (re)start gallery when place is opened
                 } else if (this.model.getModelType() === "Place") {
-                    
-                   var oldPlace = state.getCurrentLoadedPlace();
-                   
-                   state.setCurrentPlace(this);
-                   state.setCurrentLoadedPlace(this);
-                   
-                   //TODO checkIconStatus has to be modified to work with views instead of models..
-                   // change icon of new place
-                   //this.checkIconStatus();
-                   // change icon of old place
-                   if (oldPlace) {
-                      //oldPlace.checkIconStatus();
-                   }
    
                    communicator.publish("open:place", this.model);
                 }
-             }
+             },
+              _showIcon : function (icon) {
+                 
+                 var markerIsPlace = (this.model.getModelType() === "Place");
+                    
+                 this.view.setIcon({
+                    url : icon,
+                    width: markerIsPlace ? PLACE_ICON_WIDTH : ALBUM_ICON_WIDTH,
+                    height: markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT
+                 });
+              }
           });
        });

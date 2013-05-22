@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, google, main,  ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, MARKER_DEFAULT_ICON, ZOOM_LEVEL_CENTERED, SHADOW_ICON, MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT, MARKER_ICON_SHADOW_WIDTH, assert, assertTrue  */
+/*global $, define, google, main,  ALBUM_VIEW, DASHBOARD_VIEW, TEMP_TITLE_KEY, TEMP_DESCRIPTION_KEY, PLACE_DEFAULT_ICON, ALBUM_DEFAULT_ICON, ZOOM_LEVEL_CENTERED, SHADOW_ICON, PLACE_ICON_WIDTH, PLACE_ICON_HEIGHT, ALBUM_ICON_WIDTH, ALBUM_ICON_HEIGHT, MARKER_ICON_SHADOW_WIDTH, assert, assertTrue  */
 
 "use strict";
 
@@ -160,9 +160,16 @@ define([
            */
           createMarker : function (data) {
              assertTrue((data.lat && (data.lng || data.lon) && data.title), "input parameter data has to contain: lat, lng/lon, and title");
+             assertTrue(data.getModelType() === "Place" || data.getModelType() === "Album", "model has to be either place or album")
              
              var lat = parseFloat(data.lat),
-                 lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon);
+                 lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon),
+                 markerIsPlace = (data.getModelType() === "Place"),
+                 icon =  markerIsPlace ? PLACE_DEFAULT_ICON : ALBUM_DEFAULT_ICON,
+                 iconWidth = markerIsPlace ? PLACE_ICON_WIDTH : ALBUM_ICON_WIDTH,
+                 iconHeight = markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT,
+                 shadowWidth = markerIsPlace ? PLACE_ICON_SHADOW_WIDTH : ALBUM_ICON_SHADOW_WIDTH,
+                 shadowIcon = markerIsPlace ? PLACE_SHADOW_ICON : ALBUM_SHADOW_ICON;
 
              assertTrue(isFinite(lat) && isFinite(lng), "lat and lng must not be infinite");
 
@@ -173,13 +180,13 @@ define([
                 map : this.map,
                 // icon :  new google.maps.MarkerImage(MARKER_DEFAULT_ICON),
                 icon : {
-                   url : MARKER_DEFAULT_ICON,
-                   scaledSize : new google.maps.Size(MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT, "px", "px")
+                   url : icon,
+                   scaledSize : new google.maps.Size(iconWidth, iconHeight, "px", "px")
                 },
                 shadow : {
-                   url : SHADOW_ICON,
-                   anchor : new google.maps.Point(MARKER_ICON_SHADOW_WIDTH - MARKER_ICON_WIDTH, MARKER_ICON_HEIGHT),
-                   scaledSize : new google.maps.Size(MARKER_ICON_SHADOW_WIDTH, MARKER_ICON_HEIGHT, "px", "px")
+                   url : shadowIcon,
+                   anchor : new google.maps.Point(shadowWidth - iconWidth, iconHeight),
+                   scaledSize : new google.maps.Size(shadowWidth, iconHeight, "px", "px")
                 },
                 title : data.title
              });

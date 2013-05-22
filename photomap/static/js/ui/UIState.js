@@ -88,10 +88,10 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
                this.currentLoadedMarkerIndex = $(this.markers).index(marker);
             },
             getCurrentLoadedMarker : function () {
-               return this.currentMarker;
+               return this.currentLoadedMarker;
             },
             getCurrentLoadedMarkerIndex: function () {
-               return this.currentMarkerIndex;
+               return this.currentLoadedMarkerIndex;
             },
             //--------------------------------------------------------------------
             //PHOTO---------------------------------------------------------------

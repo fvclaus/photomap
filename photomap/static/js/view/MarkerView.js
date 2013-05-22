@@ -120,6 +120,10 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
              triggerMouseOver : function () {
                 this.presenter.mouseOver();
              },
+             setIcon : function (icon) {
+                console.log(icon);
+                this.marker.setIcon(new google.maps.MarkerImage(icon.url, undefined, undefined, undefined, new google.maps.Size(icon.width, icon.height, "px", "px")));
+             },
              /**
               @private
               */
