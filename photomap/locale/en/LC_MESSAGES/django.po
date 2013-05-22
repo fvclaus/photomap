@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-22 12:24+0200\n"
+"POT-Creation-Date: 2013-05-22 16:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: templates/base-interactive.html:46 templates/base-interactive.html.py:62
-#: templates/view-album.html:121
+#: templates/view-album.html:116
 msgid "Schließen"
 msgstr "Close"
 
@@ -1072,26 +1072,33 @@ msgstr "Motivation for the project"
 
 #: templates/update-album-password.html:5
 msgid "UPDATE_ALBUM_PASSWORD"
-msgstr "TODO: DER TITEL SOLLTE KLARMACHEN DASS ES UMS TEILEN GEHT!"
+msgstr "Share-link & album password"
 
-#: templates/update-album-password.html:11
-msgid "mp-copy-link-title"
-msgstr "Copy Link"
+#: templates/update-album-password.html:14
+msgid "New Password"
+msgstr "New Password"
 
-#: templates/update-album-password.html:21
-msgid "How to Share"
-msgstr "How to share the link?"
+#: templates/update-album-password.html:15
+msgid "INPUT_PLACEHOLDER_SHARE_PASSWORD"
+msgstr "Not necessary, if you've already defined a password for this album.."
 
-#: templates/update-album-password.html:24
-msgid "How to Share -> description"
+#: templates/update-album-password.html:20
+msgid "INPUT_SHARE_ALBUM_TITEL"
+msgstr "How to share?"
+
+#: templates/update-album-password.html:23
+msgid "INPUT_SHARE_ALBUM_INFO"
 msgstr ""
-"TODO: HIER SOLLTE STEHEN WIE MAN TEILT UND WAS DAS MIT DEM PASSWORT SOLL"
-
-#: templates/update-album-password.html:27
-msgid "How to Share -> attention!"
-msgstr ""
-"Please be aware that copying this link will overwrite whatever is currently "
-"stored on your clipboard. (Whatever information that you copied last.)"
+"Copy the link and insert it wherever you want to share the album. (This can "
+"be an email, blog, status message on social networks or instant messengers.) "
+"Before sharing the album for the first time you need to define a password to "
+"protect it. Every visitor needs this password to confirm that he or she may "
+"see your album. Be aware that every time you change the password you need to "
+"notify all your contacts or else they won't have access to your album "
+"anymore. <strong>Visitors can just view your album but not change anything!</"
+"strong> <br /> <br /> By the way, the link is identical to the URL of the albumview of this "
+"album, which means that in case you opened an album you can just copy the "
+"url and share it, so long as you already defined a password."
 
 #: templates/update-album.html:5
 msgid "UPDATE_ALBUM"
@@ -1121,42 +1128,58 @@ msgstr "Previous Page"
 msgid "Open Full Gallery"
 msgstr "Open Full Gallery"
 
-#: templates/view-album.html:48 templates/view-album.html.py:56
+#: templates/view-album.html:48 templates/view-album.html.py:51
 msgid "GALLERY_NOT_STARTED"
 msgstr ""
 "Please select a place by clicking on a marker on the map above in order to "
 "start the gallery."
 
-#: templates/view-album.html:53 templates/view-album.html.py:57
+#: templates/view-album.html:52
 msgid "GALLERY_IS_EMPTY"
 msgstr ""
 "The selected place does not contain photos yet. You can add a photo by "
 "dropping it into the gallery or using the 'Add Photo'-Button on the right "
 "side."
 
-#: templates/view-album.html:69
+#: templates/view-album.html:64
 msgid "Next Page"
 msgstr "Next Page"
 
-#: templates/view-album.html:73
+#: templates/view-album.html:68
 msgid "Add Image"
 msgstr "Add Image"
 
-#: templates/view-album.html:86
+#: templates/view-album.html:81
 msgid "Previous Image"
 msgstr "Previous Image"
 
-#: templates/view-album.html:92
+#: templates/view-album.html:87
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr "Please choose a photo in your gallery to start the slideshow."
 
-#: templates/view-album.html:96
+#: templates/view-album.html:91
 msgid "Next Image"
 msgstr "Next Image"
 
-#: templates/view-album.html:99
+#: templates/view-album.html:94
 msgid "Bild"
 msgstr "Image"
+
+#~ msgid "mp-copy-link-title"
+#~ msgstr "Copy Link"
+
+#~ msgid "How to Share"
+#~ msgstr "How to share the link?"
+
+#~ msgid "How to Share -> description"
+#~ msgstr ""
+#~ "TODO: HIER SOLLTE STEHEN WIE MAN TEILT UND WAS DAS MIT DEM PASSWORT SOLL"
+
+#~ msgid "How to Share -> attention!"
+#~ msgstr ""
+#~ "Please be aware that copying this link will overwrite whatever is "
+#~ "currently stored on your clipboard. (Whatever information that you copied "
+#~ "last.)"
 
 #~ msgid "privacy-sidenote Pseudonyme"
 #~ msgstr "Note concerning pseudonymes"

@@ -142,7 +142,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                   
                possibleViews[viewName].setActive(true);
                $.each(possibleViews, function (name, view) {
-                  if (name !== viewName) {
+                  if (view && name !== viewName) {
                      view.setActive(false);
                   }
                });
@@ -153,7 +153,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 }
              },
              _photoOrderChange : function (photos) {
-                place = main.getUIState().getCurrentLoadedPlace();
+                place = main.getUIState().getCurrentLoadedPlace().getModel();
                 // update the 'real' photo order
                 photos.forEach(function (photo, index) {
                    place.getPhoto(photo.photo).order = photo.order;
@@ -201,7 +201,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 var detail = main.getUI().getInformation(),
                     map = main.getMap();
                 
-                detail.update(marker.model);
+                detail.update(marker.getModel());
+                state.setCurrentMarker(marker);
                 
                 if (state.isDashboardView()) {
                    marker.centerAndMoveLeft(.25);
@@ -254,12 +255,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 main.getUI().getInformation().empty(model);
                 
                 if (type === "Photo") {
-                   main.getUI().getGallery().deletePhoto(photo);
-                   main.getUI().getSlideshow().deletePhoto(photo);
-                   state.getCurrentLoadedPlace().deletePhoto(photo);
+                   main.getUI().getGallery().deletePhoto(model);
+                   main.getUI().getSlideshow().deletePhoto(model);
+                   state.getCurrentLoadedPlace().getModel().deletePhoto(model);
                 } else if (type === "Place") {
-                   main.getUI().getGallery().placeDeleteReset(place);
-                   main.getUI().getSlideshow().placeDeleteReset(place);
+                   main.getUI().getGallery().placeDeleteReset(model);
+                   main.getUI().getSlideshow().placeDeleteReset(model);
                 }
                 
                 if (type === "Place" || type === "Album") {

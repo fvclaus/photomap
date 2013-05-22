@@ -9,6 +9,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              init : function () {
                 this.view.init();
              },
+             isStarted : function () {
+                return this.view.isStarted();
+             },
              mouseEnter : function ($el, photo) {
                 this.model = photo;
                 if (!this.view.isDisabled()) {
@@ -49,12 +52,14 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              },
              insert : function () {
                 var instance = this,
-                    place = state.getCurrentLoadedPlace();
+                    place = state.getCurrentLoadedPlace().getModel();
 
                 // if-clause to prevent method from being executed if there are no places yet
                 if (state.getPlaces().length !== 0) {
                    communicator.publish("load:dialog", {
-                      load : function () {      
+                      load : function () {
+                         var input = this;
+                         console.log(this);
                          $("#insert-photo-tabs").tabs();
                          $("input[name='place']").val(place.getId());
                          this.$title = $("input[name='title']");
@@ -73,15 +78,14 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                          data.append('place', place.getId());
                          data.append('title', this.$title.val());
                          data.append('description', this.$description.val());
-                         data.append("photo", input.editor.getAsFile());
+                         data.append("photo", this.editor.getAsFile());
 
                          return data;
                       },
                       success : function (data) {
                          communicator.publish("insert:photo", data);
                       },
-                      url : "/insert-photo",
-                      context : this
+                      url : "/insert-photo"
                    });
                 }
              },

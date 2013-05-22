@@ -77,7 +77,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                        $("input[name=lat]").val(lat);
                        $("input[name=lon]").val(lng);
                        if ($("input[name=album]").size() > 0) {
-                          $("input[name=album]").val(state.getCurrentLoadedAlbum().id);
+                          $("input[name=album]").val(state.getAlbum().getId());
                        }
                     },
                     submit : function () {

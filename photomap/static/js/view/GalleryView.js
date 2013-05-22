@@ -41,13 +41,12 @@ define(["dojo/_base/declare",
                 this.$containerColumn = $("#mp-left-column");
                 this.$loader = this.$container.find(".mp-gallery-loader");
 
-                this.$isEmpty = $("#mp-gallery-no-image");
                 this.$isNotStarted = $("#mp-gallery-not-started");
 
                 this.carousel = null;
                 
                 this.photos = null;
-                this.isStarted = false;
+                this.started = false;
                 // set on insert photo to show the teaser of the photo after it is updated
                 this.showTeaser = false;
                 this.currentPhoto = null;
@@ -68,6 +67,9 @@ define(["dojo/_base/declare",
              getCarousel : function () {
                 return this.carousel;
              },
+             isStarted : function () {
+                return this.started;
+             },
              /**
               * Triggers a click on the photo. Bypasses every listener, because they might be disabled
               */
@@ -84,7 +86,7 @@ define(["dojo/_base/declare",
               * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
               */
              start : function (photos) {
-                assert(this.isStarted, false, "gallery must not be started yet");
+                assert(this.started, false, "gallery must not be started yet");
                 
                 var options,
                     effect,
@@ -92,7 +94,7 @@ define(["dojo/_base/declare",
                     instance = this,
                     imageSources = [];
 
-                this.isStarted = true;
+                this.started = true;
                 
                 // reset FullGallery
                 this.fullGallery.destroy();
@@ -133,10 +135,6 @@ define(["dojo/_base/declare",
                 // show/hide correct message
                 this.$isNotStarted.hide();
                 if (photos.length === 0) {
-                   // display table is necessary to center the message
-                   this.$isEmpty.css("display", "table");
-                } else {
-                   this.$isEmpty.hide();
                 }
              },
              /**
@@ -144,15 +142,13 @@ define(["dojo/_base/declare",
               */
              reset : function () {
                 
-                this.isStarted = false;
+                this.started = false;
                 $(".mp-gallery-loader").addClass("mp-nodisplay");
                 this.$controls.addClass("mp-nodisplay");
                 if (this.carousel !== null) {
                    this.carousel.reset();
                    this.carousel = null;
                 }
-                // display table is necessary to center the message
-                this.$isEmpty.css("display", "table");
              },
              init : function () {
                 
@@ -174,12 +170,10 @@ define(["dojo/_base/declare",
                 // show teaser after the photo is loaded
                 this.showTeaser = true;
                 this.currentPhoto = photo;
-                // hide the 'no pictures yet' text
-                this.$isEmpty.hide();
                 // navigate to the picture if we are not on the last page
-                if (this.isStarted && !this.carousel.isLastPage()) {
+                if (this.started && !this.carousel.isLastPage()) {
                    this._navigateToLastPage();
-                } else if (!this.isStarted) {
+                } else if (!this.started) {
                    // show the new photo
                    //TODO this does now show the new photo yet
                    this.start();
@@ -191,7 +185,7 @@ define(["dojo/_base/declare",
               */
              deletePhoto : function (photo) {
                 // not possible to delete something without the gallery started
-                assert(this.isStarted, true, "gallery has to be started already");
+                assert(this.started, true, "gallery has to be started already");
                 // automatically delete if photo is on current page
                 // otherwise we dont care
                 this.carousel.deletePhoto(photo);
@@ -201,7 +195,7 @@ define(["dojo/_base/declare",
               * @description Resets the Gallery if the deleted place was the one that is currently open
               */
              placeDeleteReset : function (place) {
-                if (state.getCurrentPlace() === place) {
+                if (state.getCurrentLoadedPlace().getModel() === place) {
                    this.reset();
                 }
              },
@@ -318,13 +312,13 @@ define(["dojo/_base/declare",
                 
                 $("body")
                   .on("keyup.Gallery", null, "left", function () {
-                     if (!instance.disabled && instance.active) {
+                     if (instance.started && instance.active && !instance.disabled) {
                         console.log("UIGallery: navigating left");
                         instance.carousel.navigateLeft();
                      }
                   })
                   .on("keyup.Gallery", null, "right", function () {
-                     if (!instance.disabled && instance.active) {
+                     if (instance.started && instance.active && !instance.disabled) {
                         console.log("UIGallery: navigating right");
                         instance.carousel.navigateRight();
                      }
@@ -338,7 +332,7 @@ define(["dojo/_base/declare",
                     instance = this;
                 
                 
-                //TODO this is not used atm, if it is actually needed please use AppController + Communicator + GalleryPresenter for the trigger/listen/handle chain
+                //TODO this is not used atm, if it is actually needed please use AppController + Communicator + GalleryPresenter for the trigger/listen/handle chain be aware that getCurrentLoadedPlace return presenter now!
                 // // this is triggered by the fullgallery
                 // $(ui).on("photosOrderUpdate.mp", function (place) {
                    // if (place === state.getCurrentLoadedPlace()) {

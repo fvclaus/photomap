@@ -89,7 +89,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 }
              },
              deletePhoto : function (photo) {
-                assertTrue(photo instanceof Photo);
+                assertTrue(photo instanceof Photo, "input parameter photo has to be model of the type Photo");
 
                 var instance = this, 
                     oldPage = this.dataPage.getPage("current"),
@@ -185,7 +185,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 loadHandler = function () {
                    ++loaded;
 
-                   if (loaded === nSources) {
+                   if (loaded >= nSources) {
                       // if there is a load-handler specified in the options, execute it first
                       if (typeof instance.options.afterLoad === "function") {
                          // trigger the afterLoad event
@@ -197,6 +197,10 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 };
                 nSources = imageSources.length;
                 loader = function () {
+                   if (nSources === 0) {
+                      instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nSources));
+                      instance._update();
+                   }
                    for (i = 0; i < nSources; i++) {
                       source = imageSources[i];
                       console.log(source);
@@ -235,6 +239,11 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
              //TODO this i called even when not all photo could be loaded (e.g network error)
              // we need to indicate that a photo could not be loaded
              _update : function (from, to) {
+                
+                if (!from) {
+                   $items = this.$items;
+                   imageSources = [];
+                }
                 
                 var instance = this, 
                     imageSources = [],

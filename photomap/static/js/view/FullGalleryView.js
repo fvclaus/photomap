@@ -84,8 +84,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/Communicator", "
               */
              _savePhotos : function (photos) {
                 
-                var place = state.getCurrentLoadedPlace(),
-                    instance = this;
+                var instance = this;
                 
                 photos.forEach(function (photo) {
                    // photo must be a photo dto not the actual photo

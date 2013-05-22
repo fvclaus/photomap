@@ -93,12 +93,10 @@ define([
            */
           reset : function () {
              this.started = false;
-             //TODO if the last photo is deleted, it will fade out
-             // therefore we must not delete the carousel until the fading out is complete
-             // if (this.carousel !== null) {
-             // this.carousel.reset();
-             // this.carousel = null;
-             // }
+             if (this.carousel !== null) {
+                this.carousel.reset();
+                this.carousel = null;
+             }
              this._emptyPhotoNumber();
              $(".mp-slideshow-loader").hide();
              $(".mp-slideshow-no-image-msg").show();
@@ -159,7 +157,10 @@ define([
            * @description Resets the Gallery if the deleted place was the one that is currently open
            */
           placeDeleteReset : function (place) {
-             if (state.getCurrentPlace() === place) {
+             console.log(place);
+             console.log(state.getCurrentLoadedPlace().getModel());
+             if (state.getCurrentLoadedPlace().getModel() === place) {
+                console.log("juhuu");
                 this.reset();
              }
           },
@@ -300,13 +301,13 @@ define([
                 
              $("body")
                .on("keyup.Slideshow", null, "left", function () {
-                  if (!instance.disabled && instance.active) {
+                  if (instance.active && !instance.disabled) {
                      console.log("UISlideshow: navigating left");
                      instance.presenter.navigate("left");
                   }
                })
                .on("keyup.Slideshow", null, "right", function () {
-                  if (!instance.disabled && instance.active) {
+                  if (instance.active && !instance.disabled) {
                      console.log("UISlideshow: navigating right");
                      instance.presenter.navigate("right");
                   }

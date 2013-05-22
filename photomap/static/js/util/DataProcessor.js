@@ -57,7 +57,7 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
                 var processedData;
                 
                 if (state.isAlbumView()) {
-                   state.setCurrentLoadedAlbum(this._createAlbum(data));
+                   state.setAlbum(this._createAlbum(data));
                    processedData = this._createPlacesOrAlbums(data.places, "Place");
                    processedData = this._sortPhotos(processedData);
                 } else if (state.isDashboardView()) {
@@ -129,8 +129,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
                        photos: data.photos || null
                     });
                 
-                state.insertPlace(place);
-                
                 return place;
              },
              /**
@@ -147,8 +145,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
                        secret : data.secret,
                        isOwner : data.isOwner || false
                     });
-                
-                state.insertAlbum(album);
                 
                 return album;
              }

@@ -24,7 +24,7 @@ define([
        return declare(View, {
           constructor : function () {
              this.$container = $("#mp-right-column");
-             this.$pageTitle = $("#mp-page-title h1");
+             this.$pageTitle = $("#mp-page-title");
              this.$explanationContainer = $("#mp-detail");
              this.$teaserContainer = $("#mp-detail-teaser");
 
@@ -89,15 +89,15 @@ define([
              
              if (state.isAlbumView()) {
                 this.updatePageTitle();
-                this.update(state.getCurrentLoadedAlbum());
+                this.update(state.getAlbum());
                 this.bindPageTitleListener();
              }
           },
           updatePageTitle : function () {
              assertTrue(state.isAlbumView(), "page-title is just supposed to be changed in albumview");
              
-             console.log(state.getCurrentLoadedAlbum().title);
-             this.$pageTitle.text(state.getCurrentLoadedAlbum().title);
+             console.log("Albumtitle is: " + state.getAlbum().getTitle());
+             this.$pageTitle.text(state.getAlbum().getTitle());
           },
           /**
            * @description Hides the detail box. The teaser box should be visible afterwards
@@ -194,7 +194,7 @@ define([
              this.$pageTitle.on('click', function () {
 
                 if (!instance.isDisabled()) {
-                   instance.update(state.getCurrentLoadedAlbum());
+                   instance.update(state.getAlbum());
                 }
              });
           }

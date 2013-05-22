@@ -117,12 +117,22 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     load : function () {
                        $("input[name='album']").val(instance.model.getId());
                        $("input[name='share']").val("http://" + window.location.host + "/album/view/" + instance.model.getSecret() + "-" + instance.model.getId());
-                       // $("input[name='share']").val(
-                       // copy to clipboard with jquery (zclip) using ZeroClipboard (javascript and flash)
-                       $("#mp-copy-share").zclip({
-                          path: 'static/js/zeroclipboard/zeroclipboard.swf',
-                          copy: $("input[name='share']").val()
-                       });
+                       $("input[name='share']").on("click focus", function () {
+                          $(this).select();
+                       }).focus();
+                       $("#mp-dialog-button-save").button("disable");
+                       $("#album-password")
+                        .on("keyup keypress", null, function () {
+                          if (this.value.length > 0) {
+                              $("#mp-dialog-button-save").button("enable");
+                           }
+                        })
+                        .on("keyup", null, "backspace", function () {
+                           if (this.value.length === 0) {
+                              $("#mp-dialog-button-save").button("disable");
+                           }
+                        });
+                       
                     },
                     context : this
                  });
@@ -195,8 +205,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     
                    var oldPlace = state.getCurrentLoadedPlace();
                    
-                   state.setCurrentPlace(this.model);
-                   state.setCurrentLoadedPlace(this.model);
+                   state.setCurrentPlace(this);
+                   state.setCurrentLoadedPlace(this);
                    
                    //TODO checkIconStatus has to be modified to work with views instead of models..
                    // change icon of new place

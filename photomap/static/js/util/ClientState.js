@@ -32,8 +32,7 @@ define(["dojo/_base/declare", "util/Communicator", "util/Tools", "ui/UIState"],
               * @description Checks if user is owner of the current album (just used in albumview).
               */
              isAdmin : function () {
-                var album = state.getCurrentLoadedAlbum();
-                return album.isOwner;
+                return state.getAlbum().isOwner();
              },
              /**
               * @description Checks if User is owner of the given album.

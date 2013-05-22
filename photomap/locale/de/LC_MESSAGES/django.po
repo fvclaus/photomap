@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-22 12:24+0200\n"
+"POT-Creation-Date: 2013-05-22 16:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,7 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: templates/base-interactive.html:46 templates/base-interactive.html.py:62
-#: templates/view-album.html:121
+#: templates/view-album.html:116
 msgid "Schließen"
 msgstr "Schließen"
 
@@ -1126,27 +1126,35 @@ msgstr "Motivation am Projekt"
 
 #: templates/update-album-password.html:5
 msgid "UPDATE_ALBUM_PASSWORD"
-msgstr "TODO: DER TITEL SOLLTE KLARMACHEN DASS ES UMS TEILEN GEHT!"
+msgstr "Link zum Teilen & Album Passwort"
 
-#: templates/update-album-password.html:11
-msgid "mp-copy-link-title"
-msgstr "Link kopieren"
+#: templates/update-album-password.html:14
+msgid "New Password"
+msgstr "Neues Passwort"
 
-#: templates/update-album-password.html:21
-msgid "How to Share"
-msgstr "Wie teilt man den Link?"
+#: templates/update-album-password.html:15
+msgid "INPUT_PLACEHOLDER_SHARE_PASSWORD"
+msgstr "Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt haben.."
 
-#: templates/update-album-password.html:24
-msgid "How to Share -> description"
+#: templates/update-album-password.html:20
+msgid "INPUT_SHARE_ALBUM_TITEL"
+msgstr "Wie teilt man?"
+
+#: templates/update-album-password.html:23
+msgid "INPUT_SHARE_ALBUM_INFO"
 msgstr ""
-"TODO: HIER SOLLTE STEHEN WIE MAN TEILT UND WAS DAS MIT DEM PASSWORT SOLL"
-
-#: templates/update-album-password.html:27
-msgid "How to Share -> attention!"
-msgstr ""
-"Bitte beachten Sie, dass, was auch immer Sie momentan im Zwischenspeicher "
-"haben (also das, was Sie als letztes kopiert haben), beim Kopieren "
-"überschrieben wird."
+"Kopieren Sie den Link und fügen Sie ihn an der Stelle ein, an der Sie ihr "
+"Album mit anderen teilen wollen. (Das kann zB. eine Email, ein Blog, ein "
+"Statusnachricht bei ihrem sozialen Netzwerk oder Instant Messenger sein.) "
+"Vor dem ersten Teilen müssen Sie ein Passwort festlegen, welches Besucher "
+"Ihres Albums benötigen um die Berechtigung zum Ansehen ihres Albums zu "
+"bestätigen. Jedes Mal wenn Sie ein neues Passwort festlegen, müssen Sie Ihre "
+"Freunde und Verwandten über die Änderung informieren, gesetzt den Fall, das "
+"diese weiterhin Zugriff auf das Album haben sollen. <strong>Besucher Ihres "
+"Album können ihr Album nur ansehen, aber nichts verändern!</strong> <br /> <br /> Nebenbei "
+"bemerkt: Der Link ist identisch mit der URL der Albumsansicht des Albums, "
+"wenn sie also bereits ein Passwort festgelegt haben und ein ALbum geöffnet "
+"haben, können Sie einfach die URL kopieren und teilen."
 
 #: templates/update-album.html:5
 msgid "UPDATE_ALBUM"
@@ -1176,43 +1184,59 @@ msgstr "Vorherige Seite"
 msgid "Open Full Gallery"
 msgstr "Vollstädige Galerie öffnen"
 
-#: templates/view-album.html:48 templates/view-album.html.py:56
+#: templates/view-album.html:48 templates/view-album.html.py:51
 msgid "GALLERY_NOT_STARTED"
 msgstr ""
 "Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der Karte "
 "klicken, um die Galerie zu starten."
 
-#: templates/view-album.html:53 templates/view-album.html.py:57
+#: templates/view-album.html:52
 msgid "GALLERY_IS_EMPTY"
 msgstr ""
 "Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, "
 "ziehen Sie diese in die Galerie oder nutzen Sie den 'Bild hinzufügen'-Button "
 "rechts der Galerie."
 
-#: templates/view-album.html:69
+#: templates/view-album.html:64
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/view-album.html:73
+#: templates/view-album.html:68
 msgid "Add Image"
 msgstr "Bild hinzufügen"
 
-#: templates/view-album.html:86
+#: templates/view-album.html:81
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: templates/view-album.html:92
+#: templates/view-album.html:87
 msgid "Please choose a photo in your gallery to start the slideshow."
 msgstr ""
 "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
 
-#: templates/view-album.html:96
+#: templates/view-album.html:91
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: templates/view-album.html:99
+#: templates/view-album.html:94
 msgid "Bild"
 msgstr "Bild"
+
+#~ msgid "mp-copy-link-title"
+#~ msgstr "Link kopieren"
+
+#~ msgid "How to Share"
+#~ msgstr "Wie teilt man den Link?"
+
+#~ msgid "How to Share -> description"
+#~ msgstr ""
+#~ "TODO: HIER SOLLTE STEHEN WIE MAN TEILT UND WAS DAS MIT DEM PASSWORT SOLL"
+
+#~ msgid "How to Share -> attention!"
+#~ msgstr ""
+#~ "Bitte beachten Sie, dass, was auch immer Sie momentan im Zwischenspeicher "
+#~ "haben (also das, was Sie als letztes kopiert haben), beim Kopieren "
+#~ "überschrieben wird."
 
 #~ msgid "privacy-sidenote Pseudonyme"
 #~ msgstr "Notiz zu Pseudonymen"

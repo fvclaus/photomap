@@ -70,32 +70,34 @@ define(["dojo/_base/declare", "util/Tools"],
                    if (options.loader) {
                       options.loader.hide();
                    }
-                   $.each(options.items, function (index, item) {
-                      var imageSource = options.images[index];
-                      // center element
-                      // give the element its later height
-                      $(item)
-                           .css("visibility", "hidden")
-                           .attr("src", imageSource);
-                      // set margin-top accordingly. 
-                      tools.centerElement($(item), "vertical");
-                      // remove the img again to fade it in nicely
-                      $(item)
-                           .removeAttr("src")
-                           .css("visibility", "visible");
-                      if ( imageSource !== null) {
-                         $(this).fadeIn(options.animationTime)
-                            .attr("src", imageSource)
-                            // needed for frontend testing to select 'active' photos
-                            .addClass("mp-test-photo-used");
-
-                      } else {
-                         $(this).fadeOut(0, updated)
-                            .removeAttr("src")
-                            // needed for frontend testing to select 'active' photos
-                            .removeClass("mp-test-photo-used");
-                      }
-                   });
+                   if (options.images.length > 0) {
+                      $.each(options.items, function (index, item) {
+                         var imageSource = options.images[index];
+                         // center element
+                         // give the element its later height
+                         $(item)
+                              .css("visibility", "hidden")
+                              .attr("src", imageSource);
+                         // set margin-top accordingly. 
+                         tools.centerElement($(item), "vertical");
+                         // remove the img again to fade it in nicely
+                         $(item)
+                              .removeAttr("src")
+                              .css("visibility", "visible");
+                         if ( imageSource !== null) {
+                            $(this).fadeIn(options.animationTime)
+                               .attr("src", imageSource)
+                               // needed for frontend testing to select 'active' photos
+                               .addClass("mp-test-photo-used");
+   
+                         } else {
+                            $(this).fadeOut(0, updated)
+                               .removeAttr("src")
+                               // needed for frontend testing to select 'active' photos
+                               .removeClass("mp-test-photo-used");
+                         }
+                      });
+                   }
                    
                    window.setTimeout(
                       function () {
@@ -148,40 +150,42 @@ define(["dojo/_base/declare", "util/Tools"],
                    if (options.loader) {
                       options.loader.hide();
                    }
-                   $.each(options.items, function (index, item) {
-                      var imageSource = options.images[index];
-                      // center element
-                      // give the element its later height
-                      $(item)
-                           .css("visibility", "hidden")
-                           .show()
-                           .attr("src", imageSource);
-                      // set margin-top accordingly. 
-                      tools.centerElement($(item), "vertical");
-                      // remove the img again to fade it in nicely
-                      $(item)
-                           .removeAttr("src")
-                           .css("visibility", "visible");
-                      if ( imageSource !== null) {
-                         
+                   if (options.images.length > 0) {
+                      $.each(options.items, function (index, item) {
+                         var imageSource = options.images[index];
+                         // center element
+                         // give the element its later height
                          $(item)
-                            .attr("src", imageSource)
-                            .css({
-                               "-o-transform": scaleX(1),
-                               "-webkit-transform": scaleX(1),
-                               "transform": scaleX(1)
-                            })
-                            //.removeClass("mp-scaleX-0")
-                            // needed for frontend testing to select 'active' photos
-                            .addClass("mp-test-photo-used");
-
-                      } else {
-                         $(item).fadeOut(0, updated)
-                            .removeAttr("src")
-                            // needed for frontend testing to select 'active' photos
-                            .removeClass("mp-test-photo-used");
-                      }
-                   });
+                              .css("visibility", "hidden")
+                              .show()
+                              .attr("src", imageSource);
+                         // set margin-top accordingly. 
+                         tools.centerElement($(item), "vertical");
+                         // remove the img again to fade it in nicely
+                         $(item)
+                              .removeAttr("src")
+                              .css("visibility", "visible");
+                         if ( imageSource !== null) {
+                            
+                            $(item)
+                               .attr("src", imageSource)
+                               .css({
+                                  "-o-transform": scaleX(1),
+                                  "-webkit-transform": scaleX(1),
+                                  "transform": scaleX(1)
+                               })
+                               //.removeClass("mp-scaleX-0")
+                               // needed for frontend testing to select 'active' photos
+                               .addClass("mp-test-photo-used");
+   
+                         } else {
+                            $(item).fadeOut(0, updated)
+                               .removeAttr("src")
+                               // needed for frontend testing to select 'active' photos
+                               .removeClass("mp-test-photo-used");
+                         }
+                      });
+                   }
                    
                    window.setTimeout(
                       function () {

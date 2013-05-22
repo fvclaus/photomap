@@ -18,12 +18,12 @@ define(["dojo/_base/declare", "model/MarkerModel", "ui/UIState"],
                 assertTrue(data.secret, "album secret Must not be undefined");
                 
                 this.type = 'Album';
-                this.isOwner = data.isOwner || false;
+                this.owner = data.isOwner || false;
                 this.secret = data.secret;
-                
-                //this.checkIconStatus();
-                //this._bindListener();
 
+             },
+             isOwner : function () {
+                return this.owner;
              },
              getSecret : function () {
                 return this.secret;

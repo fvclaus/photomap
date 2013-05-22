@@ -16,10 +16,11 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
                this._NS = "UIState";
                this.currentPhoto = null;
                this.currentLoadedPhoto = null;
-               this.currentPlace = null;
-               this.currentLoadedPlace = null;
-               this.currentAlbum = null;
-               this.currentLoadedAlbum = null;
+               this.hoveredMarker = null;
+               this.currentMarker = null;
+               this.currentMarkerIndex = -1;
+               this.currentLoadedMarker = null;
+               this.currentLoadedMarkerIndex = -1;
                this.places = [];
                this.albums = [];
                this.markers = [];
@@ -29,6 +30,11 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
                //PAGE_MAPPING is defined in constants.js
                this.page = window.location.pathname;
                this.data = {};
+               
+               // store album (model) in albumview
+               if (this.isAlbumView()) {
+                  this.album = null;
+               }
             },
             //--------------------------------------------------------------------
             //MARKER--------------------------------------------------------------
@@ -42,9 +48,17 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
             insertMarker : function (marker) {
                this.markers.push(marker);
             },
-            getMarker : function (model) {
-               return this.markers.filter(function (marker, index) {
-                  return marker.getModel() === model;
+            /**
+             * @param marker {Integer/Object} Can be either the index of the marker or the model of the marker!
+             */
+            getMarker : function (marker) {
+               
+               if (typeof marker === "number") {
+                  return this.markers[marker];
+               }
+               
+               return this.markers.filter(function (markerPresenter, index) {
+                  return markerPresenter.getModel() === marker;
                })[0];
             },
             deleteMarker : function (marker) {
@@ -52,6 +66,32 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
                this.markers = this.markers.filter(function (element, index) {
                   return element !== marker;
                });
+            },
+            setHoveredMarker : function (marker) {
+               this.hoveredMarker = marker;
+            },
+            getHoveredMarker : function () {
+               return this.currentMarker;
+            },
+            setCurrentMarker : function (marker) {
+               this.currentMarker = marker;
+               this.currentMarkerIndex = $(this.markers).index(marker);
+            },
+            getCurrentMarker : function () {
+               return this.currentMarker;
+            },
+            getCurrentMarkerIndex: function () {
+               return this.currentMarkerIndex;
+            },
+            setCurrentLoadedMarker : function (marker) {
+               this.currentLoadedMarker = marker;
+               this.currentLoadedMarkerIndex = $(this.markers).index(marker);
+            },
+            getCurrentLoadedMarker : function () {
+               return this.currentMarker;
+            },
+            getCurrentLoadedMarkerIndex: function () {
+               return this.currentMarkerIndex;
             },
             //--------------------------------------------------------------------
             //PHOTO---------------------------------------------------------------
@@ -63,7 +103,7 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
             },
             getPhotos : function () {
                if (this.getCurrentLoadedPlace() !== null){
-                  return this.getCurrentLoadedPlace().photos;
+                  return this.getCurrentLoadedPlace().getModel().getPhotos();
                }
             },
             setCurrentLoadedPhotoIndex : function (index) {
@@ -98,84 +138,77 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
             //PLACE---------------------------------------------------------------
             //--------------------------------------------------------------------
             getPlaces : function () {
-               return this.places;
+               return this.getMarkers();
             },
             setPlaces : function (places) {
-               this.places = places;
+               this.setMarkers(places);
             },
             setCurrentPlace : function (place) {
-               this.currentPlace = place;
+               this.setCurrentMarker(place);
             },
             getCurrentPlace : function () {
-               return this.currentPlace;
+               return this.getCurrentMarker();
             },
-            //TODO what was activate used for?
             setCurrentLoadedPlace : function (place) {
-               if (this.currentLoadedPlace) {
-                  //this.currentLoadedPlace.deactivate();
-               }
-               this.currentLoadedPlace = place;
-               //this.currentLoadedPlace.activate();
+               this.setCurrentLoadedMarker(place);
             },
             getCurrentLoadedPlace : function () {
-               return this.currentLoadedPlace;
+               return this.getCurrentLoadedMarker();
             },
             insertPlace : function (place) {
-               this.places.push(place);
+               this.insertMarker(place);
             },
             deletePlace : function (place) {
-               
-               this.places = this.places.filter(function (element, index) {
-                  return element !== place;
-               });
+               this.deleteMarker(place);
             },
             //--------------------------------------------------------------------
             //ALBUM---------------------------------------------------------------
             //--------------------------------------------------------------------
+            setAlbum : function (album) {
+               this.album = album;
+            },
+            getAlbum : function () {
+               return this.album;
+            },
             setAlbums : function (albums) {
-               this.albums = albums;
+               this.setMarkers(albums);
             },
             getAlbums : function () {
-               return this.albums;
+               return this.getMarkers();
             },
             setCurrentAlbum : function (album) {
-               this.currentAlbum = album;
+               this.setCurrentMarker(album);
             },
             getCurrentAlbum : function () {
-               return this.currentAlbum;
+               return this.getCurrentMarker();
             },
             setCurrentLoadedAlbum : function (album) {
-               this.currentLoadedAlbum = album;
+               this.setCurrentLoadedMarker(album);
             },
             getCurrentLoadedAlbum : function () {
-               return this.currentLoadedAlbum;
+               return this.getCurrentLoadedMarker();
             },
             insertAlbum : function (album) {
-               this.albums.push(album);
+               this.insertMarker(album);
             },
             deleteAlbum : function (album) {
-               this.albums = this.albums.filter(function (element, index) {
-                  return element !== album;
-               });
-            },
-            isDashboardView : function () {
-               if (this.page.search(DASHBOARD_VIEW) !== -1) {
-                  return true;
-               } else {
-                  return false;
-               }
-            },
-            isAlbumView : function () {
-               if (this.page.search(ALBUM_VIEW) !== -1) {
-                  return true;
-               } else {
-                  return false;
-               }
+               this.deleteMarker(album);
             },
             //--------------------------------------------------------------------
             //UI------------------------------------------------------------------
             //--------------------------------------------------------------------
-         
+            isDashboardView : function () {
+               if (this.page.search(DASHBOARD_VIEW) !== -1) {
+                  return true;
+               }
+               return false;
+            },
+            isAlbumView : function () {
+               if (this.page.search(ALBUM_VIEW) !== -1) {
+                  return true;
+               }
+               return false;
+            },
             setSlideshowLoaded : function (bool) {
                this.slideshowLoaded = bool;
             },
@@ -187,13 +220,6 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
             },
             isAlbumLoading : function (bool) {
                return this.albumLoaded;
-            },
-            // not used right now, but maybe worth being used!
-            setFontSize : function (size) {
-               this.fontSize = size;
-            },
-            getFontSize: function () {
-               return this.fontSize;
             },
             setFullscreen : function (bool) {
                this.fullscreen = bool;

@@ -21,6 +21,10 @@ define([
     function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state) {
        var MapView = declare(View, {
           constructor : function () {
+             
+             this.$container = $("#mp-map");
+             this.viewName = "Map";
+             this._bindActivationListener(this.$container, this.viewName);
              // google.maps.Map
              this.map = null;
              // google.maps.StreetViewstreetview
@@ -311,7 +315,7 @@ define([
                    authorized = clientstate.isAdmin();
                    
                    if (state.getMarkers().length <= 0) {
-                      this.expandBounds(state.getCurrentLoadedAlbum());
+                      this.expandBounds(state.getAlbum());
                    } else {
                       this._showMarkers(state.getMarkers());
                    }
@@ -391,12 +395,23 @@ define([
           _setMapCursor : function (style) {
              
              if (!style) {
-                style = "cross";
+                style = "crosshair";
              }
              this.map.setOptions({
                 draggableCursor: style,
                 draggingCursor: "move"
              });
+          },
+          _bindKeyboardListener : function () {
+            
+            var instance = this;
+            
+            $("body")
+               .on("keyup.Map", null, "return", function () {
+                  if (instance.active && !instance.disabled) {
+                     instance.presenter.triggerDblClickOnMarker(state.getCurrentMarker());
+                  }
+               }); 
           },
           _bindClickListener : function (callback) {
              var instance = this;
