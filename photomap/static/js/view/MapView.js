@@ -91,6 +91,9 @@ define([
              this.map.setZoom(this.storedState.zoom);
              this.map.panTo(this.storedState.center);
           },
+          getMapCenter : function () {
+             return this.map.getCenter();
+          },
           /**
            * @public
            * @summary Returns a object containing the absolute bottom and left position of the marker.
@@ -112,10 +115,11 @@ define([
            @public
            @param {Marker} marker
            */
-          centerMarker : function (marker) {
+          centerMarker : function (markerView) {
              
              this.map.setZoom(ZOOM_LEVEL_CENTERED);
-             this.map.panTo(marker.getPosition());
+             this.map.panTo(markerView.getMarker().getPosition());
+             communicator.publish("centered:marker", markerView.getPresenter());
           },
           /**
            * @public 
@@ -398,6 +402,7 @@ define([
              this.overlay.draw = function () {};
              this.overlay.setMap(this.map);
              this._bindClickListener();
+             this._bindCenterChangeListener();
           },
           _setMapCursor : function (style) {
              
@@ -434,6 +439,7 @@ define([
              var instance = this;
              
              google.maps.event.addListener(this.map, "center_changed", function (event) {
+                console.log("Mapcenter has changed.");
                 instance.presenter.centerChanged();
              });
           }

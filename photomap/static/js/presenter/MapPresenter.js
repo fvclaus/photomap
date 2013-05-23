@@ -21,6 +21,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
              centerChanged : function () {
                 communicator.publish("change:mapCenter");
              },
+             getCenter : function () {
+                return this.view.getMapCenter();
+             },
              storeCurrentState : function () {
                 this.view.storeCurrentState();
              },

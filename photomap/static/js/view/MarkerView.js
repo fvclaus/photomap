@@ -13,6 +13,7 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
                 this.presenter = new MarkerPresenter(this, model);
                 this.marker = marker;
                 this.centered = false;
+                this.storedPosition = null;
                 
                 // show only when requested
                 this.hide();
@@ -20,6 +21,9 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
              },
              getMap : function () {
                return this.map; 
+             },
+             getMarker : function () {
+                return this.marker;
              },
              setCentered : function (centered) {
                 this.centered = centered;
@@ -60,8 +64,8 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
               * @description Centers the Map on the Marker
               */
              center : function () {
-                this.map.centerMarker(this.marker);
-                this.centered = true;
+                this.map.centerMarker(this);
+                this.presenter.setCentered(true);
              },
              centerAndMove : function (percentage, direction) {
                 
@@ -78,6 +82,12 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
              },
              getPosition : function () {
                 return this.marker.getPosition();
+             },
+             storePosition : function () {
+                this.storedPosition = this.getPosition();
+             },
+             getStoredPosition : function () {
+                return this.storedPosition;
              },
              getSize : function () {
                 return this.marker.getIcon().size;
@@ -121,7 +131,6 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
                 this.presenter.mouseOver();
              },
              setIcon : function (icon) {
-                console.log(icon);
                 this.marker.setIcon(new google.maps.MarkerImage(icon.url, undefined, undefined, undefined, new google.maps.Size(icon.width, icon.height, "px", "px")));
              },
              /**

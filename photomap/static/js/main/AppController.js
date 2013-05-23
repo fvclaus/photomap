@@ -26,7 +26,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    "mouseover:marker": this._markerMouseover,
                    "mouseout:marker": this._markerMouseout,
                    "click:marker": this._markerClick,
-                   "insert:marker": this._markerInsert
+                   "insert:marker": this._markerInsert,
+                   "centered:marker": this._markerCentered
                 });
                 
                 communicator.subscribe("change:photo change:place change:album", this._modelUpdate);
@@ -152,6 +153,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              _detailClose : function () {
                 if (state.isDashboardView()) {
                    main.getMap().restoreSavedState();
+                   state.getCurrentAlbum().resetCurrent();
                 }
              },
              _photoOrderChange : function (photos) {
@@ -175,9 +177,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getInput().show(options);
              },
              _mapCenterChanged : function () {
-                $.each(state.getMarkers(), function (index, marker) {
-                   marker.setCentered(false);
-                });
+                /*TODO current marker might not be centered anymore -> has to be notified & marked as not centered; 
+                * yet when centering center_changed event is fired often -> marker would be marked as not centered even 
+                * if it is
+                */
              },
              _galleryThumbMouseenter : function (data) {
                 main.getUI().getControls().showPhotoControls(data);
@@ -218,6 +221,13 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 if (data.open) {
                    data.marker.open();
                 }
+             },
+             _markerCentered : function (marker) {
+                $.each(state.getMarkers(), function (index, markerPresenter) {
+                   if (markerPresenter !== marker) {
+                      markerPresenter.setCentered(false);
+                   }
+                });
              },
              _modelUpdate : function (model) {
                 main.getUI().getInformation().update(model);

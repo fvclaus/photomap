@@ -97,6 +97,15 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              isCentered : function () {
                 return this.view.isCentered();
              },
+             getPosition : function () {
+                return this.view.getPosition();
+             },
+             storePosition : function () {
+                this.view.storePosition();
+             },
+             getStoredPosition : function () {
+                this.view.getStoredPosition();
+             },
              update : function () {
                  var model = this.model.getModelType().toLowerCase(),
                      instance = this;
