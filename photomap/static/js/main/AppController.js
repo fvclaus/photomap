@@ -186,6 +186,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getControls().hide(true);
              },
              _galleryThumbClick : function (photo) {
+                state.getCurrentMarker().resetCurrent();
                 main.getUI().getControls().hide(false);
                 main.getUI().getSlideshow().navigateTo(photo);
              },

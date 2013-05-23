@@ -25,6 +25,8 @@
   height 80% // === content height
   overflow hidden // full gallery pushes map down. this will hide the overflowing map
   z-index -1
+  .mp-full-column
+    border-right 1px solid black
 
 .mp-right-column
   width 50%
@@ -56,7 +58,7 @@
 
 .mp-full-column-controls
   width 100%
-  height 5%
+  height 10%
   text-align right
 
 /* ------- end column ------ */
@@ -116,6 +118,7 @@
 #mp-detail-title
   height 5%
   margin 5% auto // overwrite browser stylesheets default of 1em
+  margin-top 1%
 
 /* The teaser title must take up more space in order to be readable */
 #mp-detail-teaser-title

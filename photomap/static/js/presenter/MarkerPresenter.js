@@ -48,22 +48,36 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                    window.setTimeout(publish, 500);
                 }
              },
-             switchCurrentMarker : function () {
+             resetCurrent : function () {
+                this.switchCurrentMarker(true);
+             },
+             resetCurrentLoaded : function () {
+                this.switchCurrentLoadedMarker(true);
+             },
+             switchCurrentMarker : function (reset) {
                
                var oldMarker = state.getCurrentMarker();
                
-               state.setCurrentMarker(this);
-               if (oldMarker) {
+               if (!reset) {
+                  state.setCurrentMarker(this);
+               } else {
+                  state.setCurrentMarker(null);
+               }
+               if (oldMarker && oldMarker !== this) {
                   oldMarker.checkIconStatus();
                }
                this.checkIconStatus();
              },
-             switchCurrentLoadedMarker : function () {
+             switchCurrentLoadedMarker : function (reset) {
                
                var oldMarker = state.getCurrentLoadedMarker();
                
-               state.setCurrentLoadedMarker(this);
-               if (oldMarker) {
+               if (!reset) {
+                  state.setCurrentLoadedMarker(this);
+               } else {
+                  state.setCurrentLoadedMarker(null);
+               }
+               if (oldMarker && oldMarker !== this) {
                   oldMarker.checkIconStatus();
                }
                this.checkIconStatus();
