@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-14 16:20+0200\n"
+"POT-Creation-Date: 2013-05-23 22:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -135,8 +135,8 @@ msgstr "Legal Terms (Impressum)"
 msgid "contact form intro"
 msgstr ""
 "In case you have any questions or problems that couldn't be answered or "
-"solved on our <a href='/help#tutorial'>help-page</a>, feel free to contact us, using "
-"the contact form or by writing as an email to "
+"solved on our <a href='/help#tutorial'>help-page</a>, feel free to contact "
+"us, using the contact form or by writing as an email to "
 
 #: templates/contact.html:22 templates/impressum.html:44
 #: templates/payment.html:56
@@ -318,49 +318,49 @@ msgstr "Automatically close on success?"
 msgid "Hilfe und Support"
 msgstr "Help and Support"
 
-#: templates/help.html:23
+#: templates/help.html:14
 msgid "Introduction"
 msgstr "Introduction"
 
-#: templates/help.html:24
+#: templates/help.html:15
 msgid "Tutorial"
 msgstr "Tutorial"
 
-#: templates/help.html:28
+#: templates/help.html:19
 msgid "KEIKEN_SHORT"
 msgstr "Illustrate your experiences abroad for your family and friends"
 
-#: templates/help.html:29
+#: templates/help.html:20
 msgid "KEIKEN_BEFORE"
 msgstr ""
 "Before we found KEIKEN, we had a hard time reporting about our exchange "
 "semester:"
 
-#: templates/help.html:32
+#: templates/help.html:23
 msgid "KEIKEN_ALTERNATIVE_EMAIL"
 msgstr ""
 "You can zip your photos and write a long description via email, but often a "
 "lot of pictures needs explaining to the unfamiliar eye"
 
-#: templates/help.html:35
+#: templates/help.html:26
 msgid "KEIKEN_ALTERNATIVE_PRESENTATION"
 msgstr ""
 "You can also give a presentation when you come back, but this will only "
 "reach the people close to you"
 
-#: templates/help.html:38
+#: templates/help.html:29
 msgid "KEIKEN_ALTERNATIVE_NETWORK"
 msgstr ""
 "You can also post the photos on your favourite social network, but not "
 "everyone you want to reach will be member there"
 
-#: templates/help.html:41
+#: templates/help.html:32
 msgid "KEIKEN_REASONS"
 msgstr ""
 "Therefore we called KEIKEN to life and we hope to provide you with the tools "
 "to give everyone of your friends a presentation they deserve."
 
-#: templates/help.html:44
+#: templates/help.html:35
 msgid "KEIKEN_PRESENTATION_NOT"
 msgstr ""
 "KEIKEN is not a place meant for sharing pictures of merely temporary "
@@ -368,21 +368,21 @@ msgstr ""
 "to do so. Also KEIKEN is not designed to just simply drag and drop whole "
 "folders of pictures into the web to show them to others."
 
-#: templates/help.html:45
+#: templates/help.html:36
 msgid "KEIKEN_PRESENTATION_BUT_1"
 msgstr ""
 "As a photo-book KEIKEN is meant to present images and stories of your "
 "journeys in a pleasant way to all the people you want to share them with. "
 "Following this motto there are two key goals:"
 
-#: templates/help.html:46
+#: templates/help.html:37
 msgid "KEIKEN_PRESENTATION_BUT_2"
 msgstr ""
 "(1) Organizing and betitle the images, which KEIKEN achieves by making "
 "titles mandatory and structuring your albums into places connected to the "
 "map."
 
-#: templates/help.html:47
+#: templates/help.html:38
 msgid "KEIKEN_PRESENTATION_BUT_3"
 msgstr ""
 "And (2) making your albums easy to access. Unlike many other services you "
@@ -390,7 +390,7 @@ msgstr ""
 "a working internet connection the link to the album and the password which "
 "should be provided by the owner of the album."
 
-#: templates/help.html:48
+#: templates/help.html:39
 msgid "KEIKEN_PRESENTATION_STRUCTURE_1"
 msgstr ""
 "Let's talk a little more about the structure though. In KEIKEN albums are "
@@ -398,7 +398,7 @@ msgstr ""
 "organize your adventures and it helps the people you share the album with to "
 "explore those themselves."
 
-#: templates/help.html:49
+#: templates/help.html:40
 msgid "KEIKEN_PRESENTATION_STRUCTURE_2"
 msgstr ""
 "Yet every adventure and every journey is different! Albums and places have "
@@ -406,73 +406,74 @@ msgstr ""
 "and its places can be as big as a whole country. Another album may be just "
 "about a city-tour and each of its places is a specific sight in the city."
 
-#: templates/help.html:50
+#: templates/help.html:41
 msgid "KEIKEN_PRESENTATION_STRUCTURE_3"
 msgstr ""
 "And the photos... well the photos are photos, but we try to make them more "
-"meaningful.Therefor as with everything else photo-titles are mandatory; we don't control how you "
-"name your photos but we are confident you find more interesting names than "
-"IMG_20122708_2014.jpg."
+"meaningful.Therefor as with everything else photo-titles are mandatory; we "
+"don't control how you name your photos but we are confident you find more "
+"interesting names than IMG_20122708_2014.jpg."
 
-#: templates/help.html:51
+#: templates/help.html:42
 msgid "KEIKEN_PRESENTATION_STRUCTURE_4"
 msgstr ""
 "Think of your KEIKEN as a photo-album that has received a good amount of "
 "care; very much like those we had to view with our parents all the time when "
 "we were kids."
 
-#: templates/help.html:60
+#: templates/help.html:51
 msgid "General"
 msgstr "General"
 
-#: templates/help.html:61
+#: templates/help.html:52
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: templates/help.html:62
+#: templates/help.html:53
 msgid "Albumview"
 msgstr "Albumview"
 
-#: templates/help.html:66
+#: templates/help.html:57
 msgid "Webspace"
 msgstr "Webspace"
 
-#: templates/help.html:67
+#: templates/help.html:58
 msgid "Cookies"
 msgstr "Cookies"
 
-#: templates/help.html:68
+#: templates/help.html:59
 msgid "Contact"
 msgstr "Contact"
 
-#: templates/help.html:69
+#: templates/help.html:60
 msgid "Sharing &amp; Security"
 msgstr "Sharing & Security"
 
-#: templates/help.html:72
+#: templates/help.html:63
 msgid "TUTORIAL_WEBSPACE"
 msgstr ""
-"Currently we limit the total webspace of each user to 350Mb. Since storing albums and "
-"places take no considerable space at all, the limit mainly affects the "
-"amount of photos you can upload. You can increase the amount by decreasing "
-"the quality of the photos. You might want to use a format like *.JPG, which "
-"compresses images quite effective (most cameras already use this format!). Also you probably won't need photos of a "
-"size bigger than 8MP (=Megapixel) which is about 3264 x 2448. So you might "
-"want to think about scaling your pictures down to that size. If the 350Mb "
-"limit changes we will notify all our users. Right now there is no option to "
-"increase the amount of webspace for an account. That said, if you do need "
-"more space, please contact us and we will try to help you using your webspace more "
-"effectively or consider offering webspace-extensions after all."
+"Currently we limit the total webspace of each user to 350Mb. Since storing "
+"albums and places take no considerable space at all, the limit mainly "
+"affects the amount of photos you can upload. You can increase the amount by "
+"decreasing the quality of the photos. You might want to use a format like *."
+"JPG, which compresses images quite effective (most cameras already use this "
+"format!). Also you probably won't need photos of a size bigger than 8MP "
+"(=Megapixel) which is about 3264 x 2448. So you might want to think about "
+"scaling your pictures down to that size. If the 350Mb limit changes we will "
+"notify all our users. Right now there is no option to increase the amount of "
+"webspace for an account. That said, if you do need more space, please "
+"contact us and we will try to help you using your webspace more effectively "
+"or consider offering webspace-extensions after all."
 
-#: templates/help.html:75
+#: templates/help.html:66
 msgid "TUTORIAL_COOKIES"
 msgstr ""
 "We use several cookies, to verify your session and provide you with "
 "information about the webspace you already use and which photos you've "
-"already seen <strong>(Feature currently disabled)</strong>. Please enable "
+"already seen. Please enable "
 "cookies on KEIKEN in order to access all our features."
 
-#: templates/help.html:78
+#: templates/help.html:69
 msgid "TUTORIAL_CONTACT"
 msgstr ""
 "If you have questions or ideas, feel free to <a href='/contact' title='To "
@@ -481,7 +482,7 @@ msgstr ""
 "and so it might take a day or two. We hope that won't cause any "
 "inconviniences!"
 
-#: templates/help.html:81
+#: templates/help.html:72
 msgid "TUTORIAL_SHARESECURITY"
 msgstr ""
 "Any album you share with others is protected by a password that you have to "
@@ -494,58 +495,98 @@ msgstr ""
 "in your album, yet you might not want to share all your private experiences "
 "with everyone so share the information carefully. If your password has "
 "gotten into wrong hands you can change it by opening the share dialog and "
-"submitting a new one. If you need any help, feel free to <a href='/contact' title='To "
-"contactform'>contact us</a>."
+"submitting a new one. If you need any help, feel free to <a href='/contact' "
+"title='To contactform'>contact us</a>."
 
-#: templates/help.html:86
+#: templates/help.html:77
 msgid "Albums"
 msgstr "Albums"
 
-#: templates/help.html:90 templates/help.html.py:124 templates/help.html:152
+#: templates/help.html:81 templates/help.html.py:144 templates/help.html:209
 msgid "What is this?"
 msgstr "What is this?"
 
-#: templates/help.html:91 templates/help.html.py:125 templates/help.html:153
+#: templates/help.html:82 templates/help.html.py:145
+msgid "Meaning of Colors"
+msgstr "Meaning of the Colors"
+
+#: templates/help.html:83 templates/help.html.py:146 templates/help.html:210
 msgid "Insert"
 msgstr "Insert"
 
-#: templates/help.html:92 templates/help.html.py:126 templates/help.html:154
+#: templates/help.html:84 templates/help.html.py:147 templates/help.html:211
 msgid "Update"
 msgstr "Update"
 
-#: templates/help.html:93 templates/help.html.py:127 templates/help.html:155
+#: templates/help.html:85 templates/help.html.py:148 templates/help.html:212
 msgid "Delete"
 msgstr "Delete"
 
-#: templates/help.html:94 templates/help.html.py:128 templates/help.html:156
+#: templates/help.html:86 templates/help.html.py:149 templates/help.html:213
 msgid "Share"
 msgstr "Share"
 
-#: templates/help.html:95 templates/help.html.py:129
+#: templates/help.html:87 templates/help.html.py:150
 msgid "Open"
 msgstr "Open"
 
-#: templates/help.html:98
+#: templates/help.html:90
 msgid "TUTORIAL_ALBUMS_EXPLANATION"
 msgstr ""
 "Before you upload photos and link them to places you need to create an "
 "album. An album is fixed to a certain point on the map, it can contain an "
-"unlimited amount of places thich then hold the photos(; those don't need to be "
-"at the same point of the map as the album is). You can view all your "
+"unlimited amount of places thich then hold the photos(; those don't need to "
+"be at the same point of the map as the album is). You can view all your "
 "albums on the Dashboard and each album has an own 'Albumview', which can be "
 "opened by double-clicking on the album-marker.As with all other things on "
-"KEIKEN the title is mandatory, while the description is optional; it might be "
-"helpful for guests, if use the description to say a few things about your Album "
-"and the experiences presented in it. "
+"KEIKEN the title is mandatory, while the description is optional; it might "
+"be helpful for guests, if use the description to say a few things about your "
+"Album and the experiences presented in it. "
 
-#: templates/help.html:101 templates/help.html.py:135
+#: templates/help.html:100 templates/help.html.py:163
+msgid "Color"
+msgstr "Color"
+
+#: templates/help.html:101 templates/help.html.py:164
+msgid "Meaning"
+msgstr "Meaning"
+
+#: templates/help.html:106 templates/help.html.py:169
+msgid "Green"
+msgstr "Green"
+
+#: templates/help.html:107 templates/help.html.py:170
+msgid "TUTORIAL_MARKER_MEANING_GREEN"
+msgstr ""
+"Place or album is neither opened nor selected. Not all photos are visited yet."
+
+#: templates/help.html:110 templates/help.html.py:173
+msgid "Yellow"
+msgstr "Yellow"
+
+#: templates/help.html:111 templates/help.html.py:174
+msgid "TUTORIAL_MARKER_MEANING_YELLOW"
+msgstr ""
+"Place or album is selected. Its description can be viewed on the right hand side."
+
+#: templates/help.html:114 templates/help.html.py:185
+msgid "Gray"
+msgstr "Gray"
+
+#: templates/help.html:115 templates/help.html.py:186
+msgid "TUTORIAL_MARKER_MEANING_GRAY"
+msgstr ""
+"Place or album is disabled. If nothing is loading and no dialog is open, please contact support."
+
+#: templates/help.html:121 templates/help.html.py:192
 msgid "TUTORIAL_INSERT_PA"
 msgstr ""
 "You can insert an album or a place by simply clicking on the map. A dialog "
 "will open, which will lead you through the rest of the insert-process. The "
-"album/place will be linked to the coordinates you clicked on and is shown as a marker."
+"album/place will be linked to the coordinates you clicked on and is shown as "
+"a marker."
 
-#: templates/help.html:104 templates/help.html.py:138 templates/help.html:168
+#: templates/help.html:124 templates/help.html.py:195 templates/help.html:225
 msgid "TUTORIAL_UPDATE_PPA"
 msgstr ""
 "You can update the title and description of an album/place or photo by "
@@ -554,7 +595,7 @@ msgstr ""
 "update the item. That will open a dialog which will lead you through the "
 "rest of the update-process."
 
-#: templates/help.html:107 templates/help.html.py:141 templates/help.html:171
+#: templates/help.html:127 templates/help.html.py:198 templates/help.html:228
 msgid "TUTORIAL_DELETE_PPA"
 msgstr ""
 "You can delete the title and description of an album/place or photo by "
@@ -563,7 +604,7 @@ msgstr ""
 "delete the item. That will open a dialog which will lead you through the "
 "rest of the delete-process."
 
-#: templates/help.html:110
+#: templates/help.html:130
 msgid "TUTORIAL_SHARE_ALBUM"
 msgstr ""
 "You can open the share-dialog the same way you open update/delete-dialogs. "
@@ -575,57 +616,77 @@ msgstr ""
 "hands. After you defined a password you can share the album by simply "
 "posting the url on your social networks, via email or any other possible way."
 
-#: templates/help.html:113
+#: templates/help.html:133
 msgid "TUTORIAL_OPEN_ALBUM"
 msgstr ""
 "A single click on an album will open the description of that album as well "
 "as center the album in the left side of the map and zoom in on it. A double "
 "click on the other hand will lead you to the 'Albumview' of the album in "
-"which you can add places to the album and upload photos - guests will just see this 'Albumview'."
+"which you can add places to the album and upload photos - guests will just "
+"see this 'Albumview'."
 
-#: templates/help.html:119
+#: templates/help.html:139
 msgid "Places"
 msgstr "Places"
 
-#: templates/help.html:120
+#: templates/help.html:140
 msgid "Photos"
 msgstr "Photos"
 
-#: templates/help.html:132
+#: templates/help.html:153
 msgid "TUTORIAL_PLACE_EXPLANATION"
 msgstr ""
 "A place is very similar to an album. It is linked to the map, represented by "
 "a marker, needs a title and has an option for a description. You need to "
 "create a place before being able to upload photos. All photos will get "
 "linked to the currently opened place. You can have as many places in an "
-"album as you want and theoretically there is no limit to the amount of photos a place can "
-"hold. We do in fact limit the webspace of each user, which then again limits the total amount of "
-"images a user can upload. (More under 'General'>'Webspace')"
+"album as you want and theoretically there is no limit to the amount of "
+"photos a place can hold. We do in fact limit the webspace of each user, "
+"which then again limits the total amount of images a user can upload. (More "
+"under 'General'>'Webspace')"
 
-#: templates/help.html:144 templates/help.html.py:174
+#: templates/help.html:177
+msgid "Orange"
+msgstr "Orange"
+
+#: templates/help.html:178
+msgid "TUTORIAL_MARKER_MEANING_ORANGE"
+msgstr ""
+"Place is opened. Photos can be viewed in gallery and slideshow."
+
+#: templates/help.html:181
+msgid "Red"
+msgstr "Red"
+
+#: templates/help.html:182
+msgid "TUTORIAL_MARKER_MEANING_RED"
+msgstr ""
+"Place or album is neither opened nor selected. All photos are visited."
+
+#: templates/help.html:201 templates/help.html.py:231
 msgid "TUTORIAL_SHARE_PP"
 msgstr "Neither places nor photos can be shared at the moment."
 
-#: templates/help.html:147
+#: templates/help.html:204
 msgid "TUTORIAL_OPEN_PLACE"
 msgstr ""
 "Same as albums a single click will open the description of the place and a "
 "double-click will open the place which will start the gallery, positioned "
 "right under the map."
 
-#: templates/help.html:157
+#: templates/help.html:214
 msgid "Start Slideshow"
 msgstr "Start Slideshow"
 
-#: templates/help.html:158
+#: templates/help.html:215
 msgid "Open Fullscreen"
 msgstr "Open Fullscreen"
 
-#: templates/help.html:159
+#: templates/help.html:216
 msgid "Sort Photos/Open FullGallery"
 msgstr "Sort Photos/Open FullGallery"
 
-#: templates/help.html:162
+#: templates/help.html:219
 msgid "TUTORIAL_PHOTO_EXPLANATION"
 msgstr ""
 "Obviously photos are very important at KEIKEN, after all it is a photo-book. "
@@ -634,28 +695,29 @@ msgstr ""
 "the pictures that are linked to the currently opened place. Then there is a "
 "slideshow on the right side of the window. You can start it by clicking on a "
 "thumbnail in the gallery. Lastly you can display all photos in fullscreen, "
-"by clicking on the slideshow-image."
+"by clicking on the slideshow-image. All visited photos get marked with a checkmark. "
+"You shouldn't delete cookies from KEIKEN, if you want to keep the checkmarks after you logged out."
 
-#: templates/help.html:165
+#: templates/help.html:222
 msgid "TUTORIAL_INSERT_PHOTO"
 msgstr ""
 "You can add photos to the place by clicking on the 'Record' button on the "
 "right side of the gallery or by simply dropping them into the browser from "
 "your computer <strong>(Feature currently disabled)</strong>."
 
-#: templates/help.html:177
+#: templates/help.html:234
 msgid "TUTORIAL_OPEN_SLIDESHOW"
 msgstr ""
 "You can start the slideshow by clicking on a thumbnail in the gallery, or by "
 "navigating the slideshow left or right."
 
-#: templates/help.html:180
+#: templates/help.html:237
 msgid "TUTORIAL_OPEN_FULLSCREEN"
 msgstr ""
 "You can display any photo in fullscreen mode, by clicking on it in the "
 "slideshow."
 
-#: templates/help.html:183
+#: templates/help.html:240
 msgid "TUTORIAL_OPEN_FULLGALLERY"
 msgstr ""
 "You can sort the photos or view your whole gallery at once, by opening the "
@@ -719,9 +781,9 @@ msgstr "Welcome to KEIKEN!"
 #: templates/index-guest.html:21 templates/index.html:21
 msgid "KEIKEN_ABSTRACT"
 msgstr ""
-"KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='What is KEIKEN?'>[*]</a></sup> "
-"is a free online photo-book designed to make sharing your adventures "
-"abroad and other interesting experiences easy and vivid!"
+"KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='What is "
+"KEIKEN?'>[*]</a></sup> is a free online photo-book designed to make sharing "
+"your adventures abroad and other interesting experiences easy and vivid!"
 
 #: templates/index-guest.html:24 templates/index-guest.html.py:49
 #: templates/index-guest.html:76 templates/index.html:44
@@ -964,7 +1026,8 @@ msgstr "Bank"
 #: templates/payment.html:44
 msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
 msgstr ""
-"Please <a href='/#login' title='To Login'>sign in</a> to view the bank information."
+"Please <a href='/#login' title='To Login'>sign in</a> to view the bank "
+"information."
 
 #: templates/payment.html:48
 msgid "payment 'thank you note'"
@@ -1278,6 +1341,14 @@ msgstr "Next Image"
 #: templates/view-album.html:99
 msgid "Bild"
 msgstr "Image"
+
+#, fuzzy
+#~ msgid "TUTORIAL_PHOTO_VISITED"
+#~ msgstr ""
+#~ "We use several cookies, to verify your session and provide you with "
+#~ "information about the webspace you already use and which photos you've "
+#~ "already seen <strong>(Feature currently disabled)</strong>. Please enable "
+#~ "cookies on KEIKEN in order to access all our features."
 
 #~ msgid "help-tutorial-title"
 #~ msgstr "Tutorial"

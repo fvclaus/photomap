@@ -79,6 +79,7 @@
 	  <div id="mp-tutorial-albums" class="mp-tutorial-tabs-wrapper">
 	  	<ul>
 	  		<li><a class="tab-option" href="#mp-tutorial-whatisthis-album">{% trans "What is this?" %}</a></li>
+	  		<li><a class="tab-option" href="#mp-tutorial-colors-album">{% trans "Meaning of Colors" %}</a></li>
 	  		<li><a class="tab-option" href="#mp-tutorial-insert-album">{% trans "Insert" %}</a></li>
 	  		<li><a class="tab-option" href="#mp-tutorial-update-album">{% trans "Update" %}</a></li>
 	  		<li><a class="tab-option" href="#mp-tutorial-delete-album">{% trans "Delete" %}</a></li>
@@ -87,6 +88,34 @@
 	  	</ul>
 	  	<div id="mp-tutorial-whatisthis-album">
 	  		{% trans "TUTORIAL_ALBUMS_EXPLANATION" %}
+	  	</div>
+	  	<div id="mp-tutorial-colors-album">
+	  		<table class="mp-tutorial-color-table" border="1" cellpadding="5" cellspacing="5" frame="void">
+	  			<colgroup>
+	  				<col width="30%" />
+	  				<col width="70%" />
+	  			</colgroup>
+	  			<thead>
+		  			<tr>
+		  				<th>{% trans "Color" %}</th>
+		  				<th>{% trans "Meaning" %}</th>
+		  			</tr>
+	  			</thead>
+	  			<tbody>
+		  			<tr>
+		  				<td style="background-color: green;">{% trans "Green" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_GREEN" %}</td>
+		  			</tr>
+		  			<tr>
+		  				<td style="background-color: yellow;">{% trans "Yellow" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_YELLOW" %}</td>
+		  			</tr>
+		  			<tr>
+		  				<td style="background-color: gray;">{% trans "Gray" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_GRAY" %}</td>
+		  			</tr>
+	  			</tbody>
+	  		</table>
 	  	</div>
 	  	<div id="mp-tutorial-insert-album">
 	  		{% trans "TUTORIAL_INSERT_PA" %}
@@ -113,6 +142,7 @@
 	  <div id="mp-tutorial-places" class="mp-tutorial-tabs-wrapper">
 	  	<ul>
 	  		<li><a class="tab-option" href="#mp-tutorial-whatisthis-place">{% trans "What is this?" %}</a></li>
+	  		<li><a class="tab-option" href="#mp-tutorial-colors-place">{% trans "Meaning of Colors" %}</a></li>
 	  		<li><a class="tab-option" href="#mp-tutorial-insert-place">{% trans "Insert" %}</a></li>
 	  		<li><a class="tab-option" href="#mp-tutorial-update-place">{% trans "Update" %}</a></li>
 	  		<li><a class="tab-option" href="#mp-tutorial-delete-place">{% trans "Delete" %}</a></li>
@@ -121,6 +151,42 @@
 	  	</ul>
 	  	<div id="mp-tutorial-whatisthis-place">
 	  		{% trans "TUTORIAL_PLACE_EXPLANATION" %}
+	  	</div>
+	  	<div id="mp-tutorial-colors-place">
+	  		<table class="mp-tutorial-color-table" border="1" cellpadding="5" cellspacing="5" frame="void">
+	  			<colgroup>
+	  				<col width="20%" />
+	  				<col width="80%" />
+	  			</colgroup>
+	  			<thead>
+		  			<tr>
+		  				<th>{% trans "Color" %}</th>
+		  				<th>{% trans "Meaning" %}</th>
+		  			</tr>
+	  			</thead>
+	  			<tbody>
+		  			<tr>
+		  				<td style="background-color: green;">{% trans "Green" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_GREEN" %}</td>
+		  			</tr>
+		  			<tr>
+		  				<td style="background-color: yellow;">{% trans "Yellow" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_YELLOW" %}</td>
+		  			</tr>
+		  			<tr>
+		  				<td style="background-color: orange;">{% trans "Orange" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_ORANGE" %}</td>
+		  			</tr>
+		  			<tr>
+		  				<td style="background-color: red;">{% trans "Red" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_RED" %}</td>
+		  			</tr>
+		  			<tr>
+		  				<td style="background-color: gray;">{% trans "Gray" %}</td>
+		  				<td>{% trans "TUTORIAL_MARKER_MEANING_GRAY" %}</td>
+		  			</tr>
+	  			</tbody>
+	  		</table>
 	  	</div>
 	  	<div id="mp-tutorial-insert-place">
 	  		{% trans "TUTORIAL_INSERT_PA" %}
