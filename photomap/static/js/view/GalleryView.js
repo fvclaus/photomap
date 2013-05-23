@@ -214,12 +214,25 @@ define(["dojo/_base/declare",
                    this.$navRight.trigger("click");
                 }
              },
+             setPhotoVisited : function (photo) {
+                
+                var currentImages = [];
+                
+                $.each(this.$thumbs, function (index, tile) {
+                   currentImages.push($(tile).find("img.mp-thumb").attr("src") || null);
+                });
+                
+                if (currentImages.indexOf(photo.thumb) !== -1) {
+                   this.$container.find("img[src='" + photo.thumb + "']").siblings(".mp-thumb-visited").show();
+                }
+             },
              /**
               * @private
               * @description handler is called after gallery-thumbs are loaded
               */
              _beforeLoad : function ($photos) {
-                //TODO this is empty, loading-icon is taken care of in PhotoCarousel
+                // hide all visited icons
+                $(".mp-thumb-visited").hide();
              },
              _afterLoad : function ($photos) {
                 //enable ui
@@ -234,15 +247,35 @@ define(["dojo/_base/declare",
                 var instance = this;
                 
                 if (clientstate.isAdmin()) {
-                   $.each(this.$thumbs, function (index, thumb) {
+                   $.each(this.$thumbs, function (index, tile) {
                       
-                      if ($(thumb).children("img.mp-thumb").attr("src") && $(thumb).children("img.mp-thumb").attr("src").length > 0) {
-                         $(thumb).removeClass("mp-empty-tile");
+                      if ($(tile).children("img.mp-thumb").attr("src") && $(tile).children("img.mp-thumb").attr("src").length > 0) {
+                         $(tile).removeClass("mp-empty-tile");
                       } else {
-                         $(thumb).addClass("mp-empty-tile");
+                         $(tile).addClass("mp-empty-tile");
                       }
                    });
                 }
+                // check each thumb if the photo it represents is already visited; if yes -> show 'visited' icon
+                $.each(this.$thumbs, function (index, tile) {
+                   
+                   var photo,
+                      $thumb = $(tile).find("img.mp-thumb"),
+                      $visited = $(tile).find("img.mp-thumb-visited");
+                      
+                   if ($thumb.attr("src")) {
+                      photo = state.getPhotos()[instance._getIndexOfImage($thumb)];
+                      
+                      if (photo.isVisited()) {
+                         $visited.show();
+                      } else {
+                         $visited.hide();
+                      }
+                   } else {
+                      // should already be hidden, just in case though.. ;)
+                      $visited.hide();
+                   }
+                });
                 if (this.showTeaser) {
                    if (this.currentPhoto === null) {
                       throw new Error("Set showTeaser but no currentPhoto");

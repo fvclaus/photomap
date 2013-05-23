@@ -19,14 +19,16 @@ define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
                 this.photo = data.photo;
                 this.thumb = data.thumb;
                 this.order = data.order;
-                this.visited = clientstate.isVisitedPhoto(this.id);
+                this.visited = clientstate.isVisitedPhoto(this);
              },
              getOrder : function () {
                 return this.order;
              },
-             setVisited : function (bool) {
-                this.visited = bool;
-                clientstate.addPhoto(this.id);
+             setVisited : function (visited) {
+                this.visited = visited;
+                if (visited) {
+                  clientstate.insertVisitedPhoto(this);
+                }
              },
              isVisited : function () {
                 return this.visited;

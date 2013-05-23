@@ -50,6 +50,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              triggerClickOnPhoto : function () {
                this.view.triggerClickOnPhoto(); 
              },
+             setPhotoVisited : function (photo) {
+                this.view.setPhotoVisited(photo);
+             },
              insert : function () {
                 var instance = this,
                     place = state.getCurrentLoadedPlace().getModel();

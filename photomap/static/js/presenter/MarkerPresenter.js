@@ -173,7 +173,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     
                         
                     this.model.getPhotos().forEach(function (photo) {
-                       visited = visited && photo.visited;
+                       visited = visited && photo.isVisited();
                     });
                     
                     if (this.isDisabled()) {

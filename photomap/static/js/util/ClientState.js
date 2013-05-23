@@ -12,9 +12,10 @@ define(["dojo/_base/declare", "util/Communicator", "util/Tools", "ui/UIState"],
        function (declare, communicator, tools, state) {
           var ClientState = declare(null,  {
              constructor : function () {
-                var value = $.cookie("visited") || "";
-
-                this._parseValue(value);
+                this.visitedCookie = $.cookie("visited") || "";
+                this.visitedPhotos = [];
+                this._parseValue(this.visitedCookie);
+                
                 this._year = 356 * 24 * 60 * 60 * 1000;
                 this._cookieSettings = {
                    expires : new Date().add({years : 1}),
@@ -22,37 +23,30 @@ define(["dojo/_base/declare", "util/Communicator", "util/Tools", "ui/UIState"],
                 };
                 this.usedSpace = null;
                 this.quota = null;
-                
-                
-                console.log("#####################################");
-                console.log(state);
-                communicator.subscribeOnce("init", this._init, this);
              },
              /**
               * @description Checks if user is owner of the current album (just used in albumview).
               */
              isAdmin : function () {
+                assertTrue(state.isAlbumView(), "differing between admin and guest is just needed in albumview, dashboard is just available to admins")
                 return state.getAlbum().isOwner();
              },
-             /**
-              * @description Checks if User is owner of the given album.
-              * @param album Album Object.
-              */
-             isOwner : function (album) {
-                return album.isOwner;
-             },
-             isVisitedPhoto : function (id) {
-                var index = this.photos.indexOf(id);
-                if (index === -1) {
+             isVisitedPhoto : function (photo) {
+                if (this.visitedPhotos.indexOf(photo.id) === -1) {
                    return false;
                 }
                 return true;
              },
-             addPhoto : function (id) {
-                if (this.photos.indexOf(id) === -1) {
-                   this.photos.push(id);
+             insertVisitedPhoto : function (photo) {
+                if (this.visitedPhotos.indexOf(photo.id) === -1) {
+                   this.visitedPhotos.push(photo.id);
                    this._writePhotoCookie();
+                   communicator.publish("visited:photo", photo);
                 }
+             },
+             init : function () {
+                this.quota = tools.bytesToMbyte($.cookie("quota"));
+                this.updateUsedSpace();
              },
              getUsedSpace : function () {
                 return this.usedSpace;
@@ -110,36 +104,34 @@ define(["dojo/_base/declare", "util/Communicator", "util/Tools", "ui/UIState"],
                    return defaultValue;
                 }
              },
-             _init : function () {
-                this.quota = tools.bytesToMbyte($.cookie("quota"));
-                this.updateUsedSpace();
-             },
              /**
               * @description Takes current cookie, checks it for non-integer values, and rewrites cookie with just integer values.
               * @param {String} value The value of the current cookie or new String if there is no current cookie.
               */
              _parseValue : function (value) {
                 
-                var oldValue, i, instance = this;
-                
-                oldValue  = value.split(",");
-                this.photos = [];
+                var oldValue = value.split(","),
+                   i = oldValue.length,
+                   instance = this;
+                   
+                this.visitedPhotos = [];
                 
                 // 'visited'-cookie mustn't contain non-numeric values!
                 if (value !== "") {
-                   for (i = 0; i < oldValue.length; i++) {
+                   for (; i >= 0; --i) {
                       // in case there is a non-numeric value in the cookie
                       if (!isNaN(oldValue[i])) {
-                         this.photos.push(parseInt(oldValue[i], 10));
+                         this.visitedPhotos.push(parseInt(oldValue[i], 10));
                       }
                    }
+                   //this.visitedPhotos.reverse(); // this is not really needed, since it doesn't matter in which order the photo-ids are
                    // rewrite cookie, just in case there was a change
                    this._writePhotoCookie();
                 }
              },
              _writePhotoCookie : function () {
-                this.value = this.photos.join(",");
-                $.cookie("visited", this.value, this._cookieSettings);
+                $.cookie("visited", this.visitedPhotos.join(","), this._cookieSettings);
+                this.visitedCookie = $.cookie("visited") || "";
              }
           }),
           

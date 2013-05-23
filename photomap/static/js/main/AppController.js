@@ -8,8 +8,8 @@
  * @class Controls communication in between the classes of KEIKEN
  */
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState"], 
-       function (declare, communicator, state) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientState"], 
+       function (declare, communicator, state, clientstate) {
           return declare(null, {
              
              constructor : function () {
@@ -58,10 +58,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                    communicator.subscribe("open:place", this._placeOpen);
                    
                    communicator.subscribe("change:photoOrder", this._photoOrderChange);
+                   communicator.subscribe("visited:photo", this._photoVisited);
                 }
              },
              _init : function () {
                 main.getUI().getInformation().init();
+                clientstate.init();
                 //main.getMap().init();
                 
                 if (state.isAlbumView()) {
@@ -226,6 +228,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 main.getUI().getInformation().update(photo);
                 main.getUI().getFullscreen().update(photo);
                 main.getUI().getGallery().checkSlider();
+                photo.setVisited(true);
              },
              _slideshowBeforeLoad : function () {
                 main.getUI().getInformation().hideDetail();
@@ -275,6 +278,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState"],
                 main.getUI().getGallery().start(place.getPhotos());
                 main.getUI().getSlideshow().reset();
                 main.getUI().getMessage().hide();
+             },
+             _photoVisited : function (photo) {
+                main.getUI().getGallery().setPhotoVisited(photo);
              }
           });
        });
