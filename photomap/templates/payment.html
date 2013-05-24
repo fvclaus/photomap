@@ -33,12 +33,16 @@
 	<div>
 		<p>{% trans "payment text 'payment info'" %}</p>
 	</div>
+	{% if user.is_authenticated %}
 	<div class="mp-payment-info">
 		<p><span>{% trans "Kontoinhaber" %}</span>: Marc-Leon Roemer</p>
 		<p><span>{% trans "Kontonummer" %}</span>: 8481749</p>
 		<p><span>{% trans "BLZ" %}</span>: 20041155</p>
 		<p><span>{% trans "Kreditinstitut" %}</span>: comdirect bank AG</p>		
 	</div>
+	{% else %}
+	<p class="mp-warning">{% trans "PAYMENT_SIGN_IN_TO_VIEW_BANK" %}</p>
+	{% endif %}
 	<div>
 		<p>
 			{% trans "payment 'thank you note'" %}

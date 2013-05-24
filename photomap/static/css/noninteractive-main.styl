@@ -11,15 +11,22 @@
 
 /* -------- end imports --------- */
 
+/* ------------------------- */
+/* ---- general styling ---- */
+
+
+
+/* ------ end general ------ */
+
 /* ------------------------------- */
 /* -------- core stylings -------- */
 
 .mp-non-interactive-content
   overflow auto
-  width 95% // 100% - 5% padding
+  width 100%
   height 100%
   // margin 0 20%
-  padding-left 5%
+  padding 0 1%
   a
     text-decoration none
     color $font-color
@@ -43,14 +50,15 @@ address
 
 .mp-form
   .mp-form-submit
-    margin-left 25% // position under last input field
+    margin-left 28% // position under last input field => 3% label margin-right + 25% label width
   label
     margin 1% 0
+    margin-right 3%
     float left
     width 25% 
   input, textarea
     margin 1% 0
-    width 72% // 1% is buffer for browser stylesheets like border 1px...
+    width 72% // 100% - 3% label margin right (= space between laveb and input) - 25% label width
 
 // this is djangos css class for errors
 .errorlist
@@ -69,49 +77,96 @@ address
   span
     font-weight bolder
 
-/* --------- end payment -------- */
-
-/* ---------------------------- */
-/* -- styling for login page -- */
-
-.mp-login-tab
-  overflow auto
-
- #mp-login-register
-  width 50%
-  margin-left 25%
-  
-/* -------- end login -------- */    
-
+/* --------- end payment -------- */  
 
 /* --------------------------- */
 /* -- styling for help page -- */
 
-.mp-tutorial-wrapper
-  width 80%
+#help-navigation
+  margin-bottom 40px
+  text-align center
+  background-color #eaeaea
+  a
+    padding 0 20px
+    letter-spacing .25em
+  .mp-active-link
+   background-color #fff
+   text-decoration underline
+    
+
+#mp-project-introduction h2,
+#mp-project-introduction h3
+  text-align center
+  
+.mp-keiken-before,
+.mp-keiken-reasons
+  clear both
+.mp-keiken-reasons
+  margin-bottom 30px
+
+.mp-keiken-alternatives
+  position relative
+.mp-keiken-alternative
+  width 26%
+  margin 20px 2%
+  float left
+
+.mp-keiken-presentation-text
+  width 60%
+  float left
+  p
+    margin 0
+    padding 5px 0
+    
+.mp-keiken-presentation-text .mp-keiken-presentation-text-firsty
   padding-top 10px
-  border-top 4px solid $background-color-dark
-  margin 20px auto
-  h2
-    margin-left 5px
-.mp-tutorial-entry
-  padding 5px
-  border 1px dashed black
-  margin 1px 0
-  .mp-tutorial-description
-    font-size 95%
-    h4
-      margin-left 50px
-      font-size 105%
+.mp-keiken-presentation-text .mp-keiken-presentation-text-lasty
+  padding-bottom 10px
+
+.mp-keiken-presentation-graphic
+  width 40%
+  float left
+  img
+    width 100%
+    max-width 646px
+    height auto
+    max-height 630px
+
+.mp-tutorial-color-table
+  max-width 80%
+  margin 0 auto
+  background-color #eaeaea
+  td
+    background-color white
+  th
+    background-color white
+
+.mp-tutorial-color-table tr
+  td:first-child
+    text-align center
+
+.ui-tabs-vertical
+  width 55em
+  .ui-tabs-nav
+    width 12em
+    padding .2em .1em .2em  .2em
+    float left
     li
-      border 1px dashed black
-      margin 3px
-      list-style-type none
-  .mp-tutorial-subtopic
-    font-weight bold
-    cursor pointer
-  .mp-tutorial-subtopic-desc
-    display none
+      width 100%
+      border-bottom-width 1px !important
+      border-right-width 0 !important
+      margin 0 -1px .2em 0
+      clear left
+      a
+        display block
+    li.ui-tabs-active
+      padding-bottom 0
+      padding-right .1em
+      border-right-width 1px
+  .ui-tabs-panel
+    width 40em
+    padding 1em
+    float right
 
 /* -------- end help --------- */
 
@@ -147,26 +202,126 @@ address
 /* ------------------------------ */
 /* -- styling for landing page -- */
 
-#mp-intro
-  font-size 1.3em // make it a little bigger
-  div 
-    margin 2% 0
+/* ....... general styles ........*/
 
+#landingpage .mp-content
+  background-color #000 //#dadada
+
+#landingpage .background-image,
+#landingpage .background-overlay-black,
+#landingpage .mp-non-interactive-content
+  width 100%
+  height 80%
+  position absolute
+  top 13%
+  left 0
+
+#landingpage .background-image
+  height  80% //auto //80%
+  max-height 80%
+  opacity 0.5
+  
+  
+#landingpage .background-overlay-black
+  z-index 1
+  background-color rgba(0,0,0,0.01)
+  //display none
+
+#landingpage .mp-non-interactive-content
+  height 100%
+  position relative
+  top 0%
+  background none
+  font-size 1.2em
+  color #dadada
+  overflow hidden
+  z-index 2
+
+#landingpage .mp-reference
+  color white
+  //opacity 0.8
+
+section.keiken-intro
+  width 30%
+  max-height 85%
+  padding 30px
+  position absolute
+  top 5%
+  left 1%
+  background-color rgba(0,0,0,0.6)
+  text-align left
+  overflow auto
+  h2
+    margin-bottom 30px
+    margin-left 0
+    text-align left
+  div
+    margin-bottom 10px
+
+/* ....... main styles ....... */
 .mp-landing-page-links
   width 100%
-  position relative
-  text-align center
 
-.mp-dashboard-button
-  max-width 50%
-  margin 0 auto
-
+.mp-dashboard-button,
 .mp-demo-button,
 .mp-test-button
+  width 100%
+  margin-top 30px
+  font-size .8em
+
+/* ....... guest styles ..... */
+section.keiken-intro
+  form input
+    width 47%
+    min-height 25px
+    float left
+    background-color rgba(0,0,0,0.6)
+    color white
+    border-radius 5px
+    box-shadow(inset 0px 0px 5px rgba(255,255,255,0.8))
+  .submit-guest-password
+    margin-left 6%
+    cursor pointer
+    box-shadow(0px 0px 5px rgba(255,255,255,0.8))
+    
+.mp-guest-login-explain
+  margin-top 30px
+  font-size .8em
+  font-style italic
+
+/* ......... login styles ...... */ 
+
+section#keiken-login
+  width 25%
+  max-height 85%
+  position absolute
+  top 5%
+  left 100%
+  font-size .8em
+  opacity 0.8
+  visibility hidden
+
+#keiken-login .login-toggle
+  padding 0
+  float right
+  cursor pointer
+  a
+    padding 0
+    text-align center
+  img
+    width 100%
+    height auto
+    max-width 27px
+    max-height 27px
+    margin 0
+    padding 0
+
+.mp-login-tab
+  overflow auto
+
+ #mp-login-register
   width 50%
-  max-width 50%
-  float left
-  text-align center
+  margin-left 25%
 
 /* ------ end landing page ------ */
 

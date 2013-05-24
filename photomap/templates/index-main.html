@@ -1,0 +1,21 @@
+{% extends "index.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block keiken_intro %}
+	<div class="mp-landing-page-links">
+	  {% if user.is_authenticated %}
+	  <p class="mp-dashboard-button">
+	    <a class="mp-button" href="/dashboard" title='{% trans "TO_DASHBOARD" %}'>{% trans "TO_DASHBOARD" %}</a>
+	  </p>
+	  {% else %}
+	  <p class="mp-demo-button"> 
+	    <a class="mp-button" href="/demo" title='{% trans "VIEW_ALBUM" %}'>{% trans "VIEW_ALBUM" %}</a>
+	  </p>
+	  <p class="mp-test-button">
+	    <a class="mp-button" href="#test" title='{% trans "TRY_KEIKEN" %}'>{% trans "TRY_KEIKEN" %}</a>
+	  </p>
+	  {% endif %}
+	</div>
+{% endblock %}
