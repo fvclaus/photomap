@@ -10,8 +10,13 @@
 {% block pageID %}landingpage{% endblock %}
 
 {% block background_image %}
-<img src="/static/images/backgrounds/bg2.jpeg" alt="background couldn't be loaded" class="background-image"/>
-<div class="background-overlay-black"></div>
+	<!-- if passed along the "day"-parameter gives the current weekday from sunday = 0 to saturday = 6; each day there is a different background -->
+	{% if day %}
+		<img src="/static/images/backgrounds/bg{{ day }}.jpg" alt="background couldn't be loaded" class="background-image"/>
+	{% else %}
+		<img src="/static/images/backgrounds/bg0.jpg" alt="background couldn't be loaded" class="background-image"/>
+	{% endif %}
+	<div class="background-overlay-black"></div>
 {% endblock %}
 
 {% block non_interactive_content %}
@@ -47,7 +52,10 @@
         {{ login.password.errors }}
       </p>
       <p>
-	<input id="login-submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
+      	<input type="hidden" name="next" value="/dashboard" />
+      </p>
+      <p>
+		<input id="login-submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
       </p>
     </form>
   </div>

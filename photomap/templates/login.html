@@ -35,7 +35,10 @@
         {{ login.password.errors }}
       </p>
       <p>
-	<input class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
+      	<input type="hidden" name="next" value="{{ next }}" />
+      </p>
+      <p>
+		<input class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
       </p>
     </form>
   </section>

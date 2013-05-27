@@ -36,13 +36,16 @@ function resizeFont () {
 
 function bindUserMenuListener () {
    var $menu = $("#menu").menu(),
+       menuHeight = $menu.outerHeight(),
        $user = $("#mp-user"),
        offset = $user.offset(),
        //TODO width is not used right now
        toggle = function () {
           $menu.toggle("slide", { direction : "down" });   
        };
-
+   console.log(menuHeight);
+   console.log(offset);
+   console.log(offset.top - menuHeight);
    // user is logged in
    if ($user.size() === 1) {
       setFontSizeInVH($user, 2);
@@ -53,9 +56,10 @@ function bindUserMenuListener () {
       assertTrue(offset.top >= 0 && offset.left >= 0, "offset of $user must not be negative");
       $menu
          .css({
-            top : offset.top - $menu.outerHeight(),
+            top : offset.top - menuHeight - 3, // -5 => due to negative margin of $user button
             left : offset.left
          });
+      console.log($menu.offset().top);
 
       $user
          .button({ icons : { primary : "ui-icon-triangle-1-n" } })

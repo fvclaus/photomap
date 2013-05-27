@@ -221,6 +221,7 @@ a
   position absolute
   background-color $background-color // #dadada
   box-shadow(5px 5px 25px #A4A4A4)
+  z-index 50
 
 /* ------------ end drop up -------------- */
 
@@ -229,7 +230,7 @@ a
 
 .mp-page-footer
   height 5%
-  padding-top 0.5% // buffer for other margins and varying glyphs
+  padding-top 6px // buffer for other margins and varying glyphs
   /* this is done with js now */
   // font-size 2.4vh /* source: http://dev.w3.org/csswg/css3-values/#vw-unit. Scales to 2% of the viewport height */
   border-top 1px solid black
@@ -237,7 +238,7 @@ a
   z-index 50 // cover menu
   background-color $background-color // other menu will be visible through transparent menu
   button
-    margin-top -0.5%
+    margin-top -5px
 
 .mp-internal-links
   display inline-block

@@ -17,6 +17,7 @@ from pm.controller import album
 from pm.controller import dashboard
 from pm.controller import debug
 from pm.controller import footer
+from pm.controller import landingpage
 
 # admin.site.register(model.album.Album)
 # admin.site.register(model.photo.Photo)
@@ -48,7 +49,8 @@ urlpatterns = patterns("",
                        
 
                        url(r'^logout$', authentication.logout),
-                       url(r'^$', direct_to_template, {"template": "index-main.html"}),
+                       url(r'^$', landingpage.get_current),
+                       #url(r'^$', direct_to_template, {"template": "index-main.html"}),
                        
                        url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
 
