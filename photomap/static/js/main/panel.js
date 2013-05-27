@@ -43,9 +43,7 @@ function bindUserMenuListener () {
        toggle = function () {
           $menu.toggle("slide", { direction : "down" });   
        };
-   console.log(menuHeight);
-   console.log(offset);
-   console.log(offset.top - menuHeight);
+       
    // user is logged in
    if ($user.size() === 1) {
       setFontSizeInVH($user, 2);
@@ -59,7 +57,6 @@ function bindUserMenuListener () {
             top : offset.top - menuHeight - 3, // -5 => due to negative margin of $user button
             left : offset.left
          });
-      console.log($menu.offset().top);
 
       $user
          .button({ icons : { primary : "ui-icon-triangle-1-n" } })
