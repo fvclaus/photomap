@@ -1095,7 +1095,7 @@ msgstr "Kreditinstitut"
 #: templates/payment.html:44
 msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
 msgstr ""
-"Bitte <a href='/#login' title='Zur Anmeldung'>melden Sie sich an</a>, um die "
+"Bitte <a href='/login?next=/payment' title='Zur Anmeldung'>melden Sie sich an</a>, um die "
 "Bank-Daten zu sehen."
 
 #: templates/payment.html:48
