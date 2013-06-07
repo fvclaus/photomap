@@ -15,46 +15,40 @@ from pm.model.place import Place
 from pm.model.photo import Photo
 
 from pm.controller import set_cookie
+from pm.controller import landingpage
 import logging
+import re
 
 logger = logging.getLogger(__name__)
-
-
-
-def test(request):
-    if request.method == "GET":
-        return render_to_response("login.html", {"email" : "test@keiken.app",
-                                                "password" : "test"})
-    else:
-        return HttpResponseBadRequest()
-    
-
 
 def login(request):
     if request.method == "GET":
         loginform = LoginForm()
         registerform = RegisterForm()
         data = {"login" : loginform, "register" : registerform}
-        return render_to_response("login.html", data)
+        return landingpage.get_login(request, data) #render_to_response("login.html", data)
     if request.method == "POST":
         loginform = LoginForm(request.POST)
         registerform = RegisterForm()
         data = {"login" : loginform, "register" : registerform}
+        redirect_to = request.POST.get("next")
+        if not redirect_to or not re.match("/",redirect_to):
+            redirect_to = "/dashboard"
         if loginform.is_valid():
             user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
             
             if not (user == None or user.is_anonymous()):
                 auth_login(request, user)
-                response = HttpResponseRedirect("/dashboard")
+                response = HttpResponseRedirect(redirect_to)
                 set_cookie(response, "quota", user.userprofile.quota)
                 set_cookie(response, "used_space", user.userprofile.used_space)
                 return response
             else:
-                loginform.errors["__all__"] = loginform.error_class([u'Please recheck the email and password'])
-                return render_to_response("login.html", data)
+                loginform.errors["__all__"] = loginform.error_class(['Please recheck the email and password'])
+                return landingpage.get_login(request, data) #render_to_response("login.html", data)
             
         else:
-            return render_to_response("login.html", data)
+            return landingpage.get_login(request, data) #render_to_response("login.html", data)
         
 def logout(request):
     auth_logout(request)

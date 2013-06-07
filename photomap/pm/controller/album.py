@@ -20,6 +20,7 @@ from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 from pm.controller import set_cookie, update_used_space
+from pm.controller import landingpage
 from pm.exception import OSMException
 
 from pm.osm import reversegecode
@@ -107,7 +108,7 @@ def view(request, secret, album_id):
                 logger.debug("Album does not has a password yet.")
                 return render_to_response("album-share-failure.html")
             
-            return render_to_response("album-share-login.html")
+            return landingpage.get_guest_current(request)
         else:
             password = request.POST["password"]
             
@@ -116,7 +117,9 @@ def view(request, secret, album_id):
                 return redirect("/album/view/%s-%d" % (album.secret, album_id))
             else:
                 logger.debug("Password %s is incorrect." % password)
-                return render_to_response("album-share-login.html", {"password_incorrect_error": "Passwort is not correct."})
+                return render_to_response("album-share-login.html", 
+                                          {"password_incorrect_error": "Passwort is not correct.",
+                                           "day": today.strftime("%w")})
     except Exception, e:
         logger.info(str(e))
         return render_to_response("album-share-failure.html")

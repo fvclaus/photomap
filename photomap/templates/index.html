@@ -29,9 +29,9 @@
   
 <section id="keiken-login">
   <ul class="mp-login-register-tabs">
-    <li><a href="#mp-login">{% trans "Login" %}</a></li>
-    <li><a href="#mp-register">{% trans "Registration" %}</a></li>
-    <li class="login-toggle"><img src="/static/images/close-login.png" alt="Close" /></li>
+    <li class="mp-login-tabs"><a href="#mp-login">{% trans "Login" %}</a></li>
+    <li class="mp-login-tabs"><a href="#mp-register">{% trans "Registration" %}</a></li>
+    <li class="mp-login-toggle"><img src="/static/images/close-login.png" alt="Close" /></li>
   </ul>
   <!-- hide tabs to avoid ugly moving around during page load -->
   <div class="mp-login-tab" id="mp-login">
@@ -52,7 +52,7 @@
         {{ login.password.errors }}
       </p>
       <p>
-      	<input type="hidden" name="next" value="/dashboard" />
+      	<input type="hidden" name="next" value="{{ next }}" />
       </p>
       <p>
 		<input id="login-submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />

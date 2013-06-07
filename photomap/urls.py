@@ -45,7 +45,6 @@ urlpatterns = patterns("",
                        url(r'^payment$', direct_to_template, {"template": "payment.html"}),
                        
                        url(r'^demo$', album.demo),
-                       url(r'^test$', authentication.test),
                        
 
                        url(r'^logout$', authentication.logout),

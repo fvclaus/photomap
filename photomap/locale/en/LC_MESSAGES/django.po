@@ -1043,7 +1043,7 @@ msgstr "Bank"
 #: templates/payment.html:44
 msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
 msgstr ""
-"Please <a href='/#login' title='To Login'>sign in</a> to view the bank "
+"Please <a href='/login?next=/payment' title='To Login'>sign in</a> to view the bank "
 "information."
 
 #: templates/payment.html:48

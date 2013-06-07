@@ -245,6 +245,7 @@ INSTALLED_APPS = (
 
 
 AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
+LOGIN_REDIRECT_URL = "/dashboard"
 LOGIN_URL = "/login"
 
 EMAIL_HOST = "smtp.gmail.com"

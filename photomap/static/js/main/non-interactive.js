@@ -85,7 +85,7 @@ $(document).ready(function () {
    }
    
    if ($("body").attr("id") === "landingpage") {
-      var $loginCloseWidth = $(".login-toggle").find("img").width() + 3 + "px";
+      var $loginCloseWidth = $(".mp-login-toggle").find("img").width() + 3 + "px";
       console.log("---------------------------");
       console.log($loginCloseWidth);
       // show tabs on login box
@@ -95,13 +95,13 @@ $(document).ready(function () {
          disabled : [1]
       });
       $(".mp-login-link, .login-toggle").button();
-      $(".login-toggle .ui-button-text").css({
+      $(".mp-login-toggle .ui-button-text").css({
          padding: 0
       });
       $(".mp-login-link .ui-button-text").css({
          padding: "2px"
       });
-      $(".login-toggle").css({
+      $(".mp-login-toggle").css({
          width: $loginCloseWidth,
          height: $loginCloseWidth,
          padding: "1.5px"
@@ -109,7 +109,7 @@ $(document).ready(function () {
       //change href of login-link to prevent reloading of the page
       $(".mp-login-link").find("a").attr("href", "#login");
       // close login-box on click
-      $(".login-toggle").on("click", function (event) {
+      $(".mp-login-toggle").on("click", function (event) {
          $("#keiken-login").fadeOut(300, function () {
             $("#keiken-login").css({
                visibility: "hidden",
@@ -127,7 +127,7 @@ $(document).ready(function () {
       //check whether user is logged in or not
       if ($(".mp-login-link").size() > 0) {
          //open the login-box automatically when coming from another non-interactive by clicking on "Login/Registration"
-         if (window.location.hash === "#login") {
+         if (window.location.pathname === "/login") {
             $(window).load(function () {
                $(".mp-login-link").find("a").trigger("click");
                $("#login_email").focus();
@@ -140,14 +140,12 @@ $(document).ready(function () {
                event.preventDefault();
             }
             $("#keiken-login").css("visibility", "visible").animate({
-               left : "74%"
+               left : "69%"
             }, 400);
             $("#keiken-login").tabs("option", "active", 0)
             
          });
       }
-      
-      
    }
    // display all tags that are marked as buttons as ui-buttons
    $(".mp-button").button();
