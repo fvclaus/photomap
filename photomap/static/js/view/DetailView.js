@@ -120,10 +120,11 @@ define([
           },
           _updateDetail : function (model) {
              var title = model.getModelType() + ": " + model.getTitle(),
-                 description = model.getDescription() || gettext("NO_DESCRIPTION");
+                 description = model.getDescription();// || gettext("NO_DESCRIPTION");
              // use text() instead of html() to prevent script tag injection or similiar
-             if (description === null) {
+             if (!description) {
                 this.$description.html(this.noDescription);
+                this._bindInsertDescriptionListener();
              } else {
                 this.$description.text(description);
              }
@@ -136,9 +137,9 @@ define([
           _updateTeaser : function (model) {
              var shortDescription,
                  title = "Photo: " + model.getTitle(),
-                 description = model.getDescription() || gettext("NO_DESCRIPTION");
+                 description = model.getDescription();// || gettext("NO_DESCRIPTION");
 
-             if (description !== null) {
+             if (description) {
                 shortDescription = tools.cutText(description, 250);
                 this.$teaserDescription.text(shortDescription);
              } else {
@@ -146,6 +147,7 @@ define([
                 description = this.noDescription;
                 // this is from a trusted source and might be html
                 this.$teaserDescription.html(shortDescription);
+                this._bindInsertDescriptionListener();
              }
 
              this.$teaserTitle.text(title);
@@ -183,6 +185,24 @@ define([
              $(".mp-close-full-description").on("click", function (event) {
                 if (!instance.isDisabled()) {
                    instance.presenter.closeDetail();
+                }
+             });
+             this._bindInsertDescriptionListener();
+          },
+          _bindInsertDescriptionListener : function () {
+             var instance = this,
+                model;
+             $(".mp-insert-description").on("click", function (event) {
+                if (!instance.isDisabled()) {
+                   if (/teaser/.test($(this).parents(".mp-wrapper").attr("id"))) {
+                      model = "Photo";
+                   } else {
+                      model = "Marker";
+                   }
+                   communicator.publish("insert:description", {
+                      "event": event,
+                      "model": model
+                   });
                 }
              });
           },

@@ -24,6 +24,12 @@ define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
              getOrder : function () {
                 return this.order;
              },
+             getPhoto : function () {
+                return this.photo;
+             },
+             getThumb : function () {
+                return this.thumb;
+             },
              setVisited : function (visited) {
                 this.visited = visited;
                 if (visited) {

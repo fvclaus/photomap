@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-05-24 14:10+0200\n"
+"POT-Creation-Date: 2013-06-08 21:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -44,11 +44,16 @@ msgstr ""
 #: templates/base-interactive.html:67 templates/base-interactive.html.py:75
 #: templates/base-interactive.html:77
 msgid "NO_DESCRIPTION"
-msgstr "No description"
+msgstr "No description "
 
 #: templates/base-interactive.html:73 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Please select a photo."
+
+#: templates/base-interactive.html:75
+msgid "ADD_DESCRIPTION"
+msgstr ""
+" Add Description ..."
 
 #: templates/base-interactive.html:89
 msgid "Data Loading"
@@ -176,9 +181,8 @@ msgid "MANDATORY_FIELD"
 msgstr "This field is mandatory."
 
 #: templates/contact.html:49 templates/index-guest.html:43
-#: templates/index-guest.html.py:72 templates/index.html:38
-#: templates/index.html.py:67 templates/login.html:26
-#: templates/login.html.py:55
+#: templates/index-guest.html.py:72 templates/index.html:43
+#: templates/index.html.py:75
 msgid "Email"
 msgstr "Email"
 
@@ -776,11 +780,11 @@ msgstr ""
 msgid "Willkommen"
 msgstr "Welcome"
 
-#: templates/index-guest.html:20 templates/index.html:20
+#: templates/index-guest.html:20 templates/index.html:25
 msgid "Welcome to KEIKEN!"
 msgstr "Welcome to KEIKEN!"
 
-#: templates/index-guest.html:21 templates/index.html:21
+#: templates/index-guest.html:21 templates/index.html:26
 msgid "KEIKEN_ABSTRACT"
 msgstr ""
 "KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='What is "
@@ -788,53 +792,44 @@ msgstr ""
 "your adventures abroad and other interesting experiences easy and vivid!"
 
 #: templates/index-guest.html:24 templates/index-guest.html.py:49
-#: templates/index-guest.html:76 templates/index.html:44
-#: templates/index.html.py:71 templates/login.html:32
-#: templates/login.html.py:59 templates/login.html:87
+#: templates/index-guest.html:76 templates/index.html:49
+#: templates/index.html.py:79
 msgid "Password"
 msgstr "Password"
 
-#: templates/index-guest.html:32 templates/index.html:27
-#: templates/login.html:16
+#: templates/index-guest.html:32 templates/index.html:32
 msgid "Login"
 msgstr "Login"
 
-#: templates/index-guest.html:33 templates/index.html:28
-#: templates/login.html:17
+#: templates/index-guest.html:33 templates/index.html:33
 msgid "Registration"
 msgstr "Registration"
 
-#: templates/index-guest.html:55 templates/index.html:50
-#: templates/login.html:38 templates/login.html.py:90
+#: templates/index-guest.html:55 templates/index.html:58
 msgid "Sign in"
 msgstr "Sign in"
 
-#: templates/index-guest.html:64 templates/index.html:59
-#: templates/login.html:47
+#: templates/index-guest.html:64 templates/index.html:67
 msgid "First name"
 msgstr "First name"
 
-#: templates/index-guest.html:68 templates/index.html:63
-#: templates/login.html:51
+#: templates/index-guest.html:68 templates/index.html:71
 msgid "Last name"
 msgstr "Last name"
 
-#: templates/index-guest.html:80 templates/index.html:75
-#: templates/login.html:63
+#: templates/index-guest.html:80 templates/index.html:83
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: templates/index-guest.html:84 templates/index.html:79
-#: templates/login.html:67
+#: templates/index-guest.html:84 templates/index.html:87
 msgid "Register"
 msgstr "Register"
 
 #: templates/index-guest.html:92 templates/index-guest.html.py:100
-#: templates/login.html:77 templates/login.html.py:85
 msgid "Welcome to Keiken"
 msgstr "Welcome to Keiken"
 
-#: templates/index-guest.html:93 templates/login.html:78
+#: templates/index-guest.html:93
 msgid "LOGIN_GUEST_WELCOME_1"
 msgstr ""
 "Keiken is not a place to upload photos of temporary interest and meaning. If "
@@ -843,13 +838,13 @@ msgstr ""
 "not about unpersonal sharing of experiences or overwhelming your friends and "
 "family by spamming them with photos."
 
-#: templates/index-guest.html:94 templates/login.html:79
+#: templates/index-guest.html:94
 msgid "LOGIN_GUEST_WELCOME_2"
 msgstr ""
 "Keiken structures your albums in places and photos. Each album can contain "
 "as many places as you wish and each place can contain any number of photos."
 
-#: templates/index-guest.html:94 templates/login.html:79
+#: templates/index-guest.html:94
 msgid "LOGIN_GUEST_WELCOME_3"
 msgstr ""
 "This may help you to experience the adventures and stories told by the album "
@@ -858,7 +853,7 @@ msgstr ""
 "as big as a country eg. when you travel around the world. Or it can be as "
 "small as an interesting sight when visiting a city."
 
-#: templates/index-guest.html:95 templates/login.html:80
+#: templates/index-guest.html:95
 msgid "LOGIN_GUEST_WELCOME_4"
 msgstr ""
 "Photos are.. well photos and not actual experiences. But nevertheless photos "
@@ -867,13 +862,13 @@ msgstr ""
 "at 'IMG_13072013_1718.JPG' - and of course it would be great if you would "
 "also use the optional description-box to tell about your own experiences."
 
-#: templates/index-guest.html:97 templates/login.html:82
+#: templates/index-guest.html:97
 msgid "LOGIN_GUEST_WELCOME_5"
 msgstr ""
 "We hope you still know photo-albums. That were those nice dusty big books, "
 "which you had to look at with your parents and family after big trips."
 
-#: templates/index-guest.html:98 templates/login.html:83
+#: templates/index-guest.html:98
 msgid "LOGIN_GUEST_WELCOME_6"
 msgstr ""
 "We did a little dusting and created a digital, dust-repelling, interactive "
@@ -904,9 +899,8 @@ msgstr "Insert Album"
 #: templates/insert-album.html:11 templates/insert-photo.html:21
 #: templates/insert-place.html:11 templates/update-album.html:12
 #: templates/update-photo.html:13 templates/update-place.html:13
-#, fuzzy
 msgid "INPUT_PLACEHOLDER_TITLE"
-msgstr "Not necessary, if you've already defined a password for this album.."
+msgstr "Give a title."
 
 #: templates/insert-album.html:14 templates/insert-photo.html:11
 #: templates/insert-photo.html.py:24 templates/insert-place.html:14
@@ -918,9 +912,8 @@ msgstr "Description"
 #: templates/insert-album.html:15 templates/insert-photo.html:25
 #: templates/insert-place.html:15 templates/update-album.html:16
 #: templates/update-photo.html:17 templates/update-place.html:17
-#, fuzzy
 msgid "INPUT_PLACEHOLDER_DESCRIPTION"
-msgstr "Not necessary, if you've already defined a password for this album.."
+msgstr "(Optional) Enter a description .."
 
 #: templates/insert-photo.html:5
 msgid "INSERT_PHOTO"
@@ -941,14 +934,6 @@ msgstr ""
 #: templates/insert-place.html:5
 msgid "INSERT_PLACE"
 msgstr "Insert Place"
-
-#: templates/login.html:6 templates/login.html.py:8
-msgid "Login und Registrierung"
-msgstr "Login and Registration"
-
-#: templates/login.html:75
-msgid "Guest-Login"
-msgstr "Guest-Login"
 
 #: templates/payment.html:8
 msgid "Spenden und Zahlungsbedingungen"
@@ -1043,8 +1028,8 @@ msgstr "Bank"
 #: templates/payment.html:44
 msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
 msgstr ""
-"Please <a href='/login?next=/payment' title='To Login'>sign in</a> to view the bank "
-"information."
+"Please <a href='/login?next=/payment' title='To Login'>sign in</a> to view "
+"the bank information."
 
 #: templates/payment.html:48
 msgid "payment 'thank you note'"
@@ -1366,6 +1351,12 @@ msgstr "Next Image"
 #: templates/view-album.html:95
 msgid "Bild"
 msgstr "Image"
+
+#~ msgid "Login und Registrierung"
+#~ msgstr "Login and Registration"
+
+#~ msgid "Guest-Login"
+#~ msgstr "Guest-Login"
 
 #~ msgid "Alben"
 #~ msgstr "Albums"

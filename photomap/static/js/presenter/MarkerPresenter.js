@@ -3,16 +3,15 @@
 
 "use strict";
 
+/**
+ * @author Marc-Leon Römer
+ * @class Provides the logic to present the Album and Place models and to handle all user interaction on the marker
+ * @requires Presenter, Communicator, UIState
+ */
 
 define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UIState"],
        function (declare, Presenter, communicator, state) {
           return declare(Presenter, {
-             getView : function () {
-                return this.view;
-             },
-             getModel : function () {
-                return this.model;
-             },
              show : function () {
                 this.view.show();
              },

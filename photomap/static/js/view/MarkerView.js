@@ -3,6 +3,12 @@
 
 "use strict";
 
+/**
+ * @author Marc-Leon Römer
+ * @class represents either an Album or a Place as a marker on the map
+ * @requires View, MarkerPresenter
+ */
+
 define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
        function (declare, View, MarkerPresenter) {
           
@@ -18,6 +24,9 @@ define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
                 // show only when requested
                 this.hide();
                 this._bindMarkerListener();
+                
+                // return presenter instead of view, cause the presenter is needed right after instantiation
+                return this.presenter;
              },
              getMap : function () {
                return this.map; 

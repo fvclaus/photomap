@@ -49,10 +49,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
              },
              insertMarker : function (model, open) {
                 var markerImplementation = this.view.createMarker(model),
-                   markerView = new MarkerView(this.view, markerImplementation, model),
-                   markerPresenter = markerView.getPresenter();
+                   marker= new MarkerView(this.view, markerImplementation, model); //returns presenter already!
                 
-                communicator.publish("insert:marker", {marker: markerPresenter, "open": open});
+                communicator.publish("insert:marker", {"marker": marker, "open": open});
              },
              getPositionInPixel : function (element) {
                 return this.view.getPositionInPixel(element);

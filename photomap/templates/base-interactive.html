@@ -63,16 +63,16 @@
     </div>
     <div id="mp-detail-wrapper">
       <p id="mp-detail-title">{% trans "SELECT_PLACE_OR_ALBUM" %}</p>
-      <div id="mp-detail-description-wrapper">
-        <p><em>{% trans "NO_DESCRIPTION" %}</em></p>
+      <div id="mp-detail-description-wrapper" class="mp-wrapper">
+        <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;" class="mp-insert-description" href="#" title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
       </div>
     </div>
   </section>
   
   <section class="mp-description-wrapper mp-nodisplay" id="mp-detail-teaser">
     <p id="mp-detail-teaser-title">{% trans "SELECT_PHOTO" %}</p>
-    <div id="mp-detail-teaser-description-wrapper">
-      <p><em>{% trans "NO_DESCRIPTION" %}</em></p>
+    <div id="mp-detail-teaser-description-wrapper" class="mp-wrapper">
+      <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;" class="mp-insert-description" href="#" title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
     </div>
     <!-- <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p> -->
   </section>
