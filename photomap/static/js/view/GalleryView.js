@@ -91,8 +91,7 @@ define(["dojo/_base/declare",
                 var options,
                     effect,
                     duration,
-                    instance = this,
-                    imageSources = [];
+                    instance = this;
 
                 this.started = true;
                 
@@ -103,39 +102,34 @@ define(["dojo/_base/declare",
 
 
                 // initialize and start carousel
+                /*
                 if (navigator.sayswho[0] === "Firefox") {
                    effect = "fade";
                    duration = 500;
                 } else {
                    effect = "flip";
                    duration = 300;
-                }
+                }*/
                 options = {
                    lazy : !clientstate.isAdmin(),
-                   "effect" : effect,
-                   "duration": duration,
+                   "effect" : "fade",
+                   "duration": 500,
                    loader : this.$loader,
                    beforeLoad : this._beforeLoad,
                    afterLoad : this._afterLoad,
                    onUpdate : this._update,
                    context : this
                 };
-                photos.forEach(function (photo, index) {
-                   imageSources.push(photo.thumb);
-                });
                 this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, "thumb", options);
                 this.fullGallery.setCarousel(this.carousel);
 
                 // disable ui while loading & show loader
                 state.setAlbumLoading(true);
                 communicator.publish("disable:ui");
-                // ui.showLoading();
                 this.carousel.start();
 
                 // show/hide correct message
                 this.$isNotStarted.hide();
-                if (photos.length === 0) {
-                }
              },
              /**
               * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
@@ -276,6 +270,7 @@ define(["dojo/_base/declare",
                       $visited.hide();
                    }
                 });
+                console.log(this.showTeaser);
                 if (this.showTeaser) {
                    if (this.currentPhoto === null) {
                       throw new Error("Set showTeaser but no currentPhoto");

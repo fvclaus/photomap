@@ -15,6 +15,12 @@ define(["dojo/_base/declare", "util/Communicator"],
                 this.view = view || null;
                 this.model = model || null;
              },
+             getView : function () {
+                return this.view;
+             },
+             getModel : function () {
+                return this.model;
+             },
              setDisabled : function (disable) {
                 assertTrue(disable !== undefined, "disable mustn't be undefined");
                 

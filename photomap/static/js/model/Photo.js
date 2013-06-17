@@ -30,6 +30,12 @@ define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
              getThumb : function () {
                 return this.thumb;
              },
+             getSource : function (srcPropertyName) {
+                if (!this[srcPropertyName]) {
+                   throw new Error("UnknownPropertyError : " + srcPropertyName);
+                }
+                return this[srcPropertyName];
+             },
              setVisited : function (visited) {
                 this.visited = visited;
                 if (visited) {

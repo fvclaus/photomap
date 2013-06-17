@@ -15,7 +15,8 @@ define(["dojo/_base/declare", "util/Tools"],
                 
                 this.defaults = {
                    items : null,
-                   images : null,
+                   photos : null,
+                   srcPropertyName : null,
                    loader : null,
                    animation: "fade",
                    animationTime: 200,
@@ -50,6 +51,8 @@ define(["dojo/_base/declare", "util/Tools"],
              },
              _fade : function (options, time) {
                 
+                console.log("CarouselAnimation: in fade");
+                var photoSource
                 //begin animation
                 if (time === "start") {
                   options.items.fadeOut(options.animationTime);
@@ -70,28 +73,32 @@ define(["dojo/_base/declare", "util/Tools"],
                    if (options.loader) {
                       options.loader.hide();
                    }
-                   if (options.images.length > 0) {
+                   if (options.photos.length > 0) {
                       $.each(options.items, function (index, item) {
-                         var imageSource = options.images[index];
+                         if (options.photos[index]) {
+                            photoSource = options.photos[index].getSource(options.srcPropertyName);
+                         } else {
+                            photoSource = null;
+                         }
                          // center element
                          // give the element its later height
                          $(item)
                               .css("visibility", "hidden")
-                              .attr("src", imageSource);
+                              .attr("src", photoSource);
                          // set margin-top accordingly. 
                          tools.centerElement($(item), "vertical");
                          // remove the img again to fade it in nicely
                          $(item)
                               .removeAttr("src")
                               .css("visibility", "visible");
-                         if ( imageSource !== null) {
+                         if (photoSource) {
                             $(this).fadeIn(options.animationTime)
-                               .attr("src", imageSource)
+                               .attr("src", photoSource)
                                // needed for frontend testing to select 'active' photos
                                .addClass("mp-test-photo-used");
    
                          } else {
-                            $(this).fadeOut(0, updated)
+                            $(this).fadeOut(0)
                                .removeAttr("src")
                                // needed for frontend testing to select 'active' photos
                                .removeClass("mp-test-photo-used");
@@ -117,7 +124,8 @@ define(["dojo/_base/declare", "util/Tools"],
                     },
                     matrix = function (value) {
                        return "matrix(" + value + ")";
-                    };
+                    },
+                    photoSource;
                 
                 //begin animation
                 if (time === "start") {
@@ -150,25 +158,29 @@ define(["dojo/_base/declare", "util/Tools"],
                    if (options.loader) {
                       options.loader.hide();
                    }
-                   if (options.images.length > 0) {
+                   if (options.photos.length > 0) {
                       $.each(options.items, function (index, item) {
-                         var imageSource = options.images[index];
+                         if (options.photos[index]) {
+                            photoSource = options.photos[index].getSource(options.srcPropertyName);
+                         } else {
+                            photoSource = null;
+                         }
                          // center element
                          // give the element its later height
                          $(item)
                               .css("visibility", "hidden")
                               .show()
-                              .attr("src", imageSource);
+                              .attr("src", photoSource);
                          // set margin-top accordingly. 
                          tools.centerElement($(item), "vertical");
                          // remove the img again to fade it in nicely
                          $(item)
                               .removeAttr("src")
                               .css("visibility", "visible");
-                         if ( imageSource !== null) {
+                         if (photoSource) {
                             
                             $(item)
-                               .attr("src", imageSource)
+                               .attr("src", photoSource)
                                .css({
                                   "-o-transform": scaleX(1),
                                   "-webkit-transform": scaleX(1),
@@ -179,7 +191,7 @@ define(["dojo/_base/declare", "util/Tools"],
                                .addClass("mp-test-photo-used");
    
                          } else {
-                            $(item).fadeOut(0, updated)
+                            $(item).fadeOut(0)
                                .removeAttr("src")
                                // needed for frontend testing to select 'active' photos
                                .removeClass("mp-test-photo-used");

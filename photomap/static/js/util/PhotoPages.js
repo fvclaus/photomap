@@ -34,57 +34,86 @@ define(["dojo/_base/declare", "model/Photo"],
                 this._createPages(photos, this.photosPerPage);
              },
              getCurrentPage : function () {
-                return this.getPage(this.currentPageIndex);
+                //TODO this seems quite redundant.. the current-page is already stored so you can just return this._getCurrentPage() - why set the currentPageIndex = currentPageIndex again?
+                //return this.getPage(this.currentPageIndex);
+                return this._getCurrentPage();
              },
              /**
               * @public
               * @description returns page with given index
               */
-             getPage : function (index) {
-                assertTrue(typeof index === "string" || typeof index === "number", "index has to be string or number");
-                assertString(this.srcPropertyName, "srcPropertyName has to be string");
-
-                if (index === "first") {
-                   this._setCurrentPage(0);
-
-                } else if (index === "last") {
-                   this._setCurrentPage(this.pages.length - 1); 
-
-                } else if (index === "next") {
-                   if (this.isLastPage()) {
-                      this._setCurrentPage(0);
-                   } else {
-                      this._setCurrentPage(this.currentPageIndex + 1);
-                   }
-
-                } else if (index === "previous") {
-                   if (this.isFirstPage()) {
-                      this._setCurrentPage(this.pages.length - 1); 
-                   } else {
-                      this._setCurrentPage(this.currentPageIndex - 1);
-                   }
-
-                } else if (index === "current") {
-                   //do nothing here
-                   
-                } else if (typeof index === "number") {
-                   this._setCurrentPage(index);
-
-                } else {
-
-                   throw new Error("Unknown argument " + index);
+             getPage : function (which) {
+                assertTrue(typeof which === "string" || typeof which === "number" || which instanceof Photo, "which has to be string or number or Photo");
+                
+                var index, photo;
+                
+                if (typeof which === "number") {
+                   index = which;
+                   which = "number";
+                } else if (which instanceof Photo) {
+                   photo = which;
+                   which = "photo";
                 }
+                
+                switch (which) {
+                   
+                   case "first":
+                      this._setCurrentPage(0);
+                      break;
+                   case "last":
+                      this._setCurrentPage(this.pages.length - 1);
+                      break;
+                   case "next":
+                      if (!this.currentPageIndex && this.currentPageIndex !== 0 || this.isLastPage()) {
+                         this._setCurrentPage(0);
+                      } else {
+                         this._setCurrentPage(this.currentPageIndex + 1);
+                      }
+                      break;
+                   case "previous":
+                      if (!this.currentPageIndex && this.currentPageIndex !== 0 || this.isFirstPage()) {
+                         this._setCurrentPage(this.pages.length - 1); 
+                      } else {
+                         this._setCurrentPage(this.currentPageIndex - 1);
+                      }
+                      break;
+                   case "current":
+                      break;
+                   case "number":
+                      this._setCurrentPage(index);
+                      break;
+                   case "photo":
+                      index = this.getPageIndex(photo);
+                      if (index === null) {
+                         throw new Error("Unknown Photo: " + photo);
+                      }
+                      this._setCurrentPage(index);
+                      break;
+                   default:
+                      throw new Error("Unknown param: " + which);
+                      // this._setCurrentPage(0);
+                      // break;
+                }
+                //TODO why the deep copy?
+                //var currentPage =  $.extend(true, [], this._getCurrentPage());
 
-                var currentPage =  $.extend(true, [], this._getCurrentPage()),
-                    instance = this;
 
-                currentPage = this._extractSources(currentPage);
-
-                currentPage.forEach(function (src) {
-                   assertTrue(typeof src === "string" || src === null);
+                return this._getCurrentPage(); //currentPage;
+             },
+             getPageIndex : function (of) {
+                assertTrue(of instanceof Photo, "getPageIndex just accepts a Photo as input param");
+                
+                var index = null;
+                
+                $.each(this.pages, function (pageIndex, page) {
+                   $.each(page, function (photoIndex, photo) {
+                      if (photo === of) {
+                         index = pageIndex;
+                      }
+                   });
                 });
-
-                return currentPage;
+                
+                return index;
              },
              /**
               * @public
@@ -133,6 +162,9 @@ define(["dojo/_base/declare", "model/Photo"],
                 var photos =  $.extend(true, [], this.photos);
                 
                 return this._extractSources(photos);
+             },
+             getAllPhotos : function () {
+                return this.photos;
              },
              /**
               * @public
@@ -223,14 +255,16 @@ define(["dojo/_base/declare", "model/Photo"],
               * @private
               */
              _getCurrentPage : function () {
-                this._setCurrentPage(this.currentPageIndex);
-                return this.pages[this.currentPageIndex];
-             },
-             /**
-              * @private
-              */
-             _getCurrentPageNumber : function () {
-                return this.currentPageNumber;
+                //TODO what was this for? _setCurrentPage sets this.currentPageIndex, so this call just sets this.currentPageIndex = this.currentPageIndex;
+                //this._setCurrentPage(this.currentPageIndex);
+                
+                var currentPage = this.pages[this.currentPageIndex];
+                
+                currentPage.forEach(function (photo) {
+                   assertTrue(photo instanceof Photo || photo === null, "Pages may just contain Photos or nulls");
+                });
+                
+                return currentPage;
              },
              /**
               * @private

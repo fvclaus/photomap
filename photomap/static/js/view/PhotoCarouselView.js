@@ -61,15 +61,13 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
              /**
               * @description Starts the carousel by loading the first or the requested page
               */
-             start : function (index) {
+             start : function (photo) {
                 
                 this.isStarted = true;
-                if (index) {
-                   this.navigateTo(index);
-                   this.currentPageIndex = index;
+                if (photo) {
+                   this.navigateTo(photo);
                 } else {
                    this.currentPage = this.dataPage.getPage("first");
-                   this.currentPageIndex = 0;
                    this._load();
                 }
              },
@@ -127,15 +125,15 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 assert(this.isStarted, true, "carousel has to be started already");
 
                 switch (to) {
-                case "start":
-                   this.currentPage = this.dataPage.getPage("first");
-                   break;
-                case "end":
-                   this.currentPage = this.dataPage.getPage("last");
-                   break;
-                default:
-                   this.currentPage = this.dataPage.getPage(to);
-                   break;
+                   case "start":
+                      this.currentPage = this.dataPage.getPage("first");
+                      break;
+                   case "end":
+                      this.currentPage = this.dataPage.getPage("last");
+                      break;
+                   default:
+                      this.currentPage = this.dataPage.getPage(to);
+                      break;
                 }
                 this._load();
              },
@@ -153,6 +151,9 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
              getAllImageSources : function () {
                 return this.dataPage.getAllImageSources();
              },
+             getAllPhotos : function () {
+                return this.dataPage.getAllPhotos();
+             },
              /**
               * @description Loads all photos, or just current page depending on this.options.lazy (=true/false). 
               * When everything is loaded this.options.onLoad (optional)  is executed and the carousel is updated to show the current page.
@@ -161,7 +162,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
               * This can be used when items get deleted in the middle of the page. The last elements would be ignored without the to parameter.
               */
              _load : function (from, to) {
-                var i, j, loader, loadHandler, loaded, maxLoad, currentPage, source, instance = this, imageSources, nSources;
+                var i, j, loader, loadHandler, loaded, maxLoad, currentPage, photo, photos, nPhotos, instance = this;
                 loaded = 0;
 
                 if (from === undefined || from === null) {
@@ -172,42 +173,42 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 //TODO this should only load pictures from index 'from' , if specified
                 if (this.options.lazy) {
                    // filter current page to get the actual amount of images
-                   imageSources = this.currentPage.filter(function (e, i) {
+                   photos = this.currentPage.filter(function (e, i) {
                       return e !== null;
                    });
                    // regardless of whats actually on a page, we must update all entries to remove the old ones
                    to = this.size;
                 // load everything
                 } else {
-                   imageSources = this.getAllImageSources();
+                   photos = this.getAllPhotos();
                 }
                 // handler is called after all images are loaded
                 loadHandler = function () {
                    ++loaded;
 
-                   if (loaded >= nSources) {
+                   if (loaded >= nPhotos) {
                       // if there is a load-handler specified in the options, execute it first
                       if (typeof instance.options.afterLoad === "function") {
                          // trigger the afterLoad event
-                         instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nSources));
+                         instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nPhotos));
                       }
                       // start updating the srcs
-                      instance._update(from, to || nSources);
+                      instance._update(from, to || nPhotos);
                    }
                 };
-                nSources = imageSources.length;
+                nPhotos = photos.length;
                 loader = function () {
-                   if (nSources === 0) {
-                      instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nSources));
+                   if (nPhotos === 0) {
+                      instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nPhotos));
                       instance._update();
                    }
-                   for (i = 0; i < nSources; i++) {
-                      source = imageSources[i];
-                      console.log(source);
+                   for (i = 0; i < nPhotos; i++) {
+                      photo = photos[i];
+                      console.log(photo);
                       $('<img/>')
                          .load(loadHandler)
                          .error(loadHandler)
-                         .attr('src', source);
+                         .attr('src', photo.getSource(instance.srcPropertyName));
                    }
                 }
                 carouselAnimation.start({
@@ -220,15 +221,15 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
 
                 if (typeof this.options.beforeLoad === "function") {
                    // trigger the beforeLoad event
-                   this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || nSources));
+                   this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
                 }
                 // this is called at startup when there are no photos present or after all photos are deleted
-                if (nSources === 0){
+                if (nPhotos === 0){
                    if (typeof this.options.afterLoad === "function") {
-                      this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || nSources));
+                      this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
                    }
                    if (typeof this.options.onUpdate === "function") {
-                      this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nSources));
+                      this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nPhotos));
                    }
                 }
              },
@@ -242,22 +243,27 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 
                 if (!from) {
                    $items = this.$items;
-                   imageSources = [];
                 }
                 
-                var instance = this, 
-                    imageSources = [],
+                var instance = this,
+                    photos = [],
                     $items = this.$items.slice(from, to);
+                    console.log(from + " " + to);
+                    console.log($items.length);
                     
                 assertTrue($items.size() > 0, "$items has to contain at least one item");
                 
-                $items.each(function (index) {
-                   imageSources.push(instance.currentPage[from + index] || "");
+                $.each(this.currentPage, function (index, photo) {
+                   if (photo !== null) {
+                      photos.push(photo);
+                   }
                 });
+                console.log(photos.length);
                 
                 carouselAnimation.end({
                    items: $items,
-                   images: imageSources,
+                   "photos": photos,
+                   srcPropertyName: this.srcPropertyName,
                    loader: this.options.loader,
                    animation: this.options.effect,
                    animationTime: this.options.duration,

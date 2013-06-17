@@ -16,7 +16,12 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
                 communicator.publish("click:slideshowImage");
              },
              navigateTo : function (photo) {
-                this.view.navigateTo(photo);
+                
+                if (!this.view.isStarted()) {
+                   this.view.start(photo);
+                } else {
+                   this.view.getCarousel().navigateTo(photo);
+                }
              },
              navigate : function (direction) {
                 assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");

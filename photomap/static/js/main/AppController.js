@@ -189,7 +189,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getControls().hide(true);
              },
              _galleryThumbClick : function (photo) {
-                state.getCurrentMarker().resetCurrent();
+                if (state.getCurrentMarker()) {
+                  state.getCurrentMarker().resetCurrent();
+                }
                 main.getUI().getControls().hide(false);
                 main.getUI().getSlideshow().navigateTo(photo);
              },
@@ -214,7 +216,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 }
              },
              _markerInsert : function (data) {
-                
+                console.dir(data);
                 state.insertMarker(data.marker);
                 data.marker.checkIconStatus();
                 data.marker.show();
