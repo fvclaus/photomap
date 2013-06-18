@@ -53,6 +53,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                 
                 communicator.publish("insert:marker", {"marker": marker.getPresenter(), "open": open});
              },
+             setNoMarkerMessage : function () {
+                this.view.setNoMarkerMessage();
+             },
              getPositionInPixel : function (element) {
                 return this.view.getPositionInPixel(element);
              },

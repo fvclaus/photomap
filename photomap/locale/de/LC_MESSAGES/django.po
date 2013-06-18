@@ -47,7 +47,7 @@ msgstr ""
 msgid "NO_DESCRIPTION"
 msgstr "Keine Beschreibung "
 
-#: templates/base-interactive.html:73 templates/photo-editor.html:4
+#: templates/base-interactive.html:73 templates/Photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Bitte wählen Sie ein Photo aus."
 
@@ -171,17 +171,17 @@ msgstr ""
 "com/111238553236963807299'>Keiken</a>) besuchen."
 
 #: templates/contact.html:41 templates/insert-album.html:10
-#: templates/insert-photo.html:20 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-photo.html:12
+#: templates/insert-Photo.html:20 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-Photo.html:12
 #: templates/update-place.html:12
 msgid "NAME"
 msgstr "Name"
 
 #: templates/contact.html:42 templates/contact.html.py:50
 #: templates/contact.html:58 templates/contact.html.py:66
-#: templates/insert-album.html:10 templates/insert-photo.html:20
-#: templates/insert-photo.html.py:28 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-photo.html:12
+#: templates/insert-album.html:10 templates/insert-Photo.html:20
+#: templates/insert-Photo.html.py:28 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-Photo.html:12
 #: templates/update-place.html:12
 msgid "MANDATORY_FIELD"
 msgstr "Dieses Feld ist ein Pflichtfeld."
@@ -303,11 +303,11 @@ msgstr "Album löschen?"
 msgid "DELETE_ALBUM_QUESTION"
 msgstr "Wollen Sie das folgende Album wirklich löschen:"
 
-#: templates/delete-photo.html:5
+#: templates/delete-Photo.html:5
 msgid "DELETE_PHOTO"
 msgstr "Photo löschen?"
 
-#: templates/delete-photo.html:11
+#: templates/delete-Photo.html:11
 msgid "DELETE_PHOTO_QUESTION"
 msgstr "Wollen Sie das folgende Photo wirklich löschen: "
 
@@ -682,7 +682,7 @@ msgstr ""
 "Plätze gleichen Alben. Sie sind mit der Karte verbunden, werden durch einen "
 "Marker repräsentiert und haben einen Titel und optional auch eine "
 "Beschreibung. Sie müssen einen Platz erstellen, bevor Sie Bilder hochladen "
-"können. Jedes hochgeladene Foto wird zum aktuellen Platz hinzugefügt. Die "
+"können. Jedes hochgeladene Photo wird zum aktuellen Platz hinzugefügt. Die "
 "Anzahl an Plätzen ist unbegrenzt, auch die Anzahl der Fotos die ein Platz "
 "halten kann ist theoretisch ungegrenzt. Wir limitieren, jedoch den "
 "Speicherplatz eines jeden Users , wodurch auch die Gesamtanzahl an Bildern "
@@ -739,7 +739,7 @@ msgstr ""
 "einen gibt es die Galerie, unterhalb der Karte. Diese zeigt alle Fotos des "
 "aktuellen Platzes als kleine Kacheln. Zum anderen gibt es die Slideshow, "
 "welche auf der rechten Seite der Karte positioniert ist. Diese kann "
-"gestartet werden in dem Sie auf ein Foto in der Galerie klicken. Ausserdem "
+"gestartet werden in dem Sie auf ein Photo in der Galerie klicken. Ausserdem "
 "gibt es dann noch den Vollbild-Modus. Sie können jedes aktuelle Bild der "
 "Slideshow im Vollbild sehen, in dem Sie darauf klicken.Alle angesehenen "
 "Bilder werden mit einem Haken versehen. Die Informationen darüber welche "
@@ -758,7 +758,7 @@ msgstr ""
 #: templates/help.html:234
 msgid "TUTORIAL_OPEN_SLIDESHOW"
 msgstr ""
-"Um die Slideshow zu Starten können sie entweder auf eine Foto-Kachel in der "
+"Um die Slideshow zu Starten können sie entweder auf eine Photo-Kachel in der "
 "Galerie klicken, oder einfach die Navigationstasten der Slideshow nutzen. "
 
 #: templates/help.html:237
@@ -943,38 +943,38 @@ msgstr "KEIKEN selber ausprobieren"
 msgid "INSERT_ALBUM"
 msgstr "Album hinzufügen"
 
-#: templates/insert-album.html:11 templates/insert-photo.html:21
+#: templates/insert-album.html:11 templates/insert-Photo.html:21
 #: templates/insert-place.html:11 templates/update-album.html:12
-#: templates/update-photo.html:13 templates/update-place.html:13
+#: templates/update-Photo.html:13 templates/update-place.html:13
 msgid "INPUT_PLACEHOLDER_TITLE"
 msgstr ""
 "Bestimmen Sie einen Titel."
 
-#: templates/insert-album.html:14 templates/insert-photo.html:11
-#: templates/insert-photo.html.py:24 templates/insert-place.html:14
-#: templates/update-album.html:15 templates/update-photo.html:16
+#: templates/insert-album.html:14 templates/insert-Photo.html:11
+#: templates/insert-Photo.html.py:24 templates/insert-place.html:14
+#: templates/update-album.html:15 templates/update-Photo.html:16
 #: templates/update-place.html:16
 msgid "DESCRIPTION"
 msgstr "Beschreibung"
 
-#: templates/insert-album.html:15 templates/insert-photo.html:25
+#: templates/insert-album.html:15 templates/insert-Photo.html:25
 #: templates/insert-place.html:15 templates/update-album.html:16
-#: templates/update-photo.html:17 templates/update-place.html:17
+#: templates/update-Photo.html:17 templates/update-place.html:17
 msgid "INPUT_PLACEHOLDER_DESCRIPTION"
 msgstr ""
 "(Optional) Fügen Sie eine Beschreibung hinzu.."
 
-#: templates/insert-photo.html:5
+#: templates/insert-Photo.html:5
 msgid "INSERT_PHOTO"
 msgstr "Photo hinzufügen"
 
-#: templates/insert-photo.html:11
+#: templates/insert-Photo.html:11
 msgid "TITLE"
 msgstr "Titel"
 
-#: templates/insert-photo.html:28
+#: templates/insert-Photo.html:28
 msgid "INSERT_PHOTO_UPLOAD"
-msgstr "<span style='cursor: help;' title='(nur *.png und *.jpg)'>Foto</span>"
+msgstr "<span style='cursor: help;' title='(nur *.png und *.jpg)'>Photo</span>"
 
 #: templates/insert-place.html:5
 msgid "INSERT_PLACE"
@@ -1089,31 +1089,31 @@ msgstr ""
 "href='/contact' title='Kontaktformulat'>Kontaktformular</a> zu nutzen. Sie "
 "können uns natürlich auch eine Email schreiben, an: "
 
-#: templates/photo-editor.html:13
+#: templates/Photo-editor.html:13
 msgid "SHARPEN"
 msgstr "Schärfer stellen"
 
-#: templates/photo-editor.html:19
+#: templates/Photo-editor.html:19
 msgid "LIGHTEN"
 msgstr "Aufhellen"
 
-#: templates/photo-editor.html:23
+#: templates/Photo-editor.html:23
 msgid "USE_AVERAGE"
 msgstr "Mittelwert verwenden"
 
-#: templates/photo-editor.html:25
+#: templates/Photo-editor.html:25
 msgid "DESATURATE"
 msgstr "Entsättigen"
 
-#: templates/photo-editor.html:29
+#: templates/Photo-editor.html:29
 msgid "REMOVE_NOISE"
 msgstr "Rauschen entfernen"
 
-#: templates/photo-editor.html:30
+#: templates/Photo-editor.html:30
 msgid "ROTATE"
 msgstr "Rotieren"
 
-#: templates/photo-editor.html:31
+#: templates/Photo-editor.html:31
 msgid "REVERT"
 msgstr "Rückgängig machen"
 
@@ -1345,7 +1345,7 @@ msgstr ""
 msgid "UPDATE_ALBUM"
 msgstr "Album bearbeiten"
 
-#: templates/update-photo.html:5
+#: templates/update-Photo.html:5
 msgid "UPDATE_PHOTO"
 msgstr "Photo bearbeiten"
 
@@ -1399,7 +1399,7 @@ msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
 #: templates/view-album.html:88
-msgid "Please choose a photo in your gallery to start the slideshow."
+msgid "Please choose a Photo in your gallery to start the slideshow."
 msgstr ""
 "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
 

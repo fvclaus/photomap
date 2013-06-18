@@ -19,15 +19,17 @@ define([
    "util/Communicator",
    "util/Tools",
    "ui/UIState",
+   "util/Tooltip",
    "dojo/domReady!"
    ],
-    function (declare, View, PhotoCarouselView, FullscreenView, Photo, SlideshowPresenter, communicator, tools, state) {
+    function (declare, View, PhotoCarouselView, FullscreenView, Photo, SlideshowPresenter, communicator, tools, state, Tooltip) {
        return declare(View, {
           constructor : function () {
              this.$container = $('#mp-slideshow');
              this.viewName = "Slideshow";
              
-             this.$inner = $("#mp-slideshow-image-wrapper");
+             this.$inner = $("#mp-slideshow-inner");
+             this.$imageWrapper = $("#mp-slideshow-image-wrapper");
              this.$image = $("#mp-slideshow-image");
              this.$navLeft = $('#mp-slideshow-nav-prev');
              this.$navRight = $('#mp-slideshow-nav-next');
@@ -42,10 +44,25 @@ define([
              this.carousel = null;
              this.presenter = new SlideshowPresenter(this);
              
+             this.tooltip = new Tooltip(this.$inner, gettext("SLIDESHOW_NO_PHOTOS"), {hideOnMouseover: false});
+             
              this.started = false;
              this._isDisabled = true;
              
              this._bindActivationListener(this.$container, this.viewName);
+          },
+          init : function () {
+             var instance = this;
+             
+             this._center();
+             // everything that gets centered manually must be corrected on a resize event
+             $(window).resize(function () {
+                instance._center();
+             });
+             this._bindListener();
+             this.tooltip
+               .start()
+               .open();
           },
           isStarted : function () {
              return this.started;
@@ -78,7 +95,7 @@ define([
                 imageSources.push(photo.photo);
              });
              // initialize carousel
-             this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-slideshow-image"), photos, "photo", options);
+             this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, "photo", options);
              
              if (photos.length !== 0) {
                 $(".mp-slideshow-no-image-msg").hide();
@@ -113,16 +130,6 @@ define([
              } else {
                 this.carousel.navigateTo(index);
              }
-          },
-          init : function () {
-             var instance = this;
-             
-             this._center();
-             // everything that gets centered manually must be corrected on a resize event
-             $(window).resize(function () {
-                instance._center();
-             });
-             this._bindListener();
           },
           /**
            * @description Inserts a new Photo. This will not move the Carousel or do anything else.
@@ -169,6 +176,7 @@ define([
            * @description Executed after photo is updated (=displayed)
            */
           _update : function () {
+             console.log("Slideshow: in _update");
              var photo = this._updateAndGetCurrentLoadedPhoto();
              // deleted last photo
              if (photo  === null) {
@@ -180,6 +188,13 @@ define([
              }
              communicator.publish("update:slideshow", photo);
              communicator.publish("enable:slideshow");
+          },
+          _setTooltipNoPhotoMessage : function () {
+             if (this.carousel.getAllPhotos().length > 0) {
+                this.tooltip.close();
+             } else {
+               this.tooltip.open();
+             }
           },
           /**
            * @private
@@ -201,12 +216,8 @@ define([
           _afterLoad : function ($photos) {
              // we are expecting to receive a jquery element wrapper
              assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
-             //TODO hide loading again
-             $photos.each(function () {
-                $(this)
-                   .siblings(".mp-slideshow-loader")
-                   .hide();
-             });
+             
+             this._setTooltipNoPhotoMessage();
           },
           /**
            * @private

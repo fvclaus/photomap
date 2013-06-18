@@ -43,13 +43,6 @@
     {% endif %}
   </div>
   <div class="mp-gallery-inner column" id="mp-gallery-inner">
-    <div id="mp-gallery-not-started">
-      <p>
-        <strong>{% trans "GALLERY_NOT_STARTED" %}</strong>
-      </p>
-    </div>
-    <!-- <div class="mp-gallery-not-started-msg">{% trans "GALLERY_NOT_STARTED" %}</div> -->
-    <!-- <div class="mp-gallery-no-image-msg">{% trans "GALLERY_IS_EMPTY" %}</div> -->
     <!-- loop exactly 5 times. this iterates through every character of the string -->
     {% for index in "12345" %}
     <div class="mp-gallery-tile">
@@ -85,7 +78,6 @@
     <div class="mp-slideshow-tile" id="mp-slideshow-image-wrapper">
       <img class="mp-slideshow-image mp-control mp-zoom" id="mp-slideshow-image" src=""/>
       <img class="mp-slideshow-loader mp-light-loader mp-nodisplay" src="/static/images/light-loader.gif" />
-      <div class="mp-slideshow-no-image-msg">{% trans "Please choose a photo in your gallery to start the slideshow." %}</div>
     </div>
   </div>
   <div class="mp-slideshow-nav column">

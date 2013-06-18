@@ -16,9 +16,10 @@ define([
    "util/ClientState",
    "view/MarkerView",
    "ui/UIState",
+   "util/Tooltip",
    "dojo/domReady!"
    ],
-    function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state) {
+    function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state, Tooltip) {
        var MapView = declare(View, {
           constructor : function () {
              
@@ -65,7 +66,8 @@ define([
                 },
                 disableDoubleClickZoom : true
              };
-
+             
+             this.tooltip = new Tooltip(this.$container, "");
              // mode : fullscreen || normal
              this.mode = 'normal';
              this.presenter = new MapPresenter(this);
@@ -314,16 +316,35 @@ define([
           triggerEventOnMarker : function (marker, event) {
              google.maps.event.trigger(marker.getImplementation(), event);
           },
+          setNoMarkerMessage : function ()  {
+             if (state.getMarkers().length <= 0) {
+                if (state.isAlbumView()) { 
+                   if (clientstate.isAdmin()) {
+                      this.tooltip.setMessage(gettext("MAP_NO_PLACES_ADMIN"));
+                   } else {
+                      this.tooltip.setMessage(gettext("MAP_NO_PLACES_GUEST"));
+                   }
+                } else if (state.isDashboardView()) {
+                   this.tooltip
+                     .setOption({
+                        hideOnMouseover: false,
+                        hideOnClick: true,
+                        openAgainOnMouseleave: true
+                     })
+                     .setMessage(gettext("MAP_NO_ALBUMS"));
+                }
+                this.tooltip.start().open();
+             }
+          },
           //TODO this is a bit messy.. there must be a better way to do this!
           _init : function (data) {
              
-             var authorized, init, instance = this;
+             var init, instance = this;
              
              init = function () {
                 
                 console.log("in map init");
                 if (state.isAlbumView()) {
-                   authorized = clientstate.isAdmin();
                    
                    if (state.getMarkers().length <= 0) {
                       this.expandBounds(state.getAlbum());
@@ -331,8 +352,7 @@ define([
                       this._showMarkers(state.getMarkers());
                    }
                    
-                   //TODO: gueststyle is broken. It won't display any gmap tiles ever. 
-                   if (authorized) {
+                   if (clientstate.isAdmin()) {
                       this._bindClickListener();
                    }
                 } else if (state.isDashboardView()) {
@@ -346,6 +366,7 @@ define([
                 // set map options if interactive
                 this.map.setOptions(this.mapOptions);
                 this._setMapCursor();
+                this.setNoMarkerMessage();
              };
              
              instance.presenter.insertMarkers(data, init);

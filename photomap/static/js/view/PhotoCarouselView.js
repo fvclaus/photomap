@@ -42,7 +42,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                 // recalculate margins when window is resized
                 $(window).resize(function () {
                    $photos.each(function () {
-                      main.getTools().centerElement($(this), "vertical");
+                      tools.centerElement($(this), "vertical");
                    });
                 });
                 this.size = this.$items.length;

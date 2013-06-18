@@ -18,9 +18,10 @@ define(["dojo/_base/declare",
         "util/Tools",
         "util/ClientState",
         "ui/UIState",
+        "util/Tooltip",
         "dojo/domReady!"
        ],
-       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, clientstate, state) {
+       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, clientstate, state, Tooltip) {
 
 /**
  * @author Marc Roemer
@@ -41,8 +42,6 @@ define(["dojo/_base/declare",
                 this.$containerColumn = $("#mp-left-column");
                 this.$loader = this.$container.find(".mp-gallery-loader");
 
-                this.$isNotStarted = $("#mp-gallery-not-started");
-
                 this.carousel = null;
                 
                 this.photos = null;
@@ -51,6 +50,7 @@ define(["dojo/_base/declare",
                 this.showTeaser = false;
                 this.currentPhoto = null;
                 
+                this.tooltip = new Tooltip(this.$container, "");
                 this.fullGallery = new FullGalleryView();
                 this.$controls = $()
                    .add($(".mp-option-insert-photo"))
@@ -62,6 +62,21 @@ define(["dojo/_base/declare",
                 this.presenter = new GalleryPresenter(this);
                 
                 this._bindActivationListener(this.$container, this.viewName);
+
+             },
+             init : function () {
+                
+                if (clientstate.isAdmin()) {
+                   this._bindListener();
+                }
+                this.tooltip
+                  .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
+                  .setOption("hideOnMouseover", false)
+                  .start()
+                  .open();
+                this._bindNavigationListener();
+                
+                this._bindStartSlideshowListener();
 
              },
              getCarousel : function () {
@@ -97,6 +112,7 @@ define(["dojo/_base/declare",
                 
                 // reset FullGallery
                 this.fullGallery.destroy();
+                this.tooltip.destroy();
                 // show insert photo button
                 this.$controls.removeClass("mp-nodisplay");
 
@@ -122,14 +138,10 @@ define(["dojo/_base/declare",
                 };
                 this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, "thumb", options);
                 this.fullGallery.setCarousel(this.carousel);
-
                 // disable ui while loading & show loader
                 state.setAlbumLoading(true);
                 communicator.publish("disable:ui");
                 this.carousel.start();
-
-                // show/hide correct message
-                this.$isNotStarted.hide();
              },
              /**
               * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
@@ -143,15 +155,6 @@ define(["dojo/_base/declare",
                    this.carousel.reset();
                    this.carousel = null;
                 }
-             },
-             init : function () {
-                
-                if (clientstate.isAdmin()) {
-                   this._bindListener();
-                }
-                this._bindNavigationListener();
-                this._bindStartSlideshowListener();
-
              },
              /**
               * @description adds new photo to gallery.
@@ -234,42 +237,17 @@ define(["dojo/_base/declare",
              },
              /**
               * @private
-              * @description Check if the updated photo is a newly insert, if yes open teaser
+              * @description set new tooltip message, empty-tiles, visited-icon and show teaser (optional)
               */
              _update : function ($photos) {
                 
                 var instance = this;
                 
-                if (clientstate.isAdmin()) {
-                   $.each(this.$thumbs, function (index, tile) {
-                      
-                      if ($(tile).children("img.mp-thumb").attr("src") && $(tile).children("img.mp-thumb").attr("src").length > 0) {
-                         $(tile).removeClass("mp-empty-tile");
-                      } else {
-                         $(tile).addClass("mp-empty-tile");
-                      }
-                   });
-                }
+                this._setTooltipNoPhotoMessage();
+                this._setEmptyTiles();
                 // check each thumb if the photo it represents is already visited; if yes -> show 'visited' icon
-                $.each(this.$thumbs, function (index, tile) {
-                   
-                   var photo,
-                      $thumb = $(tile).find("img.mp-thumb"),
-                      $visited = $(tile).find("img.mp-thumb-visited");
-                      
-                   if ($thumb.attr("src")) {
-                      photo = state.getPhotos()[instance._getIndexOfImage($thumb)];
-                      
-                      if (photo.isVisited()) {
-                         $visited.show();
-                      } else {
-                         $visited.hide();
-                      }
-                   } else {
-                      // should already be hidden, just in case though.. ;)
-                      $visited.hide();
-                   }
-                });
+                this._showVisitedNotification();
+                // Check if the updated photo is a newly inserted, if yes open teaser
                 console.log(this.showTeaser);
                 if (this.showTeaser) {
                    if (this.currentPhoto === null) {
@@ -282,6 +260,57 @@ define(["dojo/_base/declare",
                    this.showTeaser = false;
 
                 } 
+             },
+             _setTooltipNoPhotoMessage : function () {
+                if (this.carousel.getAllPhotos().length > 0) {
+                   this.tooltip.close();
+                } else {
+                   if (clientstate.isAdmin()) {
+                      this.tooltip
+                        .setOption("hideOnMouseover", true)
+                        .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
+                        .open();
+                   } else {
+                      this.tooltip
+                        .setOption("hideOnMouseover", true)
+                        .setMessage(gettext("GALLERY_NO_PHOTOS_GUEST"))
+                        .open();
+                   }
+                }
+             },
+             _setEmptyTiles : function () {
+                if (clientstate.isAdmin()) {
+                   $.each(this.$thumbs, function (index, tile) {
+                      
+                      if ($(tile).children("img.mp-thumb").attr("src") && $(tile).children("img.mp-thumb").attr("src").length > 0) {
+                         $(tile).removeClass("mp-empty-tile");
+                      } else {
+                         $(tile).addClass("mp-empty-tile");
+                      }
+                   });
+                }
+             },
+             _showVisitedNotification : function () {
+                var instance = this;
+                $.each(this.$thumbs, function (index, tile) {
+                   
+                   var photo,
+                      $thumb = $(tile).find("img.mp-thumb"),
+                      $visited = $(tile).find("img.mp-thumb-visited");
+                      
+                   if ($thumb.attr("src")) {
+                      photo = instance.carousel.getAllPhotos()[instance._getIndexOfImage($thumb)];
+                      
+                      if (photo.isVisited()) {
+                         $visited.show();
+                      } else {
+                         $visited.hide();
+                      }
+                   } else {
+                      // should already be hidden, just in case though.. ;)
+                      $visited.hide();
+                   }
+                });
              },
              /**
               * @private

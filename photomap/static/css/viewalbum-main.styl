@@ -128,6 +128,7 @@
   padding-left 5%
   overflow hidden
   position relative
+  z-index 100
 
 .mp-sortable-tile
   width 20%
@@ -151,6 +152,7 @@
 .mp-slideshow-nav
   width 10%
   height 90%
+  text-align center
   img.mp-control
     width 60%
     max-width 50px
@@ -162,10 +164,14 @@
   height 90%
   width 80%
   padding 0
+  position relative
 
 .mp-slideshow-tile
   width 100%
   height 100%
+  position absolute
+  left 0
+  top 0
   text-align center
 
 .mp-slideshow-image
@@ -177,9 +183,6 @@
 .mp-slideshow-loader
   width 5%
   /* margin-top is specified in the % of the width of the containing element, not the height. fuck you css! */
-
-
-
 
 .mp-slideshow-no-image-msg
   text-align center

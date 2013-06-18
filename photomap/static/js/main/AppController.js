@@ -223,6 +223,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 if (data.open) {
                    data.marker.open();
                 }
+                main.getMap().setNoMarkerMessage();
              },
              _markerCentered : function (marker) {
                 $.each(state.getMarkers(), function (index, markerPresenter) {
@@ -281,6 +282,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 if (type === "Place" || type === "Album") {
                    console.log(state.getMarker(model));
                    state.getMarker(model).hide();
+                   main.getMap().setNoMarkerMessage();
                 }
                 
                 
