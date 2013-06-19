@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-08 21:08+0200\n"
+"POT-Creation-Date: 2013-06-19 09:55+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -32,7 +32,7 @@ msgid "View Album"
 msgstr "Album ansehen"
 
 #: templates/base-interactive.html:46 templates/base-interactive.html.py:62
-#: templates/view-album.html:117
+#: templates/view-album.html:109
 msgid "Schließen"
 msgstr "Schließen"
 
@@ -47,14 +47,13 @@ msgstr ""
 msgid "NO_DESCRIPTION"
 msgstr "Keine Beschreibung "
 
-#: templates/base-interactive.html:73 templates/Photo-editor.html:4
+#: templates/base-interactive.html:67 templates/base-interactive.html.py:75
+msgid "ADD_DESCRIPTION"
+msgstr " Beschreibung hinzufügen ..."
+
+#: templates/base-interactive.html:73 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Bitte wählen Sie ein Photo aus."
-
-#: templates/base-interactive.html:75
-msgid "ADD_DESCRIPTION"
-msgstr ""
-" Beschreibung hinzufügen ..."
 
 #: templates/base-interactive.html:89
 msgid "Data Loading"
@@ -171,17 +170,17 @@ msgstr ""
 "com/111238553236963807299'>Keiken</a>) besuchen."
 
 #: templates/contact.html:41 templates/insert-album.html:10
-#: templates/insert-Photo.html:20 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-Photo.html:12
+#: templates/insert-photo.html:20 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-photo.html:12
 #: templates/update-place.html:12
 msgid "NAME"
 msgstr "Name"
 
 #: templates/contact.html:42 templates/contact.html.py:50
 #: templates/contact.html:58 templates/contact.html.py:66
-#: templates/insert-album.html:10 templates/insert-Photo.html:20
-#: templates/insert-Photo.html.py:28 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-Photo.html:12
+#: templates/insert-album.html:10 templates/insert-photo.html:20
+#: templates/insert-photo.html.py:28 templates/insert-place.html:10
+#: templates/update-album.html:11 templates/update-photo.html:12
 #: templates/update-place.html:12
 msgid "MANDATORY_FIELD"
 msgstr "Dieses Feld ist ein Pflichtfeld."
@@ -303,11 +302,11 @@ msgstr "Album löschen?"
 msgid "DELETE_ALBUM_QUESTION"
 msgstr "Wollen Sie das folgende Album wirklich löschen:"
 
-#: templates/delete-Photo.html:5
+#: templates/delete-photo.html:5
 msgid "DELETE_PHOTO"
 msgstr "Photo löschen?"
 
-#: templates/delete-Photo.html:11
+#: templates/delete-photo.html:11
 msgid "DELETE_PHOTO_QUESTION"
 msgstr "Wollen Sie das folgende Photo wirklich löschen: "
 
@@ -381,15 +380,13 @@ msgstr ""
 "jederzeit teilen zu können."
 
 #: templates/help.html:35
-msgid "KEIKEN_PRESENTATION_NOT"
+msgid "KEIKEN_PRESENTATION_MEANING"
 msgstr ""
-"KEIKEN ist kein Ort um Bilder von kurzfristigem Interesse zu zeigen. Es gibt "
-"bereits eine ganze Menge an Sozialen Netzwerken und ähnlichen Websites, die "
-"eine sehr gute Platform für so etwas bieten. KEIKEN ist auch nicht dafür "
-"gedacht ganze Bilderordner direkt von Ihrer Kamera oder Ihrem Computer ins "
-"Internet zu ziehen, um andere damit zu überschwemmen."
+"Der Name KEIKEN kommt aus dem Japanischen und bedeutet so viel wie 'erfahren' "
+"oder 'Erfahrung'. Die Idee dahinter ist die Reisen und Erlebnisse eines anderen "
+"mit Hilfe der Bilder, Beschreibungen und der Karte ein Stück weit 'mit zu erfahren'."
 
-#: templates/help.html:36
+#: templates/help.html:37
 msgid "KEIKEN_PRESENTATION_BUT_1"
 msgstr ""
 "Als (digitales) Fotoalbum soll KEIKEN die Bilder und Geschichten Ihrer "
@@ -397,14 +394,14 @@ msgstr ""
 "denen Sie diese teilen wollen. Diesem Anspruch lassen sich zwei zentrale "
 "Punkte entnehmen: "
 
-#: templates/help.html:37
+#: templates/help.html:38
 msgid "KEIKEN_PRESENTATION_BUT_2"
 msgstr ""
 "(1) Alle Bilder müssen geordnet und mit Namen versehen werden. Darum sind "
 "Titel bei KEIKEN verpflichtend und Ihre Alben werden in Plätze unterteilt, "
 "die an bestimmte Punkte auf der Karte gebunden sind. "
 
-#: templates/help.html:38
+#: templates/help.html:39
 msgid "KEIKEN_PRESENTATION_BUT_3"
 msgstr ""
 "(2) Alle Alben, die Sie teilen wollen müssen einfach zugänglich sein. Anders "
@@ -413,7 +410,7 @@ msgstr ""
 "eine Internetverbindung, den Link zum Album und das Password, welches Ihnen "
 "der Autor des Albums geben muss. "
 
-#: templates/help.html:39
+#: templates/help.html:40
 msgid "KEIKEN_PRESENTATION_STRUCTURE_1"
 msgstr ""
 "Zurück zum Design von KEIKEN. Wie schon erwähnt werden Alben in Plätze "
@@ -421,7 +418,7 @@ msgstr ""
 "Ihnen dabei helfen, eine Übersicht über Ihre Erlebnisse zu bekommen und es "
 "soll Ihren Bekannten helfen, Ihre Abenteuer selbst zu erkunden."
 
-#: templates/help.html:40
+#: templates/help.html:41
 msgid "KEIKEN_PRESENTATION_STRUCTURE_2"
 msgstr ""
 "Nun ist aber jedes Abenteuer und jede Reise anders; darum haben Alben und "
@@ -430,7 +427,7 @@ msgstr ""
 "anderes Album kann eine Städtereise präsentieren, in dem jeder Platz eine "
 "Sehenswürdigkeit ist. "
 
-#: templates/help.html:41
+#: templates/help.html:42
 msgid "KEIKEN_PRESENTATION_STRUCTURE_3"
 msgstr ""
 "Und die Fotos? Naja Fotos sind Fotos. Sie werden nicht mehr groß "
@@ -440,7 +437,7 @@ msgstr ""
 "und wir sind zuversichtlich, dass Ihnen schönere und aussagekräftigere Namen "
 "als IMG_20122708_2014.jpg einfallen. ;) "
 
-#: templates/help.html:42
+#: templates/help.html:43
 msgid "KEIKEN_PRESENTATION_STRUCTURE_4"
 msgstr ""
 "Stellen Sie sich Ihr KEIKEN als ein Fotoalbum vor, in das man ein gutes "
@@ -448,35 +445,35 @@ msgstr ""
 "Fotoalben, die wir immer mit unseren Eltern anschauen mussten, als wir noch "
 "Kinder waren. "
 
-#: templates/help.html:51
+#: templates/help.html:52
 msgid "General"
 msgstr "Allgemeines"
 
-#: templates/help.html:52
+#: templates/help.html:53
 msgid "Dashboard"
 msgstr "Dashboard"
 
-#: templates/help.html:53
+#: templates/help.html:54
 msgid "Albumview"
 msgstr "Albumsansicht"
 
-#: templates/help.html:57
+#: templates/help.html:58
 msgid "Webspace"
 msgstr "Speicherplatz"
 
-#: templates/help.html:58
+#: templates/help.html:59
 msgid "Cookies"
 msgstr "Cookies"
 
-#: templates/help.html:59
+#: templates/help.html:60
 msgid "Contact"
 msgstr "Kontakt"
 
-#: templates/help.html:60
+#: templates/help.html:61
 msgid "Sharing &amp; Security"
 msgstr "Sicherheit beim Teilen"
 
-#: templates/help.html:63
+#: templates/help.html:64
 msgid "TUTORIAL_WEBSPACE"
 msgstr ""
 "Momentan begrenzen wir den Speicherplatz auf 350Mb pro Nutzer. Das Erstellen "
@@ -497,7 +494,7 @@ msgstr ""
 "Speicherplatz besser auszunutzen, oder vielleicht doch überlegen "
 "Speicherplatzerweiterungen zu ermöglichen. "
 
-#: templates/help.html:66
+#: templates/help.html:67
 msgid "TUTORIAL_COOKIES"
 msgstr ""
 "Wir nutzen verschiedene Cookies, um die Sitzung zu authentizieren und "
@@ -506,7 +503,7 @@ msgstr ""
 "Cookies in Ihren Browsereinstellungen, um KEIKEN in vollem Umfang nutzen zu "
 "können. "
 
-#: templates/help.html:69
+#: templates/help.html:70
 msgid "TUTORIAL_CONTACT"
 msgstr ""
 "Wenn Sie Fragen oder Ideen haben, zögern Sie nicht <a href='/contact' "
@@ -516,7 +513,7 @@ msgstr ""
 "ein oder zwei Tage dauern. Wir bitten um Ihr Verständnis und hoffen, dass es "
 "keine allzu großen Umstände bereitet."
 
-#: templates/help.html:72
+#: templates/help.html:73
 msgid "TUTORIAL_SHARESECURITY"
 msgstr ""
 "Jedes Album ist mit einem Passwort geschützt, welches Sie vor dem ersten "
@@ -535,39 +532,39 @@ msgstr ""
 "benötigen, zögern Sie nicht <a href='/contact' title='Zum "
 "Kontaktformular'>uns zu kontaktieren</a>."
 
-#: templates/help.html:77
+#: templates/help.html:78
 msgid "Albums"
 msgstr "Alben"
 
-#: templates/help.html:81 templates/help.html.py:144 templates/help.html:209
+#: templates/help.html:82 templates/help.html.py:145 templates/help.html:210
 msgid "What is this?"
 msgstr "Was ist das?"
 
-#: templates/help.html:82 templates/help.html.py:145
+#: templates/help.html:83 templates/help.html.py:146
 msgid "Meaning of Colors"
 msgstr "Bedeutung der Farben"
 
-#: templates/help.html:83 templates/help.html.py:146 templates/help.html:210
+#: templates/help.html:84 templates/help.html.py:147 templates/help.html:211
 msgid "Insert"
 msgstr "Einfügen"
 
-#: templates/help.html:84 templates/help.html.py:147 templates/help.html:211
+#: templates/help.html:85 templates/help.html.py:148 templates/help.html:212
 msgid "Update"
 msgstr "Ändern"
 
-#: templates/help.html:85 templates/help.html.py:148 templates/help.html:212
+#: templates/help.html:86 templates/help.html.py:149 templates/help.html:213
 msgid "Delete"
 msgstr "Löschen"
 
-#: templates/help.html:86 templates/help.html.py:149 templates/help.html:213
+#: templates/help.html:87 templates/help.html.py:150 templates/help.html:214
 msgid "Share"
 msgstr "Teilen"
 
-#: templates/help.html:87 templates/help.html.py:150
+#: templates/help.html:88 templates/help.html.py:151
 msgid "Open"
 msgstr "Öffnen"
 
-#: templates/help.html:90
+#: templates/help.html:91
 msgid "TUTORIAL_ALBUMS_EXPLANATION"
 msgstr ""
 "Bevor Sie Fotos hochladen und zu Plätzen hinzufügen können, müssen Sie ein "
@@ -581,45 +578,45 @@ msgstr ""
 "jedoch hilfreich für Gäste sein, wenn sie das Album und die Erfahrungen, die "
 "das Album darstellt, mit ein paar Worten beschreiben. "
 
-#: templates/help.html:100 templates/help.html.py:163
+#: templates/help.html:101 templates/help.html.py:164
 msgid "Color"
 msgstr "Farbe"
 
-#: templates/help.html:101 templates/help.html.py:164
+#: templates/help.html:102 templates/help.html.py:165
 msgid "Meaning"
 msgstr "Bedeutung"
 
-#: templates/help.html:106 templates/help.html.py:169
+#: templates/help.html:107 templates/help.html.py:170
 msgid "Green"
 msgstr "Grün"
 
-#: templates/help.html:107 templates/help.html.py:170
+#: templates/help.html:108 templates/help.html.py:171
 msgid "TUTORIAL_MARKER_MEANING_GREEN"
 msgstr ""
 "Platz oder Album ist nicht ausgewählt oder geöffnet. Es wurden noch nicht "
 "alle Bilder angesehen."
 
-#: templates/help.html:110 templates/help.html.py:173
+#: templates/help.html:111 templates/help.html.py:174
 msgid "Yellow"
 msgstr "Gelb"
 
-#: templates/help.html:111 templates/help.html.py:174
+#: templates/help.html:112 templates/help.html.py:175
 msgid "TUTORIAL_MARKER_MEANING_YELLOW"
 msgstr ""
 "Platz oder Album ist aktuell ausgewählt. Seine Beschreibung ist auf der "
 "rechten Seite geöffnet."
 
-#: templates/help.html:114 templates/help.html.py:185
+#: templates/help.html:115 templates/help.html.py:186
 msgid "Gray"
 msgstr "Grau"
 
-#: templates/help.html:115 templates/help.html.py:186
+#: templates/help.html:116 templates/help.html.py:187
 msgid "TUTORIAL_MARKER_MEANING_GRAY"
 msgstr ""
 "Platz oder Album ist deaktiviert. Sollte momentan nichts geladen werden und "
 "kein Dialog offen sein, nehmen Sie bitte mit dem Support Kontakt auf."
 
-#: templates/help.html:121 templates/help.html.py:192
+#: templates/help.html:122 templates/help.html.py:193
 msgid "TUTORIAL_INSERT_PA"
 msgstr ""
 "Sie können ein Album oder einen Platz einfügen, in dem Sie auf die Karte "
@@ -627,7 +624,7 @@ msgstr ""
 "Das Album wird an die Koordinaten gebunden, auf die Sie geklickt haben und "
 "durch einen Marker an diesem Punkt angezeigt."
 
-#: templates/help.html:124 templates/help.html.py:195 templates/help.html:225
+#: templates/help.html:125 templates/help.html.py:196 templates/help.html:226
 msgid "TUTORIAL_UPDATE_PPA"
 msgstr ""
 "Sie können Titel und Beschreibung von Album/Platz und Photo nachträglich "
@@ -636,7 +633,7 @@ msgstr ""
 "in der Galerie bewegen. Dabei öffnet sich ein kleines Fenster in dem sie "
 "auswählen können, ob Sie das Objekt löschen oder verändern wollen."
 
-#: templates/help.html:127 templates/help.html.py:198 templates/help.html:228
+#: templates/help.html:128 templates/help.html.py:199 templates/help.html:229
 msgid "TUTORIAL_DELETE_PPA"
 msgstr ""
 "Sie können Titel und Beschreibung von Album/Platz und Photo wieder löschen, "
@@ -645,7 +642,7 @@ msgstr ""
 "Galerie bewegen. Dabei öffnet sich ein kleines Fenster in dem sie auswählen "
 "können, ob Sie das Objekt löschen oder verändern wollen."
 
-#: templates/help.html:130
+#: templates/help.html:131
 msgid "TUTORIAL_SHARE_ALBUM"
 msgstr ""
 "Das Öfnnen des 'Teilen'-Dialogs funktioniert genauso, wie beim "
@@ -660,7 +657,7 @@ msgstr ""
 "Netzwerk, Blog, per Email, handschriftlich oder auf jede andere Art und "
 "Weise, die Ihnen einfällt, mit anderen teilen. "
 
-#: templates/help.html:133
+#: templates/help.html:134
 msgid "TUTORIAL_OPEN_ALBUM"
 msgstr ""
 "Ein einfacher Klick auf einen Albummarker öffnet die Beschreibung des Albums "
@@ -668,15 +665,15 @@ msgstr ""
 "einen Albummarker öffnet die Albumsansicht des Albums, in welcher Sie Plätze "
 "und Photos hinzufügen können - Gäste können nur diese Albumsansicht sehen. "
 
-#: templates/help.html:139
+#: templates/help.html:140
 msgid "Places"
 msgstr "Plätze"
 
-#: templates/help.html:140
+#: templates/help.html:141
 msgid "Photos"
 msgstr "Fotos"
 
-#: templates/help.html:153
+#: templates/help.html:154
 msgid "TUTORIAL_PLACE_EXPLANATION"
 msgstr ""
 "Plätze gleichen Alben. Sie sind mit der Karte verbunden, werden durch einen "
@@ -688,50 +685,50 @@ msgstr ""
 "Speicherplatz eines jeden Users , wodurch auch die Gesamtanzahl an Bildern "
 "begrenzt wird. (Näheres unter 'Allgemeines'>'Speicherplatz')"
 
-#: templates/help.html:177
+#: templates/help.html:178
 msgid "Orange"
 msgstr "Orange"
 
-#: templates/help.html:178
+#: templates/help.html:179
 msgid "TUTORIAL_MARKER_MEANING_ORANGE"
 msgstr ""
 "Platz ist geöffnet. Bilder des Platzes können in der Galerie und in der "
 "Slideshow angesehen werden."
 
-#: templates/help.html:181
+#: templates/help.html:182
 msgid "Red"
 msgstr "Rot"
 
-#: templates/help.html:182
+#: templates/help.html:183
 msgid "TUTORIAL_MARKER_MEANING_RED"
 msgstr ""
 "Platz oder Album ist weder ausgewählt noch geöffnet. Alle Bilder wurden "
 "bereits angesehen."
 
-#: templates/help.html:201 templates/help.html.py:231
+#: templates/help.html:202 templates/help.html.py:232
 msgid "TUTORIAL_SHARE_PP"
 msgstr "Weder Plätze noch Fotos, können momentan geteilt werden."
 
-#: templates/help.html:204
+#: templates/help.html:205
 msgid "TUTORIAL_OPEN_PLACE"
 msgstr ""
 "Genau wie bei Alben öffnet ein einfacher Klick auf den Platzmarker die "
 "Beschreibung, während ein Doppelklick den Platz öffnet und die Galerie mit "
 "den Fotos, des Platzes öffnet."
 
-#: templates/help.html:214
+#: templates/help.html:215
 msgid "Start Slideshow"
 msgstr "Slideshow starten"
 
-#: templates/help.html:215
+#: templates/help.html:216
 msgid "Open Fullscreen"
 msgstr "Vollbild öffnen"
 
-#: templates/help.html:216
+#: templates/help.html:217
 msgid "Sort Photos/Open FullGallery"
 msgstr "Fotos sortieren"
 
-#: templates/help.html:219
+#: templates/help.html:220
 msgid "TUTORIAL_PHOTO_EXPLANATION"
 msgstr ""
 "Natürlich sind Fotos sehr wichtig bei KEIKEN, es ist ja schließlich ein "
@@ -747,7 +744,7 @@ msgstr ""
 "diese Information nicht verlieren wollen, sollten Sie Cookies von KEIKEN "
 "nicht löschen."
 
-#: templates/help.html:222
+#: templates/help.html:223
 msgid "TUTORIAL_INSERT_PHOTO"
 msgstr ""
 "Sie können Photos hochladen, in dem Sie auf den 'Aufnahme' Knopf rechts "
@@ -755,19 +752,19 @@ msgstr ""
 "Desktop in das Browserfenster ziehen <strong>(Funktion momentan nicht "
 "verfügbar)</strong>."
 
-#: templates/help.html:234
+#: templates/help.html:235
 msgid "TUTORIAL_OPEN_SLIDESHOW"
 msgstr ""
 "Um die Slideshow zu Starten können sie entweder auf eine Photo-Kachel in der "
 "Galerie klicken, oder einfach die Navigationstasten der Slideshow nutzen. "
 
-#: templates/help.html:237
+#: templates/help.html:238
 msgid "TUTORIAL_OPEN_FULLSCREEN"
 msgstr ""
 "Beim Anklicken des aktuellen Fotos in der Slideshow wird die Vollbildansicht "
 "des Bildes gestartet."
 
-#: templates/help.html:240
+#: templates/help.html:241
 msgid "TUTORIAL_OPEN_FULLGALLERY"
 msgstr ""
 "Sie haben die Möglichkeit Fotos nachträglich zu sortieren. Dazu müssen Sie "
@@ -943,36 +940,34 @@ msgstr "KEIKEN selber ausprobieren"
 msgid "INSERT_ALBUM"
 msgstr "Album hinzufügen"
 
-#: templates/insert-album.html:11 templates/insert-Photo.html:21
+#: templates/insert-album.html:11 templates/insert-photo.html:21
 #: templates/insert-place.html:11 templates/update-album.html:12
-#: templates/update-Photo.html:13 templates/update-place.html:13
+#: templates/update-photo.html:13 templates/update-place.html:13
 msgid "INPUT_PLACEHOLDER_TITLE"
-msgstr ""
-"Bestimmen Sie einen Titel."
+msgstr "Bestimmen Sie einen Titel."
 
-#: templates/insert-album.html:14 templates/insert-Photo.html:11
-#: templates/insert-Photo.html.py:24 templates/insert-place.html:14
-#: templates/update-album.html:15 templates/update-Photo.html:16
+#: templates/insert-album.html:14 templates/insert-photo.html:11
+#: templates/insert-photo.html.py:24 templates/insert-place.html:14
+#: templates/update-album.html:15 templates/update-photo.html:16
 #: templates/update-place.html:16
 msgid "DESCRIPTION"
 msgstr "Beschreibung"
 
-#: templates/insert-album.html:15 templates/insert-Photo.html:25
+#: templates/insert-album.html:15 templates/insert-photo.html:25
 #: templates/insert-place.html:15 templates/update-album.html:16
-#: templates/update-Photo.html:17 templates/update-place.html:17
+#: templates/update-photo.html:17 templates/update-place.html:17
 msgid "INPUT_PLACEHOLDER_DESCRIPTION"
-msgstr ""
-"(Optional) Fügen Sie eine Beschreibung hinzu.."
+msgstr "(Optional) Fügen Sie eine Beschreibung hinzu.."
 
-#: templates/insert-Photo.html:5
+#: templates/insert-photo.html:5
 msgid "INSERT_PHOTO"
 msgstr "Photo hinzufügen"
 
-#: templates/insert-Photo.html:11
+#: templates/insert-photo.html:11
 msgid "TITLE"
 msgstr "Titel"
 
-#: templates/insert-Photo.html:28
+#: templates/insert-photo.html:28
 msgid "INSERT_PHOTO_UPLOAD"
 msgstr "<span style='cursor: help;' title='(nur *.png und *.jpg)'>Photo</span>"
 
@@ -1089,31 +1084,31 @@ msgstr ""
 "href='/contact' title='Kontaktformulat'>Kontaktformular</a> zu nutzen. Sie "
 "können uns natürlich auch eine Email schreiben, an: "
 
-#: templates/Photo-editor.html:13
+#: templates/photo-editor.html:13
 msgid "SHARPEN"
 msgstr "Schärfer stellen"
 
-#: templates/Photo-editor.html:19
+#: templates/photo-editor.html:19
 msgid "LIGHTEN"
 msgstr "Aufhellen"
 
-#: templates/Photo-editor.html:23
+#: templates/photo-editor.html:23
 msgid "USE_AVERAGE"
 msgstr "Mittelwert verwenden"
 
-#: templates/Photo-editor.html:25
+#: templates/photo-editor.html:25
 msgid "DESATURATE"
 msgstr "Entsättigen"
 
-#: templates/Photo-editor.html:29
+#: templates/photo-editor.html:29
 msgid "REMOVE_NOISE"
 msgstr "Rauschen entfernen"
 
-#: templates/Photo-editor.html:30
+#: templates/photo-editor.html:30
 msgid "ROTATE"
 msgstr "Rotieren"
 
-#: templates/Photo-editor.html:31
+#: templates/photo-editor.html:31
 msgid "REVERT"
 msgstr "Rückgängig machen"
 
@@ -1345,7 +1340,7 @@ msgstr ""
 msgid "UPDATE_ALBUM"
 msgstr "Album bearbeiten"
 
-#: templates/update-Photo.html:5
+#: templates/update-photo.html:5
 msgid "UPDATE_PHOTO"
 msgstr "Photo bearbeiten"
 
@@ -1373,43 +1368,41 @@ msgstr "Vorherige Seite"
 msgid "Open Full Gallery"
 msgstr "Vollständige Galerie öffnen"
 
-#: templates/view-album.html:48 templates/view-album.html.py:51
-msgid "GALLERY_NOT_STARTED"
-msgstr ""
-"Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der Karte "
-"klicken, um die Galerie zu starten."
-
-#: templates/view-album.html:52
-msgid "GALLERY_IS_EMPTY"
-msgstr ""
-"Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, "
-"ziehen Sie diese in die Galerie oder nutzen Sie den 'Bild hinzufügen'-Button "
-"rechts der Galerie."
-
-#: templates/view-album.html:65
+#: templates/view-album.html:58
 msgid "Next Page"
 msgstr "Nächste Seite"
 
-#: templates/view-album.html:69
+#: templates/view-album.html:62
 msgid "Add Image"
 msgstr "Bild hinzufügen"
 
-#: templates/view-album.html:82
+#: templates/view-album.html:75
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: templates/view-album.html:88
-msgid "Please choose a Photo in your gallery to start the slideshow."
-msgstr ""
-"Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
-
-#: templates/view-album.html:92
+#: templates/view-album.html:84
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: templates/view-album.html:95
+#: templates/view-album.html:87
 msgid "Bild"
 msgstr "Bild"
+
+#~ msgid "GALLERY_NOT_STARTED"
+#~ msgstr ""
+#~ "Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der "
+#~ "Karte klicken, um die Galerie zu starten."
+
+#~ msgid "GALLERY_IS_EMPTY"
+#~ msgstr ""
+#~ "Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, "
+#~ "ziehen Sie diese in die Galerie oder nutzen Sie den 'Bild hinzufügen'-"
+#~ "Button rechts der Galerie."
+
+#~ msgid "Please choose a Photo in your gallery to start the slideshow."
+#~ msgstr ""
+#~ "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu "
+#~ "starten."
 
 #~ msgid "Login und Registrierung"
 #~ msgstr "Login und Registrierung"

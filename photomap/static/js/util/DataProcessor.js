@@ -20,7 +20,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
                 communicator.subscribe("insert:album", this._processInsertAlbum, this);
                 communicator.subscribeOnce("loaded:initialData", this._processInitialData, this);
              },
-             
              /**
               * @private
               */

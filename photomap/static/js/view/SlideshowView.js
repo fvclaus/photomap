@@ -44,7 +44,7 @@ define([
              this.carousel = null;
              this.presenter = new SlideshowPresenter(this);
              
-             this.tooltip = new Tooltip(this.$inner, gettext("SLIDESHOW_NO_PHOTOS"), {hideOnMouseover: false});
+             this.tooltip = new Tooltip(this.$container, "", {hideOnMouseover: false});
              
              this.started = false;
              this._isDisabled = true;
@@ -60,9 +60,7 @@ define([
                 instance._center();
              });
              this._bindListener();
-             this.tooltip
-               .start()
-               .open();
+             this.setNoPhotoMessage();
           },
           isStarted : function () {
              return this.started;
@@ -171,6 +169,25 @@ define([
                 this.reset();
              }
           },
+          setNoPhotoMessage : function () {
+             if (state.getPhotos().length <= 0) {
+                this.tooltip
+                  .setOption("hideOnMouseover", false)
+                  .setMessage(gettext("SLIDESHOW_GALLERY_NOT_STARTED"))
+                  .start()
+                  .open();
+             } else {
+                if ( this.carousel && this.carousel.getAllPhotos().length > 0) {
+                   this.tooltip.close();
+                } else {
+                  this.tooltip
+                     .setOption("hideOnMouseover", true)
+                     .setMessage(gettext("SLIDESHOW_NO_PHOTOS"))
+                     .start()
+                     .open();
+                }
+             }
+          },
           /**
            * @private
            * @description Executed after photo is updated (=displayed)
@@ -188,13 +205,6 @@ define([
              }
              communicator.publish("update:slideshow", photo);
              communicator.publish("enable:slideshow");
-          },
-          _setTooltipNoPhotoMessage : function () {
-             if (this.carousel.getAllPhotos().length > 0) {
-                this.tooltip.close();
-             } else {
-               this.tooltip.open();
-             }
           },
           /**
            * @private
@@ -217,7 +227,7 @@ define([
              // we are expecting to receive a jquery element wrapper
              assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
              
-             this._setTooltipNoPhotoMessage();
+             this.setNoPhotoMessage();
           },
           /**
            * @private

@@ -73,7 +73,6 @@ define([
              this.presenter = new MapPresenter(this);
              this.markers = [];
              this._create();
-             communicator.subscribeOnce("init", this._init, this);
           },
           storeCurrentState : function () {
              var instance = this;
@@ -280,7 +279,7 @@ define([
            */
           enable : function () {
              
-             this._setMapCursor();
+             this.setMapCursor();
              this.map.setOptions({
                 draggable : true,
                 scrollwheel : true,
@@ -296,7 +295,7 @@ define([
            */
           disable : function () {
              
-             this._setMapCursor("not-allowed");
+             this.setMapCursor("not-allowed");
              this.map.setOptions({
                 draggable : false,
                 scrollwheel : false,
@@ -334,70 +333,24 @@ define([
                      .setMessage(gettext("MAP_NO_ALBUMS"));
                 }
                 this.tooltip.start().open();
-             }
-          },
-          //TODO this is a bit messy.. there must be a better way to do this!
-          _init : function (data) {
-             
-             var init, instance = this;
-             
-             init = function () {
-                
-                console.log("in map init");
-                if (state.isAlbumView()) {
-                   
-                   if (state.getMarkers().length <= 0) {
-                      this.expandBounds(state.getAlbum());
-                   } else {
-                      this._showMarkers(state.getMarkers());
-                   }
-                   
-                   if (clientstate.isAdmin()) {
-                      this._bindClickListener();
-                   }
-                } else if (state.isDashboardView()) {
-                   if (state.getMarkers().length <= 0) {
-                      this._showWorld();
-                   } else {
-                      this._showMarkers(state.getMarkers());
-                   }
-                   this._bindClickListener();
-                }
-                // set map options if interactive
-                this.map.setOptions(this.mapOptions);
-                this._setMapCursor();
-                this.setNoMarkerMessage();
-             };
-             
-             instance.presenter.insertMarkers(data, init);
-          },
-          //TODO this is a mess.. MapView is accessing MarkerView and MarkerPresenter.. changes to a View should be done only by its Presenter!
-          _showMarkers : function (markers) {
-
-             var markersInfo = [];
-             
-             console.log(markers);
-
-             if (markers.length === 1) {
-                markers[0].show();
-                console.log('_-------------------_');
-                console.log(markers[0]);
-                this.expandBounds(markers[0]);
              } else {
-                markers.forEach(function (marker) {
-                   marker.show();
-                   markersInfo.push({
-                      lat : marker.getLat(),
-                      lng : marker.getLng()
-                   });
-                });
-                this.fit(markersInfo);
+                this.tooltip.close();
              }
+          },
+          setMapCursor : function (style) {
+             
+             if (!style) {
+                style = "crosshair";
+             }
+             this.map.setOptions({
+                draggableCursor: style,
+                draggingCursor: "move"
+             });
           },
           /**
            * @description Set google map bounds to show a big part of the world.
            */
-          _showWorld : function () {
+          showWorld : function () {
 
              var lowerLatLng, upperLatLng, newBounds;
 
@@ -405,6 +358,16 @@ define([
              upperLatLng = new google.maps.LatLng(50, 90);
              newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
              this.map.fitBounds(newBounds);
+          },
+          bindClickListener : function (callback) {
+             var instance = this;
+
+             google.maps.event.addListener(this.map, "click", function (event) {
+                instance.presenter.click({
+                   lat : parseFloat(event.latLng.lat()),
+                   lng : parseFloat(event.latLng.lng())
+                });
+             });
           },
           /**
            * @description Initialize the google maps instance with streetview.
@@ -422,18 +385,8 @@ define([
              this.overlay = new google.maps.OverlayView();
              this.overlay.draw = function () {};
              this.overlay.setMap(this.map);
-             this._bindClickListener();
+             this.bindClickListener();
              this._bindCenterChangeListener();
-          },
-          _setMapCursor : function (style) {
-             
-             if (!style) {
-                style = "crosshair";
-             }
-             this.map.setOptions({
-                draggableCursor: style,
-                draggingCursor: "move"
-             });
           },
           _bindKeyboardListener : function () {
             
@@ -445,16 +398,6 @@ define([
                      instance.presenter.triggerDblClickOnMarker(state.getCurrentMarker());
                   }
                }); 
-          },
-          _bindClickListener : function (callback) {
-             var instance = this;
-
-             google.maps.event.addListener(this.map, "click", function (event) {
-                instance.presenter.click({
-                   lat : parseFloat(event.latLng.lat()),
-                   lng : parseFloat(event.latLng.lng())
-                });
-             });
           },
           _bindCenterChangeListener : function () {
              var instance = this;

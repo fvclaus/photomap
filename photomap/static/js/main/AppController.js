@@ -27,6 +27,11 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    "mouseout:marker": this._markerMouseout,
                    "click:marker": this._markerClick,
                    "insert:marker": this._markerInsert,
+                   "insert:markersInitialInsert": {
+                      handler: this._markerInitialInsert,
+                      context: this,
+                      counter: 1
+                   },
                    "centered:marker": this._markerCentered
                 });
                 
@@ -62,10 +67,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    communicator.subscribe("visited:photo", this._photoVisited);
                 }
              },
-             _init : function () {
+             _init : function (data) {
                 main.getUI().getInformation().init();
                 clientstate.init();
-                //main.getMap().init();
+                main.getMap().init(data);
                 
                 if (state.isAlbumView()) {
                    main.getUI().getGallery().init();
@@ -215,15 +220,26 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    detail.slideIn();
                 }
              },
-             _markerInsert : function (data) {
-                console.dir(data);
-                state.insertMarker(data.marker);
-                data.marker.checkIconStatus();
-                data.marker.show();
-                if (data.open) {
-                   data.marker.open();
+             /**
+              * 
+              * @param {Object} marker markerPresenter
+              * @param {Object} init will be undefined when insert:marker events is published - can be used in AppController itself though
+              * @see AppController._markerInitialInsert
+              */
+             _markerInsert : function (marker, init) {
+                state.insertMarker(marker);
+                marker.checkIconStatus();
+                marker.show();
+                if (!init) {
+                   marker.open();
+                   main.getMap().setNoMarkerMessage();
                 }
-                main.getMap().setNoMarkerMessage();
+             },
+             _markerInitialInsert : function (markers) {
+                var instance = this;
+                $.each(markers, function (index, marker) {
+                   instance._markerInsert(marker, true);
+                });
              },
              _markerCentered : function (marker) {
                 $.each(state.getMarkers(), function (index, markerPresenter) {

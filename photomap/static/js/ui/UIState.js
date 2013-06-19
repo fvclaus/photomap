@@ -102,9 +102,11 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
                throw new Error("DoNotUseThisError");
             },
             getPhotos : function () {
+               var photos = [];
                if (this.getCurrentLoadedPlace() !== null){
-                  return this.getCurrentLoadedPlace().getModel().getPhotos();
+                  photos = this.getCurrentLoadedPlace().getModel().getPhotos();
                }
+               return photos;
             },
             setCurrentLoadedPhotoIndex : function (index) {
                this.currentLoadedIndex = index;

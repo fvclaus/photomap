@@ -36,8 +36,12 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
                    }
                 }
              },
+             setNoPhotoMessage : function () {
+                this.view.setNoPhotoMessage();
+             },
              insertPhoto : function (photo) {
                 this.view.insertPhoto(photo);
+                this.view.setNoPhotoMessage();
              },
              deletePhoto : function (photo) {
                 this.view.deletePhoto(photo);
@@ -50,6 +54,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
              },
              reset : function () {
                 this.view.reset();
+                this.view.setNoPhotoMessage();
              }
              
           });
