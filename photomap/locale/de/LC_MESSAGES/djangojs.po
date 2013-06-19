@@ -53,6 +53,7 @@ msgstr ""
 "Um die Galerie zu starten öffnen Sie bitte einen Platz, indem Sie auf einen "
 "Marker in der Karte oberhalb der Galerie klicken. Sie können dann alle "
 "Bilder dieses Platzes ansehen."
+"<strong>Wenn es noch keinen Platz gibt, folgen Sie den Instruktionen in der Karte.</strong>"
 
 #: static/js/view/GalleryView.js:271
 msgid "GALLERY_NO_PHOTOS_ADMIN"

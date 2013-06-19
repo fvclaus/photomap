@@ -46,7 +46,7 @@ msgid "GALLERY_NO_PLACE_SELECTED"
 msgstr ""
 "To start the gallery, please select a place in the map above, by double-"
 "clicking on the marker. You'll be able to view all photos of selected place "
-"then."
+"then. <strong>If there is no place yet, follow the instructions given in the map.</strong>"
 
 #: static/js/view/GalleryView.js:271
 msgid "GALLERY_NO_PHOTOS_ADMIN"
