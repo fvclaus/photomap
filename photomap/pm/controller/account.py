@@ -99,9 +99,10 @@ def delete_account(request):
         form = UserDeleteAccountForm(request.POST)
         if form.is_valid():
             user = request.user
+            id = user.id
             user_email = request.POST.get("user_email")
             user_password = request.POST.get("user_password")
-            logger.info("Trying to delete User %d." % user.id)
+            logger.info("Trying to delete User %d." % id)
             if user.check_password(user_password):
                 user.delete()
                 logger.info("User %d account deleted." % id)

@@ -189,6 +189,15 @@ $(document).ready(function () {
                onSuccess = function (data) {
                   $(".mp-user-email").text(data.email);
                }
+            } else if ($form.parent().attr("id") === "mp-delete-account-form") {
+               onSuccess = function (data) {
+                  alert(gettext("DELETE_ACCOUNT_SUCCESS"));
+                  window.location.href = "/";
+               }
+               if (confirm(gettext("DELETE_ACCOUNT_CONFIRM"))) {
+                  submitForm($form, onSuccess);
+               }
+               return;
             }
             submitForm($form, onSuccess)
             
