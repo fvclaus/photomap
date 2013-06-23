@@ -7,7 +7,7 @@
  * @description Redirects to dashboard if user is logged in, to landing page otherwise
  */
 function bindLogoListener () {
-   $$(".mp-logo img").bind("click", function (event) {
+   $$(".mp-logo img").on("click", function (event) {
       // prevent the default anchor forward action
       // the anchor around the logo is needed in case js is disabled or failed
       event.preventDefault();
@@ -17,6 +17,20 @@ function bindLogoListener () {
       } else {
          window.location.href = "/";
       }
+   });
+}
+
+function bindSettingsListener () {
+   $$("#mp-goto-account a").on("click", function (event) {
+      event.preventDefault();
+      
+      console.log($(this).attr("href"));
+      main.getUI().getInput().show({
+          load : function () {
+             $("#update-settings-tabs").tabs();
+          },
+          url : $(this).attr("href")
+      });
    });
 }
 
@@ -94,5 +108,6 @@ $(document).ready(function () {
    // source: http://dev.w3.org/csswg/css3-values/#vw-unit
    // vh is supported in ff 19 and chrome 20
    bindUserMenuListener();
+   bindSettingsListener();
 });
 

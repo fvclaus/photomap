@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-19 11:29+0200\n"
+"POT-Creation-Date: 2013-06-22 18:22+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -28,6 +28,28 @@ msgid "NETWORK_ERROR"
 msgstr ""
 "Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
+
+#: static/js/main/non-interactive.js:181
+msgid "LOGIN_INVALID"
+msgstr ""
+"Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "
+
+#: static/js/main/non-interactive.js:183
+msgid "LOGIN_FORM_INVALID"
+msgstr ""
+"Sie haben ungültige Eingaben gemacht. Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "
+"Falls dieser Fehler mit ihren normalen Login-Daten erscheint, kontaktieren Sie bitte den Support."
+
+#: static/js/main/non-interactive.js:185
+msgid "LOGIN_USER_INACTIVE"
+msgstr ""
+"Ihr Account ist leider nicht aktiv. Bitte wenden Sie sich an den Support. "
+
+#: static/js/main/non-interactive.js:188
+msgid "LOGIN_UNKNOWN_FAIL"
+msgstr ""
+"Huch, da ist wohl was schief gelaufen. Bitte versuchen Sie es erneut. Sollte dieser Fehler wieder erscheinen, "
+"nehmen Sie bitte mit uns Kontakt auf!"
 
 #: static/js/view/DialogView.js:84
 msgid "YES"
@@ -52,8 +74,8 @@ msgid "GALLERY_NO_PLACE_SELECTED"
 msgstr ""
 "Um die Galerie zu starten öffnen Sie bitte einen Platz, indem Sie auf einen "
 "Marker in der Karte oberhalb der Galerie klicken. Sie können dann alle "
-"Bilder dieses Platzes ansehen."
-"<strong>Wenn es noch keinen Platz gibt, folgen Sie den Instruktionen in der Karte.</strong>"
+"Bilder dieses Platzes ansehen.<strong>Wenn es noch keinen Platz gibt, folgen "
+"Sie den Instruktionen in der Karte.</strong>"
 
 #: static/js/view/GalleryView.js:271
 msgid "GALLERY_NO_PHOTOS_ADMIN"
@@ -145,15 +167,17 @@ msgstr ""
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "Keine Rotation mehr möglich, nachdem das Photo bearbeitet wurde."
 
-#: static/js/view/SlideshowView.js:177
+#: static/js/view/SlideshowView.js:176
 msgid "SLIDESHOW_GALLERY_NOT_STARTED"
 msgstr ""
-"Um Bilder in der Slideshow anzusehen, müssen Sie zuerst die Galerie (unterhalb der Karte) starten. "
-"Dann können Sie auf ein Bild in der Galerie klicken oder die Navigationstasten (zur Rechten und "
-"linken Seite) nutzen um die Slideshow mit den Bildern der Galerie zu starten. "
-"<strong>Sollte es noch keine Photos geben, folgen Sie bitte den Instruktionen in der Galerie.</strong>"
+"Um Bilder in der Slideshow anzusehen, müssen Sie zuerst die Galerie "
+"(unterhalb der Karte) starten. Dann können Sie auf ein Bild in der Galerie "
+"klicken oder die Navigationstasten (zur Rechten und linken Seite) nutzen um "
+"die Slideshow mit den Bildern der Galerie zu starten. <strong>Sollte es noch "
+"keine Photos geben, folgen Sie bitte den Instruktionen in der Galerie.</"
+"strong>"
 
-#: static/js/view/SlideshowView.js:187
+#: static/js/view/SlideshowView.js:185
 msgid "SLIDESHOW_NO_PHOTOS"
 msgstr ""
 "Um Bilder in der Slideshow anzusehen, klicken Sie auf das gewünschte Bild in "

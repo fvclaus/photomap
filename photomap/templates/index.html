@@ -38,31 +38,29 @@
     <!-- action is necessary because this template is also populated by /test -->
     <form class="mp-form" action="/login" method="post">
       <!-- displays the password || email wrong message -->
-      {{ login.non_field_errors }}
+      <p id="login-fail" class="mp-warning"></p>
+      <p id="login-request-fail" class="mp-warning"></p>
       <p>
         <label for="login_email">{% trans "Email" %}:</label>
-        <input type="text" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}"/>
-        <!-- field required error -->
-        {{ login.email.errors }}
+        <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}"/>
       </p>
       <p>
         <label for="login_password">{% trans "Password" %}:</label>
         <input type="password" name="password" id="login_password" required="required" value="{{ password }}"/>
-        <!-- field required error -->
-        {{ login.password.errors }}
       </p>
       <p>
       	<input type="hidden" name="next" value="{{ next }}" />
       </p>
       <p>
-		<input id="login-submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
+		<input id="login_submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
       </p>
     </form>
+    <p id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</p>
   </div>
   <!-- hide tabs to avoid ugly moving around during page load -->
   <div class="mp-login-tab" id="mp-register">
     <!-- action is necessary because this template is also populated by /test -->
-    <form class="mp-form" action="/login" method="post">
+    <form class="mp-form" action="/register" method="post">
       <p>
         <label for="register_first_name">{% trans "First name" %}:</label>
         <input disabled="disabled" type="text" name="first_name" id="register_first_name" autofocus="autofocus" />
@@ -89,7 +87,8 @@
     </form>
   </div>
 </section>
-
+<!-- div for UIInput. The dimensions are defined in input.sty -->
+<div id="mp-dialog"></div>
 
 {% endblock %}
 

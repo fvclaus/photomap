@@ -3,16 +3,18 @@ Created on Jul 10, 2012
 
 @author: fredo
 '''
-from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.http import HttpResponse, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 from django.contrib.auth import  authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.models import User, check_password
 from django.contrib.auth.backends import ModelBackend
 from django.core.validators import email_re
+from django.core import serializers
 
 from pm.form.authentication import LoginForm, RegisterForm
 from pm.model.place import Place
 from pm.model.photo import Photo
+from pm.util.json import JSONResponse
 
 from pm.controller import set_cookie
 from pm.controller import landingpage
@@ -23,14 +25,9 @@ logger = logging.getLogger(__name__)
 
 def login(request):
     if request.method == "GET":
-        loginform = LoginForm()
-        registerform = RegisterForm()
-        data = {"login" : loginform, "register" : registerform}
-        return landingpage.get_login(request, data) #render_to_response("login.html", data)
+        return landingpage.get_current(request) #render_to_response("login.html", data)
     if request.method == "POST":
         loginform = LoginForm(request.POST)
-        registerform = RegisterForm()
-        data = {"login" : loginform, "register" : registerform}
         redirect_to = request.POST.get("next")
         if not redirect_to or not re.match("/",redirect_to):
             redirect_to = "/dashboard"
@@ -38,18 +35,24 @@ def login(request):
             user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
             
             if not (user == None or user.is_anonymous()):
-                auth_login(request, user)
-                response = HttpResponseRedirect(redirect_to)
-                set_cookie(response, "quota", user.userprofile.quota)
-                set_cookie(response, "used_space", user.userprofile.used_space)
-                return response
+                if user.is_active:
+                    auth_login(request, user)
+                    returnData = {"success": True, "next": redirect_to}
+                    response = JSONResponse(returnData)
+                    set_cookie(response, "quota", user.userprofile.quota)
+                    set_cookie(response, "used_space", user.userprofile.used_space)
+                    return response
+                else:
+                    returnData = {"success": False, "user_inactive": True, "email": loginform.cleaned_data["email"]}
+                    return JSONResponse(returnData)
             else:
-                loginform.errors["__all__"] = loginform.error_class(['Please recheck the email and password'])
-                return landingpage.get_login(request, data) #render_to_response("login.html", data)
+                returnData = {"success": False, "login_invalid": True, "email": loginform.cleaned_data["email"]}
+                return JSONResponse(returnData)
             
         else:
-            return landingpage.get_login(request, data) #render_to_response("login.html", data)
-        
+            returnData = {"success": False, "form_invalid": True, "email": loginform.cleaned_data["email"]}
+            return JSONResponse(returnData)
+
 def logout(request):
     auth_logout(request)
     return HttpResponseRedirect("/")

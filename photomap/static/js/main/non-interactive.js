@@ -42,10 +42,22 @@ function decodeEmail ($email) {
    }
 }
 
+function bindPasswordForgotListener () {
+   require(["view/DialogView"], function () {
+      var DialogView = require("view/DialogView"),
+         input = new DialogView();
+      $$("#mp-user-password-forgot").on("click", function (event) {
+         input.show({
+            url : "/reset-user-password"
+         });
+      });
+   });
+}
 // there is no need to use initialize here. initialize just bloats the whole application and starts later
 $(document).ready(function () {
 
-   var hash = window.location.hash.substring(1,window.location.hash.length);
+   var hash = window.location.hash.substring(1,window.location.hash.length),
+      data = {};
    // adds a validator and button styling to all forms
    $(".mp-form")
       .find(".mp-form-submit")
@@ -120,9 +132,9 @@ $(document).ready(function () {
       });
       // automatically sign in when users selects "Try KEIKEN yourself"
       $(".mp-test-button").on("click", function (event) {
-         $("#login-email").val("test@keiken.app");
-         $("#login-password").val("test");
-         $("#login-submit").trigger("click");
+         $("#login_email").val("test@keiken.app");
+         $("#login_password").val("test");
+         $("#login_submit").trigger("click");
       });
       //check whether user is logged in or not
       if ($(".mp-login-link").size() > 0) {
@@ -145,6 +157,52 @@ $(document).ready(function () {
             $("#keiken-login").tabs("option", "active", 0)
             
          });
+         
+         $("#login_submit").on("click", function (event) {
+            event.preventDefault();
+            var data = {};
+            
+           $.each($("#mp-login").find("form").serializeArray(), function(i, field) {
+              data[field.name] = field.value;
+           });
+           
+           $.ajax({
+              url: $("#mp-login").find("form").attr("action"),
+              type: "POST",
+              "data": data,
+              success: function (data) {
+                 $("#login-request-fail").empty();
+                 /**
+                  * if the request is succesful in the way that the user got logged in then the user will get redirected to the dashboard
+                  * else /login will return data containing information about what went wrong and this data is getting displayed here
+                  */
+                 if (data) {
+                    console.log(data);
+                    if (data.success) {
+                       window.location.href = data.next;
+                    } else {
+                       $("#login_email").val(data.email);
+                       $("#login_password").val("");
+                       if (data.login_invalid) {
+                          $("#login-fail").text(gettext("LOGIN_INVALID"));
+                       } else if (data.form_invalid) {
+                          $("#login-fail").text(gettext("LOGIN_FORM_INVALID"));
+                       } else if (data.user_inactive) {
+                          $("#login-fail").text(gettext("LOGIN_USER_INACTIVE"));
+                       }
+                    }
+                 } else {
+                    $("#login-fail").text(gettext("LOGIN_UNKNOWN_FAIL"));
+                 }
+              },
+              error: function (jqXHR, textStatus, errorThrown) {
+                 $("#login-fail").empty();
+                 $("#login-request-fail").text(textStatus + ": " + errorThrown);
+              }
+           });
+         });
+         
+         bindPasswordForgotListener();
       }
    }
    // display all tags that are marked as buttons as ui-buttons

@@ -118,29 +118,29 @@
 
       <ul id="menu" class="mp-nodisplay mp-dropup-menu">
         <li><a href="/logout">Logout</a></li>
-        <li class="ui-state-disabled"><a href="/settings">Settings</a></li>
+        <li id="mp-goto-account"><a href="/account">Settings</a></li>
       </ul>
 
 
       <footer class="mp-page-footer column span-24 last" id="mp-page-footer">
-	{% if user.is_authenticated %}
+		{% if user.is_authenticated %}
           <button id="mp-user">{{user.email}}</button>
           <span>|</span>
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
-	{% else %}
-	  <span class="mp-login-link">
-	    <a href="/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
-	  </span>
-	{% endif %}
-        <section class="mp-internal-links">
-       <a href="/payment" title='{% trans "Spenden" %}'>|{% trans "Spenden" %} </a> 	
-	  <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
-	  <a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
-	  <a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
-	  <a href="/copyright" title='{% trans "link-title-copyright" %}'>|{% trans "Urheberrecht" %} </a>
-	  <a href="/help" title='{% trans "link-title-help" %}'>|{% trans "Hilfe" %} </a>
-	  <a href="/impressum" title='{% trans "link-title-impressum" %}'>|{% trans "Impressum" %} </a>
-	</section>
+		{% else %}
+		  <span class="mp-login-link">
+		    <a href="/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
+		  </span>
+		{% endif %}
+	      <section class="mp-internal-links">
+		      <a href="/payment" title='{% trans "Spenden" %}'>|{% trans "Spenden" %} </a> 	
+			  <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
+			  <a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
+			  <a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
+			  <a href="/copyright" title='{% trans "link-title-copyright" %}'>|{% trans "Urheberrecht" %} </a>
+			  <a href="/help" title='{% trans "link-title-help" %}'>|{% trans "Hilfe" %} </a>
+			  <a href="/impressum" title='{% trans "link-title-impressum" %}'>|{% trans "Impressum" %} </a>
+		  </section>
       </footer>
     </div>
 
