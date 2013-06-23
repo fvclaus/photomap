@@ -55,10 +55,19 @@ address
     margin 1% 0
     margin-right 3%
     float left
-    width 25% 
+    width 25%
   input, textarea
     margin 1% 0
     width 72% // 100% - 3% label margin right (= space between laveb and input) - 25% label width
+    
+.mp-form label.error
+  display none !important // prevents errors from being shown
+  
+.mp-request-success
+  color blue
+  font-weight bold
+  font-size 1.1em
+  display none
 
 // this is djangos css class for errors
 .errorlist
@@ -347,3 +356,26 @@ section#keiken-login
   font-size .9em
 
 /* ------ end impressum ------ */
+
+/* -- styling for account settings -- */
+
+#account h2
+  margin-left 0
+
+#mp-account-info
+  width 50%
+  margin 30px 0
+  float left
+  table
+    width 90%
+  	tr td:nth-of-type(2)
+  	  text-align right
+
+#mp-account-settings
+  width 50%
+  float right
+.mp-account-settings-form
+  display none
+
+/* ------ end account ------ */
+

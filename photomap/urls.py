@@ -18,6 +18,7 @@ from pm.controller import dashboard
 from pm.controller import debug
 from pm.controller import footer
 from pm.controller import landingpage
+from pm.controller import account
 
 # admin.site.register(model.album.Album)
 # admin.site.register(model.photo.Photo)
@@ -86,5 +87,13 @@ urlpatterns = patterns("",
                        #================================================================
                        url(r'^insert-place$', place.insert),
                        url(r'^update-place$', place.update),
-                       url(r'^delete-place$', place.delete)
+                       url(r'^delete-place$', place.delete),
+                       #================================================================
+                       # user-settings hooks
+                       #================================================================
+                       url(r'^account$', account.view),
+                       url(r'^account/update-password$', account.update_password),
+                       url(r'^account/update-email$', account.update_email),
+                       url(r'^account/delete-account$', account.delete_account),
+                       url(r'^account/reset-password$', account.password_reset)
                        ) 

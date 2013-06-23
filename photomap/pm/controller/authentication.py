@@ -18,6 +18,8 @@ from pm.util.json import JSONResponse
 
 from pm.controller import set_cookie
 from pm.controller import landingpage
+from pm.controller.message import success, request_fail_error, user_inactive_error, form_invalid_error
+
 import logging
 import re
 
@@ -33,25 +35,20 @@ def login(request):
             redirect_to = "/dashboard"
         if loginform.is_valid():
             user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
-            
+            returnData = {"success": False, "email": loginform.cleaned_data["email"]}
             if not (user == None or user.is_anonymous()):
                 if user.is_active:
                     auth_login(request, user)
-                    returnData = {"success": True, "next": redirect_to}
-                    response = JSONResponse(returnData)
+                    response = success(next = redirect_to)
                     set_cookie(response, "quota", user.userprofile.quota)
                     set_cookie(response, "used_space", user.userprofile.used_space)
                     return response
                 else:
-                    returnData = {"success": False, "user_inactive": True, "email": loginform.cleaned_data["email"]}
-                    return JSONResponse(returnData)
+                    return user_inactive_error(email = loginform.cleaned_data["email"])
             else:
-                returnData = {"success": False, "login_invalid": True, "email": loginform.cleaned_data["email"]}
-                return JSONResponse(returnData)
-            
+                return request_fail_error(email = loginform.cleaned_data["email"])
         else:
-            returnData = {"success": False, "form_invalid": True, "email": loginform.cleaned_data["email"]}
-            return JSONResponse(returnData)
+            return form_invalid_error(email = loginform.cleaned_data["email"])
 
 def logout(request):
     auth_logout(request)

@@ -3,6 +3,13 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
+{% block extrajs %}
+{% load compress %}
+{% compress js %}
+<script type="text/javascript" src="/static/js/main/landingpage.js" ></script>
+{% endcompress %}
+{% endblock %}
+
 {% block title %}{% trans "Willkommen" %}{% endblock %}
 
 {% block name %}{% trans "Willkommen" %}{% endblock %}
@@ -38,15 +45,15 @@
     <!-- action is necessary because this template is also populated by /test -->
     <form class="mp-form" action="/login" method="post">
       <!-- displays the password || email wrong message -->
-      <p id="login-fail" class="mp-warning"></p>
-      <p id="login-request-fail" class="mp-warning"></p>
+      <p class="mp-warning mp-request-fail"></p>
+      <p class="mp-warning mp-submit-fail"></p>
       <p>
         <label for="login_email">{% trans "Email" %}:</label>
-        <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}"/>
+        <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" data-required/>
       </p>
       <p>
         <label for="login_password">{% trans "Password" %}:</label>
-        <input type="password" name="password" id="login_password" required="required" value="{{ password }}"/>
+        <input type="password" name="password" id="login_password" required="required" value="{{ password }}" data-required/>
       </p>
       <p>
       	<input type="hidden" name="next" value="{{ next }}" />

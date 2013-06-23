@@ -20,20 +20,6 @@ function bindLogoListener () {
    });
 }
 
-function bindSettingsListener () {
-   $$("#mp-goto-account a").on("click", function (event) {
-      event.preventDefault();
-      
-      console.log($(this).attr("href"));
-      main.getUI().getInput().show({
-          load : function () {
-             $("#update-settings-tabs").tabs();
-          },
-          url : $(this).attr("href")
-      });
-   });
-}
-
 function setFontSizeInVH ($el, vh) {
    assertTrue($el.size() > 0, "input parameter $el must not be undefined");
    var fontSize =  (vh / 100) * $("body").height();
@@ -108,6 +94,5 @@ $(document).ready(function () {
    // source: http://dev.w3.org/csswg/css3-values/#vw-unit
    // vh is supported in ff 19 and chrome 20
    bindUserMenuListener();
-   bindSettingsListener();
 });
 

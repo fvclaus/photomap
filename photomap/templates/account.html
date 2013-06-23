@@ -1,0 +1,143 @@
+{% extends "base-non-interactive.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+
+{% block title %}{% trans "Account" %}{% endblock %}
+
+{% block name %}{% trans "Settings" %}{% endblock %}
+
+{% block pageID %}account{% endblock %}
+
+{% block non_interactive_content %}
+
+<section id="mp-account-info">
+	
+	<h2>{% trans "Account Info" %}</h2>
+	
+	<table border="1" frame="below" rules="rows" cellpadding="15" cellspacing="5">
+		
+		<colgroup>
+			<col width="40%" />
+			<col width="60%" />
+		</colgroup>
+		
+		<tbody>
+			<tr style="display: none">
+				<td>{% trans "Profile picture" %}</td>
+				<td>{{ user.userprofile.picture }}</td>
+			</tr>
+			<tr>
+				<td>{% trans "Name" %}</td>
+				<td>{{ user.first_name }} {{ user.last_name }}</td>
+			</tr>
+			<tr>
+				<td>{% trans "Username/Email" %}</td>
+				<td><span class="mp-user-email">{{ user.email }}</span></td>
+			</tr>
+			<tr>
+				<td>{% trans "Account-Status" %}</td>
+				<td>{% if user.is_active %}{% trans "Active" %}{% else %}{% trans "Inactive" %}{% endif %}</td>
+			</tr>
+			<tr>
+				<td>{% trans "Storage Space" %}</td>
+				<td>
+					<span id="mp-user-quota">{{ user.userprofile.quota }}</span>MB 
+					({% trans "Already in use:" %} <span id="mp-user-used-space">{{ user.userprofile.used_space }}</span>MB)
+				</td>
+			</tr>
+			<tr>
+				<td>{% trans "Free space left" %}</td>
+				<td><span id="mp-user-free-space">???</span>MB</td>
+			</tr>
+			<tr>
+				<td>{% trans "Usage" %}</td>
+				<td>{{ total_albums }} {% trans "Albums" %} -- {{ total_places }} {% trans "Places" %} -- {{ total_photos }} {% trans "Photos" %}</td>
+			</tr>
+		</tbody>
+		
+	</table>
+	
+</section>
+<section id="mp-account-settings">
+	
+	<div id="mp-account-settings-options">
+		<a id="mp-option-update-password" href="#mp-update-password-form" class="mp-button">{% trans "Update Password" %}</a>
+		<a id="mp-option-update-email" href="#mp-update-email-form" class="mp-button">{% trans "Update Email" %}</a>
+		<a id="mp-option-update-picture" href="#mp-update-picture-form" class="mp-button mp-nodisplay">{% trans "Update Profile Picture" %}</a>
+		<a id="mp-option-delete-account" href="#mp-delete-account-form" class="mp-button">{% trans "Delete Account" %}</a>
+	</div>
+	
+	<div id="mp-account-settings-forms">
+		<div id="mp-update-password-form" class="mp-account-settings-form">
+  			<p>{% trans "UPDATE_PASSWORD_INFO" %}</p>
+			<form class="mp-form" method="post" action="{{ request.path }}/update-password">
+			  <p class="mp-request-fail mp-warning"></p>
+			  <p class="mp-submit-fail mp-warning"></p>
+			  <p class="mp-request-success">{% trans "UPDATE_PASSWORD_SUCCESS" %}</p>
+		      <p>
+		        <label for="old-password">{% trans "Old Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+		        <input type="password" name="old_password" id="old-password" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'INPUT_OLD_PASSWORD' %}" data-required/>
+		      </p>
+		      <p>
+		        <label for="new-password">{% trans "New Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+		        <input type="password" name="new_password" id="new-password" required="required" size="40" placeholder="{% trans 'INPUT_NEW_PASSWORD' %}" data-required/>
+		      </p>
+		      <p>
+		        <label for="new-password-repeat">{% trans "Repeat New Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+		        <input type="password" name="new_password_repeat" id="new-password-repeat" required="required" size="40" placeholder="{% trans 'INPUT_NEW_PASSWORD_REPEAT' %}" equalTo="#new-password" data-required/>
+		      </p>
+		      <p>
+		      	<input type="submit" class="mp-form-submit" value='{% trans "Save" %}' />
+		      </p>
+			</form>
+		</div>
+		<div id="mp-update-email-form" class="mp-account-settings-form">
+			<p>{% trans "UPDATE_EMAIL_INFO" %}</p>
+			<form class="mp-form" method="post" action="{{ request.path }}/update-email">
+			  <p class="mp-request-fail mp-warning"></p>
+			  <p class="mp-submit-fail mp-warning"></p>
+			  <p class="mp-request-success">{% trans "UPDATE_EMAIL_SUCCESS" %}</p>
+		      <p>
+		        <label for="new-email">{% trans "New Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+		        <input type="email" name="new_email" id="new-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'INPUT_NEW_EMAIL' %}" data-required/>
+		      </p>
+		      <p>
+		        <label for="confirm-password">{% trans "Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+		        <input type="password" name="confirm_password" id="confirm-password" required="required" size="40" placeholder="{% trans 'INPUT_CONFIRM_PASSWORD' %}" data-required/>
+		      </p>
+		      <p>
+		      	<input type="submit" class="mp-form-submit" value='{% trans "Save" %}' />
+		      </p>
+			</form>
+		</div>
+		<div id="mp-update-picture-form" class="mp-account-settings-form">
+			<form class="mp-form" method="post" action="{{ request.path }}/update-picture">
+				<!-- not used atm -->
+			</form>
+		</div>
+		<div id="mp-delete-account-form" class="mp-account-settings-form">
+			<p>{% trans "DELETE_ACCOUNT_INFO" %}</p>
+		    <form class="mp-form" method="post" action="{{ request.path }}/delete-account">
+			  <p class="mp-request-fail mp-warning"></p>
+			  <p class="mp-submit-fail mp-warning"></p>
+			  <p class="mp-request-success">{% trans "DELETE_ACCOUNT_SUCCESS" %}</p>
+		      <p>
+		        <label for="user-email">{% trans "Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+		        <input type="email" name="user_email" id="user-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'INPUT_DELETE_USER_EMAIL' %}" data-required/>
+		      </p>
+		      <p>
+		        <label for="user-password">{% trans "Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+		        <input type="password" name="user_password" id="user-password" required="required" size="40" placeholder="{% trans 'INPUT_DELETE_USER_PASSWORD' %}" data-required/>
+		      </p>
+		      <p>
+		      	<input type="submit" class="mp-form-submit" value='{% trans "Delete Account" %}' />
+		      </p>
+			</form>
+		</div>
+	</div>
+	
+</section>
+
+{% endblock %}
