@@ -31,6 +31,7 @@ urlpatterns = patterns("",
                        # main
                        #========================================================
                        url(r'^login$', authentication.login),
+                       url(r'^login/error/$', authentication.login_error),
                        # url(r'^view-album$', album.view),
                        url(r'^album/view/(.+)-(\d+)$', album.view),
                        url(r'^get-all-albums$', dashboard.get),
@@ -95,5 +96,9 @@ urlpatterns = patterns("",
                        url(r'^account/update-password$', account.update_password),
                        url(r'^account/update-email$', account.update_email),
                        url(r'^account/delete-account$', account.delete_account),
-                       url(r'^account/reset-password$', account.password_reset)
+                       url(r'^account/reset-password$', account.reset_password),
+                       url(r'^account/reset-password/done$', account.reset_password_done),
+                       url(r'^account/reset-password/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$', account.reset_password_confirm, name="reset_password_confirm"),
+                       url(r'^account/reset-password/complete', account.reset_password_complete),
+                       url(r'^account/inactive$', direct_to_template, {"template": "account-inactive.html"})
                        ) 

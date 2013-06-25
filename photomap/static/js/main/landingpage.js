@@ -63,18 +63,6 @@ $(document).ready(function () {
          $("#keiken-login").tabs("option", "active", 0)
          
       });
-      
-      $("#login_submit").on("click", function (event) {
-         event.preventDefault();
-         var onSuccess = function (data) {
-               window.location.href = data.next;
-            },
-            onFail = function (data) {
-               $("#login_email").val(data.email);
-            };
-         
-         submitForm($("#mp-login").find("form"), onSuccess, onFail);
-      });
    }
 
 });

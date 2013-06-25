@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-22 18:23+0200\n"
+"POT-Creation-Date: 2013-06-25 21:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -25,27 +25,16 @@ msgstr "The following error occurred while loading the album:  "
 msgid "NETWORK_ERROR"
 msgstr "A network error occurred. Please try again later."
 
-#: static/js/main/non-interactive.js:181
-msgid "LOGIN_INVALID"
+#: static/js/main/non-interactive.js:56
+msgid "REQUEST_UNKNOWN_FAIL"
 msgstr ""
-"Please check your email and password and submit again."
+"Uups. Something went wrong and we don't know what! Please try again, if you "
+"get this message another time, please contact support. "
 
-#: static/js/main/non-interactive.js:183
-msgid "LOGIN_FORM_INVALID"
+#: static/js/main/non-interactive.js:196
+msgid "DELETE_ACCOUNT_CONFIRM"
 msgstr ""
-"You used invalid input in the login form. Please check your email and password. If you get this error message with your "
-"valid login-data please contact the support. "
-
-#: static/js/main/non-interactive.js:185
-msgid "LOGIN_USER_INACTIVE"
-msgstr ""
-"Your account is not active. Please contact the support for more information. "
-
-#: static/js/main/non-interactive.js:188
-msgid "LOGIN_UNKNOWN_FAIL"
-msgstr ""
-"Uups. Something went wrong and we don't know what! Please try again, if you get this message another time, please "
-"contact support. "
+"Are you sure you want to delete the account? This can't be undone later on. "
 
 #: static/js/view/DialogView.js:84
 msgid "YES"
@@ -168,6 +157,20 @@ msgstr ""
 #: static/js/zeroclipboard/jquery.zclip.js:87
 msgid "COPIED_TO_CLIPBOARD"
 msgstr "Text was copied successfully to your clipboard!"
+
+#~ msgid "LOGIN_INVALID"
+#~ msgstr "Please check your email and password and submit again."
+
+#~ msgid "LOGIN_FORM_INVALID"
+#~ msgstr ""
+#~ "You used invalid input in the login form. Please check your email and "
+#~ "password. If you get this error message with your valid login-data please "
+#~ "contact the support. "
+
+#~ msgid "LOGIN_USER_INACTIVE"
+#~ msgstr ""
+#~ "Your account is not active. Please contact the support for more "
+#~ "information. "
 
 #~ msgid "NO_DESCRIPTION"
 #~ msgstr "There's no description available."

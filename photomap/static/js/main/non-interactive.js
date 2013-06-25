@@ -68,7 +68,6 @@ function submitForm ($form, onSuccess, onFail) {
  * You can fix that bug by adding the second number and do a modulo calculation again.
  * It also includes non common scripts. These should be kept short.
  */
-//TODO I really don't know why this was in UITools. This function is used only once and only here.
 function modulo (x, y) {
    return ((x % y) + y) % y;
 }
@@ -159,25 +158,28 @@ $(document).ready(function () {
       $("#mp-account-settings-options a").on("click", function (event) {
          event.preventDefault();
          
-         var $formWrapper = $($(this).attr("href"));
+         var $formWrapper = $($(this).attr("href")),
+            focus = function () {
+               $formWrapper.find(".mp-form-submit").focus();
+            };
          
          if ($(".mp-current-form").length > 0) {
             if ($(".mp-current-form").attr("id") !== $(this).attr("href").substring(1, $(this).attr("href").length)) {
                $(".mp-current-form").fadeOut(300, function () {
                   $formWrapper
-                     .fadeIn(300)
+                     .fadeIn(300, focus)
                      .addClass("mp-current-form");
                   $(this).removeClass("mp-current-form");
                });
             }
          } else {
             $formWrapper
-               .fadeIn(300)
+               .fadeIn(300, focus)
                .addClass("mp-current-form");
          }
       });
       //submit the current form
-      $(".mp-form-submit").on("click", function (event) {
+      $(".mp-settings-form-submit").on("click", function (event) {
          event.preventDefault();
          var formData = {},
             $form = $(this).parents("form"),
@@ -190,12 +192,8 @@ $(document).ready(function () {
                   $(".mp-user-email").text(data.email);
                }
             } else if ($form.parent().attr("id") === "mp-delete-account-form") {
-               onSuccess = function (data) {
-                  alert(gettext("DELETE_ACCOUNT_SUCCESS"));
-                  window.location.href = "/";
-               }
                if (confirm(gettext("DELETE_ACCOUNT_CONFIRM"))) {
-                  submitForm($form, onSuccess);
+                  submitForm($form);
                }
                return;
             }
@@ -203,6 +201,7 @@ $(document).ready(function () {
             
          }
       });
+      
    }
    // display all tags that are marked as buttons as ui-buttons
    $(".mp-button").button();

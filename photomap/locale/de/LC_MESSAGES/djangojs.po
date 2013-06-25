@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-22 18:22+0200\n"
+"POT-Creation-Date: 2013-06-25 21:37+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -29,27 +29,16 @@ msgstr ""
 "Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
 
-#: static/js/main/non-interactive.js:181
-msgid "LOGIN_INVALID"
+#: static/js/main/non-interactive.js:56
+msgid "REQUEST_UNKNOWN_FAIL"
 msgstr ""
-"Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "
+"Huch, da ist wohl was schief gelaufen. Bitte versuchen Sie es erneut. Sollte "
+"dieser Fehler wieder erscheinen, nehmen Sie bitte mit uns Kontakt auf!"
 
-#: static/js/main/non-interactive.js:183
-msgid "LOGIN_FORM_INVALID"
+#: static/js/main/non-interactive.js:196
+msgid "DELETE_ACCOUNT_CONFIRM"
 msgstr ""
-"Sie haben ungültige Eingaben gemacht. Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "
-"Falls dieser Fehler mit ihren normalen Login-Daten erscheint, kontaktieren Sie bitte den Support."
-
-#: static/js/main/non-interactive.js:185
-msgid "LOGIN_USER_INACTIVE"
-msgstr ""
-"Ihr Account ist leider nicht aktiv. Bitte wenden Sie sich an den Support. "
-
-#: static/js/main/non-interactive.js:188
-msgid "LOGIN_UNKNOWN_FAIL"
-msgstr ""
-"Huch, da ist wohl was schief gelaufen. Bitte versuchen Sie es erneut. Sollte dieser Fehler wieder erscheinen, "
-"nehmen Sie bitte mit uns Kontakt auf!"
+"Wollen Sie Ihren Account wirklich löschen? Der Vorgang kann nicht mehr rückgängig gemacht werden. "
 
 #: static/js/view/DialogView.js:84
 msgid "YES"
@@ -188,6 +177,19 @@ msgstr ""
 #: static/js/zeroclipboard/jquery.zclip.js:87
 msgid "COPIED_TO_CLIPBOARD"
 msgstr "Text wurde in die Zwischenablage kopiert!"
+
+#~ msgid "LOGIN_INVALID"
+#~ msgstr "Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "
+
+#~ msgid "LOGIN_FORM_INVALID"
+#~ msgstr ""
+#~ "Sie haben ungültige Eingaben gemacht. Bitte überprüfen Sie ihre Eingaben "
+#~ "und versuchen Sie es erneut. Falls dieser Fehler mit ihren normalen Login-"
+#~ "Daten erscheint, kontaktieren Sie bitte den Support."
+
+#~ msgid "LOGIN_USER_INACTIVE"
+#~ msgstr ""
+#~ "Ihr Account ist leider nicht aktiv. Bitte wenden Sie sich an den Support. "
 
 #~ msgid "NO_DESCRIPTION"
 #~ msgstr "Es ist keine Beschreibung vorhanden."

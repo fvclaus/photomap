@@ -79,6 +79,7 @@
 
     <script type="text/javascript" src="/static/js/util/constants.js"></script>
     <script type="text/javascript" src="/static/js/main/panel.js"></script>
+    <script type="text/javascript" src="/static/js/main/settings.js"></script>
 
     {% endcompress %}
     {% endblock %}
@@ -105,20 +106,25 @@
       </header>
 
       <main class="mp-content column span-24 last" id="mp-content">
-        <noscript  id="mp-no-script">
+        <noscript id="mp-no-script">
           <div class="ui-state-error ui-corner-all">
             <p>
               <strong>{% trans "JS_DISABLED_WARNING" %}</strong>
             </p>
           </div>
         </noscript>
+        <div id="mp-no-cookies" class="ui-state-error ui-corner-all">
+            <p>
+              <strong>{% trans "COOKIES_DISABLED_WARNING" %}</strong>
+            </p>
+        </div>
 	{% block content %}
 	{% endblock %}
       </main>
 
       <ul id="menu" class="mp-nodisplay mp-dropup-menu">
         <li><a href="/logout">Logout</a></li>
-        <li id="mp-goto-account"><a href="/account">Settings</a></li>
+        <li id="mp-goto-account"><a href="/account">{% trans "Settings" %}</a></li>
       </ul>
 
 

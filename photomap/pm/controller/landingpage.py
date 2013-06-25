@@ -7,8 +7,12 @@ Created on May 27, 2013
 from django.http import HttpResponseBadRequest 
 from django.template import RequestContext
 from django.shortcuts import render_to_response
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+
 import datetime
 
+@ensure_csrf_cookie
+@csrf_protect
 def get_current(request):
     if request.method == "GET":
         today = datetime.date.today().strftime("%w")

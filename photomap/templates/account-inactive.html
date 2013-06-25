@@ -1,0 +1,12 @@
+{% extends "account.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block name %}{% trans "Account Inactive" %}{% endblock %}
+
+{% block account_info %}
+
+<p>{% trans "ACCOUNT_INACTIVE_NOTIFY" %}</p>
+
+{% endblock %}

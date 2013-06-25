@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-19 09:55+0200\n"
+"POT-Creation-Date: 2013-06-25 21:19+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,6 +15,228 @@ msgstr ""
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: pm/controller/account.py:96
+msgid "EMAIL_MATCH_ERROR"
+msgstr ""
+"The email you've given matches the email connected to your user account. "
+
+#: pm/controller/message.py:26
+msgid "REQUEST_FAIL_ERROR"
+msgstr "We weren't able to process your request. Please try again. "
+
+#: pm/controller/message.py:30
+msgid "FORM_INVALID_ERROR"
+msgstr ""
+"The data you inserted into the form seems to be invalid. Please make sure "
+"your input has the correct format for the given input field. Eg. an email "
+"input field accepts just an email address as input. "
+
+#: pm/controller/message.py:34
+msgid "USER_INACTIVE_ERROR"
+msgstr ""
+"Your account is currently inactive. Please contact the KEIKEN-Team for more "
+"information."
+
+#: pm/controller/message.py:38
+msgid "REQUEST_NOT_ALLOWED_ERROR"
+msgstr "You do not have permission for this request. "
+
+#: templates/account-active.html:6
+msgid "Account Info & Settings"
+msgstr "Account Info & Settings"
+
+#: templates/account-active.html:10
+msgid "Account Info"
+msgstr "Account Info"
+
+#: templates/account-active.html:21
+msgid "Profile picture"
+msgstr "Profile picture"
+
+#: templates/account-active.html:25 templates/team.html:36
+#: templates/team.html.py:48 templates/team.html:60
+msgid "Name"
+msgstr "Name"
+
+#: templates/account-active.html:29
+msgid "Username/Email"
+msgstr "Username/Email"
+
+#: templates/account-active.html:33
+msgid "Account-Status"
+msgstr "Account-Status"
+
+#: templates/account-active.html:34
+msgid "Active"
+msgstr "Active"
+
+#: templates/account-active.html:34
+msgid "Inactive"
+msgstr "Inactive"
+
+#: templates/account-active.html:37
+msgid "Storage Space"
+msgstr "Storage Space"
+
+#: templates/account-active.html:40
+msgid "Already in use:"
+msgstr "Already in use:"
+
+#: templates/account-active.html:44
+msgid "Free space left"
+msgstr "Free space left"
+
+#: templates/account-active.html:48
+msgid "Usage"
+msgstr "Usage"
+
+#: templates/account-active.html:49 templates/help.html:78
+msgid "Albums"
+msgstr "Albums"
+
+#: templates/account-active.html:49 templates/help.html:140
+msgid "Places"
+msgstr "Places"
+
+#: templates/account-active.html:49 templates/help.html:141
+msgid "Photos"
+msgstr "Photos"
+
+#: templates/account-active.html:59
+msgid "Update Password"
+msgstr "Update Password"
+
+#: templates/account-active.html:60
+msgid "Update Email"
+msgstr "Update Email"
+
+#: templates/account-active.html:61
+msgid "Update Profile Picture"
+msgstr "Update Profile Picture"
+
+#: templates/account-active.html:62 templates/account-active.html.py:128
+msgid "Delete Account"
+msgstr "Delete Account"
+
+#: templates/account-active.html:67
+msgid "UPDATE_PASSWORD_INFO"
+msgstr ""
+"Please choose a new password (enter twice to prevent typing errors) and "
+"confirm it with your old password. "
+
+#: templates/account-active.html:71
+msgid "UPDATE_PASSWORD_SUCCESS"
+msgstr "You successfully changed your password. "
+
+#: templates/account-active.html:73
+msgid "Old Password"
+msgstr "Old Password"
+
+#: templates/account-active.html:73 templates/account-active.html.py:77
+#: templates/account-active.html:81 templates/account-active.html.py:96
+#: templates/account-active.html:100 templates/account-active.html.py:120
+#: templates/account-active.html:124 templates/contact.html:42
+#: templates/contact.html.py:50 templates/contact.html:58
+#: templates/contact.html.py:66 templates/insert-album.html:10
+#: templates/insert-photo.html:20 templates/insert-photo.html.py:28
+#: templates/insert-place.html:10 templates/reset-password-confirm.html:24
+#: templates/reset-password-confirm.html:31 templates/update-album.html:11
+#: templates/update-photo.html:12 templates/update-place.html:12
+msgid "MANDATORY_FIELD"
+msgstr "This field is mandatory."
+
+#: templates/account-active.html:74
+msgid "OLD_PASSWORD_PLACEHOLDER"
+msgstr "Enter your old password"
+
+#: templates/account-active.html:77 templates/reset-password-confirm.html:24
+#: templates/update-album-password.html:15
+msgid "New Password"
+msgstr "New Password"
+
+#: templates/account-active.html:78
+msgid "NEW_PASSWORD_PLACEHOLDER"
+msgstr "Enter a new password"
+
+#: templates/account-active.html:81 templates/reset-password-confirm.html:31
+msgid "Repeat New Password"
+msgstr "Repeat New Password"
+
+#: templates/account-active.html:82
+msgid "NEW_PASSWORD_REPEAT_PLACEHOLDER"
+msgstr "Enter it again.."
+
+#: templates/account-active.html:85 templates/account-active.html.py:104
+#: templates/reset-password-confirm.html:36
+msgid "Save"
+msgstr "Save"
+
+#: templates/account-active.html:90
+msgid "UPDATE_EMAIL_INFO"
+msgstr "Please enter your new email address and confirm with your password. "
+
+#: templates/account-active.html:94
+msgid "UPDATE_EMAIL_SUCCESS"
+msgstr "You successfully changed your email adress."
+
+#: templates/account-active.html:96
+msgid "New Email"
+msgstr "New Email"
+
+#: templates/account-active.html:97
+msgid "NEW_EMAIL_PLACEHOLDER"
+msgstr "Enter your new email.."
+
+#: templates/account-active.html:100 templates/account-active.html.py:124
+#: templates/index-guest.html:24 templates/index-guest.html.py:49
+#: templates/index-guest.html:76 templates/index.html:52
+#: templates/index.html.py:84 templates/login-error.html:19
+msgid "Password"
+msgstr "Password"
+
+#: templates/account-active.html:101 templates/account-active.html.py:125
+#: templates/index.html:53 templates/login-error.html:20
+msgid "USER_PASSWORD_PLACEHOLDER"
+msgstr "Enter your password.."
+
+#: templates/account-active.html:114
+msgid "DELETE_ACCOUNT_INFO"
+msgstr ""
+"To delete your user account please enter your email address and password. Be "
+"aware that with deleting your account, alle your data will also get "
+"irretrievably erased. Do not continue unless you are completely certain, you "
+"do not want to use this account anymore. "
+
+#: templates/account-active.html:120 templates/contact.html:49
+#: templates/index-guest.html:43 templates/index-guest.html.py:72
+#: templates/index.html:48 templates/index.html.py:80
+#: templates/login-error.html:15 templates/reset-password.html:18
+msgid "Email"
+msgstr "Email"
+
+#: templates/account-active.html:121 templates/index.html:49
+#: templates/login-error.html:16
+msgid "USER_EMAIL_PLACEHOLDER"
+msgstr "Enter your email.."
+
+#: templates/account-active.html:135
+msgid "ACCOUNTS_TEST_USER_INFO"
+msgstr "This is just a test-account. You cannot modify any settings. "
+
+#: templates/account-inactive.html:6
+msgid "Account Inactive"
+msgstr "Account Inactive"
+
+#: templates/account-inactive.html:10
+msgid "ACCOUNT_INACTIVE_NOTIFY"
+msgstr ""
+"Your account was deactivated. Please <a href='/contact'>contact the KEIKEN-"
+"Team</a> for more information. "
+
+#: templates/account.html:6
+msgid "Account"
+msgstr "Account"
 
 #: templates/album-share-login.html:7 templates/index-guest.html:22
 msgid "KEIKEN_GUEST_LOGIN"
@@ -66,71 +288,82 @@ msgstr "Delete"
 msgid "control-title modify"
 msgstr "Edit"
 
-#: templates/base.html:111 templates/index-guest.html:17
+#: templates/base.html:112 templates/index-guest.html:17
 msgid "JS_DISABLED_WARNING"
 msgstr ""
 "You have disabled javascript in your browser settings. KEIKEN makes heavy "
 "use of javascript, so in order to use KEIKEN you have to activate it. "
 
-#: templates/base.html:132
+#: templates/base.html:118
+#, fuzzy
+msgid "COOKIES_DISABLED_WARNING"
+msgstr ""
+"You have disabled javascript in your browser settings. KEIKEN makes heavy "
+"use of javascript, so in order to use KEIKEN you have to activate it. "
+
+#: templates/base.html:127
+msgid "Settings"
+msgstr "Settings"
+
+#: templates/base.html:138
 msgid "Login or Register"
 msgstr "Login or Register"
 
-#: templates/base.html:132
+#: templates/base.html:138
 msgid "Anmelden/Registrierung"
 msgstr "Login and Registration"
 
-#: templates/base.html:136 templates/payment.html:6
+#: templates/base.html:142 templates/payment.html:6
 msgid "Spenden"
 msgstr "Donate"
 
-#: templates/base.html:137 templates/not-supported-old.html:64
+#: templates/base.html:143 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Introduction of the project and core team members"
 
-#: templates/base.html:137 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:143 templates/team.html:6 templates/team.html.py:8
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:138 templates/not-supported-old.html:62
+#: templates/base.html:144 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Contact, Support, Ask a Question"
 
-#: templates/base.html:138 templates/contact.html:6
+#: templates/base.html:144 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:37
 msgid "Kontakt"
 msgstr "Contact"
 
-#: templates/base.html:139 templates/not-supported-old.html:60
+#: templates/base.html:145 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "View Data Use Policy"
 
-#: templates/base.html:139 templates/privacy.html:5
+#: templates/base.html:145 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Privacy"
 
-#: templates/base.html:140 templates/not-supported-old.html:61
+#: templates/base.html:146 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "View Copyright Statement"
 
-#: templates/base.html:140 templates/copyright.html:6
+#: templates/base.html:146 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:141 templates/not-supported-old.html:63
+#: templates/base.html:147 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "View FAQ, Tutorial and help-page"
 
-#: templates/base.html:141 templates/help.html:6
+#: templates/base.html:147 templates/help.html:6
 msgid "Hilfe"
 msgstr "Help"
 
-#: templates/base.html:142 templates/not-supported-old.html:59
+#: templates/base.html:148 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "View Legal Terms of KEIKEN"
 
-#: templates/base.html:142 templates/impressum.html:6
+#: templates/base.html:148 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Legal Terms (Impressum)"
@@ -169,21 +402,6 @@ msgstr ""
 #: templates/update-place.html:12
 msgid "NAME"
 msgstr "Name"
-
-#: templates/contact.html:42 templates/contact.html.py:50
-#: templates/contact.html:58 templates/contact.html.py:66
-#: templates/insert-album.html:10 templates/insert-photo.html:20
-#: templates/insert-photo.html.py:28 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:12
-msgid "MANDATORY_FIELD"
-msgstr "This field is mandatory."
-
-#: templates/contact.html:49 templates/index-guest.html:43
-#: templates/index-guest.html.py:72 templates/index.html:43
-#: templates/index.html.py:75
-msgid "Email"
-msgstr "Email"
 
 #: templates/contact.html:57
 msgid "SUBJECT"
@@ -367,10 +585,18 @@ msgstr ""
 #, fuzzy
 msgid "KEIKEN_PRESENTATION_MEANING"
 msgstr ""
-"The name KEIKEN originates from the japanese term for 'experience'. "
-"The idea was to actually 'experience' the journeys and adventures others "
-"make with looking at their photos, reading the descriptions and following "
-"travels on the map. "
+"The name KEIKEN originates from the japanese term for 'experience'. The idea "
+"was to actually 'experience' the journeys and adventures others make with "
+"looking at their photos, reading the descriptions and following travels on "
+"the map. "
+
+#: templates/help.html:36
+#, fuzzy
+msgid "KEIKEN_PRESENTATION_NOT"
+msgstr ""
+"As a photo-book KEIKEN is meant to present images and stories of your "
+"journeys in a pleasant way to all the people you want to share them with. "
+"Following this motto there are two key goals:"
 
 #: templates/help.html:37
 msgid "KEIKEN_PRESENTATION_BUT_1"
@@ -502,10 +728,6 @@ msgstr ""
 "submitting a new one. If you need any help, feel free to <a href='/contact' "
 "title='To contactform'>contact us</a>."
 
-#: templates/help.html:78
-msgid "Albums"
-msgstr "Albums"
-
 #: templates/help.html:82 templates/help.html.py:145 templates/help.html:210
 msgid "What is this?"
 msgstr "What is this?"
@@ -631,14 +853,6 @@ msgstr ""
 "click on the other hand will lead you to the 'Albumview' of the album in "
 "which you can add places to the album and upload photos - guests will just "
 "see this 'Albumview'."
-
-#: templates/help.html:140
-msgid "Places"
-msgstr "Places"
-
-#: templates/help.html:141
-msgid "Photos"
-msgstr "Photos"
 
 #: templates/help.html:154
 msgid "TUTORIAL_PLACE_EXPLANATION"
@@ -776,52 +990,47 @@ msgstr ""
 "contact data."
 
 #: templates/index-guest.html:6 templates/index-guest.html.py:8
-#: templates/index.html:6 templates/index.html.py:8
+#: templates/index.html:13 templates/index.html.py:15
 msgid "Willkommen"
 msgstr "Welcome"
 
-#: templates/index-guest.html:20 templates/index.html:25
+#: templates/index-guest.html:20 templates/index.html:32
 msgid "Welcome to KEIKEN!"
 msgstr "Welcome to KEIKEN!"
 
-#: templates/index-guest.html:21 templates/index.html:26
+#: templates/index-guest.html:21 templates/index.html:33
 msgid "KEIKEN_ABSTRACT"
 msgstr ""
 "KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='What is "
 "KEIKEN?'>[*]</a></sup> is a free online photo-book designed to make sharing "
 "your adventures abroad and other interesting experiences easy and vivid!"
 
-#: templates/index-guest.html:24 templates/index-guest.html.py:49
-#: templates/index-guest.html:76 templates/index.html:49
-#: templates/index.html.py:79
-msgid "Password"
-msgstr "Password"
-
-#: templates/index-guest.html:32 templates/index.html:32
+#: templates/index-guest.html:32 templates/index.html:39
 msgid "Login"
 msgstr "Login"
 
-#: templates/index-guest.html:33 templates/index.html:33
+#: templates/index-guest.html:33 templates/index.html:40
 msgid "Registration"
 msgstr "Registration"
 
-#: templates/index-guest.html:55 templates/index.html:58
+#: templates/index-guest.html:55 templates/index.html:62
+#: templates/login-error.html:29
 msgid "Sign in"
 msgstr "Sign in"
 
-#: templates/index-guest.html:64 templates/index.html:67
+#: templates/index-guest.html:64 templates/index.html:72
 msgid "First name"
 msgstr "First name"
 
-#: templates/index-guest.html:68 templates/index.html:71
+#: templates/index-guest.html:68 templates/index.html:76
 msgid "Last name"
 msgstr "Last name"
 
-#: templates/index-guest.html:80 templates/index.html:83
+#: templates/index-guest.html:80 templates/index.html:88
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: templates/index-guest.html:84 templates/index.html:87
+#: templates/index-guest.html:84 templates/index.html:92
 msgid "Register"
 msgstr "Register"
 
@@ -892,6 +1101,10 @@ msgstr "View our first album"
 msgid "TRY_KEIKEN"
 msgstr "Try KEIKEN yourself"
 
+#: templates/index.html:65 templates/login-error.html:10
+msgid "Help, I forgot my password!"
+msgstr "Help, I forgot my password!"
+
 #: templates/insert-album.html:5
 msgid "INSERT_ALBUM"
 msgstr "Insert Album"
@@ -934,6 +1147,17 @@ msgstr ""
 #: templates/insert-place.html:5
 msgid "INSERT_PLACE"
 msgstr "Insert Place"
+
+#: templates/login-error.html:6
+msgid "Login Error"
+msgstr "Login Error"
+
+#: templates/login-error.html:9
+msgid "LOGIN_ERROR_NOTE"
+msgstr ""
+"The given password doesn't match your email address. Please try again! In "
+"case you forgot your password, use the following link to reset your "
+"password. "
 
 #: templates/payment.html:8
 msgid "Spenden und Zahlungsbedingungen"
@@ -1228,9 +1452,55 @@ msgstr ""
 "We will send all the available and required information to you, in "
 "complaisance to your legal right to information."
 
-#: templates/team.html:36 templates/team.html.py:48 templates/team.html:60
-msgid "Name"
-msgstr "Name"
+#: templates/reset-password-complete.html:6
+msgid "Reset Password Success"
+msgstr "Reset Password Success"
+
+#: templates/reset-password-complete.html:10
+msgid "RESET_PASSWORD_COMPLETE"
+msgstr ""
+"Your new password has been set. You may go ahead and <a href='/login'>log "
+"in</a> now."
+
+#: templates/reset-password-confirm.html:6 templates/reset-password.html:5
+msgid "Reset Password"
+msgstr "Reset Password"
+
+#: templates/reset-password-confirm.html:8
+msgid "Define New Password"
+msgstr "Define New Password"
+
+#: templates/reset-password-confirm.html:15
+msgid "RESET_PASSWORD_GIVE_NEW_PASSWORD"
+msgstr ""
+"To set a password, please enter your new password twice to prevent typing "
+"errors and submit."
+
+#: templates/reset-password-confirm.html:41
+msgid "RESET_PASSWORD_FAILURE_H1"
+msgstr "Password reset not possible."
+
+#: templates/reset-password-confirm.html:42
+msgid "RESET_PASSWORD_FAILURE_P"
+msgstr ""
+"The password reset link was invalid, possibly because it has already been "
+"used or is outdated. Please request a new password reset."
+
+#: templates/reset-password-done.html:6
+msgid "Reset Email Sent"
+msgstr "Reset Email Sent"
+
+#: templates/reset-password-done.html:10
+msgid "RESET_PASSWORD_EMAIL_SENT"
+msgstr ""
+"We've emailed you instructions for setting your password to the email "
+"address you submitted. You should be receiving it shortly."
+
+#: templates/reset-password.html:8
+msgid "RESET_PASSWORD_GIVE_EMAIL"
+msgstr ""
+"Please specify your email address to receive instructions for resetting the "
+"password."
 
 #: templates/team.html:38 templates/team.html.py:50 templates/team.html:62
 msgid "Verantwortlich für"
@@ -1238,11 +1508,11 @@ msgstr "Responsible for"
 
 #: templates/team.html:39 templates/team.html.py:51
 msgid "Back End"
-msgstr "Back End"
+msgstr "Back end"
 
 #: templates/team.html:39 templates/team.html.py:63
 msgid "Front End"
-msgstr "Front End"
+msgstr "Frontend"
 
 #: templates/team.html:39 templates/team.html.py:63
 msgid "Design"
@@ -1255,10 +1525,6 @@ msgstr "Motivation for the project"
 #: templates/update-album-password.html:5
 msgid "UPDATE_ALBUM_PASSWORD"
 msgstr "Share-link & album password"
-
-#: templates/update-album-password.html:15
-msgid "New Password"
-msgstr "New Password"
 
 #: templates/update-album-password.html:16
 msgid "INPUT_PLACEHOLDER_SHARE_PASSWORD"
@@ -1334,6 +1600,33 @@ msgstr "Next Image"
 #: templates/view-album.html:87
 msgid "Bild"
 msgstr "Image"
+
+#~ msgid "To Login"
+#~ msgstr "Login"
+
+#, fuzzy
+#~ msgid "INPUT_OLD_PASSWORD"
+#~ msgstr ""
+#~ "Not necessary, if you've already defined a password for this album.."
+
+#, fuzzy
+#~ msgid "INPUT_NEW_PASSWORD"
+#~ msgstr ""
+#~ "Not necessary, if you've already defined a password for this album.."
+
+#, fuzzy
+#~ msgid "INPUT_CONFIRM_PASSWORD"
+#~ msgstr ""
+#~ "Not necessary, if you've already defined a password for this album.."
+
+#, fuzzy
+#~ msgid "INPUT_DELETE_USER_PASSWORD"
+#~ msgstr ""
+#~ "Not necessary, if you've already defined a password for this album.."
+
+#, fuzzy
+#~ msgid "Contact Form"
+#~ msgstr "Contact"
 
 #~ msgid "GALLERY_NOT_STARTED"
 #~ msgstr ""

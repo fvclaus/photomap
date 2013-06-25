@@ -10,6 +10,9 @@ from django.contrib.auth.models import User, check_password
 from django.contrib.auth.backends import ModelBackend
 from django.core.validators import email_re
 from django.core import serializers
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
+from django.template import RequestContext
 
 from pm.form.authentication import LoginForm, RegisterForm
 from pm.model.place import Place
@@ -25,6 +28,8 @@ import re
 
 logger = logging.getLogger(__name__)
 
+@sensitive_post_parameters("password")
+@csrf_protect
 def login(request):
     if request.method == "GET":
         return landingpage.get_current(request) #render_to_response("login.html", data)
@@ -39,16 +44,29 @@ def login(request):
             if not (user == None or user.is_anonymous()):
                 if user.is_active:
                     auth_login(request, user)
-                    response = success(next = redirect_to)
+                    response = HttpResponseRedirect(redirect_to)
                     set_cookie(response, "quota", user.userprofile.quota)
                     set_cookie(response, "used_space", user.userprofile.used_space)
                     return response
                 else:
-                    return user_inactive_error(email = loginform.cleaned_data["email"])
+                    return HttpResponseRedirect("/account/inactive")
             else:
-                return request_fail_error(email = loginform.cleaned_data["email"])
+                response = "/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
+                return HttpResponseRedirect(response)
         else:
-            return form_invalid_error(email = loginform.cleaned_data["email"])
+            response = "/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
+            return HttpResponseRedirect(response)
+
+@csrf_protect
+def login_error(request):
+    if request.method == "POST" or request.method == "GET":
+        data = {
+                "next": request.REQUEST.get("next"),
+                "email": request.REQUEST.get("email")
+                }
+        return render_to_response("login-error.html", data, context_instance = RequestContext(request))
+    else:
+        return HttpResponseBadRequest()
 
 def logout(request):
     auth_logout(request)

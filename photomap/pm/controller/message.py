@@ -34,5 +34,9 @@ def user_inactive_error(**kwargs):
     msg = _("USER_INACTIVE_ERROR")
     return error(msg, **kwargs)
 
+def request_not_allowed_error(**kwargs):
+    msg = _("REQUEST_NOT_ALLOWED_ERROR")
+    return error(msg, **kwargs)
+
 def jsonify(msg):
     return json.dumps(msg, indent = 4)

@@ -17,7 +17,3 @@ class UserUpdateEmailForm(forms.Form):
 class UserDeleteAccountForm(forms.Form):
     user_email = forms.EmailField()
     user_password = forms.CharField(widget = forms.PasswordInput)
-    
-
-class UserForgotPasswordForm(forms.Form):
-    email = forms.EmailField()
