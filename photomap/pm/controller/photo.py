@@ -139,13 +139,13 @@ def insert(request):
         return render_to_response("insert-photo.html", {"form":form, "place":place})
 
 @login_required
-def update(request):
+def update(request, id):
     if request.method == "POST":
         form = PhotoUpdateForm(request.POST)
         if form.is_valid():
             photo = None
             try:
-                id = form.cleaned_data["id"]
+                id = int(id)
                 #TODO we need to update the used_space cookie
                 logger.info("User %d is trying to update Photo %d." % (request.user.pk, id))
                 photo = Photo.objects.get(pk = id)
@@ -214,7 +214,7 @@ def update_multiple(request):
 def delete(request):
     if request.method == "POST":
         try:
-            id = int(request.POST["id"])
+            id = int(id)
             logger.info("User %d is trying to delete Photo %d." % (request.user.pk, id))
             photo = Photo.objects.get(pk = id)
             if not is_authorized(photo, request.user):

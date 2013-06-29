@@ -17,3 +17,8 @@ class UserUpdateEmailForm(forms.Form):
 class UserDeleteAccountForm(forms.Form):
     user_email = forms.EmailField()
     user_password = forms.CharField(widget = forms.PasswordInput)
+    
+class UserDeleteAccountReasonsForm(forms.Form):
+    cause = forms.RadioSelect()
+    cause_message = forms.Textarea()
+    optional_message = forms.Textarea()

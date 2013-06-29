@@ -5,7 +5,7 @@
 {% block title %}{% trans "INSERT_PLACE" %}{% endblock %}<!-- for the translation with django -->
 
 {% block content %}
-<form class="mp-dialog-content" name="update-album" action="/insert-place" method="post">
+<form class="mp-dialog-content" name="insert-place" action="" method="post">
   <div>
     <label for="insert-title">{% trans "NAME" %} <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup></label>
     <input class="mp-input-name" type="text" name="title" id="insert-title" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'INPUT_PLACEHOLDER_TITLE' %}"/>

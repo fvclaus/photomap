@@ -13,7 +13,6 @@ class InsertPlaceForm(forms.ModelForm):
         exclude = ("date")
         
 class UpdatePlaceForm(forms.ModelForm):
-    id = forms.IntegerField()
     class Meta:
         model = Place
         exclude = ("album", "lat", "lon","date")

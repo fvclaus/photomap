@@ -124,13 +124,16 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                 });
                 this.view.fit(latLngData);
              },
-             _insert : function (event, model) {
+             _insert : function (event, modelName) {
                  var instance = this,
                      lat = event.lat,
-                     lng = event.lng;
+                     lng = event.lng,
+                     // build url -> format /models/model/(id/)request
+                     requestUrl = "/" + modelName + "s/" + modelName + "/insert";
 
                  communicator.publish("load:dialog", {
                     load : function () {
+                       $("form[name='insert-" + modelName + "']").attr("action", requestUrl);
                        $("input[name=lat]").val(lat);
                        $("input[name=lon]").val(lng);
                        if ($("input[name=album]").size() > 0) {
@@ -149,9 +152,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                        console.log("insert success");
                        data.lng = lng;
                        data.lat = lat;
-                       communicator.publish("insert:" + model, data);
+                       communicator.publish("insert:" + modelName, data);
                     },
-                    url : "/insert-" + model,
+                    url : requestUrl,
                     context : this
                  });
               }

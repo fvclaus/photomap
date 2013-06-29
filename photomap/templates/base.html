@@ -123,7 +123,7 @@
       </main>
 
       <ul id="menu" class="mp-nodisplay mp-dropup-menu">
-        <li><a href="/logout">Logout</a></li>
+        <li><a href="/account/auth/logout">Logout</a></li>
         <li id="mp-goto-account"><a href="/account">{% trans "Settings" %}</a></li>
       </ul>
 
@@ -135,7 +135,7 @@
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
 		{% else %}
 		  <span class="mp-login-link">
-		    <a href="/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
+		    <a href="/account/auth/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
 		  </span>
 		{% endif %}
 	      <section class="mp-internal-links">

@@ -55,7 +55,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              },
              insert : function () {
                 var instance = this,
-                    place = state.getCurrentLoadedPlace().getModel();
+                    place = state.getCurrentLoadedPlace().getModel(),
+                    // build url -> format /models/model/(id/)request
+                    requestUrl = "/photos/photo/insert";
 
                 // if-clause to prevent method from being executed if there are no places yet
                 if (state.getPlaces().length !== 0) {
@@ -64,6 +66,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                          var input = this;
                          console.log(this);
                          $("#insert-photo-tabs").tabs();
+                         $("form[name='insert-photo']").attr("action", requestUrl);
                          $("input[name='place']").val(place.getId());
                          this.$title = $("input[name='title']");
                          this.$description = $("textarea[name='description']");
@@ -88,18 +91,21 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                       success : function (data) {
                          communicator.publish("insert:photo", data);
                       },
-                      url : "/insert-photo"
+                      url : requestUrl
                    });
                 }
              },
              update : function () {
-                var model = this.model.getModelType().toLowerCase(),
-                    instance = this;
+                var modelName = this.model.getModelType().toLowerCase(),
+                    id = this.model.getId(),
+                    instance = this,
+                    // build url -> format /models/model/(id/)request
+                    requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/update";
 
                 communicator.publish("load:dialog", {
                    load : function () {
+                      $("form[name='update-" + modelName + "']").attr("action", requestUrl);
                       //prefill with values from selected picture
-                      $("input[name=id]").val(instance.model.getId());
                       $("input[name=order]").val(instance.model.getOrder());
                       this.$title = $("input[name=title]").val(instance.model.getTitle());
                       this.$description = $("textarea[name=description]").val(instance.model.getDescription());
@@ -112,26 +118,29 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                    success : function (data) {
                       instance.model.setTitle(this._title);
                       instance.model.setDescription(this._description);
-                      communicator.publish("change:" + model, instance.model);
+                      communicator.publish("change:" + modelName, instance.model);
                    },
-                   url : "/update-" + model,
+                   url : requestUrl,
                    context : this
                 });
              },
              "delete" : function () {
-                var model = this.model.getModelType().toLowerCase(),
-                    instance = this;
+                var modelName = this.model.getModelType().toLowerCase(),
+                    id = this.model.getId(),
+                    instance = this,
+                    // build url -> format /models/model/(id/)request
+                    requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/delete";
                     
                 communicator.publish("load:dialog", {
                    type : CONFIRM_DIALOG,
                    load : function () {
-                      $("input[name='id']").val(instance.model.getId());
-                      $("span#mp-dialog-" + model + "-title").text("'" + instance.model.getTitle() + "'?");
+                      $("form[name='delete-" + modelName + "']").attr("action", requestUrl);
+                      $("span#mp-dialog-" + modelName + "-title").text("'" + instance.model.getTitle() + "'?");
                    },
                    success : function (data) {
-                      communicator.publish("delete:" + model, instance.model);
+                      communicator.publish("delete:" + modelName, instance.model);
                    },
-                   url: "/delete-" + model,
+                   url: requestUrl,
                    context : this
                 });
              }

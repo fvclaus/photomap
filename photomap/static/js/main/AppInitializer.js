@@ -63,31 +63,28 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
               * @private
               */
              _getAlbums : function () {
-                this._getInitialData("/get-all-albums");
+                this._getInitialData("/albums/get");
              },
              /**
               * @private
               */
              _getPlaces : function () {
                 
-                var idFromUrl = /-(\d+)$/,
-                    data = {
-                       "id" : idFromUrl.exec(window.location.pathname)[1]
-                    };
+                var idFromUrl = /\/(\d+)\//,
+                    id = idFromUrl.exec(window.location.pathname)[1];
                 
-                this._getInitialData("/get-album", data);
+                this._getInitialData("/albums/album/" + id + "/get");
              },
              /**
               * @private
               */
-             _getInitialData : function (url, data) {
+             _getInitialData : function (url) {
 
                 var processedData,
                    instance = this;
                 // get the albums and their info
                 $.ajax({
                    "url" : url,
-                   "data": data || null,
                    success :  function (data) {
                       
                       //TODO "get-all-albums" does not return a data.success or data.error

@@ -33,8 +33,6 @@ class PhotoInsertForm(forms.ModelForm):
 
 
 class PhotoUpdateForm(forms.ModelForm):
-    id = forms.IntegerField()
-        
     class Meta:
         model = Photo
         exclude = ("photo", "place", "thumb", "date", "size")

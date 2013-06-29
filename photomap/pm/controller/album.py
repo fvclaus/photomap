@@ -40,13 +40,13 @@ SECRET_KEY_POOL = string.ascii_letters + string.digits
 logger = logging.getLogger(__name__)
 
 @login_required
-def update_password(request):
+def update_password(request, id):
     if request.method == "POST":
         user = request.user
         form = AlbumPasswordUpdateForm(request.POST)
         if form.is_valid():
             try:
-                album_id = form.cleaned_data["album"]
+                album_id = int(id)
                 logger.debug("User %d is trying to set new password for Album %d." % (request.user.pk, album_id))
                 album = Album.objects.get(pk = album_id, user = user)
                 password = hashers.make_password(form.cleaned_data["password"])
@@ -83,9 +83,9 @@ def demo(request):
     else:
         return HttpResponseBadRequest()
 
-def view(request, secret, album_id):
+def view(request, id, secret):
     try:
-        album_id = int(album_id)
+        album_id = int(id)
         album = Album.objects.get(pk=album_id)
         
         logger.debug("User is trying to access album %d with secret %s." % (album_id, secret))
@@ -126,11 +126,11 @@ def view(request, secret, album_id):
 
 
 
-def get(request):
+def get(request, id):
     if request.method == "GET":
         try:
             user = request.user
-            album_id = int(request.GET["id"])
+            album_id = int(id)
             
             
             logger.info("User %s is trying to get Album %d." % (str(request.user), album_id))    
@@ -201,12 +201,12 @@ def insert(request):
         return render_to_response("insert-album.html")
 
 @login_required
-def update(request):
+def update(request, id):
     if request.method == "POST":
         form = AlbumUpdateForm(request.POST)
         if form.is_valid():
+            id = int(id)
             album = None
-            id = form.cleaned_data["id"]
             logger.info("Trying to update Album %d." % id)
             try:
                 album = Album.objects.get(user = request.user, pk = id)
@@ -223,10 +223,10 @@ def update(request):
         return render_to_response("update-album.html")  
 
 @login_required
-def delete(request):
+def delete(request, id):
     if request.method == "POST":
         try:
-            id = int(request.POST["id"])
+            id = int(id)
             logger.info("User %d is trying to delete Album %d." % (request.user.pk, id))
             album = Album.objects.get(user = request.user, pk = id)
             size = 0

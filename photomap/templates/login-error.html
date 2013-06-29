@@ -7,10 +7,10 @@
 
 {% block account_info %}
 	<p>{% trans "LOGIN_ERROR_NOTE" %}</p>
-    <p style="text-align: center"><a href="/account/reset-password">{% trans "Help, I forgot my password!" %}</a></p>
+    <p style="text-align: center"><a href="/account/password/reset">{% trans "Help, I forgot my password!" %}</a></p>
 {% endblock %}
 {% block account_settings %}
-	<form id="mp-login-form" class="mp-form" action="/login" method="post">
+	<form id="mp-login-form" class="mp-form" action="/account/auth/login" method="post">
       <p>
         <label for="login_email">{% trans "Email" %}:</label>
         <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>

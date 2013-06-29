@@ -5,8 +5,7 @@
 {% block title %}{% trans "UPDATE_PHOTO" %}{% endblock %}
   
 {% block content %}
-<form class="mp-dialog-content" action="/update-photo" method="post">
-  <input type="hidden" name="id" required="required" />
+<form class="mp-dialog-content" name="update-photo" action="" method="post">
   <input type="hidden" name="order" />
   <div>
     <label for="update-title">{% trans "NAME" %} <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup></label> 

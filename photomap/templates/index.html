@@ -43,7 +43,7 @@
   <!-- hide tabs to avoid ugly moving around during page load -->
   <div class="mp-login-tab" id="mp-login">
     <!-- action is necessary because this template is also populated by /test -->
-    <form class="mp-form" action="/login" method="post">
+    <form class="mp-form" action="/account/auth/login" method="post">
       <p>
         <label for="login_email">{% trans "Email" %}:</label>
         <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>
@@ -62,7 +62,7 @@
 		<input id="login_submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
       </p>
     </form>
-    <a href="/account/reset-password" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
+    <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
   </div>
   <!-- hide tabs to avoid ugly moving around during page load -->
   <div class="mp-login-tab" id="mp-register">

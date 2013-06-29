@@ -106,12 +106,15 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 this.view.getStoredPosition();
              },
              update : function () {
-                 var model = this.model.getModelType().toLowerCase(),
-                     instance = this;
+                 var modelName = this.model.getModelType().toLowerCase(),
+                     id = this.model.getId(),
+                     instance = this,
+                     // build url -> format /models/model/(id/)request
+                     requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/update";
 
                  communicator.publish("load:dialog", {
                     load : function () {
-                       $("input[name=id]").val(instance.model.getId());
+                       $("form[name='update-" + modelName + "']").attr("action", requestUrl);
                        this.$title = $("input[name=title]").val(instance.model.getTitle());
                        this.$description = $("textarea[name=description]").val(instance.model.getDescription());
                     },
@@ -123,38 +126,45 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     success : function () {
                        instance.model.setTitle(this._title);
                        instance.model.setDescription(this._description);
-                       communicator.publish("change:" + model, instance.model);
+                       communicator.publish("change:" + modelName, instance.model);
                     },
-                    url : "/update-" + model,
+                    url : requestUrl,
                     context : this
                  });
               },
               "delete" : function () {
-                var model = this.model.getModelType().toLowerCase(),
-                    instance = this;
-                    
-                communicator.publish("load:dialog", {
-                   type : CONFIRM_DIALOG,
-                   load : function () {
-                      $("input[name='id']").val(instance.model.getId());
-                      $("span#mp-dialog-" + model + "-title").text("'" + instance.model.getTitle() + "'?");
-                   },
-                   success : function () {
-                      communicator.publish("delete:" + model, instance.model);
-                   },
-                   url: "/delete-" + model,
-                   context : this
-                });
+                 var modelName = this.model.getModelType().toLowerCase(),
+                     id = this.model.getId(),
+                     instance = this,
+                     // build url -> format /models/model/(id/)request
+                     requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/delete";
+                     
+                 communicator.publish("load:dialog", {
+                    type : CONFIRM_DIALOG,
+                    load : function () {
+                       $("form[name='delete-" + modelName + "']").attr("action", requestUrl);
+                       $("span#mp-dialog-" + modelName + "-title").text("'" + instance.model.getTitle() + "'?");
+                    },
+                    success : function () {
+                       communicator.publish("delete:" + modelName, instance.model);
+                    },
+                    url: requestUrl,
+                    context : this
+                 });
              },
              share : function () {
-                 var model = this.model.getModelType().toLowerCase(),
-                     instance = this;
+                 var modelName = this.model.getModelType().toLowerCase(),
+                     id = this.model.getId(),
+                     instance = this,
+                     // build url -> format /models/model/(id/)request
+                     requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/password/update";
 
                  communicator.publish("load:dialog", {
-                    url : "/update-album-password",
+                    // build url -> format /models/model/(id/)request
+                    url : requestUrl,
                     load : function () {
-                       $("input[name='album']").val(instance.model.getId());
-                       $("input[name='share']").val("http://" + window.location.host + "/album/view/" + instance.model.getSecret() + "-" + instance.model.getId());
+                       $("form[name='share-" + modelName + "']").attr("action", requestUrl);
+                       $("input[name='share']").val("http://" + window.location.host + "/albums/album/" + id + "/view/" + instance.model.getSecret());
                        $("input[name='share']").on("click focus", function () {
                           $(this).select();
                        }).focus();
@@ -258,7 +268,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 // switch to albumview if album is opened
                 if (this.model.getModelType() === "Album") {
                    
-                   window.location.href = '/album/view/' + this.model.getSecret() + '-' + this.model.getId();
+                   // build url -> format models/model/(id/)request
+                   window.location.href = '/albums/album/' + this.model.getId() + '/view/' + this.model.getSecret();
                    
                 // reset ui and (re)start gallery when place is opened
                 } else if (this.model.getModelType() === "Place") {

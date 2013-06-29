@@ -51,10 +51,10 @@ def login(request):
                 else:
                     return HttpResponseRedirect("/account/inactive")
             else:
-                response = "/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
+                response = "/account/auth/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
                 return HttpResponseRedirect(response)
         else:
-            response = "/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
+            response = "/account/auth/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
             return HttpResponseRedirect(response)
 
 @csrf_protect

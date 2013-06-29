@@ -5,8 +5,7 @@
 {% block title %}{% trans "DELETE_PHOTO" %}{% endblock %}
   
 {% block content %}
-<form class="mp-dialog-content" action="/delete-photo" method="post">
-  <input type="hidden" name="id" required="required"/>
+<form class="mp-dialog-content" name="delete-photo" action="" method="post">
 </form>
 <div>{% trans "DELETE_PHOTO_QUESTION" %}<span id="mp-dialog-photo-title"></span></div>
 {% endblock %}

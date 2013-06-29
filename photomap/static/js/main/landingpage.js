@@ -45,7 +45,8 @@ $(document).ready(function () {
    //check whether user is logged in or not
    if ($(".mp-login-link").size() > 0) {
       //open the login-box automatically when coming from another non-interactive by clicking on "Login/Registration"
-      if (window.location.pathname === "/login") {
+      if (window.location.pathname === "/account/auth/login") {
+         console.log(window.location.pathname);
          $(window).load(function () {
             $(".mp-login-link").find("a").trigger("click");
             $("#login_email").focus();

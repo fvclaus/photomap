@@ -36,13 +36,13 @@ def insert(request):
         return render_to_response("insert-place.html")
 
 @login_required
-def update(request):
+def update(request, id):
     if request.method == "POST":
         form = UpdatePlaceForm(request.POST)
         if form.is_valid():
             place = None
             try:
-                id = form.cleaned_data["id"]
+                id = int(id)
                 logger.debug("User %d is trying to update Place %d." % (request.user.pk, id))
                 place = Place.objects.get(pk = id)
             except Place.DoesNotExist: 
@@ -62,10 +62,10 @@ def update(request):
             
 
 @login_required
-def delete(request):
+def delete(request, id):
     if request.method == "POST":
         try:
-            id = int(request.POST["id"])
+            id = int(id)
             logger.info("User %d is trying to delete Place %d." % (request.user.pk, id))
             place = Place.objects.get(pk = id)
             if not is_authorized(place, request.user):

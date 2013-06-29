@@ -3,6 +3,13 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
+{% block extrajs %}
+{% load compress %}
+{% compress js %}
+<script type="text/javascript" src="/static/js/main/account.js" ></script>
+{% endcompress %}
+{% endblock %}
+
 {% block title %}{% trans "Account" %}{% endblock %}
 
 {% block pageID %}account{% endblock %}

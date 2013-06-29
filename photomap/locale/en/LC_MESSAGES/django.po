@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-25 21:19+0200\n"
+"POT-Creation-Date: 2013-06-29 16:52+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pm/controller/account.py:96
+#: pm/controller/account.py:100
 msgid "EMAIL_MATCH_ERROR"
 msgstr ""
 "The email you've given matches the email connected to your user account. "
@@ -103,104 +103,104 @@ msgstr "Places"
 msgid "Photos"
 msgstr "Photos"
 
-#: templates/account-active.html:59
+#: templates/account-active.html:62
 msgid "Update Password"
 msgstr "Update Password"
 
-#: templates/account-active.html:60
+#: templates/account-active.html:63
 msgid "Update Email"
 msgstr "Update Email"
 
-#: templates/account-active.html:61
+#: templates/account-active.html:64
 msgid "Update Profile Picture"
 msgstr "Update Profile Picture"
 
-#: templates/account-active.html:62 templates/account-active.html.py:128
+#: templates/account-active.html:65 templates/account-active.html.py:131
 msgid "Delete Account"
 msgstr "Delete Account"
 
-#: templates/account-active.html:67
+#: templates/account-active.html:70
 msgid "UPDATE_PASSWORD_INFO"
 msgstr ""
 "Please choose a new password (enter twice to prevent typing errors) and "
 "confirm it with your old password. "
 
-#: templates/account-active.html:71
+#: templates/account-active.html:74
 msgid "UPDATE_PASSWORD_SUCCESS"
 msgstr "You successfully changed your password. "
 
-#: templates/account-active.html:73
+#: templates/account-active.html:76
 msgid "Old Password"
 msgstr "Old Password"
 
-#: templates/account-active.html:73 templates/account-active.html.py:77
-#: templates/account-active.html:81 templates/account-active.html.py:96
-#: templates/account-active.html:100 templates/account-active.html.py:120
-#: templates/account-active.html:124 templates/contact.html:42
+#: templates/account-active.html:76 templates/account-active.html.py:80
+#: templates/account-active.html:84 templates/account-active.html.py:99
+#: templates/account-active.html:103 templates/account-active.html.py:123
+#: templates/account-active.html:127 templates/contact.html:42
 #: templates/contact.html.py:50 templates/contact.html:58
 #: templates/contact.html.py:66 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-photo.html.py:28
-#: templates/insert-place.html:10 templates/reset-password-confirm.html:24
-#: templates/reset-password-confirm.html:31 templates/update-album.html:11
+#: templates/insert-place.html:10 templates/reset-password-confirm.html:20
+#: templates/reset-password-confirm.html:27 templates/update-album.html:11
 #: templates/update-photo.html:12 templates/update-place.html:12
 msgid "MANDATORY_FIELD"
 msgstr "This field is mandatory."
 
-#: templates/account-active.html:74
+#: templates/account-active.html:77
 msgid "OLD_PASSWORD_PLACEHOLDER"
 msgstr "Enter your old password"
 
-#: templates/account-active.html:77 templates/reset-password-confirm.html:24
+#: templates/account-active.html:80 templates/reset-password-confirm.html:20
 #: templates/update-album-password.html:15
 msgid "New Password"
 msgstr "New Password"
 
-#: templates/account-active.html:78
+#: templates/account-active.html:81
 msgid "NEW_PASSWORD_PLACEHOLDER"
 msgstr "Enter a new password"
 
-#: templates/account-active.html:81 templates/reset-password-confirm.html:31
+#: templates/account-active.html:84 templates/reset-password-confirm.html:27
 msgid "Repeat New Password"
 msgstr "Repeat New Password"
 
-#: templates/account-active.html:82
+#: templates/account-active.html:85
 msgid "NEW_PASSWORD_REPEAT_PLACEHOLDER"
 msgstr "Enter it again.."
 
-#: templates/account-active.html:85 templates/account-active.html.py:104
-#: templates/reset-password-confirm.html:36
+#: templates/account-active.html:88 templates/account-active.html.py:107
+#: templates/account-deleted.html:42 templates/reset-password-confirm.html:32
 msgid "Save"
 msgstr "Save"
 
-#: templates/account-active.html:90
+#: templates/account-active.html:93
 msgid "UPDATE_EMAIL_INFO"
 msgstr "Please enter your new email address and confirm with your password. "
 
-#: templates/account-active.html:94
+#: templates/account-active.html:97
 msgid "UPDATE_EMAIL_SUCCESS"
 msgstr "You successfully changed your email adress."
 
-#: templates/account-active.html:96
+#: templates/account-active.html:99
 msgid "New Email"
 msgstr "New Email"
 
-#: templates/account-active.html:97
+#: templates/account-active.html:100
 msgid "NEW_EMAIL_PLACEHOLDER"
 msgstr "Enter your new email.."
 
-#: templates/account-active.html:100 templates/account-active.html.py:124
+#: templates/account-active.html:103 templates/account-active.html.py:127
 #: templates/index-guest.html:24 templates/index-guest.html.py:49
 #: templates/index-guest.html:76 templates/index.html:52
 #: templates/index.html.py:84 templates/login-error.html:19
 msgid "Password"
 msgstr "Password"
 
-#: templates/account-active.html:101 templates/account-active.html.py:125
+#: templates/account-active.html:104 templates/account-active.html.py:128
 #: templates/index.html:53 templates/login-error.html:20
 msgid "USER_PASSWORD_PLACEHOLDER"
 msgstr "Enter your password.."
 
-#: templates/account-active.html:114
+#: templates/account-active.html:117
 msgid "DELETE_ACCOUNT_INFO"
 msgstr ""
 "To delete your user account please enter your email address and password. Be "
@@ -208,35 +208,99 @@ msgstr ""
 "irretrievably erased. Do not continue unless you are completely certain, you "
 "do not want to use this account anymore. "
 
-#: templates/account-active.html:120 templates/contact.html:49
+#: templates/account-active.html:123 templates/contact.html:49
 #: templates/index-guest.html:43 templates/index-guest.html.py:72
 #: templates/index.html:48 templates/index.html.py:80
 #: templates/login-error.html:15 templates/reset-password.html:18
 msgid "Email"
 msgstr "Email"
 
-#: templates/account-active.html:121 templates/index.html:49
+#: templates/account-active.html:124 templates/index.html:49
 #: templates/login-error.html:16
 msgid "USER_EMAIL_PLACEHOLDER"
 msgstr "Enter your email.."
 
-#: templates/account-active.html:135
+#: templates/account-active.html:138
 msgid "ACCOUNTS_TEST_USER_INFO"
 msgstr "This is just a test-account. You cannot modify any settings. "
+
+#: templates/account-deleted.html:6
+#, fuzzy
+msgid "Account Deleted"
+msgstr "Account Deleted"
+
+#: templates/account-deleted.html:10
+#, fuzzy
+msgid "ACCOUNT_DELETE_SUCCESS"
+msgstr "You successfully changed your email adress."
+
+#: templates/account-deleted.html:12
+msgid "ACCOUNT_DELETE_FAILURE"
+msgstr ""
+
+#: templates/account-deleted.html:25
+msgid "DELETION_FORM_CAUSE_TESTING"
+msgstr ""
+
+#: templates/account-deleted.html:26
+msgid "DELETION_FORM_CAUSE_ALTERNATIVE"
+msgstr ""
+
+#: templates/account-deleted.html:27
+msgid "DELETION_FORM_CAUSE_SERVICE"
+msgstr ""
+
+#: templates/account-deleted.html:28
+msgid "DELETION_FORM_CAUSE_USAGE"
+msgstr ""
+
+#: templates/account-deleted.html:29
+msgid "DELETION_FORM_CAUSE_LIMITATIONS"
+msgstr ""
+
+#: templates/account-deleted.html:30
+msgid "DELETION_FORM_CAUSE_NEED"
+msgstr ""
+
+#: templates/account-deleted.html:31
+msgid "DELETION_FORM_CAUSE_LIKE"
+msgstr ""
 
 #: templates/account-inactive.html:6
 msgid "Account Inactive"
 msgstr "Account Inactive"
 
-#: templates/account-inactive.html:10
+#: templates/account-inactive.html:11
 msgid "ACCOUNT_INACTIVE_NOTIFY"
 msgstr ""
 "Your account was deactivated. Please <a href='/contact'>contact the KEIKEN-"
 "Team</a> for more information. "
 
-#: templates/account.html:6
+#: templates/account-inactive.html:13
+msgid "ACCOUNT_NOT_INACTIVE_NOTIFY"
+msgstr ""
+"There seems to be an error. Ofcourse your account is still active. Please try again what you did before you saw this page. "
+"In case you get redirected here another time please contact the KEIKEN-Team."
+
+#: templates/account.html:13
 msgid "Account"
 msgstr "Account"
+
+#: templates/album-share-failure.html:8
+#, fuzzy
+msgid "ALBUM_SHARE_FAILURE_NOTE"
+msgstr ""
+"Copy the link and insert it wherever you want to share the album. (This can "
+"be an email, blog, status message on social networks or instant messengers.) "
+"Before sharing the album for the first time you need to define a password to "
+"protect it. Every visitor needs this password to confirm that he or she may "
+"see your album. Be aware that every time you change the password you need to "
+"notify all your contacts or else they won't have access to your album "
+"anymore. <strong>Visitors can just view your album but not change anything!</"
+"strong> <br /> <br /> By the way, the link is identical to the URL of the "
+"albumview of this album, which means that in case you opened an album you "
+"can just copy the url and share it, so long as you already defined a "
+"password."
 
 #: templates/album-share-login.html:7 templates/index-guest.html:22
 msgid "KEIKEN_GUEST_LOGIN"
@@ -1252,7 +1316,7 @@ msgstr "Bank"
 #: templates/payment.html:44
 msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
 msgstr ""
-"Please <a href='/login?next=/payment' title='To Login'>sign in</a> to view "
+"Please <a href='/account/auth/login?next=/payment' title='To Login'>sign in</a> to view "
 "the bank information."
 
 #: templates/payment.html:48
@@ -1459,28 +1523,24 @@ msgstr "Reset Password Success"
 #: templates/reset-password-complete.html:10
 msgid "RESET_PASSWORD_COMPLETE"
 msgstr ""
-"Your new password has been set. You may go ahead and <a href='/login'>log "
+"Your new password has been set. You may go ahead and <a href='/account/auth/login'>log "
 "in</a> now."
 
-#: templates/reset-password-confirm.html:6 templates/reset-password.html:5
-msgid "Reset Password"
-msgstr "Reset Password"
-
-#: templates/reset-password-confirm.html:8
+#: templates/reset-password-confirm.html:6
 msgid "Define New Password"
 msgstr "Define New Password"
 
-#: templates/reset-password-confirm.html:15
+#: templates/reset-password-confirm.html:11
 msgid "RESET_PASSWORD_GIVE_NEW_PASSWORD"
 msgstr ""
 "To set a password, please enter your new password twice to prevent typing "
 "errors and submit."
 
-#: templates/reset-password-confirm.html:41
+#: templates/reset-password-confirm.html:37
 msgid "RESET_PASSWORD_FAILURE_H1"
 msgstr "Password reset not possible."
 
-#: templates/reset-password-confirm.html:42
+#: templates/reset-password-confirm.html:38
 msgid "RESET_PASSWORD_FAILURE_P"
 msgstr ""
 "The password reset link was invalid, possibly because it has already been "
@@ -1495,6 +1555,10 @@ msgid "RESET_PASSWORD_EMAIL_SENT"
 msgstr ""
 "We've emailed you instructions for setting your password to the email "
 "address you submitted. You should be receiving it shortly."
+
+#: templates/reset-password.html:5
+msgid "Reset Password"
+msgstr "Reset Password"
 
 #: templates/reset-password.html:8
 msgid "RESET_PASSWORD_GIVE_EMAIL"

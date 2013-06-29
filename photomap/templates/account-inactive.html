@@ -7,6 +7,10 @@
 
 {% block account_info %}
 
-<p>{% trans "ACCOUNT_INACTIVE_NOTIFY" %}</p>
-
+	{% if not request.user.is_active %}
+		<p>{% trans "ACCOUNT_INACTIVE_NOTIFY" %}</p>
+	{% else %}
+		<p>{% trans "ACCOUNT_NOT_INACTIVE_NOTIFY" %}</p>
+	{% endif %}
+	
 {% endblock %}
