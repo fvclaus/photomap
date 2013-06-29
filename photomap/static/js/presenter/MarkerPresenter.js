@@ -163,7 +163,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     // build url -> format /models/model/(id/)request
                     url : requestUrl,
                     load : function () {
-                       $("form[name='share-" + modelName + "']").attr("action", requestUrl);
+                       $("form[name='update-" + modelName + "-password']").attr("action", requestUrl);
                        $("input[name='share']").val("http://" + window.location.host + "/albums/album/" + id + "/view/" + instance.model.getSecret());
                        $("input[name='share']").on("click focus", function () {
                           $(this).select();
