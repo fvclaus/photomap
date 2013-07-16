@@ -255,7 +255,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              _slideshowUpdate : function (photo) {
                 main.getUI().getInformation().update(photo);
                 main.getUI().getFullscreen().update(photo);
-                main.getUI().getGallery().checkSlider();
+                main.getUI().getGallery().navigateIfNecessary(photo);
                 photo.setVisited(true);
              },
              _slideshowBeforeLoad : function () {
@@ -302,10 +302,14 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 
              },
              _placeOpen : function (place) {
+                var photos = place.getPhotos();
                 main.getUI().getInformation().update(place);
-                main.getUI().getGallery().reset();
-                main.getUI().getGallery().start(place.getPhotos());
-                main.getUI().getSlideshow().reset();
+
+                main.getUI().getGallery().load(photos);
+                main.getUI().getGallery().start();
+
+                main.getUI().getSlideshow().load(photos);
+
                 main.getUI().getMessage().hide();
              },
              _photoVisited : function (photo) {

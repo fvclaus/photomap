@@ -59,6 +59,16 @@ define([
              });
              this._bindListener();
              this.updateMessage();
+
+             this.options = {
+                lazy : true,
+                loader : this.$loader,
+                beforeLoad : this._beforeLoad,
+                afterLoad : this._afterLoad,
+                onUpdate : this._update,
+                context : this
+             };
+             this.srcPropertyName = "photo";
           },
           /*
            * @presenter
@@ -68,11 +78,11 @@ define([
           },
           /*
            * @presenter
-           * TODO Exposing implementation detail. Refactor me!
            */
-          // getCarousel : function () {
-          //    return this.carousel;
-          // },
+          load : function (photos) {
+             this.reset();
+             this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, this.srcPropertyName, this.options);
+          },
           /**
            * @presenter
            * @description starts slideshow by initialising and starting the carousel 
@@ -82,25 +92,12 @@ define([
              assert(this._started, false, "slideshow must not be started yet");
 
              var photos = state.getPhotos(),
-                 options = {
-                    lazy : true,
-                    loader : this.$loader,
-                    beforeLoad : this._beforeLoad,
-                    afterLoad : this._afterLoad,
-                    onUpdate : this._update,
-                    context : this
-                 },
-                 instance = this,
-                 //UISlideshow does not need to store imageSources
-                 imageSources = [];
+                 instance = this;
 
              this._started = true;
-             
-             photos.forEach(function (photo, index) {
-                imageSources.push(photo.photo);
-             });
+
              // initialize carousel
-             this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, "photo", options);
+             // this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, "photo", options);
              
              if (photos.length !== 0) {
                 $(".mp-slideshow-no-image-msg").hide();
@@ -137,22 +134,22 @@ define([
            * @param {Photo} photo
            */
           navigateTo : function (photo) {
-             if (!this._started) {
-                this.start(photo);
-             } else {
+             // if (!this._started) {
+             //    this.start(photo);
+             // } else {
                 this.carousel.navigateTo(photo);
-             }
+             // }
           },
           /*
-           * @private
+           * @presenter
            * @description Navigates the slideshow left or right.
            * @param {String} direction: left || right
            */
-          _navigateWithDirection : function (direction) {
+          navigateWithDirection : function (direction) {
              assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
              
-             if (!this.view.isStarted()) {
-                this.view.start();
+             if (!this.isStarted()) {
+                this.start();
              } else {
                 if (direction === "left") {
                    this.carousel.navigateLeft();
@@ -171,11 +168,11 @@ define([
              // this is an unfortunate annoyance, but the gallery can be started without the slideshow
              // therefore we need to check if the gallery is started on an insert photo event
              // this is unfortunate, because the slideshow behaves differntly than the gallery
-             if (this._started){
+             // if (this._started){
                 // does not move to the new photo, because photo cant be on current page
                 this.carousel.insertPhoto(photo);
                 // updating description & photo number is handled in update
-             }
+             // }
           },
           /**
            * @presenter
@@ -186,21 +183,18 @@ define([
              assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
 
              // @see insertPhoto
-             if (this._started) {
+             // if (this._started) {
                 // automatically delete if photo is on current page
                 this.carousel.deletePhoto(photo);
                 // update will take of resetting if it was the last one
-             }
+             // }
           },
           /**
            * @presenter
-           * @description Resets the Gallery if the deleted place was the one that is currently open.
+           * @description Resets the Slideshow if the deleted place was the one that is currently open.
            */
           resetPlace : function (place) {
-             console.log(place);
-             console.log(state.getCurrentLoadedPlace().getModel());
              if (state.getCurrentLoadedPlace().getModel() === place) {
-                console.log("juhuu");
                 this.reset();
              }
           },
@@ -336,13 +330,13 @@ define([
              
              this.$navLeft.on("click", function () {
                 if (!instance.isDisabled()) {
-                   instance._navigateWithDirection("left");
+                   instance.navigateWithDirection("left");
                 }
              });
              this.$navRight.on("click", function () {
                 // UIPhotoCarousel does not 'really' support aborting loading of the current photo and skipping to the next one
                 if (!instance.isDisabled()) {
-                   instance._navigateWithDirection("right");
+                   instance.navigateWithDirection("right");
                 }
              });
              this.$image.on("click.Slideshow", function (event) {

@@ -29,8 +29,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                   communicator.publish("click:galleryThumb", photo);
                 }
              },
-             checkSlider : function () {
-                this.view.checkSlider();
+             navigateIfNecessary : function (photo) {
+                this.view.navigateIfNecessary(photo);
              },
              insertPhoto : function (photo) {
                 this.view.insertPhoto(photo);
@@ -42,10 +42,13 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 this.view.resetPlace(place);
              },
              restart : function (photos) {
-                this.view.getCarousel().update(photos);
+                this.view.restart(photos);
              },
-             start : function (photos) {
-                this.view.start(photos);
+             load : function (photos) {
+                this.view.load(photos);
+             },
+             start : function () {
+                this.view.start();
              },
              reset : function () {
                 this.view.reset();

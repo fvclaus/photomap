@@ -32,8 +32,14 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
              /*
               * @public
               */
+             load : function (photos) {
+                this.view.load(photos);
+             },
+             /*
+              * @public
+              */
              navigate : function (direction) {
-                this.view.navigate(direction);
+                this.view.navigateWithDirection(direction);
              },
              // navigate() violated information hiding
              /* 

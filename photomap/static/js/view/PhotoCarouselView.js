@@ -10,6 +10,8 @@
  * @param options.beforeLoad Called before the photos are loaded
  * @param options.afterLoad Called after all photos are loaded (successful or not)
  * @param options.onUpdate Called after all photos are updated
+ * @param options.navigateToInsertedPhoto
+ * @param options.context
  */
   
 define(["dojo/_base/declare", 
@@ -84,6 +86,10 @@ define(["dojo/_base/declare",
                    console.log("UIPhotoCarousel: New photo is inserted on current page. Reload current page from index %d.", from);
                    this.currentPage = this.dataPage.getPage("current");
                    this._load(from);
+                } else if (this.options.navigateToInsertedPhoto) {
+                   // config: Show newly inserted photos
+                   this.currentPage = this.dataPage.getPage("last");
+                   this._load();
                 }
              },
              deletePhoto : function (photo) {

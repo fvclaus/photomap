@@ -16,12 +16,11 @@ define(["dojo/_base/declare",
         "presenter/GalleryPresenter",
         "util/Communicator",
         "util/Tools",
-        "util/ClientState",
         "ui/UIState",
         "util/Tooltip",
         "dojo/domReady!"
        ],
-       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, clientstate, state, Tooltip) {
+       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, state, Tooltip) {
 
 /**
  * @author Marc Roemer
@@ -73,6 +72,20 @@ define(["dojo/_base/declare",
                 
                 this._bindStartSlideshowListener();
 
+                this.options = {
+                   lazy : !this._isAdmin(),
+                   "effect" : "fade",
+                   "duration": 500,
+                   loader : this.$loader,
+                   beforeLoad : this._beforeLoad,
+                   afterLoad : this._afterLoad,
+                   onUpdate : this._update,
+                   context : this,
+                   navigateToInsertedPhoto : true,
+                };
+
+                this.srcPropertyName = "thumb";
+
              },
              getCarousel : function () {
                 return this.carousel;
@@ -92,16 +105,20 @@ define(["dojo/_base/declare",
                    console.log("Could not find photo %s in UIGallery. Maybe it is not loaded yet", photo.photo);
                 }
              },
+             /*
+              * @presenter
+              */
+             load : function (photos) {
+                this.reset();
+                this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, this.srcPropertyName, this.options);
+             },
              /**
               * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
               */
-             start : function (photos) {
+             start : function () {
                 assert(this.started, false, "gallery must not be started yet");
                 
-                var options,
-                    effect,
-                    duration,
-                    instance = this;
+                var instance = this;
 
                 this.started = true;
                 
@@ -112,29 +129,9 @@ define(["dojo/_base/declare",
                 this.$controls.removeClass("mp-nodisplay");
 
 
-                // initialize and start carousel
-                /*
-                if (navigator.sayswho[0] === "Firefox") {
-                   effect = "fade";
-                   duration = 500;
-                } else {
-                   effect = "flip";
-                   duration = 300;
-                }*/
-                options = {
-                   lazy : !clientstate.isAdmin(),
-                   "effect" : "fade",
-                   "duration": 500,
-                   loader : this.$loader,
-                   beforeLoad : this._beforeLoad,
-                   afterLoad : this._afterLoad,
-                   onUpdate : this._update,
-                   context : this
-                };
-                this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, "thumb", options);
+                // this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, "thumb", options);
                 this.fullGallery.setCarousel(this.carousel);
                 // disable ui while loading & show loader
-                state.setAlbumLoading(true);
                 communicator.publish("disable:ui");
                 this.carousel.start();
              },
@@ -142,7 +139,6 @@ define(["dojo/_base/declare",
               * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
               */
              reset : function () {
-                
                 this.started = false;
                 $(".mp-gallery-loader").addClass("mp-nodisplay");
                 this.$controls.addClass("mp-nodisplay");
@@ -150,6 +146,13 @@ define(["dojo/_base/declare",
                    this.carousel.reset();
                    this.carousel = null;
                 }
+             },
+             /* 
+              * @presenter
+              * @description Restarts the slideshow if for example the photo order was changed.
+              */
+             restart : function (photos) {
+                this.carousel.update(photos);
              },
              /**
               * @description adds new photo to gallery.
@@ -162,10 +165,8 @@ define(["dojo/_base/declare",
                 // show teaser after the photo is loaded
                 this.showTeaser = true;
                 this.currentPhoto = photo;
-                // navigate to the picture if we are not on the last page
-                if (this.started && !this.carousel.isLastPage()) {
-                   this._navigateToLastPage();
-                } else if (!this.started) {
+                // Will automatically navigate to the new photo
+                if (!this.started) {
                    // show the new photo
                    //TODO this does now show the new photo yet
                    this.start();
@@ -187,16 +188,15 @@ define(["dojo/_base/declare",
               * @description Resets the Gallery if the deleted place was the one that is currently open
               */
              resetPlace : function (place) {
-                if (state.getCurrentLoadedPlace() && state.getCurrentLoadedPlace().getModel() === place) {
+                if (state.getCurrentLoadedPlace().getModel() === place) {
                    this.reset();
                 }
              },
              /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
               */
-             checkSlider : function () {
-                
-                var currentIndex = state.getCurrentLoadedPhotoIndex(),
+             navigateIfNecessary : function (photo) {
+                var currentIndex = this._getIndexOfPhoto(photo),
                     minIndex = this._getIndexOfFirstThumbnail(),
                     maxIndex = this._getIndexOfLastThumbnail();
                 
@@ -238,8 +238,8 @@ define(["dojo/_base/declare",
                 
                 var instance = this;
                 
-                this._setTooltipNoPhotoMessage();
-                this._setEmptyTiles();
+                this._showHelpText();
+                this._showEmptyTiles();
                 // check each thumb if the photo it represents is already visited; if yes -> show 'visited' icon
                 this._showVisitedNotification();
                 // Check if the updated photo is a newly inserted, if yes open teaser
@@ -256,11 +256,15 @@ define(["dojo/_base/declare",
 
                 } 
              },
-             _setTooltipNoPhotoMessage : function () {
+             /*
+              * @private
+              */
+             _showHelpText : function () {
+                //TODO This is too inefficient.
                 if (this.carousel.getAllPhotos().length > 0) {
                    this.tooltip.close();
                 } else {
-                   if (clientstate.isAdmin()) {
+                   if (this._isAdmin()) {
                       this.tooltip
                         .setOption("hideOnMouseover", true)
                         .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
@@ -273,8 +277,9 @@ define(["dojo/_base/declare",
                    }
                 }
              },
-             _setEmptyTiles : function () {
-                if (clientstate.isAdmin()) {
+             _showEmptyTiles : function () {
+                if (this._isAdmin()) {
+                   //TODO this is too inefficient.
                    $.each(this.$thumbs, function (index, tile) {
                       
                       if ($(tile).children("img.mp-thumb").attr("src") && $(tile).children("img.mp-thumb").attr("src").length > 0) {
@@ -286,6 +291,7 @@ define(["dojo/_base/declare",
                 }
              },
              _showVisitedNotification : function () {
+                //TODO This is too inefficient.
                 var instance = this;
                 $.each(this.$thumbs, function (index, tile) {
                    
@@ -294,7 +300,7 @@ define(["dojo/_base/declare",
                       $visited = $(tile).find("img.mp-thumb-visited");
                       
                    if ($thumb.attr("src")) {
-                      photo = instance.carousel.getAllPhotos()[instance._getIndexOfImage($thumb)];
+                      photo = instance._getPhotoOfImage($thumb);
                       
                       if (photo.isVisited()) {
                          $visited.show();
@@ -315,6 +321,12 @@ define(["dojo/_base/declare",
                 assertTrue($image.attr("src"), "src attribute of input parameter $image must not be undefined");
                 return this.carousel.getAllImageSources().indexOf($image.attr("src"));
              },
+             /*
+              * @private
+              */
+             _getIndexOfSrc : function (src) {
+                return this.carousel.getAllImageSources().indexOf(src);
+             },
              /* @private
               * @returns {Photo} Photo for the $image element
               */
@@ -322,7 +334,14 @@ define(["dojo/_base/declare",
                 assertTrue($image.attr("src"), "src attribute of input parameter $image must not be undefined");
                 var photo = this.carousel.getPhotoForSrc($image.attr("src"));
                 assertNotNull(photo, "There must be a photo for every img element.");
+                return photo;
                 
+             },
+             /**
+              * @private
+              */
+             _getIndexOfPhoto : function (photo) {
+                return this._getIndexOfSrc(photo[this.srcPropertyName]);
              },
              /**
               * @private
