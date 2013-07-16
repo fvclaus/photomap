@@ -1,14 +1,15 @@
-/*jslint */ 
+/*jslint sloppy:true */ 
 /*global $, define, main, DASHBOARD_VIEW, ALBUM_VIEW */
 
-"use strict";
+// No use strict possible with this.inherited(arguments)
+// "use strict";
 
 define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
        function (declare, Presenter, communicator) {
           return declare(Presenter, {
-             init : function () {
-                this.view.init();
-                communicator.subscribe("done:fullscreenImageFadeout", this.setFadeoutDone, this);
+             constructor : function () {
+                this.inherited(arguments);
+                communicator.subscribe("done:fullscreenImageFadeout", this.setFadeoutDone, this);                
              },
              open : function () {
                 this.view.open();

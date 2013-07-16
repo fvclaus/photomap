@@ -5,7 +5,9 @@
 
 /**
  * @author Marc-Leon Römer
- * @class Base class for all Presenter
+ * @class Base class for all Views.
+ * It provides a few shortcuts for checking the status of the view (disabled/enabled) and to check whether or not the view is active.
+ * For the View implementation this.disabled and this.active should be used.
  */
 
 define(["dojo/_base/declare", "util/Communicator"],
@@ -28,23 +30,29 @@ define(["dojo/_base/declare", "util/Communicator"],
              getName : function () {
                 return this.viewName;
              },
+             /*
+              * @presenter
+              * @description Views can query their status using the this.disabled variable.
+              */
              setDisabled : function (disabled) {
                 this.disabled = disabled;
              },
+             /*
+              * @presenter
+              * @description Presenter should use this to query the status of their views.
+              */
              isDisabled : function () {
                 return this.disabled;
              },
-             //TODO is this public?
              /*
-              * @public
+              * @presenter
               * @description Will be used upon setDisabled(true). Overwrite if needed.
               */
              disable : function () {
                 return false;
              },
-             //TODO is this public?
              /*
-              * @public
+              * @presenter
               * @description Will be used upon setDisabled(false). Overwrite if needed.
               */
              enable : function () {

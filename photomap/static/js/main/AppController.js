@@ -71,12 +71,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getInformation().init();
                 clientstate.init();
                 main.getMap().init(data);
-                
-                if (state.isAlbumView()) {
-                   main.getUI().getGallery().init();
-                   main.getUI().getSlideshow().init();
-                   main.getUI().getFullscreen().init();
-                }
              },
              _uiEnable : function () {
                 this._setUIDisabled(false);

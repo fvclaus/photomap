@@ -62,13 +62,8 @@ define(["dojo/_base/declare",
                 this.presenter = new GalleryPresenter(this);
                 
                 this._bindActivationListener(this.$container, this.viewName);
-
-             },
-             init : function () {
+                this._bindListener();
                 
-                if (clientstate.isAdmin()) {
-                   this._bindListener();
-                }
                 this.tooltip
                   .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
                   .setOption("hideOnMouseover", false)
@@ -391,23 +386,22 @@ define(["dojo/_base/declare",
                      }
                   });
              },
-             
+             /*
+              * @private
+              */
+             _isAdmin : function () {
+                return this.$controls.length > 0;
+             },
              _bindListener : function () {
-
-                var authorized = clientstate.isAdmin(),
+                // Guests won't have any controls to edit the gallery
+                var authorized = this._isAdmin(),
                     photo = null,
                     instance = this;
-                
-                
-                //TODO this is not used atm, if it is actually needed please use AppController + Communicator + GalleryPresenter for the trigger/listen/handle chain be aware that getCurrentLoadedPlace return presenter now!
-                // // this is triggered by the fullgallery
-                // $(ui).on("photosOrderUpdate.mp", function (place) {
-                   // if (place === state.getCurrentLoadedPlace()) {
-                      // instance.isDirty = true;
-                      // instance.$dirtyWarning.removeClass("mp-nodisplay");
-                   // }
-                // });
 
+                // the following events are not relevant for guests
+                if (!authorized) {
+                   return;
+                }
                 //bind events on anchors
                 // bind them to thumbs in the Gallery & FullGallery
                 $(".mp-left-column")
@@ -420,20 +414,13 @@ define(["dojo/_base/declare",
                             return e.thumb === $el.attr("src");
                          })[0];
                          state.setCurrentPhoto(photo);
-                         
-                         if (authorized) {
-                            instance.presenter.mouseEnter($el, photo);
-                         }
+                         instance.presenter.mouseEnter($el, photo);
                       }
                    })
                    .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
-                      var $el = $(this);
                       
                       if (!instance.isDisabled()) {
-                         
-                         if (authorized) {
                             instance.presenter.mouseLeave();
-                         }
                       }
                    });
 

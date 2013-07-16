@@ -45,9 +45,6 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
             this.disabled = true;
             
             this._bindActivationListener(this.$container, this.viewName);
-         },
-         init : function () {
-            
             this._bindListener();
          },
          open : function () {
@@ -85,6 +82,7 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
                instance.$image.fadeOut(300, function () {
                   instance.$loader.show();
                   // image done fading out -> now updating may start
+                  //TODO don't use pub/sub inside a class
                   communicator.publish("done:fullscreenImageFadeout");
                });
             } else if (photo) {
@@ -113,6 +111,7 @@ define(["dojo/_base/declare", "view/View", "presenter/FullscreenPresenter", "mod
                            showImage();
                         // if not wait with updating until the fading out is done (=event is triggered) -- the image might be loaded faster than the fading out takes
                         } else {
+                           //TODO Don't use pub/sub inside a class
                            communicator.subscribeOnce("done:fullscreenImageFadeout", showImage)
                         }
                         

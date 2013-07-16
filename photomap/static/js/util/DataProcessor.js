@@ -24,27 +24,21 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               * @private
               */
              _processInsertPhoto : function (data) {
-                
                 var photo = this._createPhoto(data);
-                
                 communicator.publish("processed:photo", photo);
              },
              /**
               * @private
               */
              _processInsertPlace : function (data) {
-                
                 var place = this._createPlace(data);
-                
                 communicator.publish("processed:place", place);
              },
              /**
               * @private
               */
              _processInsertAlbum : function (data) {
-                
                 var album = this._createAlbum(data);
-                
                 communicator.publish("processed:album", album);
              },
              /**
@@ -91,7 +85,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               * @private
               */
              _sortPhotos : function (places) {
-
                 $.each(places, function (index, place) {
                    place.sortPhotos();
                 });
@@ -102,7 +95,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               * @private
               */
              _createPhoto : function (data) {
-                
                 var photo = new Photo({
                        id : data.id,
                        photo : data.url,
@@ -118,7 +110,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               * @private
               */
              _createPlace : function (data) {
-                
                 var place = new Place({
                        lat: data.lat,
                        lng: data.lng || data.lon,
@@ -134,7 +125,6 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               * @private
               */
              _createAlbum : function (data) {
-                
                 var album = new Album({
                        lat: data.lat,
                        lng: data.lng || data.lon,

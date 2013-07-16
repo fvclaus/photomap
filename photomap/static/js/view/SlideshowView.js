@@ -47,16 +47,9 @@ define([
              
              this.tooltip = new Tooltip(this.$container, "", {hideOnMouseover: false});
              
-             this.started = false;
-             this._isDisabled = true;
+             this._started = false;
              
              this._bindActivationListener(this.$container, this.viewName);
-          },
-          /*
-           * @presenter
-           * @description Makes the slideshow ready to start()
-           */
-          init : function () {
              var instance = this;
              
              this._center();
@@ -71,7 +64,7 @@ define([
            * @presenter
            */
           isStarted : function () {
-             return this.started;
+             return this._started;
           },
           /*
            * @presenter
@@ -86,7 +79,7 @@ define([
            * @param {Photo} photo: Null to start with the first photo.
            */
           start: function (photo) {
-             assert(this.started, false, "slideshow must not be started yet");
+             assert(this._started, false, "slideshow must not be started yet");
 
              var photos = state.getPhotos(),
                  options = {
@@ -101,7 +94,7 @@ define([
                  //UISlideshow does not need to store imageSources
                  imageSources = [];
 
-             this.started = true;
+             this._started = true;
              
              photos.forEach(function (photo, index) {
                 imageSources.push(photo.photo);
@@ -122,7 +115,7 @@ define([
            * This can be called without ever starting the Slideshow
            */
           reset : function () {
-             this.started = false;
+             this._started = false;
              if (this.carousel !== null) {
                 this.carousel.reset();
                 this.carousel = null;
@@ -139,12 +132,12 @@ define([
              this.carousel.update(photos);
           },
           /**
+           * @presenter
            * @description Navigates to given index; starts slideshow if carousel is not yet initialized
            * @param {Photo} photo
            */
-          //TODO this looks like it is not used anymore. Why has it not been removed?
           navigateTo : function (photo) {
-             if (!this.started) {
+             if (!this._started) {
                 this.start(photo);
              } else {
                 this.carousel.navigateTo(photo);
@@ -152,7 +145,7 @@ define([
           },
           /*
            * @private
-           * @description Navigates the slideshow left and right.
+           * @description Navigates the slideshow left or right.
            * @param {String} direction: left || right
            */
           _navigateWithDirection : function (direction) {
@@ -178,7 +171,7 @@ define([
              // this is an unfortunate annoyance, but the gallery can be started without the slideshow
              // therefore we need to check if the gallery is started on an insert photo event
              // this is unfortunate, because the slideshow behaves differntly than the gallery
-             if (this.started){
+             if (this._started){
                 // does not move to the new photo, because photo cant be on current page
                 this.carousel.insertPhoto(photo);
                 // updating description & photo number is handled in update
@@ -193,7 +186,7 @@ define([
              assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
 
              // @see insertPhoto
-             if (this.started) {
+             if (this._started) {
                 // automatically delete if photo is on current page
                 this.carousel.deletePhoto(photo);
                 // update will take of resetting if it was the last one
@@ -297,7 +290,7 @@ define([
            * @returns {Photo} currentPhoto
            */
           _updateAndGetCurrentLoadedPhoto : function () {
-             assert(this.started, true, "slideshow has to be started already");
+             assert(this._started, true, "slideshow has to be started already");
 
              // this might be updated at a later point, we can't rely on that
              var photos = state.getPhotos(),

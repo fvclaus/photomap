@@ -6,9 +6,6 @@
 define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UIState"],
        function (declare, Presenter, communicator, state) {
           return declare(Presenter, {
-             init : function () {
-                this.view.init();
-             },
              isStarted : function () {
                 return this.view.isStarted();
              },

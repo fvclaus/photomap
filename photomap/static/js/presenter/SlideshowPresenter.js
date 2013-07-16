@@ -6,9 +6,6 @@
 define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
        function (declare, Presenter, communicator) {
           return declare(Presenter, {
-             init : function () {
-                this.view.init();
-             },
              isStarted : function () {
                 return this.view.isStarted();
              },
@@ -32,14 +29,29 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
                    this.view.navigateTo(photo);
                 }
              },
-             // Navigate() violated information hiding
+             /*
+              * @public
+              */
+             navigate : function (direction) {
+                this.view.navigate(direction);
+             },
+             // navigate() violated information hiding
+             /* 
+              * @public
+              */
              insertPhoto : function (photo) {
                 this.view.insertPhoto(photo);
                 this.view.updateMessage();
              },
+             /*
+              * @public
+              */
              deletePhoto : function (photo) {
                 this.view.deletePhoto(photo);
              },
+             /*
+              * @public
+              */
              resetPlace : function (place) {
                 this.view.resetPlace(place);
              },
@@ -50,6 +62,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
              restart : function (photos) {
                 this.view.restart(photos);
              },
+             /*
+              * @public
+              */
              reset : function () {
                 this.view.reset();
                 this.view.updateMessage();
