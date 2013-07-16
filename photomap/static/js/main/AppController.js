@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, init, initTest, finalizeInit, assertTrue, gettext */
+/*global $, define, main, init, initTest, finalizeInit, assertTrue, gettext */
 
 "use strict";
 
@@ -20,7 +20,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    "enable:ui": this._uiEnable,
                    "disable:ui": this._uiDisable
                 }, this);
-                communicator.subscribe("activate:view", this._viewActivation)
+                communicator.subscribe("activate:view", this._viewActivation);
                 
                 communicator.subscribe({
                    "mouseover:marker": this._markerMouseover,
@@ -291,8 +291,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    main.getUI().getSlideshow().deletePhoto(model);
                    state.getCurrentLoadedPlace().getModel().deletePhoto(model);
                 } else if (type === "Place") {
-                   main.getUI().getGallery().placeDeleteReset(model);
-                   main.getUI().getSlideshow().placeDeleteReset(model);
+                   main.getUI().getGallery().resetPlace(model);
+                   main.getUI().getSlideshow().resetPlace(model);
                 }
                 
                 if (type === "Place" || type === "Album") {

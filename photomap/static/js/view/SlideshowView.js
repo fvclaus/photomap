@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main, window, UIFullscreen, assert, assertTrue */
+/*global $, define, main, window, gettext, assert, assertTrue */
 
 "use strict";
 
@@ -24,6 +24,7 @@ define([
    ],
     function (declare, View, PhotoCarouselView, FullscreenView, Photo, SlideshowPresenter, communicator, tools, state, Tooltip) {
        return declare(View, {
+          //TODO missing markupFactory for Dojo widget init. This should possibly go into the View superclass.
           constructor : function () {
              this.$container = $('#mp-slideshow');
              this.viewName = "Slideshow";
@@ -51,6 +52,10 @@ define([
              
              this._bindActivationListener(this.$container, this.viewName);
           },
+          /*
+           * @presenter
+           * @description Makes the slideshow ready to start()
+           */
           init : function () {
              var instance = this;
              
@@ -60,15 +65,23 @@ define([
                 instance._center();
              });
              this._bindListener();
-             this.setNoPhotoMessage();
+             this.updateMessage();
           },
+          /*
+           * @presenter
+           */
           isStarted : function () {
              return this.started;
           },
+          /*
+           * @presenter
+           * TODO Exposing implementation detail. Refactor me!
+           */
           getCarousel : function () {
              return this.carousel;
           },
           /**
+           * @presenter
            * @description starts slideshow by initialising and starting the carousel (with given index)
            */
           start: function (index) {
@@ -103,6 +116,7 @@ define([
 
           },
           /**
+           * @presenter
            * @description Resets the slideshow to a state before start() was called. 
            * This can be called without ever starting the Slideshow
            */
@@ -122,14 +136,16 @@ define([
           //TODO we should probably support navigateTo(photo) instead. 
           // This will shorten the code in other places and provides a more consistend abstraction.
           // All other public methods take photo as parameter.
-          navigateTo : function (index) {
-             if (!this.started) {
-                this.start(index);
-             } else {
-                this.carousel.navigateTo(index);
-             }
-          },
+          //TODO this looks like it is not used anymore. Why has it not been removed?
+          // navigateTo : function (index) {
+          //    if (!this.started) {
+          //       this.start(index);
+          //    } else {
+          //       this.carousel.navigateTo(index);
+          //    }
+          // },
           /**
+           * @presenter
            * @description Inserts a new Photo. This will not move the Carousel or do anything else.
            */
           insertPhoto : function (photo) {
@@ -145,6 +161,7 @@ define([
              }
           },
           /**
+           * @presenter
            * @description Deletes an existing Photo. If Photo is the current Photo the previous Photo is shown.
            * If there is no previous Photo, nothing is shown.
            */
@@ -159,9 +176,10 @@ define([
              }
           },
           /**
-           * @description Resets the Gallery if the deleted place was the one that is currently open
+           * @presenter
+           * @description Resets the Gallery if the deleted place was the one that is currently open.
            */
-          placeDeleteReset : function (place) {
+          resetPlace : function (place) {
              console.log(place);
              console.log(state.getCurrentLoadedPlace().getModel());
              if (state.getCurrentLoadedPlace().getModel() === place) {
@@ -169,7 +187,10 @@ define([
                 this.reset();
              }
           },
-          setNoPhotoMessage : function () {
+          /*
+           * @description Shows or hides information message, regarding the usage.
+           */
+          updateMessage : function () {
              if (state.getPhotos().length <= 0) {
                 this.tooltip
                   .setOption("hideOnMouseover", false)
@@ -177,6 +198,7 @@ define([
                   .start()
                   .open();
              } else {
+                //TODO what is going on here?
                 if ( this.carousel && this.carousel.getAllPhotos().length > 0) {
                    this.tooltip.close();
                 } else {
@@ -227,7 +249,7 @@ define([
              // we are expecting to receive a jquery element wrapper
              assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
              
-             this.setNoPhotoMessage();
+             this.updateMessage();
           },
           /**
            * @private

@@ -15,6 +15,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
              click : function () {
                 communicator.publish("click:slideshowImage");
              },
+             //TODO is this a photo or a photoIndex?
              navigateTo : function (photo) {
                 
                 if (!this.view.isStarted()) {
@@ -36,25 +37,25 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
                    }
                 }
              },
-             setNoPhotoMessage : function () {
-                this.view.setNoPhotoMessage();
+             updateMessage : function () {
+                this.view.updateMessage();
              },
              insertPhoto : function (photo) {
                 this.view.insertPhoto(photo);
-                this.view.setNoPhotoMessage();
+                this.view.updateMessage();
              },
              deletePhoto : function (photo) {
                 this.view.deletePhoto(photo);
              },
-             placeDeleteReset : function (place) {
-                this.view.placeDeleteReset(place);
+             resetPlace : function (place) {
+                this.view.resetPlace(place);
              },
              restart : function (photos) {
                 this.view.getCarousel().update(photos);
              },
              reset : function () {
                 this.view.reset();
-                this.view.setNoPhotoMessage();
+                this.view.updateMessage();
              }
              
           });

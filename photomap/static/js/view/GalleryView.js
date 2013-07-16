@@ -191,7 +191,7 @@ define(["dojo/_base/declare",
              /**
               * @description Resets the Gallery if the deleted place was the one that is currently open
               */
-             placeDeleteReset : function (place) {
+             resetPlace : function (place) {
                 if (state.getCurrentLoadedPlace() && state.getCurrentLoadedPlace().getModel() === place) {
                    this.reset();
                 }

@@ -35,8 +35,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              deletePhoto : function (photo) {
                 this.view.deletePhoto(photo);
              },
-             placeDeleteReset : function (place) {
-                this.view.placeDeleteReset(place);
+             resetPlace : function (place) {
+                this.view.resetPlace(place);
              },
              restart : function (photos) {
                 this.view.getCarousel().update(photos);

@@ -1,5 +1,5 @@
 /*jslint */
-/*global */
+/*global assertTrue*/
 
 "use strict";
 
@@ -22,7 +22,7 @@ define(["dojo/_base/declare", "util/Communicator"],
                 return this.model;
              },
              setDisabled : function (disable) {
-                assertTrue(disable !== undefined, "disable mustn't be undefined");
+                assertTrue(disable !== undefined, "disable must be defined");
                 
                 console.log(this.view.getName() + " setDisabled: " + disable);
                 

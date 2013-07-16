@@ -1,5 +1,5 @@
 /*jslint */
-/*global */
+/*global define*/
 
 "use strict";
 
@@ -33,6 +33,22 @@ define(["dojo/_base/declare", "util/Communicator"],
              },
              isDisabled : function () {
                 return this.disabled;
+             },
+             //TODO is this public?
+             /*
+              * @public
+              * @description Will be used upon setDisabled(true). Overwrite if needed.
+              */
+             disable : function () {
+                return false;
+             },
+             //TODO is this public?
+             /*
+              * @public
+              * @description Will be used upon setDisabled(false). Overwrite if needed.
+              */
+             enable : function () {
+                return false;
              },
              setActive : function (active) {
                 this.active = active;
