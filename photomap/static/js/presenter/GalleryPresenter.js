@@ -1,5 +1,5 @@
 /*jslint */ 
-/*global $, define, main, DASHBOARD_VIEW, ALBUM_VIEW */
+/*global $, define, assertNotNull, main, DASHBOARD_VIEW, ALBUM_VIEW */
 
 "use strict";
 
@@ -21,7 +21,13 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              mouseLeave : function () {
                 communicator.publish("mouseleave:galleryThumb");
              },
+             /*
+              * @view
+              * @description Reacts to a click on one of the gallery thumbs."
+              * @param {Photo} photo
+              */
              click : function (photo) {
+                assertNotNull(photo);
                 if (!this.view.isDisabled()) {
                   communicator.publish("click:galleryThumb", photo);
                 }

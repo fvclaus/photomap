@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main, window, gettext, assert, assertTrue */
+/*global $, define, main, window, gettext, assert, assertNotNull, assertTrue */
 
 "use strict";
 
@@ -77,14 +77,15 @@ define([
            * @presenter
            * TODO Exposing implementation detail. Refactor me!
            */
-          getCarousel : function () {
-             return this.carousel;
-          },
+          // getCarousel : function () {
+          //    return this.carousel;
+          // },
           /**
            * @presenter
-           * @description starts slideshow by initialising and starting the carousel (with given index)
+           * @description starts slideshow by initialising and starting the carousel 
+           * @param {Photo} photo: Null to start with the first photo.
            */
-          start: function (index) {
+          start: function (photo) {
              assert(this.started, false, "slideshow must not be started yet");
 
              var photos = state.getPhotos(),
@@ -111,7 +112,7 @@ define([
              if (photos.length !== 0) {
                 $(".mp-slideshow-no-image-msg").hide();
                 // it is also possible to start the Carousel with empty photos, but we need to hide the no-images-msg
-                this.carousel.start(index);
+                this.carousel.start(photo);
              }
 
           },
@@ -130,20 +131,43 @@ define([
              $(".mp-slideshow-loader").hide();
              $(".mp-slideshow-no-image-msg").show();
           },
+          /* 
+           * @presenter
+           * @description Restarts the slideshow if for example the photo order was changed.
+           */
+          restart : function (photos) {
+             this.carousel.update(photos);
+          },
           /**
            * @description Navigates to given index; starts slideshow if carousel is not yet initialized
+           * @param {Photo} photo
            */
-          //TODO we should probably support navigateTo(photo) instead. 
-          // This will shorten the code in other places and provides a more consistend abstraction.
-          // All other public methods take photo as parameter.
           //TODO this looks like it is not used anymore. Why has it not been removed?
-          // navigateTo : function (index) {
-          //    if (!this.started) {
-          //       this.start(index);
-          //    } else {
-          //       this.carousel.navigateTo(index);
-          //    }
-          // },
+          navigateTo : function (photo) {
+             if (!this.started) {
+                this.start(photo);
+             } else {
+                this.carousel.navigateTo(photo);
+             }
+          },
+          /*
+           * @private
+           * @description Navigates the slideshow left and right.
+           * @param {String} direction: left || right
+           */
+          _navigateWithDirection : function (direction) {
+             assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
+             
+             if (!this.view.isStarted()) {
+                this.view.start();
+             } else {
+                if (direction === "left") {
+                   this.carousel.navigateLeft();
+                } else {
+                   this.carousel.navigateRight();
+                }
+             }
+          },
           /**
            * @presenter
            * @description Inserts a new Photo. This will not move the Carousel or do anything else.
@@ -318,16 +342,14 @@ define([
              var instance = this;
              
              this.$navLeft.on("click", function () {
-                
-                console.log("?left?");
                 if (!instance.isDisabled()) {
-                   instance.presenter.navigate("left");
+                   instance._navigateWithDirection("left");
                 }
              });
              this.$navRight.on("click", function () {
                 // UIPhotoCarousel does not 'really' support aborting loading of the current photo and skipping to the next one
                 if (!instance.isDisabled()) {
-                   instance.presenter.navigate("right");
+                   instance._navigateWithDirection("right");
                 }
              });
              this.$image.on("click.Slideshow", function (event) {

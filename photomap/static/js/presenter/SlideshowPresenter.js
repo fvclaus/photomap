@@ -1,5 +1,5 @@
 /*jslint */ 
-/*global $, define, main, DASHBOARD_VIEW, ALBUM_VIEW */
+/*global $, define, main, assertTrue, ALBUM_VIEW, assertNotNull */
 
 "use strict";
 
@@ -12,34 +12,27 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
              isStarted : function () {
                 return this.view.isStarted();
              },
+             /*
+              * @view
+              * @description Reacts to a click on the slideshow image.
+              */
              click : function () {
                 communicator.publish("click:slideshowImage");
              },
-             //TODO is this a photo or a photoIndex?
+             /*
+              * @public
+              * @description Signals the slideshow to navigate to the speicified photo
+              * @param {Photo} photo: Must not be null.
+              */
              navigateTo : function (photo) {
-                
+                assertNotNull(photo);
                 if (!this.view.isStarted()) {
                    this.view.start(photo);
                 } else {
-                   this.view.getCarousel().navigateTo(photo);
+                   this.view.navigateTo(photo);
                 }
              },
-             navigate : function (direction) {
-                assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
-                
-                if (!this.view.isStarted()) {
-                   this.view.start();
-                } else {
-                   if (direction === "left") {
-                      this.view.getCarousel().navigateLeft();
-                   } else {
-                      this.view.getCarousel().navigateRight();
-                   }
-                }
-             },
-             updateMessage : function () {
-                this.view.updateMessage();
-             },
+             // Navigate() violated information hiding
              insertPhoto : function (photo) {
                 this.view.insertPhoto(photo);
                 this.view.updateMessage();
@@ -50,8 +43,12 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
              resetPlace : function (place) {
                 this.view.resetPlace(place);
              },
+             /* 
+              * @public
+              * @description Restarts the slideshow if for example the photo order was changed.
+              */
              restart : function (photos) {
-                this.view.getCarousel().update(photos);
+                this.view.restart(photos);
              },
              reset : function () {
                 this.view.reset();

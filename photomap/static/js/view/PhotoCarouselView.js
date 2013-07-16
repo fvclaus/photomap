@@ -4,11 +4,6 @@
 "use strict";
 
 /**
- * @author Frederik Claus, Marc-Leon Römer
- * @class creates an infinite carousel (for images) with given data using DataPage.
- * @requires DataPage
- */
-/**
  * @author Frederik Claus
  * @description defines handler to initialize and navigate through the carousel and to load images (supports lazy-loading)
  * @note every callback will be called everytime no matter if there is something to load/update or not
@@ -17,7 +12,12 @@
  * @param options.onUpdate Called after all photos are updated
  */
   
-define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "util/Tools", "util/CarouselAnimation"], 
+define(["dojo/_base/declare", 
+        "view/View",
+        "model/Photo",
+        "util/PhotoPages",
+        "util/Tools", 
+        "util/CarouselAnimation"], 
        function (declare, View, Photo, PhotoPages, tools, carouselAnimation) {
           
           return declare (View, {
@@ -60,9 +60,9 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
              },
              /**
               * @description Starts the carousel by loading the first or the requested page
+              * @param {Photo} photo: Null to start with the first photo.
               */
              start : function (photo) {
-                
                 this.isStarted = true;
                 if (photo) {
                    this.navigateTo(photo);
@@ -121,8 +121,27 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                    $(this).hide().attr("src", "");
                 });
              },
+             /* 
+              * @public
+              * @param {String | Int | Photo} to
+              */
              navigateTo : function (to) {
                 assert(this.isStarted, true, "carousel has to be started already");
+                switch(typeof to) {
+                case "string":
+                   assertTrue((to === "start") || (to === "end"));
+                   break;
+                case "object" :
+                   to = this._getIndexForPhoto(to);
+                   assertTrue(to >= 0, "Photo must be a legal index.");
+                   break;
+                case "number" : 
+                   assertTrue(to >= 0, "To must be a legal index.");
+                   break;
+                default: 
+                   assertTrue(false, "Unknown type " + typeof to);
+                   break;
+                }
 
                 switch (to) {
                    case "start":
@@ -154,6 +173,27 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
              getAllPhotos : function () {
                 return this.dataPage.getAllPhotos();
              },
+             _getIndexForPhoto : function (photo) {
+                return this.getAllPhotos().indexOf(photo);
+             },
+             /*
+              * @public
+              * @returns {Photo} If src present, null otherwise.
+              */
+             getPhotoForSrc : function (src) {
+                assertString(src, "src must be of type string.");
+                var photo = null,
+                    photoIndex = 0,
+                    photos = this.getAllPhotos();
+                for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
+                   photo = photos[photoIndex];
+                   if (photo[this.srcPropertyName] === src) {
+                      return photo;
+                   }
+                }
+                return null;
+             },
+                
              /**
               * @description Loads all photos, or just current page depending on this.options.lazy (=true/false). 
               * When everything is loaded this.options.onLoad (optional)  is executed and the carousel is updated to show the current page.
@@ -210,7 +250,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/PhotoPages", "ut
                          .error(loadHandler)
                          .attr('src', photo.getSource(instance.srcPropertyName));
                    }
-                }
+                };
                 carouselAnimation.start({
                    items: instance.$items,
                    loader: this.options.loader,

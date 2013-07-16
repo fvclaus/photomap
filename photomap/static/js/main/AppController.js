@@ -193,6 +193,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              _galleryThumbMouseleave : function () {
                 main.getUI().getControls().hide(true);
              },
+             /*
+              * @private
+              * @param {Photo} photo
+              */
              _galleryThumbClick : function (photo) {
                 if (state.getCurrentMarker()) {
                   state.getCurrentMarker().resetCurrent();

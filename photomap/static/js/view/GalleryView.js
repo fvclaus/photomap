@@ -1,5 +1,5 @@
 /*jslint */
-/*global define,$, main, fileUpload, assert, assertTrue, assertString, assertFalse, assertNumber,  gettext, UIInput */
+/*global define,$, main, fileUpload, assert, assertTrue, assertString, assertFalse, assertNumber, assertNotNull, gettext, UIInput */
 
 "use strict";
 
@@ -320,6 +320,15 @@ define(["dojo/_base/declare",
                 assertTrue($image.attr("src"), "src attribute of input parameter $image must not be undefined");
                 return this.carousel.getAllImageSources().indexOf($image.attr("src"));
              },
+             /* @private
+              * @returns {Photo} Photo for the $image element
+              */
+             _getPhotoOfImage : function ($image) {
+                assertTrue($image.attr("src"), "src attribute of input parameter $image must not be undefined");
+                var photo = this.carousel.getPhotoForSrc($image.attr("src"));
+                assertNotNull(photo, "There must be a photo for every img element.");
+                
+             },
              /**
               * @private
               * @returns {int} Index of the first photo currently visible
@@ -468,7 +477,7 @@ define(["dojo/_base/declare",
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)
-                         instance.presenter.click(instance._getIndexOfImage($el));
+                         instance.presenter.click(instance._getPhotoOfImage($el));
                       }
                    });
              }
