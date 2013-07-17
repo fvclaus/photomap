@@ -8,7 +8,8 @@
  * @class provides basic effects for switching images in carousels
  */
 
-define(["dojo/_base/declare", "util/Tools"], 
+define(["dojo/_base/declare",
+        "util/Tools"], 
        function (declare, tools) {
           var CarouselEffects = declare(null, {
              constructor : function () {

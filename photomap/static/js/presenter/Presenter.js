@@ -8,7 +8,8 @@
  * @class Base class for all Presenter
  */
 
-define(["dojo/_base/declare", "util/Communicator"],
+define(["dojo/_base/declare",
+        "util/Communicator"],
        function (declare, communicator) {
           return declare(null, {
              constructor : function (view, model) {

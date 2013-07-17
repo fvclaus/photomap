@@ -10,7 +10,8 @@
  * For the View implementation this.disabled and this.active should be used.
  */
 
-define(["dojo/_base/declare", "util/Communicator"],
+define(["dojo/_base/declare",
+        "util/Communicator"],
        function (declare, communicator) {
           return declare(null, {
              constructor : function () {

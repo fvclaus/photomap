@@ -3,7 +3,9 @@
 
 "use strict";
 
-define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
+define(["dojo/_base/declare",
+        "presenter/Presenter",
+        "util/Communicator"],
        function (declare, Presenter, communicator) {
           return declare(Presenter, {
              isStarted : function () {

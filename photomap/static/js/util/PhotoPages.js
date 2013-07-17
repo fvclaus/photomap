@@ -11,7 +11,8 @@
  * @param {String} srcPropertyName Name of the property that is returned for every photo when a page is requested
  */
 
-define(["dojo/_base/declare", "model/Photo"],
+define(["dojo/_base/declare",
+        "model/Photo"],
        function (declare, Photo) {
           return declare(null, {
              constructor : function (photos, photosPerPage, srcPropertyName) {
