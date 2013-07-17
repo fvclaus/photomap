@@ -9,8 +9,9 @@
  */
 
 
-define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
-       function (declare, Model, clientstate, state) {
+define(["dojo/_base/declare", 
+        "model/Model"],
+       function (declare, Model) {
           
           return declare(Model ,{
              constructor : function (data, index) {
@@ -19,7 +20,7 @@ define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
                 this.photo = data.photo;
                 this.thumb = data.thumb;
                 this.order = data.order;
-                this.visited = clientstate.isVisitedPhoto(this);
+                this.visited = data.visited;
              },
              getOrder : function () {
                 return this.order;
@@ -38,9 +39,6 @@ define(["dojo/_base/declare", "model/Model", "util/ClientState", "ui/UIState"],
              },
              setVisited : function (visited) {
                 this.visited = visited;
-                if (visited) {
-                  clientstate.insertVisitedPhoto(this);
-                }
              },
              isVisited : function () {
                 return this.visited;

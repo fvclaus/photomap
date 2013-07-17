@@ -13,7 +13,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
           return declare(null, {
              
              constructor : function () {
-                
+
                 communicator.subscribeOnce("init", this._init);
                 communicator.subscribe("load:dialog", this._dialogLoad);
                 communicator.subscribe({
@@ -54,8 +54,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    communicator.subscribe({
                       "beforeLoad:slideshow": this._slideshowBeforeLoad,
                       "update:slideshow": this._slideshowUpdate,
-                      "enable:slideshow": this._slideshowEnable,
-                      "disable:slideshow": this._slideshowDisable,
                       "click:slideshowImage": this._slideshowClick
                    });
                    
@@ -65,10 +63,16 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    
                    communicator.subscribe("change:photoOrder", this._photoOrderChange);
                    communicator.subscribe("visited:photo", this._photoVisited);
+                   communicator.subscribe("click:pageTitle", this._updatePageTitle);
+                      
                 }
              },
              _init : function (data) {
-                main.getUI().getInformation().init();
+                var album = state.getAlbum();
+                if (state.isAlbumView()) {
+                   main.getUI().getInformation().update(album);
+                   main.getUI().getPageTitleWidget().update(album.getTitle());
+                }
                 clientstate.init();
                 main.getMap().init(data);
              },
@@ -101,12 +105,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 } else {
                    this._disableLinks();
                 }
-             },
-             _slideshowDisable : function () {
-                main.getUI().getSlideshow().setDisabled(true);
-             },
-             _slideshowEnable : function () {
-                main.getUI().getSlideshow().setDisabled(false);
              },
              _fullscreenDisable : function () {
                 main.getUI().getFullscreen().setDisabled(true);
@@ -256,6 +254,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getInformation().update(photo);
                 main.getUI().getFullscreen().update(photo);
                 main.getUI().getGallery().navigateIfNecessary(photo);
+                clientstate.insertVisitedPhoto(photo);
                 photo.setVisited(true);
              },
              _slideshowBeforeLoad : function () {
@@ -280,7 +279,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 }
              },
              _modelDelete : function (model) {
-                var type = model.getModelType();
+                var type = model.getModelType(),
+                    currentPlace = state.getCurrentLoadedPlace();
                 
                 main.getUI().getInformation().empty(model);
                 
@@ -289,8 +289,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    main.getUI().getSlideshow().deletePhoto(model);
                    state.getCurrentLoadedPlace().getModel().deletePhoto(model);
                 } else if (type === "Place") {
-                   main.getUI().getGallery().resetPlace(model);
-                   main.getUI().getSlideshow().resetPlace(model);
+                   if (currentPlace && currentPlace.getModel() === model) {
+                      main.getUI().getGallery().reset();
+                      main.getUI().getSlideshow().reset();
+                   }
                 }
                 
                 if (type === "Place" || type === "Album") {
@@ -304,6 +306,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              _placeOpen : function (place) {
                 var photos = place.getPhotos();
                 main.getUI().getInformation().update(place);
+                main.getUI().getPageTitleWidget().update(place.getTitle());
 
                 main.getUI().getGallery().load(photos);
                 main.getUI().getGallery().start();
@@ -314,7 +317,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              },
              _photoVisited : function (photo) {
                 main.getUI().getGallery().setPhotoVisited(photo);
+             },
+             _updatePageTitle : function () {
+                var album = state.getAlbum();
+                main.getUI().getInformation().update(album);
              }
+
           });
        });
 

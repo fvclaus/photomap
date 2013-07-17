@@ -185,14 +185,6 @@ define(["dojo/_base/declare",
                 this.fullGallery.deletePhoto(photo);
              },
              /**
-              * @description Resets the Gallery if the deleted place was the one that is currently open
-              */
-             resetPlace : function (place) {
-                if (state.getCurrentLoadedPlace().getModel() === place) {
-                   this.reset();
-                }
-             },
-             /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
               */
              navigateIfNecessary : function (photo) {

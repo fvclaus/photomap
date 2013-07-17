@@ -114,7 +114,7 @@ define([
           },
           _init : function () {
 
-             if (state.isDashboardView() || (state.isAlbumView() && clientstate.isAdmin())) {
+             if (state.isDashboardView() || (state.isAlbumView() && state.isAdmin())) {
                 this._bindListener();
              }
           },

@@ -9,8 +9,14 @@
  */
 
 
-define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util/Communicator", "ui/UIState"],
-       function(declare, Photo, Place, Album, communicator, state) {
+define(["dojo/_base/declare",
+        "model/Photo",
+        "model/Place",
+        "model/Album",
+        "util/Communicator",
+        "ui/UIState",
+       "util/ClientState"],
+       function(declare, Photo, Place, Album, communicator, state, clientstate) {
           
           var DataProcessor = declare(null, {
              
@@ -96,13 +102,15 @@ define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "util
               */
              _createPhoto : function (data) {
                 var photo = new Photo({
-                       id : data.id,
-                       photo : data.url,
-                       thumb : data.thumb,
-                       order : data.order || state.getPhotos().length,
-                       title : data.title || state.retrieve(TEMP_TITLE_KEY),
-                       description : data.description || state.retrieve(TEMP_DESCRIPTION_KEY)
-                    });
+                   id : data.id,
+                   photo : data.url,
+                   thumb : data.thumb,
+                   order : data.order || state.getPhotos().length,
+                   title : data.title || state.retrieve(TEMP_TITLE_KEY),
+                   description : data.description || state.retrieve(TEMP_DESCRIPTION_KEY)
+                });
+
+                photo.setVisited(clientstate.isVisitedPhoto(photo));
                 
                 return photo;
              },

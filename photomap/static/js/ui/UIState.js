@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, window, main, PAGE_MAPPING, DASHBOARD_VIEW, ALBUM_VIEW, String */
+/*global $, window, main, define, assertTrue, String */
 
 "use strict";
 
@@ -9,7 +9,9 @@
  */
 
 
-define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"], 
+define(["dojo/_base/declare",
+        "util/ClientState",
+        "dojo/domReady"], 
       function (declare, clientstate) {
          var UIState = declare(null, {
             constructor : function () {
@@ -228,6 +230,13 @@ define(["dojo/_base/declare", "util/ClientState", "dojo/domReady"],
             },
             isFullscreen : function (bool) {
                return this.fullscreen;
+            },
+             /**
+              * @description Checks if user is owner of the current album (just used in albumview).
+              */
+            isAdmin : function () {
+               assertTrue(this.isAlbumView());
+               return this.getAlbum() && this.getAlbum().isOwner();
             },
             //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
             getDialogAutoClose : function () {

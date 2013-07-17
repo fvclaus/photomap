@@ -38,9 +38,6 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              deletePhoto : function (photo) {
                 this.view.deletePhoto(photo);
              },
-             resetPlace : function (place) {
-                this.view.resetPlace(place);
-             },
              restart : function (photos) {
                 this.view.restart(photos);
              },

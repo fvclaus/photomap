@@ -8,8 +8,10 @@
  * @description Defines methods to check whether user is admin or not and reads/writes cookies, describing the state of the client (visited photos, storage-space left, ...)
  */
 
-define(["dojo/_base/declare", "util/Communicator", "util/Tools", "ui/UIState"], 
-       function (declare, communicator, tools, state) {
+define(["dojo/_base/declare",
+        "util/Communicator",
+        "util/Tools"], 
+       function (declare, communicator, tools) {
           var ClientState = declare(null,  {
              constructor : function () {
                 this.visitedCookie = $.cookie("visited") || "";
@@ -24,13 +26,8 @@ define(["dojo/_base/declare", "util/Communicator", "util/Tools", "ui/UIState"],
                 this.usedSpace = null;
                 this.quota = null;
              },
-             /**
-              * @description Checks if user is owner of the current album (just used in albumview).
-              */
-             isAdmin : function () {
-                assertTrue(state.isAlbumView(), "differing between admin and guest is just needed in albumview, dashboard is just available to admins")
-                return state.getAlbum().isOwner();
-             },
+
+
              isVisitedPhoto : function (photo) {
                 if (this.visitedPhotos.indexOf(photo.id) === -1) {
                    return false;

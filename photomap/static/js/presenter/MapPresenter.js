@@ -88,7 +88,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                       this.fitMapToMarkers(markers);
                    }
                    
-                   if (clientstate.isAdmin()) {
+                   if (state.isAdmin()) {
                       this.view.bindClickListener();
                    }
                    

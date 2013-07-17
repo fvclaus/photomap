@@ -18,13 +18,12 @@ define([
    "presenter/DetailPresenter",
    "util/Communicator",
    "util/Tools",
-   "ui/UIState"
    ],
-    function (declare, View, Photo, Place, Album, DetailPresenter, communicator, tools, state) {
+    function (declare, View, Photo, Place, Album, DetailPresenter, communicator, tools) {
        return declare(View, {
           constructor : function () {
              this.$container = $("#mp-right-column");
-             this.$pageTitle = $("#mp-page-title");
+
              this.$explanationContainer = $("#mp-detail");
              this.$teaserContainer = $("#mp-detail-teaser");
 
@@ -84,20 +83,6 @@ define([
                 this.$description.empty();
                 this.$title.empty();
              }
-          },
-          init : function () {
-             
-             if (state.isAlbumView()) {
-                this.updatePageTitle();
-                this.update(state.getAlbum());
-                this.bindPageTitleListener();
-             }
-          },
-          updatePageTitle : function () {
-             assertTrue(state.isAlbumView(), "page-title is just supposed to be changed in albumview");
-             
-             console.log("Albumtitle is: " + state.getAlbum().getTitle());
-             this.$pageTitle.text(state.getAlbum().getTitle());
           },
           /**
            * @description Hides the detail box. The teaser box should be visible afterwards
@@ -203,18 +188,6 @@ define([
                       "event": event,
                       "model": model
                    });
-                }
-             });
-          },
-          bindPageTitleListener : function () {
-             assertTrue(state.isAlbumView(), "besides in albumview, page-title isn't supposed to have a listener");
-             
-             var instance = this;
-             
-             this.$pageTitle.on('click', function () {
-
-                if (!instance.isDisabled()) {
-                   instance.update(state.getAlbum());
                 }
              });
           }

@@ -10,8 +10,7 @@
  *
  */
 
-define([
-        "dojo/_base/declare", 
+define(["dojo/_base/declare", 
         "model/Photo", 
         "model/Place", 
         "model/Album", 
@@ -22,10 +21,11 @@ define([
         "view/FullscreenView",
         "view/GalleryView",
         "view/DialogView",
+        "widget/PageTitleWidget",
         "ui/UIState",
         "dojo/domReady!"
        ],
-       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, FullscreenView, GalleryView, DialogView, state) {
+       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowView, FullscreenView, GalleryView, DialogView, PageTitleWidget, state) {
            var UI = declare(null, {
               constructor : function () {
                  this.controls = new ModelFunctionView();
@@ -38,6 +38,7 @@ define([
                     this.gallery = new GalleryView();
                     this.slideshow = new SlideshowView();
                     this.fullscreen = new FullscreenView();
+                    this.pageTitle = new PageTitleWidget();
                  }
                  this._isDisabled = false;
               },
@@ -78,6 +79,9 @@ define([
               },
               getMessage : function () {
                  return this.message;
+              },
+              getPageTitleWidget : function () {
+                 return this.pageTitle;
               }
            }),
            

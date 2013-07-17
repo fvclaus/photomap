@@ -318,7 +318,7 @@ define([
           setNoMarkerMessage : function ()  {
              if (state.getMarkers().length <= 0) {
                 if (state.isAlbumView()) { 
-                   if (clientstate.isAdmin()) {
+                   if (state.isAdmin()) {
                       this.tooltip.setMessage(gettext("MAP_NO_PLACES_ADMIN"));
                    } else {
                       this.tooltip.setMessage(gettext("MAP_NO_PLACES_GUEST"));

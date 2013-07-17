@@ -13,16 +13,14 @@ define([
    "dojo/_base/declare",
    "view/View",
    "view/PhotoCarouselView",
-   "view/FullscreenView",
    "model/Photo",
    "presenter/SlideshowPresenter",
    "util/Communicator",
    "util/Tools",
-   "ui/UIState",
    "util/Tooltip",
    "dojo/domReady!"
    ],
-    function (declare, View, PhotoCarouselView, FullscreenView, Photo, SlideshowPresenter, communicator, tools, state, Tooltip) {
+    function (declare, View, PhotoCarouselView, Photo, SlideshowPresenter, communicator, tools, Tooltip) {
        return declare(View, {
           //TODO missing markupFactory for Dojo widget init. This should possibly go into the View superclass.
           constructor : function () {
@@ -90,16 +88,13 @@ define([
            */
           start: function (photo) {
              assert(this._started, false, "slideshow must not be started yet");
-
-             var photos = state.getPhotos(),
-                 instance = this;
-
              this._started = true;
 
              // initialize carousel
              // this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, "photo", options);
              
-             if (photos.length !== 0) {
+             if (this.carousel.getAllPhotos().length !== 0) {
+                //TODO this should be a selector in the constructor
                 $(".mp-slideshow-no-image-msg").hide();
                 // it is also possible to start the Carousel with empty photos, but we need to hide the no-images-msg
                 this.carousel.start(photo);
@@ -108,7 +103,7 @@ define([
           },
           /**
            * @presenter
-           * @description Resets the slideshow to a state before start() was called. 
+           * @description Resets the slideshow 
            * This can be called without ever starting the Slideshow
            */
           reset : function () {
@@ -134,11 +129,8 @@ define([
            * @param {Photo} photo
            */
           navigateTo : function (photo) {
-             // if (!this._started) {
-             //    this.start(photo);
-             // } else {
-                this.carousel.navigateTo(photo);
-             // }
+             // Navigate to photo, displaying it when the slideshow is started
+             this.carousel.navigateTo(photo);
           },
           /*
            * @presenter
@@ -148,7 +140,7 @@ define([
           navigateWithDirection : function (direction) {
              assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
              
-             if (!this.isStarted()) {
+             if (!this._started) {
                 this.start();
              } else {
                 if (direction === "left") {
@@ -164,15 +156,8 @@ define([
            */
           insertPhoto : function (photo) {
              assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-
-             // this is an unfortunate annoyance, but the gallery can be started without the slideshow
-             // therefore we need to check if the gallery is started on an insert photo event
-             // this is unfortunate, because the slideshow behaves differntly than the gallery
-             // if (this._started){
-                // does not move to the new photo, because photo cant be on current page
-                this.carousel.insertPhoto(photo);
-                // updating description & photo number is handled in update
-             // }
+             // Slideshow might or might not be started at that point
+             this.carousel.insertPhoto(photo);
           },
           /**
            * @presenter
@@ -181,38 +166,25 @@ define([
            */
           deletePhoto : function (photo) {
              assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-
-             // @see insertPhoto
-             // if (this._started) {
-                // automatically delete if photo is on current page
-                this.carousel.deletePhoto(photo);
-                // update will take of resetting if it was the last one
-             // }
-          },
-          /**
-           * @presenter
-           * @description Resets the Slideshow if the deleted place was the one that is currently open.
-           */
-          resetPlace : function (place) {
-             if (state.getCurrentLoadedPlace().getModel() === place) {
-                this.reset();
-             }
+             // Slideshow might or might not be started at that point
+             this.carousel.deletePhoto(photo);
           },
           /*
+           * @presenter
            * @description Shows or hides information message, regarding the usage.
            */
           updateMessage : function () {
-             if (state.getPhotos().length <= 0) {
+             if (!this._started) {
                 this.tooltip
                   .setOption("hideOnMouseover", false)
                   .setMessage(gettext("SLIDESHOW_GALLERY_NOT_STARTED"))
                   .start()
                   .open();
              } else {
-                //TODO what is going on here?
-                if ( this.carousel && this.carousel.getAllPhotos().length > 0) {
+                if (this.carousel.getAllPhotos().length > 0) {
                    this.tooltip.close();
                 } else {
+                   // No photos yet.
                   this.tooltip
                      .setOption("hideOnMouseover", true)
                      .setMessage(gettext("SLIDESHOW_NO_PHOTOS"))
@@ -227,17 +199,18 @@ define([
            */
           _update : function () {
              console.log("Slideshow: in _update");
-             var photo = this._updateAndGetCurrentLoadedPhoto();
+             this._findCurrentPhoto();
              // deleted last photo
-             if (photo  === null) {
+             if (this.currentPhoto  === null) {
                 this.reset();
              } else {
                 // right now this is the first time we can update the description
                 // on the other events, beforeLoad & afterLoad, the photo src is not set yet
                 this._updatePhotoNumber();
              }
-             communicator.publish("update:slideshow", photo);
-             communicator.publish("enable:slideshow");
+             communicator.publish("update:slideshow", this.currentPhoto);
+             this.setDisabled(false);
+             this.enable();
           },
           /**
            * @private
@@ -249,8 +222,8 @@ define([
              // trigger event to tell UI that slideshow is about to change
              // @see UIDetailView/Presenter
              communicator.publish("beforeLoad:slideshow");
-             communicator.publish("disable:slideshow");
-             
+             this.setDisabled(true);
+             this.disable();
           },
           /**
            * @private
@@ -283,41 +256,37 @@ define([
            * @description Synchronizes the current photo in the slideshow with the one in the UIState
            * @returns {Photo} currentPhoto
            */
-          _updateAndGetCurrentLoadedPhoto : function () {
+          _findCurrentPhoto : function () {
              assert(this._started, true, "slideshow has to be started already");
 
              // this might be updated at a later point, we can't rely on that
-             var photos = state.getPhotos(),
+             var photos = this.carousel.getAllPhotos(),
                  // but we can rely on the currentPage
-                 imageSources = this.carousel.getAllImageSources(),
-                 currentPhoto = null,
-                 currentIndex = -1;
+                 currentPhoto = null;
+
              // if it is the only (empty) page the entry is null
-             if (imageSources.length > 0) {
+             if (photos.length > 0) {
                 currentPhoto = tools.getObjectByKey("photo", this.$image.attr("src"), photos);
-                currentIndex = $.inArray(currentPhoto, photos);
-                state.setCurrentLoadedPhoto(currentPhoto);
-                state.setCurrentLoadedPhotoIndex(currentIndex);
              }
-             return currentPhoto;
+             this.currentPhoto = currentPhoto;
           },
           /**
            * @private
            * @description Updates current photo number
            */
           _updatePhotoNumber : function () {
-             var photos = state.getPhotos();
-
+             var photos = this.carousel.getAllPhotos(),
+                 currentIndex = $.inArray(this.currentPhoto, photos);
+             
              //TODO I think Photo is fine in every language
-             this.$photoNumber.text("Photo "+(state.getCurrentLoadedPhotoIndex() + 1) + "/" + photos.length);
+             this.$photoNumber.text("Photo "+(currentIndex + 1) + "/" + photos.length);
           },
           /**
            * @private
            * @description Removes the current photo number
            */
           _emptyPhotoNumber : function () {
-             //TODO 0/0 is a little misguiding. I suggest nothing instead.
-             // this.$imageNumber.text("0/0");
+             // 0/0 is a little misguiding. I suggest nothing instead.
              this.$photoNumber.text("");
           },
           /**

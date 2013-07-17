@@ -55,12 +55,6 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
              deletePhoto : function (photo) {
                 this.view.deletePhoto(photo);
              },
-             /*
-              * @public
-              */
-             resetPlace : function (place) {
-                this.view.resetPlace(place);
-             },
              /* 
               * @public
               * @description Restarts the slideshow if for example the photo order was changed.
