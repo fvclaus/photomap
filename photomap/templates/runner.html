@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+{% load i18n %}
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>QUnit Example</title>
+    <link rel="stylesheet" href="/static/css/lib/qunit-1.12.0.css">
+    <link rel="stylesheet" type="text/css" href="/static/css/lib/sans.narrow.css" />
+    <link href="/static/css/lib/droid.sans.css" rel="stylesheet" type="text/css"/>
+    <link rel="stylesheet" type="text/css" href="/static/css/lib/tzoom.css" />
+
+    {% load compress %}
+    {% compress css %}
+    <link rel="stylesheet" type="text/x-stylus" href="/static/css/viewalbum-main.styl" />
+    {% endcompress %}
+
+    <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery-1.7.2-min.js"></script>
+    <script src="/static/js/lib/qunit-1.12.0.js"></script>
+    <script type="text/javascript" src="/static/js/lib/assert.js"></script>
+    <script type="text/javascript" src="/static/js/dojo/dojo.js" data-dojo-config="isDebug:true"></script>
+    <script type="text/javascript" src="/static/js/util/runner.js"></script>
+  </head>
+  <body>
+    <div id="qunit" style="float : left; width : 45%; height : 1000px"></div>
+    <div id="qunit-fixture" style="float : left;"></div>
+    <div id="testBody" style="float : left; width : 50%"></div>
+  </body>
+</html>
+
