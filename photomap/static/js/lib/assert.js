@@ -19,6 +19,12 @@ function assertTrue(actual, message) {
    }
 }
 
+function assertEqual(actual, expected, message) {
+   if (actual !== expected) {
+      croak(actual, expected, message);
+   }
+}
+
 function assertFalse(actual, message) {
    if (actual) {
       croak(actual, false, message);

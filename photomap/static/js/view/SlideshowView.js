@@ -51,7 +51,8 @@ define(["dojo/_base/declare",
                 // tooltip is a builtin member of _WidgetBase
                 this._tooltip = new Tooltip(this.$container, "", {hideOnMouseover: false});
                 
-                this._started = false;
+                // this._started = false;
+                this._isPhotosLoaded = false;
                 
                 this._bindActivationListener(this.$container, this.viewName);
                 var instance = this;
@@ -83,8 +84,9 @@ define(["dojo/_base/declare",
              /*
               * @presenter
               */
-             load : function (photos) {
-                this._loaded = true;
+             loadPhotos : function (photos) {
+                assertInstance(photos, Array, "Photos must be of type Array.");
+                this._isPhotosLoaded = true;
                 this.reset();
                 this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, this.srcPropertyName, this.options);
              },
@@ -93,11 +95,12 @@ define(["dojo/_base/declare",
               * @description starts slideshow by initialising and starting the carousel 
               * @param {Photo} photo: Null to start with the first photo.
               */
-             start: function (photo) {
-                assert(this._started, false, "slideshow must not be started yet");
-                assertTrue(this._loaded, "Slideshow must be loaded before starting.");
+             startCarousel: function (photo) {
+                assert(this._started, true, "Must call startup() before.");
+                assertTrue(this._isPhotosLoaded, "Must call loadPhotos(photos) before.");
 
-                this._started = true;
+                // this._started = true;
+                this._isCarouselStarted = true;
 
                 // initialize carousel
                 // this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, "photo", options);
@@ -116,14 +119,16 @@ define(["dojo/_base/declare",
               * This can be called without ever starting the Slideshow
               */
              reset : function () {
-                this._started = false;
-                if (this.carousel !== null) {
-                   this.carousel.reset();
-                   this.carousel = null;
+                // this._started = false;
+                if (this._started) { 
+                   if (this.carousel !== null) {
+                      this.carousel.reset();
+                      this.carousel = null;
+                   }
+                   this._emptyPhotoNumber();
+                   $(".mp-slideshow-loader").hide();
+                   $(".mp-slideshow-no-image-msg").show();
                 }
-                this._emptyPhotoNumber();
-                $(".mp-slideshow-loader").hide();
-                $(".mp-slideshow-no-image-msg").show();
              },
              /* 
               * @presenter
@@ -149,7 +154,7 @@ define(["dojo/_base/declare",
              navigateWithDirection : function (direction) {
                 assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
                 
-                if (!this._started) {
+                if (!this._isCarouselStarted) {
                    this.start();
                 } else {
                    if (direction === "left") {
@@ -183,7 +188,7 @@ define(["dojo/_base/declare",
               * @description Shows or hides information message, regarding the usage.
               */
              updateMessage : function () {
-                if (!this._started) {
+                if (!this._isCarouselStarted) {
                    this._tooltip
                       .setOption("hideOnMouseover", false)
                       .setMessage(gettext("SLIDESHOW_GALLERY_NOT_STARTED"))
