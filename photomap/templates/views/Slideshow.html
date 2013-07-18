@@ -3,19 +3,19 @@
   <div class="mp-nodisplay" id="mp-slideshow-photos">
   </div>
   <div class="mp-slideshow-nav column">
-    <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-prev" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}' />
+    <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-prev" data-dojo-attach-point="navLeftNode" src="/static/images/album-arrow-left.png" title='{% trans "Previous Image" %}' />
   </div>
-  <div class="mp-slideshow-inner column" id="mp-slideshow-inner">
-    <div class="mp-slideshow-tile" id="mp-slideshow-image-wrapper">
-      <img class="mp-slideshow-image mp-control mp-zoom" id="mp-slideshow-image" src=""/>
-      <img class="mp-slideshow-loader mp-light-loader mp-nodisplay" src="/static/images/light-loader.gif" />
+  <div class="mp-slideshow-inner column" id="mp-slideshow-inner" data-dojo-attach-point="innerNode">
+    <div class="mp-slideshow-tile" id="mp-slideshow-image-wrapper" data-dojo-attach-point="imageWrapperNode">
+      <img class="mp-slideshow-image mp-control mp-zoom" id="mp-slideshow-image" data-dojo-attach-point="imageNode" src=""/>
+      <img class="mp-slideshow-loader mp-light-loader mp-nodisplay" data-dojo-attach-point="loaderNode" src="/static/images/light-loader.gif" />
     </div>
   </div>
   <div class="mp-slideshow-nav column">
-    <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-next" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}' />
+    <img class="mp-cursor-pointer mp-control" id="mp-slideshow-nav-next" data-dojo-attach-point="navRightNode" src="/static/images/album-arrow-right.png" title='{% trans "Next Image" %}' />
   </div>
   <div class="mp-slideshow-info column">
     <!-- {% trans "Bild" %} -->
-    <span class="mp-image-number"><!-- 0/0 --></span>
+    <span class="mp-image-number" data-dojo-attach-point="photoNumberNode"><!-- 0/0 --></span>
   </div>
 </section>

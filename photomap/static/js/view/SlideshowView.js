@@ -27,19 +27,31 @@ define(["dojo/_base/declare",
           return declare([View, _WidgetBase, _TemplatedMixin], {
              templateString : template,
              //TODO missing markupFactory for Dojo widget init. This should possibly go into the View superclass.
+             buildRendering : function () {
+                this.inherited(arguments);
+                var instance = this;
+                this._attachPoints.forEach(function (attachPoint) {
+                   var jQSelectorName = "$" + attachPoint.replace("Node", "");
+                   instance[jQSelectorName] = $(instance[attachPoint]);
+                });
+                this.$container = $(this.domNode);
+             },
              startup : function () {
                 this.inherited(arguments);
-                this.$container = $('#mp-slideshow');
+                // Defined in buildRendering()
+                // this.$container = $('#mp-slideshow');
+                // this.$container = $(this.domNode);
                 this.viewName = "Slideshow";
                 
-                this.$inner = $("#mp-slideshow-inner");
-                this.$imageWrapper = $("#mp-slideshow-image-wrapper");
-                this.$image = $("#mp-slideshow-image");
-                this.$navLeft = $('#mp-slideshow-nav-prev');
-                this.$navRight = $('#mp-slideshow-nav-next');
-                this.$loader = this.$container.find(".mp-slideshow-loader");
+                // defined in 
+                // this.$inner = $("#mp-slideshow-inner");
+                // this.$imageWrapper = $("#mp-slideshow-image-wrapper");
+                // this.$image = $("#mp-slideshow-image");
+                // this.$navLeft = $('#mp-slideshow-nav-prev');
+                // this.$navRight = $('#mp-slideshow-nav-next');
+                // this.$loader = this.$container.find(".mp-slideshow-loader");
 
-                this.$photoNumber = $(".mp-image-number");
+                // this.$photoNumber = $(".mp-image-number");
                 // need to indicate ready status to frontend tests
                 this.$ready = $("<div id=mp-slideshow-ready />")
                    .hide()
