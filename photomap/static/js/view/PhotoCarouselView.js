@@ -14,7 +14,7 @@
  * @param options.context
  */
   
-define(["dojo/_base/declare", 
+define(["dojo/_base/declare",
         "view/View",
         "model/Photo",
         "util/PhotoPages",
@@ -23,6 +23,7 @@ define(["dojo/_base/declare",
        function (declare, View, Photo, PhotoPages, tools, carouselAnimation) {
           
           return declare (View, {
+             ID_HTML_ATTRIBUTE : "data-keiken-id",
              constructor : function ($photos, photos, srcPropertyName, options) {
                 assertTrue($photos.size() > 0, "Can't build a Carousel without placeholder for photos.");
                 
@@ -298,7 +299,7 @@ define(["dojo/_base/declare",
                     console.log($items.length);
                     
                 assertTrue($items.size() > 0, "$items has to contain at least one item");
-                
+0                
                 $.each(this.currentPage, function (index, photo) {
                    if (photo !== null) {
                       photos.push(photo);
@@ -313,7 +314,14 @@ define(["dojo/_base/declare",
                    loader: this.options.loader,
                    animation: this.options.effect,
                    animationTime: this.options.duration,
-                   onEnd: instance.options.onUpdate,
+                   onEnd: function ($photos) {
+                      $photos.each(function (photoIndex, photo) {
+                                               // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
+                         $(photo).attr(instance.ID_HTML_ATTRIBUTE, photos[photoIndex].getId());
+
+                      });
+                      instance.options.onUpdate.call(instance.options.context, $photos);
+                   },
                    context: instance.options.context
                 });
              }
