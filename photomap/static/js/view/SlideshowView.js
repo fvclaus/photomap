@@ -276,11 +276,12 @@ define(["dojo/_base/declare",
                 // this might be updated at a later point, we can't rely on that
                 var photos = this.carousel.getAllPhotos(),
                     // but we can rely on the currentPage
-                    currentPhoto = null;
+                    currentPhoto = null,
+                    id = parseInt(this.$image.attr(this.carousel.ID_HTML_ATTRIBUTE));
 
                 // if it is the only (empty) page the entry is null
                 if (photos.length > 0) {
-                   currentPhoto = tools.getObjectByKey("photo", this.$image.attr("src"), photos);
+                   currentPhoto = tools.getObjectByKey("id", id, photos);
                 }
                 this.currentPhoto = currentPhoto;
              },
