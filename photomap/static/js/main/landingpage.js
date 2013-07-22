@@ -10,7 +10,7 @@ $(document).ready(function () {
    $("#keiken-login").tabs({
       //heightStyle : "auto",
       active: 0,
-      disabled : [1]
+      //disabled : [1]
    });
    $(".mp-login-link, .login-toggle").button();
    $(".mp-login-toggle .ui-button-text").css({
