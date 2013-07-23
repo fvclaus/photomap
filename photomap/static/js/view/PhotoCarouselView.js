@@ -211,6 +211,14 @@ define(["dojo/_base/declare",
              _load : function (from, to) {
                 var i, j, loader, loadHandler, loaded, maxLoad, currentPage, photo, photos, nPhotos, instance = this;
                 loaded = 0;
+                // The loading from before has not finished yet.
+                // If there is quick succession of navigate calls, it is not really deterministic which photo will be shown.
+                // This is because the download speed of the photos varies. The slowest wins and will overwrite all other ones.
+                if (this._thread !== null) {
+                   // Overwrite the old loadHandler so it will never call _update.
+                   this._thread = function () {
+                   };
+                }
 
                 if (from === undefined || from === null) {
                    from = 0;
@@ -241,6 +249,8 @@ define(["dojo/_base/declare",
                       }
                       // start updating the srcs
                       instance._update(from, to || nPhotos);
+                      // Loading finished. Can't abort anymore.
+                      instance._thread = null;
                    }
                 };
                 nPhotos = photos.length;
@@ -279,6 +289,9 @@ define(["dojo/_base/declare",
                       this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nPhotos));
                    }
                 }
+                // Store a reference to the loader function.
+                // This is needed to abort the loading at a later point.
+                this._thread = loadHandler;
              },
              /**
               * @description Updates carousel to show current page.
@@ -316,7 +329,7 @@ define(["dojo/_base/declare",
                    animationTime: this.options.duration,
                    onEnd: function ($photos) {
                       $photos.each(function (photoIndex, photo) {
-                                               // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
+                         // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
                          $(photo).attr(instance.ID_HTML_ATTRIBUTE, photos[photoIndex].getId());
 
                       });

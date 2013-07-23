@@ -37,21 +37,12 @@ define(["dojo/_base/declare",
                 this.$container = $(this.domNode);
              },
              startup : function () {
+                if (this._started) {
+                   return;
+                }
                 this.inherited(arguments);
-                // Defined in buildRendering()
-                // this.$container = $('#mp-slideshow');
-                // this.$container = $(this.domNode);
                 this.viewName = "Slideshow";
                 
-                // defined in 
-                // this.$inner = $("#mp-slideshow-inner");
-                // this.$imageWrapper = $("#mp-slideshow-image-wrapper");
-                // this.$image = $("#mp-slideshow-image");
-                // this.$navLeft = $('#mp-slideshow-nav-prev');
-                // this.$navRight = $('#mp-slideshow-nav-next');
-                // this.$loader = this.$container.find(".mp-slideshow-loader");
-
-                // this.$photoNumber = $(".mp-image-number");
                 // need to indicate ready status to frontend tests
                 this.$ready = $("<div id=mp-slideshow-ready />")
                    .hide()
@@ -98,6 +89,7 @@ define(["dojo/_base/declare",
               */
              loadPhotos : function (photos) {
                 assertInstance(photos, Array, "Photos must be of type Array.");
+                assert(this._started, true, "Must call startup() before.");
                 this._isPhotosLoaded = true;
                 this.reset();
                 this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, this.srcPropertyName, this.options);

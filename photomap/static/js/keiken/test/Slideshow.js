@@ -2,40 +2,107 @@
 
 "use strict";
 
-require(["view/SlideshowView",
+require(["widget/SlideshowWidget",
          "keiken/test/TestFixture",
         "dojo/domReady!"],
-        function (SlideshowView, TestFixture) {
+        function (SlideshowWidget, TestFixture) {
+
            var slideshow = null,
                $testBody = $("#testBody"),
                $container = $("<section id=mp-slideshow></section>"),
                textFixture = new TestFixture(),
-               photos = textFixture.getPhotos(12);
+               photos = textFixture.getPhotos(12),
+               assertTooltipPresence = function (present) {
+                  if (present) {
+                     QUnit.ok$1($(".mp-tooltip"));
+                  } else {
+                     QUnit.ok$0($(".mp-tooltip"));
+                  }
+               },
+               assertPhotoInGallery = function (photo) {
+                  var $image = $(".mp-slideshow-image"),
+                      expectedText = "Photo " + (photos.indexOf(photo) + 1) +  "/" + photos.length;
+                  QUnit.ok$visible($image);
+                  QUnit.ok$text($(".mp-image-number"), expectedText);
+                  QUnit.ok(parseInt($image.attr("data-keiken-id")) === photo.id, "The slideshow image should display the photo with id " + photo.id);
+               };
 
-           $testBody
-              .empty()
-              .append($container);
+                  
 
-           slideshow = new SlideshowView(null, $container.get(0));
-           slideshow.startup();
-           slideshow.loadPhotos(photos);
-           slideshow.startCarousel();
-           
-           
+           module("Slideshow", {
+              setup : function () {
+                 $testBody
+                    .empty()
+                    .append($container);
 
-           QUnit.test("Slideshow", function () {
-              QUnit.ok(true);
+                 slideshow = new SlideshowWidget(null, $container.get(0));
+              },
+              teardown : function () {
+                 $testBody.empty();
+                 // Necessary to register the same widget id again.
+                 slideshow.destroyRecursive(false);
+              }
            });
-              
+           
+           QUnit.asyncTest("startup", 7, function () {
+              // No startup yet.
+              assertTooltipPresence(false);
+              QUnit.raiseError(slideshow.startCarousel, slideshow);
+              QUnit.raiseError(slideshow.loadPhotos, slideshow, photos);
+              slideshow.startup();
+              // Multiple calls to startup
+              slideshow.startup();
+              // Wait for the tooltip to fade in.
+              // The time needs to be adjusted manually.  
+              setTimeout(function () {
+                 assertTooltipPresence(true);
+                 // No args loadPhoto.
+                 QUnit.raiseError(slideshow.loadPhotos, slideshow);
+                 slideshow.loadPhotos([]);
+                 // Make sure the tooltip does not go away.
+                 setTimeout(function() {
+                    assertTooltipPresence(true);
+                    slideshow.loadPhotos(photos);
+                    // Make sure the tooltip does not go away.
+                    setTimeout(function () {
+                       assertTooltipPresence(true);
+                       QUnit.start();
+                    }, 300);
+                 }, 300);
+              }, 300);
+           });
 
-           // doh.register("Slideshow", {
-           //    setUp : function () {
-           //       slideshow = new SlideshowView({}, $container);
-           //    },
-           //    runTest : function () {
-           //       doh.t(true);
-           //       slideshow.start();
-           //    }
-           // });
-           // doh.run();
+           QUnit.asyncTest("startCarousel", 3,  function () {
+              slideshow.startup();
+              slideshow.loadPhotos(photos);
+              slideshow.startCarousel();
+              setTimeout(function () {
+                 assertPhotoInGallery(photos[0]);
+                 QUnit.start();
+              }, 1200);
+           });
+
+           QUnit.asyncTest("navigateWithDirection", 11, function () {
+              slideshow.startup();
+              slideshow.loadPhotos(photos);
+              slideshow.startCarousel();
+              QUnit.raiseError(slideshow.navigateWithDirection, slideshow, 3);
+              QUnit.raiseError(slideshow.navigateWithDirection, slideshow, "wrong");
+              slideshow.navigateWithDirection("left");
+              setTimeout(function () {
+                 assertPhotoInGallery(photos[11]);
+                 slideshow.navigateWithDirection("right");
+                 setTimeout(function () {
+                    assertPhotoInGallery(photos[0]);
+                    slideshow.navigateWithDirection("right");
+                    slideshow.navigateWithDirection("right");
+                    slideshow.navigateWithDirection("right");
+                    slideshow.navigateWithDirection("right");
+                    setTimeout(function () {
+                       assertPhotoInGallery(photos[4]);
+                       QUnit.start();
+                    }, 1200);
+                 }, 1200);
+              }, 1200);
+           });
         });
