@@ -1720,13 +1720,9 @@ msgid "Invalid URL"
 msgstr ""
 
 #: templates/url-invalid.html:14
-#, fuzzy
 msgid "INVALID_URL_ERROR"
 msgstr ""
-"Bei der Verarbeitung der von Ihnen ins Formular eingegebenen Daten trat ein "
-"Fehler auf. Bitte stellen Sie sicher, dass ein den entsprechenden Feldern "
-"auch nur passende Eingaben gemacht werden. Bsp: In ein Email-Feld muss auch "
-"eine Email-Adresse stehen. "
+"Die angegebene URL ist ungültig."
 
 #: templates/view-album.html:6
 msgid "Albumsansicht"

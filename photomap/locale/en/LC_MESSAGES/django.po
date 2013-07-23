@@ -1653,12 +1653,9 @@ msgid "Invalid URL"
 msgstr ""
 
 #: templates/url-invalid.html:14
-#, fuzzy
 msgid "INVALID_URL_ERROR"
 msgstr ""
-"The data you inserted into the form seems to be invalid. Please make sure "
-"your input has the correct format for the given input field. Eg. an email "
-"input field accepts just an email address as input. "
+"The given URL is invalid."
 
 #: templates/view-album.html:6
 msgid "Albumsansicht"
