@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-29 16:52+0200\n"
+"POT-Creation-Date: 2013-07-23 15:56+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pm/controller/account.py:100
+#: pm/controller/account.py:101
 msgid "EMAIL_MATCH_ERROR"
 msgstr ""
 "The email you've given matches the email connected to your user account. "
@@ -140,9 +140,9 @@ msgstr "Old Password"
 #: templates/contact.html.py:50 templates/contact.html:58
 #: templates/contact.html.py:66 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-photo.html.py:28
-#: templates/insert-place.html:10 templates/reset-password-confirm.html:20
-#: templates/reset-password-confirm.html:27 templates/update-album.html:11
-#: templates/update-photo.html:12 templates/update-place.html:12
+#: templates/insert-place.html:10 templates/reset-password-confirm.html:27
+#: templates/reset-password-confirm.html:34 templates/update-album.html:10
+#: templates/update-photo.html:11 templates/update-place.html:11
 msgid "MANDATORY_FIELD"
 msgstr "This field is mandatory."
 
@@ -150,8 +150,8 @@ msgstr "This field is mandatory."
 msgid "OLD_PASSWORD_PLACEHOLDER"
 msgstr "Enter your old password"
 
-#: templates/account-active.html:80 templates/reset-password-confirm.html:20
-#: templates/update-album-password.html:15
+#: templates/account-active.html:80 templates/reset-password-confirm.html:27
+#: templates/update-album-password.html:14
 msgid "New Password"
 msgstr "New Password"
 
@@ -159,7 +159,7 @@ msgstr "New Password"
 msgid "NEW_PASSWORD_PLACEHOLDER"
 msgstr "Enter a new password"
 
-#: templates/account-active.html:84 templates/reset-password-confirm.html:27
+#: templates/account-active.html:84 templates/reset-password-confirm.html:34
 msgid "Repeat New Password"
 msgstr "Repeat New Password"
 
@@ -168,7 +168,7 @@ msgid "NEW_PASSWORD_REPEAT_PLACEHOLDER"
 msgstr "Enter it again.."
 
 #: templates/account-active.html:88 templates/account-active.html.py:107
-#: templates/account-deleted.html:42 templates/reset-password-confirm.html:32
+#: templates/account-deleted.html:37 templates/reset-password-confirm.html:39
 msgid "Save"
 msgstr "Save"
 
@@ -224,45 +224,50 @@ msgstr "Enter your email.."
 msgid "ACCOUNTS_TEST_USER_INFO"
 msgstr "This is just a test-account. You cannot modify any settings. "
 
+#: templates/account-delete-error.html:6
+msgid "Account Delete Failure"
+msgstr "Account Delete Failure"
+
+#: templates/account-delete-error.html:9
+msgid "ACCOUNT_DELETE_FAIL"
+msgstr ""
+"An error occurred while trying to delete your account. Please try again (<a href='/account'>back to settings</a>) "
+"or contact support (<a href='/contact'>contact form</a>)."
+
 #: templates/account-deleted.html:6
-#, fuzzy
 msgid "Account Deleted"
 msgstr "Account Deleted"
 
-#: templates/account-deleted.html:10
+#: templates/account-deleted.html:9
 #, fuzzy
 msgid "ACCOUNT_DELETE_SUCCESS"
 msgstr "You successfully changed your email adress."
 
-#: templates/account-deleted.html:12
-msgid "ACCOUNT_DELETE_FAILURE"
-msgstr ""
-
-#: templates/account-deleted.html:25
+#: templates/account-deleted.html:20
 msgid "DELETION_FORM_CAUSE_TESTING"
 msgstr ""
 
-#: templates/account-deleted.html:26
+#: templates/account-deleted.html:21
 msgid "DELETION_FORM_CAUSE_ALTERNATIVE"
 msgstr ""
 
-#: templates/account-deleted.html:27
+#: templates/account-deleted.html:22
 msgid "DELETION_FORM_CAUSE_SERVICE"
 msgstr ""
 
-#: templates/account-deleted.html:28
+#: templates/account-deleted.html:23
 msgid "DELETION_FORM_CAUSE_USAGE"
 msgstr ""
 
-#: templates/account-deleted.html:29
+#: templates/account-deleted.html:24
 msgid "DELETION_FORM_CAUSE_LIMITATIONS"
 msgstr ""
 
-#: templates/account-deleted.html:30
+#: templates/account-deleted.html:25
 msgid "DELETION_FORM_CAUSE_NEED"
 msgstr ""
 
-#: templates/account-deleted.html:31
+#: templates/account-deleted.html:26
 msgid "DELETION_FORM_CAUSE_LIKE"
 msgstr ""
 
@@ -279,14 +284,15 @@ msgstr ""
 #: templates/account-inactive.html:13
 msgid "ACCOUNT_NOT_INACTIVE_NOTIFY"
 msgstr ""
-"There seems to be an error. Ofcourse your account is still active. Please try again what you did before you saw this page. "
-"In case you get redirected here another time please contact the KEIKEN-Team."
+"There seems to be an error. Ofcourse your account is still active. Please "
+"try again what you did before you saw this page. In case you get redirected "
+"here another time please contact the KEIKEN-Team."
 
 #: templates/account.html:13
 msgid "Account"
 msgstr "Account"
 
-#: templates/album-share-failure.html:8
+#: templates/album-share-failure.html:11
 #, fuzzy
 msgid "ALBUM_SHARE_FAILURE_NOTE"
 msgstr ""
@@ -462,8 +468,8 @@ msgstr ""
 
 #: templates/contact.html:41 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:12
+#: templates/update-album.html:10 templates/update-photo.html:11
+#: templates/update-place.html:11
 msgid "NAME"
 msgstr "Name"
 
@@ -567,7 +573,7 @@ msgstr "Share"
 msgid "DELETE_ALBUM"
 msgstr "Delete Album?"
 
-#: templates/delete-album.html:11
+#: templates/delete-album.html:10
 msgid "DELETE_ALBUM_QUESTION"
 msgstr "Do you really want to delete Album "
 
@@ -575,7 +581,7 @@ msgstr "Do you really want to delete Album "
 msgid "DELETE_PHOTO"
 msgstr "Delete Photo?"
 
-#: templates/delete-photo.html:11
+#: templates/delete-photo.html:10
 msgid "DELETE_PHOTO_QUESTION"
 msgstr "Do you really want to delete Photo "
 
@@ -583,7 +589,7 @@ msgstr "Do you really want to delete Photo "
 msgid "DELETE_PLACE"
 msgstr "Delete Place?"
 
-#: templates/delete-place.html:11
+#: templates/delete-place.html:10
 msgid "DELETE_PLACE_QUESTION"
 msgstr "Do you really want to delete Place "
 
@@ -1174,21 +1180,21 @@ msgid "INSERT_ALBUM"
 msgstr "Insert Album"
 
 #: templates/insert-album.html:11 templates/insert-photo.html:21
-#: templates/insert-place.html:11 templates/update-album.html:12
-#: templates/update-photo.html:13 templates/update-place.html:13
+#: templates/insert-place.html:11 templates/update-album.html:11
+#: templates/update-photo.html:12 templates/update-place.html:12
 msgid "INPUT_PLACEHOLDER_TITLE"
 msgstr "Give a title."
 
 #: templates/insert-album.html:14 templates/insert-photo.html:11
 #: templates/insert-photo.html.py:24 templates/insert-place.html:14
-#: templates/update-album.html:15 templates/update-photo.html:16
-#: templates/update-place.html:16
+#: templates/update-album.html:14 templates/update-photo.html:15
+#: templates/update-place.html:15
 msgid "DESCRIPTION"
 msgstr "Description"
 
 #: templates/insert-album.html:15 templates/insert-photo.html:25
-#: templates/insert-place.html:15 templates/update-album.html:16
-#: templates/update-photo.html:17 templates/update-place.html:17
+#: templates/insert-place.html:15 templates/update-album.html:15
+#: templates/update-photo.html:16 templates/update-place.html:16
 msgid "INPUT_PLACEHOLDER_DESCRIPTION"
 msgstr "(Optional) Enter a description .."
 
@@ -1316,8 +1322,8 @@ msgstr "Bank"
 #: templates/payment.html:44
 msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
 msgstr ""
-"Please <a href='/account/auth/login?next=/payment' title='To Login'>sign in</a> to view "
-"the bank information."
+"Please <a href='/account/auth/login?next=/payment' title='To Login'>sign in</"
+"a> to view the bank information."
 
 #: templates/payment.html:48
 msgid "payment 'thank you note'"
@@ -1523,34 +1529,38 @@ msgstr "Reset Password Success"
 #: templates/reset-password-complete.html:10
 msgid "RESET_PASSWORD_COMPLETE"
 msgstr ""
-"Your new password has been set. You may go ahead and <a href='/account/auth/login'>log "
-"in</a> now."
+"Your new password has been set. You may go ahead and <a href='/account/auth/"
+"login'>log in</a> now."
 
-#: templates/reset-password-confirm.html:6
+#: templates/reset-password-confirm.html:8
 msgid "Define New Password"
 msgstr "Define New Password"
 
-#: templates/reset-password-confirm.html:11
+#: templates/reset-password-confirm.html:10
+msgid "Link Invalid"
+msgstr ""
+
+#: templates/reset-password-confirm.html:18
 msgid "RESET_PASSWORD_GIVE_NEW_PASSWORD"
 msgstr ""
 "To set a password, please enter your new password twice to prevent typing "
 "errors and submit."
 
-#: templates/reset-password-confirm.html:37
+#: templates/reset-password-confirm.html:44
 msgid "RESET_PASSWORD_FAILURE_H1"
 msgstr "Password reset not possible."
 
-#: templates/reset-password-confirm.html:38
+#: templates/reset-password-confirm.html:45
 msgid "RESET_PASSWORD_FAILURE_P"
 msgstr ""
 "The password reset link was invalid, possibly because it has already been "
 "used or is outdated. Please request a new password reset."
 
-#: templates/reset-password-done.html:6
+#: templates/reset-password-requested.html:6
 msgid "Reset Email Sent"
 msgstr "Reset Email Sent"
 
-#: templates/reset-password-done.html:10
+#: templates/reset-password-requested.html:10
 msgid "RESET_PASSWORD_EMAIL_SENT"
 msgstr ""
 "We've emailed you instructions for setting your password to the email "
@@ -1590,15 +1600,15 @@ msgstr "Motivation for the project"
 msgid "UPDATE_ALBUM_PASSWORD"
 msgstr "Share-link & album password"
 
-#: templates/update-album-password.html:16
+#: templates/update-album-password.html:15
 msgid "INPUT_PLACEHOLDER_SHARE_PASSWORD"
 msgstr "Not necessary, if you've already defined a password for this album.."
 
-#: templates/update-album-password.html:21
+#: templates/update-album-password.html:20
 msgid "INPUT_SHARE_ALBUM_TITEL"
 msgstr "How to share?"
 
-#: templates/update-album-password.html:24
+#: templates/update-album-password.html:23
 msgid "INPUT_SHARE_ALBUM_INFO"
 msgstr ""
 "Copy the link and insert it wherever you want to share the album. (This can "
@@ -1633,6 +1643,23 @@ msgstr "Do you really want to update the photo order?"
 msgid "UPDATE_PLACE"
 msgstr "Update Place"
 
+#: templates/url-invalid.html:6
+#, fuzzy
+msgid "Error"
+msgstr "Login Error"
+
+#: templates/url-invalid.html:8
+msgid "Invalid URL"
+msgstr ""
+
+#: templates/url-invalid.html:14
+#, fuzzy
+msgid "INVALID_URL_ERROR"
+msgstr ""
+"The data you inserted into the form seems to be invalid. Please make sure "
+"your input has the correct format for the given input field. Eg. an email "
+"input field accepts just an email address as input. "
+
 #: templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumview"
@@ -1664,6 +1691,68 @@ msgstr "Next Image"
 #: templates/view-album.html:87
 msgid "Bild"
 msgstr "Image"
+
+#: templates/email/delete-account-email.html:1
+msgid "DELETE_ACCOUNT_NOTIFY_MAIL_INTRO"
+msgstr ""
+"Hi there,\n"
+"\n"
+"\n"
+"you just successfully deleted your user account "
+
+#: templates/email/delete-account-email.html:1
+msgid "DELETE_ACCOUNT_NOTIFY_MAIL_OUTRO"
+msgstr ""
+" at KEIKEN.\n"
+"\n"
+"Too bad you decided not to continue using KEIKEN. We hope that you enjoyed "
+"KEIKEN while you were using it. Maybe see you again sometime?! ;)\n"
+"\n"
+"\n"
+"Good luck on your future adventures and travels.\n"
+"\n"
+"The KEIKEN Team."
+
+#: templates/email/delete-account-thankyou-email.html:1
+msgid "DELETE_ACCOUNT_FEEDBACK_THANK_MAIL"
+msgstr ""
+"Hi there,\n"
+"\n"
+"\n"
+"Thank you for taking the time to answer our questions. We'll surely consider "
+"your answers in our next team-meeting!\n"
+"\n"
+"\n"
+"Sincerely\n"
+"\n"
+"The KEIKEN Team."
+
+#: templates/email/reset-password-email.html:1
+msgid "PASSWORD_RESET_MAIL_INTRO"
+msgstr ""
+"Hi there,\n"
+"\n"
+"\n"
+"Someone requested a password-reset for your user account at KEIKEN.\n"
+"\n"
+"To reset your password please follow the link below and choose a new "
+"password:"
+
+#: templates/email/reset-password-email.html:7
+msgid "PASSWORD_RESET_MAIL_USERNAME_REMINDER"
+msgstr "Your username - which you'll need to login - is "
+
+#: templates/email/reset-password-email.html:9
+msgid "PASSWORD_RESET_MAIL_OUTRO"
+msgstr ""
+"If you didn't request a password-reset or remembered your old password, feel "
+"free to ignore this email. You're password will remain unchanged.\n"
+"\n"
+"\n"
+"Thanks for using our app! We hope you enjoy creating your own photoalbums "
+"and sharing them with your family and friends.\n"
+"\n"
+"The KEIKEN team."
 
 #~ msgid "To Login"
 #~ msgstr "Login"

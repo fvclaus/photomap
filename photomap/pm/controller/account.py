@@ -63,7 +63,7 @@ def update_password(request):
         return view(request)
     if request.method == "POST":
         user = request.user
-        if is_test_user():
+        if is_test_user(user):
             return request_not_allowed_error()
         form = UserUpdatePasswordForm(request.POST)
         if form.is_valid():
@@ -91,7 +91,7 @@ def update_email(request):
         return view(request)
     if request.method == "POST":
         user = request.user
-        if is_test_user():
+        if is_test_user(user):
             return request_not_allowed_error()
         form = UserUpdateEmailForm(request.POST)
         if form.is_valid():
@@ -119,7 +119,7 @@ def delete_account(request):
         return view(request)
     if request.method == "POST":
         user = request.user
-        if is_test_user():
+        if is_test_user(user):
             return HttpResponseRedirect("/account/delete/error")
         form = UserDeleteAccountForm(request.POST)
         if form.is_valid():
@@ -129,12 +129,12 @@ def delete_account(request):
             logger.info("Trying to delete User %d." % id)
             if user.email == user_email and user.check_password(user_password):
                 user.delete()
-                send_delete_mail(username, request)
+                send_delete_mail(user_email, request)
                 session = SessionStore()
                 session["user_deleted"] = True
                 session.save()
                 logger.info("User %d account deleted." % id)
-                return HttpResponseRedirect("/account/delete/complete")
+                return HttpResponseRedirect("/account/delete/complete?username=" + user_email)
             else:
                 return HttpResponseRedirect("/account/delete/error")
         else:
@@ -143,10 +143,8 @@ def delete_account(request):
         return HttpResponseBadRequest()
 
 @csrf_protect
-def delete_account_complete(request, token):
+def delete_account_complete(request):
     if request.method == "GET":
-        user = request.user
-        username = user.email
         session = SessionStore()
         if session.get("user_deleted", default=False):
             return render_to_response("account-deleted.html", {"username": username}, context_instance = RequestContext(request))
@@ -188,35 +186,26 @@ def send_mail_to_user(user_email, subject, message):
               [user_email]
               )
 def send_delete_mail(user_email, request):
-    path = get_email_path(request)
-    subject = loader.render_to_string(path + "delete-account-subject.txt")
+    subject = loader.render_to_string("email/delete-account-subject.txt")
     dic = {
            "user": user_email,
            "site_name": get_current_site(request).name
     }
-    message = loader.render_to_string(path + "delete-account-email.html", dic)
+    message = loader.render_to_string("email/delete-account-email.html", dic)
     send_mail_to_user(user_email, subject, message)
 def send_thankyou_mail(user_email, request):
-    path = get_email_path(request)
-    subject = loader.render_to_string(path + "delete-account-thankyou-subject.txt")
+    subject = loader.render_to_string("email/delete-account-thankyou-subject.txt")
     dic = {
            "user": user_email,
            "site_name": get_current_site(request).name
     }
-    message = loader.render_to_string(path + "delete-account-thankyou-email.html", dic)
+    message = loader.render_to_string("email/delete-account-thankyou-email.html", dic)
     send_mail_to_user(user_email, subject, message)
-def get_email_path(request):
-    email_path = "email/en/"
-    lang = get_language_from_request(request)
-    if lang == "de":
-        email_path = "email/de/"
-    return email_path
 
 @csrf_protect
 def reset_password(request):
-    path = get_email_path(request)
-    email = path + "reset-password-email.html"
-    subject = path + "reset-password-subject.txt"
+    email = "email/reset-password-email.html"
+    subject = "email/reset-password-subject.txt"
     redirect_to = "/account/password/reset/requested"
     return password_reset(request, template_name = "reset-password.html", email_template_name = email, subject_template_name = subject, post_reset_redirect = redirect_to)
 
