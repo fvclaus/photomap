@@ -4,40 +4,32 @@
 "use strict";
 
 $(document).ready(function () {
-
-   var $loginCloseWidth = $(".mp-login-toggle").find("img").width() + 3 + "px";
-   // show tabs on login box
-   $("#keiken-login").tabs({
-      //heightStyle : "auto",
-      active: 0,
-      disabled : [1]
+   
+   $("#mp-login-switch").find("a").on("click", function (event) {
+      event.preventDefault();
    });
-   $(".mp-login-link, .login-toggle").button();
-   $(".mp-login-toggle .ui-button-text").css({
-      padding: 0
-   });
-   $(".mp-login-link .ui-button-text").css({
-      padding: "2px"
-   });
-   $(".mp-login-toggle").css({
-      width: $loginCloseWidth,
-      height: $loginCloseWidth,
-      padding: "1.5px"
+   $("#mp-login-switch span").on("click", function () {
+      var $active = $(this),
+         $inactive = $("#mp-login-switch").children().not(this);
+      
+      $($inactive.find("a").attr("href")).fadeOut(100, function () {
+         $($active.find("a").attr("href")).fadeIn(100);
+      });
+      
+      $active.addClass("mp-nodisplay");
+      $inactive.removeClass("mp-nodisplay");
+      
    });
    //change href of login-link to prevent reloading of the page
    $(".mp-login-link").find("a").attr("href", "#login");
-   // close login-box on click
-   $(".mp-login-toggle").on("click", function (event) {
-      $("#keiken-login").fadeOut(300, function () {
-         $("#keiken-login").css({
-            visibility: "hidden",
-            display: "block",
-            left: "100%"
-         });
-      });
+   $("#mp-demo-button").on("click", function () {
+      window.location.href = "/demo"   
+   });
+   $("#mp-dashboard-button").on("click", function () {
+      window.location.href = "/dashboard"   
    });
    // automatically sign in when users selects "Try KEIKEN yourself"
-   $(".mp-test-button").on("click", function (event) {
+   $("#mp-test-button").on("click", function (event) {
       $("#login_email").val("test@keiken.app");
       $("#login_password").val("test");
       $("#login_submit").trigger("click");

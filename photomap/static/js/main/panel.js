@@ -31,18 +31,16 @@ function setFontSizeInVH ($el, vh) {
 function resizeFont () {
    setFontSizeInVH($("#mp-page-footer"), 2.4);
    setFontSizeInVH($(".mp-page-title > h1"), 5);
+   if ($(".mp-login-link")) {
+      setFontSizeInVH($("#mp-page-footer"), 2);
+   }
 }
-
 
 function bindUserMenuListener () {
    var $menu = $("#menu").menu(),
        menuHeight = $menu.outerHeight(),
        $user = $("#mp-user"),
-       offset = $user.offset(),
-       //TODO width is not used right now
-       toggle = function () {
-          $menu.toggle("slide", { direction : "down" });   
-       };
+       offset = $user.offset();
        
    // user is logged in
    if ($user.size() === 1) {
@@ -54,14 +52,14 @@ function bindUserMenuListener () {
       assertTrue(offset.top >= 0 && offset.left >= 0, "offset of $user must not be negative");
       $menu
          .css({
-            top : offset.top - menuHeight - 3, // -5 => due to negative margin of $user button
+            bottom : $("#mp-page-footer").outerHeight(),
             left : offset.left
          });
 
       $user
          .button({ icons : { primary : "ui-icon-triangle-1-n" } })
          .on("click", function () {
-            toggle();
+            $menu.slideToggle(100);
          });
       // hide the button when something else is clicked
       $("body")
@@ -70,7 +68,7 @@ function bindUserMenuListener () {
                 // jquery ui button adds several spans inside the button, therefore the $.contains is necessary
                 isButton = event.target.id === "mp-user" || $.contains($user[0], event.target);
             if (!isMenu && !isButton && $menu.is(":visible")){
-               toggle();
+               $menu.slideToggle(100);
             }
          });
 

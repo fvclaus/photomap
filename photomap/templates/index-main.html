@@ -6,15 +6,15 @@
 {% block keiken_intro %}
 	<div class="mp-landing-page-links">
 	  {% if user.is_authenticated %}
-	  <p class="mp-dashboard-button">
-	    <a class="mp-button" href="/dashboard" title='{% trans "TO_DASHBOARD" %}'>{% trans "TO_DASHBOARD" %}</a>
+	  <p>
+	  	<input type="button" id="mp-dashboard-button" class="mp-landingpage-button" title='{% trans "TO_DASHBOARD" %}' value='{% trans "TO_DASHBOARD" %}' />
 	  </p>
 	  {% else %}
-	  <p class="mp-demo-button"> 
-	    <a class="mp-button" href="/albums/album/demo" title='{% trans "VIEW_ALBUM" %}'>{% trans "VIEW_ALBUM" %}</a>
+	  <p>
+	  	<input type="button" id="mp-demo-button" class="mp-landingpage-button" title='{% trans "VIEW_ALBUM" %}' value='{% trans "VIEW_ALBUM" %}' />
 	  </p>
-	  <p class="mp-test-button">
-	    <a class="mp-button" href="#test" title='{% trans "TRY_KEIKEN" %}'>{% trans "TRY_KEIKEN" %}</a>
+	  <p>
+	  	<input type="button" id="mp-test-button" class="mp-landingpage-button" title='{% trans "TRY_KEIKEN" %}' value='{% trans "TRY_KEIKEN" %}' />
 	  </p>
 	  {% endif %}
 	</div>

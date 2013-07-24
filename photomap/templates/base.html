@@ -123,18 +123,19 @@
       </main>
 
       <ul id="menu" class="mp-nodisplay mp-dropup-menu">
-        <li><a href="/account/auth/logout">Logout</a></li>
+        <li><a href="/dashboard">{% trans "Dashboard" %}</a></li>
         <li id="mp-goto-account"><a href="/account">{% trans "Settings" %}</a></li>
+        <li><a href="/account/auth/logout">Logout</a></li>
       </ul>
 
 
       <footer class="mp-page-footer column span-24 last" id="mp-page-footer">
 		{% if user.is_authenticated %}
-          <button id="mp-user"><span class="mp-user-email">{{user.email}}</span></button>
+          <span id="mp-user"><span class="mp-user-email">{{user.email}}</span></span>
           <span>|</span>
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
 		{% else %}
-		  <span class="mp-login-link">
+		  <span class="mp-login-link mp-button">
 		    <a href="/account/auth/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
 		  </span>
 		{% endif %}

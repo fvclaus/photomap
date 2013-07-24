@@ -50,7 +50,8 @@ account_patterns = patterns("pm.controller.account",
                             url(r'^password/', include(account_password_patterns)),
                             url(r'^email/update$', "update_email"),
                             url(r'^delete$', "delete_account"),
-                            url(r'^delete/complete/(?P<token>.+)$', "delete_account_complete")
+                            url(r'^delete/complete$', "delete_account_complete"),
+                            url(r'^delete/error$', direct_to_template, {"template": "account-delete-error.html"})
                             )
 #================================================================
 # album hooks
@@ -99,6 +100,8 @@ urlpatterns = patterns("",
                        url(r'^$', landingpage.get_current),
                        
                        url(r'^dashboard$', dashboard.view),
+                       
+                       url(r'^url/invalid$', direct_to_template, {"template": "url-invalid.html"}),
 
                        url(r'^debug/(.+)$', debug.view),
                        url(r'^test$', direct_to_template, {"template": "runner.html"} ),

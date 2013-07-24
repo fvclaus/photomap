@@ -58,24 +58,6 @@ function submitForm ($form, onSuccess, onFail) {
    });
 }
 
-function showCorrectMessage () {
-   
-   var messages = {
-      cause_testing: gettext("CAUSE_TESTING_LABEL"),
-      cause_alternative: gettext("CAUSE_ALTERNATIVE_LABEL"),
-      cause_service: gettext("CAUSE_SERVICE_LABEL"),
-      cause_usage: gettext("CAUSE_USAGE_LABEL"),
-      cause_limitations: gettext("CAUSE_LIMITATIONS_LABEL"),
-      cause_need: gettext("CAUSE_NEED_LABEL"),
-      cause_like: gettext("CAUSE_LIKE_LABEL"),
-      
-   }
-   
-   $("input[type='radio']").on("click", function (event) {
-      $("#cause-label").text(messages[$(this).attr("id")]);
-   });
-}
-
 $(document).ready(function () {
    var spaceUsage = [];
    // show correct space usage in MB
@@ -115,25 +97,26 @@ $(document).ready(function () {
    });
    //submit the current form
    $(".mp-settings-form-submit").on("click", function (event) {
-      event.preventDefault();
-      var formData = {},
-         $form = $(this).parents("form"),
-         onSuccess = null;
-         
-      if ($form.parent().hasClass("mp-current-form") && $form.valid()) {
-         
-         if ($form.parent().attr("id") === "mp-update-email-form") {
-            onSuccess = function (data) {
-               $(".mp-user-email").text(data.email);
+      if ($form.parent().attr("id") !== "mp-delete-account-form") {
+         event.preventDefault();
+         var formData = {},
+            $form = $(this).parents("form"),
+            onSuccess = null;
+            
+         if ($form.parent().hasClass("mp-current-form") && $form.valid()) {
+            
+            if ($form.parent().attr("id") === "mp-update-email-form") {
+               onSuccess = function (data) {
+                  $(".mp-user-email").text(data.email);
+               }
+            } else if ($form.parent().attr("id") === "mp-delete-account-form") {
+               if (confirm(gettext("DELETE_ACCOUNT_CONFIRM"))) {
+                  submitForm($form);
+               }
+               return;
             }
-         } else if ($form.parent().attr("id") === "mp-delete-account-form") {
-            if (confirm(gettext("DELETE_ACCOUNT_CONFIRM"))) {
-               submitForm($form);
-            }
-            return;
+            submitForm($form, onSuccess);
          }
-         submitForm($form, onSuccess)
-         
       }
    });
 });

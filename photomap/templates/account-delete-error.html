@@ -1,0 +1,10 @@
+{% extends "account.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block name %}{% trans "Account Delete Failure" %}{% endblock %}
+
+{% block account_info %}
+	<p>{% trans "ACCOUNT_DELETE_FAIL" %}</p>
+{% endblock %}
