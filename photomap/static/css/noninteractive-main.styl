@@ -14,7 +14,11 @@
 /* ------------------------- */
 /* ---- general styling ---- */
 
-
+#mp-user-password-forgot
+  margin 10% 0 0 28%
+  position relative
+  font-size .7em
+  cursor pointer
 
 /* ------ end general ------ */
 
@@ -59,7 +63,6 @@ address
   input, textarea
     margin 1% 0
     width 72% // 100% - 3% label margin right (= space between laveb and input) - 25% label width
-    
 .mp-form label.error
   display none !important // prevents errors from being shown
   
@@ -248,7 +251,10 @@ address
 
 #landingpage .mp-reference
   color white
-  //opacity 0.8
+#landingpage .mp-reference:hover
+  color #88ff88
+  background none
+  text-decoration none
 
 section.keiken-intro
   width 30%
@@ -270,24 +276,25 @@ section.keiken-intro
 /* ....... main styles ....... */
 .mp-landing-page-links
   width 100%
-
-.mp-dashboard-button,
-.mp-demo-button,
-.mp-test-button
+  
+.mp-landingpage-button
   width 100%
-  margin-top 30px
+  min-width 80%
+  margin-top 5px
   font-size .8em
+  padding 3px
 
+.mp-landingpage-button:hover
+  cursor pointer
+  color #88ff88
+  background-color black
+  
 /* ....... guest styles ..... */
 section.keiken-intro
   form input
     width 47%
     min-height 25px
     float left
-    background-color rgba(0,0,0,0.6)
-    color white
-    border-radius 5px
-    box-shadow(inset 0px 0px 5px rgba(255,255,255,0.8))
   .submit-guest-password
     margin-left 6%
     cursor pointer
@@ -303,6 +310,8 @@ section.keiken-intro
 section#keiken-login
   width 30%
   max-height 85%
+  min-height 60%
+  padding 10px
   position absolute
   top 5%
   left 100%
@@ -310,29 +319,61 @@ section#keiken-login
   font-size .8em
   visibility hidden
 
-#keiken-login .mp-login-toggle
-  padding 0
-  float right
+#mp-login-switch span
+  position absolute
+  right 5px
+  top 5px
+  a
+    color #bababa
+    font-size .8em
+#mp-login-switch span:hover
   cursor pointer
   a
-    padding 0
-    text-align center
-  img
-    width 100%
-    height auto
-    max-width 27px
-    max-height 27px
-    margin 0
-    padding 0
+    color #88ff88
+#mp-login-switch span a:hover
+  text-decoration none
+  background none
 
-#keiken-login .mp-login-tabs
-  width 40%
-  max-width 40%
-
-.mp-login-tab
+#keiken-login .mp-login-tab
   overflow auto
+  label
+    padding 3px
+  .mp-form-submit
+    color white //#050505
+  h2
+    text-align center
+    padding 5px
+    margin-top 10px
+    
+#landingpage .mp-login-tab input,
+.mp-landingpage-button
+  background-color rgba(0,0,0,0.5)
+  color white
+  border-radius 5px
+  box-shadow(inset 0px 0px 5px rgba(255,255,255,0.8))
+  padding 3px
+  
+#keiken-login .mp-login-tab p .mp-landingpage-form-submit
+  margin-left 28% //instead of using mp-form-submit
+#keiken-login .mp-login-tab p .mp-landingpage-form-submit:hover
+  cursor pointer
+  color #88ff88
+  background-color black
 
- #mp-login-register
+#mp-user-password-forgot 
+  color white
+#mp-user-password-forgot:hover 
+  background-color rgba(0,0,0,0)
+  color #88ff88
+  text-decoration none
+#account #mp-user-password-forgot
+  color #000
+#account #mp-user-password-forgot:hover 
+  background none
+  color #7a7a7a
+  text-decoration none
+    
+#mp-login-register
   width 50%
   margin-left 25%
   

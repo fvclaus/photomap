@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-23 15:56+0200\n"
+"POT-Creation-Date: 2013-07-24 18:59+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -115,7 +115,7 @@ msgstr "Update Email"
 msgid "Update Profile Picture"
 msgstr "Update Profile Picture"
 
-#: templates/account-active.html:65 templates/account-active.html.py:131
+#: templates/account-active.html:65 templates/account-active.html.py:132
 msgid "Delete Account"
 msgstr "Delete Account"
 
@@ -135,8 +135,8 @@ msgstr "Old Password"
 
 #: templates/account-active.html:76 templates/account-active.html.py:80
 #: templates/account-active.html:84 templates/account-active.html.py:99
-#: templates/account-active.html:103 templates/account-active.html.py:123
-#: templates/account-active.html:127 templates/contact.html:42
+#: templates/account-active.html:103 templates/account-active.html.py:124
+#: templates/account-active.html:128 templates/contact.html:42
 #: templates/contact.html.py:50 templates/contact.html:58
 #: templates/contact.html.py:66 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-photo.html.py:28
@@ -188,15 +188,15 @@ msgstr "New Email"
 msgid "NEW_EMAIL_PLACEHOLDER"
 msgstr "Enter your new email.."
 
-#: templates/account-active.html:103 templates/account-active.html.py:127
+#: templates/account-active.html:103 templates/account-active.html.py:128
 #: templates/index-guest.html:24 templates/index-guest.html.py:49
-#: templates/index-guest.html:76 templates/index.html:52
-#: templates/index.html.py:84 templates/login-error.html:19
+#: templates/index-guest.html:76 templates/index.html:51
+#: templates/index.html.py:83 templates/login-error.html:18
 msgid "Password"
 msgstr "Password"
 
-#: templates/account-active.html:104 templates/account-active.html.py:128
-#: templates/index.html:53 templates/login-error.html:20
+#: templates/account-active.html:104 templates/account-active.html.py:129
+#: templates/index.html:52 templates/login-error.html:19
 msgid "USER_PASSWORD_PLACEHOLDER"
 msgstr "Enter your password.."
 
@@ -208,19 +208,19 @@ msgstr ""
 "irretrievably erased. Do not continue unless you are completely certain, you "
 "do not want to use this account anymore. "
 
-#: templates/account-active.html:123 templates/contact.html:49
+#: templates/account-active.html:124 templates/contact.html:49
 #: templates/index-guest.html:43 templates/index-guest.html.py:72
-#: templates/index.html:48 templates/index.html.py:80
-#: templates/login-error.html:15 templates/reset-password.html:18
+#: templates/index.html:47 templates/index.html.py:79
+#: templates/login-error.html:14 templates/reset-password.html:18
 msgid "Email"
 msgstr "Email"
 
-#: templates/account-active.html:124 templates/index.html:49
-#: templates/login-error.html:16
+#: templates/account-active.html:125 templates/index.html:48
+#: templates/login-error.html:15
 msgid "USER_EMAIL_PLACEHOLDER"
 msgstr "Enter your email.."
 
-#: templates/account-active.html:138
+#: templates/account-active.html:139
 msgid "ACCOUNTS_TEST_USER_INFO"
 msgstr "This is just a test-account. You cannot modify any settings. "
 
@@ -231,8 +231,9 @@ msgstr "Account Delete Failure"
 #: templates/account-delete-error.html:9
 msgid "ACCOUNT_DELETE_FAIL"
 msgstr ""
-"An error occurred while trying to delete your account. Please try again (<a href='/account'>back to settings</a>) "
-"or contact support (<a href='/contact'>contact form</a>)."
+"An error occurred while trying to delete your account. Please try again (<a "
+"href='/account'>back to settings</a>) or contact support (<a href='/"
+"contact'>contact form</a>)."
 
 #: templates/account-deleted.html:6
 msgid "Account Deleted"
@@ -375,65 +376,69 @@ msgstr ""
 msgid "Settings"
 msgstr "Settings"
 
-#: templates/base.html:138
+#: templates/base.html:128 templates/help.html:53
+msgid "Dashboard"
+msgstr "Dashboard"
+
+#: templates/base.html:139
 msgid "Login or Register"
 msgstr "Login or Register"
 
-#: templates/base.html:138
+#: templates/base.html:139
 msgid "Anmelden/Registrierung"
 msgstr "Login and Registration"
 
-#: templates/base.html:142 templates/payment.html:6
+#: templates/base.html:143 templates/payment.html:6
 msgid "Spenden"
 msgstr "Donate"
 
-#: templates/base.html:143 templates/not-supported-old.html:64
+#: templates/base.html:144 templates/not-supported-old.html:64
 msgid "link-title-team"
 msgstr "Introduction of the project and core team members"
 
-#: templates/base.html:143 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:144 templates/team.html:6 templates/team.html.py:8
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:144 templates/not-supported-old.html:62
+#: templates/base.html:145 templates/not-supported-old.html:62
 msgid "link-title-contact"
 msgstr "Contact, Support, Ask a Question"
 
-#: templates/base.html:144 templates/contact.html:6
+#: templates/base.html:145 templates/contact.html:6
 #: templates/contact.html.py:8 templates/impressum.html:37
 msgid "Kontakt"
 msgstr "Contact"
 
-#: templates/base.html:145 templates/not-supported-old.html:60
+#: templates/base.html:146 templates/not-supported-old.html:60
 msgid "link-title-privacy"
 msgstr "View Data Use Policy"
 
-#: templates/base.html:145 templates/privacy.html:5
+#: templates/base.html:146 templates/privacy.html:5
 #: templates/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Privacy"
 
-#: templates/base.html:146 templates/not-supported-old.html:61
+#: templates/base.html:147 templates/not-supported-old.html:61
 msgid "link-title-copyright"
 msgstr "View Copyright Statement"
 
-#: templates/base.html:146 templates/copyright.html:6
+#: templates/base.html:147 templates/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:147 templates/not-supported-old.html:63
+#: templates/base.html:148 templates/not-supported-old.html:63
 msgid "link-title-help"
 msgstr "View FAQ, Tutorial and help-page"
 
-#: templates/base.html:147 templates/help.html:6
+#: templates/base.html:148 templates/help.html:6
 msgid "Hilfe"
 msgstr "Help"
 
-#: templates/base.html:148 templates/not-supported-old.html:59
+#: templates/base.html:149 templates/not-supported-old.html:59
 msgid "link-title-impressum"
 msgstr "View Legal Terms of KEIKEN"
 
-#: templates/base.html:148 templates/impressum.html:6
+#: templates/base.html:149 templates/impressum.html:6
 #: templates/impressum.html.py:8
 msgid "Impressum"
 msgstr "Legal Terms (Impressum)"
@@ -724,10 +729,6 @@ msgstr ""
 #: templates/help.html:52
 msgid "General"
 msgstr "General"
-
-#: templates/help.html:53
-msgid "Dashboard"
-msgstr "Dashboard"
 
 #: templates/help.html:54
 msgid "Albumview"
@@ -1075,32 +1076,33 @@ msgstr ""
 "KEIKEN?'>[*]</a></sup> is a free online photo-book designed to make sharing "
 "your adventures abroad and other interesting experiences easy and vivid!"
 
-#: templates/index-guest.html:32 templates/index.html:39
+#: templates/index-guest.html:32 templates/index.html:40
+#: templates/index.html.py:43
 msgid "Login"
 msgstr "Login"
 
-#: templates/index-guest.html:33 templates/index.html:40
+#: templates/index-guest.html:33 templates/index.html:67
 msgid "Registration"
 msgstr "Registration"
 
-#: templates/index-guest.html:55 templates/index.html:62
-#: templates/login-error.html:29
+#: templates/index-guest.html:55 templates/index.html:61
+#: templates/login-error.html:28
 msgid "Sign in"
 msgstr "Sign in"
 
-#: templates/index-guest.html:64 templates/index.html:72
+#: templates/index-guest.html:64 templates/index.html:71
 msgid "First name"
 msgstr "First name"
 
-#: templates/index-guest.html:68 templates/index.html:76
+#: templates/index-guest.html:68 templates/index.html:75
 msgid "Last name"
 msgstr "Last name"
 
-#: templates/index-guest.html:80 templates/index.html:88
+#: templates/index-guest.html:80 templates/index.html:87
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: templates/index-guest.html:84 templates/index.html:92
+#: templates/index-guest.html:84
 msgid "Register"
 msgstr "Register"
 
@@ -1171,7 +1173,11 @@ msgstr "View our first album"
 msgid "TRY_KEIKEN"
 msgstr "Try KEIKEN yourself"
 
-#: templates/index.html:65 templates/login-error.html:10
+#: templates/index.html:39 templates/index.html.py:91
+msgid "Sign Up"
+msgstr "Sign Up"
+
+#: templates/index.html:64 templates/login-error.html:31
 msgid "Help, I forgot my password!"
 msgstr "Help, I forgot my password!"
 
@@ -1224,10 +1230,7 @@ msgstr "Login Error"
 
 #: templates/login-error.html:9
 msgid "LOGIN_ERROR_NOTE"
-msgstr ""
-"The given password doesn't match your email address. Please try again! In "
-"case you forgot your password, use the following link to reset your "
-"password. "
+msgstr "The given password doesn't match your email address. Please try again!"
 
 #: templates/payment.html:8
 msgid "Spenden und Zahlungsbedingungen"
@@ -1654,8 +1657,7 @@ msgstr ""
 
 #: templates/url-invalid.html:14
 msgid "INVALID_URL_ERROR"
-msgstr ""
-"The given URL is invalid."
+msgstr "The given URL is invalid."
 
 #: templates/view-album.html:6
 msgid "Albumsansicht"

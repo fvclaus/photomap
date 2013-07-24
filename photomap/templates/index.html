@@ -6,7 +6,7 @@
 {% block extrajs %}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/main/landingpage.js" ></script>
+<script type="text/javascript" src="/static/js/main/landingpage.js"></script>
 {% endcompress %}
 {% endblock %}
 
@@ -35,13 +35,12 @@
   </section>
   
 <section id="keiken-login">
-  <ul class="mp-login-register-tabs">
-    <li class="mp-login-tabs"><a href="#mp-login">{% trans "Login" %}</a></li>
-    <li class="mp-login-tabs"><a href="#mp-register">{% trans "Registration" %}</a></li>
-    <li class="mp-login-toggle"><img src="/static/images/close-login.png" alt="Close" /></li>
-  </ul>
-  <!-- hide tabs to avoid ugly moving around during page load -->
+  <div id="mp-login-switch">
+  	<span id="mp-switch-to-register"><a href="#mp-register">{% trans "Sign Up" %}?</a></span>
+  	<span id="mp-switch-to-login" class="mp-nodisplay"><a href="#mp-login">{% trans "Login" %}?</a></span>
+  </div>
   <div class="mp-login-tab" id="mp-login">
+  	<h2>{% trans "Login" %}</h2>
     <!-- action is necessary because this template is also populated by /test -->
     <form class="mp-form" action="/account/auth/login" method="post">
       <p>
@@ -59,43 +58,42 @@
       	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
       </p>
       <p>
-		<input id="login_submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
+		<input id="login_submit" class="mp-landingpage-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
       </p>
     </form>
     <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
   </div>
-  <!-- hide tabs to avoid ugly moving around during page load -->
-  <div class="mp-login-tab" id="mp-register">
+  
+  <div class="mp-login-tab mp-nodisplay" id="mp-register">
+  	<h2>{% trans "Registration" %}</h2>
     <!-- action is necessary because this template is also populated by /test -->
     <form class="mp-form" action="/register" method="post">
       <p>
         <label for="register_first_name">{% trans "First name" %}:</label>
-        <input disabled="disabled" type="text" name="first_name" id="register_first_name" autofocus="autofocus" />
+        <input type="text" name="first_name" id="register_first_name" autofocus="autofocus" />
       </p>
       <p>
         <label for="register_last_name">{% trans "Last name" %}:</label>
-        <input disabled="disabled" type="text" name="last_name" id="register_last_name" />
+        <input type="text" name="last_name" id="register_last_name" />
       </p>
       <p>
         <label for="register_email">{% trans "Email" %}:</label>
-        <input disabled="disabled" type="text" name="email" id="register_email" />
+        <input type="text" name="email" id="register_email" />
       </p>
       <p>
         <label for="register_password">{% trans "Password" %}:</label>
-        <input disabled="disabled" type="password" name="password" id="register_password" />
+        <input type="password" name="password" id="register_password" />
       </p>
       <p>
         <label for="id_confirm">{% trans "Confirm Password" %}:</label>
-        <input disabled="disabled" type="password" name="confirm" id="register_confirm" />
+        <input type="password" name="confirm" id="register_confirm" />
       </p>
       <p>
-	<input class="ui-widget mp-form-submit" type="submit" name="register" value='{% trans "Register" %}' disabled="disabled" />
+		<input class="mp-landingpage-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' />
       </p>
     </form>
   </div>
 </section>
-<!-- div for UIInput. The dimensions are defined in input.sty -->
-<div id="mp-dialog"></div>
 
 {% endblock %}
 

@@ -1,4 +1,7 @@
 upload/
+dojo/
+dojox/
+dijit/
 photomap/*.sql
 photomap-legacy/*.sqlite
 photomap/static/photo

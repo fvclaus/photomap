@@ -206,15 +206,6 @@ a
   float right
   font-size 20px !important
   cursor pointer
-  
-#mp-user-password-forgot
-  margin 10% 0 0 28%
-  position relative
-  font-size .7em
-  color #030303
-  cursor pointer
-#mp-user-password-forgot:hover
-  color blue
 
 /* ---------- end core classes ----------- */
 
@@ -234,7 +225,6 @@ a
 .mp-keiken-logo
  height 95%
  margin-left 3%
-
 
 .mp-top-panel
   height 100%
@@ -257,6 +247,7 @@ a
 .mp-dropup-menu
   padding 10px
   position absolute
+  display none
   background-color $background-color // #dadada
   box-shadow(5px 5px 25px #A4A4A4)
   z-index 50
@@ -267,7 +258,7 @@ a
 /* ---------- footer styling ----------- */
 
 .mp-page-footer
-  height 5%
+  height 7%
   padding-top 6px // buffer for other margins and varying glyphs
   /* this is done with js now */
   // font-size 2.4vh /* source: http://dev.w3.org/csswg/css3-values/#vw-unit. Scales to 2% of the viewport height */
@@ -275,8 +266,6 @@ a
   letter-spacing 2px
   z-index 50 // cover menu
   background-color $background-color // other menu will be visible through transparent menu
-  button
-    margin-top -5px
 
 .mp-internal-links
   display inline-block
@@ -288,14 +277,13 @@ a
   a:hover
     background-color $border-color
 
-.mp-user,
-.mp-login-link
-  margin-left 1%
+#mp-user,
+#mp-login-link
+  letter-spacing 1px
   a
     text-decoration none
-    color $font-color
   a:hover
-    background-color $border-color
+    text-decoration none
 
 
 /* ------------- end footer ------------- */
