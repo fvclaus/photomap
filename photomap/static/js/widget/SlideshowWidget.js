@@ -148,7 +148,12 @@ define(["dojo/_base/declare",
               */
              navigateTo : function (photo) {
                 // Navigate to photo, displaying it when the slideshow is started
-                this.carousel.navigateTo(photo);
+                assertTrue(photo instanceof Photo || photo === null, "Parameter photo must be an instance of Photo.");
+                if (!this._isCarouselStarted) {
+                   this.startCarousel();
+                } else {
+                   this.carousel.navigateTo(photo);
+                }
              },
              /*
               * @presenter
@@ -159,7 +164,7 @@ define(["dojo/_base/declare",
                 assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
                 
                 if (!this._isCarouselStarted) {
-                   this.start();
+                   this.startCarousel();
                 } else {
                    if (direction === "left") {
                       this.carousel.navigateLeft();

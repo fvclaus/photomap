@@ -85,7 +85,8 @@ require(["widget/SlideshowWidget",
            QUnit.asyncTest("navigateWithDirection", 11, function () {
               slideshow.startup();
               slideshow.loadPhotos(photos);
-              slideshow.startCarousel();
+              // navigateWithDirection is supposed to start the slideshow if it is not running yet.
+              slideshow.navigateWithDirection("right");
               QUnit.raiseError(slideshow.navigateWithDirection, slideshow, 3);
               QUnit.raiseError(slideshow.navigateWithDirection, slideshow, "wrong");
               slideshow.navigateWithDirection("left");
@@ -105,4 +106,22 @@ require(["widget/SlideshowWidget",
                  }, 1200);
               }, 1200);
            });
+
+           QUnit.asyncTest("navigateTo", 7, function () {
+              slideshow.startup();
+              slideshow.loadPhotos(photos);
+              // No parameter not legal.
+              QUnit.raiseError(slideshow.navigateTo, slideshow);
+              // This should be the same as slideshow.startCarousel()
+              slideshow.navigateTo(null);
+              setTimeout(function () {
+                 assertPhotoInGallery(photos[0]);
+                 slideshow.navigateTo(photos[7]);
+                 setTimeout(function () {
+                    assertPhotoInGallery(photos[7]);
+                    QUnit.start();
+                 }, 1200);
+              }, 1200);
+           });
+
         });
