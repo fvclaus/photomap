@@ -119,6 +119,7 @@
 				  <p class="mp-request-fail mp-warning"></p>
 				  <p class="mp-submit-fail mp-warning"></p>
 				  <p class="mp-request-success"></p>
+				  <p><input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}"></p>
 			      <p>
 			        <label for="user-email">{% trans "Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
 			        <input type="email" name="user_email" id="user-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>

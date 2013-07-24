@@ -7,7 +7,6 @@
 
 {% block account_info %}
 	<p>{% trans "LOGIN_ERROR_NOTE" %}</p>
-    <p style="text-align: center"><a href="/account/password/reset">{% trans "Help, I forgot my password!" %}</a></p>
 {% endblock %}
 {% block account_settings %}
 	<form id="mp-login-form" class="mp-form" action="/account/auth/login" method="post">
@@ -29,4 +28,5 @@
 		<input id="login_submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
       </p>
     </form>
+    <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
 {% endblock %}
