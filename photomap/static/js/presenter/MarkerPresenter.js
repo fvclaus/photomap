@@ -163,11 +163,28 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     // build url -> format /models/model/(id/)request
                     url : requestUrl,
                     load : function () {
+                       $("#mp-open-album-password-form").on("click", function () {
+                          var $form = $("#mp-album-password-form");
+                          if($form.is(":hidden")) {
+                             $("#mp-album-share-help").stop(true).hide();
+                             $form.stop(true).slideToggle(100);
+                          } else {
+                             $form.stop(true).slideToggle(100);
+                          }
+                       });
+                       $("#mp-open-album-share-help").on("click", function () {
+                          var $help = $("#mp-album-share-help");
+                          if($help.is(":hidden")) {
+                             $("#mp-album-password-form").stop(true).hide();
+                             $help.stop(true).slideToggle(100);
+                          } else {
+                             $help.stop(true).slideToggle(100);
+                          }
+                       });
                        $("form[name='update-" + modelName + "-password']").attr("action", requestUrl);
-                       $("input[name='share']").val("http://" + window.location.host + "/albums/album/" + id + "/view/" + instance.model.getSecret());
-                       $("input[name='share']").on("click focus", function () {
-                          $(this).select();
-                       }).focus();
+                       $("a#album-url").text("http://" + window.location.host + "/albums/album/" + id + "/view/" + instance.model.getSecret());
+                       $("a#album-url").attr("href","http://" + window.location.host + "/albums/album/" + id + "/view/" + instance.model.getSecret());
+                       $("a#album-url").css("cursor", "auto");
                        $("#mp-dialog-button-save").button("disable");
                        $("#album-password")
                         .on("keyup keypress", null, function () {
@@ -182,7 +199,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                         });
                        
                     },
-                    context : this
+                    context : this,
+                    width: $(".mp-content").width() * 0.8
                  });
               },
               checkIconStatus : function () {

@@ -151,7 +151,7 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                //limit maximum height
                "maxHeight" : this.height,
                //set the width to allow percentage styling
-               "width": this.width,
+               "width": this.options.width || this.width,
                // "heightStyle": "content"
             });
          },

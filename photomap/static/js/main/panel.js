@@ -59,7 +59,7 @@ function bindUserMenuListener () {
       $user
          .button({ icons : { primary : "ui-icon-triangle-1-n" } })
          .on("click", function () {
-            $menu.slideToggle(100);
+            $menu.stop(true).slideToggle(100);
          });
       // hide the button when something else is clicked
       $("body")
@@ -68,7 +68,7 @@ function bindUserMenuListener () {
                 // jquery ui button adds several spans inside the button, therefore the $.contains is necessary
                 isButton = event.target.id === "mp-user" || $.contains($user[0], event.target);
             if (!isMenu && !isButton && $menu.is(":visible")){
-               $menu.slideToggle(100);
+               $menu.stop(true).slideToggle(100);
             }
          });
 
