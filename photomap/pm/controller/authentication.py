@@ -40,7 +40,6 @@ def login(request):
             redirect_to = "/dashboard"
         if loginform.is_valid():
             user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
-            returnData = {"success": False, "email": loginform.cleaned_data["email"]}
             if not (user == None or user.is_anonymous()):
                 if user.is_active:
                     auth_login(request, user)
@@ -54,12 +53,12 @@ def login(request):
                 response = "/account/auth/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
                 return HttpResponseRedirect(response)
         else:
-            response = "/account/auth/login/error/?next=" + redirect_to + "&email=" + loginform.cleaned_data["email"]
+            response = "/account/auth/login/error/?next=" + redirect_to
             return HttpResponseRedirect(response)
 
 @csrf_protect
 def login_error(request):
-    if request.method == "POST" or request.method == "GET":
+    if request.method == "GET":
         data = {
                 "next": request.REQUEST.get("next"),
                 "email": request.REQUEST.get("email")

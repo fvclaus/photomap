@@ -12,7 +12,7 @@
 	<form id="mp-login-form" class="mp-form" action="/account/auth/login" method="post">
       <p>
         <label for="login_email">{% trans "Email" %}:</label>
-        <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>
+        <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email|default:'' }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>
       </p>
       <p>
         <label for="login_password">{% trans "Password" %}:</label>
