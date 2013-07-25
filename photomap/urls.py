@@ -19,6 +19,7 @@ from pm.controller import debug
 from pm.controller import footer
 from pm.controller import landingpage
 from pm.controller import account
+from pm.controller.router import method_mapper
 
 # admin.site.register(model.album.Album)
 # admin.site.register(model.photo.Photo)
@@ -36,60 +37,60 @@ auth_patterns = patterns("pm.controller.authentication",
                          url(r'^logout$', "logout")
                          )
 account_password_patterns = patterns("pm.controller.account",
-                                     url(r'^update', "update_password"),
+                                     url(r'^', "update_password"),
                                      url(r'^reset$', "reset_password"),
                                      url(r'^reset/requested$', "reset_password_requested"),
                                      url(r'^reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$', "reset_password_confirm", name="reset_password_confirm"),
                                      url(r'^reset/complete$', "reset_password_complete")
                                      )
 account_patterns = patterns("pm.controller.account",
-                            url(r'^$', "view"),
+                            method_mapper(r'^$', "account", get = account.view, delete = account.delete),
                             url(r'^auth/', include(auth_patterns)),
                             url(r'^inactive$', direct_to_template, {"template": "account-inactive.html"}),
                             url(r'^password/', include(account_password_patterns)),
-                            url(r'^email/update$', "update_email"),
-                            url(r'^delete$', "delete_account"),
+                            url(r'^email/$', "update_email"),
                             url(r'^delete/complete$', "delete_account_complete"),
                             url(r'^delete/error$', direct_to_template, {"template": "account-delete-error.html"})
                             )
 #================================================================
+# dialog hooks
+#================================================================
+dialog_patterns = patterns("",
+                           url(r'^insert/album$', direct_to_template, {"template": "insert-album.html"}),
+                           url(r'^insert/place$', direct_to_template, {"template": "insert-place.html"}),
+                           url(r'^insert/photo$', direct_to_template, {"template": "insert-photo.html"}),
+                           url(r'^update/album$', direct_to_template, {"template": "update-album.html"}),
+                           url(r'^update/album/password$', direct_to_template, {"template": "update-album-password.html"}),
+                           url(r'^update/place$', direct_to_template, {"template": "update-place.html"}),
+                           url(r'^update/photo$', direct_to_template, {"template": "update-photo.html"}),
+                           url(r'^update/photos$', direct_to_template, {"template": "update-photos.html"}),
+                           url(r'^delete/album$', direct_to_template, {"template": "delete-album.html"}),
+                           url(r'^delete/place$', direct_to_template, {"template": "delete-place.html"}),
+                           url(r'^delete/photo$', direct_to_template, {"template": "delete-photo.html"})
+                           )
+#================================================================
 # album hooks
 #================================================================
 album_patterns = patterns("pm.controller.album",
-                          url(r'^get$', "get"),
-                          url(r'^view/(?P<secret>.+)$', "view"),
-                          url(r'^delete$', "delete"),
-                          url(r'^update$', "update"),
-                          url(r'^password/update$', "update_password")
-                          )
-albums_patterns = patterns("pm.controller",
-                           url(r'^get$', "dashboard.get"),
-                           url(r'^album/demo$', "album.demo"),
-                           url(r'^album/insert$', "album.insert"),
-                           url(r'^album/(?P<id>\d+)/', include(album_patterns))
+                           method_mapper(r'^$', "album", get = album.get, post = album.insert),
+                           method_mapper(r'^(?P<id>\d+)/$', "album", post = album.update, delete = album.delete),
+                           url(r'^album/demo$', "demo"),
+                           url(r'^(?P<id>\d+)/view/(?P<secret>.+)$', "view"),
+                           url(r'^(?P<id>\d+)/password$', "update_password")
                            )
 #================================================================
 # place hooks
 #================================================================
 place_patterns = patterns("pm.controller.place",
-                          url(r'^delete$', "delete"),
-                          url(r'^update$', "update")
-                          )
-places_patterns = patterns("pm.controller.place",
-                           url(r'^place/insert$', "insert"),
-                           url(r'^place/(?P<id>\d+)/', include(place_patterns))
+                           method_mapper(r'^$', "place", post = place.insert),
+                           method_mapper(r'^(?P<id>\d+)/$', "place", post = place.update, delete = place.delete),
                            )
 #================================================================
 # photo hooks
 #================================================================
 photo_patterns = patterns("pm.controller.photo",
-                          url(r'^delete$', "delete"),
-                          url(r'^update$', "update")
-                          )
-photos_patterns = patterns("pm.controller.photo",
-                           url(r'^update$', "update_multiple"),
-                           url(r'^photo/insert$', "insert"),
-                           url(r'^photo/(?P<id>\d+)/', include(photo_patterns))
+                           method_mapper(r'^$', "photo", post = photo.insert),
+                           method_mapper(r'^(?P<id>\d+)/$', "photo", post = photo.update, delete = photo.delete),
                            )
 
 urlpatterns = patterns("",
@@ -123,17 +124,23 @@ urlpatterns = patterns("",
                        #========================================================
                        url(r'^admin/', include(admin.site.urls)),
                        #================================================================
+                       # dialog hooks
+                       #================================================================
+                       url(r'^dialog/', include(dialog_patterns)),
+                       #================================================================
                        # album hooks
                        #================================================================
-                       url(r'^albums/', include(albums_patterns)),
+                       url(r'^albums$', dashboard.get),
+                       url(r'^album/', include(album_patterns)),
                        #================================================================
                        # photo hooks
                        #================================================================
-                       url(r'^photos/', include(photos_patterns)),
+                       url(r'^photos$', photo.update_multiple),
+                       url(r'^photo/', include(photo_patterns)),
                        #================================================================
                        # place hooks
                        #================================================================
-                       url(r'^places/', include(places_patterns)),
+                       url(r'^place/', include(place_patterns)),
                        #================================================================
                        # user-account hooks
                        #================================================================
