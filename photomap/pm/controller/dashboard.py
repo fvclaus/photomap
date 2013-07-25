@@ -15,33 +15,32 @@ import json
 import logging
 import decimal
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.http import require_GET
 
 logger = logging.getLogger(__name__)
 
 @login_required
 def view(request):
     if request.method == "GET":
-        return render_to_response("dashboard.html",
-                                  context_instance = RequestContext(request))
+        return render_to_response("dashboard.html", context_instance = RequestContext(request))
 
-
+@require_GET
 def get(request):
     logger.debug("dashboard: entered view function")
-    if request.method == "GET":
-        user = request.user
+    
+    user = request.user
+    
+    albums = Album.objects.all().filter(user = user) 
+    
+    data = []
+    
+    for album in albums:
+        albumflat = album.toserializable(includeplaces = False)
+        albumflat["isOwner"] = True
+        data.append(albumflat)
         
-        
-        albums = Album.objects.all().filter(user = user) 
-        
-        data = []
-        
-        for album in albums:
-            albumflat = album.toserializable(includeplaces = False)
-            albumflat["isOwner"] = True
-            data.append(albumflat)
-            
-        logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
-        return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
+    logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
+    return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
         
         
 class DecimalEncoder(json.JSONEncoder):
