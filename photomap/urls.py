@@ -11,9 +11,8 @@ from django.contrib import admin
 
 
 
-from pm.controller import photo, place
-from pm.controller import authentication 
-from pm.controller import album
+from pm.controller import album, place, photo
+from pm.controller import authentication
 from pm.controller import dashboard
 from pm.controller import debug
 from pm.controller import footer
@@ -37,7 +36,7 @@ auth_patterns = patterns("pm.controller.authentication",
                          url(r'^logout$', "logout")
                          )
 account_password_patterns = patterns("pm.controller.account",
-                                     url(r'^', "update_password"),
+                                     url(r'^', "update_password"), #accepts only POST
                                      url(r'^reset$', "reset_password"),
                                      url(r'^reset/requested$', "reset_password_requested"),
                                      url(r'^reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$', "reset_password_confirm", name="reset_password_confirm"),
@@ -48,7 +47,7 @@ account_patterns = patterns("pm.controller.account",
                             url(r'^auth/', include(auth_patterns)),
                             url(r'^inactive$', direct_to_template, {"template": "account-inactive.html"}),
                             url(r'^password/', include(account_password_patterns)),
-                            url(r'^email/$', "update_email"),
+                            url(r'^email/$', "update_email"), #accepts only POST
                             url(r'^delete/complete$', "delete_account_complete"),
                             url(r'^delete/error$', direct_to_template, {"template": "account-delete-error.html"})
                             )
@@ -58,7 +57,7 @@ account_patterns = patterns("pm.controller.account",
 dialog_patterns = patterns("",
                            url(r'^insert/album$', direct_to_template, {"template": "insert-album.html"}),
                            url(r'^insert/place$', direct_to_template, {"template": "insert-place.html"}),
-                           url(r'^insert/photo$', direct_to_template, {"template": "insert-photo.html"}),
+                           url(r'^insert/photo$', photo.get_insert_dialog),
                            url(r'^update/album$', direct_to_template, {"template": "update-album.html"}),
                            url(r'^update/album/password$', direct_to_template, {"template": "update-album-password.html"}),
                            url(r'^update/place$', direct_to_template, {"template": "update-place.html"}),
@@ -72,24 +71,24 @@ dialog_patterns = patterns("",
 # album hooks
 #================================================================
 album_patterns = patterns("pm.controller.album",
-                           method_mapper(r'^$', "album", get = album.get, post = album.insert),
-                           method_mapper(r'^(?P<id>\d+)/$', "album", post = album.update, delete = album.delete),
-                           url(r'^album/demo$', "demo"),
-                           url(r'^(?P<id>\d+)/view/(?P<secret>.+)$', "view"),
-                           url(r'^(?P<id>\d+)/password$', "update_password")
+                           url(r'^$', "insert"), #accepts only POST
+                           method_mapper(r'^(?P<id>\d+)/$', "album", get = album.get, post = album.update, delete = album.delete),
+                           url(r'^(?P<id>\d+)/view/(?P<secret>.+)/$', "view"),
+                           url(r'^(?P<id>\d+)/password$', "update_password"), #accepts only POST
+                           url(r'^album/demo$', "demo")
                            )
 #================================================================
 # place hooks
 #================================================================
 place_patterns = patterns("pm.controller.place",
-                           method_mapper(r'^$', "place", post = place.insert),
+                           url(r'^$', "insert"), #accepts only POST
                            method_mapper(r'^(?P<id>\d+)/$', "place", post = place.update, delete = place.delete),
                            )
 #================================================================
 # photo hooks
 #================================================================
 photo_patterns = patterns("pm.controller.photo",
-                           method_mapper(r'^$', "photo", post = photo.insert),
+                           url(r'^$', "insert"), #accepts only POST
                            method_mapper(r'^(?P<id>\d+)/$', "photo", post = photo.update, delete = photo.delete),
                            )
 

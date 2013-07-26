@@ -18,7 +18,7 @@ from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
-from django.views.decorators.http import require_http_methods, require_safe, require_POST
+from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.conf import settings
 
 from pm.model.album import Album
@@ -35,7 +35,7 @@ logger = logging.getLogger(__name__)
 
 @csrf_protect
 @login_required
-@require_safe
+@require_GET
 def view(request):
     albums = Album.objects.all().filter(user = request.user)
     total_albums = len(albums)

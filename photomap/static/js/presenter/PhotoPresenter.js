@@ -17,7 +17,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "view/PhotoEditorView", "ut
                 // if-clause to prevent method from being executed if there are no places yet
                 if (state.getPlaces().length !== 0) {
                    input.show({
-                      load : function () {      
+                      load : function () {
+                         //check if this is used
+                         alert("ALAARRRM THIS SHOULDN'T BE USED");    
                          $("#insert-photo-tabs").tabs();
                          $("input[name='place']").val(place.id);
                          this.$title = $("input[name='title']");
