@@ -17,10 +17,10 @@ define(["dojo/_base/declare",
         "util/Communicator",
         "util/Tools",
         "ui/UIState",
-        "util/Tooltip",
+        "util/InfoText",
         "dojo/domReady!"
        ],
-       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, state, Tooltip) {
+       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, state, InfoText) {
 
 /**
  * @author Marc Roemer
@@ -49,7 +49,7 @@ define(["dojo/_base/declare",
                 this.showTeaser = false;
                 this.currentPhoto = null;
                 
-                this.tooltip = new Tooltip(this.$container, "");
+                this.infotext = new InfoText(this.$container, "");
                 this.fullGallery = new FullGalleryView();
                 this.$controls = $()
                    .add($(".mp-option-insert-photo"))
@@ -63,7 +63,7 @@ define(["dojo/_base/declare",
                 this._bindActivationListener(this.$container, this.viewName);
                 this._bindListener();
                 
-                this.tooltip
+                this.infotext
                   .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
                   .setOption("hideOnMouseover", false)
                   .start()
@@ -124,7 +124,7 @@ define(["dojo/_base/declare",
                 
                 // reset FullGallery
                 this.fullGallery.destroy();
-                this.tooltip.destroy();
+                this.infotext.destroy();
                 // show insert photo button
                 this.$controls.removeClass("mp-nodisplay");
 
@@ -224,7 +224,7 @@ define(["dojo/_base/declare",
              },
              /**
               * @private
-              * @description set new tooltip message, empty-tiles, visited-icon and show teaser (optional)
+              * @description set new infotext message, empty-tiles, visited-icon and show teaser (optional)
               */
              _update : function ($photos) {
                 
@@ -254,15 +254,15 @@ define(["dojo/_base/declare",
              _showHelpText : function () {
                 //TODO This is too inefficient.
                 if (this.carousel.getAllPhotos().length > 0) {
-                   this.tooltip.close();
+                   this.infotext.close();
                 } else {
                    if (this._isAdmin()) {
-                      this.tooltip
+                      this.infotext
                         .setOption("hideOnMouseover", true)
                         .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
                         .open();
                    } else {
-                      this.tooltip
+                      this.infotext
                         .setOption("hideOnMouseover", true)
                         .setMessage(gettext("GALLERY_NO_PHOTOS_GUEST"))
                         .open();

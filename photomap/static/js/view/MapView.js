@@ -16,10 +16,10 @@ define([
    "util/ClientState",
    "view/MarkerView",
    "ui/UIState",
-   "util/Tooltip",
+   "util/InfoText",
    "dojo/domReady!"
    ],
-    function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state, Tooltip) {
+    function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state, InfoText) {
        var MapView = declare(View, {
           constructor : function () {
              
@@ -67,7 +67,7 @@ define([
                 disableDoubleClickZoom : true
              };
              
-             this.tooltip = new Tooltip(this.$container, "");
+             this.infotext = new InfoText(this.$container, "");
              // mode : fullscreen || normal
              this.mode = 'normal';
              this.presenter = new MapPresenter(this);
@@ -319,12 +319,12 @@ define([
              if (state.getMarkers().length <= 0) {
                 if (state.isAlbumView()) { 
                    if (state.isAdmin()) {
-                      this.tooltip.setMessage(gettext("MAP_NO_PLACES_ADMIN"));
+                      this.infotext.setMessage(gettext("MAP_NO_PLACES_ADMIN"));
                    } else {
-                      this.tooltip.setMessage(gettext("MAP_NO_PLACES_GUEST"));
+                      this.infotext.setMessage(gettext("MAP_NO_PLACES_GUEST"));
                    }
                 } else if (state.isDashboardView()) {
-                   this.tooltip
+                   this.infotext
                      .setOption({
                         hideOnMouseover: false,
                         hideOnClick: true,
@@ -332,9 +332,9 @@ define([
                      })
                      .setMessage(gettext("MAP_NO_ALBUMS"));
                 }
-                this.tooltip.start().open();
+                this.infotext.start().open();
              } else {
-                this.tooltip.close();
+                this.infotext.close();
              }
           },
           setMapCursor : function (style) {

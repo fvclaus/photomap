@@ -17,10 +17,10 @@ define([
    "presenter/SlideshowPresenter",
    "util/Communicator",
    "util/Tools",
-   "util/Tooltip",
+   "util/InfoText",
    "dojo/domReady!"
    ],
-    function (declare, View, PhotoCarouselView, Photo, SlideshowPresenter, communicator, tools, Tooltip) {
+    function (declare, View, PhotoCarouselView, Photo, SlideshowPresenter, communicator, tools, InfoText) {
        return declare(View, {
           //TODO missing markupFactory for Dojo widget init. This should possibly go into the View superclass.
           constructor : function () {
@@ -43,7 +43,7 @@ define([
              this.carousel = null;
              this.presenter = new SlideshowPresenter(this);
              
-             this.tooltip = new Tooltip(this.$container, "", {hideOnMouseover: false});
+             this.infotext = new InfoText(this.$container, "", {hideOnMouseover: false});
              
              this._started = false;
              
@@ -175,17 +175,17 @@ define([
            */
           updateMessage : function () {
              if (!this._started) {
-                this.tooltip
+                this.infotext
                   .setOption("hideOnMouseover", false)
                   .setMessage(gettext("SLIDESHOW_GALLERY_NOT_STARTED"))
                   .start()
                   .open();
              } else {
                 if (this.carousel.getAllPhotos().length > 0) {
-                   this.tooltip.close();
+                   this.infotext.close();
                 } else {
                    // No photos yet.
-                  this.tooltip
+                  this.infotext
                      .setOption("hideOnMouseover", true)
                      .setMessage(gettext("SLIDESHOW_NO_PHOTOS"))
                      .start()
