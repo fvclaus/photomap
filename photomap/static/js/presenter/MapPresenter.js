@@ -128,8 +128,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                  var instance = this,
                      lat = event.lat,
                      lng = event.lng,
-                     // build url -> format /models/model/(id/)request
-                     requestUrl = "/" + modelName + "s/" + modelName + "/insert";
+                     requestUrl = "/" + modelName + "/",
+                     dialogUrl = "/dialog/insert/" + modelName;
 
                  communicator.publish("load:dialog", {
                     load : function () {
@@ -154,7 +154,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                        data.lat = lat;
                        communicator.publish("insert:" + modelName, data);
                     },
-                    url : requestUrl,
+                    url : dialogUrl,
                     context : this
                  });
               }
