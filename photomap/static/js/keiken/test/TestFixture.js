@@ -7,7 +7,7 @@ define(["dojo/_base/declare",
        function (declare, Photo) {
           return declare(null, {
              _lipsum : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-             _photos : ["photo1.jpg", "photo2.jpg"],
+             _photos : ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg", "photo7.jpg"],
              constructor : function () {
                 this._words = this._lipsum.split(" ");
              },
@@ -16,18 +16,18 @@ define(["dojo/_base/declare",
                 var photos = [],
                     photoIndex = 0;
                 for (photoIndex = 0; photoIndex < nPhotos; photoIndex++) {
-                   photos.push(this._getRandomPhoto(photoIndex));
+                   photos.push(this.getRandomPhoto(photoIndex));
                 }
                 assertEqual(photos.length, nPhotos);
                 return photos;
              },
              /*
-              * @private
+              * @public
               * @description Returns a new photo with a random title/description.
               * The photo will be picked randomly from the test image folder.
               * @param {Number} id
               */
-             _getRandomPhoto : function (id) {
+             getRandomPhoto : function (id) {
                 assertNumber(id);
                 var photoAndThumb = this._getRandomPhotoAndThumb(),
                     nWordsTitle = parseInt(Math.random() * 20),
