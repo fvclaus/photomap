@@ -16,14 +16,14 @@ define(["dojo/_base/declare",
         "view/View",
         "view/PhotoCarouselView",
         "model/Photo",
-        "presenter/SlideshowPresenter",
         "util/Communicator",
         "util/Tools",
         "util/Tooltip",
         "dojo/text!/template/Slideshow",
+        "module",
         "dojo/domReady!"
        ],
-       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Photo, SlideshowPresenter, communicator, tools, Tooltip, template) {
+       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Photo, communicator, tools, Tooltip, template, module) {
           return declare([View, _WidgetBase, _TemplatedMixin], {
              templateString : template,
              //TODO missing markupFactory for Dojo widget init. This should possibly go into the View superclass.
@@ -41,6 +41,7 @@ define(["dojo/_base/declare",
                    return;
                 }
                 this.inherited(arguments);
+                this.module = module;
                 this.viewName = "Slideshow";
                 
                 // need to indicate ready status to frontend tests
@@ -49,7 +50,6 @@ define(["dojo/_base/declare",
                    .appendTo(this.$container);
                 
                 this.carousel = null;
-                this.presenter = new SlideshowPresenter(this);
                 
                 // tooltip is a builtin member of _WidgetBase
                 this._tooltip = new Tooltip(this.$container, "", {hideOnMouseover: false});
@@ -221,7 +221,7 @@ define(["dojo/_base/declare",
               * @description Executed after photo is updated (=displayed)
               */
              _update : function () {
-                console.log("Slideshow: in _update");
+                this.log("_update");
                 this._findCurrentPhoto();
                 // deleted last photo
                 if (this.currentPhoto  === null) {
@@ -233,7 +233,6 @@ define(["dojo/_base/declare",
                 }
                 communicator.publish("update:slideshow", this.currentPhoto);
                 this.setDisabled(false);
-                this.enable();
              },
              /**
               * @private
@@ -243,10 +242,9 @@ define(["dojo/_base/declare",
                 // we are expecting to receive a jquery element wrapper
                 assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
                 // trigger event to tell UI that slideshow is about to change
-                // @see UIDetailView/Presenter
+                // This will hide the detail view.
                 communicator.publish("beforeLoad:slideshow");
                 this.setDisabled(true);
-                this.disable();
              },
              /**
               * @private
@@ -260,32 +258,15 @@ define(["dojo/_base/declare",
              },
              /**
               * @private
-              * @description Disable Slideshow, e.g beforeLoad
-              */
-             disable : function () {
-                // need to indicate ready status to frontend tests
-                this.$ready.hide();
-             },
-             /**
-              * @private
-              * @description Enable Slideshow, e.g after update
-              */
-             enable : function () {
-                // need to indicate ready status to frontend tests
-                this.$ready.show();
-             },
-             /**
-              * @private
               * @description Synchronizes the current photo in the slideshow with the one in the UIState
               * @returns {Photo} currentPhoto
               */
              _findCurrentPhoto : function () {
                 assert(this._started, true, "slideshow has to be started already");
 
-                // this might be updated at a later point, we can't rely on that
                 var photos = this.carousel.getAllPhotos(),
-                    // but we can rely on the currentPage
                     currentPhoto = null,
+                    // The PhotoCarousel will set the id of the photo as an attribute of the img element.
                     id = parseInt(this.$image.attr(this.carousel.ID_HTML_ATTRIBUTE));
 
                 // if it is the only (empty) page the entry is null
@@ -321,17 +302,16 @@ define(["dojo/_base/declare",
                 
                 var instance = this;
                 
+                // No need to disable the navigation buttons.
+                // If the current photo is not completely loaded, 
+                // the loading will be aborted
                 this.$navLeft.on("click", function () {
-                   if (!instance.isDisabled()) {
-                      instance.navigateWithDirection("left");
-                   }
+                   instance.navigateWithDirection("left");
                 });
                 this.$navRight.on("click", function () {
-                   // UIPhotoCarousel does not 'really' support aborting loading of the current photo and skipping to the next one
-                   if (!instance.isDisabled()) {
-                      instance.navigateWithDirection("right");
-                   }
+                   instance.navigateWithDirection("right");
                 });
+                
                 this.$image.on("click.Slideshow", function (event) {
                    /* 
                     * bubbling of event has to be stopped to prevent click on slideshow to be triggered again 
@@ -339,22 +319,22 @@ define(["dojo/_base/declare",
                     */
                    event.stopPropagation();
                    if (!instance.isDisabled()) {
-                      console.log("UISlideshow: Show Fullscreen");
-                      instance.presenter.click();
+                      instance.log("Image clicked. Publishing event.");
+                      communicator.publish("click:slideshowImage");
                    }
                 });
                 
                 $("body")
                    .on("keyup.Slideshow", null, "left", function () {
-                      if (instance.active && !instance.disabled) {
-                         console.log("UISlideshow: navigating left");
-                         instance.presenter.navigate("left");
+                      if (instance._isCarouselStarted) {
+                         instance.log("Left direction key clicked. Navigating to the left.");
+                         instance.$navLeft.trigger("click");
                       }
                    })
                    .on("keyup.Slideshow", null, "right", function () {
-                      if (instance.active && !instance.disabled) {
-                         console.log("UISlideshow: navigating right");
-                         instance.presenter.navigate("right");
+                      if (instance._isCarouselStarted) {
+                         instance.log("Right direction key clicked. Navigating to the right.");
+                         instance.$navRight.trigger("click");
                       }
                    });
              },
