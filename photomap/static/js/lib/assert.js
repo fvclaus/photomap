@@ -58,6 +58,12 @@ function assertInstance(instance, clazz, message) {
    }
 }
 
+function assertObject(actual, message) {
+   if (!(typeof actual === "object")) {
+      croak(typeof actual, "object", message);
+   }
+}
+
 
 function assertNotNull(actual, message) {
    if (actual === null) {
