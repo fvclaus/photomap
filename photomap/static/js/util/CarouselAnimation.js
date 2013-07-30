@@ -53,7 +53,7 @@ define(["dojo/_base/declare",
              _fade : function (options, time) {
                 
                 console.log("CarouselAnimation: in fade");
-                var photoSource
+                var photoSource;
                 //begin animation
                 if (time === "start") {
                   options.items.fadeOut(options.animationTime);

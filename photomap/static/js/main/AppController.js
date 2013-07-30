@@ -264,7 +264,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getFullscreen().open();
              },
              _fullscreenNavigate : function (direction) {
-                main.getUI().getSlideshow().navigate(direction);
+                main.getUI().getSlideshow().navigateWithDirection(direction);
              },
              _modelInsert : function (model) {
                 var type = model.getModelType();
@@ -311,7 +311,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getGallery().load(photos);
                 main.getUI().getGallery().start();
 
-                main.getUI().getSlideshow().load(photos);
+                main.getUI().getSlideshow().loadPhotos(photos);
 
                 main.getUI().getMessage().hide();
              },

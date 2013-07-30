@@ -17,7 +17,7 @@ define(["dojo/_base/declare",
         "view/ModelFunctionView",
         "view/DetailView",
         "view/StatusMessageView",
-        "view/SlideshowView",
+        "widget/SlideshowWidget",
         "view/FullscreenView",
         "view/GalleryView",
         "view/DialogView",
@@ -36,7 +36,8 @@ define(["dojo/_base/declare",
 
                  if (this.state.isAlbumView()) {
                     this.gallery = new GalleryView();
-                    this.slideshow = new SlideshowView();
+                    this.slideshow = new SlideshowView(null, $(".mp-slideshow").get(0));
+                    this.slideshow.startup();
                     this.fullscreen = new FullscreenView();
                     this.pageTitle = new PageTitleWidget();
                  }
@@ -52,7 +53,7 @@ define(["dojo/_base/declare",
                  if (state.isDashboardView()) {
                     return null;
                  }
-                 return this.slideshow.getPresenter();
+                 return this.slideshow;
               },
               getFullscreen : function () {
                  if (state.isDashboardView()) {

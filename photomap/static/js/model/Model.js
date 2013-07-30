@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main */
+/*global $, define, main, assertNumber */
 
 "use strict";
 
@@ -17,6 +17,7 @@ define(["dojo/_base/declare"],
                 this.type = data.type;
                 this.title = data.title;
                 this.id = data.id;
+                assertNumber(this.id, "Every model must have an id.");
                 // reading from input elements will return '' if nothing has been entered
                 this.description = (data.description === "")? null : data.description;
              },
