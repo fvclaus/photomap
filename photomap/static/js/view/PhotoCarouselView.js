@@ -19,14 +19,16 @@ define(["dojo/_base/declare",
         "model/Photo",
         "util/PhotoPages",
         "util/Tools", 
+        "module",
         "util/CarouselAnimation"], 
-       function (declare, View, Photo, PhotoPages, tools, carouselAnimation) {
+       function (declare, View, Photo, PhotoPages, tools, module, carouselAnimation) {
           
           return declare (View, {
              ID_HTML_ATTRIBUTE : "data-keiken-id",
              constructor : function ($photos, photos, srcPropertyName, options) {
                 assertTrue($photos.size() > 0, "Can't build a Carousel without placeholder for photos.");
                 
+                this.module = module;
                 photos.forEach(function (photo) {
                    assertTrue(photo instanceof Photo);
                    assertString(photo[srcPropertyName]);
@@ -36,6 +38,10 @@ define(["dojo/_base/declare",
                    lazy : false,
                    effect : "fade",
                    duration: 500,
+                   // No need to check for the existince of these functions.
+                   beforeLoad : function () {},
+                   afterLoad : function () {},
+                   onUpdate : function () {},
                    context : this,
                 };
                 this.options = $.extend({}, this.defaults, options);
@@ -77,44 +83,67 @@ define(["dojo/_base/declare",
              insertPhoto : function (photo) {
                 assertTrue(photo instanceof Photo);
                 
-                console.log("UIPhotoCarousel: Inserting new photo %s to Carousel.", photo);
+                this.log("Inserting new photo %s to Carousel.", photo);
                 // update page
                 this.dataPage.insertPhoto(photo);
                 var from = this.dataPage.getIndexOfPhoto(photo);
                 
                 // Did we insert on the current page? Then we need to update it
                 if (this.isLastPage()){
-                   console.log("UIPhotoCarousel: New photo is inserted on current page. Reload current page from index %d.", from);
+                   this.log("New photo is inserted on current page. Reload current page from index %d.", from);
                    this.currentPage = this.dataPage.getPage("current");
                    this._load(from);
                 } else if (this.options.navigateToInsertedPhoto) {
                    // config: Show newly inserted photos
                    this.currentPage = this.dataPage.getPage("last");
                    this._load();
+                } else { // Call _update to correct photo number, etc
+                   this.options.onUpdate.call(this.options.context, $());
                 }
+                   
              },
              deletePhoto : function (photo) {
                 assertTrue(photo instanceof Photo, "input parameter photo has to be model of the type Photo");
 
-                var instance = this, 
-                    oldPage = this.dataPage.getPage("current"),
-                    // the oldPage consists of sources
-                    from = oldPage.indexOf(photo[this.srcPropertyName]);
+                // Deal with a quick succession of deletePhoto() calls.
+                // This will merge the onFadeOut Handler with Timeout (with src present)  with the next one without timeout (without src present).
+                // This does not work for several deletePhoto() calls where the src is not loaded.
+                if (this._deleteThreat !== null) {
+                   this._deleteThreat = function () {
+                   };
+                }
+
+                var oldPage = this.dataPage.getPage("current"),
+                    $currentItem,
+                    // oldPage pages photo instances.
+                    from = oldPage.indexOf(photo),
+                    instance = this,
+                    onFadeOut = function () {
+                       this.currentPage = this.dataPage.getPage("current");
+                       // we need to update everything from 'from' to the last entry of the oldPage
+                       //TODO get the real length of the oldPage, currently this will always be this.size
+                       this._load(from, oldPage.length);
+                       instance._deleteThreat = null;
+                    };
+
 
                 this.dataPage.deletePhoto(photo);
 
                 // Did we delete on the current page?
                 if (from !== -1) {
-                   this.$items
-                      .filter("img[src='" + photo[this.srcPropertyName] + "']")
-                      .fadeOut(500, function () {
+                   $currentItem = this.$items
+                      .filter("img[src='" + photo[this.srcPropertyName] + "']");
+                   if ($currentItem.length > 0) {
+                      $currentItem.fadeOut(500, function () {
                          $(this).attr("src", null);
-                         instance.currentPage = instance.dataPage.getPage("current");
-                         // we need to update everything from 'from' to the last entry of the oldPage
-                         //TODO get the real length of the oldPage, currently this will always be this.size
-                         instance._load(from, oldPage.length);
+                         onFadeOut.apply(instance);
                       });
+                   } else { // The image has not been loaded yet. Update immediately.
+                      // Give previous delete commands the change to execute before.
+                      onFadeOut.apply(instance);
+                   }
                 }
+                this._deleteThreat = onFadeOut;
              },
              /**
               * @description resets carousel, so that no images are shown
@@ -214,9 +243,9 @@ define(["dojo/_base/declare",
                 // The loading from before has not finished yet.
                 // If there is quick succession of navigate calls, it is not really deterministic which photo will be shown.
                 // This is because the download speed of the photos varies. The slowest wins and will overwrite all other ones.
-                if (this._thread !== null) {
+                if (this._updateThreat !== null) {
                    // Overwrite the old loadHandler so it will never call _update.
-                   this._thread = function () {
+                   this._updateThreat = function () {
                    };
                 }
 
@@ -250,7 +279,7 @@ define(["dojo/_base/declare",
                       // start updating the srcs
                       instance._update(from, to || nPhotos);
                       // Loading finished. Can't abort anymore.
-                      instance._thread = null;
+                      instance._updateThreat = null;
                    }
                 };
                 nPhotos = photos.length;
@@ -276,22 +305,19 @@ define(["dojo/_base/declare",
                    onStart : loader
                 });
 
-                if (typeof this.options.beforeLoad === "function") {
-                   // trigger the beforeLoad event
-                   this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
-                }
+
+                // trigger the beforeLoad event
+                this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
+
                 // this is called at startup when there are no photos present or after all photos are deleted
                 if (nPhotos === 0){
-                   if (typeof this.options.afterLoad === "function") {
-                      this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
-                   }
-                   if (typeof this.options.onUpdate === "function") {
-                      this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nPhotos));
-                   }
+                   this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
+                   this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nPhotos));
+
                 }
                 // Store a reference to the loader function.
                 // This is needed to abort the loading at a later point.
-                this._thread = loadHandler;
+                this._updateThreat = loadHandler;
              },
              /**
               * @description Updates carousel to show current page.
@@ -315,6 +341,7 @@ define(["dojo/_base/declare",
 0                
                 $.each(this.currentPage, function (index, photo) {
                    if (photo !== null) {
+                      // Note: this is a reference and might be gone, once the onEnd callback is called.
                       photos.push(photo);
                    }
                 });
@@ -328,10 +355,14 @@ define(["dojo/_base/declare",
                    animation: this.options.effect,
                    animationTime: this.options.duration,
                    onEnd: function ($photos) {
-                      $photos.each(function (photoIndex, photo) {
-                         // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
-                         $(photo).attr(instance.ID_HTML_ATTRIBUTE, photos[photoIndex].getId());
-
+                      $photos.each(function (photoIndex, photoNode) {
+                         // During the time the src are loaded and updated the photos might have already been deleted.
+                         try {
+                            // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
+                            $(photoNode).attr(instance.ID_HTML_ATTRIBUTE, photos[photoIndex].getId());
+                         } catch (e) {
+                            instance.log("End of animation, but photo seems to be not present anymore. It has probably been deleted.");
+                         }
                       });
                       instance.options.onUpdate.call(instance.options.context, $photos);
                    },

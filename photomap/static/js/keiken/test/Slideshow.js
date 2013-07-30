@@ -10,13 +10,13 @@ require(["widget/SlideshowWidget",
            var slideshow = null,
                $testBody = $("#testBody"),
                $container = $("<section id=mp-slideshow></section>"),
-               textFixture = new TestFixture(),
-               photos = textFixture.getPhotos(12),
+               testFixture = new TestFixture(),
+               photos = null,
                assertTooltipPresence = function (present) {
                   if (present) {
-                     QUnit.ok$1($(".mp-tooltip"));
+                     QUnit.ok$visible($(".mp-tooltip"));
                   } else {
-                     QUnit.ok$0($(".mp-tooltip"));
+                     QUnit.ok$hidden($(".mp-tooltip"));
                   }
                },
                assertPhotoInGallery = function (photo) {
@@ -25,7 +25,8 @@ require(["widget/SlideshowWidget",
                   QUnit.ok$visible($image);
                   QUnit.ok$text($(".mp-image-number"), expectedText);
                   QUnit.ok(parseInt($image.attr("data-keiken-id")) === photo.id, "The slideshow image should display the photo with id " + photo.id);
-               };
+               },
+               animationTime = 1200;
 
                   
 
@@ -36,6 +37,7 @@ require(["widget/SlideshowWidget",
                     .append($container);
 
                  slideshow = new SlideshowWidget(null, $container.get(0));
+                 photos = testFixture.getPhotos(12);
               },
               teardown : function () {
                  $testBody.empty();
@@ -72,14 +74,15 @@ require(["widget/SlideshowWidget",
               }, 300);
            });
 
-           QUnit.asyncTest("startCarousel", 3,  function () {
+           QUnit.asyncTest("startCarousel", 4,  function () {
               slideshow.startup();
               slideshow.loadPhotos(photos);
               slideshow.startCarousel();
               setTimeout(function () {
+                 assertTooltipPresence(false);
                  assertPhotoInGallery(photos[0]);
                  QUnit.start();
-              }, 1200);
+              }, animationTime);
            });
 
            QUnit.asyncTest("navigateWithDirection", 11, function () {
@@ -102,9 +105,9 @@ require(["widget/SlideshowWidget",
                     setTimeout(function () {
                        assertPhotoInGallery(photos[4]);
                        QUnit.start();
-                    }, 1200);
-                 }, 1200);
-              }, 1200);
+                    }, animationTime);
+                 }, animationTime);
+              }, animationTime);
            });
 
            QUnit.asyncTest("navigateTo", 7, function () {
@@ -120,8 +123,77 @@ require(["widget/SlideshowWidget",
                  setTimeout(function () {
                     assertPhotoInGallery(photos[7]);
                     QUnit.start();
-                 }, 1200);
+                 }, animationTime);
+              }, animationTime);
+           });
+
+           QUnit.asyncTest("reset", 5, function () {
+              slideshow.startup();
+              slideshow.loadPhotos(photos);
+              slideshow.startCarousel();
+              setTimeout(function () {
+                 assertTooltipPresence(false);
+                 assertPhotoInGallery(photos[0]);
+                 slideshow.reset();
+                 setTimeout(function () {
+                    assertTooltipPresence(true);
+                    QUnit.start();
+                 }, animationTime);
               }, 1200);
            });
 
+           QUnit.asyncTest("insertPhoto", 10,  function () {
+              var newPhoto = testFixture.getRandomPhoto(12),
+                  photoIndex = 0;
+              slideshow.startup();
+              slideshow.loadPhotos(photos);
+              slideshow.startCarousel();
+
+              QUnit.raiseError(slideshow.insertPhoto, slideshow);
+              
+              slideshow.insertPhoto(newPhoto);
+              photos.push(newPhoto);
+              setTimeout(function () {
+                 // Make sure the image counter incremented properly.
+                 assertPhotoInGallery(photos[0]);
+                 slideshow.navigateTo(newPhoto);
+                 setTimeout(function () {
+                    assertPhotoInGallery(newPhoto);
+                    for (photoIndex = 0; photoIndex < 20; photoIndex++) {
+                       newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
+                       slideshow.insertPhoto(newPhoto);
+                       photos.push(newPhoto);
+                    }
+                    setTimeout(function () {
+                       assertPhotoInGallery(photos[12]);
+                       QUnit.start();
+                    }, animationTime);
+                 }, animationTime);
+              }, animationTime);
+           });
+
+           QUnit.asyncTest("deletePhoto", 5, function () {
+              var oldPhoto = photos[0],
+                  photoIndex = 0;
+              slideshow.startup();
+              slideshow.loadPhotos(photos);
+              slideshow.startCarousel();
+
+              QUnit.raiseError(slideshow.deletePhoto, slideshow);
+              
+              slideshow.deletePhoto(oldPhoto);
+              photos.splice(0, 1);
+              setTimeout(function () {
+                 // Make sure the image counter is decremented properly.
+                 // Make sure the slideshow navigates to the 2nd photo.
+                 assertPhotoInGallery(photos[0]);
+                 for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
+                    slideshow.deletePhoto(photos[photoIndex]);
+                 }
+                 setTimeout(function () {
+                    assertTooltipPresence(true);
+                    QUnit.start();
+                 }, animationTime);
+              }, animationTime);
+           }, animationTime);
         });

@@ -1,5 +1,5 @@
 /*jslint sloppy : true*/
-/*global $, define, main, window, gettext, assert, assertNotNull, assertTrue */
+/*global $, define, window, gettext, assert, assertNotNull, assertTrue, assertInstance */
 
 // No use strict with this.inherited(arguments);
 // "use strict";
@@ -41,6 +41,7 @@ define(["dojo/_base/declare",
                    return;
                 }
                 this.inherited(arguments);
+                // Needed to determine the MID in the logging statements.
                 this.module = module;
                 this.viewName = "Slideshow";
                 
@@ -90,8 +91,10 @@ define(["dojo/_base/declare",
              loadPhotos : function (photos) {
                 assertInstance(photos, Array, "Photos must be of type Array.");
                 assert(this._started, true, "Must call startup() before.");
-                this._isPhotosLoaded = true;
+                // Resets to state after startup().
                 this.reset();
+                this._isPhotosLoaded = true;
+
                 this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, this.srcPropertyName, this.options);
              },
              /**
@@ -119,8 +122,8 @@ define(["dojo/_base/declare",
              },
              /**
               * @presenter
-              * @description Resets the slideshow 
-              * This can be called without ever starting the Slideshow
+              * @description Resets the slideshow
+              * This will put the Slideshow in the state that it was after startup() was called.
               */
              reset : function () {
                 // this._started = false;
@@ -129,14 +132,15 @@ define(["dojo/_base/declare",
                       this.carousel.reset();
                       this.carousel = null;
                    }
+                   this._isPhotosLoaded = false;
+                   this._isCarouselStarted = false;
                    this._emptyPhotoNumber();
-                   $(".mp-slideshow-loader").hide();
-                   $(".mp-slideshow-no-image-msg").show();
+                   this.updateMessage();
                 }
              },
              /* 
               * @presenter
-              * @description Restarts the slideshow if for example the photo order was changed.
+              * @description Restarts the slideshow if for example the photo order was changed. E.g. before loadPhotos() and startCarousel()
               */
              restart : function (photos) {
                 this.carousel.update(photos);
@@ -225,7 +229,8 @@ define(["dojo/_base/declare",
                 this._findCurrentPhoto();
                 // deleted last photo
                 if (this.currentPhoto  === null) {
-                   this.reset();
+                   // Don't reset the slideshow.
+                   this.updateMessage();
                 } else {
                    // right now this is the first time we can update the description
                    // on the other events, beforeLoad & afterLoad, the photo src is not set yet
