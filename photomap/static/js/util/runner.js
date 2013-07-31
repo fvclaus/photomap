@@ -61,8 +61,35 @@ QUnit.ok$text = function ($element, text) {
 // This is only possible when all test cases are known prior to starting.
 QUnit.config.autostart = false;
 
-require(["keiken/test/Slideshow",
-        ],
+// @author http://www.idealog.us/2006/06/javascript_to_p.html
+function getTestCasesFromQueryString() {
+   var query = window.location.search.substring(1);
+   var vars = query.split('&');
+   for (var i = 0; i < vars.length; i++) {
+      var pair = vars[i].split('=');
+      if (decodeURIComponent(pair[0]) == "tests") {
+         return decodeURIComponent(pair[1]).split(",");
+      }
+   }
+   return [];
+}
+
+
+var allTestCases = ["Slideshow", "AdminGallery"],
+    testCases = getTestCasesFromQueryString(),
+    testCaseIndex;
+
+if (testCases.length == 0) {
+   testCases = allTestCases;
+}
+
+// Resolve to the full MID path.
+for (testCaseIndex = 0; testCaseIndex < testCases.length; testCaseIndex++) {
+   testCases[testCaseIndex] = "keiken/test/" + testCases[testCaseIndex];
+}
+   
+
+require(testCases,
         function () {
            QUnit.start();
         });

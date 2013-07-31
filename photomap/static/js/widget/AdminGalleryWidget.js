@@ -1,79 +1,158 @@
-/*global $, define, main, assertTrue, assertFalse, assertNumber, assertString, UIInput, gettext */
+/*jslint sloppy : true*/
+/*global $, define, main, assert, assertInstance, assertTrue, assertFalse, assertNumber, assertString, gettext */
 
-"use strict";
+// No use strict with this.inherited(arguments)
+// "use strict";
 
-define(["dojo/_base/declare", "view/View", "model/Photo", "util/Communicator", "ui/UIState", "view/StatusMessageView", "dojo/domReady!"], 
-       function (declare, View, Photo, communicator, state, statusMessage) {
-          
-          return  declare(View, {
-             constructor : function () {
-                this.loaded = false;
-                this.carousel = null;
-                this.$container = $("#mp-full-left-column").find(".mp-data");
-                this.$column = $("#mp-full-left-column");
-
+define(["dojo/_base/declare",
+        "dijit/_WidgetBase",
+        "dijit/_TemplatedMixin",
+        "view/View",
+        "model/Photo",
+        "view/PhotoCarouselView",
+        "util/Communicator",
+        "module",
+        "dojo/text!/template/AdminGallery",
+        "dojo/domReady!"], 
+       function (declare, _WidgetBase, _TemplatedMixin, View, Photo, PhotoCarouselView, communicator, module, template) {
+          return  declare([View, _WidgetBase, _TemplatedMixin], {
+             templateString : template,
+             buildRendering : function () {
+                this.inherited(arguments);
+                var instance = this;
+                this._attachPoints.forEach(function (attachPoint) {
+                   var jQSelectorName = "$" + attachPoint.replace("Node", "");
+                   instance[jQSelectorName] = $(instance[attachPoint]);
+                });
+                this.$container = $(this.domNode);
              },
-
-             /**
-              * @description UIFullGallery can be instantiated without a UIPhotoCarousel. It needs to be set before calling start()
-              */
-             setCarousel : function (carousel) {
-                this.carousel = carousel;
-             },
-             /**
-              * @description Starts the Gallery. Generates new Html every time start is called.
-              * Therefore there is no need for messy array synchronisation or the like.
-              */
-             start : function () {
-                assertTrue(this.carousel, "carousel has to be initialized already");
-
-                this.$container
-                   .addClass("mp-full-gallery")
-                   .append(
-                      $.jqote('#fullGalleryTmpl', {
-                         thumbSources: this.carousel.getAllImageSources()
-                      }))
-                   .removeClass("mp-nodisplay");
-                this._initializeSortable();
-                this.$column.removeClass("mp-nodisplay");
-                this.loaded = true;
-                this.$container.find("img").css("visibility", "visible");
-             },
-             /**
-              * @description Closes the Gallery. This will remove any Html previously created.
-              */
-             destroy : function () {
-
-                if (this.$container.hasClass("ui-sortable")){
-                   this.$container.sortable("destroy");
+             startup : function () {
+                if (this._started) {
+                   return;
                 }
-                this.$container
-                   .empty()
-                   .removeClass("mp-full-gallery")
-                   .addClass("mp-nodisplay");
+                this.inherited(arguments);
+                this.module = module;
+                this.carousel = null;
 
-                this.$column.addClass("mp-nodisplay");
-                this.loaded = false;
+                this._isPhotoLoaded = false;
+                this.srcPropertyName = "photo";
+                this.options = {};
+
+                var instance = this;
+                this.$close.on("click", function (event) {
+                   instance.hide();
+                });
+             },
+             /*
+              * @public
+              */
+             load : function (photos) {
+                assertInstance(photos, Array, "Photos must be of type Array.");
+                assert(this._started, true, "Must call startup() before.");
+                this._loaded = true;
+                // Give fake img element. It will never be used anyway.
+                this.carousel = new PhotoCarouselView($("<img></img>"), photos, this.srcPropertyName, this.options);
              },
              /**
               * @public
-              * @description Removes the photo from the Gallery if open.
+              * @description Runs the Gallery. Generates new Html every time start is called.
+\              */
+             run : function () {
+                assert(this._started, true, "Must call startup() before.");
+                assertTrue(this._loaded, "Must call load(photos) before.");
+                this._run = true;
+                this._empty();
+               
+                this.$photoContainer
+                   .append(
+                      $.jqote('#fullGalleryTmpl', {
+                         photos: this.carousel.getAllPhotos()
+                      }));
+                this._initializeSortable();
+                this.show();
+
+                this._loaded = true;
+
+             },
+             /**
+              * @public
+              * @description Inserts a new Photo. This will refresh the Gallery, if open.
               */
-             deletePhoto : function (photo) {
+             insertPhoto : function (photo) {
                 assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-                // something has been deleted from the gallery
-                if (this.loaded) {
-                   this._refresh();
+                assertTrue(this._loaded, "Must call load(photos) before.");
+                // Slideshow might or might not be started at that point
+                this.carousel.insertPhoto(photo);
+                if (this._run) {
+                   this.refresh();
                 }
              },
              /**
-              * @private
-              * @description This will refresh the Gallery.
+              * @public
+              * @description Removes a photo. This will refresh the Gallery, if open.
               */
-             _refresh : function () {
+             deletePhoto : function (photo) {
+                assertTrue(photo instanceof Photo, "Input parameter photo has to be instance of Photo");
+                assertTrue(this._loaded, "Must call load(photos) before.");
+                this.carousel.deletePhoto(photo);
+                // something has been deleted from the gallery
+                if (this._run) {
+                   this.refresh();
+                }
+             },
+             /*
+              * @public
+              * @description Reset into state after startup().
+              */
+             reset : function () {
+                this._empty();
+                this.carousel = null;
+                this._run = false;
+                this._loaded = false;
+             },
+             /**
+              * @public
+              * @description This will refresh the Gallery. Displaying the photos currently in the carousel.
+              */
+             refresh : function () {
                 //TODO currently this just restarts the whole thing. this could be done better
-                this.destroy();
-                this.start();
+                this._empty();
+                this.run();
+             },
+             /*
+              * @public
+              */
+             hide : function () {
+                this.$photoContainer
+                   .removeClass("mp-full-gallery")
+                   .addClass("mp-nodisplay");
+
+                this.$container.addClass("mp-nodisplay");
+                this.$photoContainer.find("img").css("visibility", "hidden");
+             },
+             /*
+              * @public
+              */
+             show : function () {
+                this.$photoContainer
+                   .addClass("mp-full-gallery")
+                   .removeClass("mp-nodisplay");
+
+                this.$container.removeClass("mp-nodisplay");
+                this.$photoContainer.find("img").css("visibility", "visible");
+             },
+             /**
+              * @private
+              * @description This will remove all photos currently displayed.
+              */
+             _empty : function () {
+
+                if (this.$photoContainer.hasClass("ui-sortable")){
+                   this.$photoContainer.sortable("destroy");
+                }
+                this.$photoContainer
+                   .empty();
+
              },
              /**
               * @private
@@ -95,21 +174,7 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/Communicator", "
                    assertString(photo.title, "photo title has to be a string");
                 });
 
-                communicator.publish("load:dialog", {
-                   load : function () {
-                      $("input[name='photos']").val(JSON.stringify(photos));
-                   },
-                   success : function () {
-                      communicator.publish("change:photoOrder", photos);
-                   },
-                   abort : function () {
-                      console.log("UIFullGallery: Aborted updating order. Restoring old order");
-                      //TODO this could be done better
-                      instance._refresh();
-                   },
-                   type : CONFIRM_DIALOG,
-                   url : "/update-photos"
-                });
+                communicator.publish("change:photoOrder", photos);
              },
              /**
               * @private
@@ -126,18 +191,18 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/Communicator", "
                       return false;
                    }
                 });
-                this.$container
+                this.$photoContainer
                    .sortable({
                       items : ".mp-sortable-tile",
                       update : function (event, ui) {
                          jsonPhotos = [];
 
-                         state.getPhotos().forEach(function (photo, index, photos) {
+                         instance.carousel.getAllPhotos().forEach(function (photo, index, photos) {
                             // get html tag for tile containing current photo
-                            $currentTile = instance.$container.find('img[src="' + photo.thumb + '"]').parent();
+                            $currentTile = instance.$photoContainer.find('img[data-keiken-id="' + photo.id + '"]').parent();
                             // make a deep copy
                             jsonPhoto = $.extend(true, {}, photo);
-                            jsonPhoto.order = instance.$container.children().index($currentTile);
+                            jsonPhoto.order = instance.$photoContainer.children().index($currentTile);
                             console.log("Changing order of Photo %s from %d to %d", photo.title, photo.order, jsonPhoto.order);
                             jsonPhotos.push(jsonPhoto);
                             // when all photos with new order are in jsonPhotos, save the order
@@ -147,25 +212,6 @@ define(["dojo/_base/declare", "view/View", "model/Photo", "util/Communicator", "
                          });
                       }
                    });
-             },
-             //TODO start & show currently not in use
-             //    show : function () {
-             
-             //       if (!this.loaded) {
-             //          this.start();
-             //          //TODO Das geht noch nicht.
-             // //         $(".mp-full-gallery").jScrollPane();
-             //       }
-             //       this.$column.removeClass("mp-nodisplay");
-             //    },
-             //    hide : function () {
-             //       this.$column.addClass("mp-nodisplay");
-
-             //       if (this.changed) {
-             //          state.getCurrentPlace().triggerDoubleClick();
-             //          this.changed = false;
-             //       }
-             //    },
-
+             }
           });
        });

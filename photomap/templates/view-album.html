@@ -115,14 +115,6 @@
   <% }; %>
 </script>
 
-<script id="fullGalleryTmpl" type="text/html">
-  <% for (thumb in this.thumbSources) { %>
-  <div class="mp-sortable-tile mp-cursor-pointer mp-control">
-    <img class="mp-thumb" src="<%= this.thumbSources[thumb] %>" />
-  </div>
-  <% }; %>
-</script>
-
 <script id="galleryFullscreenTmpl" type="text/html">
   <div id="mp-image-overlay" class="mp-image-overlay">
     <img class="mp-dark-loader" src="/static/images/dark-loader.gif" />

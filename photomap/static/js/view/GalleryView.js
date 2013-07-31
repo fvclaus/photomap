@@ -3,16 +3,16 @@
 
 "use strict";
 
+
 /**
- * @author Frederik Claus
- * @class UIFullGallery displays all Photos of the current Place as thumbnails to allow easy editing and D'n'D.
- * @requires ClientServer
+ * @author Marc Roemer
+ * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
+ * @requires UICarousel
  */
        
 define(["dojo/_base/declare",
 "view/View",
         "view/PhotoCarouselView",
-        "view/FullGalleryView",
         "presenter/GalleryPresenter",
         "util/Communicator",
         "util/Tools",
@@ -20,13 +20,8 @@ define(["dojo/_base/declare",
         "util/Tooltip",
         "dojo/domReady!"
        ],
-       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, state, Tooltip) {
+       function (declare, View, PhotoCarouselView,  GalleryPresenter, communicator, tools, state, Tooltip) {
 
-/**
- * @author Marc Roemer
- * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
- * @requires UICarousel
- */
           return declare(View, {
              constructor : function () {
                 this.$container = $('#mp-gallery');
@@ -50,7 +45,6 @@ define(["dojo/_base/declare",
                 this.currentPhoto = null;
                 
                 this.tooltip = new Tooltip(this.$container, "");
-                this.fullGallery = new FullGalleryView();
                 this.$controls = $()
                    .add($(".mp-option-insert-photo"))
                    .add($(".mp-open-full-gallery"));
@@ -122,15 +116,14 @@ define(["dojo/_base/declare",
 
                 this.started = true;
                 
-                // reset FullGallery
-                this.fullGallery.destroy();
+
                 this.tooltip.destroy();
                 // show insert photo button
                 this.$controls.removeClass("mp-nodisplay");
 
 
                 // this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, "thumb", options);
-                this.fullGallery.setCarousel(this.carousel);
+
                 // disable ui while loading & show loader
                 communicator.publish("disable:ui");
                 this.carousel.start();
@@ -182,7 +175,6 @@ define(["dojo/_base/declare",
                 // automatically delete if photo is on current page
                 // otherwise we dont care
                 this.carousel.deletePhoto(photo);
-                this.fullGallery.deletePhoto(photo);
              },
              /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
@@ -438,15 +430,10 @@ define(["dojo/_base/declare",
                 $(".mp-open-full-gallery").on("click", function (event) {
                    
                    if (!instance.isDisabled()) {
-                      instance.fullGallery.start();
+                      communicator.publish("clicked:GalleryOpenButton");
                    }
                 });
-                $(".mp-close-full-left-column").on("click", function (event) {
-                   
-                   if (!instance.isDisabled()) {
-                      instance.fullGallery.destroy();
-                   }
-                });
+
                 
                 this.$container.on("click.PhotoMap", ".mp-empty-tile", function () {
                    instance._insert();

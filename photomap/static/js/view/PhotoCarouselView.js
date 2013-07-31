@@ -114,7 +114,7 @@ define(["dojo/_base/declare",
                 }
 
                 var oldPage = this.dataPage.getPage("current"),
-                    $currentItem,
+                    $currentItem = null,
                     // oldPage pages photo instances.
                     from = oldPage.indexOf(photo),
                     instance = this,
@@ -238,8 +238,18 @@ define(["dojo/_base/declare",
               * This can be used when items get deleted in the middle of the page. The last elements would be ignored without the to parameter.
               */
              _load : function (from, to) {
-                var i, j, loader, loadHandler, loaded, maxLoad, currentPage, photo, photos, nPhotos, instance = this;
-                loaded = 0;
+                // Storing photos.length in an temporary variable will corrupt the loading/update process.
+                // It is possible that the photos array will be modified concurrently and the length changes.
+                var loader, 
+                    photoIndex = 0,
+                    loadHandler,
+                    loaded = 0, 
+                    maxLoad, 
+                    currentPage = null,
+                    photo = null, 
+                    photos = null,
+                    instance = this;
+
                 // The loading from before has not finished yet.
                 // If there is quick succession of navigate calls, it is not really deterministic which photo will be shown.
                 // This is because the download speed of the photos varies. The slowest wins and will overwrite all other ones.
@@ -270,26 +280,27 @@ define(["dojo/_base/declare",
                 loadHandler = function () {
                    ++loaded;
 
-                   if (loaded >= nPhotos) {
+                   if (loaded >= photos.length) {
                       // if there is a load-handler specified in the options, execute it first
                       if (typeof instance.options.afterLoad === "function") {
                          // trigger the afterLoad event
-                         instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nPhotos));
+                         instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || photos.length));
                       }
                       // start updating the srcs
-                      instance._update(from, to || nPhotos);
+                      instance._update(from, to || photos.length);
                       // Loading finished. Can't abort anymore.
                       instance._updateThreat = null;
                    }
                 };
-                nPhotos = photos.length;
+
                 loader = function () {
-                   if (nPhotos === 0) {
-                      instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || nPhotos));
+                   // length could change in the meantime
+                   if (photos.length === 0) {
+                      instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || photos.length));
                       instance._update();
                    }
-                   for (i = 0; i < nPhotos; i++) {
-                      photo = photos[i];
+                   for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
+                      photo = photos[photoIndex];
                       console.log(photo);
                       $('<img/>')
                          .load(loadHandler)
@@ -307,12 +318,12 @@ define(["dojo/_base/declare",
 
 
                 // trigger the beforeLoad event
-                this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
+                this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || photos.length));
 
                 // this is called at startup when there are no photos present or after all photos are deleted
-                if (nPhotos === 0){
-                   this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || nPhotos));
-                   this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || nPhotos));
+                if (photos.length === 0){
+                   this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || photos.length));
+                   this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || photos.length));
 
                 }
                 // Store a reference to the loader function.
