@@ -18,9 +18,10 @@ define([
          "util/Communicator",
          "util/DataProcessor",
          "util/Tools",
-         "main/AppController"
+         "main/AppController",
+         "main/AppRouter"
        ],
-       function (declare, ui, MapView, ClientServer, clientState, communicator, dataProcessor, tools, AppController) {
+       function (declare, ui, MapView, ClientServer, clientState, communicator, dataProcessor, tools, AppController, AppRouter) {
 
           return declare(null , {
              
@@ -35,6 +36,7 @@ define([
                 this.ui = ui;
                 this.tools = tools;
                 this.appController = new AppController();
+                this.appRouter = new AppRouter();
              },
    
              init : function () {
