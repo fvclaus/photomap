@@ -26,7 +26,6 @@ define(["dojo/_base/declare",
        function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Photo, communicator, tools, Tooltip, template, module) {
           return declare([View, _WidgetBase, _TemplatedMixin], {
              templateString : template,
-             //TODO missing markupFactory for Dojo widget init. This should possibly go into the View superclass.
              buildRendering : function () {
                 this.inherited(arguments);
                 var instance = this;
@@ -44,19 +43,13 @@ define(["dojo/_base/declare",
                 // Needed to determine the MID in the logging statements.
                 this.module = module;
                 this.viewName = "Slideshow";
-                
-                // need to indicate ready status to frontend tests
-                this.$ready = $("<div id=mp-slideshow-ready />")
-                   .hide()
-                   .appendTo(this.$container);
-                
                 this.carousel = null;
                 
                 // tooltip is a builtin member of _WidgetBase
                 this._tooltip = new Tooltip(this.$container, "", {hideOnMouseover: false});
                 
                 // this._started = false;
-                this._isPhotosLoaded = false;
+                this._loaded = false;
                 
                 this._bindActivationListener(this.$container, this.viewName);
                 var instance = this;
@@ -82,18 +75,12 @@ define(["dojo/_base/declare",
              /*
               * @presenter
               */
-             isStarted : function () {
-                return this._started;
-             },
-             /*
-              * @presenter
-              */
-             loadPhotos : function (photos) {
+             load : function (photos) {
                 assertInstance(photos, Array, "Photos must be of type Array.");
                 assert(this._started, true, "Must call startup() before.");
                 // Resets to state after startup().
                 this.reset();
-                this._isPhotosLoaded = true;
+                this._loaded = true;
 
                 this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, this.srcPropertyName, this.options);
              },
@@ -102,12 +89,12 @@ define(["dojo/_base/declare",
               * @description starts slideshow by initialising and starting the carousel 
               * @param {Photo} photo: Null to start with the first photo.
               */
-             startCarousel: function (photo) {
+             run: function (photo) {
                 assert(this._started, true, "Must call startup() before.");
-                assertTrue(this._isPhotosLoaded, "Must call loadPhotos(photos) before.");
+                assertTrue(this._loaded, "Must call load(photos) before.");
 
                 // this._started = true;
-                this._isCarouselStarted = true;
+                this._run = true;
 
                 // initialize carousel
                 // this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, "photo", options);
@@ -132,15 +119,15 @@ define(["dojo/_base/declare",
                       this.carousel.reset();
                       this.carousel = null;
                    }
-                   this._isPhotosLoaded = false;
-                   this._isCarouselStarted = false;
+                   this._loaded = false;
+                   this._run = false;
                    this._emptyPhotoNumber();
                    this.updateMessage();
                 }
              },
              /* 
               * @presenter
-              * @description Restarts the slideshow if for example the photo order was changed. E.g. before loadPhotos() and startCarousel()
+              * @description Restarts the slideshow if for example the photo order was changed. E.g. before load() and run()
               */
              restart : function (photos) {
                 this.carousel.update(photos);
@@ -153,8 +140,8 @@ define(["dojo/_base/declare",
              navigateTo : function (photo) {
                 // Navigate to photo, displaying it when the slideshow is started
                 assertTrue(photo instanceof Photo || photo === null, "Parameter photo must be an instance of Photo.");
-                if (!this._isCarouselStarted) {
-                   this.startCarousel();
+                if (!this._run) {
+                   this.run();
                 } else {
                    this.carousel.navigateTo(photo);
                 }
@@ -167,8 +154,8 @@ define(["dojo/_base/declare",
              navigateWithDirection : function (direction) {
                 assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
                 
-                if (!this._isCarouselStarted) {
-                   this.startCarousel();
+                if (!this._run) {
+                   this.run();
                 } else {
                    if (direction === "left") {
                       this.carousel.navigateLeft();
@@ -183,6 +170,7 @@ define(["dojo/_base/declare",
               */
              insertPhoto : function (photo) {
                 assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
+                assertTrue(this._loaded, "Must call load(photos) before.");
                 // Slideshow might or might not be started at that point
                 this.carousel.insertPhoto(photo);
              },
@@ -193,6 +181,7 @@ define(["dojo/_base/declare",
               */
              deletePhoto : function (photo) {
                 assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
+                assertTrue(this._loaded, "Must call load(photos) before.");
                 // Slideshow might or might not be started at that point
                 this.carousel.deletePhoto(photo);
              },
@@ -201,7 +190,7 @@ define(["dojo/_base/declare",
               * @description Shows or hides information message, regarding the usage.
               */
              updateMessage : function () {
-                if (!this._isCarouselStarted) {
+                if (!this._run) {
                    this._tooltip
                       .setOption("hideOnMouseover", false)
                       .setMessage(gettext("SLIDESHOW_GALLERY_NOT_STARTED"))
@@ -331,13 +320,13 @@ define(["dojo/_base/declare",
                 
                 $("body")
                    .on("keyup.Slideshow", null, "left", function () {
-                      if (instance._isCarouselStarted) {
+                      if (instance._run) {
                          instance.log("Left direction key clicked. Navigating to the left.");
                          instance.$navLeft.trigger("click");
                       }
                    })
                    .on("keyup.Slideshow", null, "right", function () {
-                      if (instance._isCarouselStarted) {
+                      if (instance._run) {
                          instance.log("Right direction key clicked. Navigating to the right.");
                          instance.$navRight.trigger("click");
                       }
