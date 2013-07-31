@@ -42,6 +42,9 @@ define(["dojo/_base/declare",
              },
              isVisited : function () {
                 return this.visited;
+             },
+             toString : function () {
+                return this.id;
              }
           });
        });

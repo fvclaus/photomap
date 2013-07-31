@@ -11,9 +11,10 @@
  */
 
 define(["dojo/_base/declare",
+        "main/Object",
         "util/Communicator"],
-       function (declare, communicator) {
-          return declare(null, {
+       function (declare, Object, communicator) {
+          return declare(Object, {
              constructor : function () {
                 this.presenter = null;
                 this.$container = null; // every View that represents a DOM element has to specify the container-element 
