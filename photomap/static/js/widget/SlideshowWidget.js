@@ -197,7 +197,7 @@ define(["dojo/_base/declare",
                       .start()
                       .open();
                 } else {
-                   if (this.carousel.getAllPhotos().length > 0) {
+                   if (this.carousel.getAllPhotos().length !== 0) {
                       this._tooltip.close();
                    } else {
                       // No photos yet.

@@ -46,7 +46,7 @@ require(["widget/SlideshowWidget",
               }
            });
            
-           QUnit.asyncTest("startup", 7, function () {
+           QUnit.asyncTest("startup/loadPhotos", 7, function () {
               // No startup yet.
               assertTooltipPresence(false);
               QUnit.raiseError(slideshow.run, slideshow);
@@ -127,19 +127,15 @@ require(["widget/SlideshowWidget",
               }, animationTime);
            });
 
-           QUnit.asyncTest("reset", 5, function () {
+           QUnit.asyncTest("reset", 1, function () {
               slideshow.startup();
               slideshow.load(photos);
               slideshow.run();
+              slideshow.reset();
               setTimeout(function () {
-                 assertTooltipPresence(false);
-                 assertPhotoInGallery(photos[0]);
-                 slideshow.reset();
-                 setTimeout(function () {
-                    assertTooltipPresence(true);
-                    QUnit.start();
-                 }, animationTime);
-              }, 1200);
+                 assertTooltipPresence(true);
+                 QUnit.start();
+              }, animationTime);
            });
 
            QUnit.asyncTest("insertPhoto", 10,  function () {

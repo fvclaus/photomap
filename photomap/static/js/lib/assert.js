@@ -66,7 +66,7 @@ function assertObject(actual, message) {
 
 
 function assertNotNull(actual, message) {
-   if (actual === null) {
+   if (actual === null || actual === undefined) {
       croak(actual, null, message);
    }
 }

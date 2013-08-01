@@ -29,41 +29,7 @@
 <section class="mp-map" id="mp-map">
   <div class="mp-map-wrapper" id="map"></div>
 </section>
-<section class="mp-gallery" id="mp-gallery">
-  <div class="mp-nodisplay" id="mp-gallery-thumbs">
-  </div>
-  <div class="mp-gallery-nav column" id="mp-gallery-left-nav">
-    <span>
-      <img class="mp-cursor-pointer mp-control" id="mp-gallery-nav-left" src="/static/images/album-arrow-left.png" title='{% trans "Previous Page" %}' />
-    </span>
-    {% if user.is_authenticated %}
-    <span>
-      <img class="mp-open-full-gallery mp-cursor-pointer mp-control mp-nodisplay" src="/static/images/openEdit.png" title='{% trans "Open Full Gallery" %}'/>
-    </span>
-    {% endif %}
-  </div>
-  <div class="mp-gallery-inner column" id="mp-gallery-inner">
-    <!-- loop exactly 5 times. this iterates through every character of the string -->
-    {% for index in "12345" %}
-    <div class="mp-gallery-tile">
-      <!-- hide img tag while page loads. mp-nodisplay is overwritten by mp-thumb -->
-      <img class="mp-gallery-loader mp-light-loader mp-nodisplay" src="/static/images/light-loader.gif" />
-      <img class="mp-thumb mp-cursor-pointer mp-control" src="" />
-      <img class="mp-thumb-visited" src="/static/images/visited.png" />
-    </div>
-    {% endfor %}
-  </div>
-  <div class="mp-gallery-nav column" id="mp-gallery-right-nav">
-    <span>
-      <img class="mp-cursor-pointer mp-control" id="mp-gallery-nav-right" src="/static/images/album-arrow-right.png" title='{% trans "Next Page" %}' />
-    </span>
-    {% if user.is_authenticated %}
-    <span>
-      <img class="mp-option-insert-photo mp-cursor-pointer mp-control mp-nodisplay" src="/static/images/add.png" title='{% trans "Add Image" %}' />
-    </span>
-    {% endif %}
-  </div>
-</section>
+<section class="mp-gallery" id="mp-gallery"></section>
 {% endblock %}
 
 
