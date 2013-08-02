@@ -30,6 +30,39 @@ define(["dojo/_base/declare", "model/Model"],
               */
              getLng : function () {
                 return this.lng;
+             },
+             save : function (newData, deleteMe) {
+                var settings = {
+                   url: "/" + this.type.toLowerCase() + "/",
+                   type: "DELETE",
+                   data: {},
+                   dataType: "json"
+                };
+                // add id if exists -> for Delete or Update (id does not exist before Insert -> not needed)
+                if (this.id) {
+                   settings.url += this.id + "/";
+                }
+                // change method to POST and add title and description -> for Insert or Update (for DELETE you just need the id)
+                if (!deleteMe) {
+                   settings.type = "POST";
+                   settings.data["title"] = newData.title;
+                   settings.data["description"] = newData.description;
+                }
+                
+                settings.success = function (data, status, xhr) {
+                   if (data.success) {
+                      $(this).trigger("success", [data, status, xhr]);
+                   } else {
+                      $(this).trigger("failure", [data, status, xhr]);
+                   }
+                };
+                settings.error = function (xhr, status, error) {
+                   $(this).trigger("error", [xhr, status, error]);
+                }
+                
+                $.ajax(settings);
+                
+                return this;
              }
           });
        });

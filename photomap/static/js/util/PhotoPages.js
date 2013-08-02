@@ -132,7 +132,7 @@ define(["dojo/_base/declare",
              deletePhoto : function (photo) {
                 assertTrue(photo instanceof Photo);
 
-                console.log("PhotoPages: Deleting photo %s from pages.", photo.toString());
+                console.log("PhotoPages: Deleting photo %s from pages.", photo.getId());
                 var index = this.photos.indexOf(photo);
                 this.photos.splice(index, 1);
                 this._createPages(this.photos, this.photosPerPage);
