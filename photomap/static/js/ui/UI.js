@@ -66,6 +66,9 @@ define(["dojo/_base/declare",
               },
               getInput : function () {
                  return this.input;
+              },
+              getDialog : function () {
+                 return this.input;
               }, 
               //TODO This shouldn't be used as UIState is a singleton and should be accessed in a static way (@ui-tests.js!)
               getState: function () {

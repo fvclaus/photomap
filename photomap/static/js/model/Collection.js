@@ -36,7 +36,7 @@ define(["dojo/_base/declare"],
              * @param {Object} rawModelData The data needed to create a model. It'll be sent to the server. It's expected to look like this:
              * {isPhotoUpload: false, formData: {serialized data from IDU-form} }
              */
-            insert : function (rawModelData, ajaxSettings) {
+            insert : function (rawModelData) {
                
                assertString(rawModelData.formData.title, "Each model needs a title");
                
@@ -71,13 +71,10 @@ define(["dojo/_base/declare"],
             /**
              * @description Deletes model from collection and server and informs the subscribed classes about the deletion.
              */
-            "delete" : function (id) {
+            "delete" : function (model) {
                
-               var model = this.get(id),
-                  index;
-                  
-               assertTrue(model, "Selected model is not part of the collection");
-               index = this.models.indexOf(model);
+               assertTrue(this.has(model.getId()), "Selected model is not part of the collection");
+               var index = this.models.indexOf(model);
                
                model
                   .onSuccess(function (data, status, xhr) {
@@ -101,10 +98,9 @@ define(["dojo/_base/declare"],
              * @param {Integer} id Id of the model
              * @param {Object} data The updated data.
              */
-            update : function (id, newData) {
+            update : function (model, newData) {
                
-               var model = this.get(id);
-               assertTrue(model, "Selected model is not part of the collection");
+               assertTrue(this.has(model.getId()), "Selected model is not part of the collection");
                
                model
                   .onSuccess(function (data, status, xhr) {
@@ -121,6 +117,15 @@ define(["dojo/_base/declare"],
                   })
                   .save(newData);
                return this;
+            },
+            /**
+             * @param {String} name Name of the Attribute
+             * @param {Object} value Value of the Attribute
+             */
+            getByAttribute : function (name, value) {
+               return this.models.filter(function (model) {
+                  return (model[name] === value);
+               })[0];
             },
             /**
              * @description Retrieves a model from the collection, without deleting or modifying it. ! return undefined when model doesn't exist in collection
