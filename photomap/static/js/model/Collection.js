@@ -34,13 +34,15 @@ define(["dojo/_base/declare"],
             /**
              * @description Inserts a model into the collection, saves it to the server and informs the subscribed classes about the insertion.
              * @param {Object} rawModelData The data needed to create a model. It'll be sent to the server. It's expected to look like this:
-             * {title: "title", description: "description", isPhotoUpload: false, formData: {serialized data from IDU-form} }
+             * {isPhotoUpload: false, formData: {serialized data from IDU-form} }
              */
             insert : function (rawModelData, ajaxSettings) {
                
+               assertString(rawModelData.formData.title, "Each model needs a title");
+               
                var initalModelData = {
-                     title: rawModelData.title,
-                     description: rawModelData.description
+                     title: rawModelData.formData.title,
+                     description: rawModelData.formData.description
                   },
                   model = new this.modelConstructor(initialModelData);
                
