@@ -28,7 +28,7 @@ define(["dojo/_base/declare",
               * @param {Number} id
               */
              getRandomPhoto : function (id) {
-                assertNumber(id);
+                assertNumber(id, "Id parameter must be of type number.");
                 var photoAndThumb = this._getRandomPhotoAndThumb(),
                     nWordsTitle = parseInt(Math.random() * 20),
                     nWordsDescription = parseInt(Math.random() * 300),
@@ -50,7 +50,7 @@ define(["dojo/_base/declare",
                 var photo = this._photos[parseInt(Math.random() * this._photos.length + 1) - 1];
                 return {
                    "photo" : this._toUrl(photo),
-                   "thumb" : this._toUrl("thumb_" + photo)
+                   "thumb" : this._toUrl(photo)
                 };
              },
              /*

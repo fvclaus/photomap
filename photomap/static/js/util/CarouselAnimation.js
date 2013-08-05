@@ -86,6 +86,7 @@ define(["dojo/_base/declare",
                          $(item)
                               .css("visibility", "hidden")
                               .attr("src", photoSource);
+                         console.log("CarouselAnimation: Setting src %s on photo thumb %d.", photoSource, index);
                          // set margin-top accordingly. 
                          tools.centerElement($(item), "vertical");
                          // remove the img again to fade it in nicely
@@ -172,6 +173,7 @@ define(["dojo/_base/declare",
                               .css("visibility", "hidden")
                               .show()
                               .attr("src", photoSource);
+                         console.log("Setting src %s on photo thumb %d.", photoSource, index);
                          // set margin-top accordingly. 
                          tools.centerElement($(item), "vertical");
                          // remove the img again to fade it in nicely

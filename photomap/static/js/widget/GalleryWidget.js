@@ -1,44 +1,53 @@
-/*jslint */
+/*jslint sloppy : true*/
 /*global define,$, main, fileUpload, assert, assertTrue, assertString, assertFalse, assertNumber, assertNotNull, gettext, UIInput */
 
-"use strict";
+// No use strict with this.inherited(arguments);
+// "use strict";
 
-/**
- * @author Frederik Claus
- * @class UIFullGallery displays all Photos of the current Place as thumbnails to allow easy editing and D'n'D.
- * @requires ClientServer
- */
-       
-define(["dojo/_base/declare",
-"view/View",
-        "view/PhotoCarouselView",
-        "view/FullGalleryView",
-        "presenter/GalleryPresenter",
-        "util/Communicator",
-        "util/Tools",
-        "ui/UIState",
-        "util/Tooltip",
-        "dojo/domReady!"
-       ],
-       function (declare, View, PhotoCarouselView, FullGalleryView, GalleryPresenter, communicator, tools, state, Tooltip) {
 
 /**
  * @author Marc Roemer
  * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
  * @requires UICarousel
  */
-          return declare(View, {
-             constructor : function () {
-                this.$container = $('#mp-gallery');
+       
+define(["dojo/_base/declare",
+        "dijit/_WidgetBase",
+        "dijit/_TemplatedMixin",
+        "view/View",
+        "view/PhotoCarouselView",
+        "model/Photo",
+        "util/Communicator",
+        "util/Tools",
+        "util/Tooltip",
+        "dojo/text!/template/Gallery",
+        "module",
+        "dojo/domReady!"
+       ],
+       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView,  Photo, communicator, tools, Tooltip, template, module) {
+
+          return declare([View, _WidgetBase, _TemplatedMixin], {
+             templateString : template,
+             buildRendering : function () {
+                this.inherited(arguments);
+                var instance = this;
+                this._attachPoints.forEach(function (attachPoint) {
+                   var jQSelectorName = "$" + attachPoint.replace("Node", "");
+                   instance[jQSelectorName] = $(instance[attachPoint]);
+                });
+                this.$container = $(this.domNode);
+             },
+             startup : function () {
+                if (this._started) {
+                   return;
+                }
+                this.inherited(arguments);
+                this.module = module;
                 this.viewName = "Gallery";
                 
-                this.$inner = $('#mp-gallery-inner');
                 // this.$hidden = $("#mp-gallery-thumbs");
-                this.$thumbs = $(".mp-gallery-tile");
-                this.$navLeft = $("#mp-gallery-nav-left");
-                this.$navRight = $("#mp-gallery-nav-right");
+                this.$thumbs = this.$container.find(".mp-gallery-tile");
                 this.$photos = this.$thumbs.find(".mp-thumb");
-                this.$containerColumn = $("#mp-left-column");
                 this.$loader = this.$container.find(".mp-gallery-loader");
 
                 this.carousel = null;
@@ -46,28 +55,20 @@ define(["dojo/_base/declare",
                 this.photos = null;
                 this.started = false;
                 // set on insert photo to show the teaser of the photo after it is updated
-                this.showTeaser = false;
+                // this.showTeaser = false;
                 this.currentPhoto = null;
                 
-                this.tooltip = new Tooltip(this.$container, "");
-                this.fullGallery = new FullGalleryView();
+                this._tooltip = new Tooltip(this.$container, "");
+
                 this.$controls = $()
-                   .add($(".mp-option-insert-photo"))
-                   .add($(".mp-open-full-gallery"));
+                   .add(this.$insert)
+                   .add(this.$open);
 
-                // not present in guest mode
-                this.$insert = $(".mp-option-insert-photo");
-
-                this.presenter = new GalleryPresenter(this);
-                
                 this._bindActivationListener(this.$container, this.viewName);
                 this._bindListener();
+                this._showHelpText();
                 
-                this.tooltip
-                  .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
-                  .setOption("hideOnMouseover", false)
-                  .start()
-                  .open();
+
                 this._bindNavigationListener();
                 
                 this._bindStartSlideshowListener();
@@ -87,50 +88,24 @@ define(["dojo/_base/declare",
                 this.srcPropertyName = "thumb";
 
              },
-             getCarousel : function () {
-                return this.carousel;
-             },
-             isStarted : function () {
-                return this.started;
-             },
-             /**
-              * Triggers a click on the photo. Bypasses every listener, because they might be disabled
-              */
-             triggerClickOnPhoto : function (photo) {
-                var $image = this.$photos.filter("[src='" + photo.thumb + "']"),
-                    index = this._getIndexOfImage($image);
-                if (index !== -1) {
-                   this.presenter.click(index);
-                } else {
-                   console.log("Could not find photo %s in UIGallery. Maybe it is not loaded yet", photo.photo);
-                }
-             },
-             /*
-              * @presenter
-              */
              load : function (photos) {
-                this.reset();
+                assertInstance(photos, Array, "Photos must be of type Array.");
+                assertTrue(this._started, "Must call startup() before.");
+                this._loaded = true;
                 this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, this.srcPropertyName, this.options);
              },
              /**
               * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
               */
-             start : function () {
-                assert(this.started, false, "gallery must not be started yet");
+             run : function () {
+                assertTrue(this._started,  "Must call startup() before.");
+                assertTrue(this._loaded, "Must call load(photos) before.");
+                this._run = true;
                 
-                var instance = this;
-
-                this.started = true;
-                
-                // reset FullGallery
-                this.fullGallery.destroy();
-                this.tooltip.destroy();
+                this._tooltip.destroy();
                 // show insert photo button
                 this.$controls.removeClass("mp-nodisplay");
 
-
-                // this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, "thumb", options);
-                this.fullGallery.setCarousel(this.carousel);
                 // disable ui while loading & show loader
                 communicator.publish("disable:ui");
                 this.carousel.start();
@@ -139,16 +114,17 @@ define(["dojo/_base/declare",
               * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
               */
              reset : function () {
-                this.started = false;
-                $(".mp-gallery-loader").addClass("mp-nodisplay");
+                this._run = false;
+                this._load = false;
+                this.$loader.addClass("mp-nodisplay");
                 this.$controls.addClass("mp-nodisplay");
                 if (this.carousel !== null) {
                    this.carousel.reset();
                    this.carousel = null;
+                   this._showHelpText();
                 }
              },
              /* 
-              * @presenter
               * @description Restarts the slideshow if for example the photo order was changed.
               */
              restart : function (photos) {
@@ -158,18 +134,18 @@ define(["dojo/_base/declare",
               * @description adds new photo to gallery.
               */
              insertPhoto : function (photo) {
-                
-                // this.imageSources.push(photo.thumb);
+                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
+                assertTrue(this._loaded, "Must call load(photos) before.");
                 // automatically adds the photo if we are on last page
                 this.carousel.insertPhoto(photo);
                 // show teaser after the photo is loaded
                 this.showTeaser = true;
                 this.currentPhoto = photo;
                 // Will automatically navigate to the new photo
-                if (!this.started) {
+                if (!this._run) {
                    // show the new photo
                    //TODO this does now show the new photo yet
-                   this.start();
+                   this.run();
                 }
              },
              /**
@@ -177,18 +153,18 @@ define(["dojo/_base/declare",
               * remaining Photos to the left. If Photo was the last Photo, show an empty page.
               */
              deletePhoto : function (photo) {
-                // not possible to delete something without the gallery started
-                assert(this.started, true, "gallery has to be started already");
-                // automatically delete if photo is on current page
+                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
+                assertTrue(this._loaded, "Must call load(photos) before.");
+                 // automatically delete if photo is on current page
                 // otherwise we dont care
                 this.carousel.deletePhoto(photo);
-                this.fullGallery.deletePhoto(photo);
              },
              /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
               */
              navigateIfNecessary : function (photo) {
-                var currentIndex = this._getIndexOfPhoto(photo),
+                assertInstance(photo, Photo, "Parameter photo has to be of type Photo.");
+                var currentIndex = this._getIndexOfId(photo.id),
                     minIndex = this._getIndexOfFirstThumbnail(),
                     maxIndex = this._getIndexOfLastThumbnail();
                 
@@ -199,16 +175,7 @@ define(["dojo/_base/declare",
                 }
              },
              setPhotoVisited : function (photo) {
-                
-                var currentImages = [];
-                
-                $.each(this.$thumbs, function (index, tile) {
-                   currentImages.push($(tile).find("img.mp-thumb").attr("src") || null);
-                });
-                
-                if (currentImages.indexOf(photo.thumb) !== -1) {
-                   this.$container.find("img[src='" + photo.thumb + "']").siblings(".mp-thumb-visited").show();
-                }
+                this.$container.find("img[data-keiken-id='" + photo.id + "']").siblings(".mp-thumb-visited").show();
              },
              /**
               * @private
@@ -235,37 +202,46 @@ define(["dojo/_base/declare",
                 // check each thumb if the photo it represents is already visited; if yes -> show 'visited' icon
                 this._showVisitedNotification();
                 // Check if the updated photo is a newly inserted, if yes open teaser
-                console.log(this.showTeaser);
-                if (this.showTeaser) {
-                   if (this.currentPhoto === null) {
-                      throw new Error("Set showTeaser but no currentPhoto");
-                   }
-                   // warning: this will enable the UIGallery without the UISlideshow even started 'loading'. Quite shacky :)
-                   //TODO maybe we should disable UIGallery/Slideshow/Fullscreen all at once. This make testing alot easier and the user won't even notice it
-                   this.triggerClickOnPhoto(this.currentPhoto);
-                   this.currentPhoto = null;
-                   this.showTeaser = false;
+                // TODO this is AppController business
+                // console.log(this.showTeaser);
+                // if (this.showTeaser) {
+                //    if (this.currentPhoto === null) {
+                //       throw new Error("Set showTeaser but no currentPhoto");
+                //    }
+                //    // warning: this will enable the UIGallery without the UISlideshow even started 'loading'. Quite shacky :)
+                //    //TODO maybe we should disable UIGallery/Slideshow/Fullscreen all at once. This make testing alot easier and the user won't even notice it
+                //    this.triggerClickOnPhoto(this.currentPhoto);
+                //    this.currentPhoto = null;
+                //    this.showTeaser = false;
 
-                } 
+                // } 
              },
              /*
               * @private
               */
              _showHelpText : function () {
-                //TODO This is too inefficient.
-                if (this.carousel.getAllPhotos().length > 0) {
-                   this.tooltip.close();
+                if (!this._run) {
+                   this._tooltip
+                      .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
+                      .setOption("hideOnMouseover", false)
+                      .start()
+                      .open();
                 } else {
-                   if (this._isAdmin()) {
-                      this.tooltip
-                        .setOption("hideOnMouseover", true)
-                        .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
-                        .open();
+                   if (this.carousel.getAllPhotos().length !== 0) {
+                      this._tooltip.close();
                    } else {
-                      this.tooltip
-                        .setOption("hideOnMouseover", true)
-                        .setMessage(gettext("GALLERY_NO_PHOTOS_GUEST"))
-                        .open();
+                      // No photos yet.
+                      if (this._isAdmin()) {
+                         this._tooltip
+                            .setOption("hideOnMouseover", true)
+                            .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
+                            .open();
+                      } else {
+                         this._tooltip
+                            .setOption("hideOnMouseover", true)
+                            .setMessage(gettext("GALLERY_NO_PHOTOS_GUEST"))
+                            .open();
+                      }
                    }
                 }
              },
@@ -290,50 +266,47 @@ define(["dojo/_base/declare",
                    var photo,
                       $thumb = $(tile).find("img.mp-thumb"),
                       $visited = $(tile).find("img.mp-thumb-visited");
-                      
-                   if ($thumb.attr("src")) {
-                      photo = instance._getPhotoOfImage($thumb);
-                      
-                      if (photo.isVisited()) {
-                         $visited.show();
-                      } else {
-                         $visited.hide();
-                      }
-                   } else {
-                      // should already be hidden, just in case though.. ;)
-                      $visited.hide();
+                      // The collection might have been modified in the mean time.
+                      try { 
+                         if ($thumb.attr("src")) {
+                            photo = instance._getPhotoOfImage($thumb);
+                            
+                            if (photo.isVisited()) {
+                               $visited.show();
+                            } else {
+                               $visited.hide();
+                            }
+                         } else {
+                            // should already be hidden, just in case though.. ;)
+                            $visited.hide();
+                         }
+                   } catch (e) {
+                      console.log("GalleryWidget: Could not toggle visited icon for $img element with photo id %d. Maybe the photo has been deleted?", $thumb.attr("data-keiken-id"));
                    }
                 });
+             },
+             /*
+              * @private
+              */
+             _getIndexOfId : function (id) {
+                assertNumber(id, "Parameter id must be of type number.");
+                var photoIndex = -1,
+                    photos = this.carousel.getAllPhotos();
+
+                for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
+                   if (photos[photoIndex].id === id) {
+                      return photoIndex;
+                   }
+                }
+                return -1;
              },
              /**
               * @private
               * @returns {int} Index of the $image element in all Photos of that Place, -1 if Photo does not belong to this place
               */
              _getIndexOfImage : function ($image) {
-                assertTrue($image.attr("src"), "src attribute of input parameter $image must not be undefined");
-                return this.carousel.getAllImageSources().indexOf($image.attr("src"));
-             },
-             /*
-              * @private
-              */
-             _getIndexOfSrc : function (src) {
-                return this.carousel.getAllImageSources().indexOf(src);
-             },
-             /* @private
-              * @returns {Photo} Photo for the $image element
-              */
-             _getPhotoOfImage : function ($image) {
-                assertTrue($image.attr("src"), "src attribute of input parameter $image must not be undefined");
-                var photo = this.carousel.getPhotoForSrc($image.attr("src"));
-                assertNotNull(photo, "There must be a photo for every img element.");
-                return photo;
-                
-             },
-             /**
-              * @private
-              */
-             _getIndexOfPhoto : function (photo) {
-                return this._getIndexOfSrc(photo[this.srcPropertyName]);
+                assertTrue($image.attr("data-keiken-id"), "Id attribute of input parameter $image must not be undefined");
+                return this._getIndexOfId(parseInt($image.attr("data-keiken-id")));
              },
              /**
               * @private
@@ -355,6 +328,17 @@ define(["dojo/_base/declare",
                    }
                 });
                 return this._getIndexOfImage($photo);
+             },
+             /* @private
+              * @returns {Photo} Photo for the $image element
+              */
+             _getPhotoOfImage : function ($image) {
+                assertTrue($image.attr("data-keiken-id"), "Id attribute of input parameter $image must not be undefined");
+                var index  = this._getIndexOfImage($image),
+                    photo = this.carousel.getAllPhotos()[index];
+                assertNotNull(photo, "There must be a photo for every img element.");
+                return photo;
+                
              },
              /**
               * @private
@@ -385,13 +369,13 @@ define(["dojo/_base/declare",
                 
                 $("body")
                   .on("keyup.Gallery", null, "left", function () {
-                     if (instance.started && instance.active && !instance.disabled) {
+                     if (instance._run && instance.active && !instance.disabled) {
                         console.log("UIGallery: navigating left");
                         instance.carousel.navigateLeft();
                      }
                   })
                   .on("keyup.Gallery", null, "right", function () {
-                     if (instance.started && instance.active && !instance.disabled) {
+                     if (instance._run && instance.active && !instance.disabled) {
                         console.log("UIGallery: navigating right");
                         instance.carousel.navigateRight();
                      }
@@ -414,39 +398,33 @@ define(["dojo/_base/declare",
                    return;
                 }
                 //bind events on anchors
-                // bind them to thumbs in the Gallery & FullGallery
-                $(".mp-left-column")
+                //TODO this does not work for the AdminGallery anymore.
+                this.$container
                    .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
                       var $el = $(this);
                       
                       if (!instance.isDisabled()) {
                          
-                         photo = $.grep(state.getPhotos(), function (e, i) {
+                         photo = $.grep(this.carousel.getAllPhotos(), function (e, i) {
                             return e.thumb === $el.attr("src");
                          })[0];
-                         state.setCurrentPhoto(photo);
-                         instance.presenter.mouseEnter($el, photo);
+                         communicator.publish("hover:GalleryPhoto", {contex : this, element: $el, "photo" : photo});
+                         
                       }
                    })
                    .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
-                      
                       if (!instance.isDisabled()) {
-                            instance.presenter.mouseLeave();
+                         communicator.publish("mouseleave:galleryThumb");
                       }
                    });
 
-                $(".mp-open-full-gallery").on("click", function (event) {
+                this.$open.on("click", function (event) {
                    
                    if (!instance.isDisabled()) {
-                      instance.fullGallery.start();
+                      communicator.publish("clicked:GalleryOpenButton");
                    }
                 });
-                $(".mp-close-full-left-column").on("click", function (event) {
-                   
-                   if (!instance.isDisabled()) {
-                      instance.fullGallery.destroy();
-                   }
-                });
+                
                 
                 this.$container.on("click.PhotoMap", ".mp-empty-tile", function () {
                    instance._insert();
@@ -457,7 +435,7 @@ define(["dojo/_base/declare",
                 });
              },
              _insert : function () {
-                this.presenter.insert();
+                communicator.publish("clicked:GalleryInsert");
              },
              /**
               * @private
@@ -466,7 +444,7 @@ define(["dojo/_base/declare",
                 
                 var instance = this;
                 
-                this.$containerColumn
+                this.$container
                    .on('click.Gallery', ".mp-gallery-tile, .mp-sortable-tile", function (event) {
                       
                       var $el = $(this).children(".mp-thumb");
@@ -475,9 +453,22 @@ define(["dojo/_base/declare",
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)
-                         instance.presenter.click(instance._getPhotoOfImage($el));
+                         communicator.publish("click:galleryThumb", instance._getPhotoOfImage($el));
                       }
                    });
              }
+             /**
+              * @private
+              * Triggers a click on the photo. Bypasses every listener, because they might be disabled
+              */
+             // triggerClickOnPhoto : function (photo) {
+             //    var $image = this.$photos.filter("[src='" + photo.thumb + "']"),
+             //        index = this._getIndexOfImage($image);
+             //    if (index !== -1) {
+             //       communicator.publish("click:galleryThumb", this._getPhotoOfImage($image));
+             //    } else {
+             //       console.log("Could not find photo %s in UIGallery. Maybe it is not loaded yet", photo.photo);
+             //    }
+             // },
           });
        });

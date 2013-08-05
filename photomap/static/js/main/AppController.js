@@ -34,6 +34,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    },
                    "centered:marker": this._markerCentered
                 });
+
                 
                 communicator.subscribe("change:photo change:place change:album", this._modelUpdate);
                 communicator.subscribe("delete:photo delete:place delete:album", this._modelDelete);
@@ -46,7 +47,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 if (state.isAlbumView()) {
                    
                    communicator.subscribe({
-                      "mouseenter:galleryThumb": this._galleryThumbMouseenter,
                       "mouseleave:galleryThumb": this._galleryThumbMouseleave,
                       "click:galleryThumb": this._galleryThumbClick
                    });
@@ -64,7 +64,55 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    communicator.subscribe("change:photoOrder", this._photoOrderChange);
                    communicator.subscribe("visited:photo", this._photoVisited);
                    communicator.subscribe("click:pageTitle", this._updatePageTitle);
-                      
+                   communicator.subscribe("clicked:GalleryOpenButton", function () {
+                      main.getUI().getAdminGallery().run();
+                   });
+                   communicator.subscribe("hover:GalleryPhoto", function (data) {
+                      state.setCurrentPhoto(data.photo);
+                      main.getUI().getControls().showPhotoControls(data);
+                   });
+                   communicator.subscribe("clicked:GalleryInsert", function () {
+
+                      var place = state.getCurrentLoadedPlace().getModel(),
+                          // build url -> format /models/model/(id/)request
+                          requestUrl = "/photos/photo/insert";
+
+                      // if-clause to prevent method from being executed if there are no places yet
+                      if (state.getPlaces().length !== 0) {
+                         communicator.publish("load:dialog", {
+                            load : function () {
+                               var input = this;
+                               console.log(this);
+                               $("#insert-photo-tabs").tabs();
+                               $("form[name='insert-photo']").attr("action", requestUrl);
+                               $("input[name='place']").val(place.getId());
+                               this.$title = $("input[name='title']");
+                               this.$description = $("textarea[name='description']");
+                               //start the editor
+                               $("#file-input").bind('change', function (event) {
+                                  input.editor.edit.call(input.editor, event);
+                               });
+                            },
+                            submit: function () {
+                               state.store(TEMP_TITLE_KEY, this.$title.val());
+                               state.store(TEMP_DESCRIPTION_KEY, this.$description.val());
+                            },
+                            data : function () {
+                               var data = new FormData();
+                               data.append('place', place.getId());
+                               data.append('title', this.$title.val());
+                               data.append('description', this.$description.val());
+                               data.append("photo", this.editor.getAsFile());
+                               
+                               return data;
+                            },
+                            success : function (data) {
+                               communicator.publish("insert:photo", data);
+                            },
+                            url : requestUrl
+                         });
+                      }
+                   });
                 }
              },
              _init : function (data) {
@@ -154,21 +202,40 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 }
              },
              _photoOrderChange : function (photos) {
-                place = main.getUIState().getCurrentLoadedPlace().getModel();
-                // update the 'real' photo order
-                photos.forEach(function (photo, index) {
-                   place.getPhoto(photo.photo).order = photo.order;
-                   console.log("Update order of photo %d successful.", index);
+                var instance = this;
+                this.publish("load:dialog", {
+                   load : function () {
+                      $("input[name='photos']").val(JSON.stringify(photos));
+                   },
+                   success : function () {
+                      var place = main.getUIState().getCurrentLoadedPlace().getModel();
+                      // update the 'real' photo order
+                      photos.forEach(function (photo, index) {
+                         place.getPhoto(photo.photo).order = photo.order;
+                         console.log("Update order of photo %d successful.", index);
+                      });
+                      
+                      console.log("All Photos updated. Updating Gallery.");
+                      place.sortPhotos();
+                      
+                      photos = place.getPhotos();
+                      main.getUI().getGallery().restart(photos);
+                      if (main.getUI().getSlideshow().isStarted()) {
+                         main.getUI().getSlideshow().restart(photos);
+                      }
+
+                   },
+                   abort : function () {
+                      console.log("UIFullGallery: Aborted updating order. Restoring old order");
+                      instance.publish("abort:photoOrder");
+                      //TODO this could be done better
+                      main.getUI().getAdminGallery().refresh();
+                   },
+                   type : CONFIRM_DIALOG,
+                   url : "/update-photos"
                 });
-                
-                console.log("All Photos updated. Updating Gallery.");
-                place.sortPhotos();
-                
-                photos = place.getPhotos();
-                main.getUI().getGallery().restart(photos);
-                if (main.getUI().getSlideshow().isStarted()) {
-                   main.getUI().getSlideshow().restart(photos);
-                }
+
+
              },
              _dialogLoad : function (options) {
                 main.getUI().getInput().show(options);
@@ -179,9 +246,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 * if it is
                 */
              },
-             _galleryThumbMouseenter : function (data) {
-                main.getUI().getControls().showPhotoControls(data);
-             },
+
              _galleryThumbMouseleave : function () {
                 main.getUI().getControls().hide(true);
              },
@@ -272,6 +337,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 if (type === "Photo") {
                    main.getUI().getGallery().insertPhoto(model);
                    main.getUI().getSlideshow().insertPhoto(model);
+                   main.getUI().getAdminGallery().insertPhoto(model);
                 } else if (type === "Album" || type === "Place") {
                    main.getMap().insertMarker(model, true);
                 } else {
@@ -287,11 +353,13 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 if (type === "Photo") {
                    main.getUI().getGallery().deletePhoto(model);
                    main.getUI().getSlideshow().deletePhoto(model);
+                   main.getUI().getAdminGallery().deletePhoto(model);
                    state.getCurrentLoadedPlace().getModel().deletePhoto(model);
                 } else if (type === "Place") {
                    if (currentPlace && currentPlace.getModel() === model) {
                       main.getUI().getGallery().reset();
                       main.getUI().getSlideshow().reset();
+                      main.getUI().getAdminGallery().reset();
                    }
                 }
                 
@@ -309,9 +377,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 main.getUI().getPageTitleWidget().update(place.getTitle());
 
                 main.getUI().getGallery().load(photos);
-                main.getUI().getGallery().start();
+                main.getUI().getGallery().run();
 
-                main.getUI().getSlideshow().loadPhotos(photos);
+                main.getUI().getSlideshow().load(photos);
+                main.getUI().getAdminGallery().load(photos);
 
                 main.getUI().getMessage().hide();
              },

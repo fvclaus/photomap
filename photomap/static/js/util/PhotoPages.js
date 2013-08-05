@@ -27,7 +27,7 @@ define(["dojo/_base/declare",
                 this._setCurrentPage(0);
                 this.photosPerPage = photosPerPage;
                 this.srcPropertyName = srcPropertyName;
-                this.currentPageIndex = null;
+                this.currentPageIndex = 0;
              },
              update : function (photos) {
                 this.pages = null;

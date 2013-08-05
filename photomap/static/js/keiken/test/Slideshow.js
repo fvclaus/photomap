@@ -46,11 +46,11 @@ require(["widget/SlideshowWidget",
               }
            });
            
-           QUnit.asyncTest("startup", 7, function () {
+           QUnit.asyncTest("startup/loadPhotos", 7, function () {
               // No startup yet.
               assertTooltipPresence(false);
-              QUnit.raiseError(slideshow.startCarousel, slideshow);
-              QUnit.raiseError(slideshow.loadPhotos, slideshow, photos);
+              QUnit.raiseError(slideshow.run, slideshow);
+              QUnit.raiseError(slideshow.load, slideshow, photos);
               slideshow.startup();
               // Multiple calls to startup
               slideshow.startup();
@@ -59,12 +59,12 @@ require(["widget/SlideshowWidget",
               setTimeout(function () {
                  assertTooltipPresence(true);
                  // No args loadPhoto.
-                 QUnit.raiseError(slideshow.loadPhotos, slideshow);
-                 slideshow.loadPhotos([]);
+                 QUnit.raiseError(slideshow.load, slideshow);
+                 slideshow.load([]);
                  // Make sure the tooltip does not go away.
                  setTimeout(function() {
                     assertTooltipPresence(true);
-                    slideshow.loadPhotos(photos);
+                    slideshow.load(photos);
                     // Make sure the tooltip does not go away.
                     setTimeout(function () {
                        assertTooltipPresence(true);
@@ -74,10 +74,10 @@ require(["widget/SlideshowWidget",
               }, 300);
            });
 
-           QUnit.asyncTest("startCarousel", 4,  function () {
+           QUnit.asyncTest("run", 4,  function () {
               slideshow.startup();
-              slideshow.loadPhotos(photos);
-              slideshow.startCarousel();
+              slideshow.load(photos);
+              slideshow.run();
               setTimeout(function () {
                  assertTooltipPresence(false);
                  assertPhotoInGallery(photos[0]);
@@ -87,7 +87,7 @@ require(["widget/SlideshowWidget",
 
            QUnit.asyncTest("navigateWithDirection", 11, function () {
               slideshow.startup();
-              slideshow.loadPhotos(photos);
+              slideshow.load(photos);
               // navigateWithDirection is supposed to start the slideshow if it is not running yet.
               slideshow.navigateWithDirection("right");
               QUnit.raiseError(slideshow.navigateWithDirection, slideshow, 3);
@@ -112,10 +112,10 @@ require(["widget/SlideshowWidget",
 
            QUnit.asyncTest("navigateTo", 7, function () {
               slideshow.startup();
-              slideshow.loadPhotos(photos);
+              slideshow.load(photos);
               // No parameter not legal.
               QUnit.raiseError(slideshow.navigateTo, slideshow);
-              // This should be the same as slideshow.startCarousel()
+              // This should be the same as slideshow.run()
               slideshow.navigateTo(null);
               setTimeout(function () {
                  assertPhotoInGallery(photos[0]);
@@ -127,27 +127,23 @@ require(["widget/SlideshowWidget",
               }, animationTime);
            });
 
-           QUnit.asyncTest("reset", 5, function () {
+           QUnit.asyncTest("reset", 1, function () {
               slideshow.startup();
-              slideshow.loadPhotos(photos);
-              slideshow.startCarousel();
+              slideshow.load(photos);
+              slideshow.run();
+              slideshow.reset();
               setTimeout(function () {
-                 assertTooltipPresence(false);
-                 assertPhotoInGallery(photos[0]);
-                 slideshow.reset();
-                 setTimeout(function () {
-                    assertTooltipPresence(true);
-                    QUnit.start();
-                 }, animationTime);
-              }, 1200);
+                 assertTooltipPresence(true);
+                 QUnit.start();
+              }, animationTime);
            });
 
            QUnit.asyncTest("insertPhoto", 10,  function () {
               var newPhoto = testFixture.getRandomPhoto(12),
                   photoIndex = 0;
               slideshow.startup();
-              slideshow.loadPhotos(photos);
-              slideshow.startCarousel();
+              slideshow.load(photos);
+              slideshow.run();
 
               QUnit.raiseError(slideshow.insertPhoto, slideshow);
               
@@ -176,8 +172,8 @@ require(["widget/SlideshowWidget",
               var oldPhoto = photos[0],
                   photoIndex = 0;
               slideshow.startup();
-              slideshow.loadPhotos(photos);
-              slideshow.startCarousel();
+              slideshow.load(photos);
+              slideshow.run();
 
               QUnit.raiseError(slideshow.deletePhoto, slideshow);
               
