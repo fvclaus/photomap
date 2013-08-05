@@ -8,8 +8,8 @@
  * @class Controls communication in between the classes of KEIKEN
  */
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientState"], 
-       function (declare, communicator, state, clientstate) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", "model/Collection", "util/ClientState"], 
+       function (declare, communicator, state, Album, Collection, clientstate) {
           return declare(null, {
              
              constructor : function () {
@@ -79,10 +79,17 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
               * --------------------------------------------------
               */
              _init : function (data) {
-                var album = state.getAlbum();
+                console.dir(data);
                 if (state.isAlbumView()) {
-                   main.getUI().getInformation().update(album);
-                   main.getUI().getPageTitleWidget().update(album.getTitle());
+                   main.getUI().getInformation().update(data);
+                   main.getUI().getPageTitleWidget().update(data.getTitle());
+                   state.setAlbum(data);
+                   state.setPlaceCollection(data.places);
+                } else {
+                   state.setAlbumCollection(new Collection(data, {
+                      modelConstructor: Album,
+                      modelType: "Album"
+                   }));
                 }
                 clientstate.init();
                 main.getMap().init(data);
@@ -336,6 +343,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              },
              _placeOpen : function (place) {
                 var photos = place.getPhotos();
+                state.setPhotoCollection(place.photoCollection());
                 main.getUI().getInformation().update(place);
                 main.getUI().getPageTitleWidget().update(place.getTitle());
 

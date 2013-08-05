@@ -37,6 +37,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                 this.view.triggerEventOnMarker(marker, "mouseover");
              },
              insertMarker : function (model, init) {
+                console.log(model);
                 var markerImplementation = this.view.createMarker(model),
                    markerView = new MarkerView(this.view, markerImplementation, model),
                    marker = markerView.getPresenter();

@@ -15,7 +15,7 @@ define(["dojo/_base/declare", "model/Model"],
           return declare(Model,  {
              constructor : function (data) {
                 this.lat = data.lat;
-                this.lng = data.lng;
+                this.lng = data.lng || data.lon;
              },
              /**
               * @public

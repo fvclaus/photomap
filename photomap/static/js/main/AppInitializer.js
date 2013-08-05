@@ -8,8 +8,8 @@
  * @class inits the app and fetches the initial data from the server.
  */
 
-define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
-       function (declare, Main, communicator, state) {
+define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState", "model/Album"],
+       function (declare, Main, communicator, state, Album) {
           return declare(null, {
 
 
@@ -90,7 +90,7 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
                       
                       //TODO "get-all-albums" does not return a data.success or data.error
                       if ((data && data.success) || (data && !data.success)) {
-                         communicator.publish("loaded:initialData", data);
+                         instance._processInitialData(data);
                       } else {
                          alert(gettext("GET_ALBUM_ERROR") + data.error);
                       }
@@ -98,8 +98,24 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
                    error : function () {
                       alert(gettext("NETWORK_ERROR"));
                    }
-
                 });
+             },
+             _processInitialData : function (data) {
+                assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview");
+                
+                var processedData;
+                  
+                if (state.isAlbumView()) {
+                   processedData = new Album(data);
+                } else if (state.isDashboardView()) {
+                   processedData = [];
+                   
+                   $.each(data, function (index, albumData) {
+                      processedData.push(new Album(albumData));
+                   });
+                }
+                console.dir(processedData);
+                communicator.publish("init", processedData);
              }
           });
        });

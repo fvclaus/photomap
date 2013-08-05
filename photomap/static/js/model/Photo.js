@@ -14,7 +14,7 @@ define(["dojo/_base/declare",
        function (declare, Model) {
           
           return declare(Model ,{
-             constructor : function (data, index) {
+             constructor : function (data) {
                 
                 this.type = 'Photo';
                 this.photo = data.photo;

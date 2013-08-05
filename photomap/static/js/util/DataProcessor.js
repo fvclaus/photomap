@@ -21,7 +21,7 @@ define(["dojo/_base/declare",
           var DataProcessor = declare(null, {
              
              constructor : function () {
-                communicator.subscribeOnce("loaded:initialData", this._processInitialData, this);
+                //communicator.subscribeOnce("loaded:initialData", this._processInitialData, this);
              },
              /**
               * @private

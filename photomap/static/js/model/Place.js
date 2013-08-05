@@ -10,8 +10,8 @@
  */
 
 
-define(["dojo/_base/declare", "model/MarkerModel", "model/Photo", "util/Communicator", "ui/UIState"],
-       function (declare, MarkerModel, Photo, communicator, state) {
+define(["dojo/_base/declare", "model/MarkerModel", "model/Photo", "model/Collection", "util/Communicator", "ui/UIState"],
+       function (declare, MarkerModel, Photo, Collection, communicator, state) {
           console.log("Place: start");
           return declare(MarkerModel, {
              constructor : function (data) {
@@ -20,10 +20,20 @@ define(["dojo/_base/declare", "model/MarkerModel", "model/Photo", "util/Communic
                 this.type = 'Place';
 
                 this.photos = [];
+                this.photoList = null;
                 if (data.photos) {
-                   for (i = 0, len = data.photos.length; i < len; ++i) {
-                      this.photos.push(new Photo(data.photos[i], i));
-                   }
+                   //TODO remove Listener and replace this.photoCollection with this.photos (@see Place.js) when gallery, slideshow, ... support photoCollections
+                   $.each(data.photos, function (index, photoData) {
+                      this.photos.push(new Photo(photoData));
+                   });
+                   this.sortPhotos();
+                   this.photoCollection = new Collection(this.photos, {
+                      modelType: "Photo",
+                      modelConstructor: Photo,
+                      orderBy: "order"
+                   });
+                   //bind Listener to change this.photos if photoCollection changes -> update this.photos as well
+                   this._bindCollectionListener();
                 }
              },
              /**
@@ -41,27 +51,30 @@ define(["dojo/_base/declare", "model/MarkerModel", "model/Photo", "util/Communic
              },
              sortPhotos : function () {
                 // puts photos with order on the right position
-                this.photos
-                   .sort(function (photo, copy) {
-                      return photo.order - copy.order;
-                   });
+                this.photos.sort(function (photo, copy) {
+                   return photo.order - copy.order;
+                });
              },
              /**
               * @description Get a photo by src
               * @returns {Photo}  Photo with src present, else null
               */
              getPhoto : function (src) {
-                var photo = $.grep(this.photos, function (photo) {
-                   return photo.photo === src;
-                });
-                if (photo.length === 0) {
-                   return null;
-                } else {
-                   return photo[0];
-                }
+                return this.photoCollection.getByAttribute("photo", src);
              },
              getPhotos : function ()   {
                 return this.photos;
+             },
+             //TODO remove this once gallery, slideshow, ... support photoCollections
+             _bindCollectionListener : function () {
+                var instance = this;
+                this.photoCollection
+                   .onInsert(function (photo) {
+                      instance.insertPhoto(photo);
+                   })
+                   .onDelete(function (photo) {
+                      instance.deletePhoto(photo);
+                   });
              }
           });
        });
