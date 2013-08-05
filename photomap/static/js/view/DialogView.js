@@ -35,6 +35,12 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
             this.abort = true;
             this.editor = new PhotoEditorView();
             
+            //temporary properties, when dialog is loaded and opened
+            this.message = null;
+            this.$form = null;
+            this.$buttons = null;
+            this.$close = null;
+            
             this._bindActivationListener(this.$container, this.viewName);
             this._bindListener();
          },
@@ -126,6 +132,50 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
          },
          close : function () {
             this.$dialog.dialog("close");
+            this.message = null;
+            this.$buttons = null;
+            this.$close = null;
+            this.$form = null;
+         },
+         showResponseMessage : function (response) {
+            if (!response.success) {
+               this.$loader.hide();
+               this._scrollToMessage(this.message);
+               this.message.showFailure(response.error);
+               $buttons.button("enable");
+               return;
+            }
+            // set only when the request did not produce an error
+            instance.abort = false;
+            instance._trigger(instance.options, "success", data);
+
+            if (this.message.isAutoClose()){
+               this.close();
+            } else {
+               this.$loader.hide();
+               this._scrollToMessage(message);
+               this.message.showSuccess();
+               $close.button("enable");
+            }
+            // so we don't forget :) TODO not here but in AppController!
+            clientstate.updateUsedSpace();
+         },
+         showNetworkError : function () {
+            this.$loader.hide();
+            this._scrollToMessage(message);
+            this.message.showFailure(gettext("NETWORK_ERROR"));
+            this.$buttons.button("enable");
+         },
+         setInputValue : function (name, value) {
+            assertTrue(instance.$form, "Form has to be loaded before settings its input values");
+            instance.$form.find("[name='" + name +  "']").val(value);
+         },
+         startPhotoEditor : function () {
+            assertTrue(instance.$form, "Form has to be loaded before settings its input values");
+            assertTrue(this.options.isPhotoUpload, "Editor is not available unless it is a photo upload");
+            this.$form.find("input[name='" + this.options.photoInputName + "']").bind('change', function (event) {
+               input.editor.edit.call(input.editor, event);
+            });
          },
          _prepareDialog : function (url){
             var html = this._loadHtml(url),
@@ -192,81 +242,54 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
           */
          _submitHandler : function () {
             var instance = this,
-                $widget = this.$dialog.dialog("widget"),
-                $form = $widget.find("form"),
-                $close = $widget.find("ui-dialog-titlebar-close"),
-                $buttons = $form
-                   .find("button, input[type='submit']")
-                   .add($("#mp-dialog-button-yes"))
-                   .add($("#mp-dialog-button-no"))
-                   .add($("#mp-dialog-button-save"))
-                   .add($close),
-                message = new DialogMessageView($widget);
+                $widget = this.$dialog.dialog("widget")
+                formData = null;
             
-      
+            // set temporary properties
+            this.$form = $widget.find("form");
+            this.message = new DialogMessageView($widget)
+            this.$close = $widget.find("ui-dialog-titlebar-close");
+            this.$buttons = $form
+                              .find("button, input[type='submit']")
+                              .add($("#mp-dialog-button-yes"))
+                              .add($("#mp-dialog-button-no"))
+                              .add($("#mp-dialog-button-save"))
+                              .add($close);
+            
             //called when data is valid
-            $form.validate({
+            this.$form.validate({
                success : "valid",
                errorPlacement : function () {}, //don't show any errors
                submitHandler : function () {
-                  $buttons.button("disable");
+                  instance.$buttons.button("disable");
                   instance.$loader.show();
-                  instance._trigger(instance.options, "submit");
-                  //submit form with ajax call and close popup
-                  $.ajaxSetup({
-                     type : $form.attr("method"),
-                     success : function (data, textStatus) {
-      
-                        if (!data.success) {
-                           instance.$loader.hide();
-                           instance._scrollToMessage(message);
-                           message.showFailure(data.error);
-                           $buttons.button("enable");
-                           return;
-                        }
-                        // set only when the request did not produce an error
-                        instance.abort = false;
-                        instance._trigger(instance.options, "success", data);
-      
-                        if (message.isAutoClose()){
-                           instance.close();
-                        } else {
-                           instance.$loader.hide();
-                           instance._scrollToMessage(message);
-                           message.showSuccess();
-                           $close.button("enable");
-                        }
-                        // so we don't forget :)
-                        clientstate.updateUsedSpace();
-                     },
-                     error : function (error) {
-                        // instance.close();
-                        instance.$loader.hide();
-                        instance._scrollToMessage(message);
-                        message.showFailure(gettext("NETWORK_ERROR"));
-                        $buttons.button("enable");
-                     }
-                  });
-      
-                  if (typeof instance.options.data === "function"){
-                     $.ajax({
-                        processData : false,
-                        contentType : false,
-                        cache : false,
-                        data : instance.options.data.call(instance.options.context),
-                        url : $form.attr("action")
-                     });
+                  
+                  formData = instance.getFormData(instance.$form);
+                  
+                  data = {
+                     isPhotoUpload: instance.options.isPhotoUpload,
+                     "formData": formData
                   }
-                  else{
-                     $.ajax({               
-                        url  : $form.attr("action"),
-                        data : $form.serialize(),
-                        dataType : "json"
-                     });
-                  }
+                  
+                  instance._trigger(instance.options, "submit", data);
                }
             });
             this._trigger(this.options, "load");
+         },
+         _getFormData : function ($form) {
+            var formData = {},
+               $relevantInput = $form.find("input, textarea");
+            
+            if (this.options.isPhotoUpload) {
+               $relevantInput = $relevantInput.not("input[name='" + this.options.photoInputName + "']");
+               formData[this.options.photoInputName] = this.editor.getAsFile();
+            }
+            
+            $.each($relevantInput, function (index, input) {
+               formData[$(input).attr("name")] = $(input).val();
+            });
+            
+            return formData;  
          },
          _scrollToMessage : function (message) {
             this.$dialog.stop().animate({

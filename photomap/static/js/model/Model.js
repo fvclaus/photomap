@@ -17,7 +17,7 @@ define(["dojo/_base/declare"],
                 this.type = data.type;
                 this.title = data.title;
                 this.id = data.id;
-                assertNumber(this.id, "Every model must have an id.");
+                
                 // reading from input elements will return '' if nothing has been entered
                 this.description = (data.description === "")? null : data.description;
              },
@@ -54,7 +54,72 @@ define(["dojo/_base/declare"],
                 } else {
                    return false;
                 }
-             }
+             },
+             updateProperties : function (newData) {
+                $.each(newData, function (key, value) {
+                   if (this.hasOwnProperty(key)) {
+                      this[key] = value;
+                   }
+                });
+             },
+             /**
+              * @description Check if the model has a title and an id, which every model has to have!
+              */
+             assertValidity : function () {
+                assertNumber(this.id, "Every model has to have an id");
+                assertString(this.title, "Every model has to have a title");
+                
+                return true;
+             },
+            /**
+             * @description Adds handler to the "success"-event triggered after model-data is succesfully saved to the server
+             */
+            onSuccess : function (handler, thisReference) {
+               var context = thisReference || this,
+                  instance = this;
+               
+               $(this).one("success.RequestEvent", function (event, data) {
+                  // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
+                  // handler can use same arguments as with the original jQuery.ajax.success
+                  handler.call(context, data[0], data[1], data[2]);
+                  // remove other request-events (like failure, error)
+                  $(instance).off(".RequestEvent");
+               });
+               
+               return this;
+            },
+            /**
+             * @description Adds handler to the "success"-event triggered when a request couldn't be processed by the server
+             */
+            onFailure : function (handler, thisReference) {
+               var context = thisReference || this,
+                  instance = this;
+               
+               $(this).one("failure.RequestEvent", function (event, data) {
+                  // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
+                  // handler can use same arguments as with the original jQuery.ajax.success
+                  handler.call(context, data[0], data[1], data[2]);
+                  $(instance).off(".RequestEvent");
+               });
+               
+               return this;
+            },
+            /**
+             * @description Adds handler to the "error"-event triggered when there was a network error and the request couldn't be submitted
+             */
+            onError : function (handler, thisReference) {
+               var context = thisReference || this,
+                  instance = this;
+               
+               $(this).one("error.RequestEvent", function (event, data) {
+                  // Simulate jQuery ajax response: data = [jqXHR, textStatus, errorThrown]
+                  // handler can use same arguments as with the original jQuery.ajax.error
+                  handler.call(context, data[0], data[1], data[2]);
+                  $(instance).off(".RequestEvent");
+               });
+               
+               return this;
+            },
           });
        });
 
