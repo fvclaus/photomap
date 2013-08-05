@@ -3,7 +3,7 @@
 "use strict";
 
 var DASHBOARD_VIEW = "/dashboard", 
-    ALBUM_VIEW = /albums\/album\/\d+\/view/,
+    ALBUM_VIEW = /album\/\d+\/view/,
     
     ALBUM_ICON_WIDTH = 25,
     ALBUM_ICON_HEIGHT = 25,

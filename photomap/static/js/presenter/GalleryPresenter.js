@@ -48,13 +48,12 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              setPhotoVisited : function (photo) {
                 this.view.setPhotoVisited(photo);
              },
-
              update : function () {
                 var modelName = this.model.getModelType().toLowerCase(),
                     id = this.model.getId(),
                     instance = this,
-                    // build url -> format /models/model/(id/)request
-                    requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/update";
+                    requestUrl = "/" + modelName + "/" + id + "/",
+                    dialogUrl = "/dialog/update/photo";
 
                 communicator.publish("load:dialog", {
                    load : function () {
@@ -74,7 +73,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                       instance.model.setDescription(this._description);
                       communicator.publish("change:" + modelName, instance.model);
                    },
-                   url : requestUrl,
+                   url : dialogUrl,
                    context : this
                 });
              },
@@ -82,8 +81,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 var modelName = this.model.getModelType().toLowerCase(),
                     id = this.model.getId(),
                     instance = this,
-                    // build url -> format /models/model/(id/)request
-                    requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/delete";
+                    requestUrl = "/" + modelName + "/" + id + "/",
+                    dialogUrl = "/dialog/delete/photo";
                     
                 communicator.publish("load:dialog", {
                    type : CONFIRM_DIALOG,
@@ -94,7 +93,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                    success : function (data) {
                       communicator.publish("delete:" + modelName, instance.model);
                    },
-                   url: requestUrl,
+                   url: dialogUrl,
                    context : this
                 });
              }

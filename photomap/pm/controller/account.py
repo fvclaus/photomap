@@ -14,11 +14,11 @@ from django.contrib.auth.views import password_reset, password_reset_confirm
 from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
 from django.contrib.sessions.backends.db import SessionStore
-from django.utils.translation import get_language_from_request
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.conf import settings
 
 from pm.model.album import Album
@@ -35,112 +35,98 @@ logger = logging.getLogger(__name__)
 
 @csrf_protect
 @login_required
+@require_GET
 def view(request):
-    if request.method == "GET":
-        albums = Album.objects.all().filter(user = request.user)
-        total_albums = len(albums)
-        total_places = 0
-        total_photos = 0
-        for album in albums:
-            places = Place.objects.all().filter(album = album)
-            total_places += len(places)
-            for place in places:
-                total_photos += Photo.objects.filter(place = place).count()
-        data = {
-                "total_albums": total_albums,
-                "total_places": total_places,
-                "total_photos": total_photos
-                }
-        return render_to_response("account-active.html", data, context_instance = RequestContext(request))
-    else:
-        return HttpResponseBadRequest()
+    albums = Album.objects.all().filter(user = request.user)
+    total_albums = len(albums)
+    total_places = 0
+    total_photos = 0
+    for album in albums:
+        places = Place.objects.all().filter(album = album)
+        total_places += len(places)
+        for place in places:
+            total_photos += Photo.objects.filter(place = place).count()
+    data = {
+            "total_albums": total_albums,
+            "total_places": total_places,
+            "total_photos": total_photos
+            }
+    return render_to_response("account-active.html", data, context_instance = RequestContext(request))
 
 @sensitive_post_parameters()
 @csrf_protect
 @login_required
+@require_POST
 def update_password(request):
-    if request.method == "GET":
-        return view(request)
-    if request.method == "POST":
-        user = request.user
-        if is_test_user(user):
-            return request_not_allowed_error()
-        form = UserUpdatePasswordForm(request.POST)
-        if form.is_valid():
-            old_password = form.cleaned_data["old_password"]
-            new_password = form.cleaned_data["new_password"]
-            new_password_repeat = form.cleaned_data["new_password_repeat"]
-            logger.info("Trying to update password of User %d." % user.id)
-            if user.check_password(old_password) and new_password == new_password_repeat:
-                user.set_password(new_password)
-                user.save()
-                logger.info("User %d password updated." % user.id)
-                return success()
-            else:
-                return request_fail_error()
+    user = request.user
+    if is_test_user(user):
+        return request_not_allowed_error()
+    form = UserUpdatePasswordForm(request.POST)
+    if form.is_valid():
+        old_password = form.cleaned_data["old_password"]
+        new_password = form.cleaned_data["new_password"]
+        new_password_repeat = form.cleaned_data["new_password_repeat"]
+        logger.info("Trying to update password of User %d." % user.id)
+        if user.check_password(old_password) and new_password == new_password_repeat:
+            user.set_password(new_password)
+            user.save()
+            logger.info("User %d password updated." % user.id)
+            return success()
         else:
-            return error(str(form.errors))
+            return request_fail_error()
     else:
-        return HttpResponseBadRequest()
+        return error(str(form.errors))
 
+@csrf_protect
+@login_required
+@require_POST
 @sensitive_post_parameters("confirm_password")
-@csrf_protect
-@login_required
 def update_email(request):
-    if request.method == "GET":
-        return view(request)
-    if request.method == "POST":
-        user = request.user
-        if is_test_user(user):
-            return request_not_allowed_error()
-        form = UserUpdateEmailForm(request.POST)
-        if form.is_valid():
-            new_email = form.cleaned_data["new_email"]
-            confirm_password = form.cleaned_data["confirm_password"]
-            if user.email == new_email:
-                return error(_("EMAIL_MATCH_ERROR"))
-            logger.info("Trying to update email of User %d." % user.id)
-            if user.check_password(confirm_password):
-                user.email = new_email
-                user.save()
-                logger.info("User email updated. New email = %s" % new_email)
-                return success(email = new_email)
-            else:
-                return request_fail_error()
+    user = request.user
+    if is_test_user(user):
+        return request_not_allowed_error()
+    form = UserUpdateEmailForm(request.POST)
+    if form.is_valid():
+        new_email = form.cleaned_data["new_email"]
+        confirm_password = form.cleaned_data["confirm_password"]
+        if user.email == new_email:
+            return error(_("EMAIL_MATCH_ERROR"))
+        logger.info("Trying to update email of User %d." % user.id)
+        if user.check_password(confirm_password):
+            user.email = new_email
+            user.save()
+            logger.info("User email updated. New email = %s" % new_email)
+            return success(email = new_email)
         else:
-            return error(str(form.errors))
+            return request_fail_error()
     else:
-        return HttpResponseBadRequest()
+        return error(str(form.errors))
 
 @csrf_protect
 @login_required
-def delete_account(request):
-    if request.method == "GET":
-        return view(request)
-    if request.method == "POST":
-        user = request.user
-        if is_test_user(user):
-            return HttpResponseRedirect("/account/delete/error")
-        form = UserDeleteAccountForm(request.POST)
-        if form.is_valid():
-            id = user.id
-            user_email = form.cleaned_data["user_email"]
-            user_password = form.cleaned_data["user_password"]
-            logger.info("Trying to delete User %d." % id)
-            if user.email == user_email and user.check_password(user_password):
-                user.delete()
-                send_delete_mail(user_email, request)
-                session = SessionStore()
-                session["user_deleted"] = True
-                session.save()
-                logger.info("User %d account deleted." % id)
-                return HttpResponseRedirect("/account/delete/complete?username=" + user_email)
-            else:
-                return HttpResponseRedirect("/account/delete/error")
+@require_http_methods(["DELETE"])
+def delete(request):
+    user = request.user
+    if is_test_user(user):
+        return HttpResponseRedirect("/account/delete/error")
+    form = UserDeleteAccountForm(request.POST)
+    if form.is_valid():
+        id = user.id
+        user_email = form.cleaned_data["user_email"]
+        user_password = form.cleaned_data["user_password"]
+        logger.info("Trying to delete User %d." % id)
+        if user.email == user_email and user.check_password(user_password):
+            user.delete()
+            send_delete_mail(user_email, request)
+            session = SessionStore()
+            session["user_deleted"] = True
+            session.save()
+            logger.info("User %d account deleted." % id)
+            return HttpResponseRedirect("/account/delete/complete?username=" + user_email)
         else:
             return HttpResponseRedirect("/account/delete/error")
     else:
-        return HttpResponseBadRequest()
+        return HttpResponseRedirect("/account/delete/error")
 
 @csrf_protect
 def delete_account_complete(request):

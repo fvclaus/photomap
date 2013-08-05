@@ -63,7 +63,7 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
               * @private
               */
              _getAlbums : function () {
-                this._getInitialData("/albums/get");
+                this._getInitialData("/albums");
              },
              /**
               * @private
@@ -73,7 +73,7 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
                 var idFromUrl = /\/(\d+)\//,
                     id = idFromUrl.exec(window.location.pathname)[1];
                 
-                this._getInitialData("/albums/album/" + id + "/get");
+                this._getInitialData("/album/" + id + "/");
              },
              /**
               * @private
@@ -84,6 +84,7 @@ define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState"],
                    instance = this;
                 // get the albums and their info
                 $.ajax({
+                   type: "GET",
                    "url" : url,
                    success :  function (data) {
                       

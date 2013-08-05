@@ -18,12 +18,12 @@ define(["dojo/_base/declare",
         "model/Photo",
         "util/Communicator",
         "util/Tools",
-        "util/Tooltip",
+        "util/InfoText",
         "dojo/text!/template/Slideshow",
         "module",
         "dojo/domReady!"
        ],
-       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Photo, communicator, tools, Tooltip, template, module) {
+       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Photo, communicator, tools, InfoText, template, module) {
           return declare([View, _WidgetBase, _TemplatedMixin], {
              templateString : template,
              buildRendering : function () {
@@ -46,7 +46,7 @@ define(["dojo/_base/declare",
                 this.carousel = null;
                 
                 // tooltip is a builtin member of _WidgetBase
-                this._tooltip = new Tooltip(this.$container, "", {hideOnMouseover: false});
+                this._infoText = new InfoText(this.$container, "", {hideOnMouseover: false});
                 
                 // this._started = false;
                 this._loaded = false;
@@ -191,17 +191,17 @@ define(["dojo/_base/declare",
               */
              updateMessage : function () {
                 if (!this._run) {
-                   this._tooltip
+                   this._infoText
                       .setOption("hideOnMouseover", false)
                       .setMessage(gettext("SLIDESHOW_GALLERY_NOT_STARTED"))
                       .start()
                       .open();
                 } else {
                    if (this.carousel.getAllPhotos().length !== 0) {
-                      this._tooltip.close();
+                      this._infoText.close();
                    } else {
                       // No photos yet.
-                      this._tooltip
+                      this._infoText
                          .setOption("hideOnMouseover", true)
                          .setMessage(gettext("SLIDESHOW_NO_PHOTOS"))
                          .start()

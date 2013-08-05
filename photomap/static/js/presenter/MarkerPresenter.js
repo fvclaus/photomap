@@ -109,8 +109,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                  var modelName = this.model.getModelType().toLowerCase(),
                      id = this.model.getId(),
                      instance = this,
-                     // build url -> format /models/model/(id/)request
-                     requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/update";
+                     requestUrl = "/" + modelName + "/" + id + "/",
+                     dialogUrl = "/dialog/update/" + modelName;
 
                  communicator.publish("load:dialog", {
                     load : function () {
@@ -128,7 +128,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                        instance.model.setDescription(this._description);
                        communicator.publish("change:" + modelName, instance.model);
                     },
-                    url : requestUrl,
+                    url : dialogUrl,
                     context : this
                  });
               },
@@ -136,8 +136,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                  var modelName = this.model.getModelType().toLowerCase(),
                      id = this.model.getId(),
                      instance = this,
-                     // build url -> format /models/model/(id/)request
-                     requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/delete";
+                     requestUrl = "/" + modelName + "/" + id + "/",
+                     dialogUrl = "/dialog/delete/" + modelName;
                      
                  communicator.publish("load:dialog", {
                     type : CONFIRM_DIALOG,
@@ -148,7 +148,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     success : function () {
                        communicator.publish("delete:" + modelName, instance.model);
                     },
-                    url: requestUrl,
+                    url: dialogUrl,
                     context : this
                  });
              },
@@ -156,12 +156,11 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                  var modelName = this.model.getModelType().toLowerCase(),
                      id = this.model.getId(),
                      instance = this,
-                     // build url -> format /models/model/(id/)request
-                     requestUrl = "/" + modelName + "s/" + modelName + "/" + id + "/password/update";
+                     requestUrl = "/" + modelName + "/" + id + "/password",
+                     dialogUrl = "/dialog/update/" + modelName + "/password";
 
                  communicator.publish("load:dialog", {
-                    // build url -> format /models/model/(id/)request
-                    url : requestUrl,
+                    url : dialogUrl,
                     load : function () {
                        $("#mp-open-album-password-form").on("click", function () {
                           var $form = $("#mp-album-password-form");
@@ -182,8 +181,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                           }
                        });
                        $("form[name='update-" + modelName + "-password']").attr("action", requestUrl);
-                       $("a#album-url").text("http://" + window.location.host + "/albums/album/" + id + "/view/" + instance.model.getSecret());
-                       $("a#album-url").attr("href","http://" + window.location.host + "/albums/album/" + id + "/view/" + instance.model.getSecret());
+                       $("a#album-url").text("http://" + window.location.host + "/album/" + id + "/view/" + instance.model.getSecret() + "/");
+                       $("a#album-url").attr("href","http://" + window.location.host + "/album/" + id + "/view/" + instance.model.getSecret() + "/");
                        $("a#album-url").css("cursor", "auto");
                        $("#mp-dialog-button-save").button("disable");
                        $("#album-password")
@@ -287,7 +286,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 if (this.model.getModelType() === "Album") {
                    
                    // build url -> format models/model/(id/)request
-                   window.location.href = '/albums/album/' + this.model.getId() + '/view/' + this.model.getSecret();
+                   window.location.href = '/album/' + this.model.getId() + '/view/' + this.model.getSecret() + "/";
                    
                 // reset ui and (re)start gallery when place is opened
                 } else if (this.model.getModelType() === "Place") {

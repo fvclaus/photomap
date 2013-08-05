@@ -19,12 +19,12 @@ define(["dojo/_base/declare",
         "model/Photo",
         "util/Communicator",
         "util/Tools",
-        "util/Tooltip",
+        "util/InfoText",
         "dojo/text!/template/Gallery",
         "module",
         "dojo/domReady!"
        ],
-       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView,  Photo, communicator, tools, Tooltip, template, module) {
+       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView,  Photo, communicator, tools, InfoText, template, module) {
 
           return declare([View, _WidgetBase, _TemplatedMixin], {
              templateString : template,
@@ -58,7 +58,7 @@ define(["dojo/_base/declare",
                 // this.showTeaser = false;
                 this.currentPhoto = null;
                 
-                this._tooltip = new Tooltip(this.$container, "");
+                this._infotext = new InfoText(this.$container, "");
 
                 this.$controls = $()
                    .add(this.$insert)
@@ -68,7 +68,11 @@ define(["dojo/_base/declare",
                 this._bindListener();
                 this._showHelpText();
                 
-
+                this._infotext
+                  .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
+                  .setOption("hideOnMouseover", false)
+                  .start()
+                  .open();
                 this._bindNavigationListener();
                 
                 this._bindStartSlideshowListener();
@@ -102,7 +106,7 @@ define(["dojo/_base/declare",
                 assertTrue(this._loaded, "Must call load(photos) before.");
                 this._run = true;
                 
-                this._tooltip.destroy();
+                this._infotext.destroy();
                 // show insert photo button
                 this.$controls.removeClass("mp-nodisplay");
 
@@ -191,7 +195,7 @@ define(["dojo/_base/declare",
              },
              /**
               * @private
-              * @description set new tooltip message, empty-tiles, visited-icon and show teaser (optional)
+              * @description set new infotext message, empty-tiles, visited-icon and show teaser (optional)
               */
              _update : function ($photos) {
                 
@@ -221,23 +225,23 @@ define(["dojo/_base/declare",
               */
              _showHelpText : function () {
                 if (!this._run) {
-                   this._tooltip
+                   this._infotext
                       .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
                       .setOption("hideOnMouseover", false)
                       .start()
                       .open();
                 } else {
                    if (this.carousel.getAllPhotos().length !== 0) {
-                      this._tooltip.close();
+                      this._infotext.close();
                    } else {
                       // No photos yet.
                       if (this._isAdmin()) {
-                         this._tooltip
+                         this._infotext
                             .setOption("hideOnMouseover", true)
                             .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
                             .open();
                       } else {
-                         this._tooltip
+                         this._infotext
                             .setOption("hideOnMouseover", true)
                             .setMessage(gettext("GALLERY_NO_PHOTOS_GUEST"))
                             .open();
