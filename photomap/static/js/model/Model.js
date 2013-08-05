@@ -56,8 +56,9 @@ define(["dojo/_base/declare"],
                 }
              },
              updateProperties : function (newData) {
+                var instance = this;
                 $.each(newData, function (key, value) {
-                   if (this.hasOwnProperty(key)) {
+                   if (instance.hasOwnProperty(key)) {
                       this[key] = value;
                    }
                 });
@@ -78,10 +79,11 @@ define(["dojo/_base/declare"],
                var context = thisReference || this,
                   instance = this;
                
-               $(this).one("success.RequestEvent", function (event, data) {
+               $(this).one("success.RequestEvent", function (event, data, status, xhr) {
+                  console.log(data);
                   // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
                   // handler can use same arguments as with the original jQuery.ajax.success
-                  handler.call(context, data[0], data[1], data[2]);
+                  handler.call(context, data, status, xhr);
                   // remove other request-events (like failure, error)
                   $(instance).off(".RequestEvent");
                });
@@ -95,10 +97,10 @@ define(["dojo/_base/declare"],
                var context = thisReference || this,
                   instance = this;
                
-               $(this).one("failure.RequestEvent", function (event, data) {
+               $(this).one("failure.RequestEvent", function (event, data, status, xhr) {
                   // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
                   // handler can use same arguments as with the original jQuery.ajax.success
-                  handler.call(context, data[0], data[1], data[2]);
+                  handler.call(context, data, status, xhr);
                   $(instance).off(".RequestEvent");
                });
                
@@ -111,10 +113,10 @@ define(["dojo/_base/declare"],
                var context = thisReference || this,
                   instance = this;
                
-               $(this).one("error.RequestEvent", function (event, data) {
+               $(this).one("error.RequestEvent", function (event, xhr, status, error) {
                   // Simulate jQuery ajax response: data = [jqXHR, textStatus, errorThrown]
                   // handler can use same arguments as with the original jQuery.ajax.error
-                  handler.call(context, data[0], data[1], data[2]);
+                  handler.call(context, xhr, status, error);
                   $(instance).off(".RequestEvent");
                });
                

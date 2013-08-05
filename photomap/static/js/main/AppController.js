@@ -233,7 +233,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
              },
              _markerMouseover : function (marker) {
                 main.getUI().getControls().show({
-                   "model": marker.getModel(),
+                   "context": marker,
                    pixel: main.getMap().getPositionInPixel(marker)
                 });
              },

@@ -9,8 +9,8 @@
  */
 
 
-define(["dojo/_base/declare", "presenter/Presenter"],
-       function (declare, Presenter) {
+define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator"],
+       function (declare, Presenter, communicator) {
           return declare(Presenter, {
              constructor : function (view) {
                 this.currentContext = null;
@@ -18,13 +18,17 @@ define(["dojo/_base/declare", "presenter/Presenter"],
              setCurrentContext : function (model) {
                 console.log("MFP setCurrentContext");
                 console.log(model);
-                this.currentContext = model;
+                if (model.getModel) {
+                   this.currentContext = model.getModel();
+                } else {
+                   this.currentContext = model;
+                }
              },
              /**
               * @public
               */
              update : function (event) {
-                  
+                
                 if (!this.view.isDisabled()) {
                   communicator.publish("click:UpdateControl", this.currentContext);
                 }

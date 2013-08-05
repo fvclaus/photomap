@@ -40,6 +40,8 @@ define(["dojo/_base/declare"],
                
                assertString(rawModelData.formData.title, "Each model needs a title");
                
+               var instance = this;
+               
                var initalModelData = {
                      title: rawModelData.formData.title,
                      description: rawModelData.formData.description
@@ -48,21 +50,21 @@ define(["dojo/_base/declare"],
                
                model
                   .onSuccess(function (data, status, xhr) {
-                     this._trigger("success", [data, status, xhr]);
+                     instance._trigger("success", [data, status, xhr]);
                      
                      model.updateProperties(data);
                      // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true,
                      // for development it is needed though to assure that the new IDU-Design works
                      if (model.assertValidity()) {
-                        this.models.push(model);
-                        this._trigger("insert", model);
+                        instance.models.push(model);
+                        instance._trigger("insert", model);
                      }
                   })
                   .onFailure(function (data, status, xhr) {
-                     this._trigger("failure", [data, status, xhr]);
+                     instance._trigger("failure", [data, status, xhr]);
                   })
                   .onError(function (xhr, status, error) {
-                     this._trigger("error", [xhr, status, error]);
+                     instance._trigger("error", [xhr, status, error]);
                   })
                   .save(rawModelData);
                
@@ -74,20 +76,21 @@ define(["dojo/_base/declare"],
             "delete" : function (model) {
                
                assertTrue(this.has(model.getId()), "Selected model is not part of the collection");
-               var index = this.models.indexOf(model);
+               var index = this.models.indexOf(model),
+                  instance = this;
                
                model
                   .onSuccess(function (data, status, xhr) {
-                     this._trigger("success", [data, status, xhr]);
+                     instance._trigger("success", [data, status, xhr]);
                      
-                     this.models.splice(index, 1);
-                     this._trigger("delete", model);
+                     instance.models.splice(index, 1);
+                     instance._trigger("delete", model);
                   })
                   .onFailure(function (data, status, xhr) {
-                     this._trigger("failure", [data, status, xhr]);
+                     instance._trigger("failure", [data, status, xhr]);
                   })
                   .onError(function (xhr, status, error) {
-                     this._trigger("error", [xhr, status, error]);
+                     instance._trigger("error", [xhr, status, error]);
                   })
                   .save(null, true);
                
@@ -99,21 +102,24 @@ define(["dojo/_base/declare"],
              * @param {Object} data The updated data.
              */
             update : function (model, newData) {
-               
+               console.log("update called");
                assertTrue(this.has(model.getId()), "Selected model is not part of the collection");
+               
+               var instance = this;
                
                model
                   .onSuccess(function (data, status, xhr) {
-                     this._trigger("success", [data, status, xhr]);
+                     console.log(data);
+                     instance._trigger("success", [data, status, xhr]);
                      
                      model.updateProperties(newData);
-                     this._trigger("update", model);
+                     instance._trigger("update", model);
                   })
                   .onFailure(function (data, status, xhr) {
-                     this._trigger("failure", [data, status, xhr]);
+                     instance._trigger("failure", [data, status, xhr]);
                   })
                   .onError(function (xhr, status, error) {
-                     this._trigger("error", [xhr, status, error]);
+                     instance._trigger("error", [xhr, status, error]);
                   })
                   .save(newData);
                return this;
@@ -183,10 +189,10 @@ define(["dojo/_base/declare"],
                var context = thisReference || this,
                   instance = this;
                
-               $(this).one("success.requestEvent", function (event, data) {
+               $(this).one("success.requestEvent", function (event, data, status, xhr) {
                   // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
                   // handler can use same arguments as with the original jQuery.ajax.success
-                  handler.call(context, data[0], data[1], data[2]);
+                  handler.call(context, data, status, xhr);
                   // remove other request-events (like failure, error)
                   $(instance).off(".RequestEvent");
                });
@@ -200,10 +206,10 @@ define(["dojo/_base/declare"],
                var context = thisReference || this,
                   instance = this;
                
-               $(this).one("failure.requestEvent", function (event, data) {
+               $(this).one("failure.requestEvent", function (event, data, status, xhr) {
                   // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
                   // handler can use same arguments as with the original jQuery.ajax.success
-                  handler.call(context, data[0], data[1], data[2]);
+                  handler.call(context, data, status, xhr);
                   $(instance).off(".RequestEvent");
                });
                
@@ -216,10 +222,10 @@ define(["dojo/_base/declare"],
                var context = thisReference || this,
                   instance = this;
                
-               $(this).one("error.requestEvent", function (event, data) {
+               $(this).one("error.requestEvent", function (event, xhr, status, error) {
                   // Simulate jQuery ajax response: data = [jqXHR, textStatus, errorThrown]
                   // handler can use same arguments as with the original jQuery.ajax.error
-                  handler.call(context, data[0], data[1], data[2]);
+                  handler.call(context, xhr, status, error);
                   $(instance).off(".RequestEvent");
                });
                

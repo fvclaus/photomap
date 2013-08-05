@@ -91,9 +91,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              },
              _modelUpdate : function (model) {
                 var dialog = main.getUI().getDialog(),
-                  modelType = model.getType(),
+                  modelType = model.getModelType(),
                   collection = state.getCollection(modelType);
-                  
                   
                 dialog.show({
                    load : function () {
@@ -112,12 +111,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                         .onError(dialog.showNetworkError)
                         .update(model, data);
                    },
-                   url : "/form/update/" + model.getType().toLowerCase()
+                   url : "/form/update/" + modelType.toLowerCase()
                 });
              },
              _modelDelete : function (model) {
                 var dialog = main.getUI().getDialog(),
-                  modelType = model.getType(),
+                  modelType = model.getModelType(),
                   collection = state.getCollection(modelType);
                   
                   
@@ -138,12 +137,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                         .onError(dialog.showNetworkError)
                         .delete(model, data);
                    },
-                   url : "/form/delete/" + model.getType().toLowerCase()
+                   url : "/form/delete/" + modelType.toLowerCase()
                 });
              },
              _albumShare : function (album) {
                 var dialog = main.getUI().getDialog()
-                  collection = state.getCollection(modelType);
+                  collection = state.getCollection("Album");
                   
                   
                 dialog.show({

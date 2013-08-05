@@ -146,16 +146,16 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                return;
             }
             // set only when the request did not produce an error
-            instance.abort = false;
-            instance._trigger(instance.options, "success", data);
+            this.abort = false;
+            this._trigger(this.options, "success", response);
 
             if (this.message.isAutoClose()){
                this.close();
             } else {
                this.$loader.hide();
-               this._scrollToMessage(message);
+               this._scrollToMessage(this.message);
                this.message.showSuccess();
-               $close.button("enable");
+               this.$close.button("enable");
             }
          },
          showNetworkError : function () {
@@ -165,8 +165,8 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
             this.$buttons.button("enable");
          },
          setInputValue : function (name, value) {
-            assertTrue(instance.$form, "Form has to be loaded before settings its input values");
-            instance.$form.find("[name='" + name +  "']").val(value);
+            assertTrue(this.$form, "Form has to be loaded before settings its input values");
+            this.$form.find("[name='" + name +  "']").val(value);
          },
          startPhotoEditor : function () {
             assertTrue(instance.$form, "Form has to be loaded before settings its input values");
@@ -240,19 +240,18 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
           */
          _submitHandler : function () {
             var instance = this,
-                $widget = this.$dialog.dialog("widget")
-                formData = null;
+                $widget = this.$dialog.dialog("widget");
             
             // set temporary properties
             this.$form = $widget.find("form");
             this.message = new DialogMessageView($widget)
             this.$close = $widget.find("ui-dialog-titlebar-close");
-            this.$buttons = $form
+            this.$buttons = this.$form
                               .find("button, input[type='submit']")
                               .add($("#mp-dialog-button-yes"))
                               .add($("#mp-dialog-button-no"))
                               .add($("#mp-dialog-button-save"))
-                              .add($close);
+                              .add(this.$close);
             
             //called when data is valid
             this.$form.validate({
@@ -262,11 +261,9 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                   instance.$buttons.button("disable");
                   instance.$loader.show();
                   
-                  formData = instance.getFormData(instance.$form);
-                  
-                  data = {
+                  var data = {
                      isPhotoUpload: instance.options.isPhotoUpload,
-                     "formData": formData
+                     "formData": instance._getFormData(instance.$form)
                   }
                   
                   instance._trigger(instance.options, "submit", data);
@@ -277,6 +274,7 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
          _getFormData : function ($form) {
             var formData = {},
                $relevantInput = $form.find("input, textarea");
+               
             
             if (this.options.isPhotoUpload) {
                $relevantInput = $relevantInput.not("input[name='" + this.options.photoInputName + "']");

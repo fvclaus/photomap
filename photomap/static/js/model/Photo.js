@@ -49,12 +49,23 @@ define(["dojo/_base/declare",
                 throw new Error("DoNotUseThisError");
              },
              save : function (newData, deleteMe) {
-                var settings = {
-                   url: "/" + this.type.toLowerCase() + "/",
-                   type: "DELETE",
-                   data: {},
-                   dataType: "json"
-                };
+                var instance = this,
+                   settings = {
+                      url: "/" + this.type.toLowerCase() + "/",
+                      type: "DELETE",
+                      data: {},
+                      dataType: "json",
+                      success: function (data, status, xhr) {
+                         if (data.success) {
+                            $(instance).trigger("success", [data, status, xhr]);
+                         } else {
+                            $(instance).trigger("failure", [data, status, xhr]);
+                         }
+                      },
+                      error: function (xhr, status, error) {
+                         $(instance).trigger("error", [xhr, status, error]);
+                      }
+                   };
                 // add id if exists -> for Delete or Update (id does not exist before Insert -> not needed)
                 if (this.id) {
                    settings.url += this.id + "/";
@@ -68,20 +79,8 @@ define(["dojo/_base/declare",
                       settings.cache = false;
                       settings.data = this._parseFormData(newData.formData);
                    } else {
-                      settings.data["title"] = newData.title;
-                      settings.data["description"] = newData.description;
+                      settings.data = newData.formData;
                    }
-                }
-                
-                settings.success = function (data, status, xhr) {
-                   if (data.success) {
-                      $(this).trigger("success", [data, status, xhr]);
-                   } else {
-                      $(this).trigger("failure", [data, status, xhr]);
-                   }
-                };
-                settings.error = function (xhr, status, error) {
-                   $(this).trigger("error", [xhr, status, error]);
                 }
                 
                 $.ajax(settings);
