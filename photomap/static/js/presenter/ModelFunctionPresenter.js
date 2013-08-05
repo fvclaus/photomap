@@ -15,10 +15,10 @@ define(["dojo/_base/declare", "presenter/Presenter"],
              constructor : function (view) {
                 this.currentContext = null;
              },
-             setCurrentContext : function (context) {
+             setCurrentContext : function (model) {
                 console.log("MFP setCurrentContext");
-                console.log(context);
-                this.currentContext = context;
+                console.log(model);
+                this.currentContext = model;
              },
              /**
               * @public
@@ -26,7 +26,7 @@ define(["dojo/_base/declare", "presenter/Presenter"],
              update : function (event) {
                   
                 if (!this.view.isDisabled()) {
-                  this.currentContext.update(event);
+                  communicator.publish("click:UpdateControl", this.currentContext);
                 }
              },
 
@@ -34,18 +34,18 @@ define(["dojo/_base/declare", "presenter/Presenter"],
               * @public
               */
              "delete" : function (event) {
-     
+                
                 if (!this.view.isDisabled()) {
-                   this.currentContext.delete(event);
+                  communicator.publish("click:DeleteControl", this.currentContext);
                 }
              },
              /**
               * @private
               */
              share : function (event) {
-
+                
                 if (!this.view.isDisabled()) {
-                   this.currentContext.share();
+                  communicator.publish("click:ShareControl", this.currentContext);
                 }
              }
           });

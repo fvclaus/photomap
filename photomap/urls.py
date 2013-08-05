@@ -55,7 +55,7 @@ account_patterns = patterns("pm.controller.account",
 #================================================================
 # dialog hooks
 #================================================================
-dialog_patterns = patterns("",
+form_patterns = patterns("",
                            url(r'^insert/album$', direct_to_template, {"template": "insert-album.html"}),
                            url(r'^insert/place$', direct_to_template, {"template": "insert-place.html"}),
                            url(r'^insert/photo$', photo.get_insert_dialog),
@@ -127,7 +127,7 @@ urlpatterns = patterns("",
                        #================================================================
                        # dialog hooks
                        #================================================================
-                       url(r'^dialog/', include(dialog_patterns)),
+                       url(r'^form/', include(form_patterns)),
                        #================================================================
                        # album hooks
                        #================================================================

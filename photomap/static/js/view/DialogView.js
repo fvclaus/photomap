@@ -157,8 +157,6 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                this.message.showSuccess();
                $close.button("enable");
             }
-            // so we don't forget :) TODO not here but in AppController!
-            clientstate.updateUsedSpace();
          },
          showNetworkError : function () {
             this.$loader.hide();

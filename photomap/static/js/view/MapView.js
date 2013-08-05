@@ -363,7 +363,7 @@ define([
              var instance = this;
 
              google.maps.event.addListener(this.map, "click", function (event) {
-                instance.presenter.click({
+                communicator.publish("click:Map", {
                    lat : parseFloat(event.latLng.lat()),
                    lng : parseFloat(event.latLng.lng())
                 });

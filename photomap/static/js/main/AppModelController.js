@@ -1,7 +1,7 @@
 /*jslint */
 /*global $, define, main, init, initTest, finalizeInit, assertTrue, gettext */
 
-"use strict";
+//"use strict";
 
 /**
  * @author Marc-Leon Roemer
@@ -14,10 +14,11 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              
              constructor : function () {
                 
-                communicator.subscribe("click:galleryInsert", this._galleryInsert);
-                communicator.subscribe("click:map", this._mapInsert);
-                communicator.subscribe("click:photoUpdate click:placeUpdate click:albumUpdate", this._modelUpdate);
-                communicator.subscribe("click:photoDelete click:placeDelete click:albumDelete", this._modelDelete);
+                communicator.subscribe("click:GalleryInsert", this._galleryInsert);
+                communicator.subscribe("click:Map", this._mapInsert);
+                communicator.subscribe("click:UpdateControl", this._modelUpdate);
+                communicator.subscribe("click:DeleteControl", this._modelDelete);
+                communicator.subscribe("click:ShareControl", this._albumShare);
              },
              /*
               * --------------------------------------------------
@@ -40,6 +41,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                       photoCollection
                         .onSuccess(function (data) {
                            dialog.showResponseMessage(data);
+                           clientstate.updateUsedSpace();
                         })
                         .onFailure(function (data) {
                            dialog.showResponseMessage(data);
@@ -47,7 +49,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                         .onError(dialog.showNetworkError)
                         .insert(data);
                    },
-                   url : "/dialog/insert/photo",
+                   url : "/form/insert/photo",
                    isPhotoUpload: true,
                    photoInputName: "photo"
                 });
@@ -76,6 +78,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                       markerCollection
                         .onSuccess(function (data) {
                            dialog.showResponseMessage(data);
+                           clientstate.updateUsedSpace();
                         })
                         .onFailure(function (data) {
                            dialog.showResponseMessage(data);
@@ -83,32 +86,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                         .onError(dialog.showNetworkError)
                         .insert(data);
                    },
-                   url : "/dialog/insert/" + modelType.toLowerCase(),
-                });
-             }
-             _modelUpdate : function (model) {
-                var dialog = main.getUI().getDialog(),
-                  modelType = model.getType(),
-                  collection = state.getCollection(modelType);
-                  
-                  
-                dialog.show({
-                   load : function () {
-                      dialog.setInputValue("title", model.getTitle());
-                      dialog.setInputValue("description", model.getDescription());
-                   },
-                   submit: function (data) {
-                      collection
-                        .onSuccess(function (data) {
-                           dialog.showResponseMessage(data);
-                        })
-                        .onFailure(function (data) {
-                           dialog.showResponseMessage(data);
-                        })
-                        .onError(dialog.showNetworkError)
-                        .update(model, data);
-                   },
-                   url : "/dialog/update/" + model.getType().toLowerCase()
+                   url : "/form/insert/" + modelType.toLowerCase(),
                 });
              },
              _modelUpdate : function (model) {
@@ -126,6 +104,33 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                       collection
                         .onSuccess(function (data) {
                            dialog.showResponseMessage(data);
+                           clientstate.updateUsedSpace();
+                        })
+                        .onFailure(function (data) {
+                           dialog.showResponseMessage(data);
+                        })
+                        .onError(dialog.showNetworkError)
+                        .update(model, data);
+                   },
+                   url : "/form/update/" + model.getType().toLowerCase()
+                });
+             },
+             _modelDelete : function (model) {
+                var dialog = main.getUI().getDialog(),
+                  modelType = model.getType(),
+                  collection = state.getCollection(modelType);
+                  
+                  
+                dialog.show({
+                   load : function () {
+                      dialog.setInputValue("title", model.getTitle());
+                      dialog.setInputValue("description", model.getDescription());
+                   },
+                   submit: function (data) {
+                      collection
+                        .onSuccess(function (data) {
+                           dialog.showResponseMessage(data);
+                           clientstate.updateUsedSpace();
                         })
                         .onFailure(function (data) {
                            dialog.showResponseMessage(data);
@@ -133,7 +138,67 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                         .onError(dialog.showNetworkError)
                         .delete(model, data);
                    },
-                   url : "/dialog/delete/" + model.getType().toLowerCase()
+                   url : "/form/delete/" + model.getType().toLowerCase()
+                });
+             },
+             _albumShare : function (album) {
+                var dialog = main.getUI().getDialog()
+                  collection = state.getCollection(modelType);
+                  
+                  
+                dialog.show({
+                   load : function () {
+                       $("#mp-open-album-password-form").on("click", function () {
+                          var $form = $("#mp-album-password-form");
+                          if($form.is(":hidden")) {
+                             $("#mp-album-share-help").stop(true).hide();
+                             $form.stop(true).slideToggle(100);
+                          } else {
+                             $form.stop(true).slideToggle(100);
+                          }
+                       });
+                       $("#mp-open-album-share-help").on("click", function () {
+                          var $help = $("#mp-album-share-help");
+                          if($help.is(":hidden")) {
+                             $("#mp-album-password-form").stop(true).hide();
+                             $help.stop(true).slideToggle(100);
+                          } else {
+                             $help.stop(true).slideToggle(100);
+                          }
+                       });
+                       $("form[name='update-" + modelName + "-password']").attr("action", requestUrl);
+                       $("a#album-url").text("http://" + window.location.host + "/album/" + id + "/view/" + instance.model.getSecret() + "/");
+                       $("a#album-url").attr("href","http://" + window.location.host + "/album/" + id + "/view/" + instance.model.getSecret() + "/");
+                       $("a#album-url").css("cursor", "auto");
+                       $("#mp-dialog-button-save").button("disable");
+                       $("#album-password")
+                        .on("keyup keypress", null, function () {
+                          if (this.value.length > 0) {
+                              $("#mp-dialog-button-save").button("enable");
+                           }
+                        })
+                        .on("keyup", null, "backspace", function () {
+                           if (this.value.length === 0) {
+                              $("#mp-dialog-button-save").button("disable");
+                           }
+                        });
+                   },
+                   submit: function (formData) {
+                      $.ajax({
+                         type: "POST",
+                         dataType: "json",
+                         data: formData,
+                         url: "/album/" + album.getId() + "/password",
+                         success: function (response) {
+                            dialog.showResponseMessage(response);
+                         },
+                         error : function () {
+                            dialog.showNetworkError();
+                         }
+                      })
+                   },
+                   width: $(".mp-content").width() * 0.8,
+                   url : "/form/update/album/password"
                 });
              }
           });

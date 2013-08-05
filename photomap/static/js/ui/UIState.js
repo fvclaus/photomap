@@ -23,6 +23,9 @@ define(["dojo/_base/declare",
                this.currentMarkerIndex = -1;
                this.currentLoadedMarker = null;
                this.currentLoadedMarkerIndex = -1;
+               this.albumCollection = null;
+               this.placeCollection = null;
+               this.photoCollection = null;
                this.places = [];
                this.albums = [];
                this.markers = [];
@@ -37,6 +40,29 @@ define(["dojo/_base/declare",
                if (this.isAlbumView()) {
                   this.album = null;
                }
+            },
+            //--------------------------------------------------------------------
+            //MODEL_COLLECTIONS--------------------------------------------------------------
+            //--------------------------------------------------------------------
+            getCollection : function (modelType) {
+               if (modelType === "Album") {
+                  return this.albumCollection;
+               } else if (modelType === "Place") {
+                  return this.placeCollection;
+               } else if (modelType === "Photo") {
+                  return this.photoCollection;
+               } else {
+                  throw new Error("UnknownCollectionError");
+               }
+            },
+            setAlbumCollection : function (collection) {
+               this.albumCollection = collection;
+            },
+            setPlaceCollection : function (collection) {
+               this.placeCollection = collection;
+            },
+            setPhotoCollection : function (collection) {
+               this.photoCollection = collection;
             },
             //--------------------------------------------------------------------
             //MARKER--------------------------------------------------------------

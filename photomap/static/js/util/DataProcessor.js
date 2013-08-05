@@ -21,31 +21,7 @@ define(["dojo/_base/declare",
           var DataProcessor = declare(null, {
              
              constructor : function () {
-                communicator.subscribe("insert:photo", this._processInsertPhoto, this);
-                communicator.subscribe("insert:place", this._processInsertPlace, this);
-                communicator.subscribe("insert:album", this._processInsertAlbum, this);
                 communicator.subscribeOnce("loaded:initialData", this._processInitialData, this);
-             },
-             /**
-              * @private
-              */
-             _processInsertPhoto : function (data) {
-                var photo = this._createPhoto(data);
-                communicator.publish("processed:photo", photo);
-             },
-             /**
-              * @private
-              */
-             _processInsertPlace : function (data) {
-                var place = this._createPlace(data);
-                communicator.publish("processed:place", place);
-             },
-             /**
-              * @private
-              */
-             _processInsertAlbum : function (data) {
-                var album = this._createAlbum(data);
-                communicator.publish("processed:album", album);
              },
              /**
               * @private

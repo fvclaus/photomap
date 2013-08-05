@@ -7,17 +7,6 @@
 define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/MarkerView", "util/ClientState", "ui/UIState"],
        function (declare, Presenter, communicator, MarkerView, clientstate, state) {
           return declare(Presenter,  {
-             click : function (event) {
-
-                if (!this.view.isDisabled()) {
-                   //create new place with description and select it
-                   if (!state.isDashboardView()) {
-                      this._insert(event, "place");
-                   } else {
-                      this._insert(event, "album");
-                   }
-                }
-             },
              centerChanged : function () {
                 communicator.publish("change:mapCenter");
              },
@@ -124,39 +113,5 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                 });
                 this.view.fit(latLngData);
              },
-             _insert : function (event, modelName) {
-                 var instance = this,
-                     lat = event.lat,
-                     lng = event.lng,
-                     requestUrl = "/" + modelName + "/",
-                     dialogUrl = "/dialog/insert/" + modelName;
-
-                 communicator.publish("load:dialog", {
-                    load : function () {
-                       $("form[name='insert-" + modelName + "']").attr("action", requestUrl);
-                       $("input[name=lat]").val(lat);
-                       $("input[name=lon]").val(lng);
-                       if ($("input[name=album]").size() > 0) {
-                          $("input[name=album]").val(state.getAlbum().getId());
-                       }
-                    },
-                    submit : function () {
-                       //get name + description
-                       var title = $("[name=title]").val(),
-                           description = $("[name=description]").val();
-                       //dont create yet, server might return error
-                       state.store(TEMP_TITLE_KEY, title);
-                       state.store(TEMP_DESCRIPTION_KEY, description);
-                    },
-                    success : function (data) {
-                       console.log("insert success");
-                       data.lng = lng;
-                       data.lat = lat;
-                       communicator.publish("insert:" + modelName, data);
-                    },
-                    url : dialogUrl,
-                    context : this
-                 });
-              }
           });
        });

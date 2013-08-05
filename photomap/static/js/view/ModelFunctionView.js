@@ -44,7 +44,7 @@ define([
              
              var center;
              
-             this.presenter.setCurrentContext(data.context);
+             this.presenter.setCurrentContext(data.photo);
              
              center = data.element.offset();
              center.left += tools.getRealWidth(data.element) / 2;
@@ -71,7 +71,7 @@ define([
                         var projection, markerSize, mapOffset;
                         
                         // set the context for the Controls-Dialog (current Album, Place, Photo)                           
-                        instance.presenter.setCurrentContext(data.context);
+                        instance.presenter.setCurrentContext(data.context.getModel());
 
                         markerSize = data.context.getView().getSize();
                         // this happens when the Icon representing the Marker is not loaded yet

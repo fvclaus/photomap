@@ -439,7 +439,7 @@ define(["dojo/_base/declare",
                 });
              },
              _insert : function () {
-                communicator.publish("clicked:GalleryInsert");
+                communicator.publish("click:GalleryInsert");
              },
              /**
               * @private
