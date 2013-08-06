@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-07-24 18:58+0200\n"
+"POT-Creation-Date: 2013-08-06 14:39+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: pm/controller/account.py:101
+#: pm/controller/account.py:93
 msgid "EMAIL_MATCH_ERROR"
 msgstr ""
 "Die von Ihnen angegebene Email-Adresse entspricht der bei uns bereits "
@@ -146,8 +146,7 @@ msgstr "Altes Passwort"
 #: templates/contact.html.py:66 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-photo.html.py:28
 #: templates/insert-place.html:10 templates/reset-password-confirm.html:27
-#: templates/reset-password-confirm.html:34 templates/update-album.html:10
-#: templates/update-photo.html:11 templates/update-place.html:11
+#: templates/reset-password-confirm.html:34 templates/update-model.html:10
 msgid "MANDATORY_FIELD"
 msgstr "Dieses Feld ist ein Pflichtfeld."
 
@@ -156,7 +155,7 @@ msgid "OLD_PASSWORD_PLACEHOLDER"
 msgstr "Altes Passwort eingeben.."
 
 #: templates/account-active.html:80 templates/reset-password-confirm.html:27
-#: templates/update-album-password.html:14
+#: templates/update-album-password.html:28
 msgid "New Password"
 msgstr "Neues Passwort"
 
@@ -198,7 +197,7 @@ msgstr "Neue Email-Adresse eingeben.."
 #: templates/account-active.html:103 templates/account-active.html.py:128
 #: templates/index-guest.html:24 templates/index-guest.html.py:49
 #: templates/index-guest.html:76 templates/index.html:51
-#: templates/index.html.py:83 templates/login-error.html:18
+#: templates/index.html.py:84 templates/login-error.html:18
 msgid "Password"
 msgstr "Passwort"
 
@@ -217,7 +216,7 @@ msgstr ""
 
 #: templates/account-active.html:124 templates/contact.html:49
 #: templates/index-guest.html:43 templates/index-guest.html.py:72
-#: templates/index.html:47 templates/index.html.py:79
+#: templates/index.html:47 templates/index.html.py:80
 #: templates/login-error.html:14 templates/reset-password.html:18
 msgid "Email"
 msgstr "Email"
@@ -335,41 +334,41 @@ msgstr "Passwort eingeben..."
 msgid "View Album"
 msgstr "Album ansehen"
 
-#: templates/base-interactive.html:46 templates/base-interactive.html.py:62
-#: templates/view-album.html:109
+#: templates/base-interactive.html:56 templates/view-album.html:57
+#: templates/views/AdminGallery.html:4
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:65
+#: templates/base-interactive.html:59
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr ""
 "Wenn Sie einen Platz oder ein Album auswählen, wird die Beschreibung des "
 "ausgewählten Objekts hier angezeigt."
 
-#: templates/base-interactive.html:67 templates/base-interactive.html.py:75
-#: templates/base-interactive.html:77
+#: templates/base-interactive.html:61 templates/base-interactive.html.py:69
+#: templates/base-interactive.html:71
 msgid "NO_DESCRIPTION"
 msgstr "Keine Beschreibung "
 
-#: templates/base-interactive.html:67 templates/base-interactive.html.py:75
+#: templates/base-interactive.html:61 templates/base-interactive.html.py:69
 msgid "ADD_DESCRIPTION"
 msgstr " Beschreibung hinzufügen ..."
 
-#: templates/base-interactive.html:73 templates/photo-editor.html:4
+#: templates/base-interactive.html:67 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Bitte wählen Sie ein Photo aus."
 
-#: templates/base-interactive.html:89
+#: templates/base-interactive.html:83
 msgid "Data Loading"
 msgstr ""
 "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
 "Geduld!"
 
-#: templates/base-interactive.html:97
+#: templates/base-interactive.html:91
 msgid "control-title delete"
 msgstr "Löschen"
 
-#: templates/base-interactive.html:98
+#: templates/base-interactive.html:92
 msgid "control-title modify"
 msgstr "Bearbeiten"
 
@@ -388,13 +387,13 @@ msgstr ""
 "nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
 "die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
 
+#: templates/base.html:126 templates/help.html:53
+msgid "Dashboard"
+msgstr "Dashboard"
+
 #: templates/base.html:127
 msgid "Settings"
 msgstr "Einstellungen"
-
-#: templates/base.html:128 templates/help.html:53
-msgid "Dashboard"
-msgstr "Dashboard"
 
 #: templates/base.html:139
 msgid "Login or Register"
@@ -491,8 +490,7 @@ msgstr ""
 
 #: templates/contact.html:41 templates/insert-album.html:10
 #: templates/insert-photo.html:20 templates/insert-place.html:10
-#: templates/update-album.html:10 templates/update-photo.html:11
-#: templates/update-place.html:11
+#: templates/update-model.html:10
 msgid "NAME"
 msgstr "Name"
 
@@ -599,29 +597,13 @@ msgstr ""
 msgid "control-title share"
 msgstr "Teilen"
 
-#: templates/delete-album.html:5
-msgid "DELETE_ALBUM"
-msgstr "Album löschen?"
+#: templates/delete-model.html:5
+msgid "DELETE_CONFIRM"
+msgstr "Löschen bestätigen"
 
-#: templates/delete-album.html:10
-msgid "DELETE_ALBUM_QUESTION"
-msgstr "Wollen Sie das folgende Album wirklich löschen:"
-
-#: templates/delete-photo.html:5
-msgid "DELETE_PHOTO"
-msgstr "Photo löschen?"
-
-#: templates/delete-photo.html:10
-msgid "DELETE_PHOTO_QUESTION"
-msgstr "Wollen Sie das folgende Photo wirklich löschen: "
-
-#: templates/delete-place.html:5
-msgid "DELETE_PLACE"
-msgstr "Platz löschen?"
-
-#: templates/delete-place.html:10
-msgid "DELETE_PLACE_QUESTION"
-msgstr "Wollen Sie den folgenden Platz wirklich löschen: "
+#: templates/delete-model.html:10
+msgid "DELETE_MODEL_QUESTION"
+msgstr "Bitte bestätigen Sie das Löschen von: "
 
 #: templates/dialog.html:10
 msgid "FAILURE"
@@ -1136,7 +1118,7 @@ msgstr ""
 msgid "Login"
 msgstr "Anmeldung"
 
-#: templates/index-guest.html:33 templates/index.html:67
+#: templates/index-guest.html:33 templates/index.html:68
 msgid "Registration"
 msgstr "Registration"
 
@@ -1145,15 +1127,15 @@ msgstr "Registration"
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: templates/index-guest.html:64 templates/index.html:71
+#: templates/index-guest.html:64 templates/index.html:72
 msgid "First name"
 msgstr "Vorname"
 
-#: templates/index-guest.html:68 templates/index.html:75
+#: templates/index-guest.html:68 templates/index.html:76
 msgid "Last name"
 msgstr "Nachname"
 
-#: templates/index-guest.html:80 templates/index.html:87
+#: templates/index-guest.html:80 templates/index.html:88
 msgid "Confirm Password"
 msgstr "Passwort bestätigen"
 
@@ -1231,7 +1213,7 @@ msgstr "Unser erstes Album betrachten"
 msgid "TRY_KEIKEN"
 msgstr "KEIKEN selber ausprobieren"
 
-#: templates/index.html:39 templates/index.html.py:91
+#: templates/index.html:39 templates/index.html.py:92
 msgid "Sign Up"
 msgstr "Registrieren"
 
@@ -1244,21 +1226,18 @@ msgid "INSERT_ALBUM"
 msgstr "Album hinzufügen"
 
 #: templates/insert-album.html:11 templates/insert-photo.html:21
-#: templates/insert-place.html:11 templates/update-album.html:11
-#: templates/update-photo.html:12 templates/update-place.html:12
+#: templates/insert-place.html:11 templates/update-model.html:11
 msgid "INPUT_PLACEHOLDER_TITLE"
 msgstr "Bestimmen Sie einen Titel."
 
 #: templates/insert-album.html:14 templates/insert-photo.html:11
 #: templates/insert-photo.html.py:24 templates/insert-place.html:14
-#: templates/update-album.html:14 templates/update-photo.html:15
-#: templates/update-place.html:15
+#: templates/update-model.html:14
 msgid "DESCRIPTION"
 msgstr "Beschreibung"
 
 #: templates/insert-album.html:15 templates/insert-photo.html:25
-#: templates/insert-place.html:15 templates/update-album.html:15
-#: templates/update-photo.html:16 templates/update-place.html:16
+#: templates/insert-place.html:15 templates/update-model.html:15
 msgid "INPUT_PLACEHOLDER_DESCRIPTION"
 msgstr "(Optional) Fügen Sie eine Beschreibung hinzu.."
 
@@ -1668,17 +1647,20 @@ msgstr "Motivation am Projekt"
 msgid "UPDATE_ALBUM_PASSWORD"
 msgstr "Link zum Teilen & Album Passwort"
 
-#: templates/update-album-password.html:15
-msgid "INPUT_PLACEHOLDER_SHARE_PASSWORD"
+#: templates/update-album-password.html:12
+msgid "Album share url"
 msgstr ""
-"Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt "
-"haben.."
 
-#: templates/update-album-password.html:20
+#: templates/update-album-password.html:16
+#: templates/update-album-password.html:21
 msgid "INPUT_SHARE_ALBUM_TITEL"
 msgstr "Wie teilt man?"
 
-#: templates/update-album-password.html:23
+#: templates/update-album-password.html:17
+msgid "Assign new album password"
+msgstr ""
+
+#: templates/update-album-password.html:24
 msgid "INPUT_SHARE_ALBUM_INFO"
 msgstr ""
 "Kopieren Sie den Link und fügen Sie ihn an der Stelle ein, an der Sie ihr "
@@ -1695,13 +1677,15 @@ msgstr ""
 "haben und ein ALbum geöffnet haben, können Sie einfach die URL kopieren und "
 "teilen."
 
-#: templates/update-album.html:5
-msgid "UPDATE_ALBUM"
-msgstr "Album bearbeiten"
+#: templates/update-album-password.html:29
+msgid "INPUT_PLACEHOLDER_SHARE_PASSWORD"
+msgstr ""
+"Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt "
+"haben.."
 
-#: templates/update-photo.html:5
-msgid "UPDATE_PHOTO"
-msgstr "Photo bearbeiten"
+#: templates/update-model.html:5
+msgid "UPDATE_FORM"
+msgstr "Update-Formular"
 
 #: templates/update-photos.html:5
 msgid "UPDATE_PHOTOS"
@@ -1710,10 +1694,6 @@ msgstr "Bearbeiten der Photo-Reihenfolge"
 #: templates/update-photos.html:11
 msgid "UPDATE_PHOTOS_CONFIRMATION"
 msgstr "Wollen Sie die neue Reihenfolge bestätigen?"
-
-#: templates/update-place.html:5
-msgid "UPDATE_PLACE"
-msgstr "Platz bearbeiten"
 
 #: templates/url-invalid.html:6
 #, fuzzy
@@ -1731,34 +1711,6 @@ msgstr "Die angegebene URL ist ungültig."
 #: templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumsansicht"
-
-#: templates/view-album.html:37
-msgid "Previous Page"
-msgstr "Vorherige Seite"
-
-#: templates/view-album.html:41
-msgid "Open Full Gallery"
-msgstr "Vollständige Galerie öffnen"
-
-#: templates/view-album.html:58
-msgid "Next Page"
-msgstr "Nächste Seite"
-
-#: templates/view-album.html:62
-msgid "Add Image"
-msgstr "Bild hinzufügen"
-
-#: templates/view-album.html:75
-msgid "Previous Image"
-msgstr "Vorheriges Bild"
-
-#: templates/view-album.html:84
-msgid "Next Image"
-msgstr "Nächstes Bild"
-
-#: templates/view-album.html:87
-msgid "Bild"
-msgstr "Bild"
 
 #: templates/email/delete-account-email.html:1
 msgid "DELETE_ACCOUNT_NOTIFY_MAIL_INTRO"
@@ -1825,6 +1777,55 @@ msgstr ""
 "teilen ihrer eigenen Fotoalben.\n"
 "\n"
 "Das KEIKEN Team."
+
+#: templates/views/Gallery.html:7
+msgid "Previous Page"
+msgstr "Vorherige Seite"
+
+#: templates/views/Gallery.html:11
+msgid "Open Full Gallery"
+msgstr "Vollständige Galerie öffnen"
+
+#: templates/views/Gallery.html:28
+msgid "Next Page"
+msgstr "Nächste Seite"
+
+#: templates/views/Gallery.html:32
+msgid "Add Image"
+msgstr "Bild hinzufügen"
+
+#: templates/views/Slideshow.html:6
+msgid "Previous Image"
+msgstr "Vorheriges Bild"
+
+#: templates/views/Slideshow.html:15
+msgid "Next Image"
+msgstr "Nächstes Bild"
+
+#: templates/views/Slideshow.html:18
+msgid "Bild"
+msgstr "Bild"
+
+#~ msgid "UPDATE_PHOTO"
+#~ msgstr "Photo bearbeiten"
+
+#~ msgid "UPDATE_PLACE"
+#~ msgstr "Platz bearbeiten"
+
+#~ msgid "DELETE_ALBUM"
+#~ msgstr "Album löschen?"
+
+#~ msgid "DELETE_PHOTO"
+#~ msgstr "Photo löschen?"
+
+#~ msgid "DELETE_PHOTO_QUESTION"
+#~ msgstr "Wollen Sie das folgende Photo wirklich löschen: "
+
+#~ msgid "DELETE_PLACE"
+#~ msgstr "Platz löschen?"
+
+#~ msgid "DELETE_PLACE_QUESTION"
+#~ msgstr "Wollen Sie den folgenden Platz wirklich löschen: "
 
 #~ msgid "To Login"
 #~ msgstr "Anmeldung"

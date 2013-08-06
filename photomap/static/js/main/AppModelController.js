@@ -111,7 +111,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                         .onError(dialog.showNetworkError)
                         .update(data);
                    },
-                   url : "/form/update/" + model.getModelType().toLowerCase()
+                   url : "/form/update/model"
                 });
              },
              _modelDelete : function (model) {
@@ -122,8 +122,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                   
                 dialog.show({
                    load : function () {
-                      dialog.setInputValue("title", model.getTitle());
-                      dialog.setInputValue("description", model.getDescription());
+                      $("#mp-dialog-model-title").text(modelType + " - " + model.getTitle());
                    },
                    submit: function (data) {
                       collection
@@ -137,7 +136,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                         .onError(dialog.showNetworkError)
                         .delete(model, data);
                    },
-                   url : "/form/delete/" + modelType.toLowerCase()
+                   url : "/form/delete/model"
                 });
              },
              _albumShare : function (album) {

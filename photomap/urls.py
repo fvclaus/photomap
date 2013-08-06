@@ -59,14 +59,10 @@ form_patterns = patterns("",
                            url(r'^insert/album$', direct_to_template, {"template": "insert-album.html"}),
                            url(r'^insert/place$', direct_to_template, {"template": "insert-place.html"}),
                            url(r'^insert/photo$', photo.get_insert_dialog),
-                           url(r'^update/album$', direct_to_template, {"template": "update-album.html"}),
+                           url(r'^update/model$', direct_to_template, {"template": "update-model.html"}),
                            url(r'^update/album/password$', direct_to_template, {"template": "update-album-password.html"}),
-                           url(r'^update/place$', direct_to_template, {"template": "update-place.html"}),
-                           url(r'^update/photo$', direct_to_template, {"template": "update-photo.html"}),
                            url(r'^update/photos$', direct_to_template, {"template": "update-photos.html"}),
-                           url(r'^delete/album$', direct_to_template, {"template": "delete-album.html"}),
-                           url(r'^delete/place$', direct_to_template, {"template": "delete-place.html"}),
-                           url(r'^delete/photo$', direct_to_template, {"template": "delete-photo.html"})
+                           url(r'^delete/model$', direct_to_template, {"template": "delete-model.html"})
                            )
 #================================================================
 # album hooks
