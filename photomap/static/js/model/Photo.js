@@ -48,39 +48,36 @@ define(["dojo/_base/declare",
                 //return this.id;
                 throw new Error("DoNotUseThisError");
              },
-             save : function (newData, deleteMe) {
+             save : function (newData) {
                 var instance = this,
                    settings = {
                       url: "/" + this.type.toLowerCase() + "/",
-                      type: "DELETE",
+                      type: "post",
                       data: {},
                       dataType: "json",
                       success: function (data, status, xhr) {
                          if (data.success) {
-                            $(instance).trigger("success", [data, status, xhr]);
+                            instance._trigger("success", [data, status, xhr]);
                          } else {
-                            $(instance).trigger("failure", [data, status, xhr]);
+                            instance._trigger("failure", [data, status, xhr]);
                          }
                       },
                       error: function (xhr, status, error) {
-                         $(instance).trigger("error", [xhr, status, error]);
+                         instance._trigger("error", [xhr, status, error]);
                       }
                    };
                 // add id if exists -> for Delete or Update (id does not exist before Insert -> not needed)
                 if (this.id) {
                    settings.url += this.id + "/";
                 }
-                // change method to POST and add title and description for Update or Formdata (photo-upload) for Insert
-                if (!deleteMe) {
-                   settings.type = "POST";
-                   if (newData.isPhotoUpload) {
-                      settings.processData = false;
-                      settings.contentType = false;
-                      settings.cache = false;
-                      settings.data = this._parseFormData(newData.formData);
-                   } else {
-                      settings.data = newData.formData;
-                   }
+                // add title and description for Update or Formdata (photo-upload) for Insert
+                if (newData.isPhotoUpload) {
+                   settings.processData = false;
+                   settings.contentType = false;
+                   settings.cache = false;
+                   settings.data = this._parseFormData(newData.formData);
+                } else {
+                   settings.data = newData.formData;
                 }
                 
                 $.ajax(settings);

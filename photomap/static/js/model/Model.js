@@ -72,6 +72,42 @@ define(["dojo/_base/declare"],
                 
                 return true;
              },
+             update : function (newData) {
+                var instance = this;
+                this
+                  .onSuccess(function () {
+                     instance.updateProperties(newData);
+                     instance._trigger("update", this);
+                  })
+                  .save(newData);
+             },
+             "delete": function () {
+                var instance = this;
+                $.ajax({
+                   url: "/" + this.type.toLowerCase() + "/" + this.id + "/",
+                   type: "DELETE",
+                   dataType: "json",
+                   success: function (data, status, xhr) {
+                      if (data.success) {
+                         $(instance).trigger("success", [data, status, xhr]);
+                      } else {
+                         $(instance).trigger("failure", [data, status, xhr]);
+                      }
+                   },
+                   error: function (xhr, status, error) {
+                      $(instance).trigger("error", [xhr, status, error]);
+                   }
+                });
+             },
+            onUpdate : function (handler, thisReference) {
+               var context = thisReference || this;
+               
+               $(this).on("update", function (event, model) {
+                  handler.call(context, model);
+               });
+               
+               return this;
+            },
             /**
              * @description Adds handler to the "success"-event triggered after model-data is succesfully saved to the server
              */
@@ -122,6 +158,14 @@ define(["dojo/_base/declare"],
                
                return this;
             },
+            /**
+             * @description Wraps jQuery .trigger() - triggers event on the collection.
+             * @param {String} eventName
+             * @param {Object} data Data to be passed to the handler. data mayb be an Array, Object or basically anything else
+             */
+            _trigger : function (eventName, data) {
+               $(this).trigger(eventName, data);
+            }
           });
        });
 

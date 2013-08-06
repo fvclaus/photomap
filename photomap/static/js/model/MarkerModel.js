@@ -31,32 +31,27 @@ define(["dojo/_base/declare", "model/Model"],
              getLng : function () {
                 return this.lng;
              },
-             save : function (newData, deleteMe) {
+             save : function (newData) {
                 var instance = this,
                    settings = {
                       url: "/" + this.type.toLowerCase() + "/",
-                      type: "DELETE",
-                      data: {},
+                      type: "post",
+                      data: newData.formData,
                       dataType: "json",
                       success: function (data, status, xhr) {
                          if (data.success) {
-                            $(instance).trigger("success", [data, status, xhr]);
+                            instance._trigger("success", [data, status, xhr]);
                          } else {
-                            $(instance).trigger("failure", [data, status, xhr]);
+                            instance._trigger("failure", [data, status, xhr]);
                          }
                       },
                       error: function (xhr, status, error) {
-                         $(instance).trigger("error", [xhr, status, error]);
+                         instance._trigger("error", [xhr, status, error]);
                       }
                    };
-                // add id if exists -> for Delete or Update (id does not exist before Insert -> not needed)
+                // add id if exists -> for Update (id does not exist before Insert -> not needed)
                 if (this.id) {
                    settings.url += this.id + "/";
-                }
-                // change method to POST and add title and description -> for Insert or Update (for DELETE you just need the id)
-                if (!deleteMe) {
-                   settings.type = "POST";
-                   settings.data = newData.formData;
                 }
                 
                 $.ajax(settings);

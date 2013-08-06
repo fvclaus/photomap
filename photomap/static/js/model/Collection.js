@@ -30,6 +30,8 @@ define(["dojo/_base/declare"],
                if (options.orderBy) {
                   this._sort();
                }
+               
+               this._bindModelUpdateListener();
             },
             /**
              * @description Inserts a model into the collection, saves it to the server and informs the subscribed classes about the insertion.
@@ -57,6 +59,11 @@ define(["dojo/_base/declare"],
                      // for development it is needed though to assure that the new IDU-Design works
                      if (model.assertValidity()) {
                         instance.models.push(model);
+                        // start listening to model updates
+                        model.onUpdate(function (model) {
+                           instance._trigger("update", model);
+                        });
+                        // insert successful
                         instance._trigger("insert", model);
                      }
                   })
@@ -67,6 +74,36 @@ define(["dojo/_base/declare"],
                      instance._trigger("error", [xhr, status, error]);
                   })
                   .save(rawModelData);
+               
+               return this;
+            },
+            insertModel : function (model) {
+               var instance = this;
+               
+               model
+                  .onSuccess(function (data, status, xhr) {
+                     instance._trigger("success", [data, status, xhr]);
+                     
+                     model.updateProperties(data);
+                     // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true,
+                     // for development it is needed though to assure that the new IDU-Design works
+                     if (model.assertValidity()) {
+                        instance.models.push(model);
+                        // start listening to model updates
+                        model.onUpdate(function (model) {
+                           instance._trigger("update", model);
+                        });
+                        // insert successful
+                        instance._trigger("insert", model);
+                     }
+                  })
+                  .onFailure(function (data, status, xhr) {
+                     instance._trigger("failure", [data, status, xhr]);
+                  })
+                  .onError(function (xhr, status, error) {
+                     instance._trigger("error", [xhr, status, error]);
+                  })
+                  .save();
                
                return this;
             },
@@ -92,7 +129,7 @@ define(["dojo/_base/declare"],
                   .onError(function (xhr, status, error) {
                      instance._trigger("error", [xhr, status, error]);
                   })
-                  .save(null, true);
+                  .delete();
                
                return this;
             },
@@ -158,8 +195,8 @@ define(["dojo/_base/declare"],
             onInsert : function (handler, thisReference) {
                var context = thisReference || this;
                
-               $(this).on("insert", function (event, data) {
-                  handler.call(context, data);
+               $(this).on("insert", function (event, model) {
+                  handler.call(context, model);
                });
                
                return this;
@@ -167,8 +204,8 @@ define(["dojo/_base/declare"],
             onUpdate : function (handler, thisReference) {
                var context = thisReference || this;
                
-               $(this).on("delete", function (event, data) {
-                  handler.call(context, data);
+               $(this).on("update", function (event, model) {
+                  handler.call(context, model);
                });
                
                return this;
@@ -176,8 +213,8 @@ define(["dojo/_base/declare"],
             onDelete : function (handler, thisReference) {
                var context = thisReference || this;
                
-               $(this).on("delete", function (event, data) {
-                  handler.call(context, data);
+               $(this).on("delete", function (event, model) {
+                  handler.call(context, model);
                });
                
                return this;
@@ -239,6 +276,14 @@ define(["dojo/_base/declare"],
                
                this.models.sort(function (model, copy) {
                   return model[instance.options.orderBy] - copy[instance.options.orderBy];
+               });
+            },
+            _bindModelUpdateListener : function () {
+               var instance = this;
+               $.each(this.models, function (i, model) {
+                  model.onUpdate(function (model) {
+                     instance._trigger("update", model);
+                  });
                });
             },
             /**
