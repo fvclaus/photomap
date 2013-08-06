@@ -55,6 +55,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 });
              },
              _mapInsert : function (eventData) {
+                console.log("Event-Data (should contain lat & lng): ");
+                console.log(eventData);
                 var dialog = main.getUI().getDialog(),
                   markerCollection,
                   modelType;
@@ -163,10 +165,11 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                              $help.stop(true).slideToggle(100);
                           }
                        });
-                       $("form[name='update-" + modelName + "-password']").attr("action", requestUrl);
-                       $("a#album-url").text("http://" + window.location.host + "/album/" + id + "/view/" + instance.model.getSecret() + "/");
-                       $("a#album-url").attr("href","http://" + window.location.host + "/album/" + id + "/view/" + instance.model.getSecret() + "/");
-                       $("a#album-url").css("cursor", "auto");
+                       $("form[name='update-album-password']").attr("action", "/album/" + album.getId() + "password");
+                       console.log("http://" + window.location.host + "/album/" + album.getId() + "/view/" + album.getSecret() + "/");
+                       $("a#album-url").text("http://" + window.location.host + "/album/" + album.getId() + "/view/" + album.getSecret() + "/");
+                       $("a#album-url").attr("href","http://" + window.location.host + "/album/" + album.getId()  + "/view/" + album.getSecret() + "/");
+                       $("a#album-url").css("cursor", "default");
                        $("#mp-dialog-button-save").button("disable");
                        $("#album-password")
                         .on("keyup keypress", null, function () {

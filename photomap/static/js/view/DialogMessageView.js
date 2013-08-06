@@ -22,9 +22,11 @@ define(["dojo/_base/declare", "view/View", "ui/UIState", "dojo/domReady!"],
             this._bindListener();
          },
          showSuccess : function () {
+            this.$container.show();
             this.$success.show("slow");
          },
          showFailure : function (error) {
+            this.$container.show();
             this.$failure.show("slow");
             this.$error.text(error.toString());
          },

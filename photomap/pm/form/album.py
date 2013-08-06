@@ -17,11 +17,11 @@ class AlbumUpdateForm(forms.ModelForm):
         exclude = ("country", "user","lat","lon","date", "secret", "password")
         
 class AlbumPasswordUpdateForm(forms.Form):
-    password = forms.CharField()
+    album_password = forms.CharField()
     
 
 class AlbumShareLoginForm(forms.Form):
-    password = forms.CharField()
+    album_password = forms.CharField()
     
 
     

@@ -50,7 +50,7 @@ def update_password(request, id):
             album_id = int(id)
             logger.debug("User %d is trying to set new password for Album %d." % (request.user.pk, album_id))
             album = Album.objects.get(pk = album_id, user = user)
-            password = hashers.make_password(form.cleaned_data["password"])
+            password = hashers.make_password(form.cleaned_data["album_password"])
             album.password = password
             album.save()
             return success()
@@ -78,7 +78,7 @@ def demo(request):
         demo = User.objects.get(username="demo")
         album = Album.objects.get(user = demo)
         request.session["album_%d" % album.pk] = True
-        return redirect("/album/view/%s-%d" % (album.secret, album.pk))
+        return redirect("/album/%d/view/%s/" % (album.pk, album.secret))
     else:
         return HttpResponseBadRequest()
 
@@ -109,11 +109,11 @@ def view(request, id, secret):
             
             return landingpage.get_guest_current(request)
         else:
-            password = request.POST["password"]
+            password = request.POST["album_password"]
             
             if hashers.check_password(password, album.password):
                 request.session["album_%d" % album_id] = True
-                return redirect("/album/view/%s-%d" % (album.secret, album_id))
+                return redirect("/album/%d/view/%s/" % (album_id, album.secret))
             else:
                 logger.debug("Password %s is incorrect." % password)
                 return render_to_response("album-share-login.html", 
