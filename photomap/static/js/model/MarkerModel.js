@@ -36,7 +36,7 @@ define(["dojo/_base/declare", "model/Model"],
                    settings = {
                       url: "/" + this.type.toLowerCase() + "/",
                       type: "post",
-                      data: newData.formData,
+                      data: newData,
                       dataType: "json",
                       success: function (data, status, xhr) {
                          if (data.success) {

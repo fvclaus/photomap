@@ -261,9 +261,9 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                   instance.$buttons.button("disable");
                   instance.$loader.show();
                   
-                  var data = {
-                     isPhotoUpload: instance.options.isPhotoUpload,
-                     "formData": instance._getFormData(instance.$form)
+                  var data = instance._getFormData(instance.$form);
+                  if (instance.options.isPhotoUpload) {
+                     data.isPhotoUpload = true;
                   }
                   
                   instance._trigger(instance.options, "submit", data);

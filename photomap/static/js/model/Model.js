@@ -59,7 +59,7 @@ define(["dojo/_base/declare"],
                 var instance = this;
                 $.each(newData, function (key, value) {
                    if (instance.hasOwnProperty(key)) {
-                      this[key] = value;
+                      instance[key] = value;
                    }
                 });
              },
@@ -77,7 +77,7 @@ define(["dojo/_base/declare"],
                 this
                   .onSuccess(function () {
                      instance.updateProperties(newData);
-                     instance._trigger("update", this);
+                     instance._trigger("updated.Model", this);
                   })
                   .save(newData);
              },
@@ -102,7 +102,7 @@ define(["dojo/_base/declare"],
             onUpdate : function (handler, thisReference) {
                var context = thisReference || this;
                
-               $(this).on("update", function (event, model) {
+               $(this).on("updated.Model", function (event, model) {
                   handler.call(context, model);
                });
                

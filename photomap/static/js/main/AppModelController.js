@@ -90,9 +90,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 });
              },
              _modelUpdate : function (model) {
-                var dialog = main.getUI().getDialog(),
-                  modelType = model.getModelType(),
-                  collection = state.getCollection(modelType);
+                var dialog = main.getUI().getDialog();
                   
                 dialog.show({
                    load : function () {
@@ -100,7 +98,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                       dialog.setInputValue("description", model.getDescription());
                    },
                    submit: function (data) {
-                      collection
+                      model
                         .onSuccess(function (data) {
                            dialog.showResponseMessage(data);
                            clientstate.updateUsedSpace();
@@ -109,9 +107,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                            dialog.showResponseMessage(data);
                         })
                         .onError(dialog.showNetworkError)
-                        .update(model, data);
+                        .update(data);
                    },
-                   url : "/form/update/" + modelType.toLowerCase()
+                   url : "/form/update/" + model.getModelType().toLowerCase()
                 });
              },
              _modelDelete : function (model) {

@@ -64,7 +64,7 @@ define(["dojo/_base/declare"],
                            instance._trigger("update", model);
                         });
                         // insert successful
-                        instance._trigger("insert", model);
+                        instance._trigger("inserted.Model", model);
                      }
                   })
                   .onFailure(function (data, status, xhr) {
@@ -91,10 +91,10 @@ define(["dojo/_base/declare"],
                         instance.models.push(model);
                         // start listening to model updates
                         model.onUpdate(function (model) {
-                           instance._trigger("update", model);
+                           instance._trigger("updated.Model", model);
                         });
                         // insert successful
-                        instance._trigger("insert", model);
+                        instance._trigger("inserted.Model", model);
                      }
                   })
                   .onFailure(function (data, status, xhr) {
@@ -121,7 +121,7 @@ define(["dojo/_base/declare"],
                      instance._trigger("success", [data, status, xhr]);
                      
                      instance.models.splice(index, 1);
-                     instance._trigger("delete", model);
+                     instance._trigger("deleted.Model", model);
                   })
                   .onFailure(function (data, status, xhr) {
                      instance._trigger("failure", [data, status, xhr]);
@@ -150,7 +150,7 @@ define(["dojo/_base/declare"],
                      instance._trigger("success", [data, status, xhr]);
                      
                      model.updateProperties(newData);
-                     instance._trigger("update", model);
+                     instance._trigger("updated.Model", model);
                   })
                   .onFailure(function (data, status, xhr) {
                      instance._trigger("failure", [data, status, xhr]);
@@ -195,7 +195,7 @@ define(["dojo/_base/declare"],
             onInsert : function (handler, thisReference) {
                var context = thisReference || this;
                
-               $(this).on("insert", function (event, model) {
+               $(this).on("inserted.Model", function (event, model) {
                   handler.call(context, model);
                });
                
@@ -204,7 +204,7 @@ define(["dojo/_base/declare"],
             onUpdate : function (handler, thisReference) {
                var context = thisReference || this;
                
-               $(this).on("update", function (event, model) {
+               $(this).on("updated.Model", function (event, model) {
                   handler.call(context, model);
                });
                
@@ -213,7 +213,7 @@ define(["dojo/_base/declare"],
             onDelete : function (handler, thisReference) {
                var context = thisReference || this;
                
-               $(this).on("delete", function (event, model) {
+               $(this).on("deleted.Model", function (event, model) {
                   handler.call(context, model);
                });
                
@@ -282,7 +282,7 @@ define(["dojo/_base/declare"],
                var instance = this;
                $.each(this.models, function (i, model) {
                   model.onUpdate(function (model) {
-                     instance._trigger("update", model);
+                     instance._trigger("updated.Model", model);
                   });
                });
             },

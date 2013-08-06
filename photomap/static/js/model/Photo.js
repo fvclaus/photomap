@@ -75,9 +75,9 @@ define(["dojo/_base/declare",
                    settings.processData = false;
                    settings.contentType = false;
                    settings.cache = false;
-                   settings.data = this._parseFormData(newData.formData);
+                   settings.data = this._parseFormData(newData);
                 } else {
-                   settings.data = newData.formData;
+                   settings.data = newData;
                 }
                 
                 $.ajax(settings);
