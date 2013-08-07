@@ -84,7 +84,7 @@ define(["dojo/_base/declare",
              insertPhoto : function (photo) {
                 assertTrue(photo instanceof Photo);
                 
-                this.log("Inserting new photo %s to Carousel.", photo);
+                console.log("Inserting new photo %s to Carousel.", photo);
                 // update page
                 this.dataPage.insertPhoto(photo);
                 var from = this.dataPage.getIndexOfPhoto(photo);
@@ -150,15 +150,19 @@ define(["dojo/_base/declare",
               * @description resets carousel, so that no images are shown
               */
              reset : function () {
-                
+                console.log("PhotoCarouselView: reset()");
                 this.dataPage = null;
-                this.options = null;
                 this.currentPage = null;
-                this.log("Stopping update threats.");
+                console.log("Stopping update threads.");
                 this.nLoadHandler = 0;
-                this.$items.each(function (index) {
-                   $(this).hide().attr("src", "");
+                this.$items.each(function () {
+                   $(this).hide().removeAttr("src");
                 });
+                this.options.loader.each(function () {
+                   $(this).hide();
+                });
+                this.options = null;
+                this.$items = null;
              },
              /* 
               * @public
@@ -333,6 +337,7 @@ define(["dojo/_base/declare",
                          instance._update();
                       }
                       for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
+                         instance._ping();
                          photo = photos[photoIndex];
                          $('<img/>')
                             .load(loadHandler)
@@ -403,7 +408,12 @@ define(["dojo/_base/declare",
                    try { 
                       $photos.each(function (photoIndex, photoNode) {
                          // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
-                         $(photoNode).attr(instance.ID_HTML_ATTRIBUTE, photos[photoIndex].getId());
+                         var photo = photos[photoIndex];
+                         if (photo) {
+                            $(photoNode).attr(instance.ID_HTML_ATTRIBUTE, photos[photoIndex].getId());
+                         } else {
+                            $(photoNode).removeAttr(instance.ID_HTML_ATTRIBUTE);
+                         }
                       });
                       instance.options.onUpdate.call(instance.options.context, $photos);
                    } catch (e) {
@@ -423,7 +433,17 @@ define(["dojo/_base/declare",
                 });
 
                 this._finishThreat = finishHandler;
-             }
+             },
+             /*
+              * @private
+              * @description Test if this instance is not reset or garbage collected.
+              * This is sometimes necessary in threads that do not access class members, but only modify the Dom.
+              * This will raise an error, if the instance was taken down and will terminate the threads.
+              */
+             _ping : function () {
+                console.log("PhotoCarouselView: _ping");
+                this.$items.length * 2;
+             },
           });
        });
    

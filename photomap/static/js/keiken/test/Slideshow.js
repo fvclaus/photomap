@@ -19,7 +19,7 @@ require(["widget/SlideshowWidget",
                      QUnit.ok$hidden($(".mp-tooltip"));
                   }
                },
-               assertPhotoInGallery = function (photo) {
+               assertPhotoInWidget = function (photo) {
                   var $image = $(".mp-slideshow-image"),
                       expectedText = "Photo " + (photos.indexOf(photo) + 1) +  "/" + photos.length;
                   QUnit.ok$visible($image);
@@ -46,9 +46,8 @@ require(["widget/SlideshowWidget",
               }
            });
            
-           QUnit.asyncTest("startup/loadPhotos", 7, function () {
+           QUnit.asyncTest("startup/loadPhotos", 6, function () {
               // No startup yet.
-              assertTooltipPresence(false);
               QUnit.raiseError(slideshow.run, slideshow);
               QUnit.raiseError(slideshow.load, slideshow, photos);
               slideshow.startup();
@@ -80,7 +79,7 @@ require(["widget/SlideshowWidget",
               slideshow.run();
               setTimeout(function () {
                  assertTooltipPresence(false);
-                 assertPhotoInGallery(photos[0]);
+                 assertPhotoInWidget(photos[0]);
                  QUnit.start();
               }, animationTime);
            });
@@ -94,16 +93,16 @@ require(["widget/SlideshowWidget",
               QUnit.raiseError(slideshow.navigateWithDirection, slideshow, "wrong");
               slideshow.navigateWithDirection("left");
               setTimeout(function () {
-                 assertPhotoInGallery(photos[11]);
+                 assertPhotoInWidget(photos[11]);
                  slideshow.navigateWithDirection("right");
                  setTimeout(function () {
-                    assertPhotoInGallery(photos[0]);
+                    assertPhotoInWidget(photos[0]);
                     slideshow.navigateWithDirection("right");
                     slideshow.navigateWithDirection("right");
                     slideshow.navigateWithDirection("right");
                     slideshow.navigateWithDirection("right");
                     setTimeout(function () {
-                       assertPhotoInGallery(photos[4]);
+                       assertPhotoInWidget(photos[4]);
                        QUnit.start();
                     }, animationTime);
                  }, animationTime);
@@ -118,10 +117,10 @@ require(["widget/SlideshowWidget",
               // This should be the same as slideshow.run()
               slideshow.navigateTo(null);
               setTimeout(function () {
-                 assertPhotoInGallery(photos[0]);
+                 assertPhotoInWidget(photos[0]);
                  slideshow.navigateTo(photos[7]);
                  setTimeout(function () {
-                    assertPhotoInGallery(photos[7]);
+                    assertPhotoInWidget(photos[7]);
                     QUnit.start();
                  }, animationTime);
               }, animationTime);
@@ -151,17 +150,17 @@ require(["widget/SlideshowWidget",
               photos.push(newPhoto);
               setTimeout(function () {
                  // Make sure the image counter incremented properly.
-                 assertPhotoInGallery(photos[0]);
+                 assertPhotoInWidget(photos[0]);
                  slideshow.navigateTo(newPhoto);
                  setTimeout(function () {
-                    assertPhotoInGallery(newPhoto);
+                    assertPhotoInWidget(newPhoto);
                     for (photoIndex = 0; photoIndex < 20; photoIndex++) {
                        newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
                        slideshow.insertPhoto(newPhoto);
                        photos.push(newPhoto);
                     }
                     setTimeout(function () {
-                       assertPhotoInGallery(photos[12]);
+                       assertPhotoInWidget(photos[12]);
                        QUnit.start();
                     }, animationTime);
                  }, animationTime);
@@ -182,7 +181,7 @@ require(["widget/SlideshowWidget",
               setTimeout(function () {
                  // Make sure the image counter is decremented properly.
                  // Make sure the slideshow navigates to the 2nd photo.
-                 assertPhotoInGallery(photos[0]);
+                 assertPhotoInWidget(photos[0]);
                  for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
                     slideshow.deletePhoto(photos[photoIndex]);
                  }

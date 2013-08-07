@@ -19,14 +19,14 @@ define(["dojo/_base/declare",
         "view/StatusMessageView",
         "widget/SlideshowWidget",
         "widget/AdminGalleryWidget",
-        "view/FullscreenView",
+        "widget/FullscreenWidget",
         "widget/GalleryWidget",
         "view/DialogView",
         "widget/PageTitleWidget",
         "ui/UIState",
         "dojo/domReady!"
        ],
-       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowWidget, AdminGalleryWidget, FullscreenView, GalleryWidget, DialogView, PageTitleWidget, state) {
+       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state) {
            var UI = declare(null, {
               constructor : function () {
                  this.controls = new ModelFunctionView();
@@ -42,7 +42,8 @@ define(["dojo/_base/declare",
                     this.slideshow.startup();
                     this.adminGallery = new AdminGalleryWidget(null, $("#mp-full-left-column").get(0));
                     this.adminGallery.startup();
-                    this.fullscreen = new FullscreenView();
+                    this.fullscreen = new FullscreenWidget(null, $("#mp-fullscreen").get(0));
+                    this.fullscreen.startup();
                     this.pageTitle = new PageTitleWidget();
                  } 
                  this._isDisabled = false;
@@ -69,7 +70,7 @@ define(["dojo/_base/declare",
                  if (state.isDashboardView()) {
                     return null;
                  }
-                 return this.fullscreen.getPresenter();
+                 return this.fullscreen;
               },
               getControls : function () {
                  return this.controls;

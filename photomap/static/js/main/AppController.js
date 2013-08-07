@@ -154,12 +154,13 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    this._disableLinks();
                 }
              },
-             _fullscreenDisable : function () {
-                main.getUI().getFullscreen().setDisabled(true);
-             },
-             _fullscreenEnable : function () {
-                main.getUI().getFullscreen().setDisabled(false);
-             },
+             // Fullscreen is thread safe and does not need to be disabled.
+             // _fullscreenDisable : function () {
+             //    main.getUI().getFullscreen().setDisabled(true);
+             // },
+             // _fullscreenEnable : function () {
+             //    main.getUI().getFullscreen().setDisabled(false);
+             // },
              _disableLinks : function () {
                
                  $("a, .mp-control").css({
@@ -317,16 +318,17 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              },
              _slideshowUpdate : function (photo) {
                 main.getUI().getInformation().update(photo);
-                main.getUI().getFullscreen().update(photo);
+
                 main.getUI().getGallery().navigateIfNecessary(photo);
                 clientstate.insertVisitedPhoto(photo);
                 photo.setVisited(true);
+                main.getUI().getFullscreen().navigateTo(photo);
              },
              _slideshowBeforeLoad : function () {
                 main.getUI().getInformation().hideDetail();
              },
              _slideshowClick : function () {
-                main.getUI().getFullscreen().open();
+                main.getUI().getFullscreen().show();
              },
              _fullscreenNavigate : function (direction) {
                 main.getUI().getSlideshow().navigateWithDirection(direction);
@@ -354,12 +356,14 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                    main.getUI().getGallery().deletePhoto(model);
                    main.getUI().getSlideshow().deletePhoto(model);
                    main.getUI().getAdminGallery().deletePhoto(model);
+                   main.getUI().getFullscreen().deletePhoto(model);
                    state.getCurrentLoadedPlace().getModel().deletePhoto(model);
                 } else if (type === "Place") {
                    if (currentPlace && currentPlace.getModel() === model) {
                       main.getUI().getGallery().reset();
                       main.getUI().getSlideshow().reset();
                       main.getUI().getAdminGallery().reset();
+                      main.getUI().getFullscreen().reset();
                    }
                 }
                 
@@ -381,6 +385,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
 
                 main.getUI().getSlideshow().load(photos);
                 main.getUI().getAdminGallery().load(photos);
+                main.getUI().getFullscreen().load(photos);
 
                 main.getUI().getMessage().hide();
              },

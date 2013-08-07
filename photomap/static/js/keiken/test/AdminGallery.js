@@ -83,7 +83,7 @@ require(["widget/AdminGalleryWidget",
               setTimeout(function () {
                  assertPhotosInGallery(photos);
                  QUnit.start();
-              },1000);
+              }, 1000);
            });
 
            QUnit.asyncTest("drag", nPhotos + 3, function () {

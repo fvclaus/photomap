@@ -73,7 +73,7 @@ define(["dojo/_base/declare",
                 this.srcPropertyName = "photo";
              },
              /*
-              * @presenter
+              * @public
               */
              load : function (photos) {
                 assertInstance(photos, Array, "Photos must be of type Array.");
@@ -214,7 +214,7 @@ define(["dojo/_base/declare",
               * @description Executed after photo is updated (=displayed)
               */
              _update : function () {
-                this.log("_update");
+                console.log("_update");
                 this._findCurrentPhoto();
                 // deleted last photo
                 if (this.currentPhoto  === null) {
@@ -312,10 +312,10 @@ define(["dojo/_base/declare",
                     * after Fullscreen is already focused, which causes activation problems (-> keyboard events!)
                     */
                    event.stopPropagation();
-                   if (!instance.isDisabled()) {
-                      instance.log("Image clicked. Publishing event.");
-                      communicator.publish("click:slideshowImage");
-                   }
+
+                   instance.log("Image clicked. Publishing event.");
+                   communicator.publish("click:slideshowImage");
+
                 });
                 
                 $("body")
