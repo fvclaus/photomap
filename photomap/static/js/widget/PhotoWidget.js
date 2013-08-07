@@ -30,9 +30,7 @@ define(["dojo/_base/declare",
                 assertFunction(this.insertPhoto, "Every PhotoWidget must define a insertPhoto function.");
                 assertFunction(this.deletePhoto, "Every PhotoWidget must define a deletePhoto function.");
                 assertFunction(this._bindListener, "Every PhotoWidget must define a _bindListener function");
-
                 assertString(this.viewName, "Every PhotoWidget must define a viewName");
-
              },
              /*
               * @public

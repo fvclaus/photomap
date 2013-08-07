@@ -11,10 +11,7 @@
  */
 
 define(["dojo/_base/declare",
-        "dijit/_WidgetBase",
-        "dijit/_TemplatedMixin",
-        "view/View",
-        "view/PhotoCarouselView",
+        "widget/SinglePhotoWidget",
         "model/Photo",
         "util/Communicator",
         "util/Tools",
@@ -23,46 +20,17 @@ define(["dojo/_base/declare",
         "module",
         "dojo/domReady!"
        ],
-       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Photo, communicator, tools, InfoText, template, module) {
-          return declare([View, _WidgetBase, _TemplatedMixin], {
+       function (declare, SinglePhotoWidget, Photo, communicator, tools, InfoText, template) {
+          return declare([SinglePhotoWidget], {
              templateString : template,
-             buildRendering : function () {
-                this.inherited(arguments);
-                var instance = this;
-                this._attachPoints.forEach(function (attachPoint) {
-                   var jQSelectorName = "$" + attachPoint.replace("Node", "");
-                   instance[jQSelectorName] = $(instance[attachPoint]);
-                });
-                this.$container = $(this.domNode);
-             },
+
+             viewName : "Slideshow",
+
              startup : function () {
                 if (this._started) {
                    return;
                 }
-                this.inherited(arguments);
-                // Needed to determine the MID in the logging statements.
-                this.module = module;
-                this.viewName = "Slideshow";
-                this.carousel = null;
-                
-                // tooltip is a builtin member of _WidgetBase
-                this._infoText = new InfoText(this.$container, "", {hideOnMouseover: false});
-                
-                // this._started = false;
-                this._loaded = false;
-                
-                this._bindActivationListener(this.$container, this.viewName);
-                var instance = this;
-                
-                this._center();
-                // everything that gets centered manually must be corrected on a resize event
-                $(window).resize(function () {
-                   instance._center();
-                });
-                this._bindListener();
-                this.updateMessage();
-
-                this.options = {
+                this._carouselOptions = {
                    lazy : true,
                    loader : this.$loader,
                    beforeLoad : this._beforeLoad,
@@ -70,42 +38,21 @@ define(["dojo/_base/declare",
                    onUpdate : this._update,
                    context : this
                 };
-                this.srcPropertyName = "photo";
-             },
-             /*
-              * @public
-              */
-             load : function (photos) {
-                assertInstance(photos, Array, "Photos must be of type Array.");
-                assert(this._started, true, "Must call startup() before.");
-                // Resets to state after startup().
-                this.reset();
-                this._loaded = true;
-
-                this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, this.srcPropertyName, this.options);
-             },
-             /**
-              * @presenter
-              * @description starts slideshow by initialising and starting the carousel 
-              * @param {Photo} photo: Null to start with the first photo.
-              */
-             run: function (photo) {
-                assert(this._started, true, "Must call startup() before.");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-
-                // this._started = true;
-                this._run = true;
-
-                // initialize carousel
-                // this.carousel = new PhotoCarouselView(this.$imageWrapper.find("img.mp-slideshow-image"), photos, "photo", options);
+                this._srcPropertyName = "photo";
+                this.$photos = this.$imageWrapper.find("img.mp-slideshow-image");
+                this.inherited(arguments);
+                // Needed to determine the MID in the logging statements.
                 
-                if (this.carousel.getAllPhotos().length !== 0) {
-                   //TODO this should be a selector in the constructor
-                   $(".mp-slideshow-no-image-msg").hide();
-                   // it is also possible to start the Carousel with empty photos, but we need to hide the no-images-msg
-                   this.carousel.start(photo);
-                }
-
+                // tooltip is a builtin member of _WidgetBase
+                this._infoText = new InfoText(this.$container, "", {hideOnMouseover: false});
+                
+                this._center();
+                // everything that gets centered manually must be corrected on a resize event
+                var instance = this;
+                $(window).resize(function () {
+                   instance._center();
+                });
+                this.updateMessage();
              },
              /**
               * @presenter
@@ -132,20 +79,6 @@ define(["dojo/_base/declare",
              restart : function (photos) {
                 this.carousel.update(photos);
              },
-             /**
-              * @presenter
-              * @description Navigates to given index; starts slideshow if carousel is not yet initialized
-              * @param {Photo} photo
-              */
-             navigateTo : function (photo) {
-                // Navigate to photo, displaying it when the slideshow is started
-                assertTrue(photo instanceof Photo || photo === null, "Parameter photo must be an instance of Photo.");
-                if (!this._run) {
-                   this.run();
-                } else {
-                   this.carousel.navigateTo(photo);
-                }
-             },
              /*
               * @presenter
               * @description Navigates the slideshow left or right.
@@ -163,27 +96,6 @@ define(["dojo/_base/declare",
                       this.carousel.navigateRight();
                    }
                 }
-             },
-             /**
-              * @presenter
-              * @description Inserts a new Photo. This will not move the Carousel or do anything else.
-              */
-             insertPhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-                // Slideshow might or might not be started at that point
-                this.carousel.insertPhoto(photo);
-             },
-             /**
-              * @presenter
-              * @description Deletes an existing Photo. If Photo is the current Photo the previous Photo is shown.
-              * If there is no previous Photo, nothing is shown.
-              */
-             deletePhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-                // Slideshow might or might not be started at that point
-                this.carousel.deletePhoto(photo);
              },
              /*
               * @presenter
@@ -249,25 +161,6 @@ define(["dojo/_base/declare",
                 assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
                 
                 this.updateMessage();
-             },
-             /**
-              * @private
-              * @description Synchronizes the current photo in the slideshow with the one in the UIState
-              * @returns {Photo} currentPhoto
-              */
-             _findCurrentPhoto : function () {
-                assert(this._started, true, "slideshow has to be started already");
-
-                var photos = this.carousel.getAllPhotos(),
-                    currentPhoto = null,
-                    // The PhotoCarousel will set the id of the photo as an attribute of the img element.
-                    id = parseInt(this.$image.attr(this.carousel.ID_HTML_ATTRIBUTE));
-
-                // if it is the only (empty) page the entry is null
-                if (photos.length > 0) {
-                   currentPhoto = tools.getObjectByKey("id", id, photos);
-                }
-                this.currentPhoto = currentPhoto;
              },
              /**
               * @private

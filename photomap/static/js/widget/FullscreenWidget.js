@@ -62,20 +62,6 @@ define(["dojo/_base/declare",
                 this.visible = false;
              },
              /**
-              * @public
-              * @description Navigates to the photo. Runs the fullscreen if run has not been called before.
-              * @param {Photo} photo
-              */
-             navigateTo : function (photo) {
-                // Navigate to photo, displaying it when the slideshow is started
-                assertTrue(photo instanceof Photo || photo === null, "Parameter photo must be an instance of Photo.");
-                if (!this._run) {
-                   this.run();
-                } else {
-                   this.carousel.navigateTo(photo);
-                }
-             },
-             /**
               * @presenter
               * @description Resets the slideshow
               * This will put the Slideshow in the state that it was after startup() was called.
