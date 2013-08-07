@@ -12,60 +12,53 @@
  */
        
 define(["dojo/_base/declare",
-        "dijit/_WidgetBase",
-        "dijit/_TemplatedMixin",
-        "view/View",
-        "view/PhotoCarouselView",
+        "widget/PhotoWidget",
         "model/Photo",
         "util/Communicator",
         "util/Tools",
         "util/InfoText",
         "dojo/text!/template/Gallery",
-        "module",
         "dojo/domReady!"
        ],
-       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView,  Photo, communicator, tools, InfoText, template, module) {
+       function (declare, PhotoWidget, Photo, communicator, tools, InfoText, template) {
+          return declare([PhotoWidget], {
 
-          return declare([View, _WidgetBase, _TemplatedMixin], {
              templateString : template,
-             buildRendering : function () {
-                this.inherited(arguments);
-                var instance = this;
-                this._attachPoints.forEach(function (attachPoint) {
-                   var jQSelectorName = "$" + attachPoint.replace("Node", "");
-                   instance[jQSelectorName] = $(instance[attachPoint]);
-                });
-                this.$container = $(this.domNode);
-             },
+             viewName : "Gallery",
+
              startup : function () {
                 if (this._started) {
                    return;
                 }
-                this.inherited(arguments);
-                this.module = module;
-                this.viewName = "Gallery";
-                
-                // this.$hidden = $("#mp-gallery-thumbs");
+                this.$loader = this.$container.find(".mp-gallery-loader");
+                this.$controls = $()
+                   .add(this.$insert)
+                   .add(this.$open);
+
+                this._carouselOptions = {
+                   lazy : !this._isAdmin(),
+                   "effect" : "fade",
+                   "duration": 500,
+                   loader : this.$loader,
+                   beforeLoad : this._beforeLoad,
+                   onUpdate : this._update,
+                   context : this,
+                   navigateToInsertedPhoto : true,
+                };
+
+                this._srcPropertyName = "thumb";
                 this.$thumbs = this.$container.find(".mp-gallery-tile");
                 this.$photos = this.$thumbs.find(".mp-thumb");
-                this.$loader = this.$container.find(".mp-gallery-loader");
-
-                this.carousel = null;
-                
+                this.inherited(arguments);
+                 
                 this.photos = null;
-                this.started = false;
                 // set on insert photo to show the teaser of the photo after it is updated
                 // this.showTeaser = false;
                 this.currentPhoto = null;
                 
                 this._infotext = new InfoText(this.$container, "");
 
-                this.$controls = $()
-                   .add(this.$insert)
-                   .add(this.$open);
 
-                this._bindActivationListener(this.$container, this.viewName);
-                this._bindListener();
                 this._showHelpText();
                 
                 this._infotext
@@ -76,43 +69,19 @@ define(["dojo/_base/declare",
                 this._bindNavigationListener();
                 
                 this._bindStartSlideshowListener();
-
-                this.options = {
-                   lazy : !this._isAdmin(),
-                   "effect" : "fade",
-                   "duration": 500,
-                   loader : this.$loader,
-                   beforeLoad : this._beforeLoad,
-                   afterLoad : this._afterLoad,
-                   onUpdate : this._update,
-                   context : this,
-                   navigateToInsertedPhoto : true,
-                };
-
-                this.srcPropertyName = "thumb";
-
-             },
-             load : function (photos) {
-                assertInstance(photos, Array, "Photos must be of type Array.");
-                assertTrue(this._started, "Must call startup() before.");
-                this._loaded = true;
-                this.carousel = new PhotoCarouselView(this.$inner.find("img.mp-thumb"), photos, this.srcPropertyName, this.options);
              },
              /**
-              * @description Loads all the photos in the gallery and displays them as thumbnails. This will block the UI.
+              * @description Loads all the photos in the gallery and displays them as thumbnails.
+              * @idempotent
               */
              run : function () {
-                assertTrue(this._started,  "Must call startup() before.");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-                this._run = true;
-                
+                if (this._run) {
+                   return;
+                }
+                this.inherited(arguments);
                 this._infotext.destroy();
-                // show insert photo button
+                // show controls
                 this.$controls.removeClass("mp-nodisplay");
-
-                // disable ui while loading & show loader
-                communicator.publish("disable:ui");
-                this.carousel.start();
              },
              /**
               * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
@@ -137,32 +106,19 @@ define(["dojo/_base/declare",
              /**
               * @description adds new photo to gallery.
               */
-             insertPhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-                // automatically adds the photo if we are on last page
-                this.carousel.insertPhoto(photo);
-                // show teaser after the photo is loaded
-                this.showTeaser = true;
-                this.currentPhoto = photo;
-                // Will automatically navigate to the new photo
-                if (!this._run) {
-                   // show the new photo
-                   //TODO this does now show the new photo yet
-                   this.run();
-                }
-             },
-             /**
-              * @description Deletes an existing Photo. If the Photo was on the current page, fade it out and move all
-              * remaining Photos to the left. If Photo was the last Photo, show an empty page.
-              */
-             deletePhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-                 // automatically delete if photo is on current page
-                // otherwise we dont care
-                this.carousel.deletePhoto(photo);
-             },
+             // insertPhoto : function (photo) {
+             //    assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
+             //    assertTrue(this._loaded, "Must call load(photos) before.");
+             //    // automatically adds the photo if we are on last page
+             //    this.carousel.insertPhoto(photo);
+
+             //    // Will automatically navigate to the new photo
+             //    if (!this._run) {
+             //       // show the new photo
+             //       //TODO this does now show the new photo yet
+             //       this.run();
+             //    }
+             // },
              /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
               */
@@ -188,10 +144,6 @@ define(["dojo/_base/declare",
              _beforeLoad : function ($photos) {
                 // hide all visited icons
                 $(".mp-thumb-visited").hide();
-             },
-             _afterLoad : function ($photos) {
-                //enable ui
-                communicator.publish("enable:ui");
              },
              /**
               * @private
