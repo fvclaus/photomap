@@ -97,7 +97,7 @@ require(["widget/AdminGalleryWidget",
                      img0Pos = $img0.position(),
                      img1Pos = $img1.position();
                  
-                 communicator.subscribe("change:photoOrder", 
+                 communicator.subscribeOnce("change:photoOrder", 
                                         function (photos) {
                                            QUnit.ok(photos instanceof Array);
                                            photos.forEach(function (photo, index) {
@@ -110,13 +110,15 @@ require(["widget/AdminGalleryWidget",
                                            });
                                            QUnit.start();
                                         });
-                                              
-                 // Drag the 2nd photo to the first position.
+                 
+
+
                  $img1.simulate("drag", {
                     dx : img0Pos.left - img1Pos.left,
                     dy : img0Pos.top - img1Pos.top,
-                    moves : 10
+                    // handle : "center"
+                    // moves : 10
                  });
-              }, 1000);
+              }, 2000);
            });
         });
