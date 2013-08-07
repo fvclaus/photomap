@@ -46,6 +46,13 @@ function assertNumber(actual, message) {
    }
 }
 
+function assertFunction(actual, message) {
+   if (!(typeof actual === "function")) {
+      croak(typeof actual, "function", message);
+   }
+}
+
+
 function assertString(actual, message) {
    if (!(typeof actual === "string")) {
       croak(typeof actual, "string", message);

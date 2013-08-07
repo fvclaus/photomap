@@ -114,7 +114,7 @@ require(["widget/AdminGalleryWidget",
 
 
                  $img1.simulate("drag", {
-                    dx : img0Pos.left - img1Pos.left,
+                    dx : img0Pos.left  - (img1Pos.left + $img1.width()),
                     dy : img0Pos.top - img1Pos.top,
                     // handle : "center"
                     // moves : 10
