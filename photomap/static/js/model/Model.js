@@ -16,7 +16,7 @@ define(["dojo/_base/declare"],
                 
                 this.type = data.type;
                 this.title = data.title;
-                this.id = data.id;
+                this.id = data.id || -1;
                 
                 // reading from input elements will return '' if nothing has been entered
                 this.description = (data.description === "")? null : data.description;
@@ -55,14 +55,6 @@ define(["dojo/_base/declare"],
                    return false;
                 }
              },
-             updateProperties : function (newData) {
-                var instance = this;
-                $.each(newData, function (key, value) {
-                   if (instance.hasOwnProperty(key)) {
-                      instance[key] = value;
-                   }
-                });
-             },
              /**
               * @description Check if the model has a title and an id, which every model has to have!
               */
@@ -72,15 +64,6 @@ define(["dojo/_base/declare"],
                 
                 return true;
              },
-             update : function (newData) {
-                var instance = this;
-                this
-                  .onSuccess(function () {
-                     instance.updateProperties(newData);
-                     instance._trigger("updated.Model", this);
-                  })
-                  .save(newData);
-             },
              "delete": function () {
                 var instance = this;
                 $.ajax({
@@ -89,20 +72,39 @@ define(["dojo/_base/declare"],
                    dataType: "json",
                    success: function (data, status, xhr) {
                       if (data.success) {
-                         $(instance).trigger("success", [data, status, xhr]);
+                         instance._trigger("success", [data, status, xhr]);
+                         instance._trigger("deleted.Model", this);
                       } else {
-                         $(instance).trigger("failure", [data, status, xhr]);
+                        instance._trigger("failure", [data, status, xhr]);
                       }
                    },
                    error: function (xhr, status, error) {
-                      $(instance).trigger("error", [xhr, status, error]);
+                      instance._trigger("error", [xhr, status, error]);
                    }
                 });
              },
+            onInsert : function (handler, thisReference) {
+               var context = thisReference || this;
+               
+               $(this).on("inserted.Model", function (event, model) {
+                  handler.call(context, model);
+               });
+               
+               return this;
+            },
             onUpdate : function (handler, thisReference) {
                var context = thisReference || this;
                
                $(this).on("updated.Model", function (event, model) {
+                  handler.call(context, model);
+               });
+               
+               return this;
+            },
+            onDelete : function (handler, thisReference) {
+               var context = thisReference || this;
+               
+               $(this).on("deleted.Model", function (event, model) {
                   handler.call(context, model);
                });
                
@@ -165,6 +167,14 @@ define(["dojo/_base/declare"],
              */
             _trigger : function (eventName, data) {
                $(this).trigger(eventName, data);
+            },
+            _setProperties : function (data) {
+               var instance = this;
+               $.each(data, function (key, value) {
+                  if (instance.hasOwnProperty(key)) {
+                     instance[key] = value;
+                  }
+               });
             }
           });
        });

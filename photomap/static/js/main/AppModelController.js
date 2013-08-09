@@ -47,7 +47,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                            dialog.showResponseMessage(data);
                         })
                         .onError(dialog.showNetworkError)
-                        .insert(data);
+                        .insertRaw(data);
                    },
                    url : "/form/insert/photo",
                    isPhotoUpload: true,
@@ -86,7 +86,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                            dialog.showResponseMessage(data);
                         })
                         .onError(dialog.showNetworkError)
-                        .insert(data);
+                        .insertRaw(data);
                    },
                    url : "/form/insert/" + modelType.toLowerCase(),
                 });
@@ -109,7 +109,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                            dialog.showResponseMessage(data);
                         })
                         .onError(dialog.showNetworkError)
-                        .update(data);
+                        .save(data);
                    },
                    url : "/form/update/model"
                 });
@@ -134,7 +134,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                            dialog.showResponseMessage(data);
                         })
                         .onError(dialog.showNetworkError)
-                        .delete(model, data);
+                        .delete(model, true);
                    },
                    url : "/form/delete/model"
                 });

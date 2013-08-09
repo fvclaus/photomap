@@ -41,6 +41,14 @@ define(["dojo/_base/declare", "model/Model"],
                       success: function (data, status, xhr) {
                          if (data.success) {
                             instance._trigger("success", [data, status, xhr]);
+                            if (instance.id > -1) {
+                               instance._setProperties(newData);
+                               instance._trigger("updated.Model", this);
+                            } else {
+                               //set id of the new model
+                               instance._setProperties(data);
+                               instance._trigger("inserted.Model", this);
+                            }
                          } else {
                             instance._trigger("failure", [data, status, xhr]);
                          }
@@ -49,8 +57,8 @@ define(["dojo/_base/declare", "model/Model"],
                          instance._trigger("error", [xhr, status, error]);
                       }
                    };
-                // add id if exists -> for Update (id does not exist before Insert -> not needed)
-                if (this.id) {
+                // add id if model exists -> for Update (id does not exist before Insert -> not needed)
+                if (this.id > -1) {
                    settings.url += this.id + "/";
                 }
                 
