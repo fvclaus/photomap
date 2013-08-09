@@ -58,6 +58,13 @@ define(["dojo/_base/declare",
                       success: function (data, status, xhr) {
                          if (data.success) {
                             instance._trigger("success", [data, status, xhr]);
+                            if (instance.id > -1) {
+                               instance._trigger("updated.Model", this);
+                            } else {
+                               //set id, photo and thumb of the new Photo
+                               instance._setProperties(data);
+                               instance._trigger("inserted.Model", this);
+                            }
                          } else {
                             instance._trigger("failure", [data, status, xhr]);
                          }
@@ -66,8 +73,8 @@ define(["dojo/_base/declare",
                          instance._trigger("error", [xhr, status, error]);
                       }
                    };
-                // add id if exists -> for Delete or Update (id does not exist before Insert -> not needed)
-                if (this.id) {
+                // add id if model exists -> for Update (id does not exist before Insert -> not needed)
+                if (this.id > -1) {
                    settings.url += this.id + "/";
                 }
                 // add title and description for Update or Formdata (photo-upload) for Insert
