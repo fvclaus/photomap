@@ -112,15 +112,15 @@ define(["dojo/_base/declare"],
              */
             insertRaw : function (rawModelData) {
                
-               assertString(rawModelData.formData.title, "Each model needs a title");
+               assertString(rawModelData.title, "Each model needs a title");
                
                var instance = this;
                
-               var initalModelData = {
-                     title: rawModelData.formData.title,
-                     description: rawModelData.formData.description
-                  };
-               model = new this.modelConstructor(initialModelData);
+               var initialModelData = {
+                     title: rawModelData.title,
+                     description: rawModelData.description
+                  },
+                  model = new this.modelConstructor(initialModelData);
                
                model
                   .onSuccess(function (data, status, xhr) {

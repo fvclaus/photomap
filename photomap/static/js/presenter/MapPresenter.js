@@ -91,8 +91,6 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                    } else {
                       this.fitMapToMarkers(markers);
                    }
-                   
-                   this.view.bindClickListener();
                 }
                 // set map options if interactive
                 this.view.map.setOptions(this.view.mapOptions);
