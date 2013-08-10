@@ -32,8 +32,6 @@ define([
              assertTrue(this.$delete.size() > 0 && this.$update.size() > 0);
 
              this.presenter = new ModelFunctionPresenter(this);
-             
-             communicator.subscribeOnce("init", this._init, this);
           },
           /**
            * @description Displays modify control under a photo
@@ -112,8 +110,8 @@ define([
                 this.$controls.hide();
              }
           },
-          _init : function () {
-
+          init : function () {
+             console.log("in controls init");
              if (state.isDashboardView() || (state.isAlbumView() && state.isAdmin())) {
                 this._bindListener();
              }

@@ -78,6 +78,9 @@ define(["dojo/_base/declare"],
                   return (model.getId() === id);
                })[0];
             },
+            getAll : function () {
+               return this.models;
+            },
             /**
              * @description Checks if the Collection contains a certain model
              * @param {Integer} id Id of the model (id is unique!)
@@ -188,17 +191,10 @@ define(["dojo/_base/declare"],
                   .onSuccess(function (data, status, xhr) {
                      instance._trigger("success", [data, status, xhr]);
                      
-                     model.updateProperties(data);
                      // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true,
                      // for development it is needed though to assure that the new IDU-Design works
                      if (model.assertValidity()) {
-                        instance.models.push(this.tempModel);
-                        // start listening to model updates
-                        model.onUpdate(function (model) {
-                           instance._trigger("update", model);
-                        });
-                        // insert successful
-                        instance._trigger("inserted.Model", model);
+                        instance.insert(model);
                      }
                   })
                   .onFailure(function (data, status, xhr) {

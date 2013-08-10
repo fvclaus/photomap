@@ -37,6 +37,9 @@ define(["dojo/_base/declare", "model/MarkerModel", "model/Place", "model/Collect
              },
              getSecret : function () {
                 return this.secret;
+             },
+             getPlaces : function () {
+                return this.places;
              }
           });
        });

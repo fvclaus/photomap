@@ -91,6 +91,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                       modelType: "Album"
                    }));
                 }
+                main.getUI().getControls().init();
                 clientstate.init();
                 main.getMap().init(data);
              },
@@ -347,7 +348,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
              },
              _placeOpen : function (place) {
                 var photos = place.getPhotos();
-                state.setPhotoCollection(place.photoCollection());
+                state.setPhotoCollection(place.getPhotoCollection());
                 main.getUI().getInformation().update(place);
                 main.getUI().getPageTitleWidget().update(place.getTitle());
 

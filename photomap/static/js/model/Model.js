@@ -21,6 +21,19 @@ define(["dojo/_base/declare"],
                 // reading from input elements will return '' if nothing has been entered
                 this.description = (data.description === "")? null : data.description;
              },
+             /**
+              * @description sets any attribute of the model to the 
+              */
+             set : function (name, value) {
+               if (name === "id" || name === "type") {
+                  throw new Error("RequestNotAllowedError");
+               }
+               if (this.hasOwnProperty(name)) {
+                  this[name] = value;
+               } else {
+                  throw new Error("UnknownAttributeError");
+               }
+             },
              getTitle : function () {
                 return this.title;
              },
