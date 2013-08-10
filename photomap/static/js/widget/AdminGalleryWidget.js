@@ -5,53 +5,29 @@
 // "use strict";
 
 define(["dojo/_base/declare",
-        "dijit/_WidgetBase",
-        "dijit/_TemplatedMixin",
-        "view/View",
+        "widget/PhotoWidget",
         "model/Photo",
         "view/PhotoCarouselView",
         "util/Communicator",
-        "module",
         "dojo/text!/template/AdminGallery",
         "dojo/domReady!"], 
-       function (declare, _WidgetBase, _TemplatedMixin, View, Photo, PhotoCarouselView, communicator, module, template) {
-          return  declare([View, _WidgetBase, _TemplatedMixin], {
+       function (declare, PhotoWidget, Photo, PhotoCarouselView, communicator, template) {
+          return  declare([PhotoWidget], {
+
              templateString : template,
-             buildRendering : function () {
-                this.inherited(arguments);
-                var instance = this;
-                this._attachPoints.forEach(function (attachPoint) {
-                   var jQSelectorName = "$" + attachPoint.replace("Node", "");
-                   instance[jQSelectorName] = $(instance[attachPoint]);
-                });
-                this.$container = $(this.domNode);
-             },
+
              startup : function () {
                 if (this._started) {
                    return;
                 }
+                // Give fake img element. It will never be used anyway.
+                this.$photos = $("<img></img>");
+                this._srcPropertyName = "photo";
+                this._carouselOptions = {};
                 this.inherited(arguments);
-                this.module = module;
-                this.carousel = null;
 
                 this._isPhotoLoaded = false;
-                this.srcPropertyName = "photo";
-                this.options = {};
 
-                var instance = this;
-                this.$close.on("click", function (event) {
-                   instance.hide();
-                });
-             },
-             /*
-              * @public
-              */
-             load : function (photos) {
-                assertInstance(photos, Array, "Photos must be of type Array.");
-                assert(this._started, true, "Must call startup() before.");
-                this._loaded = true;
-                // Give fake img element. It will never be used anyway.
-                this.carousel = new PhotoCarouselView($("<img></img>"), photos, this.srcPropertyName, this.options);
              },
              /**
               * @public
@@ -72,17 +48,13 @@ define(["dojo/_base/declare",
                 this.show();
 
                 this._loaded = true;
-
              },
              /**
               * @public
               * @description Inserts a new Photo. This will refresh the Gallery, if open.
               */
              insertPhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-                // Slideshow might or might not be started at that point
-                this.carousel.insertPhoto(photo);
+                this.inherited(arguments);
                 if (this._run) {
                    this.refresh();
                 }
@@ -92,10 +64,7 @@ define(["dojo/_base/declare",
               * @description Removes a photo. This will refresh the Gallery, if open.
               */
              deletePhoto : function (photo) {
-                assertTrue(photo instanceof Photo, "Input parameter photo has to be instance of Photo");
-                assertTrue(this._loaded, "Must call load(photos) before.");
-                this.carousel.deletePhoto(photo);
-                // something has been deleted from the gallery
+                this.inherited(arguments);
                 if (this._run) {
                    this.refresh();
                 }
@@ -175,6 +144,15 @@ define(["dojo/_base/declare",
                 });
 
                 communicator.publish("change:photoOrder", photos);
+             },
+             /**
+              * @private
+              */
+             _bindListener : function () {
+                var instance = this;
+                this.$close.on("click", function (event) {
+                   instance.hide();
+                });
              },
              /**
               * @private

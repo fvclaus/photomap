@@ -30,9 +30,8 @@ define(["dojo/_base/declare",
                 assertFunction(this.insertPhoto, "Every PhotoWidget must define a insertPhoto function.");
                 assertFunction(this.deletePhoto, "Every PhotoWidget must define a deletePhoto function.");
                 assertFunction(this._bindListener, "Every PhotoWidget must define a _bindListener function");
-
                 assertString(this.viewName, "Every PhotoWidget must define a viewName");
-
+                assertString(this.templateString, "Every PhotoWidget must define a templateString.");
              },
              /*
               * @public
@@ -51,6 +50,7 @@ define(["dojo/_base/declare",
              /*
               * @public
               * @description Part of the dijit widget lifecycle. This must be called by hand. The dom is already present. Every PhotoWidget must at least define _carouselOptions and _srcPropertyName by the time this startup function is called.
+              * @idempotent
               */
              startup : function () {
                 if (this._started) {
@@ -82,12 +82,14 @@ define(["dojo/_base/declare",
              /*
               * @public
               * @description Reset must be implemented by PhotoWidgets. It must reset the widget to the state the widget was in after calling startup() and before load()
+              * @idempotent
               */
              reset : null,
              /**
               * @public
               * @description Starts widget by starting the carousel. No problems if the photos are empty.
               * @param {Photo} photo: Null to start with the first photo.
+              * @idempotent
               */
              run: function (photo) {
                 assert(this._started, true, "Must call startup() before.");
