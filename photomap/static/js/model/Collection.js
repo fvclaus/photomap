@@ -31,121 +31,32 @@ define(["dojo/_base/declare"],
                   this._sort();
                }
                
-               this._bindModelUpdateListener();
+               this._bindModelListener(this.models);
             },
             /**
-             * @description Inserts a model into the collection, and optionally saves it to the server and informs the subscribed classes about the insertion.
+             * @description Inserts a model into the collection and informs the subscribed classes about the insertion.
              * @param {Object} model Model to be inserted into the collection.
-             * @param {Object} modelData the optional Data that is needed if the model is supposed to be saved to server (eg. photo-upload)
-             * @param {Boolean} saveToServer Set true if model shall be saved to server.
              */
-            insert : function (model, modelData, saveToServer) {
-               var instance = this;
+            insert : function (model) {
                
-               if (saveToServer) {
-                  model
-                     .onSuccess(function (data, status, xhr) {
-                        instance._trigger("success", [data, status, xhr]);
-                        
-                        model.updateProperties(data);
-                        // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true,
-                        // for development it is needed though to assure that the new IDU-Design works
-                        if (model.assertValidity()) {
-                           instance.models.push(model);
-                           // start listening to model updates
-                           model.onUpdate(function (model) {
-                              instance._trigger("updated.Model", model);
-                           });
-                           // insert successful
-                           instance._trigger("inserted.Model", model);
-                        }
-                     })
-                     .onFailure(function (data, status, xhr) {
-                        instance._trigger("failure", [data, status, xhr]);
-                     })
-                     .onError(function (xhr, status, error) {
-                        instance._trigger("error", [xhr, status, error]);
-                     })
-                     .save(modelData);
-               } else {
-                  this.models.push(model);
-               }
+               this.models.push(model);
+               this._bindModelListener([model]);
+               
+               this._trigger("inserted.Model", model);
                
                return this;
             },
             /**
              * @description Deletes model from collection and server and informs the subscribed classes about the deletion.
              * @param {Object} model Model to be inserted from the collection.
-             * @param {Boolean} saveToServer Set true if model shall be deleted in backend.
              */
-            "delete" : function (model, saveToServer) {
+            "delete" : function (model) {
                
                assertTrue(this.has(model.getId()), "Selected model is not part of the collection");
-               var index = this.models.indexOf(model),
-                  instance = this;
                
-               if (saveToServer) {
-                  model
-                     .onSuccess(function (data, status, xhr) {
-                        instance._trigger("success", [data, status, xhr]);
-                        
-                        instance.models.splice(index, 1);
-                        instance._trigger("deleted.Model", model);
-                     })
-                     .onFailure(function (data, status, xhr) {
-                        instance._trigger("failure", [data, status, xhr]);
-                     })
-                     .onError(function (xhr, status, error) {
-                        instance._trigger("error", [xhr, status, error]);
-                     })
-                     .delete();
-               } else {
-                  this.models.splice(index, 1);
-               }
+               this.models.splice(this.models.indexOf(model), 1);
                
-               return this;
-            },
-            /**
-             * @description Inserts a model into the collection, saves it to the server and informs the subscribed classes about the insertion.
-             * @param {Object} rawModelData The data needed to create a model. It'll be sent to the server. It's expected to look like this:
-             * {isPhotoUpload: false, formData: {serialized data from IDU-form} }
-             */
-            insertRaw : function (rawModelData) {
-               
-               assertString(rawModelData.title, "Each model needs a title");
-               
-               var instance = this;
-               
-               var initialModelData = {
-                     title: rawModelData.title,
-                     description: rawModelData.description
-                  },
-                  model = new this.modelConstructor(initialModelData);
-               
-               model
-                  .onSuccess(function (data, status, xhr) {
-                     instance._trigger("success", [data, status, xhr]);
-                     
-                     model.updateProperties(data);
-                     // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true,
-                     // for development it is needed though to assure that the new IDU-Design works
-                     if (model.assertValidity()) {
-                        instance.models.push(this.tempModel);
-                        // start listening to model updates
-                        model.onUpdate(function (model) {
-                           instance._trigger("update", model);
-                        });
-                        // insert successful
-                        instance._trigger("inserted.Model", model);
-                     }
-                  })
-                  .onFailure(function (data, status, xhr) {
-                     instance._trigger("failure", [data, status, xhr]);
-                  })
-                  .onError(function (xhr, status, error) {
-                     instance._trigger("error", [xhr, status, error]);
-                  })
-                  .save(rawModelData);
+               this._trigger("deleted.Model", model);
                
                return this;
             },
@@ -257,6 +168,50 @@ define(["dojo/_base/declare"],
                return this;
             },
             /**
+             * @description Convenience method to insert a model into the collection using raw form-data, 
+             * also saves it to the server and informs the subscribed classes about the insertion.
+             * @param {Object} rawModelData The data needed to create a model. It'll be sent to the server.
+             */
+            insertRaw : function (rawModelData) {
+               
+               assertString(rawModelData.title, "Each model needs a title");
+               
+               var instance = this;
+               
+               var initialModelData = {
+                     title: rawModelData.title,
+                     description: rawModelData.description
+                  },
+                  model = new this.modelConstructor(initialModelData);
+               
+               model
+                  .onSuccess(function (data, status, xhr) {
+                     instance._trigger("success", [data, status, xhr]);
+                     
+                     model.updateProperties(data);
+                     // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true,
+                     // for development it is needed though to assure that the new IDU-Design works
+                     if (model.assertValidity()) {
+                        instance.models.push(this.tempModel);
+                        // start listening to model updates
+                        model.onUpdate(function (model) {
+                           instance._trigger("update", model);
+                        });
+                        // insert successful
+                        instance._trigger("inserted.Model", model);
+                     }
+                  })
+                  .onFailure(function (data, status, xhr) {
+                     instance._trigger("failure", [data, status, xhr]);
+                  })
+                  .onError(function (xhr, status, error) {
+                     instance._trigger("error", [xhr, status, error]);
+                  })
+                  .save(rawModelData);
+               
+               return this;
+            },
+            /**
              * @description Sorts the models by the property given in options.orderBy. If this options is undefined or null, the models won't be sorted!
              */
             _sort : function () {
@@ -266,12 +221,16 @@ define(["dojo/_base/declare"],
                   return model[instance.options.orderBy] - copy[instance.options.orderBy];
                });
             },
-            _bindModelUpdateListener : function () {
+            _bindModelListener : function (models) {
                var instance = this;
-               $.each(this.models, function (i, model) {
-                  model.onUpdate(function (model) {
-                     instance._trigger("updated.Model", model);
-                  });
+               $.each(models, function (i, model) {
+                  model
+                     .onUpdate(function (model) {
+                        instance._trigger("updated.Model", model);
+                     })
+                     .onDelete(function (model) {
+                        instance.delete(model);
+                     });
                });
             },
             /**
