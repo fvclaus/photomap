@@ -206,7 +206,7 @@ define(["dojo/_base/declare",
                     */
                    event.stopPropagation();
 
-                   instance.log("Image clicked. Publishing event.");
+                   console.log("Image clicked. Publishing event.");
                    communicator.publish("click:slideshowImage");
 
                 });
@@ -214,13 +214,13 @@ define(["dojo/_base/declare",
                 $("body")
                    .on("keyup.Slideshow", null, "left", function () {
                       if (instance._run) {
-                         instance.log("Left direction key clicked. Navigating to the left.");
+                         console.log("Left direction key clicked. Navigating to the left.");
                          instance.$navLeft.trigger("click");
                       }
                    })
                    .on("keyup.Slideshow", null, "right", function () {
                       if (instance._run) {
-                         instance.log("Right direction key clicked. Navigating to the right.");
+                         console.log("Right direction key clicked. Navigating to the right.");
                          instance.$navRight.trigger("click");
                       }
                    });

@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, window, assert, assertTrue, assertString */
+/*global $, define, window, assert, assertTrue, assertInstance, assertString */
 
 "use strict";
 
@@ -21,16 +21,14 @@ define(["dojo/_base/declare",
         "model/Photo",
         "util/PhotoPages",
         "util/Tools", 
-        "module",
         "util/CarouselAnimation"], 
-       function (declare, View, Photo, PhotoPages, tools, module, carouselAnimation) {
+       function (declare, View, Photo, PhotoPages, tools, carouselAnimation) {
           
           return declare (View, {
              ID_HTML_ATTRIBUTE : "data-keiken-id",
              constructor : function ($photos, photos, srcPropertyName, options) {
                 assertTrue($photos.size() > 0, "Can't build a Carousel without placeholder for photos.");
                 
-                this.module = module;
                 photos.forEach(function (photo) {
                    assertTrue(photo instanceof Photo);
                    assertString(photo[srcPropertyName]);
@@ -47,7 +45,10 @@ define(["dojo/_base/declare",
                    navigateToInsertedPhoto : false,
                    context : this,
                 };
+                
                 this.options = $.extend({}, this.defaults, options);
+                
+                assertTrue(tools.countAttributes(this.options) === tools.countAttributes(this.defaults), "The options you defined seem to have more attributes than available.");
                 this.srcPropertyName = srcPropertyName;
                 this.nLoadHandler = 0;
                 
@@ -75,13 +76,15 @@ define(["dojo/_base/declare",
               * @param {Photo} photo: Null to start with the first photo.
               */
              start : function (photo) {
-                this.isStarted = true;
+                assertTrue(photo === undefined || (photo.isInstanceOf && photo.isInstanceOf(Photo)), "Photo parameter must be undefined or an instance of Photo.");
                 if (photo) {
+                   assertTrue(this._getIndexForPhoto(Photo) !== -1, "Photo parameter must be part of this carousel.");
                    this.navigateTo(photo);
                 } else {
                    this.currentPage = this.dataPage.getPage("first");
                    this._load();
                 }
+                this.isStarted = true;
              },
              insertPhoto : function (photo) {
                 assertTrue(photo instanceof Photo);
@@ -464,7 +467,7 @@ define(["dojo/_base/declare",
                       });
                       instance.options.onUpdate.call(instance.options.context, $photos);
                    } catch (e) {
-                      instance.log("Could not finish the animation. Maybe the carousel has been reset");
+                      console.log("Could not finish the animation. Maybe the carousel has been reset");
                    }
                 };
 
