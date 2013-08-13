@@ -10,13 +10,12 @@
  */
 define(["dojo/_base/declare",
         "widget/SinglePhotoWidget",
-        "view/PhotoCarouselView",
         "model/Photo", 
         "util/Communicator", 
         "util/Tools",
         "dojo/text!/template/Fullscreen",
         "dojo/domReady!"], 
-       function (declare, PhotoWidget, PhotoCarouselView, Photo, communicator, tools, template) {
+       function (declare, PhotoWidget, Photo, communicator, tools, template) {
           return declare([PhotoWidget], {
              templateString : template,
 

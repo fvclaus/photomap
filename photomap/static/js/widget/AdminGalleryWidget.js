@@ -7,7 +7,7 @@
 define(["dojo/_base/declare",
         "widget/PhotoWidget",
         "model/Photo",
-        "view/PhotoCarouselView",
+        "widget/PhotoCarouselWidget",
         "util/Communicator",
         "dojo/text!/template/AdminGallery",
         "dojo/domReady!"], 

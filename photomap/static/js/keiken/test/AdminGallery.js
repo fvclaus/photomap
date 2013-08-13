@@ -25,7 +25,7 @@ require(["widget/AdminGalleryWidget",
                     .append($container);
 
                  gallery = new AdminGalleryWidget(null, $container.get(0));
-                 photos = testFixture.getPhotos(nPhotos);
+                 photos = testFixture.getRandomPhotos(nPhotos);
               },
               teardown : function () {
                  $testBody.empty();

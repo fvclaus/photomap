@@ -11,7 +11,7 @@ define(["dojo/_base/declare",
              constructor : function () {
                 this._words = this._lipsum.split(" ");
              },
-             getPhotos : function (nPhotos) {
+             getRandomPhotos : function (nPhotos) {
                 assertNumber(nPhotos, "nPhotos must be of type Number.");
                 var photos = [],
                     photoIndex = 0;
@@ -28,7 +28,10 @@ define(["dojo/_base/declare",
               * @param {Number} id
               */
              getRandomPhoto : function (id) {
-                assertNumber(id, "Id parameter must be of type number.");
+                if (id === null || id === undefined) {
+                   console.warn("Did not provide Id for test photo. Using random one.");
+                   id = parseInt(Math.random() * 1000);
+                }
                 var photoAndThumb = this._getRandomPhotoAndThumb(),
                     nWordsTitle = parseInt(Math.random() * 20),
                     nWordsDescription = parseInt(Math.random() * 300),

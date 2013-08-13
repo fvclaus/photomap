@@ -43,7 +43,7 @@ require(["widget/GalleryWidget",
                     .append($container);
 
                  gallery = new GalleryWidget(null, $container.get(0));
-                 photos = testFixture.getPhotos(nPhotos);
+                 photos = testFixture.getRandomPhotos(nPhotos);
               },
               teardown : function () {
                  $testBody.empty();
@@ -133,7 +133,7 @@ require(["widget/GalleryWidget",
            });
 
            QUnit.asyncTest("insertPhoto", 3 * nPhotosInGalleryAssertions + 1,  function () {
-              var photos = testFixture.getPhotos(4),
+              var photos = testFixture.getRandomPhotos(4),
                   photo5 = testFixture.getRandomPhoto(12),
                   photo6 = testFixture.getRandomPhoto(13),
                   photoIndex = 0,
@@ -168,7 +168,7 @@ require(["widget/GalleryWidget",
            });
 
            QUnit.asyncTest("deletePhoto", nPhotosInGalleryAssertions + 2, function () {
-              var photos = testFixture.getPhotos(6),
+              var photos = testFixture.getRandomPhotos(6),
                   oldPhoto = photos[5],
                   photoIndex = 0;
 
