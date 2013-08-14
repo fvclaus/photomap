@@ -15,11 +15,10 @@ define(["dojo/_base/declare", "model/MarkerModel", "model/Place", "model/Collect
           console.log("Album: start");
           return declare(MarkerModel, {
              constructor : function (data) {
-                assertTrue(data.secret, "album secret Must not be undefined");
                 
                 this.type = 'Album';
                 this.owner = data.isOwner || false;
-                this.secret = data.secret;
+                this.secret = data.secret || "";
                 
                 this.places = null;
                 if (data.places) {
@@ -38,6 +37,9 @@ define(["dojo/_base/declare", "model/MarkerModel", "model/Place", "model/Collect
              },
              getSecret : function () {
                 return this.secret;
+             },
+             getPlaces : function () {
+                return this.places;
              }
           });
        });

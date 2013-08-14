@@ -361,12 +361,14 @@ define([
           },
           bindClickListener : function (callback) {
              var instance = this;
-
+             
              google.maps.event.addListener(this.map, "click", function (event) {
-                communicator.publish("click:Map", {
-                   lat : parseFloat(event.latLng.lat()),
-                   lng : parseFloat(event.latLng.lng())
-                });
+                if (state.isDashboardView() || (state.isAlbumView() && state.isAdmin())) {
+                   communicator.publish("click:Map", {
+                      lat : parseFloat(event.latLng.lat()),
+                      lng : parseFloat(event.latLng.lng())
+                   });
+                }
              });
           },
           /**

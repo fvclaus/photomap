@@ -63,12 +63,14 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                 
                 return markers;
              },
-             init : function (models) {
+             init : function (albumCollection) {
                 
                 console.log("in map init");
-                var markers = this.initMarkers(models);
+                var markers;
                 // switch between albumview and dashboard (different map)
                 if (state.isAlbumView()) {
+                   //in this case albumCollection is actually just a single album with a placeCollection
+                   markers = this.initMarkers(albumCollection.getPlaces().getAll());
                    // show the map depending on amount of markers
                    if (markers.length <= 0) {
                       this.view.expandBounds(state.getAlbum());
@@ -78,11 +80,8 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                       this.fitMapToMarkers(markers);
                    }
                    
-                   if (state.isAdmin()) {
-                      this.view.bindClickListener();
-                   }
-                   
                 } else if (state.isDashboardView()) {
+                   markers = this.initMarkers(albumCollection);
                    // show the map depending on amount of markers
                    if (markers.length <= 0) {
                       this.view.showWorld();
@@ -91,8 +90,6 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                    } else {
                       this.fitMapToMarkers(markers);
                    }
-                   
-                   this.view.bindClickListener();
                 }
                 // set map options if interactive
                 this.view.map.setOptions(this.view.mapOptions);

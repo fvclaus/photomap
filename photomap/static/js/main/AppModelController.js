@@ -71,7 +71,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 dialog.show({
                    load : function () {
                       if (modelType === "Place") {
-                        dialog.setInputValue("album", state.getCurrentLoadedAlbum().getId());
+                        dialog.setInputValue("album", state.getAlbum().getId());
                       }
                       dialog.setInputValue("lat", eventData.lat);
                       dialog.setInputValue("lon", eventData.lng);

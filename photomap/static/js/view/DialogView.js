@@ -252,7 +252,6 @@ define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/Clien
                               .add($("#mp-dialog-button-no"))
                               .add($("#mp-dialog-button-save"))
                               .add(this.$close);
-            
             //called when data is valid
             this.$form.validate({
                success : "valid",
