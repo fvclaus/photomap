@@ -56,19 +56,20 @@ define(["dojo/_base/declare",
                 var photoSource;
                 //begin animation
                 if (time === "start") {
-                   // Fadout items in animationTime microseconds
+                   // Fadout items in animationTime microseconds.
+                   // The complete event will get fired everytime a photo element is faded out.
                    options.items.fadeOut(options.animationTime);
-                   // Once the items are faded out
-                   window.setTimeout(
-                      function () {
-                         // Show the loading handler and
-                         if (options.loader) {
-                            options.loader.show();
-                         }
-                         // Call the onStart callback.
-                         options.onStart.call(options.context, options.items);
-                      }, options.animationTime);
-                   // end animation
+                   // Therefore the other code has to be moved into a timout.
+                   setTimeout(function () {
+                      // Sometimes the items are not hidden. Reason: Unknown.
+                      options.items.hide();
+                      // Show the loading handler and
+                      if (options.loader) {
+                         options.loader.show();
+                      }
+                      // Call the onStart callback.
+                      options.onStart.call(options.context, options.items);
+                   }, options.animationTime);
                 } else if (time === "end") {
                    
                    if (options.loader) {
@@ -84,26 +85,22 @@ define(["dojo/_base/declare",
                          // center element
                          // give the element its later height
                          $(item)
-                            .css("visibility", "hidden")
+                            .hide()
                             .attr("src", photoSource);
                          console.log("CarouselAnimation: Setting src %s on photo thumb %d.", photoSource, index);
                          // set margin-top accordingly. 
                          tools.centerElement($(item), "vertical");
                          // remove the img again to fade it in nicely
                          $(item)
-                            .removeAttr("src")
-                            .css("visibility", "visible");
+                            .removeAttr("src");
                          if (photoSource) {
-                            $(this).fadeIn(options.animationTime)
+                            $(this)
                                .attr("src", photoSource)
-                            // needed for frontend testing to select 'active' photos
-                               .addClass("mp-test-photo-used");
-                            
+                               .fadeIn(options.animationTime);
                          } else {
-                            $(this).fadeOut(0)
-                               .removeAttr("src")
-                            // needed for frontend testing to select 'active' photos
-                               .removeClass("mp-test-photo-used");
+                            $(this)
+                               .hide()
+                               .removeAttr("src");
                          }
                       });
                    }
@@ -111,14 +108,15 @@ define(["dojo/_base/declare",
                    window.setTimeout(
                       function () {
                          if (options.onEnd) {
-                            options.onEnd.call(options.context, options.items)
+                            options.onEnd.call(options.context, options.items);
                          }
                       }, options.animationTime);
                 }
              },
+             //TODO remove code duplication in _fade & _flip
              _flip : function (options, time) {
                 
-                console.log("CarouselAnimation: in flip");
+                console.log("CarouselAnimation: _flip");
                 var scaleX = function (value) {
                    return "scaleX(" + value + ")";
                 },
@@ -149,8 +147,7 @@ define(["dojo/_base/declare",
                             options.onStart.call(options.context, options.items);
                          }
                       },
-                      options.animationTime
-                   );
+                      options.animationTime);
                    // end animation
                 } else if (time === "end") {
                    console.log("CarouselAnimation: end flipping");
@@ -168,7 +165,6 @@ define(["dojo/_base/declare",
                          // center element
                          // give the element its later height
                          $(item)
-                            .css("visibility", "hidden")
                             .show()
                             .attr("src", photoSource);
                          console.log("Setting src %s on photo thumb %d.", photoSource, index);
@@ -176,26 +172,20 @@ define(["dojo/_base/declare",
                          tools.centerElement($(item), "vertical");
                          // remove the img again to fade it in nicely
                          $(item)
-                            .removeAttr("src")
-                            .css("visibility", "visible");
+                            .removeAttr("src");
                          if (photoSource) {
-                            
                             $(item)
                                .attr("src", photoSource)
                                .css({
                                   "-o-transform": scaleX(1),
                                   "-webkit-transform": scaleX(1),
                                   "transform": scaleX(1)
-                               })
-                            //.removeClass("mp-scaleX-0")
-                            // needed for frontend testing to select 'active' photos
-                               .addClass("mp-test-photo-used");
+                               });
                             
                          } else {
-                            $(item).fadeOut(0)
-                               .removeAttr("src")
-                            // needed for frontend testing to select 'active' photos
-                               .removeClass("mp-test-photo-used");
+                            $(item)
+                               .hide()
+                               .removeAttr("src");
                          }
                       });
                    }
@@ -203,7 +193,7 @@ define(["dojo/_base/declare",
                    window.setTimeout(
                       function () {
                          if (options.onEnd) {
-                            options.onEnd.call(options.context, options.items)
+                            options.onEnd.call(options.context, options.items);
                          }
                       },
                       options.animationTime

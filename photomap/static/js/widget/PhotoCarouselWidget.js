@@ -12,7 +12,7 @@
  * @param {Function} options.onUpdate: Called after all photos are updated.
  * @param {Boolean} options.navigateToInsertedPhoto: Defaults to false.
  * @param {Object} options.context:  Defaults to false.
- * @param {Boolean} options.lazy:  Defaults to false.
+ * @param {Boolean} options.lazy:  Defaults to true.
  * @param {String} options.effect:  fade || flip. Defaults to fade.
  */
   
@@ -35,9 +35,10 @@ define(["dojo/_base/declare",
                 });
 
                 this.defaults = {
-                   lazy : false,
+                   lazy : true,
                    effect : "fade",
                    duration: 500,
+                   loader : $(),
                    // No need to check for the existence of these functions.
                    beforeLoad : function () {},
                    afterLoad : function () {},
@@ -52,14 +53,14 @@ define(["dojo/_base/declare",
                 this.srcPropertyName = srcPropertyName;
                 this.nLoadHandler = 0;
                 
-                this.$items = $photos;
+                this.$photos = $photos;
                 // recalculate margins when window is resized
                 $(window).resize(function () {
                    $photos.each(function () {
                       tools.centerElement($(this), "vertical");
                    });
                 });
-                this.size = this.$items.length;
+                this.size = this.$photos.length;
 
                 this.dataPage = new PhotoPages(photos, this.size, this.srcPropertyName);
                 
@@ -74,36 +75,38 @@ define(["dojo/_base/declare",
              /**
               * @description Starts the carousel by loading the first or the requested page
               * @param {Photo} photo: Null to start with the first photo.
+              * @idempotent
               */
              start : function (photo) {
                 assertTrue(photo === undefined || (photo.isInstanceOf && photo.isInstanceOf(Photo)), "Photo parameter must be undefined or an instance of Photo.");
                 if (photo) {
-                   assertTrue(this._getIndexForPhoto(Photo) !== -1, "Photo parameter must be part of this carousel.");
+                   assertTrue(this._getIndexForPhoto(photo) !== -1, "Photo parameter must be part of this carousel.");
+                   this.isStarted = true;
                    this.navigateTo(photo);
                 } else {
                    this.currentPage = this.dataPage.getPage("first");
+                   this.isStarted = true;
                    this._load();
                 }
-                this.isStarted = true;
              },
              insertPhoto : function (photo) {
-                assertTrue(photo instanceof Photo);
+                assertTrue(photo instanceof Photo, "Parameter photo must be an instance of Photo.");
                 
                 console.log("PhotoCarouselWidget: Inserting new photo %s to Carousel.", photo);
                 // update page
                 this.dataPage.insertPhoto(photo);
-                var from = this.dataPage.getIndexOfPhoto(photo);
+                var from = this.dataPage.getLocalIndexOfPhoto(photo);
                 
                 // Did we insert on the current page? Then we need to update it
                 if (this._isLastPage()){
                    console.log("PhotoCarouselWidget: New photo is inserted on current page. Reload current page from index %d.", from);
                    this.currentPage = this.dataPage.getPage("current");
-                   this._load(from);
+                   this._load(from, from + 1);
                 } else if (this.options.navigateToInsertedPhoto) {
                    // config: Show newly inserted photos
                    this.currentPage = this.dataPage.getPage("last");
                    this._load();
-                } else { // Call _update to correct photo number, etc
+                } else if (this.isStarted) { // Call _update to correct photo number, etc
                    this.options.onUpdate.call(this.options.context, $());
                 }
                    
@@ -119,16 +122,18 @@ define(["dojo/_base/declare",
                    };
                 }
 
-                var oldPage = this.dataPage.getPage("current"),
+                var currentPage = this.dataPage.getPage("current"),
                     $currentItem = null,
                     // oldPage pages photo instances.
-                    from = oldPage.indexOf(photo),
+                    from = 0,
+                    firstIndexOfCurrentPage = this._getIndexForPhoto(currentPage[0]),
+                    index = this._getIndexForPhoto(photo),
+                    localIndex = this.dataPage.getLocalIndexOfPhoto(photo),
                     instance = this,
                     onFadeOut = function () {
                        this.currentPage = this.dataPage.getPage("current");
-                       // we need to update everything from 'from' to the last entry of the oldPage
-                       //TODO get the real length of the oldPage, currently this will always be this.size
-                       this._load(from, oldPage.length);
+                       // Update everything from and including the deleted photo element.
+                       this._load(from);
                        instance._deleteThread = null;
                     };
 
@@ -136,51 +141,65 @@ define(["dojo/_base/declare",
                 this.dataPage.deletePhoto(photo);
 
                 // Did we delete on the current page?
-                if (from !== -1) {
-                   $currentItem = this.$items
-                      .filter("img[src='" + photo[this.srcPropertyName] + "']");
-                   if ($currentItem.length > 0) {
-                      $currentItem.fadeOut(500, function () {
-                         $(this).removeAttr("src");
-                         onFadeOut.apply(instance);
-                      });
-                   } else { // The image has not been loaded yet. Update immediately.
-                      // Give previous delete commands the change to execute before.
+                if (localIndex !== -1 ) {
+                   $currentItem = this.$photos.eq(localIndex);
+                      
+                   $currentItem.fadeOut(500, function () {
+                      $(this)
+                         .removeAttr("src")
+                         .removeAttr("data-keiken-id");
+                      // Refresh everything and including the delete photo element.
+                      from = localIndex;
                       onFadeOut.apply(instance);
-                   }
+                   });
+                   this._deleteThread = onFadeOut;
+                }  else if (index < firstIndexOfCurrentPage) {  // Did we delete from a previous page?
+                   // Refresh the whole page.
+                   // Everything is moving to the left.
+                   from = 0;
+                   this._deleteThread = onFadeOut;
+                   onFadeOut.apply(instance);
+                } else if (this.isStarted) { // Call _update to correct photo number, etc
+                   this.options.onUpdate.call(this.options.context, $());
                 }
-                this._deleteThread = onFadeOut;
              },
              /**
-              * @description Resets to the state after the construction.
+              * @description Destroys this instance. Use this to stop all running threads.
               * Hides all photos and removes the src attribute. Also hides all loaders.
+              * Note: Makes this instance unusable. It has to be discarded immediatly afterwards.
               */
-             reset : function () {
-                console.log("PhotoCarouselWidget: reset(). Stopping update all threads.");
+             destroy : function () {
+                console.log("PhotoCarouselWidget: Destroying. Stopping update all threads.");
                 this.dataPage = null;
                 this.currentPage = null;
                 this.nLoadHandler = 0;
-                this.$items.each(function () {
+                this.$photos.each(function () {
                    $(this).hide().removeAttr("src");
                 });
                 this.options.loader.each(function () {
                    $(this).hide();
                 });
                 this.options = null;
-                this.$items = null;
+                this.$photos = null;
              },
              /* 
               * @public
+              * @description Navigates only if necessary.
               * @param {String | Photo} to
               */
              navigateTo : function (to) {
-                assert(this.isStarted, true, "carousel has to be started already");
+                this.isStarted = true;
+                // assert(this.isStarted, true, "carousel has to be started already");
                 switch(typeof to) {
                 case "string":
-                   assertTrue((to === "start") || (to === "end"));
+                   assertTrue((to === "start") || (to === "end"), "Parameter to can only be one of 'start' or 'end'.");
                    break;
                 case "object" :
-                   to = this._getIndexForPhoto(to);
+                   to = this.dataPage.getPageIndex(to);
+                   // The photo is on the current page. Do nothing.
+                   if (to === this.dataPage.getCurrentPageIndex()) {
+                      return;
+                   }
                    assertTrue(to >= 0, "Photo must be a legal index.");
                    break;
                 default: 
@@ -201,6 +220,7 @@ define(["dojo/_base/declare",
                 }
                 this._load();
              },
+
              navigateLeft : function () {
                 this.currentPage = this.dataPage.getPage("previous");
                 this._load();
@@ -280,6 +300,10 @@ define(["dojo/_base/declare",
                    from = 0;
                 }
 
+                if (to === undefined || to === null) {
+                   to = this.size;
+                }
+
                 if (this._loadThread !== null) {
                    this._loadThread = function () {};
                 }
@@ -288,18 +312,17 @@ define(["dojo/_base/declare",
                 //TODO this should only load pictures from index 'from' , if specified
                 if (this.options.lazy) {
                    // Filter out null values of the current page.
-                   photos = this.currentPage.filter(function (e, i) {
+                   // Photo elements with null srcs will never trigger the load event.
+                   photos = this.currentPage.slice(from, to).filter(function (e, i) {
                       return e !== null;
                    });
-                   // Regardless of whats actually on a page, we must update all entries to remove the old ones.
-                   to = this.size;
                 } else { // Load all photos.
                    photos = this.getAllPhotos();
                 }
                 // Remove old network error warnings.
-                this.$items.slice(from, to).removeClass("mp-photo-network-error");
+                this.$photos.slice(from, to).removeClass("mp-photo-network-error");
 
-                console.log("PhotoCarouselWidget: Preparing to update from '%d' to '%d'.", from, to || photos.length);
+                console.log("PhotoCarouselWidget: Preparing to update from %d to %d.", from, to);
 
                 /*
                  * This thread will be executed every time a photo is loaded.
@@ -315,36 +338,43 @@ define(["dojo/_base/declare",
                       if (loaded >= photos.length) {
                          // This threat is the last active threat -> If there were multiple threats during the creation time, then it must update the whole page.
                          if (instance.nLoadHandler === 1) {
+                            instance.nLoadHandler = 0;
                             console.log("PhotoCarousel: Last update threat. Calling _update.");
                             // Trigger the afterLoad event.
-                            instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || photos.length));
+                            instance.options.afterLoad.call(instance.options.context, instance.$photos.slice(from, to));
                             // Mark the photo element that srcs could not be loaded
                             // They will be excluded from _update.
                             photoErrors.forEach(function (photoIndex) {
-                               instance.$items.get(photoIndex).addClass("mp-photo-network-error");
+                               instance.$photos.get(photoIndex).addClass("mp-photo-network-error");
                             });
                             // There are other loadHandler running, loading other photos.
                             // This could lead to flickering, because the current page is updated more than once.
                             // The solution: Only call update once and ignore from and to.
                             if (instance._loadThreadWaiting) {
                                instance._loadThreadWaiting = false;
-                               console.log("PhotoCarouselWidget: Ignoring to and from. Updating from %d to %d.", 0, instance.$items.length);
-                               instance._update(0, instance.$items.length);
+                               console.log("PhotoCarouselWidget: Ignoring to and from. Updating from %d to %d.", 0, instance.$photos.length);
+                               instance._update(0, instance.$photos.length);
                             } else {
                                // Start updating the srcs.
-                               console.log("PhotoCarouselWidget: Starting to update from '%d' to '%d'.", from, to || photos.length);
-                               instance._update(from, to || photos.length);                  
+                               console.log("PhotoCarouselWidget: Starting to update from %d to %d.", from, to);
+                               instance._update(from, to);                  
                             }
                          } else {
+                            // Make sure to free the locked resources.
+                            instance._loadThread = null;
+                            instance.nLoadHandler -= 1;
                             instance._loadThreadWaiting = true;
                             console.log("PhotoCarouselWidget: Not the last update threat. Waiting for other update threats.");
                          }
-                         instance._loadThread = null;
-                         instance.nLoadHandler -= 1;
                       }
                    } catch (e) {
                       console.log("PhotoCarouselWidget: Could not count loaded photos. Maybe the carousel was reset?");
                       console.dir(e);
+                      // Free resources, in case the thread dies unexpectedly.
+                      if (instance._loadThread !== null) {
+                         instance._loadThread = null;
+                         instance.nLoadHandler -= 1;
+                      }
                    }
                 };
 
@@ -374,7 +404,7 @@ define(["dojo/_base/declare",
                       // Length could change in the meantime, do not store this in an intermediate variable.
                       // There are no photos and nothing to load, but the afterLoad event still needs to be triggered.
                       if (photos.length === 0) {
-                         instance.options.afterLoad.call(instance.options.context, instance.$items.slice(from, to || photos.length));
+                         instance.options.afterLoad.call(instance.options.context, instance.$photos.slice(from, to));
                          // Update an empty set to trigger all other events properly too.
                          instance._update();
                       }
@@ -398,7 +428,7 @@ define(["dojo/_base/declare",
                 
                 // Starts the fadeout animation and the load Thread afterwards.
                 carouselAnimation.start({
-                   items: instance.$items,
+                   items: instance.$photos.slice(from, to),
                    loader: this.options.loader,
                    animation: this.options.effect,
                    animationTime: this.options.duration,
@@ -407,12 +437,12 @@ define(["dojo/_base/declare",
 
 
                 // Trigger the beforeLoad event.
-                this.options.beforeLoad.call(this.options.context, this.$items.slice(from, to || photos.length));
+                this.options.beforeLoad.call(this.options.context, this.$photos.slice(from, to));
 
                 // This is called at startup when there are no photos present or after all photos are deleted.
                 if (photos.length === 0){
-                   this.options.afterLoad.call(this.options.context, this.$items.slice(from, to || photos.length));
-                   this.options.onUpdate.call(this.options.context, this.$items.slice(from, to || photos.length));
+                   this.options.afterLoad.call(this.options.context, this.$photos.slice(from, to));
+                   this.options.onUpdate.call(this.options.context, this.$photos.slice(from, to));
                 }
                 
                 this._loadThread = loadHandler;
@@ -424,18 +454,13 @@ define(["dojo/_base/declare",
              //TODO this i called even when not all photo could be loaded (e.g network error)
              // we need to indicate that a photo could not be loaded
              _update : function (from, to) {
-                
-                if (!from) {
-                   $items = this.$items;
-                }
-
-                if (this._finishThreat !== null) {
-                   this._finishThreat = function () {};
+                if (this._finishThread !== null) {
+                   this._finishThread = function () {};
                 }
                 
                 var instance = this,
                     photos = [],
-                    $items = this.$items
+                    $photos = this.$photos
                        .slice(from, to)
                 // Don't update photo elements which srcs could not be loaded.
                        .filter(function () {
@@ -443,14 +468,9 @@ define(["dojo/_base/declare",
                        }),
                     finishHandler = null;
 
-                assertTrue($items.size() > 0, "$items has to contain at least one item");
-                
-                this.currentPage.forEach(function (photo, index) {
-                   if (photo !== null) {
-                      // Note: this is a reference and might be gone, once the onEnd callback is called.
-                      photos.push(photo);
-                   }
-                });
+                assertTrue($photos.size() > 0, "$photos has to contain at least one item");
+                // Include null values to allow gaps between photos.
+                photos = this.currentPage.slice(from, to);
                 
                 // This threat could be executed after the carousel has been garbage collected.
                 // Protect everything with a try-catch clause.
@@ -472,7 +492,7 @@ define(["dojo/_base/declare",
                 };
 
                 carouselAnimation.end({
-                   items: $items,
+                   items: $photos,
                    "photos": photos,
                    srcPropertyName: this.srcPropertyName,
                    loader: this.options.loader,
@@ -482,7 +502,7 @@ define(["dojo/_base/declare",
                    context: instance.options.context
                 });
 
-                this._finishThreat = finishHandler;
+                this._finishThread = finishHandler;
              },
              /*
               * @private
@@ -492,7 +512,7 @@ define(["dojo/_base/declare",
               */
              _ping : function () {
                 console.log("PhotoCarouselView: _ping");
-                this.$items.length * 2;
+                this.$photos.length * 2;
              },
           });
        });

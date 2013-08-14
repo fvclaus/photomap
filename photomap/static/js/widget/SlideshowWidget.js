@@ -63,7 +63,7 @@ define(["dojo/_base/declare",
                 // this._started = false;
                 if (this._started) { 
                    if (this.carousel !== null) {
-                      this.carousel.reset();
+                      this.carousel.destroy();
                       this.carousel = null;
                    }
                    this._loaded = false;

@@ -170,6 +170,6 @@ require(["widget/FullscreenWidget",
                     assertPhotoInWidget(null);
                     QUnit.start();
                  }, animationTime);
-              }, animationTime);
-           }, animationTime);
+              }, 2 * animationTime); // Needs more time for fading out.
+           });
         });

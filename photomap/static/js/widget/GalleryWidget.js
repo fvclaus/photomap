@@ -92,7 +92,7 @@ define(["dojo/_base/declare",
                 this.$loader.addClass("mp-nodisplay");
                 this.$controls.addClass("mp-nodisplay");
                 if (this.carousel !== null) {
-                   this.carousel.reset();
+                   this.carousel.destroy();
                    this.carousel = null;
                    this._showHelpText();
                 }
