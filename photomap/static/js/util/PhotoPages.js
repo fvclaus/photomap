@@ -29,6 +29,9 @@ define(["dojo/_base/declare",
                 this.srcPropertyName = srcPropertyName;
                 this.currentPageIndex = 0;
              },
+             reset : function () {
+                this.currentPageIndex = 0;
+             },
              update : function (photos) {
                 this.pages = null;
                 this.photos = $.extend(true, [], photos);
@@ -119,6 +122,12 @@ define(["dojo/_base/declare",
              /**
               * @public
               */
+             getCurrentPageIndex : function () {
+                return this.currentPageIndex;
+             },
+             /**
+              * @public
+              */
              insertPhoto : function (photo) {
                 assertTrue(photo instanceof Photo);
                 
@@ -170,8 +179,18 @@ define(["dojo/_base/declare",
              /**
               * @public
               */
-             getIndexOfPhoto : function (photo) {
-                return this.photos.indexOf(photo);
+             getLocalIndexOfPhoto : function (photo) {
+                var photoIndex = 0,
+                    photoOnPage = null,
+                    currentPage = this._getCurrentPage();
+                
+                for (photoIndex = 0; photoIndex < currentPage.length; photoIndex++) {
+                   photoOnPage = currentPage[photoIndex];
+                   if (photoOnPage && photo.getId() === photoOnPage.getId()) {
+                      return photoIndex;
+                   }
+                }
+                return -1;
              },
              /**
               * @private

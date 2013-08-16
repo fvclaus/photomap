@@ -16,8 +16,11 @@ define(["dojo/_base/declare"],
                 
                 this.type = data.type;
                 this.title = data.title;
-                this.id = data.id || -1;
-                
+                if (typeof data.id === "number") {
+                   this.id = data.id;
+                } else {
+                   this.id = -1;
+                }
                 // reading from input elements will return '' if nothing has been entered
                 this.description = (data.description === "")? null : data.description;
              },

@@ -37,7 +37,7 @@ require(["widget/SlideshowWidget",
                     .append($container);
 
                  slideshow = new SlideshowWidget(null, $container.get(0));
-                 photos = testFixture.getPhotos(12);
+                 photos = testFixture.getRandomPhotos(12);
               },
               teardown : function () {
                  $testBody.empty();

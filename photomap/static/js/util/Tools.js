@@ -19,6 +19,16 @@ define(["dojo/_base/declare"],
          modulo : function (x, y) {
             return ((x % y) + y) % y;
          },
+         countAttributes : function (object) {
+            var count = 0,
+                key = null;
+            for (key in object) {
+               if (object.hasOwnProperty(key)) {
+                  count++;
+               }
+            }
+            return count;
+         },
          cutText : function (text, size) {
       
             if (text === null){

@@ -40,7 +40,7 @@ require(["widget/FullscreenWidget",
                  fullscreen = new FullscreenWidget(null, $container.get(0));
                  // The default style hides the fullscreen.
                  $("#" + $container.attr("id")).show();
-                 photos = testFixture.getPhotos(12);
+                 photos = testFixture.getRandomPhotos(12);
               },
               teardown : function () {
                  $testBody.empty();
@@ -170,6 +170,6 @@ require(["widget/FullscreenWidget",
                     assertPhotoInWidget(null);
                     QUnit.start();
                  }, animationTime);
-              }, animationTime);
-           }, animationTime);
+              }, 2 * animationTime); // Needs more time for fading out.
+           });
         });

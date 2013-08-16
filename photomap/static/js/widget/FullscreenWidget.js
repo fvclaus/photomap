@@ -10,13 +10,12 @@
  */
 define(["dojo/_base/declare",
         "widget/SinglePhotoWidget",
-        "view/PhotoCarouselView",
         "model/Photo", 
         "util/Communicator", 
         "util/Tools",
         "dojo/text!/template/Fullscreen",
         "dojo/domReady!"], 
-       function (declare, PhotoWidget, PhotoCarouselView, Photo, communicator, tools, template) {
+       function (declare, PhotoWidget, Photo, communicator, tools, template) {
           return declare([PhotoWidget], {
              templateString : template,
 
@@ -70,7 +69,7 @@ define(["dojo/_base/declare",
                 // this._started = false;
                 if (this._started) { 
                    if (this.carousel !== null) {
-                      this.carousel.reset();
+                      this.carousel.destroy();
                       this.carousel = null;
                    }
                    this._loaded = false;

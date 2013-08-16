@@ -7,7 +7,7 @@
 define(["dojo/_base/declare",
         "widget/PhotoWidget",
         "model/Photo",
-        "view/PhotoCarouselView",
+        "widget/PhotoCarouselWidget",
         "util/Communicator",
         "dojo/text!/template/AdminGallery",
         "dojo/domReady!"], 
@@ -75,6 +75,9 @@ define(["dojo/_base/declare",
               */
              reset : function () {
                 this._empty();
+                if (this.carousel) {
+                   this.carousel.destroy();
+                }
                 this.carousel = null;
                 this._run = false;
                 this._loaded = false;
