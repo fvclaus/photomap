@@ -12,6 +12,15 @@
 define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UIState"],
        function (declare, Presenter, communicator, state) {
           return declare(Presenter, {
+             constructor : function () {
+                this.opened = false;
+             },
+             setOpened : function (opened) {
+                this.opened = opened;
+             },
+             isOpen : function () {
+                return this.opened;
+             },
              show : function () {
                 this.view.show();
              },
@@ -194,7 +203,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 // reset ui and (re)start gallery when place is opened
                 } else if (this.model.getModelType() === "Place") {
    
-                   communicator.publish("open:place", this.model);
+                   communicator.publish("called:openPlace", this);
                 }
              },
               _showIcon : function (icon) {

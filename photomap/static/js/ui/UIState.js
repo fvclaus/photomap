@@ -45,11 +45,12 @@ define(["dojo/_base/declare",
             //MODEL_COLLECTIONS--------------------------------------------------------------
             //--------------------------------------------------------------------
             getCollection : function (modelType) {
-               if (modelType === "Album") {
+               var type = modelType.toLowerCase();
+               if (type === "album") {
                   return this.albumCollection;
-               } else if (modelType === "Place") {
+               } else if (type === "place") {
                   return this.placeCollection;
-               } else if (modelType === "Photo") {
+               } else if (type === "photo") {
                   return this.photoCollection;
                } else {
                   throw new Error("UnknownCollectionError");

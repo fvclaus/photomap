@@ -59,7 +59,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                    
                    communicator.subscribe("navigate:fullscreen", this._fullscreenNavigate);
                    
-                   communicator.subscribe("open:place", this._placeOpen);
+                   communicator.subscribe("called:openPlace", this._placeOpen);
                    
                    communicator.subscribe("change:photoOrder", this._photoOrderChange);
                    communicator.subscribe("visited:photo", this._photoVisited);
@@ -346,20 +346,30 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 
                 
              },
-             _placeOpen : function (place) {
-                var photos = place.getPhotos();
-                state.setPhotoCollection(place.getPhotoCollection());
-                main.getUI().getInformation().update(place);
-                main.getUI().getPageTitleWidget().update(place.getTitle());
-
-                main.getUI().getGallery().load(photos);
-                main.getUI().getGallery().run();
-
-                main.getUI().getSlideshow().load(photos);
-                main.getUI().getAdminGallery().load(photos);
-                main.getUI().getFullscreen().load(photos);
-
-                main.getUI().getMessage().hide();
+             _placeOpen : function (placePresenter) {
+                if (!placePresenter.isOpen()) {
+                   var place = placePresenter.getModel(),
+                     photos = place.getPhotos();
+                   state.setPhotoCollection(place.getPhotoCollection());
+                   main.getUI().getInformation().update(place);
+                   main.getUI().getPageTitleWidget().update(place.getTitle());
+   
+                   main.getUI().getGallery().load(photos);
+                   main.getUI().getGallery().run();
+   
+                   main.getUI().getSlideshow().load(photos);
+                   main.getUI().getAdminGallery().load(photos);
+                   main.getUI().getFullscreen().load(photos);
+   
+                   main.getUI().getMessage().hide();
+                   
+                   $.each(state.getMarkers(), function (i, placePresenter) {
+                      placePresenter.setOpened(false);
+                   });
+                   placePresenter.setOpened(true);
+                }
+                // fire the place opened event in any case
+                communicator.publish("opened:Place", placePresenter);
              },
              _photoVisited : function (photo) {
                 main.getUI().getGallery().setPhotoVisited(photo);
