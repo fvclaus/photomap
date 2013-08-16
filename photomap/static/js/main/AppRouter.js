@@ -1,5 +1,5 @@
 /*jslint */
-/*global $ */
+/*global $, gettext */
 
 "use strict";
 
@@ -10,87 +10,207 @@
  * The ids of place and photo are consecutively set in the backend, the page id is set frontend and starts over in each place
  */
 
-define(["dojo/_base/declare", "dojo/router", "util/Communicator", "dojo/domReady!"], 
-      function (declare, router, communicator) {
+define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", "util/InfoText", "dojo/domReady!"], 
+      function (declare, router, communicator, state, InfoText) {
          return declare(null, {
             
             constructor: function () {
                
-               this.placeHashMatcher = /\/place\/(\d+)\//;
-               this.galleryPageHashMatcher = /\/page\/(\d+)\//;
-               this.photoHashMatcher = /\/photo\/(\d+)\//;
+               /* -------- matcher to get or change a specific part of the hash -------- */
+               this.albumMatcher = /(\/album\/)(\d+)(\/)/;
+               this.placeMatcher = /(\/place\/)(\d+)(\/)/;
+               this.galleryPageMatcher = /(\/page\/)(\d+)(\/)/;
+               this.photoMatcher = /(\/photo\/)(\d+)(\/)/;
                
-               this.currentHash = null;
+               /* ------ supported hash structures -------- */
+               this.albumSelectedHash = /^!\/(album)\/(\d+)\/$/;
+               this.placeSelectedHash = /^!\/(place)\/(\d+)\/$/;
+               this.placeLoadedHash = /^!\/(place)\/(\d+)\/(page)\/(\d+)\/$/;
+               this.photoLoadedHash = /^!\/(place)\/(\d+)\/(page)\/(\d+)\/(photo)\/(\d+)\/$/;
                
-               //this.albumListener = registerAlbumChangeListener();
+               this.currentHash = "";
+               this.state = {
+                  album: null,
+                  place: null,
+                  page: null,
+                  photo: null
+               }
                
-               this.placeListener = this._registerPlaceChangeListener();
+               /* ----- hash change handles ---- */
+               this.albumListener = null;
+               this.placeListener = null;
+               this.pageListener = null;
+               this.photoListener = null;
                
-               this.galleryPageListener = this._registerGalleryPageChangeListener();
+               this._registerHashListener();
                
-               this.photoListener = this._registerPhotoChangeListener();
+               this.infoText = new InfoText();
                
                router.startup();
             },
-            goToPlace : function (id) {
-               var oldPlaceHash = this._getCurrentPlaceHash() || ["/place/0/"];
+            goToAlbum : function (id) {
                
-               router.go(oldPlaceHash[0].replace(/\d+/, id));
-            },
-            goToGalleryPage : function (id) {
-               var oldGalleryPageHash = this._getCurrentGalleryPageHash() || ["/page/0/"];
+               var newHash;
                
-               if (this._getCurrentPlaceHash()) {
-                  router.go(this._getCurrentPlaceHash()[0] + oldGalleryPageHash[0].replace(/\d+/, id));
+               if (this.albumMatcher.test(this.currentHash)) {
+                  newHash = this.currentHash.replace(this.albumMatcher, "$1" + id + "$3");
                } else {
-                  alert("You cannot select a gallery page without selecting a place first.");
+                  newHash = "!/album/" + id + "/";
                }
+               
+               router.go(newHash);
+            },
+            goToPlace : function (id) {
+               
+               var newHash;
+               
+               if (this.placeMatcher.test(this.currentHash)) {
+                  newHash = this.currentHash.replace(this.placeMatcher, "$1" + id + "$3");
+               } else {
+                  newHash = "!/place/" + id + "/";
+               }
+               
+               router.go(newHash);
+            },
+            goToPage : function (id) {
+               
+               var newHash;
+               
+               if (this.pageMatcher.test(this.currentHash)) {
+                  newHash = this.currentHash.replace(this.pageMatcher, "$1" + id + "$3");
+               } else if (this.placeMatcher.test(this.currentHash)) {
+                  newHash = this.currentHash + "page/" + id + "/";
+               } else {
+                  throw new Error("NoPlaceLoadedError");
+               }
+               
+               router.go(newHash);
             },
             goToPhoto : function (id) {
-               var oldPhotoHash = this._getCurrentPhotoHash() || ["/photo/0/"];
                
-               if (this._getCurrentPlaceHash() && this._getCurrentGalleryPageHash()) {
-                  router.go(this._getCurrentPlaceHash()[0] + this._getCurrentGalleryPageHash()[0] + oldPhotoHash[0].replace(/\d+/, id));
+               var newHash;
+               
+               if (this.photoMatcher.test(this.currentHash)) {
+                  newHash = this.currentHash.replace(this.photoMatcher, "$1" + id + "$3");
+               } else if (this.pageMatcher.test(this.currentHash)) {
+                  newHash = this.currentHash + "page/" + id + "/";
                } else {
-                  alert("You cannot select a photo without selecting a place or gallery page first.");
+                  throw new Error("NoPlaceLoadedError");
                }
-            },
-            _getCurrentPlaceHash : function () {
-               if (this.placeHashMatcher.test(this.currentHash)) {
-                  return this.placeHashMatcher.exec(this.currentHash);
-               }
-               return null;
-            },
-            _getCurrentGalleryPageHash : function () {
-               if (this.galleryPageHashMatcher.test(this.currentHash)) {
-                  return this.galleryPageHashMatcher.exec(this.currentHash);
-               }
-               return null;
-            },
-            _getCurrentPhotoHash : function () {
-               if (this.photoHashMatcher.test(this.currentHash)) {
-                  return this.photoHashMatcher.exec(this.currentHash);
-               }
-               return null;
-            },
-            /**
-             * @private
-             */
-            _registerPlaceChangeListener: function () {
-               return router.register();
-            },
-            /**
-             * @private
-             */
-            _registerGalleryPageChangeListener : function () {
                
+               router.go(newHash);
             },
-            /**
-             * @private
-             */
-            _registerPhotoChangeListener: function () {
-               return router.register();
+            _registerHashListener : function () {
+               var instance = this;
+               
+               if (state.isDashboardView()) {
+                  this.albumListener = router.register(this.albumSelectedHash, instance._markerChangeHandler);
+               } else if (state.isAlbumView()) {
+                  this.placeListener = router.register(this.placeSelectedHash, instance._markerChangeHandler);
+                  this.pageListener = router.register(this.placeLoadedHash, this._pageChangeHandler);
+                  this.photoListener = router.register(this.photoLoadedHash, this._photoChangeHandler);
+               } else {
+                  throw new Error("UnknownPageError");
+               }
             },
+            _markerChangeHandler : function (event) {
+               
+               var type = event.params[0],
+                  infoMessage = "INVALID_" + type.toUpperCase();
+               // set current hash and update state
+               this.currentHash = event.newPath;
+               this._updateState(event.params);
+               // check if model exists
+               if (state.getCollection(type).has(this.state[type])) {
+                  communicator.publish("change:AppState", this.state);
+               } else {
+                  this.infoText.alert(gettext(infoMessage));
+               }
+            },
+            _pageChangeHandler : function (event) {
+               
+               var type = event.params[0], place, instance = this;
+               // set current hash and update state
+               this.currentHash = event.newPath;
+               this._updateState(event.params);
+               if (state.getCollection("Place").has(this.state.place)) {
+                  // get Presenter of the current place
+                  place = state.getMarker(state.getCollection("Place").get(this.state.place));
+                  communicator.subscribeOnce("opened:place", function () {
+                     if (main.getUI().getGallery().hasPage(instance.state.page)) {
+                        communicator.publish("change:AppState", instance.state);
+                     } else {
+                        this.infoText.alert(gettext("INVALID_PAGE"));
+                     }
+                  });
+                  place.open();
+               } else {
+                  this.infoText.alert(gettext("INVALID_PLACE"));
+               }
+            },
+            _photoChangeHandler : function (event) {
+               
+               var type = event.params[0];
+               /// set current hash and update state
+               this.currentHash = event.newPath;
+               this._updateState(event.params);
+               if (state.getCollection("Place").has(this.state.place)) {
+                  // get Presenter of the current place
+                  place = state.getMarker(state.getCollection("Place").get(this.state.place));
+                  communicator.subscribeOnce("opened:place", function () {
+                     if (state.getCollection("Photo").has(instance.state.photo)) {
+                        communicator.publish("change:AppState", instance.state);
+                     } else {
+                        this.infoText.alert(gettext("INVALID_PHOTO"));
+                     }
+                  });
+                  place.open();
+               } else {
+                  this.infoText.alert(gettext("INVALID_PLACE"));
+               }
+            },
+            _updateState : function (hashParams) {
+               var newState = {},
+                  i = 0,
+                  defaultState = {
+                     album: null,
+                     place: null,
+                     page: null,
+                     photo: null
+                  };
+               for (i; i <= hashParams.length; i += 2) {
+                  if (i === hashParams.length) {
+                     $.extend(this.state, defaultState, newState);
+                     break;
+                  }
+                  newState[hashParams[i]] = hashParams[i+1];
+               }
+            }
+//             
+            // _getCurrentAlbumHash : function () {
+               // if (this.albumMatcher.test(this.currentHash)) {
+                  // return this.albumMatcher.exec(this.currentHash);
+               // }
+               // return null;
+            // },
+            // _getCurrentPlaceHash : function () {
+               // if (this.placeMatcher.test(this.currentHash)) {
+                  // return this.placeMatcher.exec(this.currentHash);
+               // }
+               // return null;
+            // },
+            // _getCurrentGalleryPageHash : function () {
+               // if (this.galleryPageMatcher.test(this.currentHash)) {
+                  // return this.galleryPageMatcher.exec(this.currentHash);
+               // }
+               // return null;
+            // },
+            // _getCurrentPhotoHash : function () {
+               // if (this.photoMatcher.test(this.currentHash)) {
+                  // return this.photoMatcher.exec(this.currentHash);
+               // }
+               // return null;
+            // },
             
          });
       });
