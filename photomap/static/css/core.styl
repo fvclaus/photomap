@@ -178,7 +178,8 @@ a
   max-width 32px
   max-height 32px
   
-.mp-infotext
+.mp-infotext,
+#mp-infoalert
   width 100%
   height 100%
   padding 0 10%
@@ -199,13 +200,22 @@ a
     display table-cell
     vertical-align middle
 
+#mp-infoalert
+  width 60%
+  height 20%
+  top 40%
+  left 20%
+  z-index 101
+
 #mp-mask
   width 100%
   height 100%
   position absolute
   top 0
   left 0
+  z-index 100
   background-color rgba(244, 244, 244, 0.5)
+  
 #mp-infotext-closing-help
   position absolute
   right 0

@@ -15,7 +15,6 @@ define(["dojo/_base/declare"],
          return declare (null, {
             constructor : function ($container, message, options) {
                this.defaults = {
-                  imitateAlert: false,
                   hideOnMouseover: true,
                   hideOnClick: false,
                   hideOnEscape: false,
@@ -24,11 +23,19 @@ define(["dojo/_base/declare"],
                this.options = $.extend({}, this.defaults, options);
                this.$container = $container;
                this.$infoText = null;
+               this.$infoAlert = null;
                this.$mask = null;
                this.message = message;
                this.closed = true;
                this.fadingTime = 200;
                this.started = false;
+               this.alertAttributes = {
+                  prepared: false,
+                  closed: true,
+                  $mask: null,
+                  $textContainer: null,
+                  isRead: false
+               }
                this.id = $(".mp-infotext").size();
             },
             /**
@@ -43,13 +50,9 @@ define(["dojo/_base/declare"],
                   this.$infoText = $infoText;
                   this.$infoText.find("span").html(this.message);
                   this._bindListener();
-                  if (this.options.imitateAlert) {
-                     this._prepareInfoAlert();
-                  } else {
-                     this._resize();
-                     this._position();
-                     this._bindResizeListener();
-                  }
+                  this._resize();
+                  this._position();
+                  this._bindResizeListener();
                   this.started = true;
                }
                
@@ -84,6 +87,28 @@ define(["dojo/_base/declare"],
                } else if (!this.started) {
                   this.start().open();
                }
+            },
+            // @description imitates an alert displaying the given message - doesn't require InfoText to be started or $container & options to be set
+            alert : function (message) {
+               var instance = this;
+                  
+               if (!this.alertPrepared) {
+                  this._prepareAlert();
+               }
+               
+               // we can trust the message -> html is ok
+               this.alertAttributes.$textContainer.find("span").html(message);
+               
+               this.alertAttributes.$textContainer.fadeIn(this.fadingTime, function () {
+                  instance.alertAttributes.closed = false;
+               });
+               this.alertAttributes.$mask.fadeIn(this.fadingTime);
+               
+               // prevent accidental closing of alert -> show for at least 2s
+               this.alertAttributes.isRead = false;
+               window.setTimeout(function (instance) {
+                  instance.alertAttributes.isRead = true;
+               }, 2000, this);
             },
             /**
              * @description set a new Message for this InfoText - will update the html if started
@@ -144,29 +169,31 @@ define(["dojo/_base/declare"],
                
                return this;
             },
-            _prepareInfoAlert : function () {
-               this.$container = $("body");
+            _prepareAlert : function () {
                if ($("#mp-mask").length > 0) {
-                  this.$mask = $("#mp-mask");
+                  this.alertAttributes.$mask = $("#mp-mask");
                } else {
-                  this.$mask = $("<div id='mp-mask'></div>").appendTo(this.$container);
+                  this.alertAttributes.$mask = $("<div id='mp-mask'></div>").appendTo("body");
                }
-               this.$infoText.css({
-                  width: "60%",
-                  height: "20%",
-                  zIndex: 101,
-                  top: "40%",
-                  left: "20%"
-               });
-               this.$mask.css({
-                  zIndex: 100
-               });
-               this.$infoText.append("<div id='mp-infotext-closing-help'>" + gettext("CLOSE_INFOTEXT_ALERT") + "</div>")
-               this.options.hideOnEscape = true;
-               this.options.hideOnClick = true;
-               this.options.openOnMouseleave = false;
-               this.options.hideOnMouseover = false;
-               this._bindMaskListener();
+               if ($("#mp-infoalert").length > 0) {
+                  this.alertAttributes.$textContainer = $("#mp-infoalert");
+               } else {
+                  this.alertAttributes.$textContainer = $("<div id='mp-infoalert'><span></span></div>").appendTo("body");
+               }
+               this.alertAttributes.$textContainer.append("<div id='mp-infotext-closing-help'>" + gettext("CLOSE_INFOTEXT_ALERT") + "</div>");
+               this._bindAlertListener();
+               this.alertAttributes.prepared = true;
+            },
+            _closeAlert : function (instance) {
+               if (this.alertAttributes.prepared && (this.alertAttributes.$textContainer.is(":visible") || !this.alertAttributes.closed)) {
+                  // prevent accidental closing of alerts -> user is supposed to read the alert cause it gives important information
+                  if (!this.alertAttributes.isRead) {
+                     return false;
+                  }
+                  this.alertAttributes.$textContainer.fadeOut(this.fadingTime);
+                  this.alertAttributes.$mask.fadeOut(this.fadingTime);
+                  this.alertAttributes.closed = true;
+               }
             },
             _resize : function () {
                this.$infoText.css({
@@ -191,13 +218,15 @@ define(["dojo/_base/declare"],
                   "z-index": zIndex + 1
                });
             },
-            _bindMaskListener : function () {
-               var instance = this;
-               this.$mask.on("click", function () {
-                  instance.$infoText.stop(true, true);
-                  instance.$mask.stop(true, true);
-                  instance.close();
-               });
+            _bindAlertListener : function () {
+               var instance = this,
+                  click = function () {
+                     instance.alertAttributes.$textContainer.stop(true, true);
+                     instance.alertAttributes.$mask.stop(true, true);
+                     instance._closeAlert();
+                  };
+               this.alertAttributes.$mask.on("click", click);
+               this.alertAttributes.$textContainer.on("click", click)
             },
             _bindResizeListener : function () {
                var instance = this;
@@ -235,6 +264,11 @@ define(["dojo/_base/declare"],
                   }
                });
                $(document).on("keyup.InfoText", null, "esc", function (event) {
+                  // if alert is open close it and leave everything else as it is
+                  if (!instance.alertAttributes.closed) {
+                     instance._closeAlert();
+                     return true;
+                  }
                   if (instance.options.hideOnEscape && instance.started && !instance.closed) {
                      instance.$infoText.stop(true, true);
                      instance.close(!instance.options.openOnMouseleave); // if openOnMouseleave is false -> fully close, else just hide
