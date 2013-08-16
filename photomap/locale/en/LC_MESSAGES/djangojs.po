@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-25 21:37+0200\n"
+"POT-Creation-Date: 2013-08-16 13:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,63 +16,41 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/main/AppInitializer.js:97 static/js/util/ClientServer.js:116
+#: static/js/main/AppInitializer.js:95 static/js/util/ClientServer.js:116
 msgid "GET_ALBUM_ERROR"
 msgstr "The following error occurred while loading the album:  "
 
-#: static/js/main/AppInitializer.js:101 static/js/util/ClientServer.js:120
-#: static/js/view/DialogView.js:185 static/js/view/DialogView.js.c:246
+#: static/js/main/AppInitializer.js:99 static/js/util/ClientServer.js:120
+#: static/js/view/DialogView.js:164 static/js/view/DialogView.js.c:233
 msgid "NETWORK_ERROR"
 msgstr "A network error occurred. Please try again later."
 
-#: static/js/main/non-interactive.js:56
+#: static/js/main/account.js:50
 msgid "REQUEST_UNKNOWN_FAIL"
 msgstr ""
 "Uups. Something went wrong and we don't know what! Please try again, if you "
 "get this message another time, please contact support. "
 
-#: static/js/main/non-interactive.js:196
+#: static/js/main/account.js:113
 msgid "DELETE_ACCOUNT_CONFIRM"
 msgstr ""
 "Are you sure you want to delete the account? This can't be undone later on. "
 
-#: static/js/view/DialogView.js:84
+#: static/js/util/InfoText.js:164
+msgid "CLOSE_INFOTEXT_ALERT"
+msgstr "Press Escape or click anywhere on the page to close this message."
+
+#: static/js/view/DialogView.js:90
 msgid "YES"
 msgstr "Yes"
 
-#: static/js/view/DialogView.js:92
+#: static/js/view/DialogView.js:98
 msgid "NO"
 msgstr "No"
 
-#: static/js/view/DialogView.js:107
+#: static/js/view/DialogView.js:113
 msgid "SAVE"
 msgstr "Save"
-
-#: static/js/view/FullscreenView.js:125
-msgid "PHOTO_LOADING_ERROR"
-msgstr "The requested image couldn't be loaded. Please try again later."
-
-#: static/js/view/GalleryView.js:73
-msgid "GALLERY_NO_PLACE_SELECTED"
-msgstr ""
-"To start the gallery, please select a place in the map above, by double-"
-"clicking on the marker. You'll be able to view all photos of selected place "
-"then. <strong>If there is no place yet, follow the instructions given in the "
-"map.</strong>"
-
-#: static/js/view/GalleryView.js:271
-msgid "GALLERY_NO_PHOTOS_ADMIN"
-msgstr ""
-"To add a photo to the current place you can either drop the photo into the "
-"browser window, click on an empty tile or use the <img style='max-width: "
-"15px; height: auto;' src='/static/images/add.png' alt='Camera Record-' /> "
-"button on the right side of the gallery."
-
-#: static/js/view/GalleryView.js:276
-msgid "GALLERY_NO_PHOTOS_GUEST"
-msgstr ""
-"Oh no, this place has no photos! Maybe the owner of the album forgot to add "
-"some? ;)"
 
 #: static/js/view/MapView.js:322
 msgid "MAP_NO_PLACES_ADMIN"
@@ -138,7 +116,29 @@ msgstr "Currently there is support for only JPEG and PNG photos."
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "No rotation possible, after the photo was modified."
 
-#: static/js/view/SlideshowView.js:176
+#: static/js/widget/GalleryWidget.js:65 static/js/widget/GalleryWidget.js:181
+msgid "GALLERY_NO_PLACE_SELECTED"
+msgstr ""
+"To start the gallery, please select a place in the map above, by double-"
+"clicking on the marker. You'll be able to view all photos of selected place "
+"then. <strong>If there is no place yet, follow the instructions given in the "
+"map.</strong>"
+
+#: static/js/widget/GalleryWidget.js:193
+msgid "GALLERY_NO_PHOTOS_ADMIN"
+msgstr ""
+"To add a photo to the current place you can either drop the photo into the "
+"browser window, click on an empty tile or use the <img style='max-width: "
+"15px; height: auto;' src='/static/images/add.png' alt='Camera Record-' /> "
+"button on the right side of the gallery."
+
+#: static/js/widget/GalleryWidget.js:198
+msgid "GALLERY_NO_PHOTOS_GUEST"
+msgstr ""
+"Oh no, this place has no photos! Maybe the owner of the album forgot to add "
+"some? ;)"
+
+#: static/js/widget/SlideshowWidget.js:108
 msgid "SLIDESHOW_GALLERY_NOT_STARTED"
 msgstr ""
 "To view pictures in the slideshow you need to start the gallery (below the "
@@ -146,7 +146,7 @@ msgstr ""
 "the navigation-buttons of the slideshow to view the photos. <strong>If there "
 "are no photos yet, follow the instructions given in the gallery.</strong>"
 
-#: static/js/view/SlideshowView.js:185
+#: static/js/widget/SlideshowWidget.js:118
 msgid "SLIDESHOW_NO_PHOTOS"
 msgstr ""
 "To view pictures in the slideshow, click on a thumbnail in the gallery below "
@@ -154,9 +154,11 @@ msgstr ""
 "click on the current photo in the slideshow, a fullscreen-view of the photo "
 "will open. "
 
-#: static/js/zeroclipboard/jquery.zclip.js:87
-msgid "COPIED_TO_CLIPBOARD"
-msgstr "Text was copied successfully to your clipboard!"
+#~ msgid "COPIED_TO_CLIPBOARD"
+#~ msgstr "Text was copied successfully to your clipboard!"
+
+#~ msgid "PHOTO_LOADING_ERROR"
+#~ msgstr "The requested image couldn't be loaded. Please try again later."
 
 #~ msgid "LOGIN_INVALID"
 #~ msgstr "Please check your email and password and submit again."

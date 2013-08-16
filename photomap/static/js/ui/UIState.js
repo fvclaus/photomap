@@ -79,14 +79,14 @@ define(["dojo/_base/declare",
             /**
              * @param marker {Integer/Object} Can be either the index of the marker or the model of the marker!
              */
-            getMarker : function (marker) {
+            getMarker : function (model) {
                
-               if (typeof marker === "number") {
-                  return this.markers[marker];
+               if (typeof model === "number") {
+                  return this.markers[model];
                }
                
-               return this.markers.filter(function (markerPresenter, index) {
-                  return markerPresenter.getModel() === marker;
+               return this.markers.filter(function (marker, index) {
+                  return marker.getModel() === model;
                })[0];
             },
             deleteMarker : function (marker) {

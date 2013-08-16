@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-06-25 21:37+0200\n"
+"POT-Creation-Date: 2013-08-16 13:58+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,67 +18,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: static/js/main/AppInitializer.js:97 static/js/util/ClientServer.js:116
+#: static/js/main/AppInitializer.js:95 static/js/util/ClientServer.js:116
 msgid "GET_ALBUM_ERROR"
 msgstr "Beim Laden des Albums trat folgender Fehler auf: "
 
-#: static/js/main/AppInitializer.js:101 static/js/util/ClientServer.js:120
-#: static/js/view/DialogView.js:185 static/js/view/DialogView.js.c:246
+#: static/js/main/AppInitializer.js:99 static/js/util/ClientServer.js:120
+#: static/js/view/DialogView.js:164 static/js/view/DialogView.js.c:233
 msgid "NETWORK_ERROR"
 msgstr ""
 "Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
 
-#: static/js/main/non-interactive.js:56
+#: static/js/main/account.js:50
 msgid "REQUEST_UNKNOWN_FAIL"
 msgstr ""
 "Huch, da ist wohl was schief gelaufen. Bitte versuchen Sie es erneut. Sollte "
 "dieser Fehler wieder erscheinen, nehmen Sie bitte mit uns Kontakt auf!"
 
-#: static/js/main/non-interactive.js:196
+#: static/js/main/account.js:113
 msgid "DELETE_ACCOUNT_CONFIRM"
 msgstr ""
-"Wollen Sie Ihren Account wirklich löschen? Der Vorgang kann nicht mehr rückgängig gemacht werden. "
+"Wollen Sie Ihren Account wirklich löschen? Der Vorgang kann nicht mehr "
+"rückgängig gemacht werden. "
 
-#: static/js/view/DialogView.js:84
+#: static/js/util/InfoText.js:164
+msgid "CLOSE_INFOTEXT_ALERT"
+msgstr ""
+"Drücken Sie Escape oder klicken sie auf die Seite um diese Nachricht zu "
+"schließen."
+
+#: static/js/view/DialogView.js:90
 msgid "YES"
 msgstr "Ja"
 
-#: static/js/view/DialogView.js:92
+#: static/js/view/DialogView.js:98
 msgid "NO"
 msgstr "Nein"
 
-#: static/js/view/DialogView.js:107
+#: static/js/view/DialogView.js:113
 msgid "SAVE"
 msgstr "Speichern"
-
-#: static/js/view/FullscreenView.js:125
-msgid "PHOTO_LOADING_ERROR"
-msgstr ""
-"Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren Sie "
-"es zu einem späteren Zeitpunkt noch einmal."
-
-#: static/js/view/GalleryView.js:73
-msgid "GALLERY_NO_PLACE_SELECTED"
-msgstr ""
-"Um die Galerie zu starten öffnen Sie bitte einen Platz, indem Sie auf einen "
-"Marker in der Karte oberhalb der Galerie klicken. Sie können dann alle "
-"Bilder dieses Platzes ansehen.<strong>Wenn es noch keinen Platz gibt, folgen "
-"Sie den Instruktionen in der Karte.</strong>"
-
-#: static/js/view/GalleryView.js:271
-msgid "GALLERY_NO_PHOTOS_ADMIN"
-msgstr ""
-"Sie können neue Photos zum aktuell geöffneten Platz hinzufügen, indem Sie "
-"diese einfach in das Browserfenster ziehen, auf eine leere Kachel klicken "
-"oder den <img style='max-width: 15px; height: auto;' src='/static/images/add."
-"png' alt='Camera Record-' /> auf der rechten Seite der Galerie nutzen. "
-
-#: static/js/view/GalleryView.js:276
-msgid "GALLERY_NO_PHOTOS_GUEST"
-msgstr ""
-"Huch, dieser Platz hat keine Fotos. Vielleicht hat der Besitzer des Albums "
-"vergessen, welche hochzuladen? ;)"
 
 #: static/js/view/MapView.js:322
 msgid "MAP_NO_PLACES_ADMIN"
@@ -156,7 +135,29 @@ msgstr ""
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "Keine Rotation mehr möglich, nachdem das Photo bearbeitet wurde."
 
-#: static/js/view/SlideshowView.js:176
+#: static/js/widget/GalleryWidget.js:65 static/js/widget/GalleryWidget.js:181
+msgid "GALLERY_NO_PLACE_SELECTED"
+msgstr ""
+"Um die Galerie zu starten öffnen Sie bitte einen Platz, indem Sie auf einen "
+"Marker in der Karte oberhalb der Galerie klicken. Sie können dann alle "
+"Bilder dieses Platzes ansehen.<strong>Wenn es noch keinen Platz gibt, folgen "
+"Sie den Instruktionen in der Karte.</strong>"
+
+#: static/js/widget/GalleryWidget.js:193
+msgid "GALLERY_NO_PHOTOS_ADMIN"
+msgstr ""
+"Sie können neue Photos zum aktuell geöffneten Platz hinzufügen, indem Sie "
+"diese einfach in das Browserfenster ziehen, auf eine leere Kachel klicken "
+"oder den <img style='max-width: 15px; height: auto;' src='/static/images/add."
+"png' alt='Camera Record-' /> auf der rechten Seite der Galerie nutzen. "
+
+#: static/js/widget/GalleryWidget.js:198
+msgid "GALLERY_NO_PHOTOS_GUEST"
+msgstr ""
+"Huch, dieser Platz hat keine Fotos. Vielleicht hat der Besitzer des Albums "
+"vergessen, welche hochzuladen? ;)"
+
+#: static/js/widget/SlideshowWidget.js:108
 msgid "SLIDESHOW_GALLERY_NOT_STARTED"
 msgstr ""
 "Um Bilder in der Slideshow anzusehen, müssen Sie zuerst die Galerie "
@@ -166,7 +167,7 @@ msgstr ""
 "keine Photos geben, folgen Sie bitte den Instruktionen in der Galerie.</"
 "strong>"
 
-#: static/js/view/SlideshowView.js:185
+#: static/js/widget/SlideshowWidget.js:118
 msgid "SLIDESHOW_NO_PHOTOS"
 msgstr ""
 "Um Bilder in der Slideshow anzusehen, klicken Sie auf das gewünschte Bild in "
@@ -174,9 +175,13 @@ msgstr ""
 "rechts der Slideshow. Wenn Sie auf das aktuelle Bild in der Slideshow "
 "klicken, öffnet sich die Fullscreen-Ansicht des Bildes. "
 
-#: static/js/zeroclipboard/jquery.zclip.js:87
-msgid "COPIED_TO_CLIPBOARD"
-msgstr "Text wurde in die Zwischenablage kopiert!"
+#~ msgid "COPIED_TO_CLIPBOARD"
+#~ msgstr "Text wurde in die Zwischenablage kopiert!"
+
+#~ msgid "PHOTO_LOADING_ERROR"
+#~ msgstr ""
+#~ "Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren "
+#~ "Sie es zu einem späteren Zeitpunkt noch einmal."
 
 #~ msgid "LOGIN_INVALID"
 #~ msgstr "Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "

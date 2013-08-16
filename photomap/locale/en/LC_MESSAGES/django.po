@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-06 14:40+0200\n"
+"POT-Creation-Date: 2013-08-16 13:41+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -322,8 +322,8 @@ msgstr "Enter Password..."
 msgid "View Album"
 msgstr "View Album"
 
-#: templates/base-interactive.html:56 templates/view-album.html:57
-#: templates/views/AdminGallery.html:4
+#: templates/base-interactive.html:56 templates/views/AdminGallery.html:4
+#: templates/views/Fullscreen.html:16
 msgid "Schließen"
 msgstr "Close"
 
