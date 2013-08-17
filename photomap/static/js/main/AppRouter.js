@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, gettext */
+/*global $, gettext, parseInt */
 
 "use strict";
 
@@ -10,8 +10,8 @@
  * The ids of place and photo are consecutively set in the backend, the page id is set frontend and starts over in each place
  */
 
-define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", "util/InfoText", "dojo/domReady!"], 
-      function (declare, router, communicator, state, InfoText) {
+define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", "util/InfoText", "dojo/ready"], 
+      function (declare, router, communicator, state, InfoText, ready) {
          return declare(null, {
             
             constructor: function () {
@@ -42,11 +42,14 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                this.pageListener = null;
                this.photoListener = null;
                
-               this._registerHashListener();
-               
                this.infoText = new InfoText();
                
+               communicator.subscribeOnce("ready:App", this.start, this);
+            },
+            start : function () {
+               this._registerHashListener();
                router.startup();
+               router.go(window.location.hash.substring(1, window.location.hash.length));
             },
             goToAlbum : function (id) {
                
@@ -104,11 +107,19 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                var instance = this;
                
                if (state.isDashboardView()) {
-                  this.albumListener = router.register(this.albumSelectedHash, instance._markerChangeHandler);
+                  this.albumListener = router.register(this.albumSelectedHash, function (event) {
+                     instance._markerChangeHandler.call(instance, event);
+                  });
                } else if (state.isAlbumView()) {
-                  this.placeListener = router.register(this.placeSelectedHash, instance._markerChangeHandler);
-                  this.pageListener = router.register(this.placeLoadedHash, this._pageChangeHandler);
-                  this.photoListener = router.register(this.photoLoadedHash, this._photoChangeHandler);
+                  this.placeListener = router.register(this.placeSelectedHash, function (event) {
+                     instance._markerChangeHandler.call(instance, event);
+                  });
+                  this.pageListener = router.register(this.placeLoadedHash, function (event) {
+                     instance._pageChangeHandler.call(instance, event);
+                  });
+                  this.photoListener = router.register(this.photoLoadedHash, function (event) {
+                     instance._photoChangeHandler.call(instance, event);
+                  });
                } else {
                   throw new Error("UnknownPageError");
                }
@@ -121,6 +132,8 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                this.currentHash = event.newPath;
                this._updateState(event.params);
                // check if model exists
+               console.log(type);
+               console.log(state.getCollection(type).has(this.state[type]));
                if (state.getCollection(type).has(this.state[type])) {
                   communicator.publish("change:AppState", this.state);
                } else {
@@ -159,9 +172,16 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                   place = state.getMarker(state.getCollection("Place").get(this.state.place));
                   communicator.subscribeOnce("opened:place", function () {
                      if (state.getCollection("Photo").has(instance.state.photo)) {
+                        if (main.getUI().getGallery().hasPage(instance.state.page)) {
+                           this.infoText.alert(gettext("INVALID_PAGE"));
+                        }
                         communicator.publish("change:AppState", instance.state);
                      } else {
-                        this.infoText.alert(gettext("INVALID_PHOTO"));
+                        if (main.getUI().getGallery().hasPage(instance.state.page)) {
+                           this.infoText.alert(gettext("INVALID_PHOTO_AND_PAGE"));
+                        } else {
+                           this.infoText.alert(gettext("INVALID_PHOTO"));
+                        }
                      }
                   });
                   place.open();
@@ -183,7 +203,7 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                      $.extend(this.state, defaultState, newState);
                      break;
                   }
-                  newState[hashParams[i]] = hashParams[i+1];
+                  newState[hashParams[i]] = parseInt(hashParams[i+1]);
                }
             }
 //             

@@ -44,6 +44,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 communicator.subscribe("change:mapCenter", this._mapCenterChanged);
                 communicator.subscribe("close:detail", this._detailClose);
                 
+                communicator.subscribe("change:AppState", this._handleAppStateChanges, this);
+                
                 if (state.isAlbumView()) {
                    
                    communicator.subscribe({
@@ -94,6 +96,28 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 main.getUI().getControls().init();
                 clientstate.init();
                 main.getMap().init(data);
+                communicator.publish("ready:App");
+             },
+             _handleAppStateChanges : function (newState) {
+                console.log("Hash changed. Starting AppState change.");
+                
+                var marker;
+                
+                if (newState.album) {
+                   marker = state.getMarker(state.getCollection("Album").get(newState.album));
+                   this._markerClick(marker);
+                } else if (newState.place && !newState.page) {
+                   marker = state.getMarker(state.getCollection("Place").get(newState.place));
+                   this._markerClick(marker);
+                } else if (newState.place && newState.page && !newState.photo) {
+                   //state.getMarker(state.getCollection("Place").get(newState.place)).open();
+                   main.getUI().getGallery().navigateToPage(newState.page);
+                   if (newState.photo) {
+                      main.getUI().getSlideshow.navigateTo(state.getCollection("Place").get(newState.place).getPhotoCollection().get(newState.photo));
+                   }
+                } else {
+                   throw new Error("InvalidAppStateError");
+                }
              },
              _uiEnable : function () {
                 this._setUIDisabled(false);
