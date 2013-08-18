@@ -2,7 +2,7 @@
 
 "use strict";
 
-var DASHBOARD_VIEW = "/dashboard", 
+var DASHBOARD_VIEW = "/dashboard/", 
     ALBUM_VIEW = /album\/\d+\/view/,
     
     ALBUM_ICON_WIDTH = 25,

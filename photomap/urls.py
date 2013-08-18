@@ -95,7 +95,7 @@ urlpatterns = patterns("",
                        #========================================================
                        url(r'^$', landingpage.get_current),
                        
-                       url(r'^dashboard$', dashboard.view),
+                       url(r'^dashboard/$', dashboard.view),
                        
                        url(r'^url/invalid$', direct_to_template, {"template": "url-invalid.html"}),
 

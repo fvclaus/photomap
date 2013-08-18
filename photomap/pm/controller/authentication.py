@@ -37,7 +37,7 @@ def login(request):
         loginform = LoginForm(request.POST)
         redirect_to = request.POST.get("next")
         if not redirect_to or not re.match("/",redirect_to):
-            redirect_to = "/dashboard"
+            redirect_to = "/dashboard/"
         if loginform.is_valid():
             user = authenticate(username = loginform.cleaned_data["email"], password = loginform.cleaned_data["password"])
             if not (user == None or user.is_anonymous()):

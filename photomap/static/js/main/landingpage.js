@@ -26,7 +26,7 @@ $(document).ready(function () {
       window.location.href = "/demo"   
    });
    $("#mp-dashboard-button").on("click", function () {
-      window.location.href = "/dashboard"   
+      window.location.href = "/dashboard/"   
    });
    // automatically sign in when users selects "Try KEIKEN yourself"
    $("#mp-test-button").on("click", function (event) {

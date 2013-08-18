@@ -246,7 +246,7 @@ INSTALLED_APPS = (
 
 
 AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
-LOGIN_REDIRECT_URL = "/dashboard"
+LOGIN_REDIRECT_URL = "/dashboard/"
 LOGIN_URL = "account/auth/login"
 LOGOUT_URL = "account/auth/logout"
 
