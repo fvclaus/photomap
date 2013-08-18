@@ -57,6 +57,9 @@ define([
              getClientServer : function () {
                 return this.clientServer;
              },
+             getAppRouter : function () {
+                return this.appRouter;
+             },
              getMap : function () {
                 return this.map.getPresenter();
              },

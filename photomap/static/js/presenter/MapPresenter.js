@@ -100,6 +100,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/
                 
                 communicator.publish("insert:markersInitialInsert", markers);
              },
+             showAll : function () {
+                this.fitMapToMarkers(state.getMarkers());
+             },
              fitMapToMarkers : function (markers) {
                 var latLngData = [];
                 

@@ -116,7 +116,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
              },
              _modelDelete : function (model) {
                 var dialog = main.getUI().getDialog(),
-                  modelType = model.getModelType(),
+                  modelType = model.getType(),
                   collection = state.getCollection(modelType);
                   
                   

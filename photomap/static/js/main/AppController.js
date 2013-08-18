@@ -105,16 +105,18 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 
                 if (newState.album) {
                    marker = state.getMarker(state.getCollection("Album").get(newState.album));
-                   this._markerClick(marker);
+                   this._markerSelect(marker);
                 } else if (newState.place && !newState.page) {
                    marker = state.getMarker(state.getCollection("Place").get(newState.place));
-                   this._markerClick(marker);
+                   this._markerSelect(marker);
                 } else if (newState.place && newState.page && !newState.photo) {
                    //state.getMarker(state.getCollection("Place").get(newState.place)).open();
                    main.getUI().getGallery().navigateToPage(newState.page);
                    if (newState.photo) {
                       main.getUI().getSlideshow.navigateTo(state.getCollection("Place").get(newState.place).getPhotoCollection().get(newState.photo));
                    }
+                } else if (!newState.album && !newState.place) {
+                   this._markerDeselect();
                 } else {
                    throw new Error("InvalidAppStateError");
                 }
@@ -192,9 +194,8 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                });
              },
              _detailClose : function () {
-                if (state.isDashboardView()) {
-                   main.getMap().restoreSavedState();
-                   state.getCurrentAlbum().resetCurrent();
+                if (state.isDashboardView() || !state.getCurrentLoadedMarker()) {
+                   main.getAppRouter().goTo(null);
                 }
              },
              _photoOrderChange : function (photos) {
@@ -267,14 +268,26 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 main.getUI().getControls().hide(true);
              },
              _markerClick : function (marker) {
-                
+                main.getAppRouter().goTo(marker.getModel().getType(), marker.getModel().getId());
+             },
+             _markerSelect : function (marker) {
                 var detail = main.getUI().getInformation();
                 
+                marker.select();
                 detail.update(marker.getModel());
                 
                 if (state.isDashboardView()) {
                    marker.centerAndMoveLeft(.25);
                    detail.slideIn();
+                }
+             },
+             _markerDeselect : function () {
+                main.getUI().getInformation().closeDetail(true);
+                if (state.isDashboardView()) {
+                   main.getMap().showAll();
+                }
+                if (state.getCurrentMarker()) {
+                  state.getCurrentMarker().resetCurrent();
                 }
              },
              /**
@@ -329,7 +342,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 main.getUI().getSlideshow().navigateWithDirection(direction);
              },
              _modelInsert : function (model) {
-                var type = model.getModelType();
+                var type = model.getType();
                 
                 if (type === "Photo") {
                    main.getUI().getGallery().insertPhoto(model);
@@ -342,7 +355,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 }
              },
              _modelDelete : function (model) {
-                var type = model.getModelType(),
+                var type = model.getType(),
                     currentPlace = state.getCurrentLoadedPlace();
                 
                 main.getUI().getInformation().empty(model);

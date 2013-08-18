@@ -51,6 +51,31 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                router.startup();
                router.go(window.location.hash.substring(1, window.location.hash.length));
             },
+            goTo : function (name, id) {
+               
+               if (!name) {
+                  this._emptyHash();
+                  return;
+               }
+               
+               switch (name.toLowerCase()) {
+                  case "album":
+                     this.goToAlbum(id);
+                     break;
+                  case "place":
+                     this.goToPlace(id);
+                     break;
+                  case "page":
+                     this.goToPage(id);
+                     break;
+                  case "photo":
+                     this.goToPhoto(id);
+                     break;
+                  default:
+                     throw new Error("InvalidHashRequestError");
+                     break;
+               }
+            },
             goToAlbum : function (id) {
                
                var newHash;
@@ -103,8 +128,16 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                
                router.go(newHash);
             },
+            _emptyHash : function () {
+               router.go("!/");
+            },
             _registerHashListener : function () {
                var instance = this;
+               
+               router.register("!/", function (event) {
+                  instance._updateState([]);
+                  communicator.publish("change:AppState", instance.state);
+               });
                
                if (state.isDashboardView()) {
                   this.albumListener = router.register(this.albumSelectedHash, function (event) {

@@ -27,13 +27,15 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              slideOut : function () {
                 this.view.slideOut();
              },
-             closeDetail : function () {
+             closeDetail : function (dontPublish) {
                 if (state.isDashboardView()) {
                    this.slideOut();
                 } else {
                    this.hideDetail();
                 }
-                communicator.publish("close:detail");
+                if (!dontPublish) {
+                  communicator.publish("close:detail");
+                }
              }
           });
        });

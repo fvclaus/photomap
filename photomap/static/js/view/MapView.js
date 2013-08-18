@@ -165,11 +165,11 @@ define([
            */
           createMarker : function (data) {
              assertTrue((data.lat && (data.lng || data.lon) && data.title), "input parameter data has to contain: lat, lng/lon, and title");
-             assertTrue(data.getModelType() === "Place" || data.getModelType() === "Album", "model has to be either place or album")
+             assertTrue(data.getType() === "Place" || data.getType() === "Album", "model has to be either place or album")
              
              var lat = parseFloat(data.lat),
                  lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon),
-                 markerIsPlace = (data.getModelType() === "Place"),
+                 markerIsPlace = (data.getType() === "Place"),
                  icon =  markerIsPlace ? PLACE_DEFAULT_ICON : ALBUM_DEFAULT_ICON,
                  iconWidth = markerIsPlace ? PLACE_ICON_WIDTH : ALBUM_ICON_WIDTH,
                  iconHeight = markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT,

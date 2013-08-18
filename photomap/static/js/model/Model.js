@@ -53,7 +53,7 @@ define(["dojo/_base/declare"],
               * @public
               * @returns {String} Name of this model
               */
-             getModelType : function () {
+             getType : function () {
                 return this.type;
              },
              /**

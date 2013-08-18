@@ -56,6 +56,9 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                    window.setTimeout(publish, 500);
                 }
              },
+             select : function () {
+                this.switchCurrentMarker();
+             },
              resetCurrent : function () {
                 this.switchCurrentMarker(true);
              },
@@ -120,7 +123,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                     loadedMarker = state.getCurrentLoadedMarker(),
                     currentMarker = state.getCurrentMarker();
                  
-                 if (this.model.getModelType() === "Album") {
+                 if (this.model.getType() === "Album") {
                     
                     if (this.isDisabled()) {
                        this.showDisabledIcon();
@@ -130,7 +133,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                        this.showUnselectedIcon();
                     }
                     
-                 } else if (this.model.getModelType() === "Place") {
+                 } else if (this.model.getType() === "Place") {
                     
                         
                     this.model.getPhotos().forEach(function (photo) {
@@ -155,23 +158,23 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                  this.view.setCursor(style);
               },
               showVisitedIcon : function () {
-                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_VISITED_ICON : ALBUM_VISITED_ICON;
+                 var markerIcon = (this.model.getType() === "Place") ? PLACE_VISITED_ICON : ALBUM_VISITED_ICON;
                  this._showIcon(markerIcon);
               },
               showLoadedIcon : function () {
-                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_LOADED_ICON : ALBUM_LOADED_ICON;
+                 var markerIcon = (this.model.getType() === "Place") ? PLACE_LOADED_ICON : ALBUM_LOADED_ICON;
                  this._showIcon(markerIcon);
               },
               showSelectedIcon : function () {
-                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_SELECTED_ICON : ALBUM_SELECTED_ICON;
+                 var markerIcon = (this.model.getType() === "Place") ? PLACE_SELECTED_ICON : ALBUM_SELECTED_ICON;
                  this._showIcon(markerIcon);
               },
               showUnselectedIcon : function () {
-                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_UNSELECTED_ICON : ALBUM_UNSELECTED_ICON;
+                 var markerIcon = (this.model.getType() === "Place") ? PLACE_UNSELECTED_ICON : ALBUM_UNSELECTED_ICON;
                  this._showIcon(markerIcon);
               },
               showDisabledIcon : function () {
-                 var markerIcon = (this.model.getModelType() === "Place") ? PLACE_DISABLED_ICON : ALBUM_DISABLED_ICON;
+                 var markerIcon = (this.model.getType() === "Place") ? PLACE_DISABLED_ICON : ALBUM_DISABLED_ICON;
                  this._showIcon(markerIcon);
               },
               /**
@@ -195,20 +198,20 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
              open : function () {
                 
                 // switch to albumview if album is opened
-                if (this.model.getModelType() === "Album") {
+                if (this.model.getType() === "Album") {
                    
                    // build url -> format models/model/(id/)request
                    window.location.href = '/album/' + this.model.getId() + '/view/' + this.model.getSecret() + "/";
                    
                 // reset ui and (re)start gallery when place is opened
-                } else if (this.model.getModelType() === "Place") {
+                } else if (this.model.getType() === "Place") {
    
                    communicator.publish("called:openPlace", this);
                 }
              },
               _showIcon : function (icon) {
                  
-                 var markerIsPlace = (this.model.getModelType() === "Place");
+                 var markerIsPlace = (this.model.getType() === "Place");
                     
                  this.view.setIcon({
                     url : icon,

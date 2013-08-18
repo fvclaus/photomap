@@ -104,7 +104,7 @@ define([
              this.$container.animate({left: "100%"}, 300);
           },
           _updateDetail : function (model) {
-             var title = model.getModelType() + ": " + model.getTitle(),
+             var title = model.getType() + ": " + model.getTitle(),
                  description = model.getDescription();// || gettext("NO_DESCRIPTION");
              // use text() instead of html() to prevent script tag injection or similiar
              if (!description) {
