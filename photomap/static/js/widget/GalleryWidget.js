@@ -37,7 +37,7 @@ define(["dojo/_base/declare",
 
                 this._carouselOptions = {
                    lazy : !this._isAdmin(),
-                   "effect" : "fade",
+                   "effect" : "flip",
                    "duration": 500,
                    loader : this.$loader,
                    beforeLoad : this._beforeLoad,
@@ -104,35 +104,10 @@ define(["dojo/_base/declare",
                 this.carousel.update(photos);
              },
              /**
-              * @description adds new photo to gallery.
-              */
-             // insertPhoto : function (photo) {
-             //    assertTrue(photo instanceof Photo, "input parameter photo has to be instance of Photo");
-             //    assertTrue(this._loaded, "Must call load(photos) before.");
-             //    // automatically adds the photo if we are on last page
-             //    this.carousel.insertPhoto(photo);
-
-             //    // Will automatically navigate to the new photo
-             //    if (!this._run) {
-             //       // show the new photo
-             //       //TODO this does now show the new photo yet
-             //       this.run();
-             //    }
-             // },
-             /**
               * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
               */
              navigateIfNecessary : function (photo) {
-                assertInstance(photo, Photo, "Parameter photo has to be of type Photo.");
-                var currentIndex = this._getIndexOfId(photo.id),
-                    minIndex = this._getIndexOfFirstThumbnail(),
-                    maxIndex = this._getIndexOfLastThumbnail();
-                
-                if (currentIndex < minIndex) {
-                   this.$navLeft.trigger("click");
-                } else if (currentIndex > maxIndex) {
-                   this.$navRight.trigger("click");
-                }
+                this.carousel.navigateTo(photo);
              },
              setPhotoVisited : function (photo) {
                 this.$container.find("img[data-keiken-id='" + photo.id + "']").siblings(".mp-thumb-visited").show();
@@ -241,50 +216,7 @@ define(["dojo/_base/declare",
                    }
                 });
              },
-             /*
-              * @private
-              */
-             _getIndexOfId : function (id) {
-                assertNumber(id, "Parameter id must be of type number.");
-                var photoIndex = -1,
-                    photos = this.carousel.getAllPhotos();
 
-                for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
-                   if (photos[photoIndex].id === id) {
-                      return photoIndex;
-                   }
-                }
-                return -1;
-             },
-             /**
-              * @private
-              * @returns {int} Index of the $image element in all Photos of that Place, -1 if Photo does not belong to this place
-              */
-             _getIndexOfImage : function ($image) {
-                assertTrue($image.attr("data-keiken-id"), "Id attribute of input parameter $image must not be undefined");
-                return this._getIndexOfId(parseInt($image.attr("data-keiken-id")));
-             },
-             /**
-              * @private
-              * @returns {int} Index of the first photo currently visible
-              */
-             _getIndexOfFirstThumbnail : function () {
-                return this._getIndexOfImage(this.$photos.first());
-             },
-             /**
-              * @private
-              * @return {int} Index of the last photo currently visible
-              */
-             _getIndexOfLastThumbnail : function () {
-                //this does not work with a simple selector
-                var $photo = this.$photos.first();
-                this.$photos.each(function (photoIndex) {
-                   if ($(this).attr("src")){
-                      $photo = $(this);
-                   }
-                });
-                return this._getIndexOfImage($photo);
-             },
              /* @private
               * @returns {Photo} Photo for the $image element
               */
@@ -296,14 +228,6 @@ define(["dojo/_base/declare",
                 return photo;
                 
              },
-             /**
-              * @private
-              */
-             _navigateToLastPage : function () {
-                this.carousel.navigateTo("end");
-             },
-
-             
              /* ---- Listeners ---- */
              
              _bindNavigationListener : function () {

@@ -22,7 +22,7 @@ define(["dojo/_base/declare",
         "util/PhotoPages",
         "util/Tools", 
         "util/CarouselAnimation"], 
-       function (declare, View, Photo, PhotoPages, tools, carouselAnimation) {
+       function (declare, View, Photo, PhotoPages, tools, CarouselAnimation) {
           
           return declare (View, {
              ID_HTML_ATTRIBUTE : "data-keiken-id",
@@ -47,6 +47,7 @@ define(["dojo/_base/declare",
                    context : this,
                 };
                 
+                this.carouselAnimation = new CarouselAnimation();
                 this.options = $.extend({}, this.defaults, options);
                 
                 assertTrue(tools.countAttributes(this.options) === tools.countAttributes(this.defaults), "The options you defined seem to have more attributes than available.");
@@ -181,6 +182,8 @@ define(["dojo/_base/declare",
                 });
                 this.options = null;
                 this.$photos = null;
+                this.carouselAnimation.destroy();
+                this.carouselAnimation = null;
              },
              /* 
               * @public
@@ -427,12 +430,12 @@ define(["dojo/_base/declare",
                 };
                 
                 // Starts the fadeout animation and the load Thread afterwards.
-                carouselAnimation.start({
+                this.carouselAnimation.start({
                    items: instance.$photos.slice(from, to),
                    loader: this.options.loader,
                    animation: this.options.effect,
                    animationTime: this.options.duration,
-                   onStart : loader
+                   complete : loader
                 });
 
 
@@ -491,14 +494,14 @@ define(["dojo/_base/declare",
                    }
                 };
 
-                carouselAnimation.end({
+                this.carouselAnimation.end({
                    items: $photos,
                    "photos": photos,
                    srcPropertyName: this.srcPropertyName,
                    loader: this.options.loader,
                    animation: this.options.effect,
                    animationTime: this.options.duration,
-                   onEnd: finishHandler,
+                   complete: finishHandler,
                    context: instance.options.context
                 });
 

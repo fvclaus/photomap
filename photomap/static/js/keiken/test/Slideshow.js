@@ -14,9 +14,9 @@ require(["widget/SlideshowWidget",
                photos = null,
                assertTooltipPresence = function (present) {
                   if (present) {
-                     QUnit.ok$visible($(".mp-tooltip"));
+                     QUnit.ok$visible($(".mp-infotext"));
                   } else {
-                     QUnit.ok$hidden($(".mp-tooltip"));
+                     QUnit.ok$hidden($(".mp-infotext"));
                   }
                },
                assertPhotoInWidget = function (photo) {
@@ -26,7 +26,7 @@ require(["widget/SlideshowWidget",
                   QUnit.ok$text($(".mp-image-number"), expectedText);
                   QUnit.ok(parseInt($image.attr("data-keiken-id")) === photo.id, "The slideshow image should display the photo with id " + photo.id);
                },
-               animationTime = 1200;
+               animationTime = 1500;
 
                   
 

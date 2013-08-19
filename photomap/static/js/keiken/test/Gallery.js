@@ -13,10 +13,11 @@ require(["widget/GalleryWidget",
                testFixture = new TestFixture(),
                photos = null,
                assertTooltipPresence = function (present) {
+                  var $infoText = $(".mp-infotext");
                   if (present) {
-                     QUnit.ok$visible($(".mp-tooltip"));
+                     QUnit.ok$visible($infoText);
                   } else {
-                     QUnit.ok$hidden($(".mp-tooltip"));
+                     QUnit.ok($infoText.length === 0 || $infoText.is(":hidden"));
                   }
                },
                nPhotosInGalleryAssertions = 10,
@@ -33,7 +34,7 @@ require(["widget/GalleryWidget",
                   });
                },
                nPhotos = 20,
-               animationTime = 2000;
+               animationTime = 2200;
                   
            
            module("Gallery", {

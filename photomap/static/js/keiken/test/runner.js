@@ -48,7 +48,7 @@ QUnit.ok$visible = function ($element) {
 };
 
 QUnit.ok$hidden = function ($element) {
-   QUnit.ok(!($element.is(":visible")), "Selector '" + $element.selector + "' is supposed to be hidden");
+   QUnit.ok($element.is(":hidden"), "Selector '" + $element.selector + "' is supposed to be hidden");
 };
 
 QUnit.ok$text = function ($element, text) {
@@ -75,7 +75,7 @@ function getTestCasesFromQueryString() {
 }
 
 
-var allTestCases = ["Slideshow", "AdminGallery", "Gallery", "Fullscreen", "PhotoPages"],
+var allTestCases = ["Slideshow", "AdminGallery", "Gallery", "Fullscreen", "PhotoPages", "PhotoCarousel", "CarouselAnimation"],
     testCases = getTestCasesFromQueryString(),
     testCaseIndex;
 

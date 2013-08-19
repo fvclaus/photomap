@@ -36,7 +36,7 @@ require(["widget/PhotoCarouselWidget",
                      }
                   });
                },
-               animationTime = 1500,
+               animationTime = 1700,
                nExpectedAssertions = 0,
                nExpected$photos = 0,
                expectedPhotos = null,

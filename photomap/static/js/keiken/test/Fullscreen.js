@@ -27,7 +27,7 @@ require(["widget/FullscreenWidget",
                      QUnit.ok($image.attr("data-keiken-id") === undefined, "The fullscreen image should not have a data attribute");
                   }
                },
-               animationTime = 1200;
+               animationTime = 1600;
 
                   
 
@@ -115,7 +115,7 @@ require(["widget/FullscreenWidget",
                  //TODO PhotoAnimation can't be reset and executes even though a reset has been triggered
                  assertPhotoInWidget(null);
                  QUnit.start();
-              }, 4 * animationTime);
+              }, animationTime);
            });
 
            QUnit.asyncTest("insertPhoto", 13,  function () {
