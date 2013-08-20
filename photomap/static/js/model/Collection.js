@@ -1,5 +1,5 @@
 /*jslint */
-/*global $ */
+/*global $, asserTrue, assertString */
 
 "use strict";
 
@@ -94,28 +94,65 @@ define(["dojo/_base/declare"],
              * triggered on the collection
              * ---------------------------------------
              */
-            onInsert : function (handler, thisReference) {
+            /**
+             * @description Removes a set of given events selected by eventName and eventType
+             * @param {String} name Eventname - does not remove any events if eventname wasnt specified upon created of listener (eg. onUpdate(handler, this, EVENTNAME))
+             * @param {String} events May be a single event or multiple events separated by spaces - allowed Events are "deleted", "inserted", "updated"
+             */
+            removeEvents : function (name, events) {
+               assertString(name, "Eventname has to be a string");
+               
+               var instance = this;
+               
+               if (events) {
+                  if (/\s+/.test(events)) {
+                     events = events.split(/\s+/);
+                  } else {
+                     events = [events];
+                  }
+               } else {
+                  var events = ["inserted", "updated", "deleted"];
+               }
+               
+               $.each(events, function (i, event) {
+                  assertTrue(event === "inserted" || event === "updated" || event === "deleted", "Only following events are allowed: inserted, updated, deleted");
+                  $(instance).off(event + "." + name);
+               });
+            },
+            onInsert : function (handler, thisReference, eventName) {
                var context = thisReference || this;
                
-               $(this).on("inserted.Model", function (event, model) {
+               if (!eventName) {
+                  var eventName = "Model";
+               }
+               
+               $(this).on("inserted." + eventName, function (event, model) {
                   handler.call(context, model);
                });
                
                return this;
             },
-            onUpdate : function (handler, thisReference) {
+            onUpdate : function (handler, thisReference, eventName) {
                var context = thisReference || this;
                
-               $(this).on("updated.Model", function (event, model) {
+               if (!eventName) {
+                  var eventName = "Model";
+               }
+               
+               $(this).on("updated." + eventName, function (event, model) {
                   handler.call(context, model);
                });
                
                return this;
             },
-            onDelete : function (handler, thisReference) {
+            onDelete : function (handler, thisReference, eventName) {
                var context = thisReference || this;
                
-               $(this).on("deleted.Model", function (event, model) {
+               if (!eventName) {
+                  var eventName = "Model";
+               }
+               
+               $(this).on("deleted." + eventName, function (event, model) {
                   handler.call(context, model);
                });
                
