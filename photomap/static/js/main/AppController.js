@@ -8,11 +8,13 @@
  * @class Controls communication in between the classes of KEIKEN
  */
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", "model/Collection", "util/ClientState"], 
-       function (declare, communicator, state, Album, Collection, clientstate) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", "model/Collection", "util/ClientState", "util/InfoText"], 
+       function (declare, communicator, state, Album, Collection, clientstate, InfoText) {
           return declare(null, {
              
              constructor : function () {
+                // Instantiate an infotext in case user needs to be informed about sth (use this.infotext.alert(message) for that)
+                this.infoText = new InfoText();
 
                 communicator.subscribeOnce("init", this._init);
                 communicator.subscribe("load:dialog", this._dialogLoad);
@@ -25,7 +27,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 communicator.subscribe({
                    "mouseover:marker": this._markerMouseover,
                    "mouseout:marker": this._markerMouseout,
-                   "click:marker": this._markerClick,
+                   //"click:marker": this._markerClick, // @see AppRouter.js
                    "insert:marker": this._markerInsert,
                    "insert:markersInitialInsert": {
                       handler: this._markerInitialInsert,
@@ -42,7 +44,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 
                 communicator.subscribe("change:usedSpace", this._usedSpaceUpdate);
                 communicator.subscribe("change:mapCenter", this._mapCenterChanged);
-                communicator.subscribe("close:detail", this._detailClose);
+                //communicator.subscribe("close:detail", this._detailClose); handled in AppRouter now
                 
                 communicator.subscribe("change:AppState", this._handleAppStateChanges, this);
                 
@@ -50,7 +52,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                    
                    communicator.subscribe({
                       "mouseleave:galleryThumb": this._galleryThumbMouseleave,
-                      "click:galleryThumb": this._galleryThumbClick
+                      //"click:galleryThumb": this._galleryThumbClick handled in AppRouter now
                    });
                    
                    communicator.subscribe({
@@ -61,7 +63,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                    
                    communicator.subscribe("navigate:fullscreen", this._fullscreenNavigate);
                    
-                   communicator.subscribe("called:openPlace", this._placeOpen);
+                   //communicator.subscribe("called:openPlace", this._placeOpen); now "dblClick:place" -> handled in AppRouter
                    
                    communicator.subscribe("change:photoOrder", this._photoOrderChange);
                    communicator.subscribe("visited:photo", this._photoVisited);
@@ -101,19 +103,43 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
              _handleAppStateChanges : function (newState) {
                 console.log("Hash changed. Starting AppState change.");
                 
-                var marker;
+                var place;
                 
                 if (newState.album) {
-                   marker = state.getMarker(state.getCollection("Album").get(newState.album));
-                   this._markerSelect(marker);
-                } else if (newState.place && !newState.page) {
-                   marker = state.getMarker(state.getCollection("Place").get(newState.place));
-                   this._markerSelect(marker);
-                } else if (newState.place && newState.page && !newState.photo) {
-                   //state.getMarker(state.getCollection("Place").get(newState.place)).open();
-                   main.getUI().getGallery().navigateToPage(newState.page);
-                   if (newState.photo) {
-                      main.getUI().getSlideshow.navigateTo(state.getCollection("Place").get(newState.place).getPhotoCollection().get(newState.photo));
+                   if (state.getCollection("Album").has(newState.album)) {
+                      this._markerSelect(state.getMarker(state.getCollection("Album").get(newState.album)));
+                   } else {
+                      this.infoText.alert(gettext("INVALID_ALBUM"));
+                   }
+                } else if (newState.place) {
+                   if (state.getCollection("Place").has(newState.place)) {
+                      if (!newState.page) {
+                         this._markerSelect(state.getMarker(state.getCollection("Place").get(newState.place)));
+                      } else if (newState.page) {
+                         place = state.getMarker(state.getCollection("Place").get(newState.place));
+                         communicator.subscribeOnce("opened:place", function () {
+                            //TODO Gallery does not yet support navigating to pages
+                            // if (main.getUI().getGallery().hasPage(newState.page)) {
+                               // main.getUI().getGallery().navigateToPage(newState.page);
+                            // } else {
+                               // if (place.getModel().getPhotoCollection().has(newState.photo)) {
+                                  // this.infoText.alert(gettext("INVALID_PHOTO_AND_PAGE"));
+                               // } else {
+                                  // this.infoText.alert(gettext("INVALID_PAGE"));
+                               // }
+                            // }
+                            if (newState.photo) {
+                               if (place.getModel().getPhotoCollection().has(newState.photo)) {
+                                 this._loadPhotoIntoSlideshow(place.getModel().getPhotoCollection().get(newState.photo));
+                               } else {
+                                  this.infoText.alert(gettext("INVALID_PHOTO"));
+                               }
+                            }
+                         }, this);
+                         this._placeOpen(place);
+                      }
+                   } else {
+                      this.infoText.alert(gettext("INVALID_PLACE"));
                    }
                 } else if (!newState.album && !newState.place) {
                    this._markerDeselect();
@@ -184,7 +210,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                      Fullscreen: ui.getFullscreen(),
                      Map: main.getMap(),
                      Dialog: ui.getInput()
-                  }
+                  };
                   
                possibleViews[viewName].setActive(true);
                $.each(possibleViews, function (name, view) {
@@ -193,11 +219,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                   }
                });
              },
-             _detailClose : function () {
-                if (state.isDashboardView() || !state.getCurrentLoadedMarker()) {
-                   main.getAppRouter().goTo(null);
-                }
-             },
+             // handled in AppRouter now
+             // _detailClose : function () {
+                // if (state.isDashboardView() || !state.getCurrentLoadedMarker()) {
+                   // main.getAppRouter().goTo(null);
+                // }
+             // },
              _photoOrderChange : function (photos) {
                 var instance = this;
                 this.publish("load:dialog", {
@@ -251,7 +278,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
               * @private
               * @param {Photo} photo
               */
-             _galleryThumbClick : function (photo) {
+             _loadPhotoIntoSlideshow : function (photo) {
                 if (state.getCurrentMarker()) {
                   state.getCurrentMarker().resetCurrent();
                 }
@@ -267,9 +294,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
              _markerMouseout : function () {
                 main.getUI().getControls().hide(true);
              },
-             _markerClick : function (marker) {
-                main.getAppRouter().goTo(marker.getModel().getType(), marker.getModel().getId());
-             },
+             // done directly in AppRouter now
+             // _markerClick : function (marker) {
+                // main.getAppRouter().goTo(marker.getModel().getType(), marker.getModel().getId());
+             // },
              _markerSelect : function (marker) {
                 var detail = main.getUI().getInformation();
                 
@@ -282,12 +310,12 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 }
              },
              _markerDeselect : function () {
-                main.getUI().getInformation().closeDetail(true);
+                if (state.getCurrentMarker()) {
+                  main.getUI().getInformation().closeDetail(true);
+                  state.getCurrentMarker().resetCurrent();
+                }
                 if (state.isDashboardView()) {
                    main.getMap().showAll();
-                }
-                if (state.getCurrentMarker()) {
-                  state.getCurrentMarker().resetCurrent();
                 }
              },
              /**
@@ -406,7 +434,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                    placePresenter.setOpened(true);
                 }
                 // fire the place opened event in any case
-                communicator.publish("opened:Place", placePresenter);
+                communicator.publish("opened:place", placePresenter);
              },
              _photoVisited : function (photo) {
                 main.getUI().getGallery().setPhotoVisited(photo);

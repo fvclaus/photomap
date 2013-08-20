@@ -10,8 +10,8 @@
  * The ids of place and photo are consecutively set in the backend, the page id is set frontend and starts over in each place
  */
 
-define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", "util/InfoText", "dojo/ready"], 
-      function (declare, router, communicator, state, InfoText, ready) {
+define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", "dojo/ready"], 
+      function (declare, router, communicator, state, ready) {
          return declare(null, {
             
             constructor: function () {
@@ -19,22 +19,17 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                /* -------- matcher to get or change a specific part of the hash -------- */
                this.albumMatcher = /(\/album\/)(\d+)(\/)/;
                this.placeMatcher = /(\/place\/)(\d+)(\/)/;
-               this.galleryPageMatcher = /(\/page\/)(\d+)(\/)/;
+               this.pageMatcher = /(\/page\/)(\d+)(\/)/;
                this.photoMatcher = /(\/photo\/)(\d+)(\/)/;
                
                /* ------ supported hash structures -------- */
-               this.albumSelectedHash = /^!\/(album)\/(\d+)\/$/;
-               this.placeSelectedHash = /^!\/(place)\/(\d+)\/$/;
-               this.placeLoadedHash = /^!\/(place)\/(\d+)\/(page)\/(\d+)\/$/;
-               this.photoLoadedHash = /^!\/(place)\/(\d+)\/(page)\/(\d+)\/(photo)\/(\d+)\/$/;
+               this.defaultHash = /^!\/$/;
+               this.albumSelectedHash = /^!\/(album)\/(\d+)\/$/; // album selected
+               this.placeSelectedHash = /^!\/(place)\/(\d+)\/$/; // place selected
+               this.placeLoadedHash = /^!\/(place)\/(\d+)\/(page)\/(\d+)\/$/; // place opened
+               this.photoLoadedHash = /^!\/(place)\/(\d+)\/(page)\/(\d+)\/(photo)\/(\d+)\/$/; // place opened and photo loaded
                
                this.currentHash = "";
-               this.state = {
-                  album: null,
-                  place: null,
-                  page: null,
-                  photo: null
-               }
                
                /* ----- hash change handles ---- */
                this.albumListener = null;
@@ -42,65 +37,70 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                this.pageListener = null;
                this.photoListener = null;
                
-               this.infoText = new InfoText();
-               
-               communicator.subscribeOnce("ready:App", this.start, this);
+               communicator.subscribeOnce("ready:App", this._start, this);
             },
-            start : function () {
+            _start : function () {
+               // register routes
                this._registerHashListener();
+               // register App State change requests
+               communicator.subscribe({
+                  "click:marker": function (marker) {
+                     this.goTo(marker.getModel().getType(), marker.getModel().getId()); // select marker (place or album)
+                  },
+                  //TODO somehow click:marker is triggered right after dblClick was triggered on the marker.. -> hash changes back to "!/place/ID/"
+                  "dblClick:place": function (place) {
+                     router.go("!/place/" + place.getModel().getId() + "/page/1/"); // open place
+                  },
+                  "close:detail": function () {
+                     if (state.isDashboardView() || !state.getCurrentLoadedMarker()) {
+                        this._goToDefault(); // reset state to default
+                     } else if (state.getCurrentLoadedMarker()) {
+                        //TODO if a place is loaded in AlbumView and then another place is selected and then deselected again (by closing the detail), the hash has to be updated to show current place/page and photo again!
+                        //router.go("!/place/" + state.getCurrentLoadedMarker() + "/page/" + CURRENTGALLERYPAGE + "/photo/" + CURRENTPHOTO)
+                     }
+                  },
+                  "click:galleryThumb": function (photo) {
+                     this.goTo("photo", photo.getId()); // load photo
+                  },
+                  //TODO these events have to be published in order for the routing to work properly
+                  "click:galleryNav": function (newPageId) {
+                     this.goTo("page", newPageId);
+                  },
+                  "click:slideshowNav": function (newPhoto) {
+                     this.goTo("photo", newPhoto.getId());
+                  },
+                  //TODO depending on how fullscreen and slideshow are connected this event has to be published and the handler 
+                  // in AppController must navigate Slideshow as well as Fullscreen
+                  "click:fullscreenNav": function (newPhoto) {
+                     this.goTo("photo", newPhoto.getId());
+                  }
+               }, this);
+               // start router
                router.startup();
+               // start routing by calling router.go on the current hash
                router.go(window.location.hash.substring(1, window.location.hash.length));
             },
             goTo : function (name, id) {
                
-               if (!name) {
-                  this._emptyHash();
-                  return;
-               }
-               
                switch (name.toLowerCase()) {
                   case "album":
-                     this.goToAlbum(id);
+                     router.go("!/album/" + id + "/");
                      break;
                   case "place":
-                     this.goToPlace(id);
+                     router.go("!/place/" + id + "/");
                      break;
                   case "page":
-                     this.goToPage(id);
+                     this._goToPage(id);
                      break;
                   case "photo":
-                     this.goToPhoto(id);
+                     this._goToPhoto(id);
                      break;
                   default:
                      throw new Error("InvalidHashRequestError");
                      break;
                }
             },
-            goToAlbum : function (id) {
-               
-               var newHash;
-               
-               if (this.albumMatcher.test(this.currentHash)) {
-                  newHash = this.currentHash.replace(this.albumMatcher, "$1" + id + "$3");
-               } else {
-                  newHash = "!/album/" + id + "/";
-               }
-               
-               router.go(newHash);
-            },
-            goToPlace : function (id) {
-               
-               var newHash;
-               
-               if (this.placeMatcher.test(this.currentHash)) {
-                  newHash = this.currentHash.replace(this.placeMatcher, "$1" + id + "$3");
-               } else {
-                  newHash = "!/place/" + id + "/";
-               }
-               
-               router.go(newHash);
-            },
-            goToPage : function (id) {
+            _goToPage : function (id) {
                
                var newHash;
                
@@ -108,121 +108,63 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                   newHash = this.currentHash.replace(this.pageMatcher, "$1" + id + "$3");
                } else if (this.placeMatcher.test(this.currentHash)) {
                   newHash = this.currentHash + "page/" + id + "/";
-               } else {
+               } else if (this.currentHash === "" || this.defaultHash.test(this.currentHash)){
                   throw new Error("NoPlaceLoadedError");
+                  newHash = "!/place/" + id + "/page/1/";
                }
                
                router.go(newHash);
             },
-            goToPhoto : function (id) {
+            _goToPhoto : function (id) {
                
                var newHash;
                
                if (this.photoMatcher.test(this.currentHash)) {
                   newHash = this.currentHash.replace(this.photoMatcher, "$1" + id + "$3");
                } else if (this.pageMatcher.test(this.currentHash)) {
-                  newHash = this.currentHash + "page/" + id + "/";
+                  newHash = this.currentHash + "photo/" + id + "/";
                } else {
                   throw new Error("NoPlaceLoadedError");
                }
                
                router.go(newHash);
             },
-            _emptyHash : function () {
+            _goToDefault : function () {
                router.go("!/");
             },
             _registerHashListener : function () {
                var instance = this;
                
-               router.register("!/", function (event) {
-                  instance._updateState([]);
-                  communicator.publish("change:AppState", instance.state);
+               router.register(this.defaultHash, function (event) {
+                  instance._hashChangeHandler.call(instance, event);
                });
                
                if (state.isDashboardView()) {
                   this.albumListener = router.register(this.albumSelectedHash, function (event) {
-                     instance._markerChangeHandler.call(instance, event);
+                     instance._hashChangeHandler.call(instance, event);
                   });
                } else if (state.isAlbumView()) {
                   this.placeListener = router.register(this.placeSelectedHash, function (event) {
-                     instance._markerChangeHandler.call(instance, event);
+                     instance._hashChangeHandler.call(instance, event);
                   });
                   this.pageListener = router.register(this.placeLoadedHash, function (event) {
-                     instance._pageChangeHandler.call(instance, event);
+                     instance._hashChangeHandler.call(instance, event);
                   });
                   this.photoListener = router.register(this.photoLoadedHash, function (event) {
-                     instance._photoChangeHandler.call(instance, event);
+                     instance._hashChangeHandler.call(instance, event);
                   });
                } else {
                   throw new Error("UnknownPageError");
                }
             },
-            _markerChangeHandler : function (event) {
+            _hashChangeHandler : function (event) {
                
-               var type = event.params[0],
-                  infoMessage = "INVALID_" + type.toUpperCase();
-               // set current hash and update state
+               // set current hash
                this.currentHash = event.newPath;
-               this._updateState(event.params);
-               // check if model exists
-               console.log(type);
-               console.log(state.getCollection(type).has(this.state[type]));
-               if (state.getCollection(type).has(this.state[type])) {
-                  communicator.publish("change:AppState", this.state);
-               } else {
-                  this.infoText.alert(gettext(infoMessage));
-               }
+               // publish change
+               communicator.publish("change:AppState", this._parseHash(event.params));
             },
-            _pageChangeHandler : function (event) {
-               
-               var type = event.params[0], place, instance = this;
-               // set current hash and update state
-               this.currentHash = event.newPath;
-               this._updateState(event.params);
-               if (state.getCollection("Place").has(this.state.place)) {
-                  // get Presenter of the current place
-                  place = state.getMarker(state.getCollection("Place").get(this.state.place));
-                  communicator.subscribeOnce("opened:place", function () {
-                     if (main.getUI().getGallery().hasPage(instance.state.page)) {
-                        communicator.publish("change:AppState", instance.state);
-                     } else {
-                        this.infoText.alert(gettext("INVALID_PAGE"));
-                     }
-                  });
-                  place.open();
-               } else {
-                  this.infoText.alert(gettext("INVALID_PLACE"));
-               }
-            },
-            _photoChangeHandler : function (event) {
-               
-               var type = event.params[0];
-               /// set current hash and update state
-               this.currentHash = event.newPath;
-               this._updateState(event.params);
-               if (state.getCollection("Place").has(this.state.place)) {
-                  // get Presenter of the current place
-                  place = state.getMarker(state.getCollection("Place").get(this.state.place));
-                  communicator.subscribeOnce("opened:place", function () {
-                     if (state.getCollection("Photo").has(instance.state.photo)) {
-                        if (main.getUI().getGallery().hasPage(instance.state.page)) {
-                           this.infoText.alert(gettext("INVALID_PAGE"));
-                        }
-                        communicator.publish("change:AppState", instance.state);
-                     } else {
-                        if (main.getUI().getGallery().hasPage(instance.state.page)) {
-                           this.infoText.alert(gettext("INVALID_PHOTO_AND_PAGE"));
-                        } else {
-                           this.infoText.alert(gettext("INVALID_PHOTO"));
-                        }
-                     }
-                  });
-                  place.open();
-               } else {
-                  this.infoText.alert(gettext("INVALID_PLACE"));
-               }
-            },
-            _updateState : function (hashParams) {
+            _parseHash : function (hashParams) {
                var newState = {},
                   i = 0,
                   defaultState = {
@@ -238,6 +180,8 @@ define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", 
                   }
                   newState[hashParams[i]] = parseInt(hashParams[i+1]);
                }
+               
+               return newState;
             }
 //             
             // _getCurrentAlbumHash : function () {
