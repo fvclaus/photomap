@@ -17,7 +17,6 @@ define(["dojo/_base/declare",
              constructor : function () {
                 this.presenter = null;
                 this.$container = null; // every View that represents a DOM element has to specify the container-element 
-                this.viewName = "View"; // the viewName method is just for convenience, still every View that represents a DOM element should specify the viewName property
                 
                 this.disabled = false;
                 this.active = false;

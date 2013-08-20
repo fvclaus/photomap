@@ -283,27 +283,17 @@ define(["dojo/_base/declare",
                 this.$container
                    .on('mouseenter.Gallery', "img.mp-thumb", function (event) {
                       var $el = $(this);
-                      
-                      if (!instance.isDisabled()) {
-                         
-                         photo = $.grep(this.carousel.getAllPhotos(), function (e, i) {
+                         photo = $.grep(instance.carousel.getAllPhotos(), function (e, i) {
                             return e.thumb === $el.attr("src");
                          })[0];
                          communicator.publish("hover:GalleryPhoto", {contex : this, element: $el, "photo" : photo});
-                         
-                      }
                    })
                    .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
-                      if (!instance.isDisabled()) {
                          communicator.publish("mouseleave:galleryThumb");
-                      }
                    });
 
                 this.$open.on("click", function (event) {
-                   
-                   if (!instance.isDisabled()) {
                       communicator.publish("clicked:GalleryOpenButton");
-                   }
                 });
                 
                 
@@ -330,7 +320,7 @@ define(["dojo/_base/declare",
                       
                       var $el = $(this).children(".mp-thumb");
                       
-                      if (!instance.isDisabled() && !$(this).hasClass(".mp-empty-tile")) {
+                      if (!$(this).hasClass(".mp-empty-tile")) {
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)
@@ -338,18 +328,5 @@ define(["dojo/_base/declare",
                       }
                    });
              }
-             /**
-              * @private
-              * Triggers a click on the photo. Bypasses every listener, because they might be disabled
-              */
-             // triggerClickOnPhoto : function (photo) {
-             //    var $image = this.$photos.filter("[src='" + photo.thumb + "']"),
-             //        index = this._getIndexOfImage($image);
-             //    if (index !== -1) {
-             //       communicator.publish("click:galleryThumb", this._getPhotoOfImage($image));
-             //    } else {
-             //       console.log("Could not find photo %s in UIGallery. Maybe it is not loaded yet", photo.photo);
-             //    }
-             // },
           });
        });

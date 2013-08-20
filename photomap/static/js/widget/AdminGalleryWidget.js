@@ -15,6 +15,7 @@ define(["dojo/_base/declare",
           return  declare([PhotoWidget], {
 
              templateString : template,
+             viewName : "AdminGallery",
 
              startup : function () {
                 if (this._started) {
