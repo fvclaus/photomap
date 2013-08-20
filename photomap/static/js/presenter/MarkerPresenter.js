@@ -206,7 +206,7 @@ define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UI
                 // reset ui and (re)start gallery when place is opened
                 } else if (this.model.getType() === "Place") {
    
-                   communicator.publish("called:openPlace", this);
+                   communicator.publish("dblClick:place", this);
                 }
              },
               _showIcon : function (icon) {
