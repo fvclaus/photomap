@@ -26,7 +26,7 @@ require(["widget/GalleryWidget",
                   $imgs.each(function (index, el) {
                      if (photos[index]) {
                         QUnit.ok$visible($(el));
-                        QUnit.ok($(el).attr("src") === photos[index].photo);
+                        QUnit.ok($(el).attr("src") === photos[index].thumb);
                      } else {
                         QUnit.ok$hidden($(el));
                         QUnit.ok($(el).attr("src") === undefined);
@@ -145,20 +145,22 @@ require(["widget/GalleryWidget",
               gallery.run();
 
               QUnit.raiseError(gallery.insertPhoto, gallery);
-              gallery.insertPhoto(photo5);
               photos.push(photo5);
+              gallery.insertPhoto(photo5);
+
               setTimeout(function () {
                  // Make sure the image counter incremented properly.
                  assertPhotosInGallery(photos.slice(0, 5));
                  // This should navigate the gallery to 2nd page.
-                 gallery.insertPhoto(photo6);
                  photos.push(photo6);
+                 gallery.insertPhoto(photo6);
                  setTimeout(function () {
                     assertPhotosInGallery([photo6, null, null, null, null]);
                     for (photoIndex = 0; photoIndex < 19; photoIndex++) {
                        newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
-                       gallery.insertPhoto(newPhoto);
                        photos.push(newPhoto);
+                       gallery.insertPhoto(newPhoto);
+
                     }
                     setTimeout(function () {
                        assertPhotosInGallery(photos.slice(20, 25));
@@ -171,21 +173,26 @@ require(["widget/GalleryWidget",
            QUnit.asyncTest("deletePhoto", nPhotosInGalleryAssertions + 2, function () {
               var photos = testFixture.getRandomPhotos(6),
                   oldPhoto = photos[5],
-                  photoIndex = 0;
+                  photoIndex = 0,
+                  nPhotos = photos.length;
 
               gallery.startup();
               gallery.load(photos);
               gallery.run();
 
               QUnit.raiseError(gallery.deletePhoto, gallery);
-              gallery.deletePhoto(oldPhoto);
               photos.splice(5, 6);
+              gallery.deletePhoto(oldPhoto);
+
               setTimeout(function () {
                  // Make sure the image counter is decremented properly.
                  // Make sure the gallery navigates to the 2nd photo.
                  assertPhotosInGallery(photos.slice(0, 5));
-                 for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
-                    gallery.deletePhoto(photos[photoIndex]);
+                 nPhotos = photos.length;
+                 for (photoIndex = 0; photoIndex < nPhotos; photoIndex++) {
+                    oldPhoto = photos[0];
+                    photos.splice(0, 1);
+                    gallery.deletePhoto(oldPhoto);
                  }
                  setTimeout(function () {
                     assertTooltipPresence(true);

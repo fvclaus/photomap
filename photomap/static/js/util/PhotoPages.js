@@ -16,14 +16,14 @@ define(["dojo/_base/declare",
        function (declare, Photo) {
           return declare(null, {
              constructor : function (photos, photosPerPage, srcPropertyName) {
-                assertTrue(photos instanceof Array);
+                assertTrue(photos instanceof Array, "Parameter photos must be of type Array.");
                 assertNumber(photosPerPage);
                 assertTrue(photosPerPage >= 1);
                 assertString(srcPropertyName, "Need property name to reduce the photo later");
                 
                 this.pages = [];
                 this._createPages(photos, photosPerPage);
-                this.photos = $.extend(true, [], photos);
+                this.photos = photos;
                 this._setCurrentPage(0);
                 this.photosPerPage = photosPerPage;
                 this.srcPropertyName = srcPropertyName;
@@ -33,14 +33,7 @@ define(["dojo/_base/declare",
                 this.currentPageIndex = 0;
              },
              update : function (photos) {
-                this.pages = null;
-                this.photos = $.extend(true, [], photos);
                 this._createPages(photos, this.photosPerPage);
-             },
-             getCurrentPage : function () {
-                //TODO this seems quite redundant.. the current-page is already stored so you can just return this._getCurrentPage() - why set the currentPageIndex = currentPageIndex again?
-                //return this.getPage(this.currentPageIndex);
-                return this._getCurrentPage();
              },
              /**
               * @public
@@ -49,7 +42,8 @@ define(["dojo/_base/declare",
              getPage : function (which) {
                 assertTrue(typeof which === "string" || typeof which === "number" || which instanceof Photo, "which has to be string or number or Photo");
                 
-                var index, photo;
+                var index = 0, 
+                    photo = null;
                 
                 if (typeof which === "number") {
                    index = which;
@@ -68,18 +62,10 @@ define(["dojo/_base/declare",
                       this._setCurrentPage(this.pages.length - 1);
                       break;
                    case "next":
-                      if (!this.currentPageIndex && this.currentPageIndex !== 0 || this.isLastPage()) {
-                         this._setCurrentPage(0);
-                      } else {
-                         this._setCurrentPage(this.currentPageIndex + 1);
-                      }
+                      this._setCurrentPage((this.currentPageIndex + 1) % this.pages.length);
                       break;
                    case "previous":
-                      if (!this.currentPageIndex && this.currentPageIndex !== 0 || this.isFirstPage()) {
-                         this._setCurrentPage(this.pages.length - 1); 
-                      } else {
-                         this._setCurrentPage(this.currentPageIndex - 1);
-                      }
+                      this._setCurrentPage((this.currentPageIndex + this.pages.length - 1) % this.pages.length);
                       break;
                    case "current":
                       break;
@@ -87,31 +73,27 @@ define(["dojo/_base/declare",
                       this._setCurrentPage(index);
                       break;
                    case "photo":
-                      index = this.getPageIndex(photo);
-                      if (index === null) {
-                         throw new Error("Unknown Photo: " + photo);
-                      }
-                      this._setCurrentPage(index);
+                      this._setCurrentPage(this.getPageIndex(photo));
                       break;
                    default:
                       throw new Error("Unknown param: " + which);
-                      // this._setCurrentPage(0);
-                      // break;
                 }
-                //TODO why the deep copy?
-                //var currentPage =  $.extend(true, [], this._getCurrentPage());
 
 
-                return this._getCurrentPage(); //currentPage;
+                return this._getCurrentPage();
              },
-             getPageIndex : function (of) {
-                assertTrue(of instanceof Photo, "getPageIndex just accepts a Photo as input param");
+             /**
+              * @public
+              * @description Returns the index of the page that the photo has been assigned to.
+              */
+             getPageIndex : function (photo) {
+                assertTrue(photo instanceof Photo, "getPageIndex just accepts a Photo as input param");
                 
-                var index = null;
+                var index = -1;
                 
-                $.each(this.pages, function (pageIndex, page) {
-                   $.each(page, function (photoIndex, photo) {
-                      if (photo === of) {
+                this.pages.forEach(function (page, pageIndex) {
+                   page.forEach(function (photoOnPage) {
+                      if (photo === photoOnPage) {
                          index = pageIndex;
                       }
                    });
@@ -127,12 +109,28 @@ define(["dojo/_base/declare",
              },
              /**
               * @public
+              * @description Returns the index of the photo local to the current page. The index can only be in the range of 0..photosPerPage.
+              * Returns -1, if the photo is not on the current page.
+              */
+             getLocalPhotoIndex : function (photo) {
+                var photoIndex = 0,
+                    currentPage = this._getCurrentPage();
+                
+                for (photoIndex = 0; photoIndex < currentPage.length; photoIndex++) {
+                   if (currentPage[photoIndex] === photo) {
+                      return photoIndex;
+                   }
+                }
+                return -1;
+             },
+             /**
+              * @public
               */
              insertPhoto : function (photo) {
                 assertTrue(photo instanceof Photo);
-                
+                assertTrue(this.photos.indexOf(photo) !== -1, "The photo needs to be inserted to the original array before.");
                 console.log("PhotoPages: Inserting photo %s into pages.", photo);
-                this.photos.push(photo);
+                // Repage
                 this._createPages(this.photos, this.photosPerPage);
              },
              /**
@@ -140,10 +138,10 @@ define(["dojo/_base/declare",
               */
              deletePhoto : function (photo) {
                 assertTrue(photo instanceof Photo);
-
+                assertTrue(this.photos.indexOf(photo) === -1, "The photo needs to be removed from the original photo array before.");
                 console.log("PhotoPages: Deleting photo %s from pages.", photo.getId());
-                var index = this.photos.indexOf(photo);
-                this.photos.splice(index, 1);
+                
+                // Repage
                 this._createPages(this.photos, this.photosPerPage);
                 //the current page does not exist anymore. go back one
                 if (this.pages[this.currentPageIndex] === undefined){
@@ -169,87 +167,7 @@ define(["dojo/_base/declare",
               * @public
               */
              getAllImageSources : function () {
-                var photos =  $.extend(true, [], this.photos);
-                
-                return this._extractSources(photos);
-             },
-             getAllPhotos : function () {
-                return this.photos;
-             },
-             /**
-              * @public
-              */
-             getLocalIndexOfPhoto : function (photo) {
-                var photoIndex = 0,
-                    photoOnPage = null,
-                    currentPage = this._getCurrentPage();
-                
-                for (photoIndex = 0; photoIndex < currentPage.length; photoIndex++) {
-                   photoOnPage = currentPage[photoIndex];
-                   if (photoOnPage && photo.getId() === photoOnPage.getId()) {
-                      return photoIndex;
-                   }
-                }
-                return -1;
-             },
-             /**
-              * @private
-              * @description Creates the photo pages
-              */
-             _createPages : function (photos, photosPerPage) {
-                assertTrue(photos instanceof Array);
-                assertNumber(photosPerPage);
-
-                console.log("PhotoPages: Paging %d photos to %d photos/page.", photos.length, photosPerPage);
-
-                var pages = [],
-                    pageData = $.extend(true, [], photos), //make a deep copy so that the original data won't get modified
-                    photoIndex = 0,
-                    pageIndex = 0,
-                    nPhotosLastPage = 0,
-                    nEmptyPhotosLastPage = 0;
-
-                
-                pages[0] = [];
-                //no entries: creating null x photosPerPage
-                if (photos.length === 0) {
-                   console.log("PhotoPages: Photos are emtpy. Filling first page with null values.");
-                   for (photoIndex = 0; photoIndex < photosPerPage; photoIndex++){
-                      pages[0][photoIndex] = null;
-                   }
-                }
-                else{
-                   nPhotosLastPage = pageData.length % photosPerPage;
-                   // fill up empty slot with null
-                   if (nPhotosLastPage !== 0) {
-                      nEmptyPhotosLastPage = photosPerPage - nPhotosLastPage;
-                      console.log("PhotoPages: Filling the last page with %d empty photos.", nEmptyPhotosLastPage);
-
-                      for (photoIndex = 0; photoIndex < nEmptyPhotosLastPage; photoIndex++) {
-                         pageData.push(null);
-                      }
-                   }
-                   
-                   pageIndex = 0;
-                   // create a matrix with all pages as separate array
-                   for (photoIndex = 1; photoIndex <= pageData.length; photoIndex++){
-                      pages[pageIndex].push(pageData[photoIndex - 1]);
-                      // photo is not the last one
-                      if (photoIndex !== pageData.length){
-                         // photo is not the first one, expect the pageSize is 1
-                         if (photosPerPage > 1 && photos === 1){
-                            continue;
-                         }
-                         // photoIndex is exactly divided by photosPerPage. start a new page
-                         if (photoIndex % photosPerPage === 0) {
-                            pages.push([]);
-                            pageIndex++;
-                         }
-                      }
-                   }
-                   console.log("PhotoPages: Created %d pages in total.", pages.length);
-                }
-                this.pages = pages;
+                return this._extractSources(this.photos);
              },
              /**
               * @private
@@ -260,7 +178,6 @@ define(["dojo/_base/declare",
                     instance = this;
 
                 // extract sources
-                //NOTE: $.map will remove all entries that return null
                 photos.forEach(function (photo) {
                    if (photo !== null) {
                       sources.push(photo[instance.srcPropertyName]);
@@ -271,28 +188,67 @@ define(["dojo/_base/declare",
 
                 return sources;
              },
+             getAllPhotos : function () {
+                return this.photos;
+             },
+
+             /**
+              * @private
+              * @description Creates pages of photo. Updates old pages in memory or creates new pages.
+              */
+             _createPages : function (photos, photosPerPage) {
+                assertTrue(photos instanceof Array);
+                assertNumber(photosPerPage);
+
+                console.log("PhotoPages: Paging %d photos to %d photos/page.", photos.length, photosPerPage);
+
+                var page = null,
+                    photoIndex = 0,
+                    localPageIndex = 0,
+                    lastPhotoIndex = photos.length - 1,
+                    pageIndex = 0;
+                    
+                while (true) {
+                   // Try to get the existing page from memory.
+                   page = this.pages[pageIndex];
+                   // If non exists, create a new one.
+                   if (page === undefined) {
+                      page = [];
+                      this.pages.push(page);
+                   }
+                   // Update page with remaining photos.
+                   // Fill up with null values if necessary.
+                   for (localPageIndex = 0; localPageIndex < photosPerPage; localPageIndex++) {
+                      page[localPageIndex] = null;
+                      if (photos[photoIndex] !== undefined) {
+                         page[localPageIndex] = photos[photoIndex];
+                      }
+                      // Keep track of the next photo.
+                      photoIndex += 1;
+                   }
+                   pageIndex += 1;
+                   // Checks if another page needs to be created.
+                   if (photoIndex > lastPhotoIndex) {
+                      // Delete old pages that are no longer necessary, because entries have been deleted.
+                      this.pages.splice(pageIndex, this.pages.length - pageIndex);
+                      break;
+
+                   }
+                }
+             },
+
              /**
               * @private
               */
              _getCurrentPage : function () {
-                //TODO what was this for? _setCurrentPage sets this.currentPageIndex, so this call just sets this.currentPageIndex = this.currentPageIndex;
-                //this._setCurrentPage(this.currentPageIndex);
-                
-                var currentPage = this.pages[this.currentPageIndex];
-                
-                currentPage.forEach(function (photo) {
-                   assertTrue(photo instanceof Photo || photo === null, "Pages may just contain Photos or nulls");
-                });
-                
-                return currentPage;
+                return this.pages[this.currentPageIndex];
              },
              /**
               * @private
               */
              _setCurrentPage : function (index) {
-                //TODO setting currentPage is prone to error when we update the pages Array. Only store currentPageIndex
                 console.log("PhotoPages: Current page is now %d.", index);
-                assertTrue(this.pages[index] !== undefined, "There is no page with given index. You have to provide a valid index.");
+                assertTrue(this.pages[index] !== undefined, "There is no page for index " + index + ". You have to provide a valid index.");
                 
                 this.currentPageIndex = index;
              }

@@ -55,13 +55,15 @@ require(["widget/AdminGalleryWidget",
               var photoIndex = 0,
                   oldPhoto = photos[0];
               QUnit.raiseError(gallery.deletePhoto, gallery);
-              gallery.deletePhoto(oldPhoto);
               photos.splice(0, 1);
+              gallery.deletePhoto(oldPhoto);
+
               setTimeout(function () {
                  assertPhotosInGallery(photos);
                  for (photoIndex = photos.length - 1; photoIndex >= 0; photoIndex--) {
-                    gallery.deletePhoto(photos[0]);
+                    oldPhoto = photos[0];
                     photos.splice(0, 1);
+                    gallery.deletePhoto(oldPhoto);
                  }
                  setTimeout(function () {
                     assertPhotosInGallery(photos);
@@ -78,8 +80,8 @@ require(["widget/AdminGalleryWidget",
               gallery.run();
               var newPhoto = testFixture.getRandomPhoto(photos.length);
               QUnit.raiseError(gallery.insertPhoto, gallery);
-              gallery.insertPhoto(newPhoto);
               photos.push(newPhoto);
+              gallery.insertPhoto(newPhoto);
               setTimeout(function () {
                  assertPhotosInGallery(photos);
                  QUnit.start();

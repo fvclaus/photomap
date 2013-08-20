@@ -48,7 +48,7 @@ QUnit.ok$visible = function ($element) {
 };
 
 QUnit.ok$hidden = function ($element) {
-   QUnit.ok($element.is(":hidden"), "Selector '" + $element.selector + "' is supposed to be hidden");
+   QUnit.ok($element.is(":hidden") || $element.css("visibility") === "hidden", "Selector '" + $element.selector + "' is supposed to be hidden");
 };
 
 QUnit.ok$text = function ($element, text) {

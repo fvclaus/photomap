@@ -184,8 +184,8 @@ require(["widget/PhotoCarouselWidget",
               QUnit.raiseError(photoCarousel.insertPhoto, photoCarousel, {});
               // Insert on the last page. Easy.
               photo = testFixture.getRandomPhoto();
-              photoCarousel.insertPhoto(photo);
               photos.push(photo);
+              photoCarousel.insertPhoto(photo);
               expectedPhotos = [photos[10], photos[11], photos[12], null, null];
               // Navigate to the last page.
               photoCarousel.navigateTo("end");
@@ -195,8 +195,8 @@ require(["widget/PhotoCarouselWidget",
                  photo = testFixture.getRandomPhoto();
                  expectedPhotos = [photo];
                  // Insert on the current page. Expect reload.
-                 photoCarousel.insertPhoto(photo);
                  photos.push(photo);
+                 photoCarousel.insertPhoto(photo);
                  setTimeout(function() {
                     assertPhotosInWidget(expectedPhotos, 3);
                     // Navigate away from the last page.
@@ -225,9 +225,9 @@ require(["widget/PhotoCarouselWidget",
               // Wrong input.
               QUnit.raiseError(photoCarousel.deletePhoto, photoCarousel, {});
               // Delete from the last page. Easy.
-              photoCarousel.deletePhoto(photos[11]);
-              photos.pop();
+              photo = photos.pop();
               expectedPhotos = [photos[10], null, null, null, null];
+              photoCarousel.deletePhoto(photo);
               // Navigate to the last page.
               photoCarousel.navigateTo("end");
               setTimeout(function () {
@@ -251,113 +251,5 @@ require(["widget/PhotoCarouselWidget",
                  }, 2 *  animationTime);
               }, animationTime);
            });
-
-           //            QUnit.asyncTest("navigateWithDirection", 11, function () {
-           //               photoCarousel.startup();
-           //               photoCarousel.load(photos);
-           //               // navigateWithDirection is supposed to start the photoCarousel if it is not running yet.
-           //               photoCarousel.navigateWithDirection("right");
-           //               QUnit.raiseError(photoCarousel.navigateWithDirection, photoCarousel, 3);
-           //               QUnit.raiseError(photoCarousel.navigateWithDirection, photoCarousel, "wrong");
-           //               photoCarousel.navigateWithDirection("left");
-           //               setTimeout(function () {
-           //                  assertPhotoInWidget(photos[11]);
-           //                  photoCarousel.navigateWithDirection("right");
-           //                  setTimeout(function () {
-           //                     assertPhotoInWidget(photos[0]);
-           //                     photoCarousel.navigateWithDirection("right");
-           //                     photoCarousel.navigateWithDirection("right");
-           //                     photoCarousel.navigateWithDirection("right");
-           //                     photoCarousel.navigateWithDirection("right");
-           //                     setTimeout(function () {
-           //                        assertPhotoInWidget(photos[4]);
-           //                        QUnit.start();
-           //                     }, animationTime);
-           //                  }, animationTime);
-           //               }, animationTime);
-           //            });
-
-           //            QUnit.asyncTest("navigateTo", 7, function () {
-           //               photoCarousel.startup();
-           //               photoCarousel.load(photos);
-           //               // No parameter not legal.
-           //               QUnit.raiseError(photoCarousel.navigateTo, photoCarousel);
-           //               // This should be the same as photoCarousel.run()
-           //               photoCarousel.navigateTo(null);
-           //               setTimeout(function () {
-           //                  assertPhotoInWidget(photos[0]);
-           //                  photoCarousel.navigateTo(photos[7]);
-           //                  setTimeout(function () {
-           //                     assertPhotoInWidget(photos[7]);
-           //                     QUnit.start();
-           //                  }, animationTime);
-           //               }, animationTime);
-           //            });
-
-           //            QUnit.asyncTest("reset", 1, function () {
-           //               photoCarousel.startup();
-           //               photoCarousel.load(photos);
-           //               photoCarousel.run();
-           //               photoCarousel.reset();
-           //               setTimeout(function () {
-           //                  assertTooltipPresence(true);
-           //                  QUnit.start();
-           //               }, animationTime);
-           //            });
-
-           //            QUnit.asyncTest("insertPhoto", 10,  function () {
-           //               var newPhoto = testFixture.getRandomPhoto(12),
-           //                   photoIndex = 0;
-           //               photoCarousel.startup();
-           //               photoCarousel.load(photos);
-           //               photoCarousel.run();
-
-           //               QUnit.raiseError(photoCarousel.insertPhoto, photoCarousel);
-           
-           //               photoCarousel.insertPhoto(newPhoto);
-           //               photos.push(newPhoto);
-           //               setTimeout(function () {
-           //                  // Make sure the image counter incremented properly.
-           //                  assertPhotoInWidget(photos[0]);
-           //                  photoCarousel.navigateTo(newPhoto);
-           //                  setTimeout(function () {
-           //                     assertPhotoInWidget(newPhoto);
-           //                     for (photoIndex = 0; photoIndex < 20; photoIndex++) {
-           //                        newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
-           //                        photoCarousel.insertPhoto(newPhoto);
-           //                        photos.push(newPhoto);
-           //                     }
-           //                     setTimeout(function () {
-           //                        assertPhotoInWidget(photos[12]);
-           //                        QUnit.start();
-           //                     }, animationTime);
-           //                  }, animationTime);
-           //               }, animationTime);
-           //            });
-
-           //            QUnit.asyncTest("deletePhoto", 5, function () {
-           //               var oldPhoto = photos[0],
-           //                   photoIndex = 0;
-           //               photoCarousel.startup();
-           //               photoCarousel.load(photos);
-           //               photoCarousel.run();
-
-           //               QUnit.raiseError(photoCarousel.deletePhoto, photoCarousel);
-           
-           //               photoCarousel.deletePhoto(oldPhoto);
-           //               photos.splice(0, 1);
-           //               setTimeout(function () {
-           //                  // Make sure the image counter is decremented properly.
-           //                  // Make sure the photoCarousel navigates to the 2nd photo.
-           //                  assertPhotoInWidget(photos[0]);
-           //                  for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
-           //                     photoCarousel.deletePhoto(photos[photoIndex]);
-           //                  }
-           //                  setTimeout(function () {
-           //                     assertTooltipPresence(true);
-           //                     QUnit.start();
-           //                  }, animationTime);
-           //               }, animationTime);
-           //            }, animationTime);
         });
            

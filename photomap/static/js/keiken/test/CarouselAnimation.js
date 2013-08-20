@@ -34,7 +34,7 @@ require(["util/CarouselAnimation",
 
            module("CarouselAnimation", {
               setup : function () {
-                 $container =  $("<section id=mp-fullscreen><img style='min-width:50%; max-width:50%; height:auto; max-height: 25%' id='carouselanimation'/> <img class='mp-slideshow-loader mp-light-loader mp-nodisplay' src='/static/images/light-loader.gif'/></section> ");
+                 $container = $("<div class='mp-gallery-tile' style='height:200px; width:200px'><img class='mp-gallery-loader mp-light-loader mp-nodisplay' src='/static/images/light-loader.gif'/> <img class='mp-thumb mp-cursor-pointer mp-control' style='min-width: 50%' /></div>");
                  $testBody
                     .empty()
                     .append($container);
@@ -42,11 +42,11 @@ require(["util/CarouselAnimation",
                  carouselAnimation = new CarouselAnimation();
 
                  photo = testFixture.getRandomPhoto();
-                 $photo = $testBody.find("#carouselanimation");
+                 $photo = $testBody.find(".mp-thumb");
                  $photo.attr("src", photo.photo);
 
-                 $loader = $testBody.find(".mp-slideshow-loader");
-                 photos = testFixture.getRandomPhotos(1);
+                 $loader = $testBody.find(".mp-gallery-loader");
+                photos = testFixture.getRandomPhotos(1);
                  // Simple prefetching of the photos.
                  // This only works in addition with a setTimeout at the start of every testcase.
                  photos.forEach(function (photo) {
