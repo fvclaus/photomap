@@ -69,9 +69,9 @@ define(["dojo/_base/declare",
                 this.isStarted = false;
              },
              update : function (photos) {
-               this.dataPage.update(photos);
-               this.currentPage = this.dataPage.getCurrentPage();
-               this._load();
+                this.dataPage.update(photos);
+                this.currentPage = this.dataPage.getPage("current");
+                this._load();
              },
              /**
               * @description Starts the carousel by loading the first or the requested page
@@ -96,12 +96,11 @@ define(["dojo/_base/declare",
                 console.log("PhotoCarouselWidget: Inserting new photo %s to Carousel.", photo);
                 // update page
                 this.dataPage.insertPhoto(photo);
-                var from = this.dataPage.getLocalIndexOfPhoto(photo);
+                var from = this.dataPage.getLocalPhotoIndex(photo);
                 
                 // Did we insert on the current page? Then we need to update it
-                if (this._isLastPage()){
+                if (from !== -1){
                    console.log("PhotoCarouselWidget: New photo is inserted on current page. Reload current page from index %d.", from);
-                   this.currentPage = this.dataPage.getPage("current");
                    this._load(from, from + 1);
                 } else if (this.options.navigateToInsertedPhoto) {
                    // config: Show newly inserted photos
@@ -129,7 +128,7 @@ define(["dojo/_base/declare",
                     from = 0,
                     firstIndexOfCurrentPage = this._getIndexForPhoto(currentPage[0]),
                     index = this._getIndexForPhoto(photo),
-                    localIndex = this.dataPage.getLocalIndexOfPhoto(photo),
+                    localIndex = this.dataPage.getLocalPhotoIndex(photo),
                     instance = this,
                     onFadeOut = function () {
                        this.currentPage = this.dataPage.getPage("current");
@@ -258,24 +257,6 @@ define(["dojo/_base/declare",
              _getIndexForPhoto : function (photo) {
                 return this.getAllPhotos().indexOf(photo);
              },
-             /*
-              * @public
-              * @returns {Photo} If src present, null otherwise.
-              */
-             // getPhotoForSrc : function (src) {
-             //    assertString(src, "src must be of type string.");
-             //    var photo = null,
-             //        photoIndex = 0,
-             //        photos = this.getAllPhotos();
-             //    for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
-             //       photo = photos[photoIndex];
-             //       if (photo[this.srcPropertyName] === src) {
-             //          return photo;
-             //       }
-             //    }
-             //    return null;
-             // },
-                
              /**
               * @private
               * @description Loads all photos, or just current page depending on this.options.lazy (=true/false). 

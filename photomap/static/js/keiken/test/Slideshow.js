@@ -104,9 +104,9 @@ require(["widget/SlideshowWidget",
                     setTimeout(function () {
                        assertPhotoInWidget(photos[4]);
                        QUnit.start();
-                    }, animationTime);
-                 }, animationTime);
-              }, animationTime);
+                    }, 2 *  animationTime);
+                 },  animationTime);
+              },  animationTime);
            });
 
            QUnit.asyncTest("navigateTo", 7, function () {
@@ -145,9 +145,10 @@ require(["widget/SlideshowWidget",
               slideshow.run();
 
               QUnit.raiseError(slideshow.insertPhoto, slideshow);
-              
-              slideshow.insertPhoto(newPhoto);
+
               photos.push(newPhoto);
+              slideshow.insertPhoto(newPhoto);
+
               setTimeout(function () {
                  // Make sure the image counter incremented properly.
                  assertPhotoInWidget(photos[0]);
@@ -156,8 +157,8 @@ require(["widget/SlideshowWidget",
                     assertPhotoInWidget(newPhoto);
                     for (photoIndex = 0; photoIndex < 20; photoIndex++) {
                        newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
-                       slideshow.insertPhoto(newPhoto);
                        photos.push(newPhoto);
+                       slideshow.insertPhoto(newPhoto);
                     }
                     setTimeout(function () {
                        assertPhotoInWidget(photos[12]);
@@ -169,26 +170,32 @@ require(["widget/SlideshowWidget",
 
            QUnit.asyncTest("deletePhoto", 5, function () {
               var oldPhoto = photos[0],
-                  photoIndex = 0;
+                  photoIndex = 0,
+                  nPhotos = photos.length;
+
               slideshow.startup();
               slideshow.load(photos);
               slideshow.run();
 
               QUnit.raiseError(slideshow.deletePhoto, slideshow);
-              
+
+              photos.splice(0, 1);              
               slideshow.deletePhoto(oldPhoto);
-              photos.splice(0, 1);
+
               setTimeout(function () {
                  // Make sure the image counter is decremented properly.
                  // Make sure the slideshow navigates to the 2nd photo.
                  assertPhotoInWidget(photos[0]);
-                 for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
-                    slideshow.deletePhoto(photos[photoIndex]);
+                 nPhotos = photos.length;
+                 for (photoIndex = 0; photoIndex < nPhotos ; photoIndex++) {
+                    oldPhoto = photos[0];
+                    photos.splice(0, 1);
+                    slideshow.deletePhoto(oldPhoto);
                  }
                  setTimeout(function () {
                     assertTooltipPresence(true);
                     QUnit.start();
-                 }, animationTime);
-              }, animationTime);
-           }, animationTime);
+                 }, 2 * animationTime);
+              }, 2 * animationTime);
+           });
         });

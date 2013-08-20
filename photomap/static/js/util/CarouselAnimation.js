@@ -58,8 +58,13 @@ define(["dojo/_base/declare",
                 
                 options = $.extend({}, this.defaults, options);
 
-                var scaleX = function (value) {
-                   return "scaleX(" + value + ")";
+                var scaleX = function ($element, value) {
+                   var scaleValue = "scaleX(" + value + ")";
+                   $element.css({
+                      "-o-transform": scaleValue,
+                      "-webkit-transform": scaleValue,
+                      "transform": scaleValue
+                   });
                 },
                     instance = this;
                 //TODO Where is matrix used?
@@ -86,24 +91,26 @@ define(["dojo/_base/declare",
 
                 if (time === "start") {
                    this.lastAnimation = this.animation;
+                   options.items.show();
+
                    // The complete event for fadeOut will get fired everytime a photo element is faded out.
                    // There is no event for scaling,
                    if (this.animation === this.FADE) {
                       // Fadout items in animationTime microseconds.
                       options.items.fadeOut(options.animationTime);
                    } else {
-                      options.items.css({
-                      "-o-transform": scaleX(0),
-                      "-webkit-transform": scaleX(0),
-                      "transform": scaleX(0)
-                      });
+                      setTimeout(function() {
+                         scaleX(options.items, 0);
+                      }, 100);
                    }
                    // Therefore the other code has to be moved into a timeout.
                    // This thread might be executed after the instance has been destroyed.
                    setTimeout(function () {
                       try { 
                          instance._ping();
-                         options.items.hide();  // Scale does not hide the items.
+                         options.items
+                            .hide();
+                            // .css("visibility", "hidden");// Scale does not hide the items.
                          // Show the loading handler and
                          options.loader.show();
                          // Call the complete callback.
@@ -118,7 +125,15 @@ define(["dojo/_base/declare",
                    options.loader.hide();
                    // flip does not work properly, if the photos are still hidden.
                    if (this.animation === this.FLIP) {
-                      options.items.show();
+                      options.items.show()
+                         // .css("display", "block")
+                         // .css("visibility" , "visible")
+                      // Reset the transformation.
+                         .removeClass("mp-animate-" + options.animationTime)
+                         .css({
+                            "-webkit-transform" : "",
+                            "transform" : "",
+                            "-o-transform" : ""});
                    }
 
                    options.photos.forEach(function (photo, index) {
@@ -137,13 +152,16 @@ define(["dojo/_base/declare",
                       if (photoSource) {
                          $photo.attr("src", photoSource);
                          if (instance.animation === instance.FADE) {
-                            $photo.fadeIn(options.animationTime);
+                            $photo.hide().fadeIn(options.animationTime);
                          } else {
-                            $photo.css({
-                               "-o-transform": scaleX(1),
-                               "-webkit-transform": scaleX(1),
-                               "transform": scaleX(1)
-                            });
+                            // Scale it to 0 first to scale it to 1 later.
+                            // This should happen instantly without delay.
+                            scaleX($photo, 0);
+                            // Transform needs little time to 'catch up'.
+                            setTimeout(function () {
+                               $photo.addClass("mp-animate-" + options.animationTime);
+                               scaleX($photo, 1);
+                            } , 100);
                          }
                       } else {
                          $photo

@@ -68,7 +68,7 @@ define(["dojo/_base/declare",
                    word += this._getRandomWord();
                    word += " ";
                 }
-                word[word.length - 1] = ".";
+                word += ".";
                 return word;
              },
              /*

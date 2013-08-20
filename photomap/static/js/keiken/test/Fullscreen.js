@@ -126,9 +126,9 @@ require(["widget/FullscreenWidget",
               fullscreen.run();
 
               QUnit.raiseError(fullscreen.insertPhoto, fullscreen);
-              
+              photos.push(newPhoto);              
               fullscreen.insertPhoto(newPhoto);
-              photos.push(newPhoto);
+
               setTimeout(function () {
                  // Make sure the image counter incremented properly.
                  assertPhotoInWidget(photos[0]);
@@ -137,8 +137,8 @@ require(["widget/FullscreenWidget",
                     assertPhotoInWidget(newPhoto);
                     for (photoIndex = 0; photoIndex < 20; photoIndex++) {
                        newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
-                       fullscreen.insertPhoto(newPhoto);
                        photos.push(newPhoto);
+                       fullscreen.insertPhoto(newPhoto);
                     }
                     setTimeout(function () {
                        assertPhotoInWidget(photos[12]);
@@ -150,21 +150,24 @@ require(["widget/FullscreenWidget",
 
            QUnit.asyncTest("deletePhoto", 9, function () {
               var oldPhoto = photos[0],
-                  photoIndex = 0;
+                  photoIndex = 0,
+                  nPhotos = photos.length;
               fullscreen.startup();
               fullscreen.load(photos);
               fullscreen.run();
 
               QUnit.raiseError(fullscreen.deletePhoto, fullscreen);
-              
-              fullscreen.deletePhoto(oldPhoto);
               photos.splice(0, 1);
+              fullscreen.deletePhoto(oldPhoto);
               setTimeout(function () {
                  // Make sure the image counter is decremented properly.
                  // Make sure the fullscreen navigates to the 2nd photo.
                  assertPhotoInWidget(photos[0]);
-                 for (photoIndex = 0; photoIndex < photos.length; photoIndex++) {
-                    fullscreen.deletePhoto(photos[photoIndex]);
+                 nPhotos = photos.length;
+                 for (photoIndex = 0; photoIndex < nPhotos; photoIndex++) {
+                    oldPhoto = photos[0];
+                    photos.splice(0, 1);
+                    fullscreen.deletePhoto(oldPhoto);
                  }
                  setTimeout(function () {
                     assertPhotoInWidget(null);
