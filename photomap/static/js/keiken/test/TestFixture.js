@@ -3,8 +3,9 @@
 "use strict";
 
 define(["dojo/_base/declare",
-       "model/Photo"],
-       function (declare, Photo) {
+        "model/Photo",
+       "model/Collection"],
+       function (declare, Photo, Collection) {
           return declare(null, {
              _lipsum : "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
              _photos : ["photo1.jpg", "photo2.jpg", "photo3.jpg", "photo4.jpg", "photo5.jpg", "photo6.jpg", "photo7.jpg"],
@@ -20,6 +21,12 @@ define(["dojo/_base/declare",
                 }
                 assertEqual(photos.length, nPhotos);
                 return photos;
+             },
+             getRandomPhotoCollection : function (nPhotos) {
+                var photos = this.getRandomPhotos(nPhotos);
+                return new Collection(photos, Photo, {
+                   modelConstructor : Photo,
+                   modelType : "photo"});
              },
              /*
               * @public

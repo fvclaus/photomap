@@ -12,6 +12,7 @@ require(["widget/AdminGalleryWidget",
                $container = $("<section id=mp-full-left-column></section>"),
                testFixture = new TestFixture(),
                photos = null,
+               photoCollection = null,
                assertPhotosInGallery = function (photos) {
                   QUnit.ok($testBody.find("img").length === photos.length);
                },
@@ -25,7 +26,8 @@ require(["widget/AdminGalleryWidget",
                     .append($container);
 
                  gallery = new AdminGalleryWidget(null, $container.get(0));
-                 photos = testFixture.getRandomPhotos(nPhotos);
+                 photoCollection = testFixture.getRandomPhotoCollection(nPhotos);
+                 photos = photoCollection.getAll();
               },
               teardown : function () {
                  $testBody.empty();
@@ -38,7 +40,7 @@ require(["widget/AdminGalleryWidget",
            QUnit.asyncTest("run", 2, function () {
               gallery.startup();
               QUnit.raiseError(gallery.load, gallery);
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
               setTimeout(function () {
                  assertPhotosInGallery(photos);
@@ -50,20 +52,18 @@ require(["widget/AdminGalleryWidget",
               gallery.startup();
               // deletePhotos without loading them
               QUnit.raiseError(gallery.deletePhoto, gallery, photos[0]);
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
               var photoIndex = 0,
                   oldPhoto = photos[0];
               QUnit.raiseError(gallery.deletePhoto, gallery);
-              photos.splice(0, 1);
-              gallery.deletePhoto(oldPhoto);
+              photoCollection.delete(photos[0]);
+
 
               setTimeout(function () {
                  assertPhotosInGallery(photos);
                  for (photoIndex = photos.length - 1; photoIndex >= 0; photoIndex--) {
-                    oldPhoto = photos[0];
-                    photos.splice(0, 1);
-                    gallery.deletePhoto(oldPhoto);
+                    photoCollection.delete(photos[0]);
                  }
                  setTimeout(function () {
                     assertPhotosInGallery(photos);
@@ -76,12 +76,11 @@ require(["widget/AdminGalleryWidget",
               gallery.startup();
               // insertPhoto without loading them
               QUnit.raiseError(gallery.insertPhoto, gallery, testFixture.getRandomPhoto(photos.length));
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
               var newPhoto = testFixture.getRandomPhoto(photos.length);
               QUnit.raiseError(gallery.insertPhoto, gallery);
-              photos.push(newPhoto);
-              gallery.insertPhoto(newPhoto);
+              photoCollection.insert(newPhoto);
               setTimeout(function () {
                  assertPhotosInGallery(photos);
                  QUnit.start();
@@ -90,7 +89,7 @@ require(["widget/AdminGalleryWidget",
 
            QUnit.asyncTest("drag", nPhotos + 3, function () {
               gallery.startup();
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
               setTimeout(function () {
                  var $imgs = $testBody.find("img"),

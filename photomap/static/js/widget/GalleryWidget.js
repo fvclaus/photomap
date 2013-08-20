@@ -217,13 +217,14 @@ define(["dojo/_base/declare",
                 });
              },
 
-             /* @private
+             /**
+              * @private
               * @returns {Photo} Photo for the $image element
               */
              _getPhotoOfImage : function ($image) {
                 assertTrue($image.attr("data-keiken-id"), "Id attribute of input parameter $image must not be undefined");
-                var index  = this._getIndexOfImage($image),
-                    photo = this.carousel.getAllPhotos()[index];
+                var id  = parseInt($image.attr("data-keiken-id")),
+                    photo = this._photos.get(id);
                 assertNotNull(photo, "There must be a photo for every img element.");
                 return photo;
                 

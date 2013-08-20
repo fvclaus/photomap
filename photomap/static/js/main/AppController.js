@@ -345,9 +345,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 var type = model.getType();
                 
                 if (type === "Photo") {
-                   main.getUI().getGallery().insertPhoto(model);
-                   main.getUI().getSlideshow().insertPhoto(model);
-                   main.getUI().getAdminGallery().insertPhoto(model);
+                   // main.getUI().getGallery().insertPhoto(model);
+                   // main.getUI().getSlideshow().insertPhoto(model);
+                   // main.getUI().getAdminGallery().insertPhoto(model);
                 } else if (type === "Album" || type === "Place") {
                    main.getMap().insertMarker(model, true);
                 } else {
@@ -361,10 +361,10 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                 main.getUI().getInformation().empty(model);
                 
                 if (type === "Photo") {
-                   main.getUI().getGallery().deletePhoto(model);
-                   main.getUI().getSlideshow().deletePhoto(model);
-                   main.getUI().getAdminGallery().deletePhoto(model);
-                   main.getUI().getFullscreen().deletePhoto(model);
+                   // main.getUI().getGallery().deletePhoto(model);
+                   // main.getUI().getSlideshow().deletePhoto(model);
+                   // main.getUI().getAdminGallery().deletePhoto(model);
+                   // main.getUI().getFullscreen().deletePhoto(model);
                    state.getCurrentLoadedPlace().getModel().deletePhoto(model);
                 } else if (type === "Place") {
                    if (currentPlace && currentPlace.getModel() === model) {
@@ -386,7 +386,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
              _placeOpen : function (placePresenter) {
                 if (!placePresenter.isOpen()) {
                    var place = placePresenter.getModel(),
-                     photos = place.getPhotos();
+                     photos = place.getPhotoCollection();
                    state.setPhotoCollection(place.getPhotoCollection());
                    main.getUI().getInformation().update(place);
                    main.getUI().getPageTitleWidget().update(place.getTitle());

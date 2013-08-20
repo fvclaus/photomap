@@ -12,6 +12,7 @@ require(["widget/GalleryWidget",
                $container = $("<section id=mp-gallery></section>"),
                testFixture = new TestFixture(),
                photos = null,
+               photoCollection = null,
                assertTooltipPresence = function (present) {
                   var $infoText = $(".mp-infotext");
                   if (present) {
@@ -44,7 +45,8 @@ require(["widget/GalleryWidget",
                     .append($container);
 
                  gallery = new GalleryWidget(null, $container.get(0));
-                 photos = testFixture.getRandomPhotos(nPhotos);
+                 photoCollection = testFixture.getRandomPhotoCollection(nPhotos);
+                 photos = photoCollection.getAll();
               },
               teardown : function () {
                  $testBody.empty();
@@ -53,7 +55,7 @@ require(["widget/GalleryWidget",
               }
            });
 
-           QUnit.asyncTest("startup/loadPhotos", 6, function () {
+           QUnit.asyncTest("startup/loadPhotos", 7, function () {
               // No startup yet.
               QUnit.raiseError(gallery.run, gallery);
               QUnit.raiseError(gallery.load, gallery, photos);
@@ -66,11 +68,13 @@ require(["widget/GalleryWidget",
                  assertTooltipPresence(true);
                  // No args loadPhoto.
                  QUnit.raiseError(gallery.load, gallery);
-                 gallery.load([]);
+                 // Wrong input
+                 QUnit.raiseError(gallery.load, gallery, photos);
+                 gallery.load(testFixture.getRandomPhotoCollection(0));
                  // Make sure the tooltip does not go away.
                  setTimeout(function() {
                     assertTooltipPresence(true);
-                    gallery.load(photos);
+                    gallery.load(photoCollection);
                     // Make sure the tooltip does not go away.
                     setTimeout(function () {
                        assertTooltipPresence(true);
@@ -82,7 +86,7 @@ require(["widget/GalleryWidget",
 
            QUnit.asyncTest("run", nPhotosInGalleryAssertions + 1,  function () {
               gallery.startup();
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
               setTimeout(function () {
                  assertTooltipPresence(false);
@@ -93,7 +97,7 @@ require(["widget/GalleryWidget",
 
            QUnit.asyncTest("navigateIfNecessary", 4 * nPhotosInGalleryAssertions + 1, function () {
               gallery.startup();
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
               setTimeout(function () {
                  // Should throw error without photo.
@@ -124,7 +128,7 @@ require(["widget/GalleryWidget",
 
            QUnit.asyncTest("reset", 1, function () {
               gallery.startup();
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
               gallery.reset();
               setTimeout(function () {
@@ -134,33 +138,31 @@ require(["widget/GalleryWidget",
            });
 
            QUnit.asyncTest("insertPhoto", 3 * nPhotosInGalleryAssertions + 1,  function () {
-              var photos = testFixture.getRandomPhotos(4),
+              var photoCollection = testFixture.getRandomPhotoCollection(4),
+                  photos = photoCollection.getAll(),
                   photo5 = testFixture.getRandomPhoto(12),
                   photo6 = testFixture.getRandomPhoto(13),
                   photoIndex = 0,
                   newPhoto = null;
               console.log("Gallery: Starting insertPhoto test.");
               gallery.startup();
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
 
               QUnit.raiseError(gallery.insertPhoto, gallery);
-              photos.push(photo5);
-              gallery.insertPhoto(photo5);
+              photoCollection.insert(photo5);
+
 
               setTimeout(function () {
                  // Make sure the image counter incremented properly.
                  assertPhotosInGallery(photos.slice(0, 5));
                  // This should navigate the gallery to 2nd page.
-                 photos.push(photo6);
-                 gallery.insertPhoto(photo6);
+                 photoCollection.insert(photo6);
                  setTimeout(function () {
                     assertPhotosInGallery([photo6, null, null, null, null]);
                     for (photoIndex = 0; photoIndex < 19; photoIndex++) {
                        newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
-                       photos.push(newPhoto);
-                       gallery.insertPhoto(newPhoto);
-
+                       photoCollection.insert(newPhoto);
                     }
                     setTimeout(function () {
                        assertPhotosInGallery(photos.slice(20, 25));
@@ -171,18 +173,18 @@ require(["widget/GalleryWidget",
            });
 
            QUnit.asyncTest("deletePhoto", nPhotosInGalleryAssertions + 2, function () {
-              var photos = testFixture.getRandomPhotos(6),
+              var photoCollection = testFixture.getRandomPhotoCollection(6),
+                  photos = photoCollection.getAll(),
                   oldPhoto = photos[5],
                   photoIndex = 0,
                   nPhotos = photos.length;
 
               gallery.startup();
-              gallery.load(photos);
+              gallery.load(photoCollection);
               gallery.run();
 
               QUnit.raiseError(gallery.deletePhoto, gallery);
-              photos.splice(5, 6);
-              gallery.deletePhoto(oldPhoto);
+              photoCollection.delete(photos[5]);
 
               setTimeout(function () {
                  // Make sure the image counter is decremented properly.
@@ -190,9 +192,7 @@ require(["widget/GalleryWidget",
                  assertPhotosInGallery(photos.slice(0, 5));
                  nPhotos = photos.length;
                  for (photoIndex = 0; photoIndex < nPhotos; photoIndex++) {
-                    oldPhoto = photos[0];
-                    photos.splice(0, 1);
-                    gallery.deletePhoto(oldPhoto);
+                    photoCollection.delete(photos[0]);
                  }
                  setTimeout(function () {
                     assertTooltipPresence(true);

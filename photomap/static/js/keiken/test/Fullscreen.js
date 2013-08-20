@@ -12,6 +12,7 @@ require(["widget/FullscreenWidget",
                $container = $("<section id=mp-fullscreen></section> "),
                testFixture = new TestFixture(),
                photos = null,
+               photoCollection = null,
                assertPhotoInWidget = function (photo) {
                   var $image = $("#mp-fullscreen-image"),
                       $title = $("#mp-fullscreen-title");
@@ -40,7 +41,8 @@ require(["widget/FullscreenWidget",
                  fullscreen = new FullscreenWidget(null, $container.get(0));
                  // The default style hides the fullscreen.
                  $("#" + $container.attr("id")).show();
-                 photos = testFixture.getRandomPhotos(12);
+                 photoCollection = testFixture.getRandomPhotoCollection(12);
+                 photos = photoCollection.getAll();
               },
               teardown : function () {
                  $testBody.empty();
@@ -49,10 +51,10 @@ require(["widget/FullscreenWidget",
               }
            });
            
-           QUnit.asyncTest("startup/loadPhotos", 15, function () {
+           QUnit.asyncTest("startup/loadPhotos", 16, function () {
               // No startup yet.
               QUnit.raiseError(fullscreen.run, fullscreen);
-              QUnit.raiseError(fullscreen.load, fullscreen, photos);
+              QUnit.raiseError(fullscreen.load, fullscreen, photoCollection);
               fullscreen.startup();
               // Multiple calls to startup
               fullscreen.startup();
@@ -63,11 +65,13 @@ require(["widget/FullscreenWidget",
                  assertPhotoInWidget(null);
                  // No args loadPhoto.
                  QUnit.raiseError(fullscreen.load, fullscreen);
-                 fullscreen.load([]);
+                 // Wrong input
+                 QUnit.raiseError(fullscreen.load, fullscreen, photos);
+                 fullscreen.load(testFixture.getRandomPhotoCollection(0));
                  // Make sure the tooltip does not go away.
                  setTimeout(function() {
                     assertPhotoInWidget(null);
-                    fullscreen.load(photos);
+                    fullscreen.load(photoCollection);
                     // Make sure the tooltip does not go away.
                     setTimeout(function () {
                        assertPhotoInWidget(null);
@@ -79,7 +83,7 @@ require(["widget/FullscreenWidget",
 
            QUnit.asyncTest("run", 4,  function () {
               fullscreen.startup();
-              fullscreen.load(photos);
+              fullscreen.load(photoCollection);
               fullscreen.run();
               // fullscreen.show();
               setTimeout(function () {
@@ -90,7 +94,7 @@ require(["widget/FullscreenWidget",
 
            QUnit.asyncTest("navigateTo", 9, function () {
               fullscreen.startup();
-              fullscreen.load(photos);
+              fullscreen.load(photoCollection);
               // fullscreen.show();
               // No parameter not legal.
               QUnit.raiseError(fullscreen.navigateTo, fullscreen);
@@ -108,7 +112,7 @@ require(["widget/FullscreenWidget",
 
            QUnit.asyncTest("reset", 4, function () {
               fullscreen.startup();
-              fullscreen.load(photos);
+              fullscreen.load(photoCollection);
               fullscreen.run();
               fullscreen.reset();
               setTimeout(function () {
@@ -122,12 +126,12 @@ require(["widget/FullscreenWidget",
               var newPhoto = testFixture.getRandomPhoto(12),
                   photoIndex = 0;
               fullscreen.startup();
-              fullscreen.load(photos);
+              fullscreen.load(photoCollection);
               fullscreen.run();
 
               QUnit.raiseError(fullscreen.insertPhoto, fullscreen);
-              photos.push(newPhoto);              
-              fullscreen.insertPhoto(newPhoto);
+              photoCollection.insert(newPhoto);              
+              // fullscreen.insertPhoto(newPhoto);
 
               setTimeout(function () {
                  // Make sure the image counter incremented properly.
@@ -136,9 +140,7 @@ require(["widget/FullscreenWidget",
                  setTimeout(function () {
                     assertPhotoInWidget(newPhoto);
                     for (photoIndex = 0; photoIndex < 20; photoIndex++) {
-                       newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
-                       photos.push(newPhoto);
-                       fullscreen.insertPhoto(newPhoto);
+                       photoCollection.insert(newPhoto);
                     }
                     setTimeout(function () {
                        assertPhotoInWidget(photos[12]);
@@ -153,21 +155,19 @@ require(["widget/FullscreenWidget",
                   photoIndex = 0,
                   nPhotos = photos.length;
               fullscreen.startup();
-              fullscreen.load(photos);
+              fullscreen.load(photoCollection);
               fullscreen.run();
 
               QUnit.raiseError(fullscreen.deletePhoto, fullscreen);
-              photos.splice(0, 1);
-              fullscreen.deletePhoto(oldPhoto);
+              photoCollection.delete(photos[0]);
+
               setTimeout(function () {
                  // Make sure the image counter is decremented properly.
                  // Make sure the fullscreen navigates to the 2nd photo.
                  assertPhotoInWidget(photos[0]);
                  nPhotos = photos.length;
                  for (photoIndex = 0; photoIndex < nPhotos; photoIndex++) {
-                    oldPhoto = photos[0];
-                    photos.splice(0, 1);
-                    fullscreen.deletePhoto(oldPhoto);
+                    photoCollection.delete(photos[0]);
                  }
                  setTimeout(function () {
                     assertPhotoInWidget(null);

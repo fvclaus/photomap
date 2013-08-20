@@ -13,11 +13,12 @@ define(["dojo/_base/declare",
         "dijit/_TemplatedMixin",
         "view/View",
         "widget/PhotoCarouselWidget",
+        "model/Collection",
         "model/Photo", 
         "util/Communicator", 
         "util/Tools",
         "dojo/domReady!"], 
-       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Photo, communicator, tools, template) {
+       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Collection, Photo, communicator, tools, template) {
           return declare([View, _WidgetBase, _TemplatedMixin], {
              /*
               * @public
@@ -71,13 +72,16 @@ define(["dojo/_base/declare",
               * @description Initiates the PhotoCarouselView. This will not display any photos, it just makes this widget ready to receive insert/deletePhoto events.
               */
              load : function (photos) {
-                assertInstance(photos, Array, "Photos must be of type Array.");
+                assertInstance(photos, Collection, "Photos must be of type Collection.");
                 assert(this._started, true, "Must call startup() before.");
                 // Resets to state after startup().
                 this.reset();
                 this._loaded = true;
-
-                this.carousel = new PhotoCarouselView(this.$photos, photos, this._srcPropertyName, this._carouselOptions);
+                this._photos = photos;
+                
+                photos.onInsert(this.insertPhoto, this);
+                photos.onDelete(this.deletePhoto, this);
+                this.carousel = new PhotoCarouselView(this.$photos, photos.getAll(), this._srcPropertyName, this._carouselOptions);
              },
              /*
               * @public
@@ -92,7 +96,7 @@ define(["dojo/_base/declare",
               * @idempotent
               */
              run: function (photo) {
-                assert(this._started, true, "Must call startup() before.");
+                assertTrue(this._started, "Must call startup() before.");
                 assertTrue(this._loaded, "Must call load(photos) before.");
 
                 if (this._run) {

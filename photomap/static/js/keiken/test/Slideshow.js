@@ -12,6 +12,7 @@ require(["widget/SlideshowWidget",
                $container = $("<section id=mp-slideshow></section>"),
                testFixture = new TestFixture(),
                photos = null,
+               photoCollection = null,
                assertTooltipPresence = function (present) {
                   if (present) {
                      QUnit.ok$visible($(".mp-infotext"));
@@ -37,7 +38,8 @@ require(["widget/SlideshowWidget",
                     .append($container);
 
                  slideshow = new SlideshowWidget(null, $container.get(0));
-                 photos = testFixture.getRandomPhotos(12);
+                 photoCollection = testFixture.getRandomPhotoCollection(12);
+                 photos = photoCollection.getAll();
               },
               teardown : function () {
                  $testBody.empty();
@@ -46,10 +48,10 @@ require(["widget/SlideshowWidget",
               }
            });
            
-           QUnit.asyncTest("startup/loadPhotos", 6, function () {
+           QUnit.asyncTest("startup/loadPhotos", 7, function () {
               // No startup yet.
               QUnit.raiseError(slideshow.run, slideshow);
-              QUnit.raiseError(slideshow.load, slideshow, photos);
+              QUnit.raiseError(slideshow.load, slideshow, photoCollection);
               slideshow.startup();
               // Multiple calls to startup
               slideshow.startup();
@@ -59,11 +61,13 @@ require(["widget/SlideshowWidget",
                  assertTooltipPresence(true);
                  // No args loadPhoto.
                  QUnit.raiseError(slideshow.load, slideshow);
-                 slideshow.load([]);
+                 // Wrong parameter
+                 QUnit.raiseError(slideshow.load, slideshow, photos);
+                 slideshow.load(testFixture.getRandomPhotoCollection(0));
                  // Make sure the tooltip does not go away.
                  setTimeout(function() {
                     assertTooltipPresence(true);
-                    slideshow.load(photos);
+                    slideshow.load(photoCollection);
                     // Make sure the tooltip does not go away.
                     setTimeout(function () {
                        assertTooltipPresence(true);
@@ -75,7 +79,7 @@ require(["widget/SlideshowWidget",
 
            QUnit.asyncTest("run", 4,  function () {
               slideshow.startup();
-              slideshow.load(photos);
+              slideshow.load(photoCollection);
               slideshow.run();
               setTimeout(function () {
                  assertTooltipPresence(false);
@@ -86,7 +90,7 @@ require(["widget/SlideshowWidget",
 
            QUnit.asyncTest("navigateWithDirection", 11, function () {
               slideshow.startup();
-              slideshow.load(photos);
+              slideshow.load(photoCollection);
               // navigateWithDirection is supposed to start the slideshow if it is not running yet.
               slideshow.navigateWithDirection("right");
               QUnit.raiseError(slideshow.navigateWithDirection, slideshow, 3);
@@ -111,7 +115,7 @@ require(["widget/SlideshowWidget",
 
            QUnit.asyncTest("navigateTo", 7, function () {
               slideshow.startup();
-              slideshow.load(photos);
+              slideshow.load(photoCollection);
               // No parameter not legal.
               QUnit.raiseError(slideshow.navigateTo, slideshow);
               // This should be the same as slideshow.run()
@@ -128,7 +132,7 @@ require(["widget/SlideshowWidget",
 
            QUnit.asyncTest("reset", 1, function () {
               slideshow.startup();
-              slideshow.load(photos);
+              slideshow.load(photoCollection);
               slideshow.run();
               slideshow.reset();
               setTimeout(function () {
@@ -141,13 +145,13 @@ require(["widget/SlideshowWidget",
               var newPhoto = testFixture.getRandomPhoto(12),
                   photoIndex = 0;
               slideshow.startup();
-              slideshow.load(photos);
+              slideshow.load(photoCollection);
               slideshow.run();
 
               QUnit.raiseError(slideshow.insertPhoto, slideshow);
 
-              photos.push(newPhoto);
-              slideshow.insertPhoto(newPhoto);
+              photoCollection.insert(newPhoto);
+              // slideshow.insertPhoto(newPhoto);
 
               setTimeout(function () {
                  // Make sure the image counter incremented properly.
@@ -156,9 +160,9 @@ require(["widget/SlideshowWidget",
                  setTimeout(function () {
                     assertPhotoInWidget(newPhoto);
                     for (photoIndex = 0; photoIndex < 20; photoIndex++) {
-                       newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
-                       photos.push(newPhoto);
-                       slideshow.insertPhoto(newPhoto);
+                       // newPhoto = testFixture.getRandomPhoto(13 + photoIndex);
+                       photoCollection.insert(newPhoto);
+                       // slideshow.insertPhoto(newPhoto);
                     }
                     setTimeout(function () {
                        assertPhotoInWidget(photos[12]);
@@ -174,13 +178,13 @@ require(["widget/SlideshowWidget",
                   nPhotos = photos.length;
 
               slideshow.startup();
-              slideshow.load(photos);
+              slideshow.load(photoCollection);
               slideshow.run();
 
               QUnit.raiseError(slideshow.deletePhoto, slideshow);
 
-              photos.splice(0, 1);              
-              slideshow.deletePhoto(oldPhoto);
+              photoCollection.delete(photos[0]);
+              // slideshow.deletePhoto(oldPhoto);
 
               setTimeout(function () {
                  // Make sure the image counter is decremented properly.
@@ -188,9 +192,9 @@ require(["widget/SlideshowWidget",
                  assertPhotoInWidget(photos[0]);
                  nPhotos = photos.length;
                  for (photoIndex = 0; photoIndex < nPhotos ; photoIndex++) {
-                    oldPhoto = photos[0];
-                    photos.splice(0, 1);
-                    slideshow.deletePhoto(oldPhoto);
+                    // oldPhoto = photos[0];
+                    photoCollection.delete(photos[0]);
+                    // slideshow.deletePhoto(oldPhoto);
                  }
                  setTimeout(function () {
                     assertTooltipPresence(true);

@@ -140,7 +140,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 });
              },
              _albumShare : function (album) {
-                var dialog = main.getUI().getDialog()
+                var dialog = main.getUI().getDialog(),
                   collection = state.getCollection("Album");
                   
                   
@@ -194,7 +194,7 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                          error : function () {
                             dialog.showNetworkError();
                          }
-                      })
+                      });
                    },
                    width: $(".mp-content").width() * 0.8,
                    url : "/form/update/album/password"

@@ -57,7 +57,6 @@ define(["dojo/_base/declare",
              },
              hide : function () {
                 this.$container.hide();
-                this.$ready.hide();
                 this.visible = false;
              },
              /**
