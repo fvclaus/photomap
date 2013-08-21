@@ -10,13 +10,13 @@
 
 define([
    "dojo/_base/declare",
-   "view/View",
-   "presenter/MapPresenter",
-   "util/Communicator",
-   "util/ClientState",
-   "view/MarkerView",
-   "ui/UIState",
-   "util/InfoText",
+   "./View",
+   "../presenter/MapPresenter",
+   "../util/Communicator",
+   "../util/ClientState",
+   "../view/MarkerView",
+   "../ui/UIState",
+   "../util/InfoText",
    "dojo/domReady!"
    ],
     function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state, InfoText) {

@@ -10,7 +10,7 @@
 
 
 define(["dojo/_base/declare", 
-        "model/Model"],
+        "./Model"],
        function (declare, Model) {
           
           return declare(Model ,{

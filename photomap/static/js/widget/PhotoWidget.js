@@ -9,12 +9,12 @@
  * @description Base class for all widgets displaying photos. It defines and enforces certain API conventions that all photo widgets must follow.
  */
 define(["dojo/_base/declare",
-        "widget/Widget",
-        "widget/PhotoCarouselWidget",
-        "model/Collection",
-        "model/Photo", 
-        "util/Communicator", 
-        "util/Tools",
+        "./Widget",
+        "./PhotoCarouselWidget",
+        "../model/Collection",
+        "../model/Photo", 
+        "../util/Communicator", 
+        "../util/Tools",
         "dojo/domReady!"], 
        function (declare, Widget, PhotoCarouselView, Collection, Photo, communicator, tools, template) {
           return declare([Widget], {

@@ -9,7 +9,7 @@
  */
 
 define(["dojo/_base/declare",
-        "util/Tools"], 
+        "../util/Tools"], 
        function (declare, tools) {
           return declare(null, {
              FADE : 0,

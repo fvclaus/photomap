@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, gettext, parseInt */
+/*global $, define, gettext, parseInt */
 
 "use strict";
 
@@ -10,7 +10,11 @@
  * The ids of place and photo are consecutively set in the backend, the page id is set frontend and starts over in each place
  */
 
-define(["dojo/_base/declare", "dojo/router", "util/Communicator", "ui/UIState", "dojo/ready"], 
+define(["dojo/_base/declare", 
+        "dojo/router", 
+        "../util/Communicator", 
+        "../ui/UIState", 
+        "dojo/ready"], 
       function (declare, router, communicator, state, ready) {
          return declare(null, {
             

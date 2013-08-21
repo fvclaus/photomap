@@ -10,8 +10,11 @@
  */
 
 
-define(["dojo/_base/declare", "model/MarkerModel", "model/Place", "model/Collection", "ui/UIState"],
-       function (declare, MarkerModel, Place, Collection, state, detail) {
+define(["dojo/_base/declare", 
+        "./MarkerModel", 
+        "./Place", 
+        "./Collection"],
+       function (declare, MarkerModel, Place, Collection) {
           console.log("Album: start");
           return declare(MarkerModel, {
              constructor : function (data) {

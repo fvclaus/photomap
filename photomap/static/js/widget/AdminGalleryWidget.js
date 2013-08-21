@@ -5,10 +5,10 @@
 // "use strict";
 
 define(["dojo/_base/declare",
-        "widget/PhotoWidget",
-        "model/Photo",
-        "widget/PhotoCarouselWidget",
-        "util/Communicator",
+        "./PhotoWidget",
+        "../model/Photo",
+        "./PhotoCarouselWidget",
+        "../util/Communicator",
         "dojo/text!/template/AdminGallery",
         "dojo/domReady!"], 
        function (declare, PhotoWidget, Photo, PhotoCarouselView, communicator, template) {

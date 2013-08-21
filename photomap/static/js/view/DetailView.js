@@ -11,13 +11,13 @@
 
 define([
    "dojo/_base/declare",
-   "view/View",
-   "model/Photo",
-   "model/Place",
-   "model/Album",
-   "presenter/DetailPresenter",
-   "util/Communicator",
-   "util/Tools",
+   "./View",
+   "../model/Photo",
+   "../model/Place",
+   "../model/Album",
+   "../presenter/DetailPresenter",
+   "../util/Communicator",
+   "../util/Tools",
    ],
     function (declare, View, Photo, Place, Album, DetailPresenter, communicator, tools) {
        return declare(View, {

@@ -11,7 +11,7 @@
  */
 
 define(["dojo/_base/declare",
-        "util/Communicator"],
+        "../util/Communicator"],
        function (declare, communicator) {
           return declare(null, {
              constructor : function () {

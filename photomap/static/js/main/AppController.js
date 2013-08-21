@@ -8,7 +8,14 @@
  * @class Controls communication in between the classes of KEIKEN
  */
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", "model/Collection", "util/ClientState", "util/InfoText", "util/Tools"], 
+define(["dojo/_base/declare", 
+        "../util/Communicator", 
+        "../ui/UIState", 
+        "../model/Album", 
+        "../model/Collection", 
+        "../util/ClientState", 
+        "../util/InfoText", 
+        "../util/Tools"], 
        function (declare, communicator, state, Album, Collection, clientstate, InfoText, tools) {
           return declare(null, {
              

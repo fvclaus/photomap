@@ -9,7 +9,13 @@
  */
 
 
-define(["dojo/_base/declare", "model/Photo", "model/Place", "model/Album", "view/DetailView", "util/Tools", "ui/UIState"],
+define(["dojo/_base/declare",
+        "../model/Photo", 
+        "../model/Place",
+        "../model/Album",
+        "../view/DetailView",
+        "./Tools",
+        "../ui/UIState"],
        function (declare, Photo, Place, Album, detailView, tools, state) {
           return declare(null, {
              constructor :  function () {

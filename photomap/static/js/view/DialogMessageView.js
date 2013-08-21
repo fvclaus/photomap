@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, gettext */
+/*global $, main, gettext, define */
 
 "use strict";
 
@@ -8,7 +8,10 @@
  * @class Shows the feedback (success or failure) in DialogView
  */
 
-define(["dojo/_base/declare", "view/View", "ui/UIState", "dojo/domReady!"], 
+define(["dojo/_base/declare", 
+        "./View",
+        "../ui/UIState",
+        "dojo/domReady!"], 
    function (declare, View, state) {
       return declare(View, {
          constructor : function ($el) {

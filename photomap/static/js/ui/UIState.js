@@ -10,7 +10,7 @@
 
 
 define(["dojo/_base/declare",
-        "util/ClientState",
+        "../util/ClientState",
         "dojo/domReady"], 
       function (declare, clientstate) {
          var UIState = declare(null, {

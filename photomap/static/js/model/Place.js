@@ -10,8 +10,12 @@
  */
 
 
-define(["dojo/_base/declare", "model/MarkerModel", "model/Photo", "model/Collection", "util/Communicator", "ui/UIState"],
-       function (declare, MarkerModel, Photo, Collection, communicator, state) {
+define(["dojo/_base/declare", 
+        "./MarkerModel", 
+        "./Photo", 
+        "./Collection", 
+        "../util/Communicator"],
+       function (declare, MarkerModel, Photo, Collection) {
           console.log("Place: start");
           return declare(MarkerModel, {
              constructor : function (data) {

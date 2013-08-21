@@ -8,7 +8,10 @@
  * @class Controls communication concerning models (especially IDU-requests)
  */
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientState"], 
+define(["dojo/_base/declare", 
+        "../util/Communicator", 
+        "../ui/UIState", 
+        "../util/ClientState"], 
        function (declare, communicator, state, clientstate) {
           return declare(null, {
              

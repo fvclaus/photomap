@@ -8,7 +8,11 @@
  * @class inits the app and fetches the initial data from the server.
  */
 
-define(["dojo/_base/declare", "main/Main", "util/Communicator", "ui/UIState", "model/Album"],
+define(["dojo/_base/declare", 
+        "./Main", 
+        "../util/Communicator", 
+        "../ui/UIState", 
+        "../model/Album"],
        function (declare, Main, communicator, state, Album) {
           return declare(null, {
 

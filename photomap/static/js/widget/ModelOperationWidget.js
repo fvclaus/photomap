@@ -6,13 +6,13 @@
 
 define([
    "dojo/_base/declare",
-   "widget/Widget",
-   "util/Communicator",
-   "model/Model",
-   "model/Photo",
-   "model/Place",
-   "model/Album",
-   "util/Tools",
+   "./Widget",
+   "../util/Communicator",
+   "../model/Model",
+   "../model/Photo",
+   "../model/Place",
+   "../model/Album",
+   "../util/Tools",
    "dojo/text!/template/ModelOperation",
    "dojo/domReady!"],
        function (declare, Widget, communicator, Model, Photo, Place, Album, tools, template) {

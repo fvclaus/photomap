@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, mpEvents, gettext, CONFIRM_DIALOG, INPUT_DIALOG */
+/*global $, main, define, mpEvents, gettext, CONFIRM_DIALOG, INPUT_DIALOG */
 
 "use strict";
 
@@ -16,7 +16,13 @@ $.extend($.ui.dialog.prototype.options, {
    closeOnEscape : false
 });
 
-define(["dojo/_base/declare", "view/View", "view/DialogMessageView", "util/ClientState", "view/PhotoEditorView", "util/Communicator", "dojo/domReady!"], 
+define(["dojo/_base/declare",
+        "./View", 
+        "./DialogMessageView",
+        "../util/ClientState",
+        "../view/PhotoEditorView",
+        "../util/Communicator",
+        "dojo/domReady!"], 
    function (declare, View, DialogMessageView, clientstate, PhotoEditorView, communicator) {
       return declare(View, {
          constructor : function () {

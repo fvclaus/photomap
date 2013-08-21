@@ -4,7 +4,12 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "view/MarkerView", "util/ClientState", "ui/UIState"],
+define(["dojo/_base/declare", 
+        "./Presenter", 
+        "../util/Communicator",
+        "../view/MarkerView", 
+        "../util/ClientState",
+        "../ui/UIState"],
        function (declare, Presenter, communicator, MarkerView, clientstate, state) {
           return declare(Presenter,  {
              centerChanged : function () {

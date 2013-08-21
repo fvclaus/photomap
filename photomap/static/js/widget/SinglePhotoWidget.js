@@ -9,9 +9,9 @@
  * @description Displays current slideshow-image as fullscreen, supports zooming into the image
  */
 define(["dojo/_base/declare",
-        "widget/PhotoWidget",
-        "model/Photo",
-        "util/Tools"], 
+        "./PhotoWidget",
+        "../model/Photo",
+        "../util/Tools"], 
        function (declare, PhotoWidget, Photo, tools) {
           return declare([PhotoWidget], {
              /**

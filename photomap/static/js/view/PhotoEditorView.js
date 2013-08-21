@@ -7,7 +7,8 @@ var UIPhotoEditor, instance, $orig, $preview, longest_side, canvas, context, $ca
 longest_side = 500;
 
 
-define(["dojo/_base/declare", "view/View"],
+define(["dojo/_base/declare", 
+        "./View"],
        function (declare, View) {
           return declare(View, {
              constructor : function () {

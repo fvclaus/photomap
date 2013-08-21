@@ -16,13 +16,12 @@ define([
          "util/ClientServer",
          "util/ClientState",
          "util/Communicator",
-         "util/DataProcessor",
          "util/Tools",
          "main/AppController",
          "main/AppModelController",
          "main/AppRouter"
        ],
-       function (declare, ui, MapView, ClientServer, clientState, communicator, dataProcessor, tools, AppController, AppModelController, AppRouter) {
+       function (declare, ui, MapView, ClientServer, clientState, communicator, tools, AppController, AppModelController, AppRouter) {
 
           return declare(null , {
              
@@ -32,7 +31,6 @@ define([
                 // instance of Map
                 this.clientServer = new ClientServer();
                 this.communicator = communicator;
-                this.dataProcessor = dataProcessor;
                 // instance of Menu
                 this.ui = ui;
                 this.tools = tools;
@@ -70,9 +68,6 @@ define([
              getCommunicator : function () {
                 return this.communicator;
                 //throw new Error("DoNotUseThisError");
-             },
-             getDataProcessor : function () {
-                throw new Error("DoNotUseThisError");
              },
              getTools : function () {
                 throw new Error("DoNotUseThisError");

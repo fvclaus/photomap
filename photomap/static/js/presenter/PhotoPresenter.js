@@ -2,7 +2,11 @@
 "use strict";
 
 
-define(["dojo/_base/declare", "presenter/Presenter", "view/PhotoEditorView", "util/Communicator", "ui/UIState"], 
+define(["dojo/_base/declare", 
+        "./Presenter", 
+        "../view/PhotoEditorView", 
+        "../util/Communicator",
+        "../ui/UIState"], 
        function (declare, Presenter, PhotoEditorView, detailView, communicator, state) {
           return declare(Presenter, {
              constructor : function () {

@@ -9,7 +9,9 @@
  * @requires View, MarkerPresenter
  */
 
-define(["dojo/_base/declare", "view/View", "presenter/MarkerPresenter"],
+define(["dojo/_base/declare", 
+        "./View", 
+        "../presenter/MarkerPresenter"],
        function (declare, View, MarkerPresenter) {
           
           return declare(View,  {

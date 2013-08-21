@@ -12,11 +12,11 @@
  */
        
 define(["dojo/_base/declare",
-        "widget/PhotoWidget",
-        "model/Photo",
-        "util/Communicator",
-        "util/Tools",
-        "util/InfoText",
+        "./PhotoWidget",
+        "../model/Photo",
+        "../util/Communicator",
+        "../util/Tools",
+        "../util/InfoText",
         "dojo/text!/template/Gallery",
         "dojo/domReady!"
        ],

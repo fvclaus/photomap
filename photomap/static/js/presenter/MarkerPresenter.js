@@ -9,7 +9,10 @@
  * @requires Presenter, Communicator, UIState
  */
 
-define(["dojo/_base/declare", "presenter/Presenter", "util/Communicator", "ui/UIState"],
+define(["dojo/_base/declare", 
+        "./Presenter", 
+        "../util/Communicator", 
+        "../ui/UIState"],
        function (declare, Presenter, communicator, state) {
           return declare(Presenter, {
              constructor : function () {

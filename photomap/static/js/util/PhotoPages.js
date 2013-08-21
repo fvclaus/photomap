@@ -12,7 +12,7 @@
  */
 
 define(["dojo/_base/declare",
-        "model/Photo"],
+        "../model/Photo"],
        function (declare, Photo) {
           return declare(null, {
              constructor : function (photos, photosPerPage, srcPropertyName) {

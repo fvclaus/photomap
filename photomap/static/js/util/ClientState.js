@@ -9,8 +9,8 @@
  */
 
 define(["dojo/_base/declare",
-        "util/Communicator",
-        "util/Tools"], 
+        "./Communicator",
+        "./Tools"], 
        function (declare, communicator, tools) {
           var ClientState = declare(null,  {
              constructor : function () {
