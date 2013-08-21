@@ -13,9 +13,10 @@ define([
    "../model/Place",
    "../model/Album",
    "../util/Tools",
-   "dojo/text!/template/ModelOperation",
-   "dojo/domReady!"],
-       function (declare, Widget, communicator, Model, Photo, Place, Album, tools, template) {
+   "dojo/text!./templates/ModelOperation.html",
+   "dojo/i18n",
+   "dojo/i18n!./nls/ModelOperation"],
+       function (declare, Widget, communicator, Model, Photo, Place, Album, tools, template, i18n) {
        return declare(Widget, {
           templateString : template,
           viewName : "ModelOperation",
@@ -26,7 +27,7 @@ define([
              }
 
              this.$container.hide();
-             if (typeof options.shareOperation === "boolean" && !options.shareOperation) {
+             if (options && typeof options.shareOperation === "boolean" && !options.shareOperation) {
                 this.$share.hide();
              }
                 
@@ -37,6 +38,10 @@ define([
              this.inherited(arguments);
 
              assertTrue(this.$delete.size() > 0 && this.$update.size() > 0, "Operation controls need to be present.");
+          },
+          postMixInProperties : function () {
+             this.inherited(arguments);
+             this.messages = i18n.getLocalization("widget", "ModelOperation", this.lang);
           },
           /**
            * @public

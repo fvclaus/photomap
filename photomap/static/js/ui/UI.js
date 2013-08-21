@@ -23,20 +23,26 @@ define(["dojo/_base/declare",
         "../view/DialogView",
         "../widget/PageTitleWidget",
         "../ui/UIState",
+        "../util/Communicator",
         "dojo/domReady!"
        ],
-       function(declare, Photo, Place, Album, ModelOperationWidget, DetailView,  SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state) {
+       function(declare, Photo, Place, Album, ModelOperationWidget, DetailView,  SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state, communicator) {
            var UI = declare(null, {
               constructor : function () {
+                 var instance = this;
                  this.controls = new ModelOperationWidget(null, $("#mp-controls").get(0));
                  this.controls.startup({ shareOperation : state.isDashboardView()});
                  this.input = new DialogView();
                  this.state = state;
                  this.information = new DetailView();
+                 
 
                  if (this.state.isAlbumView()) {
                     this.gallery = new GalleryWidget(null, $("#mp-gallery").get(0));
-                    this.gallery.startup();
+                    // Guest or admin is only known upon ready:App.
+                    communicator.subscribeOnce("ready:App", function () {
+                       instance.gallery.startup({ adminMode : state.isAdmin() });
+                    });
                     this.slideshow = new SlideshowWidget(null, $(".mp-slideshow").get(0));
                     this.slideshow.startup();
                     this.adminGallery = new AdminGalleryWidget(null, $("#mp-full-left-column").get(0));

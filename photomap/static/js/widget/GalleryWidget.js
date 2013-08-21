@@ -17,16 +17,24 @@ define(["dojo/_base/declare",
         "../util/Communicator",
         "../util/Tools",
         "../util/InfoText",
-        "dojo/text!/template/Gallery",
-        "dojo/domReady!"
-       ],
-       function (declare, PhotoWidget, Photo, communicator, tools, InfoText, template) {
+        "dojo/text!./templates/Gallery.html",
+        "dojo/i18n",
+        "dojo/i18n!./nls/Gallery"],
+       function (declare, PhotoWidget, Photo, communicator, tools, InfoText, template, i18n) {
           return declare([PhotoWidget], {
 
              templateString : template,
              viewName : "Gallery",
-
-             startup : function () {
+             postCreate : function () {
+                var index = 0;
+                // Imitate template looping.
+                for (index = 0; index < 4; index++) {
+                   this.$tile
+                      .clone()
+                      .appendTo(this.$tile.parent());
+                }
+             },
+             startup : function (options) {
                 if (this._started) {
                    return;
                 }
@@ -35,8 +43,17 @@ define(["dojo/_base/declare",
                    .add(this.$insert)
                    .add(this.$open);
 
+                if (options && typeof options.adminMode === "boolean" && options.adminMode) {
+                   this._adminMode = true;
+                } else {
+                   this._adminMode = false;
+                   this.$controls.hide();
+                   // Disable the use of the controls.
+                   this.$controls = $();
+                }
+
                 this._carouselOptions = {
-                   lazy : !this._isAdmin(),
+                   lazy : !this._adminMode,
                    "effect" : "flip",
                    "duration": 500,
                    loader : this.$loader,
@@ -69,6 +86,10 @@ define(["dojo/_base/declare",
                 this._bindNavigationListener();
                 
                 this._bindStartSlideshowListener();
+             },
+             postMixInProperties : function () {
+                this.inherited(arguments);
+                this.messages = i18n.getLocalization("widget", "Gallery", this.lang);
              },
              /**
               * @description Loads all the photos in the gallery and displays them as thumbnails.
@@ -162,7 +183,7 @@ define(["dojo/_base/declare",
                       this._infotext.close();
                    } else {
                       // No photos yet.
-                      if (this._isAdmin()) {
+                      if (this._adminMode) {
                          this._infotext
                             .setOption("hideOnMouseover", true)
                             .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
@@ -177,7 +198,7 @@ define(["dojo/_base/declare",
                 }
              },
              _showEmptyTiles : function () {
-                if (this._isAdmin()) {
+                if (this._adminMode) {
                    //TODO this is too inefficient.
                    $.each(this.$thumbs, function (index, tile) {
                       
@@ -262,22 +283,16 @@ define(["dojo/_base/declare",
                      }
                   });
              },
-             /*
-              * @private
-              */
-             _isAdmin : function () {
-                return this.$controls.length > 0;
-             },
              _bindListener : function () {
-                // Guests won't have any controls to edit the gallery
-                var authorized = this._isAdmin(),
-                    photo = null,
-                    instance = this;
-
                 // the following events are not relevant for guests
-                if (!authorized) {
+                if (!this._adminMode) {
                    return;
                 }
+
+                // Guests won't have any controls to edit the gallery
+                var photo = null,
+                    instance = this;
+
                 //bind events on anchors
                 //TODO this does not work for the AdminGallery anymore.
                 this.$container

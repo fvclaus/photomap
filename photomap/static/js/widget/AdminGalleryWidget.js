@@ -9,9 +9,10 @@ define(["dojo/_base/declare",
         "../model/Photo",
         "./PhotoCarouselWidget",
         "../util/Communicator",
-        "dojo/text!/template/AdminGallery",
-        "dojo/domReady!"], 
-       function (declare, PhotoWidget, Photo, PhotoCarouselView, communicator, template) {
+        "dojo/text!./templates/AdminGallery.html",
+        "dojo/i18n",
+        "dojo/i18n!./nls/common"],
+       function (declare, PhotoWidget, Photo, PhotoCarouselView, communicator, template, i18n) {
           return  declare([PhotoWidget], {
 
              templateString : template,
@@ -29,6 +30,10 @@ define(["dojo/_base/declare",
 
                 this._isPhotoLoaded = false;
 
+             },
+             postMixInProperties : function () {
+                this.inherited(arguments);
+                this.messages = i18n.getLocalization("widget", "common", this.lang);
              },
              /**
               * @public

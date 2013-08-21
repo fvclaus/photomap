@@ -1,4 +1,3 @@
-{% load i18n %}
 <section class="mp-fullscreen" id="mp-fullscreen">
   <img class="mp-fullscreen-loader mp-dark-loader" src="/static/images/dark-loader.gif" data-dojo-attach-point="loaderNode"/>
   <img class="mp-image-zoom" src="/static/images/zoom.png" data-dojo-attach-point="zoomNode"/>
@@ -13,7 +12,7 @@
       <img class="mp-fullscreen-nav-next mp-cursor-pointer mp-control" id="mp-fullscreen-nav-next" src="/static/images/image-arrow-right.png" data-dojo-attach-point="navRightNode"/>
     </div>
     <div class="mp-fullscreen-close mp-cursor-pointer" id="mp-fullscreen-close" data-dojo-attach-point="closeNode">
-      {% trans "Schließen" %}
+      ${messages.close}
       <!--
       <img class="mp-cursor-pointer mp-control" id="mp-fullscreen-close" src="/static/images/close.png" />
       -->

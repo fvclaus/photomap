@@ -16,17 +16,16 @@ define(["dojo/_base/declare",
         "util/Communicator",
         "util/Tools",
         "util/InfoText",
-        "dojo/text!/template/Slideshow",
-        "module",
-        "dojo/domReady!"
-       ],
-       function (declare, SinglePhotoWidget, Photo, communicator, tools, InfoText, template) {
+        "dojo/text!./templates/Slideshow.html",
+        "dojo/i18n",
+        "dojo/i18n!./nls/Slideshow"],
+       function (declare, SinglePhotoWidget, Photo, communicator, tools, InfoText, template, i18n) {
           return declare([SinglePhotoWidget], {
              templateString : template,
 
              viewName : "Slideshow",
 
-             startup : function () {
+             startup : function (options) {
                 if (this._started) {
                    return;
                 }
@@ -53,6 +52,10 @@ define(["dojo/_base/declare",
                    instance._center();
                 });
                 this.updateMessage();
+             },
+             postMixInProperties : function () {
+                this.inherited(arguments);
+                this.messages = i18n.getLocalization("widget", "Slideshow", this.lang);
              },
              /**
               * @presenter

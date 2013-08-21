@@ -13,9 +13,11 @@ define(["dojo/_base/declare",
         "../model/Photo", 
         "../util/Communicator", 
         "../util/Tools",
-        "dojo/text!/template/Fullscreen",
+        "dojo/text!./templates/Fullscreen.html",
+        "dojo/i18n",
+        "dojo/i18n!./nls/common",
         "dojo/domReady!"], 
-       function (declare, PhotoWidget, Photo, communicator, tools, template) {
+       function (declare, PhotoWidget, Photo, communicator, tools, template, i18n) {
           return declare([PhotoWidget], {
              templateString : template,
 
@@ -46,6 +48,10 @@ define(["dojo/_base/declare",
                 
                 this.visible = false;
                 this.disabled = true;
+             },
+             postMixInProperties : function () {
+                this.inherited(arguments);
+                this.messages = i18n.getLocalization("widget", "common", this.lang);
              },
              show : function () {
                 
