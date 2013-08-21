@@ -5,21 +5,19 @@
 // "use strict";
 
 /**
- * @author Marc Roemer
- * @description Displays current slideshow-image as fullscreen, supports zooming into the image
+ * @author Frederik Claus
+ * @description Base class for all widgets displaying photos. It defines and enforces certain API conventions that all photo widgets must follow.
  */
 define(["dojo/_base/declare",
-        "dijit/_WidgetBase",
-        "dijit/_TemplatedMixin",
-        "view/View",
+        "widget/Widget",
         "widget/PhotoCarouselWidget",
         "model/Collection",
         "model/Photo", 
         "util/Communicator", 
         "util/Tools",
         "dojo/domReady!"], 
-       function (declare, _WidgetBase, _TemplatedMixin, View, PhotoCarouselView, Collection, Photo, communicator, tools, template) {
-          return declare([View, _WidgetBase, _TemplatedMixin], {
+       function (declare, Widget, PhotoCarouselView, Collection, Photo, communicator, tools, template) {
+          return declare([Widget], {
              /*
               * @public
               * @description PhotoWidgets must expose a certain number of function. The constructor will check if they have been defined in the child class.
@@ -30,23 +28,6 @@ define(["dojo/_base/declare",
                 assertFunction(this.reset, "Every PhotoWidget must define a reset function");
                 assertFunction(this.insertPhoto, "Every PhotoWidget must define a insertPhoto function.");
                 assertFunction(this.deletePhoto, "Every PhotoWidget must define a deletePhoto function.");
-                assertFunction(this._bindListener, "Every PhotoWidget must define a _bindListener function");
-                assertString(this.viewName, "Every PhotoWidget must define a viewName");
-                assertString(this.templateString, "Every PhotoWidget must define a templateString.");
-             },
-             /*
-              * @public
-              * @description Part of the dijit widget lifecycle. Gets called before the dom is ready. Converts the standard dom element attach points to jquery element attach points. Declare your selectors with data-dojo-attach-point=exampleNode to access them as this.$example after buildRendering().
-              * The dijit domNode member will be converted to $container. $container will be the root element of your widget.
-              */
-             buildRendering : function () {
-                this.inherited(arguments);
-                var instance = this;
-                this._attachPoints.forEach(function (attachPoint) {
-                   var jQSelectorName = "$" + attachPoint.replace("Node", "");
-                   instance[jQSelectorName] = $(instance[attachPoint]);
-                });
-                this.$container = $(this.domNode);
              },
              /*
               * @public
@@ -60,12 +41,12 @@ define(["dojo/_base/declare",
                 assertObject(this.$photos, "Every PhotoWidget must define the image elements for the PhotoCarousel");
                 assertObject(this._carouselOptions, "Every PhotoWidget must define options for the PhotoCarousel");
                 assertString(this._srcPropertyName,  "Every PhotoWidget must define its srcPropertyName");
+                // Widget will call _bindListener.
                 this.inherited(arguments);
                 // Prevent the (this.carousel === null) clause from failing because this.carousel is undefined.
                 this.carousel = null;
                 // Use this widget with the keyboard.
                 this._bindActivationListener(this.$container, this.viewName);
-                this._bindListener();
              },
              /*
               * @public
@@ -126,7 +107,6 @@ define(["dojo/_base/declare",
                 assertTrue(this._loaded, "Must call load(photos) before.");
                 // Slideshow might or might not be started at that point
                 this.carousel.deletePhoto(photo);
-             },
-
+             }
           });
        });

@@ -14,7 +14,7 @@ define(["dojo/_base/declare",
         "model/Photo", 
         "model/Place", 
         "model/Album", 
-        "view/ModelFunctionView",
+        "widget/ModelOperationWidget",
         "view/DetailView",
         "view/StatusMessageView",
         "widget/SlideshowWidget",
@@ -26,10 +26,11 @@ define(["dojo/_base/declare",
         "ui/UIState",
         "dojo/domReady!"
        ],
-       function(declare, Photo, Place, Album, ModelFunctionView, DetailView, StatusMessageView, SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state) {
+       function(declare, Photo, Place, Album, ModelOperationWidget, DetailView, StatusMessageView, SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state) {
            var UI = declare(null, {
               constructor : function () {
-                 this.controls = new ModelFunctionView();
+                 this.controls = new ModelOperationWidget(null, $("#mp-controls").get(0));
+                 this.controls.startup({ shareOperation : state.isDashboardView()});
                  this.input = new DialogView();
                  this.state = state;
                  this.information = new DetailView();

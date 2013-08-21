@@ -1,0 +1,9 @@
+{% load i18n %}
+
+<span class="mp-controls-wrapper ui-corner-all mp-nodisplay" id="mp-controls">
+<!-- ff does not change the width of the conrols wrapper, unless it is a span tag -->
+<!-- changing the display to inline-block alone does not do the trick -->
+  <img class="mp-option-delete mp-control mp-cursor-pointer" src="/static/images/delete.png" title='{% trans "control-title delete" %}' data-dojo-attach-point="deleteNode" />
+  <img class="mp-option-modify mp-control mp-cursor-pointer" src="/static/images/modify.png" title='{% trans "control-title modify" %}' data-dojo-attach-point="updateNode"/>
+  <img class="mp-cursor-pointer mp-control mp-option-share" src="/static/images/share.png" title='{% trans "control-title share" %}' data-dojo-attach-point="shareNode" />
+</span>

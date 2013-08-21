@@ -30,8 +30,8 @@ define(["dojo/_base/declare",
                 assertTrue($photos.size() > 0, "Can't build a Carousel without placeholder for photos.");
                 
                 photos.forEach(function (photo) {
-                   assertTrue(photo instanceof Photo);
-                   assertString(photo[srcPropertyName]);
+                   assertTrue(photo instanceof Photo, "Only type Photo allowed.");
+                   assertString(photo[srcPropertyName], "SrcProperty must be defined.");
                 });
 
                 this.defaults = {

@@ -8,8 +8,8 @@
  * @class Controls communication in between the classes of KEIKEN
  */
 
-define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", "model/Collection", "util/ClientState", "util/InfoText"], 
-       function (declare, communicator, state, Album, Collection, clientstate, InfoText) {
+define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", "model/Collection", "util/ClientState", "util/InfoText", "util/Tools"], 
+       function (declare, communicator, state, Album, Collection, clientstate, InfoText, tools) {
           return declare(null, {
              
              constructor : function () {
@@ -73,7 +73,13 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                    });
                    communicator.subscribe("hover:GalleryPhoto", function (data) {
                       state.setCurrentPhoto(data.photo);
-                      main.getUI().getControls().showPhotoControls(data);
+                      main.getUI().getControls().show({
+                         modelInstance : data.photo,
+                         offset : data.element.offset(),
+                         dimension : {
+                            width : tools.getRealWidth(data.element)
+                         }
+                      });
                    });
                 }
              },
@@ -95,7 +101,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                       modelType: "Album"
                    }));
                 }
-                main.getUI().getControls().init();
                 clientstate.init();
                 main.getMap().init(data);
                 communicator.publish("ready:App");
@@ -287,8 +292,11 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
              },
              _markerMouseover : function (marker) {
                 main.getUI().getControls().show({
-                   "context": marker,
-                   pixel: main.getMap().getPositionInPixel(marker)
+                   modelInstance : marker.getModel(),
+                   offset: main.getMap().getPositionInPixel(marker),
+                   dimension : {
+                      width : marker.getView().getSize().width
+                   }
                 });
              },
              _markerMouseout : function () {

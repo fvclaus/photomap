@@ -16,9 +16,9 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "util/ClientSta
                 
                 communicator.subscribe("click:GalleryInsert", this._galleryInsert);
                 communicator.subscribe("click:Map", this._mapInsert);
-                communicator.subscribe("click:UpdateControl", this._modelUpdate);
-                communicator.subscribe("click:DeleteControl", this._modelDelete);
-                communicator.subscribe("click:ShareControl", this._albumShare);
+                communicator.subscribe("clicked:UpdateOperation", this._modelUpdate);
+                communicator.subscribe("clicked:DeleteOperation", this._modelDelete);
+                communicator.subscribe("clicked:ShareOperation", this._albumShare);
              },
              /*
               * --------------------------------------------------
