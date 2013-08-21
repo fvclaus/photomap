@@ -14,7 +14,6 @@ from django.contrib import admin
 from pm.controller import album, place, photo
 from pm.controller import authentication
 from pm.controller import dashboard
-from pm.controller import debug
 from pm.controller import main
 from pm.controller import footer
 from pm.controller import landingpage
@@ -99,7 +98,6 @@ urlpatterns = patterns("",
                        
                        url(r'^url/invalid$', direct_to_template, {"template": "url-invalid.html"}),
 
-                       url(r'^debug/(.+)$', debug.view),
                        url(r'^test$', direct_to_template, {"template": "runner.html"} ),
                        url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
                        url(r'template/(.+)$', main.from_template),

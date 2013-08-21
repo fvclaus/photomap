@@ -16,7 +16,6 @@ define(["dojo/_base/declare",
         "model/Album", 
         "widget/ModelOperationWidget",
         "view/DetailView",
-        "view/StatusMessageView",
         "widget/SlideshowWidget",
         "widget/AdminGalleryWidget",
         "widget/FullscreenWidget",
@@ -26,7 +25,7 @@ define(["dojo/_base/declare",
         "ui/UIState",
         "dojo/domReady!"
        ],
-       function(declare, Photo, Place, Album, ModelOperationWidget, DetailView, StatusMessageView, SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state) {
+       function(declare, Photo, Place, Album, ModelOperationWidget, DetailView,  SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state) {
            var UI = declare(null, {
               constructor : function () {
                  this.controls = new ModelOperationWidget(null, $("#mp-controls").get(0));
@@ -34,7 +33,6 @@ define(["dojo/_base/declare",
                  this.input = new DialogView();
                  this.state = state;
                  this.information = new DetailView();
-                 this.message = new StatusMessageView();
 
                  if (this.state.isAlbumView()) {
                     this.gallery = new GalleryWidget(null, $("#mp-gallery").get(0));
@@ -92,9 +90,6 @@ define(["dojo/_base/declare",
               },
               getInformation: function () {
                  return this.information.getPresenter();
-              },
-              getMessage : function () {
-                 return this.message;
               },
               getPageTitleWidget : function () {
                  return this.pageTitle;

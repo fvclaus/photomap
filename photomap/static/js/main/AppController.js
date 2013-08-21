@@ -434,7 +434,6 @@ define(["dojo/_base/declare", "util/Communicator", "ui/UIState", "model/Album", 
                    main.getUI().getAdminGallery().load(photos);
                    main.getUI().getFullscreen().load(photos);
    
-                   main.getUI().getMessage().hide();
                    
                    $.each(state.getMarkers(), function (i, placePresenter) {
                       placePresenter.setOpened(false);
