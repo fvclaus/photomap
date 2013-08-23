@@ -6,7 +6,8 @@
 
 /**
  * @author Frederik Claus
- * @description Base class for all widgets displaying photos. It defines and enforces certain API conventions that all photo widgets must follow.
+ * @description Base class for all widgets displaying photos. It defines and enforces certain API conventions that all photo widgets must follow. It is up to the widget to display photos on one page or multiple pages.
+ * @see MultiplePagesPhotoWidget
  */
 define(["dojo/_base/declare",
         "./Widget",

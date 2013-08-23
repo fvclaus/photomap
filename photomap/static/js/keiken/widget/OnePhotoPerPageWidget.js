@@ -5,29 +5,15 @@
 // "use strict";
 
 /**
- * @author Marc Roemer
- * @description Displays current slideshow-image as fullscreen, supports zooming into the image
+ * @author Frederik Class
+ * @description Widgets of this class display only one photo per page on several pages.
  */
 define(["dojo/_base/declare",
-        "./PhotoWidget",
+        "./MultiplePagesPhotoWidget",
         "../model/Photo",
         "../util/Tools"], 
        function (declare, PhotoWidget, Photo, tools) {
           return declare([PhotoWidget], {
-             /**
-              * @public
-              * @description Navigates to the photo. Runs the widget if run has not been called before.
-              * @param {Photo} photo
-              */
-             navigateTo : function (photo) {
-                // Navigate to photo, displaying it when the slideshow is started
-                assertTrue(photo instanceof Photo || photo === null, "Parameter photo must be an instance of Photo.");
-                if (!this._run) {
-                   this.run();
-                } else {
-                   this.carousel.navigateTo(photo);
-                }
-             },
              /**
               * @private
               * @description Finds the current photo based on the data id attribute the PhotoCarousel sets on every photo element. The currentPhoto will be saved as this.currentPhoto

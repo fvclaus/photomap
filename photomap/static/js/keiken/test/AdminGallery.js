@@ -1,125 +1,113 @@
-/*global require, $, QUnit, steal*/
+/*global define, $, QUnit, steal*/
 
 "use strict";
 
-require(["widget/AdminGalleryWidget",
-         "keiken/test/TestFixture",
-         "util/Communicator",
+define(["dojo/_base/declare",
+         "dojo/_base/lang",
+         "../widget/AdminGalleryWidget",
+         "./PhotoWidget",
+         "../util/Communicator",
          "dojo/domReady!"],
-        function (AdminGalleryWidget, TestFixture, communicator) {
-           var gallery = null,
-               $testBody = $("#testBody"),
-               $container = $("<section id=mp-full-left-column></section>"),
-               testFixture = new TestFixture(),
-               photos = null,
-               photoCollection = null,
-               assertPhotosInGallery = function (photos) {
-                  QUnit.ok($testBody.find("img").length === photos.length);
+        function (declare, lang, AdminGalleryWidget, PhotoWidgetTestCase, communicator) {
+
+           var GalleryTest = declare([PhotoWidgetTestCase], {
+              name : "AdminGallery",
+              $containerTemplate : $("<section id=mp-full-left-column></section>"),
+              PhotoWidget : AdminGalleryWidget,
+              nPhotos : 20,
+              photosInWidgetAssertions : 1,
+              assertPhotosInWidget : function (photos) {
+                  QUnit.ok(this.$testBody.find("img").length === photos.length);
                },
-               nPhotos = 20;
-                  
-           
-           module("AdminGallery", {
-              setup : function () {
-                 $testBody
-                    .empty()
-                    .append($container);
-
-                 gallery = new AdminGalleryWidget(null, $container.get(0));
-                 photoCollection = testFixture.getRandomPhotoCollection(nPhotos);
-                 photos = photoCollection.getAll();
-              },
-              teardown : function () {
-                 $testBody.empty();
-                 // Necessary to register the same widget id again.
-                 gallery.destroyRecursive(false);
-              }
-           });
-           
-
-           QUnit.asyncTest("run", 2, function () {
-              gallery.startup();
-              QUnit.raiseError(gallery.load, gallery);
-              gallery.load(photoCollection);
-              gallery.run();
-              setTimeout(function () {
-                 assertPhotosInGallery(photos);
-                 QUnit.start();
-              }, 1000);
-           });
-
-           QUnit.asyncTest("deletePhoto", 4, function () {
-              gallery.startup();
-              // deletePhotos without loading them
-              QUnit.raiseError(gallery.deletePhoto, gallery, photos[0]);
-              gallery.load(photoCollection);
-              gallery.run();
-              var photoIndex = 0,
-                  oldPhoto = photos[0];
-              QUnit.raiseError(gallery.deletePhoto, gallery);
-              photoCollection.delete(photos[0]);
-
-
-              setTimeout(function () {
-                 assertPhotosInGallery(photos);
-                 for (photoIndex = photos.length - 1; photoIndex >= 0; photoIndex--) {
-                    photoCollection.delete(photos[0]);
-                 }
-                 setTimeout(function () {
-                    assertPhotosInGallery(photos);
+              testRunPhotoAssertions : 2,
+              testRun : function () {
+                 this.widget.startup();
+                 QUnit.raiseError(this.widget.load, this.widget);
+                 this.widget.load(this.photoCollection);
+                 this.widget.run();
+                 setTimeout(lang.hitch(this, function () {
+                    this.assertPhotosInWidget(this.photos);
                     QUnit.start();
-                 }, 1000);
-              }, 1000);
-           });
-
-           QUnit.asyncTest("insertPhoto", 3, function () {
-              gallery.startup();
-              // insertPhoto without loading them
-              QUnit.raiseError(gallery.insertPhoto, gallery, testFixture.getRandomPhoto(photos.length));
-              gallery.load(photoCollection);
-              gallery.run();
-              var newPhoto = testFixture.getRandomPhoto(photos.length);
-              QUnit.raiseError(gallery.insertPhoto, gallery);
-              photoCollection.insert(newPhoto);
-              setTimeout(function () {
-                 assertPhotosInGallery(photos);
-                 QUnit.start();
-              }, 1000);
-           });
-
-           QUnit.asyncTest("drag", nPhotos + 3, function () {
-              gallery.startup();
-              gallery.load(photoCollection);
-              gallery.run();
-              setTimeout(function () {
-                 var $imgs = $testBody.find("img"),
-                     $img0 = $imgs.eq(0),
-                     $img1 = $imgs.eq(1),
-                     img0Pos = $img0.position(),
-                     img1Pos = $img1.position();
-                 
-                 communicator.subscribeOnce("change:photoOrder", 
-                                        function (photos) {
-                                           QUnit.ok(photos instanceof Array);
-                                           photos.forEach(function (photo, index) {
-                                              QUnit.ok(photo.order > -1);
-                                              if (index === 0) {
-                                                 QUnit.ok(photo.order === 1);
-                                              } else if (index === 1) {
-                                                 QUnit.ok(photo.order === 0);
-                                              }
-                                           });
-                                           QUnit.start();
-                                        });
-                 
+                 }), this.options.animationTime);
+              },
+              testDeletePhotoAssertions : 4,
+              testDeletePhoto : function () {
+                 this.widget.startup();
+                 // delete photos without loading them
+                 QUnit.raiseError(this.widget.deletePhoto, this.widget, this.photos[0]);
+                 this.widget.load(this.photoCollection);
+                 this.widget.run();
+                 var photoIndex = 0,
+                     oldPhoto = this.photos[0];
+                 QUnit.raiseError(this.widget.deletePhoto, this.widget);
+                 this.photoCollection.delete(this.photos[0]);
 
 
-                 $img1.simulate("drag", {
-                    dx : img0Pos.left  - (img1Pos.left + $img1.width()),
-                    dy : img0Pos.top - img1Pos.top,
-                    // handle : "center"
-                    // moves : 10
-                 });
-              }, 2000);
-           });
+                 setTimeout(lang.hitch(this, function () {
+                    this.assertPhotosInWidget(this.photos);
+                    for (photoIndex = this.photos.length - 1; photoIndex >= 0; photoIndex--) {
+                       this.photoCollection.delete(this.photos[0]);
+                    }
+                    setTimeout(lang.hitch(this, function () {
+                       this.assertPhotosInWidget(this.photos);
+                       QUnit.start();
+                    }), this.options.animationTime);
+                 }), this.options.animationTime);
+              },
+
+              testInsertPhotoAssertions : 3,
+              testInsertPhoto :  function () {
+                 this.widget.startup();
+                 // insertPhoto without loading them
+                 QUnit.raiseError(this.widget.insertPhoto, this.widget, this.photos.length);
+                 this.widget.load(this.photoCollection);
+                 this.widget.run();
+                 var newPhoto = this.fixture.getRandomPhoto(this.photos.length);
+                 QUnit.raiseError(this.widget.insertPhoto, this.widget);
+                 this.photoCollection.insert(newPhoto);
+                 setTimeout(lang.hitch(this, function () {
+                    this.assertPhotosInWidget(this.photos);
+                    QUnit.start();
+                 }), this.options.animationTime);
+              },
+              testDragAssertions : 20 + 3, // nThis.Photos + 3
+              testDrag : function () {
+                 this.widget.startup();
+                 this.widget.load(this.photoCollection);
+                 this.widget.run();
+                 setTimeout(lang.hitch(this, function () {
+                    var $imgs = this.$testBody.find("img"),
+                        $img0 = $imgs.eq(0),
+                        $img1 = $imgs.eq(1),
+                        img0Pos = $img0.position(),
+                        img1Pos = $img1.position();
+                    
+                    communicator.subscribeOnce("change:photoOrder", 
+                                               lang.hitch(this, function (photos) {
+                                                  QUnit.ok(this.photos instanceof Array);
+                                                  photos.forEach(function (photo, index) {
+                                                     QUnit.ok(photo.order > -1);
+                                                     if (index === 0) {
+                                                        QUnit.ok(photo.order === 1);
+                                                     } else if (index === 1) {
+                                                        QUnit.ok(photo.order === 0);
+                                                     }
+                                                  });
+                                                  QUnit.start();
+                                               }));
+                    
+
+
+                    $img1.simulate("drag", {
+                       dx : img0Pos.left  - (img1Pos.left + $img1.width()),
+                       dy : img0Pos.top - img1Pos.top,
+                       // handle : "center"
+                       // moves : 10
+                    });
+                 }), 2 * this.options.animationTime);
+              },
+           }),
+               test = new GalleryTest({ animationTime : 1000});
+
+           test.run();
         });

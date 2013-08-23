@@ -22,10 +22,10 @@ define(["dojo/_base/declare",
                 if (this._started) {
                    return;
                 }
-                // Give fake img element. It will never be used anyway.
+                // Give fake img element to PhotoCarouselView. It will never be used anyway.
                 this.$photos = $("<img></img>");
                 this._srcPropertyName = "photo";
-                this._carouselOptions = {};
+                this._carouselOptions = { };
                 this.inherited(arguments);
 
                 this._isPhotoLoaded = false;
@@ -33,7 +33,7 @@ define(["dojo/_base/declare",
              },
              postMixInProperties : function () {
                 this.inherited(arguments);
-                this.messages = i18n.getLocalization("widget", "common", this.lang);
+                this.messages = i18n.getLocalization("keiken/widget", "common", this.lang);
              },
              /**
               * @public
@@ -43,14 +43,7 @@ define(["dojo/_base/declare",
                 assert(this._started, true, "Must call startup() before.");
                 assertTrue(this._loaded, "Must call load(photos) before.");
                 this._run = true;
-                this._empty();
-               
-                this.$photoContainer
-                   .append(
-                      $.jqote('#fullGalleryTmpl', {
-                         photos: this.carousel.getAllPhotos()
-                      }));
-                this._initializeSortable();
+                this.refresh();
                 this.show();
 
                 this._loaded = true;
@@ -95,7 +88,13 @@ define(["dojo/_base/declare",
              refresh : function () {
                 //TODO currently this just restarts the whole thing. this could be done better
                 this._empty();
-                this.run();
+               
+                this.$photoContainer
+                   .append(
+                      $.jqote('#fullGalleryTmpl', {
+                         photos: this.carousel.getAllPhotos()
+                      }));
+                this._initializeSortable();
              },
              /*
               * @public

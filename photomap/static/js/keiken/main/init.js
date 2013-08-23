@@ -26,7 +26,7 @@ navigator.sayswho= (function(){
 /**
  * @description Initializes main constructor. Needs document ready!
  */
-require(["main/AppInitializer", "dojo/domReady!"], function (AppInitializer) {
+require(["keiken/main/AppInitializer", "dojo/domReady!"], function (AppInitializer) {
 
    // main = new Main();
    // // initialise js-classes

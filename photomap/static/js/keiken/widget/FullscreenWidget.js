@@ -9,7 +9,7 @@
  * @description Displays current slideshow-image as fullscreen, supports zooming into the image
  */
 define(["dojo/_base/declare",
-        "./SinglePhotoWidget",
+        "./OnePhotoPerPageWidget",
         "../model/Photo", 
         "../util/Communicator", 
         "../util/Tools",
@@ -51,7 +51,7 @@ define(["dojo/_base/declare",
              },
              postMixInProperties : function () {
                 this.inherited(arguments);
-                this.messages = i18n.getLocalization("widget", "common", this.lang);
+                this.messages = i18n.getLocalization("keiken/widget", "common", this.lang);
              },
              show : function () {
                 

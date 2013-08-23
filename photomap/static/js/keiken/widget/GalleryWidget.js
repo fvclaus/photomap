@@ -12,7 +12,7 @@
  */
        
 define(["dojo/_base/declare",
-        "./PhotoWidget",
+        "./MultiplePagesPhotoWidget",
         "../model/Photo",
         "../util/Communicator",
         "../util/Tools",
@@ -89,7 +89,7 @@ define(["dojo/_base/declare",
              },
              postMixInProperties : function () {
                 this.inherited(arguments);
-                this.messages = i18n.getLocalization("widget", "Gallery", this.lang);
+                this.messages = i18n.getLocalization("keiken/widget", "Gallery", this.lang);
              },
              /**
               * @description Loads all the photos in the gallery and displays them as thumbnails.
@@ -125,10 +125,10 @@ define(["dojo/_base/declare",
                 this.carousel.update(photos);
              },
              /**
-              * @description Checks if current loaded photo is in the currrently visible gallery slider, if not gallery will move to containing slider
+              * @deprecated Use navigateTo instead.
               */
              navigateIfNecessary : function (photo) {
-                this.carousel.navigateTo(photo);
+                this.navigateTo(photo);
              },
              setPhotoVisited : function (photo) {
                 this.$container.find("img[data-keiken-id='" + photo.id + "']").siblings(".mp-thumb-visited").show();

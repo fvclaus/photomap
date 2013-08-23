@@ -11,7 +11,7 @@
 define(["dojo/_base/declare",
         "dijit/_WidgetBase",
         "dijit/_TemplatedMixin",
-        "view/View",
+        "../view/View",
         "dojo/domReady!"], 
        function (declare, _WidgetBase, _TemplatedMixin, View) {
           return declare([View, _WidgetBase, _TemplatedMixin], {

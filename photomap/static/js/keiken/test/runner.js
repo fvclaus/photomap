@@ -90,6 +90,7 @@ for (testCaseIndex = 0; testCaseIndex < testCases.length; testCaseIndex++) {
    
 
 require(testCases,
-        function () {
-           QUnit.start();
-        });
+   function () {
+      QUnit.start();
+   });
+

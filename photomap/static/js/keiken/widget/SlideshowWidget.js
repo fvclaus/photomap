@@ -11,11 +11,11 @@
  */
 
 define(["dojo/_base/declare",
-        "widget/SinglePhotoWidget",
-        "model/Photo",
-        "util/Communicator",
-        "util/Tools",
-        "util/InfoText",
+        "./OnePhotoPerPageWidget",
+        "../model/Photo",
+        "../util/Communicator",
+        "../util/Tools",
+        "../util/InfoText",
         "dojo/text!./templates/Slideshow.html",
         "dojo/i18n",
         "dojo/i18n!./nls/Slideshow"],
@@ -55,7 +55,7 @@ define(["dojo/_base/declare",
              },
              postMixInProperties : function () {
                 this.inherited(arguments);
-                this.messages = i18n.getLocalization("widget", "Slideshow", this.lang);
+                this.messages = i18n.getLocalization("keiken/widget", "Slideshow", this.lang);
              },
              /**
               * @presenter
@@ -81,24 +81,6 @@ define(["dojo/_base/declare",
               */
              restart : function (photos) {
                 this.carousel.update(photos);
-             },
-             /*
-              * @presenter
-              * @description Navigates the slideshow left or right.
-              * @param {String} direction: left || right
-              */
-             navigateWithDirection : function (direction) {
-                assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right");
-                
-                if (!this._run) {
-                   this.run();
-                } else {
-                   if (direction === "left") {
-                      this.carousel.navigateLeft();
-                   } else {
-                      this.carousel.navigateRight();
-                   }
-                }
              },
              /*
               * @presenter
@@ -135,6 +117,7 @@ define(["dojo/_base/declare",
                 if (this.currentPhoto  === null) {
                    // Don't reset the slideshow.
                    this.updateMessage();
+                   this._emptyPhotoNumber();
                 } else {
                    // right now this is the first time we can update the description
                    // on the other events, beforeLoad & afterLoad, the photo src is not set yet

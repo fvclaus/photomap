@@ -1,9 +1,9 @@
-/*global require, $, QUnit*/
+/*global define, $, QUnit*/
 
 "use strict";
 
-require(["util/CarouselAnimation",
-         "keiken/test/TestFixture",
+define(["../util/CarouselAnimation",
+         "./TestFixture",
         "dojo/domReady!"],
         function (CarouselAnimation, TestFixture) {
 

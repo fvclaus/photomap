@@ -10,17 +10,17 @@
  */
 
 define([
-         "dojo/_base/declare",
-         "ui/UI",
-         "view/MapView",
-         "util/ClientServer",
-         "util/ClientState",
-         "util/Communicator",
-         "util/Tools",
-         "main/AppController",
-         "main/AppModelController",
-         "main/AppRouter"
-       ],
+   "dojo/_base/declare",
+   "../ui/UI",
+   "../view/MapView",
+   "../util/ClientServer",
+   "../util/ClientState",
+   "../util/Communicator",
+   "../util/Tools",
+   "./AppController",
+   "./AppModelController",
+   "./AppRouter"
+],
        function (declare, ui, MapView, ClientServer, clientState, communicator, tools, AppController, AppModelController, AppRouter) {
 
           return declare(null , {

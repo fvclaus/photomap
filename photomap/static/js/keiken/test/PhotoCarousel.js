@@ -1,10 +1,10 @@
-/*global require, $, QUnit*/
+/*global define, $, QUnit*/
 
 "use strict";
 
-require(["widget/PhotoCarouselWidget",
-         "keiken/test/TestFixture",
-         "model/Photo",
+define(["../widget/PhotoCarouselWidget",
+         "./TestFixture",
+         "../model/Photo",
         "dojo/domReady!"],
         function (PhotoCarouselWidget, TestFixture, Photo) {
 

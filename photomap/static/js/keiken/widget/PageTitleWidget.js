@@ -3,7 +3,7 @@
 "use strict";
 
 define(["dojo/_base/declare",
-        "util/Communicator",
+        "../util/Communicator",
         "dojo/domReady!"],
        function (declare, communicator) {
           return declare(null, {

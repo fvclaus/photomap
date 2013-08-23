@@ -4,9 +4,9 @@
 "use strict";
 
 
-define(["util/PhotoPages",
-        "keiken/test/TestFixture",
-        "model/Photo"],
+define(["../util/PhotoPages",
+        "./TestFixture",
+        "../model/Photo"],
        function (PhotoPages, TestFixture, Photo) {
           var testFixture = new TestFixture();
 

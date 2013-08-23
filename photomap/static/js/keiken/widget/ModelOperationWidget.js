@@ -41,7 +41,7 @@ define([
           },
           postMixInProperties : function () {
              this.inherited(arguments);
-             this.messages = i18n.getLocalization("widget", "ModelOperation", this.lang);
+             this.messages = i18n.getLocalization("keiken/widget", "ModelOperation", this.lang);
           },
           /**
            * @public

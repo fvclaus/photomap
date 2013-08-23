@@ -8,11 +8,11 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/util/noconsole.js" ></script>
+<script type="text/javascript" src="/static/js/keiken/util/noconsole.js" ></script>
 <script type="text/javascript" src="/static/js/lib/jquery.jqote2.min.js" ></script>
 <!-- the modified version supports translations via gettext -->
 
-<script type="text/javascript" src="/static/js/main/init.js" ></script>
+<script type="text/javascript" src="/static/js/keiken/main/init.js" ></script>
 {% endcompress %}
 <!-- mapjs does not work here. why? -->
 <!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script> -->

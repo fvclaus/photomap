@@ -17,11 +17,11 @@
  */
   
 define(["dojo/_base/declare",
-        "view/View",
-        "model/Photo",
-        "util/PhotoPages",
-        "util/Tools", 
-        "util/CarouselAnimation"], 
+        "../view/View",
+        "../model/Photo",
+        "../util/PhotoPages",
+        "../util/Tools", 
+        "../util/CarouselAnimation"], 
        function (declare, View, Photo, PhotoPages, tools, CarouselAnimation) {
           
           return declare (View, {
@@ -423,13 +423,16 @@ define(["dojo/_base/declare",
                 // Trigger the beforeLoad event.
                 this.options.beforeLoad.call(this.options.context, this.$photos.slice(from, to));
 
+                this._loadThread = loadHandler;
+
                 // This is called at startup when there are no photos present or after all photos are deleted.
                 if (photos.length === 0){
                    this.options.afterLoad.call(this.options.context, this.$photos.slice(from, to));
-                   this.options.onUpdate.call(this.options.context, this.$photos.slice(from, to));
+                   this.nLoadHandler -= 1;
+                   this._loadThread = null;
+                   this._update(from, to);
+                   // this.options.onUpdate.call(this.options.context, this.$photos.slice(from, to));
                 }
-                
-                this._loadThread = loadHandler;
              },
              /**
               * @description Updates carousel to show current page.
