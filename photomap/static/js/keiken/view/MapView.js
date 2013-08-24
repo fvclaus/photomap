@@ -74,24 +74,10 @@ define([
              this.markers = [];
              this._create();
           },
-          storeCurrentState : function () {
-             var instance = this;
-             
-             this.storedState =  {
-                zoom: instance.map.getZoom(),
-                center: instance.map.getCenter(),
-                type: instance.map.getMapTypeId()
-             }
-          },
-          store : function (property, value) {
-            this.storedState[property] = value; 
-          },
-          restoreSavedState : function () {
-             
-             this.map.setMapTypeId(this.storedState.type);
-             this.map.setZoom(this.storedState.zoom);
-             this.map.panTo(this.storedState.center);
-          },
+          
+          /* ------------------------------------ */
+          /* ------ Map specific methods -------- */
+         
           getMapCenter : function () {
              return this.map.getCenter();
           },
@@ -111,16 +97,6 @@ define([
              pixel.y += offset.top;
              pixel.x += offset.left;
              return {top : pixel.y, left : pixel.x};
-          },
-          /**
-           @public
-           @param {Marker} marker
-           */
-          centerMarker : function (markerView) {
-             
-             this.map.setZoom(ZOOM_LEVEL_CENTERED);
-             this.map.panTo(markerView.getMarker().getPosition());
-             communicator.publish("centered:marker", markerView.getPresenter());
           },
           /**
            * @public 
@@ -158,55 +134,6 @@ define([
           move : function (x, y) {
              this.map.panBy(x, y);
           },
-          /**
-           * @public
-           * @summary This roughly implements a Factory pattern. google.maps.Marker must only be instantiated through this method.
-           * @returns {Marker}
-           */
-          createMarker : function (data) {
-             assertTrue((data.lat && (data.lng || data.lon) && data.title), "input parameter data has to contain: lat, lng/lon, and title");
-             assertTrue(data.getType() === "Place" || data.getType() === "Album", "model has to be either place or album")
-             
-             var lat = parseFloat(data.lat),
-                 lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon),
-                 markerIsPlace = (data.getType() === "Place"),
-                 icon =  markerIsPlace ? PLACE_DEFAULT_ICON : ALBUM_DEFAULT_ICON,
-                 iconWidth = markerIsPlace ? PLACE_ICON_WIDTH : ALBUM_ICON_WIDTH,
-                 iconHeight = markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT,
-                 shadowWidth = markerIsPlace ? PLACE_ICON_SHADOW_WIDTH : ALBUM_ICON_SHADOW_WIDTH,
-                 shadowIcon = markerIsPlace ? PLACE_SHADOW_ICON : ALBUM_SHADOW_ICON;
-
-             assertTrue(isFinite(lat) && isFinite(lng), "lat and lng must not be infinite");
-
-             // lng = parseFloat(lng);
-
-             return new google.maps.Marker({
-                position : new google.maps.LatLng(lat, lng),
-                map : this.map,
-                // icon :  new google.maps.MarkerImage(MARKER_DEFAULT_ICON),
-                icon : {
-                   url : icon,
-                   scaledSize : new google.maps.Size(iconWidth, iconHeight, "px", "px")
-                },
-                shadow : {
-                   url : shadowIcon,
-                   anchor : new google.maps.Point(shadowWidth - iconWidth, iconHeight),
-                   scaledSize : new google.maps.Size(shadowWidth, iconHeight, "px", "px")
-                },
-                title : data.title
-             });
-          },
-          /**
-           * @public
-           * @param {Marker} marker
-           * @param {String} event
-           * @param {Function} callback
-           */
-          addListenerToMarker : function (marker, event, callback) {
-             assertTrue(event && callback, "input parameters event and callback must not be undefined");
-
-             google.maps.event.addListener(marker.getImplementation(), event, callback);
-          },
           setZoom : function (level) {
 
              var instance, zoomListener;
@@ -231,9 +158,6 @@ define([
                  newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
 
              this.map.fitBounds(newBounds);
-          },
-          getInstance : function () {
-             throw new Error("DoNotUseThisError");
           },
           getPanorama : function () {
              return this.streetview;
@@ -312,6 +236,91 @@ define([
           createLatLng : function (lat, lng) {
              return new google.maps.LatLng(lat, lng);
           },
+          setMapCursor : function (style) {
+             
+             if (!style) {
+                style = "crosshair";
+             }
+             this.map.setOptions({
+                draggableCursor: style,
+                draggingCursor: "move"
+             });
+          },
+          /**
+           * @description Set google map bounds to show a big part of the world.
+           */
+          showWorld : function () {
+
+             var lowerLatLng, upperLatLng, newBounds;
+
+             lowerLatLng = new google.maps.LatLng(-50, -90);
+             upperLatLng = new google.maps.LatLng(50, 90);
+             newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
+             this.map.fitBounds(newBounds);
+          },
+          
+          /* ---------------------------------------- */
+          /* ------- Marker specific methods -------- */
+         
+          /**
+           @public
+           @param {Marker} marker
+           */
+          centerMarker : function (markerView) {
+             
+             this.map.setZoom(ZOOM_LEVEL_CENTERED);
+             this.map.panTo(markerView.getMarker().getPosition());
+             communicator.publish("centered:marker", markerView.getPresenter());
+          },
+          /**
+           * @public
+           * @summary This roughly implements a Factory pattern. google.maps.Marker must only be instantiated through this method.
+           * @returns {Marker}
+           */
+          createMarker : function (data) {
+             assertTrue((data.lat && (data.lng || data.lon) && data.title), "input parameter data has to contain: lat, lng/lon, and title");
+             assertTrue(data.getType() === "Place" || data.getType() === "Album", "model has to be either place or album");
+             
+             var lat = parseFloat(data.lat),
+                 lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon),
+                 markerIsPlace = (data.getType() === "Place"),
+                 icon =  markerIsPlace ? PLACE_DEFAULT_ICON : ALBUM_DEFAULT_ICON,
+                 iconWidth = markerIsPlace ? PLACE_ICON_WIDTH : ALBUM_ICON_WIDTH,
+                 iconHeight = markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT,
+                 shadowWidth = markerIsPlace ? PLACE_ICON_SHADOW_WIDTH : ALBUM_ICON_SHADOW_WIDTH,
+                 shadowIcon = markerIsPlace ? PLACE_SHADOW_ICON : ALBUM_SHADOW_ICON;
+
+             assertTrue(isFinite(lat) && isFinite(lng), "lat and lng must not be infinite");
+
+             // lng = parseFloat(lng);
+
+             return new google.maps.Marker({
+                position : new google.maps.LatLng(lat, lng),
+                map : this.map,
+                // icon :  new google.maps.MarkerImage(MARKER_DEFAULT_ICON),
+                icon : {
+                   url : icon,
+                   scaledSize : new google.maps.Size(iconWidth, iconHeight, "px", "px")
+                },
+                shadow : {
+                   url : shadowIcon,
+                   anchor : new google.maps.Point(shadowWidth - iconWidth, iconHeight),
+                   scaledSize : new google.maps.Size(shadowWidth, iconHeight, "px", "px")
+                },
+                title : data.title
+             });
+          },
+          /**
+           * @public
+           * @param {Marker} marker
+           * @param {String} event
+           * @param {Function} callback
+           */
+          addListenerToMarker : function (marker, event, callback) {
+             assertTrue(event && callback, "input parameters event and callback must not be undefined");
+
+             google.maps.event.addListener(marker.getImplementation(), event, callback);
+          },
           triggerEventOnMarker : function (marker, event) {
              google.maps.event.trigger(marker.getImplementation(), event);
           },
@@ -337,40 +346,10 @@ define([
                 this.infotext.close();
              }
           },
-          setMapCursor : function (style) {
-             
-             if (!style) {
-                style = "crosshair";
-             }
-             this.map.setOptions({
-                draggableCursor: style,
-                draggingCursor: "move"
-             });
-          },
-          /**
-           * @description Set google map bounds to show a big part of the world.
-           */
-          showWorld : function () {
-
-             var lowerLatLng, upperLatLng, newBounds;
-
-             lowerLatLng = new google.maps.LatLng(-50, -90);
-             upperLatLng = new google.maps.LatLng(50, 90);
-             newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
-             this.map.fitBounds(newBounds);
-          },
-          bindClickListener : function (callback) {
-             var instance = this;
-             
-             google.maps.event.addListener(this.map, "click", function (event) {
-                if (state.isDashboardView() || (state.isAlbumView() && state.isAdmin())) {
-                   communicator.publish("click:Map", {
-                      lat : parseFloat(event.latLng.lat()),
-                      lng : parseFloat(event.latLng.lng())
-                   });
-                }
-             });
-          },
+          
+          /* -------------------------------------------------- */
+          /* ---------- listener and private methods ---------- */
+         
           /**
            * @description Initialize the google maps instance with streetview.
            * @private
@@ -387,8 +366,20 @@ define([
              this.overlay = new google.maps.OverlayView();
              this.overlay.draw = function () {};
              this.overlay.setMap(this.map);
-             this.bindClickListener();
+             this._bindClickListener();
              this._bindCenterChangeListener();
+          },
+          _bindClickListener : function (callback) {
+             var instance = this;
+             
+             google.maps.event.addListener(this.map, "click", function (event) {
+                if (state.isDashboardView() || (state.isAlbumView() && state.isAdmin())) {
+                   communicator.publish("click:Map", {
+                      lat : parseFloat(event.latLng.lat()),
+                      lng : parseFloat(event.latLng.lng())
+                   });
+                }
+             });
           },
           _bindKeyboardListener : function () {
             

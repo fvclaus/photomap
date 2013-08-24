@@ -15,13 +15,30 @@ define(["dojo/_base/declare",
         "../model/Collection", 
         "../util/ClientState", 
         "../util/InfoText", 
-        "../util/Tools"], 
-       function (declare, communicator, state, Album, Collection, clientstate, InfoText, tools) {
+        "../util/Tools",
+        "../util/HashHelper"], 
+       function (declare, communicator, state, Album, Collection, clientstate, InfoText, tools, hash) {
           return declare(null, {
              
              constructor : function () {
+                var instance = this;
                 // Instantiate an infotext in case user needs to be informed about sth (use this.infotext.alert(message) for that)
                 this.infoText = new InfoText();
+
+                /* -------- hash management -------- */
+               $(window)
+                  .on("load", function () {
+                     var state = hash.parse();
+                     console.log("Initial AppState: " + state.toString());
+                     hash.update(state, {replace: true, title: "initial state"});
+                     instance._updateAppState(state);
+                  })
+                  .on("hashchange", function () {
+                     var state = hash.getCurrentState();
+                     console.log("New AppState: " + state.toString());
+                     instance._updateAppState(state);
+                  });
+
 
                 communicator.subscribeOnce("init", this._init);
                 communicator.subscribe("load:dialog", this._dialogLoad);
@@ -112,7 +129,7 @@ define(["dojo/_base/declare",
                 main.getMap().init(data);
                 communicator.publish("ready:App");
              },
-             _handleAppStateChanges : function (newState) {
+             _updateAppState : function (newState) {
                 console.log("Hash changed. Starting AppState change.");
                 
                 var place;
@@ -134,15 +151,15 @@ define(["dojo/_base/declare",
                             // if (main.getUI().getGallery().hasPage(newState.page)) {
                                // main.getUI().getGallery().navigateToPage(newState.page);
                             // } else {
-                               // if (place.getModel().getPhotoCollection().has(newState.photo)) {
+                               // if (place.getModel().getPhotos().has(newState.photo)) {
                                   // this.infoText.alert(gettext("INVALID_PHOTO_AND_PAGE"));
                                // } else {
                                   // this.infoText.alert(gettext("INVALID_PAGE"));
                                // }
                             // }
                             if (newState.photo) {
-                               if (place.getModel().getPhotoCollection().has(newState.photo)) {
-                                 this._loadPhotoIntoSlideshow(place.getModel().getPhotoCollection().get(newState.photo));
+                               if (place.getModel().getPhotos().has(newState.photo)) {
+                                 this._loadPhotoIntoSlideshow(place.getModel().getPhotos().get(newState.photo));
                                } else {
                                   this.infoText.alert(gettext("INVALID_PHOTO"));
                                }
@@ -158,61 +175,6 @@ define(["dojo/_base/declare",
                 } else {
                    throw new Error("InvalidAppStateError");
                 }
-             },
-             _uiEnable : function () {
-                this._setUIDisabled(false);
-             },
-             _uiDisable : function () {
-                this._setUIDisabled(true);
-             },
-             _setUIDisabled : function (disable) {
-                assertTrue(disable !== undefined, "disable mustn't be undefined");
-                
-                var ui = main.getUI(),
-                    markers = state.getMarkers();
-                
-                if (state.isAlbumView()) {
-                   ui.getGallery().setDisabled(disable);
-                   ui.getSlideshow().setDisabled(disable);
-                   ui.getFullscreen().setDisabled(disable);
-                }
-                ui.getControls().setDisabled(disable);
-                ui.getInformation().setDisabled(disable);
-                main.getMap().setDisabled(disable);
-                $.each(markers, function (index, marker) {
-                      marker.setDisabled(disable);
-                });
-                
-                if (!disable) {
-                   this._enableLinks();
-                } else {
-                   this._disableLinks();
-                }
-             },
-             // Fullscreen is thread safe and does not need to be disabled.
-             // _fullscreenDisable : function () {
-             //    main.getUI().getFullscreen().setDisabled(true);
-             // },
-             // _fullscreenEnable : function () {
-             //    main.getUI().getFullscreen().setDisabled(false);
-             // },
-             _disableLinks : function () {
-               
-                 $("a, .mp-control").css({
-                    cursor: "not-allowed"
-                 });
-                 $("a").on("click.Disabled", function (event) {
-                    event.preventDefault();
-                    event.stopPropagation();
-                 }); 
-             },
-             _enableLinks : function () {
-                 
-                 console.log("in _enableLinks");
-                 $("a, .mp-control").css({
-                    cursor: ""
-                 });
-                 $("a").off(".Disabled");
              },
              _viewActivation : function (viewName) {
                var ui = main.getUI(),
@@ -254,7 +216,7 @@ define(["dojo/_base/declare",
                       console.log("All Photos updated. Updating Gallery.");
                       place.sortPhotos();
                       
-                      photos = place.getPhotos();
+                      photos = place.getPhotos().getAll();
                       main.getUI().getGallery().restart(photos);
                       if (main.getUI().getSlideshow().isStarted()) {
                          main.getUI().getSlideshow().restart(photos);
@@ -272,9 +234,6 @@ define(["dojo/_base/declare",
                 });
 
 
-             },
-             _dialogLoad : function (options) {
-                main.getUI().getInput().show(options);
              },
              _mapCenterChanged : function () {
                 /*TODO current marker might not be centered anymore -> has to be notified & marked as not centered; 
@@ -429,8 +388,8 @@ define(["dojo/_base/declare",
              _placeOpen : function (placePresenter) {
                 if (!placePresenter.isOpen()) {
                    var place = placePresenter.getModel(),
-                     photos = place.getPhotoCollection();
-                   state.setPhotoCollection(place.getPhotoCollection());
+                     photos = place.getPhotos();
+                   state.setPhotoCollection(photos);
                    main.getUI().getInformation().update(place);
                    main.getUI().getPageTitleWidget().update(place.getTitle());
    
