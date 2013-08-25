@@ -96,7 +96,7 @@ define(["dojo/_base/declare",
               },
               testNavigateToAssertions : function () {
                  return 1 + 
-                    4 * this.photosInWidgetAssertions;
+                    3 * this.photosInWidgetAssertions;
               },
               testNavigateTo : function () {
                  this.widget.startup();
@@ -104,27 +104,22 @@ define(["dojo/_base/declare",
                  // No parameter not legal.
                  QUnit.raiseError(this.widget.navigateTo, this.widget);
 
-                 // This should be the same as this.widget.run()
-                 this.widget.navigateTo(null);
+                 // Should stay on the same page.
+                 this.widget.navigateTo(this.getLastPhoto(0));
                  setTimeout(lang.hitch(this, function () {
                     this.assertPhotosInWidget(this.getPage(0));
                     // Should stay on the same page.
-                    this.widget.navigateTo(this.getLastPhoto(0));
+                    this.widget.navigateTo(this.photos[0]);
                     setTimeout(lang.hitch(this, function () {
                        this.assertPhotosInWidget(this.getPage(0));
-                       // Should stay on the same page.
-                       this.widget.navigateTo(this.photos[0]);
+                       // Should navigate to 2nd page.
+                       this.widget.navigateTo(this.getFirstPhoto(1));
                        setTimeout(lang.hitch(this, function () {
-                          this.assertPhotosInWidget(this.getPage(0));
-                          // Should navigate to 2nd page.
-                          this.widget.navigateTo(this.getFirstPhoto(1));
-                          setTimeout(lang.hitch(this, function () {
-                             this.assertPhotosInWidget(this.getPage(1));
-                             QUnit.start();
-                          }), this.options.animationTime);
-                       }), this.options.animationTime);
-                    }), this.options.animationTime);
-                 }), this.options.animationTime);
+                          this.assertPhotosInWidget(this.getPage(1));
+                          QUnit.start();
+                       }),  this.options.animationTime);
+                    }),  this.options.animationTime);
+                 }),  this.options.animationTime);
               },
               testResetAssertions : function () {
                  return this.infoTextPresenceAssertions
@@ -189,7 +184,6 @@ define(["dojo/_base/declare",
                  this.photos = this.photoCollection.getAll();
                  this.widget.startup();
                  this.widget.load(this.photoCollection);
-                 this.widget.run();
                  this.widget.navigateTo(this.getFirstPhoto(1));
 
                  QUnit.raiseError(this.widget.deletePhoto, this.widget);

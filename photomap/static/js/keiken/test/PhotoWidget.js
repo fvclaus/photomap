@@ -17,7 +17,7 @@ define(["dojo/_base/declare",
                  assertNumber(this.nPhotos, "Every PhotoWidget needs to define the number of photos used.");
 
                  this.options = $.extend({}, {
-                    animationTime : 1600
+                    animationTime : 1800
                  }, options);
                  // this.PhotoWidget = PhotoWidget;
                  this.fixture = new TestFixture();

@@ -154,6 +154,12 @@ define(["dojo/_base/declare",
              /**
               * @public
               */
+             getNPages : function () {
+                return this.pages.length;
+             },
+             /**
+              * @public
+              */
              isLastPage : function () {
                 return this.currentPageIndex === this.pages.length - 1;
              },

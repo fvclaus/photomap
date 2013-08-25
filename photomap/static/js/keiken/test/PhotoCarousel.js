@@ -44,7 +44,9 @@ define(["../widget/PhotoCarouselWidget",
                disableAssertions = false,
                getExpectedAssertionsForOneLoad = function () {
                   return nExpectedAssertions + n$photos;
-               };
+               },
+               afterLoad = null,
+               onUpdate = null;
 
            module("PhotoCarousel", {
               setup : function () {
@@ -62,7 +64,13 @@ define(["../widget/PhotoCarouselWidget",
                  $photos = $container.find("img");
 
                  nExpectedAssertions = (n$photos * 4) + 3;
+                 // The following are functions that can be used by a testcase to add some extra assertions.
+                 // Reset after every testcase to avoid cross talk.
+                 afterLoad = null;
+                 onUpdate = null;
+
                  photoCarousel = new PhotoCarouselWidget($photos, photos, "photo", {
+                    effect : "flip",
                     beforeLoad : function ($photos) {
                        if (disableAssertions) {
                           return;
@@ -71,6 +79,7 @@ define(["../widget/PhotoCarouselWidget",
                        QUnit.ok($photos.length === expectedPhotos.length);
                     },
                     afterLoad : function ($photos) {
+                       if (typeof afterLoad === "function") { afterLoad.call(); }
                        if (disableAssertions) {
                           return;
                        }
@@ -79,8 +88,11 @@ define(["../widget/PhotoCarouselWidget",
                        expectedPhotos.forEach(function (photo, index) {
                           QUnit.ok$hidden($photos.eq(index));
                        });
+
                     },
-                    onUpdate : function ($photos) {
+                    onUpdate : function ($photos, $photosWithError) {
+                       if (typeof onUpdate === "function") { onUpdate.call(); }
+
                        if (disableAssertions) {
                           return;
                        } else if ($photos.length === 0) { // This is triggered on insert/delete events to update text content.
@@ -88,6 +100,12 @@ define(["../widget/PhotoCarouselWidget",
                        }
                           
                        QUnit.ok($photos.length === expectedPhotos.length);
+                       $photosWithError.each(function () {
+                          var $photo = $(this);
+                          QUnit.ok($photo.attr("data-keiken-error"));
+                          QUnit.ok($photo.attr("data-keiken-id"));
+                          QUnit.ok($photo.attr("src") === undefined);
+                       });
                        // After updating, a photo element must be visible, if it has valid src.
                        expectedPhotos.forEach(function (photo, index) {
                           var $photo = $photos.eq(index);
@@ -98,6 +116,7 @@ define(["../widget/PhotoCarouselWidget",
                              QUnit.ok($photo.attr("src") === undefined);
                              QUnit.ok($photo.attr("data-keiken-id") === undefined);
                           }
+                          QUnit.ok($photo.attr("data-keiken-error") === undefined);
                        });
                     }
                  });
@@ -145,22 +164,21 @@ define(["../widget/PhotoCarouselWidget",
            });
 
            QUnit.asyncTest("navigateTo",  function () {
-              // Carousel not started yet.
-              // QUnit.raiseError(photoCarousel.navigateTo, photoCarousel, "start");
+
               nExpected$photos = 5;
               // Two successive load cycles.
               disableAssertions = true;
-              photoCarousel.start(photos[1]);
+              photoCarousel.navigateTo(photos[1]);
               // Wrong input
               QUnit.raiseError(photoCarousel.navigateTo, photoCarousel, "back");
-              QUnit.raiseError(photoCarousel.navigateTo, photoCarousel, 2);
-              photoCarousel.navigateTo("end");
+              QUnit.raiseError(photoCarousel.navigateTo, photoCarousel, null);
+              photoCarousel.navigateTo(photoCarousel.getNPages() - 1);
               setTimeout(function() {
                  assertPhotosInWidget([photos[10], photos[11], null, null, null]);
                  // No successive calls from now on.
                  disableAssertions = false;
                  expectedPhotos = photos.slice(0, 5);
-                 photoCarousel.navigateTo("start");
+                 photoCarousel.navigateTo(0);
                  setTimeout(function () {
                     assertPhotosInWidget(expectedPhotos);
                     // Must stay on the same page.
@@ -178,7 +196,55 @@ define(["../widget/PhotoCarouselWidget",
                  }, animationTime);
               }, animationTime);
            });
-
+           
+           QUnit.asyncTest("networkError", function () {
+              photos[0].photo = "Thisdoesnotexist";
+              expectedPhotos = photos.slice(0, 5);
+              onUpdate = function () {
+                 expectedPhotos = photos.slice(1, 5);
+                 onUpdate= null;
+              };
+              photoCarousel.start();
+              setTimeout(function() {
+                 QUnit.ok($photos.eq(0).attr("data-keiken-error"));
+                 expectedPhotos = photos.slice(5, 10);
+                 photoCarousel.navigateRight();
+                 setTimeout(function () {
+                    QUnit.ok($photos.eq(0).attr("data-keiken-error") === undefined);
+                    QUnit.start();
+                 },  animationTime);
+              },  animationTime);
+           });
+           /*
+            * Try to trigger two onUpdate events for "one" load.
+            * After the photos have been loaded, navigate again.
+            * This might cause the carousel to trigger onUpdate, when the second update cycle is fading out the photos.
+            */
+           QUnit.asyncTest("updateCycle", function () {
+              var nUpdates = 0,
+                  nAfterLoads = 0;
+              expectedPhotos = photos.slice(0, 5);
+              photoCarousel.start();
+              // After load signals that the photos are fading in again.
+              // Navigate left only on the first event to avoid looping.
+              afterLoad = function () {
+                 if (nAfterLoads === 0) {
+                    // Wait till the animation begins.
+                    setTimeout(function () {
+                       photoCarousel.navigateRight();
+                    }, 100);
+                 }
+                 nAfterLoads += 1;
+              };
+              // Allow only one update. The first update should be stopped, as the second one starts loading.
+              onUpdate = function () {
+                 nUpdates += 1;
+                 QUnit.ok(nUpdates === 1);
+              };
+              setTimeout(function () {
+                 QUnit.start();
+              }, 2 * animationTime);
+           });
            QUnit.asyncTest("insertPhoto", function () {
               // Wrong input.
               QUnit.raiseError(photoCarousel.insertPhoto, photoCarousel, {});
@@ -188,7 +254,7 @@ define(["../widget/PhotoCarouselWidget",
               photoCarousel.insertPhoto(photo);
               expectedPhotos = [photos[10], photos[11], photos[12], null, null];
               // Navigate to the last page.
-              photoCarousel.navigateTo("end");
+              photoCarousel.navigateTo(photoCarousel.getNPages() - 1);
               setTimeout(function () {
                  // Check that photo was inserted on last page.
                  assertPhotosInWidget(expectedPhotos);
@@ -229,7 +295,7 @@ define(["../widget/PhotoCarouselWidget",
               expectedPhotos = [photos[10], null, null, null, null];
               photoCarousel.deletePhoto(photo);
               // Navigate to the last page.
-              photoCarousel.navigateTo("end");
+              photoCarousel.navigateTo(photoCarousel.getNPages() - 1);
               setTimeout(function () {
                  // Check that photo was deleted from last page.
                  assertPhotosInWidget(expectedPhotos);
