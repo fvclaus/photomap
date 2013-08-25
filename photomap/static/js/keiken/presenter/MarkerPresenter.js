@@ -6,221 +6,112 @@
 /**
  * @author Marc-Leon Römer
  * @class Provides the logic to present the Album and Place models and to handle all user interaction on the marker
- * @requires Presenter, Communicator, UIState
+ * @requires Presenter, Communicator
  */
 
-define(["dojo/_base/declare", 
-        "./Presenter", 
-        "../util/Communicator", 
-        "../ui/UIState"],
-       function (declare, Presenter, communicator, state) {
-          return declare(Presenter, {
-             constructor : function () {
-                this.opened = false;
-             },
-             setOpened : function (opened) {
-                this.opened = opened;
-             },
-             isOpen : function () {
-                return this.opened;
-             },
-             show : function () {
-                this.view.show();
-             },
-             hide : function () {
-                this.view.hide();
-             },
-             mouseOver : function () {
-                if (!this.view.isDisabled()) {
-                   communicator.publish("mouseover:marker", this);
-                }
-             },
-             mouseOut : function () {
-                // hide EditControls after a small timeout, when the EditControls are not entered
-                // the EditControls-Box is never seamlessly connected to a place, so we need to give the user some time
-                communicator.publish("mouseout:marker");
-             },
-             dblClick : function () {
-                if (!this.view.isDisabled()) {
-                  this.switchCurrentLoadedMarker();
-                  this.open();
-                }
-             },
-             click : function () {
-                
-                var instance = this,
-                   publish = function () {
-                     instance.switchCurrentMarker();
-                     communicator.publish('click:marker', instance);
-                   };
-                
-                if (!this.view.isDisabled()) {
-                   //timeout necessary to wait if user is actually dblclicking
-                   window.setTimeout(publish, 500);
-                }
-             },
-             select : function () {
-                this.switchCurrentMarker();
-             },
-             resetCurrent : function () {
-                this.switchCurrentMarker(true);
-             },
-             resetCurrentLoaded : function () {
-                this.switchCurrentLoadedMarker(true);
-             },
-             switchCurrentMarker : function (reset) {
+define(["dojo/_base/declare",
+        "./Presenter",
+        "../util/Communicator"],
+   function (declare, Presenter, communicator, state) {
+      return declare(Presenter, {
+         constructor : function () {
+            this.opened = false;
+         },
+         show : function () {
+            this.view.show();
+         },
+         hide : function () {
+            this.view.hide();
+         },
+         center : function () {
+            this.view.center();
+         },
+         centerAndMoveLeft : function (percentage) {
+            this.view.centerAndMove(percentage, "left");
+         },
+         centerAndMoveRight : function (percentage) {
+            this.view.centerAndMove(percentage, "right");
+         },
+         updateIcon : function (opened, selected) {
+            
+            var visited = true;
+            
+            if (this.model.getType() === "Album") {
                
-               var oldMarker = state.getCurrentMarker();
-               
-               if (!reset) {
-                  state.setCurrentMarker(this);
+               if (selected) {
+                  this.showSelectedIcon();
                } else {
-                  state.setCurrentMarker(null);
+                  this.showUnselectedIcon();
                }
-               if (oldMarker && oldMarker !== this) {
-                  oldMarker.checkIconStatus();
-               }
-               this.checkIconStatus();
-             },
-             switchCurrentLoadedMarker : function (reset) {
                
-               var oldMarker = state.getCurrentLoadedMarker();
+            } else if (this.model.getType() === "Place") {
                
-               if (!reset) {
-                  state.setCurrentLoadedMarker(this);
+               //TODO this is done every single time a user clicks on a place -> might be more efficient if place had a visited attribute which is set when all it's photos are visited
+               this.model.getPhotos().getAll().forEach(function (photo) {
+                  visited = visited && photo.isVisited();
+               });
+               
+               if (selected && !opened) {
+                  this.showSelectedIcon();
+               } else if (opened) {
+                  this.showLoadedIcon();
+               } else if (visited) {
+                  this.showVisitedIcon();
                } else {
-                  state.setCurrentLoadedMarker(null);
+                  this.showUnselectedIcon();
                }
-               if (oldMarker && oldMarker !== this) {
-                  oldMarker.checkIconStatus();
-               }
-               this.checkIconStatus();
-             },
-             center : function () {
-                this.view.center();
-             },
-             centerAndMoveLeft : function (percentage) {
-                this.view.centerAndMove(percentage, "left");
-             },
-             centerAndMoveRight : function (percentage) {
-                this.view.centerAndMove(percentage, "right");
-             },
-             setCentered : function (centered) {
-                this.view.setCentered(centered);
-             },
-             isCentered : function () {
-                return this.view.isCentered();
-             },
-             getPosition : function () {
-                return this.view.getPosition();
-             },
-             storePosition : function () {
-                this.view.storePosition();
-             },
-             getStoredPosition : function () {
-                this.view.getStoredPosition();
-             },
-              checkIconStatus : function () {
-                 
-                 var visited = true,
-                    loadedMarker = state.getCurrentLoadedMarker(),
-                    currentMarker = state.getCurrentMarker();
-                 
-                 if (this.model.getType() === "Album") {
-                    
-                    if (this.isDisabled()) {
-                       this.showDisabledIcon();
-                    } else if (this === currentMarker) {
-                       this.showSelectedIcon();
-                    } else {
-                       this.showUnselectedIcon();
-                    }
-                    
-                 } else if (this.model.getType() === "Place") {
-                    
-                        
-                    this.model.getPhotos().forEach(function (photo) {
-                       visited = visited && photo.isVisited();
-                    });
-                    
-                    if (this.isDisabled()) {
-                       this.showDisabledIcon();
-                    } else if (this === currentMarker && this !== loadedMarker) {
-                       this.showSelectedIcon();
-                    } else if (this === loadedMarker) {
-                       this.showLoadedIcon();
-                    } else if (visited) {
-                       this.showVisitedIcon();
-                    } else {
-                       this.showUnselectedIcon();
-                    }
-                 }
-                 
-              },
-              setCursor : function (style) {
-                 this.view.setCursor(style);
-              },
-              showVisitedIcon : function () {
-                 var markerIcon = (this.model.getType() === "Place") ? PLACE_VISITED_ICON : ALBUM_VISITED_ICON;
-                 this._showIcon(markerIcon);
-              },
-              showLoadedIcon : function () {
-                 var markerIcon = (this.model.getType() === "Place") ? PLACE_LOADED_ICON : ALBUM_LOADED_ICON;
-                 this._showIcon(markerIcon);
-              },
-              showSelectedIcon : function () {
-                 var markerIcon = (this.model.getType() === "Place") ? PLACE_SELECTED_ICON : ALBUM_SELECTED_ICON;
-                 this._showIcon(markerIcon);
-              },
-              showUnselectedIcon : function () {
-                 var markerIcon = (this.model.getType() === "Place") ? PLACE_UNSELECTED_ICON : ALBUM_UNSELECTED_ICON;
-                 this._showIcon(markerIcon);
-              },
-              showDisabledIcon : function () {
-                 var markerIcon = (this.model.getType() === "Place") ? PLACE_DISABLED_ICON : ALBUM_DISABLED_ICON;
-                 this._showIcon(markerIcon);
-              },
-              /**
-              * @public
-              * @returns {float} Latitude
-              */
-             getLat : function () {
-                return this.model.getLat();
-             },
-             /**
-              * @public
-              * @returns {float} Longitude
-              */
-             getLng : function () {
-                return this.model.getLng();
-             },
-             getLatLng : function () {
-                var map = this.view.getMap();
-                return map.createLatLng(this.getLat(), this.getLng());
-             },
-             open : function () {
-                
-                // switch to albumview if album is opened
-                if (this.model.getType() === "Album") {
-                   
-                   // build url -> format models/model/(id/)request
-                   window.location.href = '/album/' + this.model.getId() + '/view/' + this.model.getSecret() + "/";
-                   
-                // reset ui and (re)start gallery when place is opened
-                } else if (this.model.getType() === "Place") {
-   
-                   communicator.publish("dblClick:place", this);
-                }
-             },
-              _showIcon : function (icon) {
-                 
-                 var markerIsPlace = (this.model.getType() === "Place");
-                    
-                 this.view.setIcon({
-                    url : icon,
-                    width: markerIsPlace ? PLACE_ICON_WIDTH : ALBUM_ICON_WIDTH,
-                    height: markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT
-                 });
-              }
-          });
-       });
+            }
+         },
+         setCursor : function (style) {
+            this.view.setCursor(style);
+         },
+         showVisitedIcon : function () {
+            var markerIcon = (this.model.getType() === "Place") ? PLACE_VISITED_ICON : ALBUM_VISITED_ICON;
+            this._showIcon(markerIcon);
+         },
+         showLoadedIcon : function () {
+            var markerIcon = (this.model.getType() === "Place") ? PLACE_LOADED_ICON : ALBUM_LOADED_ICON;
+            this._showIcon(markerIcon);
+         },
+         showSelectedIcon : function () {
+            var markerIcon = (this.model.getType() === "Place") ? PLACE_SELECTED_ICON : ALBUM_SELECTED_ICON;
+            this._showIcon(markerIcon);
+         },
+         showUnselectedIcon : function () {
+            var markerIcon = (this.model.getType() === "Place") ? PLACE_UNSELECTED_ICON : ALBUM_UNSELECTED_ICON;
+            this._showIcon(markerIcon);
+         },
+         showDisabledIcon : function () {
+            var markerIcon = (this.model.getType() === "Place") ? PLACE_DISABLED_ICON : ALBUM_DISABLED_ICON;
+            this._showIcon(markerIcon);
+         },
+         /**
+          * @public
+          * @returns {float} Latitude
+          */
+         getLat : function () {
+            return this.model.getLat();
+         },
+         /**
+          * @public
+          * @returns {float} Longitude
+          */
+         getLng : function () {
+            return this.model.getLng();
+         },
+         getLatLng : function () {
+            var map = this.view.getMap();
+            return map.createLatLng(this.getLat(), this.getLng());
+         },
+         _showIcon : function (icon) {
+            
+            var markerIsPlace = (this.model.getType() === "Place");
+               
+            this.view.setIcon({
+               url : icon,
+               width: markerIsPlace ? PLACE_ICON_WIDTH : ALBUM_ICON_WIDTH,
+               height: markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT
+            });
+         }
+      });
+   });
