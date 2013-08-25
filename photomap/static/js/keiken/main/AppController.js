@@ -113,7 +113,6 @@ define(["dojo/_base/declare",
                   //TODO update hash/state accordingly
                });
                
-               communicator.subscribe("change:photoOrder", this._openPhotosUpdateDialog);
                communicator.subscribe("visited:photo", function (photo) {
                   main.getUI().getGallery().setPhotoVisited(photo);
                });
@@ -172,39 +171,6 @@ define(["dojo/_base/declare",
                if (view && name !== viewName) {
                   view.setActive(false);
                }
-            });
-         },
-         _openPhotosUpdateDialog : function (photos) {
-            var instance = this;
-            this.publish("load:dialog", {
-               load : function () {
-                  $("input[name='photos']").val(JSON.stringify(photos));
-               },
-               success : function () {
-                  var place = main.getUIState().getCurrentLoadedPlace().getModel();
-                  // update the 'real' photo order
-                  photos.forEach(function (photo, index) {
-                     place.getPhoto(photo.photo).order = photo.order;
-                     console.log("Update order of photo %d successful.", index);
-                  });
-                  
-                  console.log("All Photos updated. Updating Gallery.");
-                  place.sortPhotos();
-                  
-                  photos = place.getPhotos().getAll();
-                  main.getUI().getGallery().restart(photos);
-                  if (main.getUI().getSlideshow().isStarted()) {
-                     main.getUI().getSlideshow().restart(photos);
-                  }
-               },
-               abort : function () {
-                  console.log("UIFullGallery: Aborted updating order. Restoring old order");
-                  instance.publish("abort:photoOrder");
-                  //TODO this could be done better
-                  main.getUI().getAdminGallery().refresh();
-               },
-               type : CONFIRM_DIALOG,
-               url : "/update-photos"
             });
          },
          /*

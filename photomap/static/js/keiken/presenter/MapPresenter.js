@@ -56,6 +56,9 @@ define(["dojo/_base/declare",
             this.view.toggleMessage((this.markerModelCollection.size() === 0));
             
          },
+         getOpenedMarker : function () {
+            return this.openedMarker;
+         },
          /* ------------------------------------- */
          /* ---------- Map Management  ---------- */
          
@@ -91,12 +94,16 @@ define(["dojo/_base/declare",
             }
          },
          resetSelectedMarker : function () {
-            this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), false);
-            this.selectedMarker = null;
+            if (this.selectedMarker) {
+               this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), false);
+               this.selectedMarker = null;
+            }
          },
          resetOpenedMarker : function () {
-            this.openedMarker.updateIcon(false, (this.selectedMarker === this.openedMarker));
-            this.openedMarker = null;
+            if (this.openedMarker) {
+               this.openedMarker.updateIcon(false, (this.selectedMarker === this.openedMarker));
+               this.openedMarker = null;
+            }
          },
          updateMarkerIcons : function (presenter) {
             var opened, selected;

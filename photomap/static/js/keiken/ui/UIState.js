@@ -35,10 +35,6 @@ define(["dojo/_base/declare",
          getAlbums : function () {
             return this.albums;
          },
-         getPlaces : function () {
-            assertTrue(this.album, "there is no album loaded");
-            return this.album.getPlaces();
-         },
          //--------------------------------------------------------------------
          //UI------------------------------------------------------------------
          //--------------------------------------------------------------------
