@@ -145,8 +145,9 @@ define(["../util/CarouselAnimation",
                     loader : $loader,
                     "animationTime" : animationTime,
                     complete : function ($photos) {
-                       // This should never be executed.
-                       QUnit.ok(false);
+                       // PhotoCarouselWidgets needs this callback.
+                       // // This should never be executed.
+                       // QUnit.ok(false);
                     }
                  });
                  carouselAnimation.destroy();

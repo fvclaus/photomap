@@ -21,9 +21,9 @@ define(["dojo/_base/declare",
               */
              navigateTo : function (photo) {
                 // Navigate to photo, displaying it when the slideshow is started
-                assertTrue(photo instanceof Photo || photo === null, "Parameter photo must be an instance of Photo.");
+                assertTrue(photo !== undefined, "Parameter photo must not be undefined.");
                 if (!this._run) {
-                   this.run();
+                   this.run(photo);
                 } else {
                    this.carousel.navigateTo(photo);
                 }
@@ -45,6 +45,12 @@ define(["dojo/_base/declare",
                       this.carousel.navigateRight();
                    }
                 }
+             },
+             /**
+              * @public
+              */
+             getNPages : function () {
+                return this.carousel.getNPages();
              }
           });
        });

@@ -148,7 +148,7 @@ define(["dojo/_base/declare",
              _update : function ($photos) {
                 
                 var instance = this;
-                
+                console.log("GalleryWidget: _update");
                 this._showHelpText();
                 this._showEmptyTiles();
                 // check each thumb if the photo it represents is already visited; if yes -> show 'visited' icon
@@ -257,29 +257,23 @@ define(["dojo/_base/declare",
                 var instance = this;
                 
                 this.$navLeft.on("click", function () {
-                   
-                   if (!instance.isDisabled()) {
-                      instance.carousel.navigateLeft();
-                   }
+                   instance.carousel.navigateLeft();
+                   communicator.publish("opened:GalleryPage", instance.carousel.getCurrentPageIndex());
                 });
                 this.$navRight.on("click", function () {
-                   
-                   if (!instance.isDisabled()) {
-                      instance.carousel.navigateRight();
-                   }
+                   instance.carousel.navigateRight();
+                   communicator.publish("opened:GalleryPage", instance.carousel.getCurrentPageIndex());
                 });
                 
                 $("body")
                   .on("keyup.Gallery", null, "left", function () {
-                     if (instance._run && instance.active && !instance.disabled) {
-                        console.log("UIGallery: navigating left");
-                        instance.carousel.navigateLeft();
+                     if (instance._run && instance.active) {
+                        instance.$navLeft.trigger("click");
                      }
                   })
                   .on("keyup.Gallery", null, "right", function () {
-                     if (instance._run && instance.active && !instance.disabled) {
-                        console.log("UIGallery: navigating right");
-                        instance.carousel.navigateRight();
+                     if (instance._run && instance.active) {
+                        instance.$navRight.trigger("click");
                      }
                   });
              },

@@ -99,6 +99,7 @@ define(["dojo/_base/declare",
                       // Fadout items in animationTime microseconds.
                       options.items.fadeOut(options.animationTime);
                    } else {
+                      // This needs a little time to catch up.
                       setTimeout(function() {
                          scaleX(options.items, 0);
                       }, 100);
@@ -106,14 +107,16 @@ define(["dojo/_base/declare",
                    // Therefore the other code has to be moved into a timeout.
                    // This thread might be executed after the instance has been destroyed.
                    setTimeout(function () {
-                      try { 
-                         instance._ping();
-                         options.items
-                            .hide();
-                            // .css("visibility", "hidden");// Scale does not hide the items.
-                         // Show the loading handler and
-                         options.loader.show();
-                         // Call the complete callback.
+                      try {
+                         //TODO this is an hack to always execute the complete callback that is needed by PhotoCarouselWidget.
+                         if (!instance._isDestroyed()) {
+                            options.items.hide();
+                            // Show the loading handler and
+                            options.loader.show();
+                            // Call the complete callback.
+                         }
+                         // Never skip the start complete event.
+                         // The complete event starts the load handler for photos.
                          options.complete.call(options.context, options.items);
                       } catch (e) {
                          console.log("CarouselAnimation: This instance has been destroyed. Aborting.");
@@ -172,6 +175,7 @@ define(["dojo/_base/declare",
                    // This thread might be executed after its instance has been destroyed.
                    window.setTimeout(function () {
                       try { 
+                         instance._ping();
                          options.complete.call(options.context, options.items);
                       } catch (e) {
                          console.log("CarouselAnimation: This instance has been destroyed. Aborting.");
@@ -182,6 +186,9 @@ define(["dojo/_base/declare",
                 } else {
                    assertTrue(false, "Time has to be one of start or end.");
                 }
+             },
+             _isDestroyed : function () {
+                return this.defaults === null;
              },
              /**
               * @private
