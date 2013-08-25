@@ -1,123 +1,196 @@
-/*global $, define, main*/
+/*global $, define, main, assertTrue, gettext */
 
 
 "use strict";
 
 
-define(["dojo/_base/declare", 
-        "./Presenter", 
+define(["dojo/_base/declare",
+        "./Presenter",
         "../util/Communicator",
-        "../view/MarkerView", 
+        "../view/MarkerView",
         "../util/ClientState",
         "../ui/UIState"],
-       function (declare, Presenter, communicator, MarkerView, clientstate, state) {
-          return declare(Presenter,  {
-             centerChanged : function () {
-                communicator.publish("change:mapCenter");
-             },
-             getCenter : function () {
-                return this.view.getMapCenter();
-             },
-             storeCurrentState : function () {
-                this.view.storeCurrentState();
-             },
-             restoreSavedState : function () {
-                this.view.restoreSavedState();
-             },
-             /**
-              * @public
-              * @param {Marker} marker
-              */
-             triggerClickOnMarker : function (marker) {
-                this.view.triggerEventOnMarker(marker, "click");
-             },
-             /**
-              * @public
-              * @param {Marker} marker
-              */
-             triggerDblClickOnMarker : function (marker) {
-                this.view.triggerEventOnMarker(marker, "dblclick");
-             },
-             triggerMouseOverOnMarker : function (marker) {
-                this.view.triggerEventOnMarker(marker, "mouseover");
-             },
-             insertMarker : function (model, init) {
-                console.log(model);
-                var markerImplementation = this.view.createMarker(model),
-                   markerView = new MarkerView(this.view, markerImplementation, model),
-                   marker = markerView.getPresenter();
-                
-                if (!init) {
-                  communicator.publish("insert:marker", marker);
-                }
-                
-                return marker;
-             },
-             setNoMarkerMessage : function () {
-                this.view.setNoMarkerMessage();
-             },
-             getPositionInPixel : function (element) {
-                return this.view.getPositionInPixel(element);
-             },
-             initMarkers : function (models) {
-                var instance = this,
-                   markers = [];
-                $.each(models, function (index, model) {
-                   markers.push(instance.insertMarker(model, true));
-                });
-                
-                return markers;
-             },
-             init : function (albumCollection) {
-                
-                console.log("in map init");
-                var markers;
-                // switch between albumview and dashboard (different map)
-                if (state.isAlbumView()) {
-                   //in this case albumCollection is actually just a single album with a placeCollection
-                   markers = this.initMarkers(albumCollection.getPlaces().getAll());
-                   // show the map depending on amount of markers
-                   if (markers.length <= 0) {
-                      this.view.expandBounds(state.getAlbum());
-                   } else if (markers.length === 1) {
-                      this.view.expandBounds(markers[0]);
-                   } else {
-                      this.fitMapToMarkers(markers);
-                   }
-                   
-                } else if (state.isDashboardView()) {
-                   markers = this.initMarkers(albumCollection);
-                   // show the map depending on amount of markers
-                   if (markers.length <= 0) {
-                      this.view.showWorld();
-                   } else if (markers.length === 1) {
-                      this.view.expandBounds(markers[0]);
-                   } else {
-                      this.fitMapToMarkers(markers);
-                   }
-                }
-                // set map options if interactive
-                this.view.map.setOptions(this.view.mapOptions);
-                this.view.setMapCursor();
-                if (markers.lengeth <= 0) {
-                   this.view.setNoMarkerMessage();
-                }
-                
-                communicator.publish("insert:markersInitialInsert", markers);
-             },
-             showAll : function () {
-                this.fitMapToMarkers(state.getMarkers());
-             },
-             fitMapToMarkers : function (markers) {
-                var latLngData = [];
-                
-                $.each(markers, function (index, marker) {
-                   latLngData.push({
-                      lat : marker.getLat(),
-                      lng : marker.getLng()
-                   });
-                });
-                this.view.fit(latLngData);
-             },
-          });
-       });
+   function (declare, Presenter, communicator, MarkerView, clientstate, state) {
+      return declare(Presenter,  {
+         constructor : function () {
+            this.markerModelCollection = null;
+            this.markerPresenter = null;
+            this.selectedMarker = null;
+            this.openedMarker = null;
+         },
+         
+         start : function (mapData, albumview, admin) {
+            if (albumview) {
+               //in this case mapData is actually just a single album with a place-collection
+               this.markerModelCollection = mapData.getPlaces();
+               // zoom out when no places are created yet
+               if (this.markerModelCollection.size() === 0) {
+                  this.view.expandBounds(mapData);
+               }
+               this._setMapMessage(true, admin);
+               if (admin) {
+                  this.view.bindClickListener();
+               }
+            } else {
+               // here mapData is a collection of all albums of the user
+               this.markerModelCollection = mapData;
+               // show whole world if no albums are created yet
+               if (this.markerModelCollection.size() === 0) {
+                  this.view.showWorld();
+               }
+               this.view.bindClickListener();
+               this._setMapMessage(false);
+            }
+            // set array of marker-presenter
+            this.markerPresenter = this.initMarkers(this.markerModelCollection.getAll());
+            // show the map depending on amount of markers
+            if (this.markerModelCollection.size() === 1) {
+               this.view.expandBounds(this.markerModelCollection.getByIndex(1));
+            } else {
+               this._fitMapToMarkers(this.markerModelCollection.getAll());
+            }
+            // set map options if interactive
+            this.view.map.setOptions(this.view.mapOptions);
+            this.view.setMapCursor();
+            // show message if no markers are displayed
+            this.view.toggleMessage((this.markerModelCollection.size() === 0));
+            
+         },
+         getOpenedMarker : function () {
+            return this.openedMarker;
+         },
+         /* ------------------------------------- */
+         /* ---------- Map Management  ---------- */
+         
+         getPositionInPixel : function (element) {
+            return this.view.getPositionInPixel(element);
+         },
+         /* ------------------------------------- */
+         /* --------- Marker Management --------- */
+         updateMarkerStatus : function (presenter, status) {
+            assertTrue((status === "select" || status === "open"), "Marker status can just be 'selected' or 'opened'.");
+            
+            if (status === "select") {
+               // change icon of selected (soon to be old) marker; (!) when a marker is deselected it might still be opened in which case its icon has to change to selected
+               if (this.selectedMarker) {
+                  this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), false);
+               }
+               // change selected marker
+               this.selectedMarker = presenter;
+               // change icon of new selected marker; (!) when a marker is selected it might already be opened in which case its icon doesn't change
+               this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), true);
+            } else {
+               // when a marker is opened it's also selected at first -> both selected and opened have to be changed and updated (icon-wise)
+               if (this.selectedMarker) {
+                  this.selectedMarker.updateIcon(false, false);
+               }
+               this.selectedMarker = presenter;
+               if (this.openedMarker) {
+                  this.openedMarker.updateIcon(false, false);
+               }
+               this.openedMarker = presenter;
+               // change icon of new opened marker
+               this.openedMarker.updateIcon(true, true);
+            }
+         },
+         resetSelectedMarker : function () {
+            if (this.selectedMarker) {
+               this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), false);
+               this.selectedMarker = null;
+            }
+         },
+         resetOpenedMarker : function () {
+            if (this.openedMarker) {
+               this.openedMarker.updateIcon(false, (this.selectedMarker === this.openedMarker));
+               this.openedMarker = null;
+            }
+         },
+         updateMarkerIcons : function (presenter) {
+            var opened, selected;
+            
+            this.markerPresenter.forEach(function (markerPresenter) {
+               opened = (markerPresenter === this.openedMarker);
+               selected = (markerPresenter === this.selectedMarker);
+               markerPresenter.checkIconStatus(opened, selected);
+            });
+         },
+         centerMarker : function (presenter, offset) {
+            if (offset < 0) {
+               presenter.centerAndMoveLeft(-offset);
+            } else {
+               presenter.centerAndMoveRight(offset);
+            }
+         },
+         /**
+          * @public
+          * @param {Marker} marker
+          */
+         triggerClickOnMarker : function (marker) {
+            this.view.triggerEventOnMarker(marker, "click");
+         },
+         /**
+          * @public
+          * @param {Marker} marker
+          */
+         triggerDblClickOnMarker : function (marker) {
+            this.view.triggerEventOnMarker(marker, "dblclick");
+         },
+         triggerMouseOverOnMarker : function (marker) {
+            this.view.triggerEventOnMarker(marker, "mouseover");
+         },
+         insertMarker : function (model, init) {
+            var markerImplementation = this.view.createMarker(model),
+               markerView = new MarkerView(this.view, markerImplementation, model),
+               marker = markerView.getPresenter();
+            
+            marker.show();
+            marker.updateIcon(false, false);
+            if (!init) {
+               this.view.toggleMessage(false);
+               this.map.triggerDblClickOnMarker(marker);
+            }
+            
+            return marker;
+         },
+         initMarkers : function (models) {
+            var instance = this,
+               presenter = [];
+            models.forEach(function (model) {
+               presenter.push(instance.insertMarker(model, true));
+            });
+            communicator.publish("insert:markers", presenter);
+            return presenter;
+         },
+         showAll : function () {
+            this._fitMapToMarkers(this.markerModelCollection.getAll());
+         },
+         /* ----------------------------------- */
+         /* --------- private methods --------- */
+         _setMapMessage : function (albumview, admin) {
+            if (!albumview) {
+               this.view.setMessage(gettext("MAP_NO_ALBUMS"), {
+                  hideOnMouseover: false,
+                  hideOnClick: true,
+                  openOnMouseleave: true
+               });
+            } else {
+               if (admin) {
+                  this.view.setMessage(gettext("MAP_NO_PLACES_ADMIN"));
+               } else {
+                  this.view.setMessage(gettext("MAP_NO_PLACES_GUEST"));
+               }
+            }
+         },
+         _fitMapToMarkers : function (models) {
+            var latLngData = [];
+            
+            models.forEach(function (model) {
+               latLngData.push({
+                  lat : model.getLat(),
+                  lng : model.getLng()
+               });
+            });
+            this.view.fit(latLngData);
+         }
+      });
+   });

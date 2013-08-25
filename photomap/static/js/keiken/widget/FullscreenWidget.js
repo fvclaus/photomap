@@ -64,6 +64,7 @@ define(["dojo/_base/declare",
              hide : function () {
                 this.$container.hide();
                 this.visible = false;
+                communicator.publish("closed:fullscreen");
              },
              /**
               * @presenter
