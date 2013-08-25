@@ -165,6 +165,7 @@ define([
                    // this would overwrite the photos description
                    instance._updateDetail(instance.currentPhoto);
                    instance._showDetail();
+                   communicator.publish("click:photoDetailOpen");
                 }
              });
              $(".mp-close-full-description").on("click", function (event) {

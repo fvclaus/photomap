@@ -16,8 +16,8 @@ define(["dojo/_base/declare",
         "../util/ClientState",
         "../util/InfoText",
         "../util/Tools",
-        "../util/HashHelper"],
-   function (declare, communicator, state, Album, Collection, clientstate, InfoText, tools, hash) {
+        "./AppStateHelper"],
+   function (declare, communicator, state, Album, Collection, clientstate, InfoText, tools, appState) {
       return declare(null, {
          
          constructor : function () {
@@ -27,15 +27,11 @@ define(["dojo/_base/declare",
             this.infoText = new InfoText();
             /* -------- hash management -------- */
             $(window)
-               .on("load", function () {
-                  var state = hash.parse();
-                  console.log("Initial AppState:");
-                  console.log(state);
-               })
-               .on("hashchange", function () {
-                  var state = hash.getCurrentState();
+               .on("popstate", function () {
+                  var state = appState.getCurrentState();
                   console.log("New AppState:");
                   console.log(state);
+                  instance._updateState(state);
                });
             communicator.subscribeOnce("init", this._init);
             communicator.subscribe("activate:view", this._viewActivation);
@@ -56,6 +52,11 @@ define(["dojo/_base/declare",
                "click:marker": function (markerPresenter) {
                   this._showDetail(markerPresenter);
                   main.getMap().updateMarkerStatus(markerPresenter, "select");
+                  if (markerPresenter.getModel().getType() === "Album") {
+                     appState.updateAlbum(markerPresenter.getModel().getId());
+                  } else {
+                     appState.updateSelectedPlace(markerPresenter.getModel().getId());
+                  }
                },
                "dblClick:marker": function (markerPresenter) {
                   if (markerPresenter.getModel().getType() === "Album") {
@@ -64,13 +65,19 @@ define(["dojo/_base/declare",
                   } else {
                      this._startPhotoWidgets(markerPresenter.getModel());
                      main.getMap().updateMarkerStatus(markerPresenter, "open");
+                     appState.updateOpenedPlace(markerPresenter.getModel().getId());
                   }
                }
             }, this);
-            
-            communicator.subscribe("close:detail", function () {
-               main.getMap().resetSelectedMarker();
-               this._hideDetail();
+            communicator.subscribe({
+               "close:detail": function () {
+                  main.getMap().resetSelectedMarker();
+                  this._hideDetail();
+                  appState.updateDescription(false);
+               },
+               "click:photoDetailOpen": function () {
+                  appState.updateDescription(true);
+               }
             }, this);
             
             communicator.subscribe("change:usedSpace", function (data) {
@@ -84,8 +91,10 @@ define(["dojo/_base/declare",
                      main.getUI().getControls().hide(true);
                   },
                   "click:galleryThumb": function (photo) {
+                     main.getMap().resetSelectedMarker();
+                     this._hideDetail();
                      this._navigateSlideshow(photo);
-                     //TODO do sth like changing hash/state and navigate the slideshow
+                     appState.updatePhoto(photo.getId());
                   }
                }, this);
                
@@ -99,18 +108,21 @@ define(["dojo/_base/declare",
                      clientstate.insertVisitedPhoto(photo);
                      photo.setVisited(true);
                      main.getUI().getFullscreen().navigateTo(photo);
+                     appState.updatePhoto(photo.getId());
                   },
                   "click:slideshowImage": function () {
                      main.getUI().getFullscreen().show();
+                     appState.updateFullscreen(true);
                   }
                });
                
-               communicator.subscribe("navigate:fullscreen", function (direction) {
-                  main.getUI().getSlideshow().navigateWithDirection(direction);
-               });
-               communicator.subscribe("close:detail", function () {
-                  main.getMap().resetSelectedMarker();
-                  //TODO update hash/state accordingly
+               communicator.subscribe({
+                  "navigate:fullscreen": function (direction) {
+                     main.getUI().getSlideshow().navigateWithDirection(direction);
+                  },
+                  "closed:fullscreen": function () {
+                     appState.updateFullscreen(false);
+                  }
                });
                
                communicator.subscribe("visited:photo", function (photo) {
@@ -118,12 +130,12 @@ define(["dojo/_base/declare",
                });
                communicator.subscribe("click:pageTitle", function () {
                   main.getUI().getInformation().update(state.getAlbum());
+                  appState.updateDescription(state.getAlbum().getDescription());
                });
                communicator.subscribe("clicked:GalleryOpenButton", function () {
                   main.getUI().getAdminGallery().run();
                });
                communicator.subscribe("hover:GalleryPhoto", function (data) {
-                  state.setCurrentPhoto(data.photo);
                   main.getUI().getControls().show({
                      modelInstance : data.photo,
                      offset : data.element.offset(),
@@ -140,14 +152,17 @@ define(["dojo/_base/declare",
           * --------------------------------------------------
           */
          _init : function (albumData) {
+            var albums;
             if (state.isAlbumView()) {
+               // set initial state -> opened description, and maybe place or even photo
+               appState.setInitialState();
                // albumData is a single album
+               state.setAlbum(albumData);
                main.getUI().getInformation().update(albumData);
                main.getUI().getPageTitleWidget().update(albumData.getTitle());
-               state.setAlbum(albumData);
                main.getMap().start(albumData, true, albumData.isOwner());
             } else {
-               var albums = new Collection(albumData, {
+               albums = new Collection(albumData, {
                   modelConstructor: Album,
                   modelType: "Album"
                });
@@ -155,6 +170,9 @@ define(["dojo/_base/declare",
                state.setAlbums(albums);
             }
             clientstate.init();
+         },
+         _updateState : function (newState) {
+            //TODO handle appstate-changes
          },
          _viewActivation : function (viewName) {
             var ui = main.getUI(),
