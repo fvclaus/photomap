@@ -27,14 +27,19 @@ define(["dojo/_base/declare",
             this.infoText = new InfoText();
             // instantiate attributes that tell the controller whether an event should be ignored
             this.ignoreNextSlideshowUpdate = false;
+            this.ignoreNextAppStateChange = true;
             
             /* -------- hash management -------- */
             $(window)
                .on("popstate", function () {
-                  var newState = appState.getCurrentState();
-                  console.log("New AppState:");
-                  console.log(newState);
-                  instance._updateState(newState);
+                  if (!instance.ignoreNextAppStateChange) {
+                     var newState = appState.getCurrentState();
+                     console.log("New AppState:");
+                     console.log(newState);
+                     instance._updateState(newState);
+                  } else {
+                     instance.ignoreNextAppStateChange = false;
+                  }
                });
             communicator.subscribeOnce("init", this._init, this);
             communicator.subscribe("activate:view", this._viewActivation);
@@ -100,8 +105,7 @@ define(["dojo/_base/declare",
                      appState.updatePhoto(photo.getId());
                   },
                   "opened:GalleryPage": function (pageIndex) {
-                     //TODO manage page updates also in appState (still ignored)
-                     //appState.updatePage(pageIndex);
+                     appState.updatePage(pageIndex);
                   }
                }, this);
                
@@ -113,6 +117,7 @@ define(["dojo/_base/declare",
                      if (!this.ignoreNextSlideshowUpdate) {
                         main.getUI().getInformation().update(photo);
                         main.getUI().getGallery().navigateIfNecessary(photo);
+                        main.getUI().getGallery().setPhotoVisited(photo);
                         clientstate.insertVisitedPhoto(photo);
                         photo.setVisited(true);
                         main.getUI().getFullscreen().navigateTo(photo);
@@ -134,10 +139,6 @@ define(["dojo/_base/declare",
                   "click:fullscreenClose": function () {
                      appState.updateFullscreen(false);
                   }
-               });
-               
-               communicator.subscribe("visited:photo", function (photo) {
-                  main.getUI().getGallery().setPhotoVisited(photo);
                });
                communicator.subscribe("click:pageTitle", function () {
                   main.getUI().getInformation().update(state.getAlbum());
@@ -171,7 +172,8 @@ define(["dojo/_base/declare",
                initialState = appState.setInitialState();
                main.getUI().getPageTitleWidget().update(albumData.getTitle());
                main.getMap().start(albumData, true, albumData.isOwner());
-               this._updateState(initialState);
+               main.getUI().getGallery().startup({ adminMode : albumData.isOwner() });
+               this._updateState(initialState, true);
             } else {
                albums = new Collection(albumData, {
                   modelConstructor: Album,
@@ -182,8 +184,9 @@ define(["dojo/_base/declare",
             }
             clientstate.init();
          },
-         _updateState : function (newState) {
-            //TODO handle appstate-changes
+         _updateState : function (newState, initialCall) {
+            //ignore next AppChange - why? some browser trigger popstate after page load and some don't, for those who do the appstate will be initialized and then changed which is not necessary and causes troubles at some occasions..
+            this.ignoreNextAppStateChange = initialCall || false;
             var album, selectedPlace, openedPlace, photo;
             // start with testing if it's dashboard view -> the only possible action is album-selection
             if (state.isDashboardView()) {
@@ -192,7 +195,7 @@ define(["dojo/_base/declare",
                   main.getMap().updateMarkerStatus(album, "select");
                } else if (newState.album) {
                   this.infoText.alert(gettext("INVALID_SELECTED_ALBUM"));
-               } if (!newState.album) {
+               } else if (!newState.album) {
                   main.getMap().resetSelectedMarker();
                }
             // if not -> albumview -> more actions possible
@@ -206,8 +209,10 @@ define(["dojo/_base/declare",
                }
                // open place if necessary
                if (openedPlace) {
-                  this._startPhotoWidgets(openedPlace);
-                  main.getMap().updateMarkerStatus(openedPlace, "open");
+                  if (!main.getMap().getOpenedMarker() || openedPlace !== main.getMap().getOpenedMarker().getModel()) {
+                     this._startPhotoWidgets(openedPlace);
+                     main.getMap().updateMarkerStatus(openedPlace, "open");
+                  }
                } else if (newState.openedPlace) {
                   this.infoText.alert(gettext("INVALID_OPENED_PLACE"));
                } else {
@@ -215,10 +220,15 @@ define(["dojo/_base/declare",
                }
                // load photo if necessary
                if (photo) {
-                  this.ignoreNextSlideshowUpdate = true;
+                  // ignore next slideshow update to prevent gallery page from being auto navigated, unless (!) it is the initial appstate update
+                  this.ignoreNextSlideshowUpdate = !initialCall;
                   this._navigateSlideshow(photo);
                } else if (newState.photo) {
                   this.infoText.alert(gettext("INVALID_LOADED_PHOTO"));
+               }
+               // navigate gallery if necessary
+               if (newState.page && newState.page <= main.getUI().getGallery().getNPages()) {
+                  main.getUI().getGallery().navigateTo(newState.page);
                }
                // start fullscreen if necessary
                if (photo && newState.fullscreen) {
@@ -277,6 +287,11 @@ define(["dojo/_base/declare",
             main.getUI().getSlideshow().navigateTo(photo);
          },
          _showDetail : function (markerModel) {
+            
+            if (!markerModel) {
+               return;
+            }
+            
             var detail = main.getUI().getInformation();
             
             detail.update(markerModel);
@@ -295,14 +310,10 @@ define(["dojo/_base/declare",
          _startPhotoWidgets : function (place) {
             var photos = place.getPhotos();
             main.getUI().getInformation().update(place);
-            main.getUI().getGallery().startup();
             main.getUI().getGallery().load(photos);
             main.getUI().getGallery().run();
-            main.getUI().getSlideshow().startup();
             main.getUI().getSlideshow().load(photos);
-            main.getUI().getAdminGallery().startup();
             main.getUI().getAdminGallery().load(photos);
-            main.getUI().getFullscreen().startup();
             main.getUI().getFullscreen().load(photos);
          }
       });

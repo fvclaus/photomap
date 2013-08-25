@@ -69,7 +69,7 @@ define(["dojo/_base/declare"],
             if (hashParams) {
                // create an object containing information given in the hash
                for (i; i < hashParams.length; i += 2) {
-                  parsedHash[hashParams[i]] = hashParams[i + 1];
+                  parsedHash[hashParams[i]] = parseInt(hashParams[i + 1], 10);
                }
             }
             return parsedHash;
@@ -131,9 +131,10 @@ define(["dojo/_base/declare"],
             var hashState = this.parse(),
                 // no place opened -> album description; place loaded -> place description, unless photo is loaded -> no description
                description = !(hashState.place) ? "album" : !(hashState.photo) ? "place" : null,
+               selectedPlace = !(hashState.place) ? null : !(hashState.photo) ? hashState.place : null,
                initialState =  {
                   "description": description,
-                  selectedPlace: hashState.place || null,
+                  "selectedPlace": selectedPlace,
                   openedPlace: hashState.place || null,
                   photo: hashState.photo || null
                };
@@ -141,7 +142,7 @@ define(["dojo/_base/declare"],
             console.log(initialState);
             this.update(initialState, {replace: true, dontUseCurrent: true, title: "initial state"});
             
-            return initialState;
+            return $.extend({}, this.defaultState, initialState);
          },
          /* --------------------------------- */
          /* -------- private methods -------- */

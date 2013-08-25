@@ -39,10 +39,6 @@ define(["dojo/_base/declare",
 
                  if (this.state.isAlbumView()) {
                     this.gallery = new GalleryWidget(null, $("#mp-gallery").get(0));
-                    // Guest or admin is only known upon ready:App.
-                    communicator.subscribeOnce("ready:App", function () {
-                       instance.gallery.startup({ adminMode : state.isAdmin() });
-                    });
                     this.slideshow = new SlideshowWidget(null, $(".mp-slideshow").get(0));
                     this.slideshow.startup();
                     this.adminGallery = new AdminGalleryWidget(null, $("#mp-full-left-column").get(0));
