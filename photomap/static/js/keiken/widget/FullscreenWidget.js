@@ -64,7 +64,6 @@ define(["dojo/_base/declare",
              hide : function () {
                 this.$container.hide();
                 this.visible = false;
-                communicator.publish("closed:fullscreen");
              },
              /**
               * @presenter
@@ -118,12 +117,13 @@ define(["dojo/_base/declare",
                 this.$close.on("click.Fullscreen", function () {
                    console.log("FullscreenWidget: close");
                    instance.hide();
-
+                   communicator.publish("click:fullscreenClose");
                 });
                 $("body")
                    .on("keyup.Fullscreen", null, "esc", function () {
                       if (instance.active) {
                          instance.hide();
+                         communicator.publish("click:fullscreenClose");
                       }
                    })
                    .on("keyup.Fullscreen", null, "left", function () {

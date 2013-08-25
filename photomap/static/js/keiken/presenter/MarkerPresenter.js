@@ -33,7 +33,6 @@ define(["dojo/_base/declare",
             this.view.centerAndMove(percentage, "right");
          },
          updateIcon : function (opened, selected) {
-            
             var visited = true;
             
             if (this.model.getType() === "Album") {

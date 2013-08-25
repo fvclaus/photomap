@@ -67,8 +67,11 @@ define(["dojo/_base/declare",
          },
          /* ------------------------------------- */
          /* --------- Marker Management --------- */
-         updateMarkerStatus : function (presenter, status) {
-            assertTrue((status === "select" || status === "open"), "Marker status can just be 'selected' or 'opened'.");
+         updateMarkerStatus : function (presenterOrModel, status) {
+            assertTrue((status === "select" || status === "open"), "Marker status can just be 'select' or 'open'.");
+            
+            // if the given place or album is not a presenter of a marker you have to get its presenter first..
+            var presenter = (presenterOrModel instanceof Presenter) ? presenterOrModel : this.getMarkerPresenter(presenterOrModel);
             
             if (status === "select") {
                // change icon of selected (soon to be old) marker; (!) when a marker is deselected it might still be opened in which case its icon has to change to selected
@@ -114,7 +117,13 @@ define(["dojo/_base/declare",
                markerPresenter.checkIconStatus(opened, selected);
             });
          },
-         centerMarker : function (presenter, offset) {
+         getMarkerPresenter : function (model) {
+            return this.markerPresenter.filter(function (markerPresenter) {
+               return (markerPresenter.getModel() === model);
+            })[0];
+         },
+         centerMarker : function (model, offset) {
+            var presenter = this.getMarkerPresenter(model);
             if (offset < 0) {
                presenter.centerAndMoveLeft(-offset);
             } else {
@@ -158,7 +167,6 @@ define(["dojo/_base/declare",
             models.forEach(function (model) {
                presenter.push(instance.insertMarker(model, true));
             });
-            communicator.publish("insert:markers", presenter);
             return presenter;
          },
          showAll : function () {

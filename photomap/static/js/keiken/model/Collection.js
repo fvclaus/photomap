@@ -74,6 +74,9 @@ define(["dojo/_base/declare"],
           * @param {Integer} id Id of the model
           */
          get : function (id) {
+            if (!id) {
+               return null;
+            }
             return this.models.filter(function (model) {
                return (model.getId() === id);
             })[0];

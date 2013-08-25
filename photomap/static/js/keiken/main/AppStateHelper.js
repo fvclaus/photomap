@@ -46,9 +46,9 @@ define(["dojo/_base/declare"],
          update : function (properties, newValue, options) {
             options = (typeof properties === "string") ? options : newValue;
             var method = options.replace ? "replaceState" : "pushState",
-                state = this._parseProperties(properties, newValue, options),
-                hash = this._createHash(state),
-                title = options.title || "";
+               state = this._parseProperties(properties, newValue, options),
+               hash = this._createHash(state),
+               title = options.title || "";
             
             window.history[method](state, title, hash);
          },
@@ -59,9 +59,9 @@ define(["dojo/_base/declare"],
           */
          parse : function (hash) {
             var url = hash || window.location.hash,
-                parsedHash = {},
-                hashParams,
-                i = 1;
+               parsedHash = {},
+               hashParams,
+               i = 1;
             hashParams = this.validHashes[0].exec(url);
             if (!hashParams) {
                hashParams = this.validHashes[1].exec(url);
@@ -85,11 +85,11 @@ define(["dojo/_base/declare"],
             var title = open ? "fullscreen opened" : "fullscreen closed";
             this.update("fullscreen", open, {"title": title});
          },
-         updateDescription : function (open) {
-            var title = open ? "description updated" : "description closed",
-                newState = {description: open};
+         updateDescription : function (modelType) {
+            var title = modelType ? "description updated" : "description closed",
+               newState = {description: modelType};
             
-            if (!open) {
+            if (!modelType) {
                newState.selectedPlace = null;
                newState.album = null;
             }
@@ -108,18 +108,18 @@ define(["dojo/_base/declare"],
          updateAlbum : function (newAlbum) {
             this.update({
                album: newAlbum,
-               description: true
+               description: "album"
             }, {"title": "selected album"});
          },
          updateSelectedPlace : function (newPlace) {
             this.update({
                selectedPlace: newPlace,
-               description: true
+               description: "place"
             }, {"title": "selected place"});
          },
          updateOpenedPlace : function (newPlace) {
             this.update({
-               description: true,
+               description: "place",
                selectedPlace: newPlace,
                openedPlace: newPlace
             }, {
@@ -129,14 +129,19 @@ define(["dojo/_base/declare"],
          },
          setInitialState : function () {
             var hashState = this.parse(),
+                // no place opened -> album description; place loaded -> place description, unless photo is loaded -> no description
+               description = !(hashState.place) ? "album" : !(hashState.photo) ? "place" : null,
                initialState =  {
-                  description: (hashState.photo === null),
+                  "description": description,
+                  selectedPlace: hashState.place || null,
                   openedPlace: hashState.place || null,
                   photo: hashState.photo || null
                };
             console.log("Initial AppState:");
             console.log(initialState);
             this.update(initialState, {replace: true, dontUseCurrent: true, title: "initial state"});
+            
+            return initialState;
          },
          /* --------------------------------- */
          /* -------- private methods -------- */
