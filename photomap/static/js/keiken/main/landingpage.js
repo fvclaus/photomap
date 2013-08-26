@@ -53,8 +53,7 @@ $(document).ready(function () {
          $("#keiken-login").css("visibility", "visible").animate({
             left : "69%"
          }, 400);
-         $("#keiken-login").tabs("option", "active", 0)
-         
+         $("#keiken-login").tabs("option", "active", 0);
       });
    }
 

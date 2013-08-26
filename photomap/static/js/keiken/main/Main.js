@@ -33,7 +33,7 @@ define([
             this.controls = new ModelOperationWidget(null, $("#mp-controls").get(0));
             this.controls.startup({ shareOperation : state.isDashboardView()});
             this.input = new DialogView();
-            this.information = new DetailView();
+            this.information = new DetailView(state.isDashboardView());
             if (state.isAlbumView()) {
                this.gallery = new GalleryWidget(null, $("#mp-gallery").get(0));
                this.slideshow = new SlideshowWidget(null, $(".mp-slideshow").get(0));

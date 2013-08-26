@@ -10,8 +10,8 @@ define([
 ],
    function (declare, Presenter, communicator) {
       return declare (Presenter, {
-         init : function () {
-            this.view.init();
+         constructor : function (isDashboard) {
+            this.isSLider = isDashboard;
          },
          hideDetail : function () {
             this.view.hideDetail();
@@ -31,14 +31,11 @@ define([
          slideOut : function () {
             this.view.slideOut();
          },
-         closeDetail : function (albumview, dontPublish) {
-            if (!albumview) {
+         closeDetail : function () {
+            if (this.isSlider) {
                this.slideOut();
             } else {
                this.hideDetail();
-            }
-            if (!dontPublish) {
-               communicator.publish("close:detail");
             }
          }
       });

@@ -322,7 +322,7 @@ define([
             }
          },
          _hideDetail : function () {
-            description.closeDetail(true);
+            description.closeDetail();
             if (state.isDashboardView()) {
                map.showAll();
             }

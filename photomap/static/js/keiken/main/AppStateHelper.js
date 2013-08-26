@@ -25,7 +25,7 @@ define(["dojo/_base/declare"],
                fullscreen: false,
                description: null
             };
-            this.validHashes  = [
+            this.validHashes = [
                   /^#!\/(place)\/(\d+)\/$/,
                   /^#!\/(place)\/(\d+)\/(photo)\/(\d+)\/$/,
             ];

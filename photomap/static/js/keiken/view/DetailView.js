@@ -158,20 +158,16 @@ define([
             
             this.$teaserContainer.on("click", ".mp-open-full-description", function (event) {
                
-               if (!instance.isDisabled()) {
-                  // there is a open explanation link which means the description did not fit into the teaser completely
-                  // update the explanation so it shows the photos description
-                  // this is necessary because the user might have looked at a description of a place or album
-                  // this would overwrite the photos description
-                  instance._updateDetail(instance.currentPhoto);
-                  instance._showDetail();
-                  communicator.publish("click:photoDetailOpen");
-               }
+               // there is a open explanation link which means the description did not fit into the teaser completely
+               // update the explanation so it shows the photos description
+               // this is necessary because the user might have looked at a description of a place or album
+               // this would overwrite the photos description
+               instance._updateDetail(instance.currentPhoto);
+               instance._showDetail();
+               communicator.publish("click:photoDetailOpen");
             });
             $(".mp-close-full-description").on("click", function (event) {
-               if (!instance.isDisabled()) {
-                  instance.presenter.closeDetail();
-               }
+               communicator.publish("close:detail");
             });
             this._bindInsertDescriptionListener();
          },
