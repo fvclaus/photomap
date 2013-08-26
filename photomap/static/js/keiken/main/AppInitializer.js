@@ -14,7 +14,7 @@ define([
    "./AppController",
    "./AppModelController",
    "../util/Communicator",
-   "../ui/UIState",
+   "./UIState",
    "../model/Album",
    "../util/InfoText"
 ],

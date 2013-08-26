@@ -11,21 +11,20 @@
 define([
    "dojo/_base/declare",
    "./Main",
-   "../ui/UI",
+   "./UIState",
    "../util/Communicator",
-   "../ui/UIState",
    "../util/ClientState"
 ],
-   function (declare, main, ui, communicator, state, clientstate) {
+   function (declare, main, state, communicator, clientstate) {
       var map = main.getMap(),
-         gallery = ui.getGallery(),
-         slideshow = ui.getSlideshow(),
-         description = ui.getInformation(),
-         fullscreen = ui.getFullscreen(),
-         adminGallery = ui.getAdminGallery(),
-         pageTitle = ui.getPageTitleWidget(),
-         controls = ui.getControls(),
-         dialog = ui.getInput();
+         gallery = main.getGallery(),
+         slideshow = main.getSlideshow(),
+         description = main.getInformation(),
+         fullscreen = main.getFullscreen(),
+         adminGallery = main.getAdminGallery(),
+         pageTitle = main.getPageTitleWidget(),
+         controls = main.getControls(),
+         dialog = main.getInput();
       
       return declare(null, {
          
@@ -118,8 +117,7 @@ define([
                   model
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
-                        clientstate.updateUsedSpace();
-                        description.update(model);
+                        communicator.publish("updated:model", model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
@@ -141,8 +139,7 @@ define([
                   model
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
-                        clientstate.updateUsedSpace();
-                        description.empty(model);
+                        communicator.publish("deleted:model", model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);

@@ -83,7 +83,6 @@ define([
                this.$description.empty();
                this.$title.empty();
             }
-            //TODO close description when detail was visible - (!) dashboard and album close differently @see this.presenter.closeDetail
          },
          /**
           * @description Hides the detail box. The teaser box should be visible afterwards

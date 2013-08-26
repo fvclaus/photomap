@@ -11,9 +11,8 @@
 define([
    "dojo/_base/declare",
    "./Main",
-   "../ui/UI",
    "../util/Communicator",
-   "../ui/UIState",
+   "./UIState",
    "../model/Album",
    "../model/Collection",
    "../util/ClientState",
@@ -21,16 +20,16 @@ define([
    "../util/Tools",
    "./AppStateHelper"
 ],
-   function (declare, main, ui, communicator, state, Album, Collection, clientstate, InfoText, tools, appState) {
+   function (declare, main, communicator, state, Album, Collection, clientstate, InfoText, tools, appState) {
       var map = main.getMap(),
-         gallery = ui.getGallery(),
-         slideshow = ui.getSlideshow(),
-         description = ui.getInformation(),
-         fullscreen = ui.getFullscreen(),
-         adminGallery = ui.getAdminGallery(),
-         pageTitle = ui.getPageTitleWidget(),
-         controls = ui.getControls(),
-         dialog = ui.getInput();
+         gallery = main.getGallery(),
+         slideshow = main.getSlideshow(),
+         description = main.getInformation(),
+         fullscreen = main.getFullscreen(),
+         adminGallery = main.getAdminGallery(),
+         pageTitle = main.getPageTitleWidget(),
+         controls = main.getControls(),
+         dialog = main.getInput();
       
       return declare(null, {
          
@@ -57,6 +56,18 @@ define([
                });
             communicator.subscribeOnce("init", this._init, this);
             communicator.subscribe("activate:view", this._viewActivation);
+            
+            communicator.subscribe({
+               "updated:model": function (model) {
+                  clientstate.updateUsedSpace();
+                  description.update(model);
+               },
+               "deleted:model": function (model) {
+                  clientstate.updateUsedSpace();
+                  description.empty(model);
+                  this._hideDetail();
+               }
+            }, this);
             
             communicator.subscribe({
                "mouseover:marker": function (marker) {

@@ -8,11 +8,13 @@
  * @class Shows the feedback (success or failure) in DialogView
  */
 
-define(["dojo/_base/declare", 
-        "./View",
-        "../ui/UIState",
-        "dojo/domReady!"], 
-   function (declare, View, state) {
+define([
+   "dojo/_base/declare",
+   "./View",
+   "../util/ClientState",
+   "dojo/domReady!"
+],
+       function (declare, View, clientstate) {
       return declare(View, {
          constructor : function ($el) {
             this.$el = $el;
@@ -21,7 +23,7 @@ define(["dojo/_base/declare",
             this.$failure = this.$el.find("#mp-dialog-message-failure").hide();
             this.$error = this.$failure.find("em");
             this.$autoClose = this.$el.find("input[name='auto-close']");
-            this.autoClose = state.getDialogAutoClose();
+            this.autoClose = clientstate.getDialogAutoClose();
             this._bindListener();
          },
          showSuccess : function () {
@@ -45,10 +47,10 @@ define(["dojo/_base/declare",
          _bindListener : function () {
             this.$autoClose.click(function () {
                var autoClose = false;
-               if ($(this).is(":checked")){
+               if ($(this).is(":checked")) {
                   autoClose = true;
                }
-               state.setDialogAutoClose(autoClose);
+               clientstate.setDialogAutoClose(autoClose);
                this.autoClose = autoClose;
             });
          },

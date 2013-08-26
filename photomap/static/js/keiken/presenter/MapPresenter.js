@@ -4,13 +4,13 @@
 "use strict";
 
 
-define(["dojo/_base/declare",
-        "./Presenter",
-        "../util/Communicator",
-        "../view/MarkerView",
-        "../util/ClientState",
-        "../ui/UIState"],
-   function (declare, Presenter, communicator, MarkerView, clientstate, state) {
+define([
+   "dojo/_base/declare",
+   "./Presenter",
+   "../util/Communicator",
+   "../view/MarkerView"
+],
+   function (declare, Presenter, communicator, MarkerView) {
       return declare(Presenter,  {
          constructor : function () {
             this.markerModelCollection = null;
@@ -59,6 +59,9 @@ define(["dojo/_base/declare",
          },
          getOpenedMarker : function () {
             return this.openedMarker;
+         },
+         getSelectedMarker : function () {
+            return this.selectedMarker;
          },
          /* ------------------------------------- */
          /* ---------- Map Management  ---------- */

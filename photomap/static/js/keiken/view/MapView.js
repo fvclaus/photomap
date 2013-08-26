@@ -13,13 +13,11 @@ define([
    "./View",
    "../presenter/MapPresenter",
    "../util/Communicator",
-   "../util/ClientState",
    "../view/MarkerView",
-   "../ui/UIState",
    "../util/InfoText",
    "dojo/domReady!"
 ],
-   function (declare, View, MapPresenter, communicator, clientstate, MarkerView, state, InfoText) {
+   function (declare, View, MapPresenter, communicator, MarkerView, InfoText) {
       var MapView = declare(View, {
          constructor : function () {
             
@@ -372,7 +370,7 @@ define([
             $("body")
                .on("keyup.Map", null, "return", function () {
                   if (instance.active) {
-                     instance.presenter.triggerDblClickOnMarker(state.getCurrentMarker());
+                     instance.presenter.triggerDblClickOnMarker(this.presenter.getSelectedMarker());
                   }
                });
          }

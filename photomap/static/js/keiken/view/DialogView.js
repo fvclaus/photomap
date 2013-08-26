@@ -16,14 +16,15 @@ $.extend($.ui.dialog.prototype.options, {
    closeOnEscape : false
 });
 
-define(["dojo/_base/declare",
-        "./View", 
-        "./DialogMessageView",
-        "../util/ClientState",
-        "../view/PhotoEditorView",
-        "../util/Communicator",
-        "dojo/domReady!"], 
-   function (declare, View, DialogMessageView, clientstate, PhotoEditorView, communicator) {
+define([
+   "dojo/_base/declare",
+   "./View",
+   "./DialogMessageView",
+   "../view/PhotoEditorView",
+   "../util/Communicator",
+   "dojo/domReady!"
+],
+   function (declare, View, DialogMessageView, PhotoEditorView, communicator) {
       return declare(View, {
          constructor : function () {
             
@@ -63,13 +64,13 @@ define(["dojo/_base/declare",
             //load html, add the title and the resize the box
             this._prepareDialog(this.options.url);
       
-            this.$dialog.dialog("option",{
+            this.$dialog.dialog("option", {
                close: function () {
                   communicator.publish("enable:ui");
                   instance.$dialog.empty();
                   instance.$dialog.dialog("destroy");
                   instance.setVisibility(false);
-                  instance.setActive(false);  
+                  instance.setActive(false);
                   console.log("Dialog closed.");
                   // in case the user did not submit or a network/server error occurred and the dialog is closed
                   if (instance.abort) {
@@ -148,14 +149,14 @@ define(["dojo/_base/declare",
                this.$loader.hide();
                this._scrollToMessage(this.message);
                this.message.showFailure(response.error);
-               $buttons.button("enable");
+               this.$buttons.button("enable");
                return;
             }
             // set only when the request did not produce an error
             this.abort = false;
             this._trigger(this.options, "success", response);
 
-            if (this.message.isAutoClose()){
+            if (this.message.isAutoClose()) {
                this.close();
             } else {
                this.$loader.hide();
@@ -166,7 +167,7 @@ define(["dojo/_base/declare",
          },
          showNetworkError : function () {
             this.$loader.hide();
-            this._scrollToMessage(message);
+            this._scrollToMessage(this.message);
             this.message.showFailure(gettext("NETWORK_ERROR"));
             this.$buttons.button("enable");
          },
@@ -250,7 +251,7 @@ define(["dojo/_base/declare",
             
             // set temporary properties
             this.$form = $widget.find("form");
-            this.message = new DialogMessageView($widget)
+            this.message = new DialogMessageView($widget);
             this.$close = $widget.find("ui-dialog-titlebar-close");
             this.$buttons = this.$form
                               .find("button, input[type='submit']")
@@ -290,15 +291,15 @@ define(["dojo/_base/declare",
                formData[$(input).attr("name")] = $(input).val();
             });
             
-            return formData;  
+            return formData;
          },
          _scrollToMessage : function (message) {
             this.$dialog.stop().animate({
                scrollTop : message.getOffset().top
             }, 300);
          },
-         _trigger : function (options, name, args){
-            if (typeof options[name] === "function"){
+         _trigger : function (options, name, args) {
+            if (typeof options[name] === "function") {
                options[name].call(options.context, args);
             }
          },

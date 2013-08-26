@@ -27,7 +27,12 @@ define(["dojo/_base/declare",
             this.quota = null;
          },
          
-         
+         getDialogAutoClose : function () {
+            return this.read("DialogMessage", "dialogAutoClose", false);
+         },
+         setDialogAutoClose : function (autoClose) {
+            this.write("DialogMessage", "dialogAutoClose", autoClose);
+         },
          isVisitedPhoto : function (photo) {
             if (this.visitedPhotos.indexOf(photo.id) === -1) {
                return false;

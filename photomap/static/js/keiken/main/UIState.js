@@ -9,19 +9,22 @@
  */
 
 
-define(["dojo/_base/declare",
-        "../util/ClientState",
-        "dojo/domReady"],
-   function (declare, clientstate) {
+define([
+   "dojo/_base/declare",
+   "dojo/domReady"
+],
+   function (declare) {
       var UIState = declare(null, {
          constructor : function () {
-            this._NS = "UIState";
             this.album = null; // in albumview this refers to the loaded album
             this.albums = null; // in dashboardview this is the collection of all albums
             //PAGE_MAPPING is defined in constants.js
             this.page = window.location.pathname;
             this.data = {};
          },
+         //--------------------------------------------------------------------
+         //STORE AND RETRIEVE CURRENT ALBUM(S)----------------------------------
+         //--------------------------------------------------------------------
          setAlbum : function (album) {
             this.album = album;
          },
@@ -50,25 +53,9 @@ define(["dojo/_base/declare",
             }
             return false;
          },
-         getDialogAutoClose : function () {
-            
-            console.log("UIState - getDialogAutoClose: ");
-            if (this.dialogAutoClose === undefined){
-               this.dialogAutoClose = clientstate.read(this._NS, "dialogAutoClose", false);
-            }
-            return this.dialogAutoClose;
-         },
-         //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
-         setDialogAutoClose : function (autoClose) {
-            this.dialogAutoClose = autoClose;
-            clientstate.write(this._NS, "dialogAutoClose", autoClose);
-         },
-         //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
-         _save : function () {
-            main.getClientState().writeCookie(this._COOKIE_KEY, {
-               dialogAutoClose : this.dialogAutoClose
-            });
-         },
+         //------------------------------------------------------------------------
+         //STORE AND RETRIEVE TEMPORARY DATA --------------------------------------
+         //------------------------------------------------------------------------
          /**
           * @description Provides a simple method to store variables temporarily
           * @param {String} key
@@ -90,7 +77,7 @@ define(["dojo/_base/declare",
          }
       }),
           
-          _instance = new UIState();
+         _instance = new UIState();
       return _instance;
    });
 
