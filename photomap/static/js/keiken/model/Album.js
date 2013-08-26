@@ -3,7 +3,7 @@
 
 "use strict";
 
-/*
+/**
  * Album.js
  * @author Frederik Claus
  * @class Models an album that holds places

@@ -59,11 +59,11 @@ define(["dojo/_base/declare",
                          if (data.success) {
                             instance._trigger("success", [data, status, xhr]);
                             if (instance.id > -1) {
-                               instance._trigger("updated.Model", this);
+                               instance._trigger("updated", instance);
                             } else {
                                //set id, photo and thumb of the new Photo
                                instance._setProperties(data);
-                               instance._trigger("inserted.Model", this);
+                               instance._trigger("inserted", instance);
                             }
                          } else {
                             instance._trigger("failure", [data, status, xhr]);

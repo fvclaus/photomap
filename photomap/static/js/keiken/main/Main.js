@@ -11,30 +11,19 @@
 
 define([
    "dojo/_base/declare",
-   "../ui/UI",
-   "../view/MapView",
-   "./AppController",
-   "./AppModelController"
+   "../view/MapView"
 ],
-   function (declare, ui, MapView, AppController, AppModelController) {
+   function (declare, MapView) {
 
-      return declare(null, {
+      var Main = declare(null, {
          
-         constructor : function (args) {
-            
-            this.ui = ui;
-            this.appController = new AppController();
-            this.appModelController = new AppModelController();
-         },
-   
-         init : function () {
+         constructor : function () {
             this.map = new MapView();
          },
          getMap : function () {
             return this.map.getPresenter();
-         },
-         getUI : function () {
-            return this.ui;
          }
-      });
+      }),
+          _instance = new Main();
+      return _instance;
    });

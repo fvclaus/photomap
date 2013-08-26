@@ -2,7 +2,7 @@
 
 "use strict";
 
-/* 
+/**
  * @description Asserts that the block of code will raise a AssertionError raised by @assert.js
  */
 QUnit.raiseError = function(block, context) {

@@ -13,7 +13,6 @@
  * Date: Dec 2011
  */
 
-var main = null;
 // add function to navigator to determine the browser and its version
 navigator.sayswho= (function(){
     var N= navigator.appName, ua= navigator.userAgent, tem;
@@ -28,9 +27,6 @@ navigator.sayswho= (function(){
  */
 require(["keiken/main/AppInitializer", "dojo/domReady!"], function (AppInitializer) {
 
-   // main = new Main();
-   // // initialise js-classes
-   // main.preinit();
    var appInit = new AppInitializer();
    appInit.start();
 });

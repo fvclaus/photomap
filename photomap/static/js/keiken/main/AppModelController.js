@@ -8,11 +8,25 @@
  * @class Controls communication concerning models (especially IDU-requests)
  */
 
-define(["dojo/_base/declare",
-        "../util/Communicator",
-        "../ui/UIState",
-        "../util/ClientState"],
-   function (declare, communicator, state, clientstate) {
+define([
+   "dojo/_base/declare",
+   "./Main",
+   "../ui/UI",
+   "../util/Communicator",
+   "../ui/UIState",
+   "../util/ClientState"
+],
+   function (declare, main, ui, communicator, state, clientstate) {
+      var map = main.getMap(),
+         gallery = ui.getGallery(),
+         slideshow = ui.getSlideshow(),
+         description = ui.getInformation(),
+         fullscreen = ui.getFullscreen(),
+         adminGallery = ui.getAdminGallery(),
+         pageTitle = ui.getPageTitleWidget(),
+         controls = ui.getControls(),
+         dialog = ui.getInput();
+      
       return declare(null, {
          
          constructor : function () {
@@ -30,9 +44,8 @@ define(["dojo/_base/declare",
           * --------------------------------------------------
           */
          _openPhotoInsertDialog : function () {
-            var place = main.getMap().getOpenedMarker().getModel(),
-                photoCollection = place.getPhotos(),
-                dialog = main.getUI().getDialog();
+            var place = map.getOpenedMarker().getModel(),
+                photoCollection = place.getPhotos();
             
             dialog.show({
                load : function () {
@@ -61,8 +74,7 @@ define(["dojo/_base/declare",
          _openMarkerInsertDialog : function (eventData) {
             console.log("Event-Data (should contain lat & lng): ");
             console.log(eventData);
-            var dialog = main.getUI().getDialog(),
-                markerCollection,
+            var markerCollection,
                 modelType;
             
             if (state.isDashboardView()) {
@@ -97,8 +109,6 @@ define(["dojo/_base/declare",
             });
          },
          _openModelUpdateDialog : function (model) {
-            var dialog = main.getUI().getDialog();
-            
             dialog.show({
                load : function () {
                   dialog.setInputValue("title", model.getTitle());
@@ -109,6 +119,7 @@ define(["dojo/_base/declare",
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
                         clientstate.updateUsedSpace();
+                        description.update(model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
@@ -120,9 +131,7 @@ define(["dojo/_base/declare",
             });
          },
          _openModelDeleteDialog : function (model) {
-            var dialog = main.getUI().getDialog(),
-                modelType = model.getType();
-            
+            var modelType = model.getType();
             
             dialog.show({
                load : function () {
@@ -133,19 +142,19 @@ define(["dojo/_base/declare",
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
                         clientstate.updateUsedSpace();
+                        description.empty(model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
                      })
-                     .onError(dialog.showNetworkError)
-                     .delete(model, true);
+                     .onError(dialog.showNetworkError);
+                  
+                  model["delete"](model, true);
                },
                url : "/form/delete/model"
             });
          },
          _openAlbumShareDialog : function (album) {
-            var dialog = main.getUI().getDialog();
-            
             dialog.show({
                load : function () {
                   $("#mp-open-album-password-form").on("click", function () {
@@ -209,7 +218,7 @@ define(["dojo/_base/declare",
                   $("input[name='photos']").val(JSON.stringify(photos));
                },
                success : function () {
-                  var place = main.getUIState().getCurrentLoadedPlace().getModel();
+                  var place = map.getOpenedMarker().getModel();
                   // update the 'real' photo order
                   photos.forEach(function (photo, index) {
                      place.getPhoto(photo.photo).order = photo.order;
@@ -220,16 +229,16 @@ define(["dojo/_base/declare",
                   place.sortPhotos();
                   
                   photos = place.getPhotos().getAll();
-                  main.getUI().getGallery().restart(photos);
-                  if (main.getUI().getSlideshow().isStarted()) {
-                     main.getUI().getSlideshow().restart(photos);
+                  gallery.restart(photos);
+                  if (slideshow.isStarted()) {
+                     slideshow.restart(photos);
                   }
                },
                abort : function () {
                   console.log("UIFullGallery: Aborted updating order. Restoring old order");
                   instance.publish("abort:photoOrder");
                   //TODO this could be done better
-                  main.getUI().getAdminGallery().refresh();
+                  adminGallery.refresh();
                },
                type : CONFIRM_DIALOG,
                url : "/update-photos"

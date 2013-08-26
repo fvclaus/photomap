@@ -61,14 +61,14 @@ define(["dojo/_base/declare"],
             var url = hash || window.location.hash,
                parsedHash = {},
                hashParams,
-               i = 1;
+               i;
             hashParams = this.validHashes[0].exec(url);
             if (!hashParams) {
                hashParams = this.validHashes[1].exec(url);
             }
             if (hashParams) {
                // create an object containing information given in the hash
-               for (i; i < hashParams.length; i += 2) {
+               for (i = 1; i < hashParams.length; i += 2) {
                   parsedHash[hashParams[i]] = parseInt(hashParams[i + 1], 10);
                }
             }

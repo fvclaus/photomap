@@ -19,7 +19,7 @@ define(["dojo/_base/declare",
             this.openedMarker = null;
          },
          
-         start : function (mapData, albumview, admin) {
+         startup : function (mapData, albumview, admin) {
             if (albumview) {
                //in this case mapData is actually just a single album with a place-collection
                this.markerModelCollection = mapData.getPlaces();
@@ -54,6 +54,7 @@ define(["dojo/_base/declare",
             this.view.setMapCursor();
             // show message if no markers are displayed
             this.view.toggleMessage((this.markerModelCollection.size() === 0));
+            this._bindCollectionListener();
             
          },
          getOpenedMarker : function () {
@@ -156,7 +157,7 @@ define(["dojo/_base/declare",
             marker.updateIcon(false, false);
             if (!init) {
                this.view.toggleMessage(false);
-               this.map.triggerDblClickOnMarker(marker);
+               this.triggerDblClickOnMarker(marker);
             }
             
             return marker;
@@ -199,6 +200,15 @@ define(["dojo/_base/declare",
                });
             });
             this.view.fit(latLngData);
+         },
+         _bindCollectionListener : function () {
+            this.markerModelCollection
+               .onDelete(function (model) {
+                  this.getMarkerPresenter(model).hide();
+               }, this, "Map")
+               .onInsert(function (model) {
+                  this.insertMarker(model);
+               }, this, "Map");
          }
       });
    });

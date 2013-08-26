@@ -107,14 +107,14 @@ define(["dojo/_base/declare",
          _parseValue : function (value) {
             
             var oldValue = value.split(","),
-               i = oldValue.length,
+               i,
                instance = this;
             
             this.visitedPhotos = [];
             
             // 'visited'-cookie mustn't contain non-numeric values!
             if (value !== "") {
-               for (i; i >= 0; --i) {
+               for (i = oldValue.length; i >= 0; --i) {
                   // in case there is a non-numeric value in the cookie
                   if (!isNaN(oldValue[i])) {
                      this.visitedPhotos.push(parseInt(oldValue[i], 10));

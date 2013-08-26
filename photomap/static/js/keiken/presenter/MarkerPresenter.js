@@ -102,6 +102,9 @@ define(["dojo/_base/declare",
             var map = this.view.getMap();
             return map.createLatLng(this.getLat(), this.getLng());
          },
+         getImplementation : function () {
+            return this.view.getImplementation();
+         },
          _showIcon : function (icon) {
             
             var markerIsPlace = (this.model.getType() === "Place");

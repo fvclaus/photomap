@@ -3,7 +3,7 @@
 
 "use strict";
 
-/*
+/**
  * @author Marc-Leon Römer, Frederik Claus
  * @class Base class for both Album and Place.
  */
@@ -44,11 +44,11 @@ define(["dojo/_base/declare",
                             instance._trigger("success", [data, status, xhr]);
                             if (instance.id > -1) {
                                instance._setProperties(newData);
-                               instance._trigger("updated.Model", this);
+                               instance._trigger("updated", instance);
                             } else {
                                //set id of the new model
                                instance._setProperties(data);
-                               instance._trigger("inserted.Model", this);
+                               instance._trigger("inserted", instance);
                             }
                          } else {
                             instance._trigger("failure", [data, status, xhr]);

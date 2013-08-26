@@ -42,7 +42,7 @@ define(["dojo/_base/declare"],
             this.models.push(model);
             this._bindModelListener([model]);
             
-            this._trigger("inserted.Model", model);
+            this._trigger("inserted", model);
             
             return this;
          },
@@ -51,12 +51,12 @@ define(["dojo/_base/declare"],
           * @param {Object} model Model to be inserted from the collection.
           */
          "delete" : function (model) {
-            
+            console.log(model);
             assertTrue(this.has(model.getId()), "Selected model is not part of the collection");
             
             this.models.splice(this.models.indexOf(model), 1);
             
-            this._trigger("deleted.Model", model);
+            this._trigger("deleted", model);
             
             return this;
          },
@@ -237,21 +237,17 @@ define(["dojo/_base/declare"],
           * @param {Object} rawModelData The data needed to create a model. It'll be sent to the server.
           */
          insertRaw : function (rawModelData) {
-            
             assertString(rawModelData.title, "Each model needs a title");
+            console.log(rawModelData);
             
             var instance = this,
-               initialModelData = {
-                  title: rawModelData.title,
-                  description: rawModelData.description
-               },
-               model = new this.modelConstructor(initialModelData);
+               model = new this.modelConstructor(rawModelData);
             
             model
                .onSuccess(function (data, status, xhr) {
                   instance._trigger("success", [data, status, xhr]);
                   
-                  // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return tru                     // for development it is needed though to assure that the new IDU-Design works
+                  // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true                     // for development it is needed though to assure that the new IDU-Design works
                   if (model.assertValidity()) {
                      instance.insert(model);
                   }
@@ -274,7 +270,7 @@ define(["dojo/_base/declare"],
                      instance._trigger("updated.Model", model);
                   })
                   .onDelete(function (model) {
-                     instance.delete(model);
+                     instance["delete"](model);
                   });
             });
          },

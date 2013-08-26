@@ -71,7 +71,6 @@ define([
             // mode : fullscreen || normal
             this.mode = 'normal';
             this.presenter = new MapPresenter(this);
-            this.markers = [];
             this._create();
          },
          

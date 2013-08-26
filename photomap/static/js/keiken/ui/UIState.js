@@ -50,21 +50,18 @@ define(["dojo/_base/declare",
             }
             return false;
          },
-         //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
          getDialogAutoClose : function () {
             
             console.log("UIState - getDialogAutoClose: ");
-            console.log(clientstate);
-            console.log(main.getClientState());
             if (this.dialogAutoClose === undefined){
-               this.dialogAutoClose = main.getClientState().read(this._NS, "dialogAutoClose", false);
+               this.dialogAutoClose = clientstate.read(this._NS, "dialogAutoClose", false);
             }
             return this.dialogAutoClose;
          },
          //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
          setDialogAutoClose : function (autoClose) {
             this.dialogAutoClose = autoClose;
-            main.getClientState().write(this._NS, "dialogAutoClose", autoClose);
+            clientstate.write(this._NS, "dialogAutoClose", autoClose);
          },
          //TODO clientstate should be accessed in a static way, for some reason this doesn't work in UIState, yet: cuz clientstate is not loaded!?!
          _save : function () {

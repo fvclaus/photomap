@@ -8,16 +8,30 @@
  * @class Controls communication in between the classes of KEIKEN
  */
 
-define(["dojo/_base/declare",
-        "../util/Communicator",
-        "../ui/UIState",
-        "../model/Album",
-        "../model/Collection",
-        "../util/ClientState",
-        "../util/InfoText",
-        "../util/Tools",
-        "./AppStateHelper"],
-   function (declare, communicator, state, Album, Collection, clientstate, InfoText, tools, appState) {
+define([
+   "dojo/_base/declare",
+   "./Main",
+   "../ui/UI",
+   "../util/Communicator",
+   "../ui/UIState",
+   "../model/Album",
+   "../model/Collection",
+   "../util/ClientState",
+   "../util/InfoText",
+   "../util/Tools",
+   "./AppStateHelper"
+],
+   function (declare, main, ui, communicator, state, Album, Collection, clientstate, InfoText, tools, appState) {
+      var map = main.getMap(),
+         gallery = ui.getGallery(),
+         slideshow = ui.getSlideshow(),
+         description = ui.getInformation(),
+         fullscreen = ui.getFullscreen(),
+         adminGallery = ui.getAdminGallery(),
+         pageTitle = ui.getPageTitleWidget(),
+         controls = ui.getControls(),
+         dialog = ui.getInput();
+      
       return declare(null, {
          
          constructor : function () {
@@ -46,20 +60,20 @@ define(["dojo/_base/declare",
             
             communicator.subscribe({
                "mouseover:marker": function (marker) {
-                  main.getUI().getControls().show({
+                  controls.show({
                      modelInstance : marker.getModel(),
-                     offset: main.getMap().getPositionInPixel(marker),
+                     offset: map.getPositionInPixel(marker),
                      dimension : {
                         width : marker.getView().getSize().width
                      }
                   });
                },
                "mouseout:marker": function () {
-                  main.getUI().getControls().hide(true);
+                  controls.hide(true);
                },
                "click:marker": function (markerPresenter) {
                   this._showDetail(markerPresenter.getModel());
-                  main.getMap().updateMarkerStatus(markerPresenter, "select");
+                  map.updateMarkerStatus(markerPresenter, "select");
                   if (markerPresenter.getModel().getType() === "Album") {
                      appState.updateAlbum(markerPresenter.getModel().getId());
                   } else {
@@ -72,14 +86,14 @@ define(["dojo/_base/declare",
                      window.location.href = '/album/' + markerPresenter.model.getId() + '/view/' + markerPresenter.model.getSecret() + "/";
                   } else {
                      this._startPhotoWidgets(markerPresenter.getModel());
-                     main.getMap().updateMarkerStatus(markerPresenter, "open");
+                     map.updateMarkerStatus(markerPresenter, "open");
                      appState.updateOpenedPlace(markerPresenter.getModel().getId());
                   }
                }
             }, this);
             communicator.subscribe({
                "close:detail": function () {
-                  main.getMap().resetSelectedMarker();
+                  map.resetSelectedMarker();
                   this._hideDetail();
                   appState.updateDescription(null);
                },
@@ -89,17 +103,17 @@ define(["dojo/_base/declare",
             }, this);
             
             communicator.subscribe("change:usedSpace", function (data) {
-               main.getUI().getInformation().updateUsedSpace(data);
+               description.updateUsedSpace(data);
             });
             
             if (state.isAlbumView()) {
                
                communicator.subscribe({
                   "mouseleave:galleryThumb": function () {
-                     main.getUI().getControls().hide(true);
+                     controls.hide(true);
                   },
                   "click:galleryThumb": function (photo) {
-                     main.getMap().resetSelectedMarker();
+                     map.resetSelectedMarker();
                      this._hideDetail();
                      this._navigateSlideshow(photo);
                      appState.updatePhoto(photo.getId());
@@ -115,40 +129,40 @@ define(["dojo/_base/declare",
                   },
                   "update:slideshow": function (photo) {
                      if (!this.ignoreNextSlideshowUpdate) {
-                        main.getUI().getInformation().update(photo);
-                        main.getUI().getGallery().navigateIfNecessary(photo);
-                        main.getUI().getGallery().setPhotoVisited(photo);
+                        description.update(photo);
+                        gallery.navigateIfNecessary(photo);
+                        gallery.setPhotoVisited(photo);
                         clientstate.insertVisitedPhoto(photo);
                         photo.setVisited(true);
-                        main.getUI().getFullscreen().navigateTo(photo);
+                        fullscreen.navigateTo(photo);
                         appState.updatePhoto(photo.getId());
                      } else {
                         this.ignoreNextSlideshowUpdate = false;
                      }
                   },
                   "click:slideshowImage": function () {
-                     main.getUI().getFullscreen().show();
+                     fullscreen.show();
                      appState.updateFullscreen(true);
                   }
                }, this);
                
                communicator.subscribe({
                   "navigate:fullscreen": function (direction) {
-                     main.getUI().getSlideshow().navigateWithDirection(direction);
+                     slideshow.navigateWithDirection(direction);
                   },
                   "click:fullscreenClose": function () {
                      appState.updateFullscreen(false);
                   }
                });
                communicator.subscribe("click:pageTitle", function () {
-                  main.getUI().getInformation().update(state.getAlbum());
+                  description.update(state.getAlbum());
                   appState.updateDescription("album");
                });
                communicator.subscribe("clicked:GalleryOpenButton", function () {
-                  main.getUI().getAdminGallery().run();
+                  adminGallery.run();
                });
                communicator.subscribe("hover:GalleryPhoto", function (data) {
-                  main.getUI().getControls().show({
+                  controls.show({
                      modelInstance : data.photo,
                      offset : data.element.offset(),
                      dimension : {
@@ -170,16 +184,16 @@ define(["dojo/_base/declare",
                state.setAlbum(albumData);
                // set initial state -> opened description, and maybe place or even photo
                initialState = appState.setInitialState();
-               main.getUI().getPageTitleWidget().update(albumData.getTitle());
-               main.getMap().start(albumData, true, albumData.isOwner());
-               main.getUI().getGallery().startup({ adminMode : albumData.isOwner() });
+               pageTitle.update(albumData.getTitle());
+               map.startup(albumData, true, albumData.isOwner());
+               gallery.startup({ adminMode : albumData.isOwner() });
                this._updateState(initialState, true);
             } else {
                albums = new Collection(albumData, {
                   modelConstructor: Album,
                   modelType: "Album"
                });
-               main.getMap().start(albums, false);
+               map.startup(albums, false);
                state.setAlbums(albums);
             }
             clientstate.init();
@@ -192,11 +206,11 @@ define(["dojo/_base/declare",
             if (state.isDashboardView()) {
                album = state.getAlbums().get(newState.album);
                if (album) {
-                  main.getMap().updateMarkerStatus(album, "select");
+                  map.updateMarkerStatus(album, "select");
                } else if (newState.album) {
                   this.infoText.alert(gettext("INVALID_SELECTED_ALBUM"));
                } else if (!newState.album) {
-                  main.getMap().resetSelectedMarker();
+                  map.resetSelectedMarker();
                }
             // if not -> albumview -> more actions possible
             } else {
@@ -209,14 +223,14 @@ define(["dojo/_base/declare",
                }
                // open place if necessary
                if (openedPlace) {
-                  if (!main.getMap().getOpenedMarker() || openedPlace !== main.getMap().getOpenedMarker().getModel()) {
+                  if (!map.getOpenedMarker() || openedPlace !== map.getOpenedMarker().getModel()) {
                      this._startPhotoWidgets(openedPlace);
-                     main.getMap().updateMarkerStatus(openedPlace, "open");
+                     map.updateMarkerStatus(openedPlace, "open");
                   }
                } else if (newState.openedPlace) {
                   this.infoText.alert(gettext("INVALID_OPENED_PLACE"));
                } else {
-                  main.getMap().resetOpenedMarker();
+                  map.resetOpenedMarker();
                }
                // load photo if necessary
                if (photo) {
@@ -227,21 +241,21 @@ define(["dojo/_base/declare",
                   this.infoText.alert(gettext("INVALID_LOADED_PHOTO"));
                }
                // navigate gallery if necessary
-               if (newState.page && newState.page <= main.getUI().getGallery().getNPages()) {
-                  main.getUI().getGallery().navigateTo(newState.page);
+               if (newState.page && newState.page <= gallery.getNPages()) {
+                  gallery.navigateTo(newState.page);
                }
                // start fullscreen if necessary
                if (photo && newState.fullscreen) {
-                  main.getUI().getFullscreen().run();
-                  main.getUI().getFullscreen().show();
+                  fullscreen.run();
+                  fullscreen.show();
                } else {
-                  main.getUI().getFullscreen().hide();
+                  fullscreen.hide();
                }
                // reset selected place if selectedPlace is undefined
                if (!newState.selectedPlace) {
-                  main.getMap().resetSelectedMarker();
+                  map.resetSelectedMarker();
                } else if (selectedPlace) {
-                  main.getMap().updateMarkerStatus(selectedPlace, "select");
+                  map.updateMarkerStatus(selectedPlace, "select");
                }
             }
             // display the correct description if necessary
@@ -261,13 +275,12 @@ define(["dojo/_base/declare",
             }
          },
          _viewActivation : function (viewName) {
-            var ui = main.getUI(),
-               possibleViews = {
-                  Slideshow: ui.getSlideshow(),
-                  Gallery: ui.getGallery(),
-                  Fullscreen: ui.getFullscreen(),
-                  Map: main.getMap(),
-                  Dialog: ui.getInput()
+            var possibleViews = {
+                  Slideshow: slideshow,
+                  Gallery: gallery,
+                  Fullscreen: fullscreen,
+                  Map: map,
+                  Dialog: dialog
                };
             
             possibleViews[viewName].setActive(true);
@@ -282,39 +295,35 @@ define(["dojo/_base/declare",
           * @param {Photo} photo
           */
          _navigateSlideshow : function (photo) {
-            main.getUI().getControls().hide(false);
-            main.getUI().getSlideshow().run();
-            main.getUI().getSlideshow().navigateTo(photo);
+            controls.hide(false);
+            slideshow.run();
+            slideshow.navigateTo(photo);
          },
          _showDetail : function (markerModel) {
-            
             if (!markerModel) {
                return;
             }
-            
-            var detail = main.getUI().getInformation();
-            
-            detail.update(markerModel);
+            description.update(markerModel);
             
             if (state.isDashboardView()) {
-               main.getMap().centerMarker(markerModel, -0.25);
-               detail.slideIn();
+               map.centerMarker(markerModel, -0.25);
+               description.slideIn();
             }
          },
          _hideDetail : function () {
-            main.getUI().getInformation().closeDetail(true);
+            description.closeDetail(true);
             if (state.isDashboardView()) {
-               main.getMap().showAll();
+               map.showAll();
             }
          },
          _startPhotoWidgets : function (place) {
             var photos = place.getPhotos();
-            main.getUI().getInformation().update(place);
-            main.getUI().getGallery().load(photos);
-            main.getUI().getGallery().run();
-            main.getUI().getSlideshow().load(photos);
-            main.getUI().getAdminGallery().load(photos);
-            main.getUI().getFullscreen().load(photos);
+            description.update(place);
+            gallery.load(photos);
+            gallery.run();
+            slideshow.load(photos);
+            adminGallery.load(photos);
+            fullscreen.load(photos);
          }
       });
    });
