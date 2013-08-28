@@ -40,13 +40,13 @@ define(["dojo/_base/declare",
                  var photoIndex = 0,
                      oldPhoto = this.photos[0];
                  QUnit.raiseError(this.widget.deletePhoto, this.widget);
-                 this.photoCollection.delete(this.photos[0]);
+                 this.photoCollection["delete"](this.photos[0]);
 
 
                  setTimeout(lang.hitch(this, function () {
                     this.assertPhotosInWidget(this.photos);
                     for (photoIndex = this.photos.length - 1; photoIndex >= 0; photoIndex--) {
-                       this.photoCollection.delete(this.photos[0]);
+                       this.photoCollection["delete"](this.photos[0]);
                     }
                     setTimeout(lang.hitch(this, function () {
                        this.assertPhotosInWidget(this.photos);
@@ -100,12 +100,12 @@ define(["dojo/_base/declare",
 
                     $img1.simulate("drag", {
                        dx : img0Pos.left  - (img1Pos.left + $img1.width()),
-                       dy : img0Pos.top - img1Pos.top,
+                       dy : img0Pos.top - img1Pos.top
                        // handle : "center"
                        // moves : 10
                     });
                  }), 2 * this.options.animationTime);
-              },
+              }
            }),
                test = new GalleryTest({ animationTime : 1000});
 

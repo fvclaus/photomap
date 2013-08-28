@@ -4,8 +4,8 @@
   <head>
     <meta charset="UTF-8" />
     <title>KEIKEN | {% block title %}{% endblock %}</title>
-
-	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <!-- This only works here! Putting this in core.styl will not work, because core.styl is not present, when the document gets displayed. -->
     <style type="text/css">
       body,html { margin : 0px; padding : 0px; min-height : 100%; height : 100%  }
@@ -24,56 +24,36 @@
     <!-- used for google verification, linking keiken search results to keiken-google+ page and to generally improve search results -->
     <meta name="google-site-verification" content="FfCsCzP68IIoV3bVbLsDAUoeUHBXQZl2EvbOD942AnE" />
     <link href="https://plus.google.com/111238553236963807299" rel="publisher" />
-    {% block meta %}
-    {% endblock %}
-
-    <!-- styles -->
-
 
     <!-- THE IMAGE LINKS BREAK WHEN COMPRESSED -->
     <link rel="stylesheet" type="text/css" href="/static/css/lib/smoothness-custom-font/jquery-ui-1.10.1.custom.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/grid.css" />
 
-    <!-- <link rel="stylesheet" type="text/css" href="/static/css/lib/jquery.jscrollpane.css" /> -->
     {% load compress %}
-    <!-- {% compress css file %} -->
-
-    <!-- {% endcompress %} -->
     {% block css %}
     {% compress css %}
-    <link rel="stylesheet" type="text/css" href="/static/css/lib/sans.narrow.css" />
     <link href="/static/css/lib/droid.sans.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/lib/tzoom.css" />
+    <link rel="stylesheet" type="text/css" href="/static/css/grid.css" />
     {% endcompress %}
     {% endblock %}
-
-
     <!-- LIBS DONT COMPRESS ANYMORE - MAYBE UNCOMPRESSED VERSION -->    
     <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery-1.7.2-min.js"></script>
-    <script type="text/javascript" data-dojo-config="isDebug:true" src="/static/js/dojo/dojo.js"></script>
-    <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.hotkeys.js"></script>
+
 
     {% block js %}
     {% compress js %}
-    <script type="text/javascript" src="/static/js/lib/jquery.tools.notabs.min.js"></script>
+    <script type="text/javascript" src="/static/js/lib/noconsole.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery-1.7.2.js"></script>
     <script type="text/javascript" src="/static/js/lib/flexie.min.js"></script>
-    <!-- removed tabs from fucking broken jquery tools  -->
-    <!-- <script type="text/javascript" src="/static/js/lib/jquery.tools.no-jquery.min.js"></script> -->
-    <script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.min.js"></script>
-    <!-- added tabs to jquery ui -->
-    <!-- <script type="text/javascript" src="/static/js/lib/jquery-ui-1.9.0.custom.min.js"></script> -->
+    <script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
+    <script type="text/javascript" src="/static/js/lib/jquery.cookie.js" ></script>
 
     <script type="text/javascript" src="/static/js/lib/assert.js"></script>
-    <!-- javascript libraries -->
-    <script type="text/javascript" src="/static/js/lib/date.js" ></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.min.js" ></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.cookie.js" ></script>
-    <script type="text/javascript" src="/static/js/lib/ie.js" ></script>
-    <script type="text/javascript" src="/static/js/lib/formdata.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.jscrollpane.min.js" ></script>
+    <!-- IE currently not supported. -->
+    <!-- <script type="text/javascript" src="/static/js/lib/ie.js" ></script> -->
+    <!-- FF 4+ and Chrome 7+  support FormData -->
+    <!-- <script type="text/javascript" src="/static/js/lib/formdata.js"></script> -->
+    <!-- This is necessary for all side pages. -->
     <script type="text/javascript" src="/static/js/lib/html5shiv.js"></script>
 
     <script type="text/javascript" src="/static/js/keiken/util/constants.js"></script>
@@ -86,7 +66,7 @@
     {% block mapjs %}
     {% endblock %}
   </head>
-  <body id="{% block pageID %} {% endblock %}">
+  <body id="{% block pageID %} {% endblock %}"> <!-- TODO What happened with the body id -->
 
     <div class="mp-container container" id="mp-container">
 
@@ -105,18 +85,6 @@
       </header>
 
       <main class="mp-content column span-24 last" id="mp-content">
-        <noscript id="mp-no-script">
-          <div class="ui-state-error ui-corner-all">
-            <p>
-              <strong>{% trans "JS_DISABLED_WARNING" %}</strong>
-            </p>
-          </div>
-        </noscript>
-        <div id="mp-no-cookies" class="ui-state-error ui-corner-all">
-            <p>
-              <strong>{% trans "COOKIES_DISABLED_WARNING" %}</strong>
-            </p>
-        </div>
 	{% block content %}
 	{% endblock %}
       </main>
@@ -129,27 +97,25 @@
 
 
       <footer class="mp-page-footer column span-24 last" id="mp-page-footer">
-		{% if user.is_authenticated %}
+	{% if user.is_authenticated %}
           <span id="mp-user"><span class="mp-user-email">{{user.email}}</span></span>
           <span>|</span>
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
-		{% else %}
-		  <span class="mp-login-link mp-button">
-		    <a href="/account/auth/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
-		  </span>
-		{% endif %}
-	      <section class="mp-internal-links">
-		      <a href="/payment" title='{% trans "Spenden" %}'>|{% trans "Spenden" %} </a> 	
-			  <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
-			  <a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
-			  <a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
-			  <a href="/copyright" title='{% trans "link-title-copyright" %}'>|{% trans "Urheberrecht" %} </a>
-			  <a href="/help" title='{% trans "link-title-help" %}'>|{% trans "Hilfe" %} </a>
-			  <a href="/impressum" title='{% trans "link-title-impressum" %}'>|{% trans "Impressum" %} </a>
-		  </section>
+	{% else %}
+	  <span class="mp-login-link mp-button">
+	    <a href="/account/auth/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
+	  </span>
+        {% endif %}
+	  <section class="mp-internal-links">
+	    <a href="/payment" title='{% trans "Spenden" %}'>|{% trans "Spenden" %} </a> 	
+	    <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
+	    <a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
+	    <a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
+	    <a href="/copyright" title='{% trans "link-title-copyright" %}'>|{% trans "Urheberrecht" %} </a>
+	    <a href="/help" title='{% trans "link-title-help" %}'>|{% trans "Hilfe" %} </a>
+	    <a href="/impressum" title='{% trans "link-title-impressum" %}'>|{% trans "Impressum" %} </a>
+	  </section>
       </footer>
     </div>
-
-
   </body>
 </html>

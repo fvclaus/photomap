@@ -60,7 +60,7 @@ define(["dojo/_base/declare",
                    beforeLoad : this._beforeLoad,
                    onUpdate : this._update,
                    context : this,
-                   navigateToInsertedPhoto : true,
+                   navigateToInsertedPhoto : true
                 };
 
                 this._srcPropertyName = "thumb";

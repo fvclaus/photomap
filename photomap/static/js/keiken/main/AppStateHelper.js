@@ -27,7 +27,7 @@ define(["dojo/_base/declare"],
             };
             this.validHashes = [
                   /^#!\/(place)\/(\d+)\/$/,
-                  /^#!\/(place)\/(\d+)\/(photo)\/(\d+)\/$/,
+                  /^#!\/(place)\/(\d+)\/(photo)\/(\d+)\/$/
             ];
          },
          

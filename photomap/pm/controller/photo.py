@@ -1,10 +1,9 @@
 '''
 Created on Jun 30, 2012
 
-@author: fredo
+@author: Frederik Claus
 '''
 
-from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response
 
 from pm.model.photo import Photo
@@ -21,7 +20,7 @@ from django.views.decorators.http import require_http_methods, require_GET, requ
 
 from StringIO import StringIO
 from PIL import Image
-import json, types
+import json 
 import  logging, sys, uuid
 
 
@@ -97,7 +96,7 @@ def insert(request):
         if settings.DEBUG:
             request.FILES["photo"] = original
             from django.core.files.uploadedfile import InMemoryUploadedFile
-            thumb = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpeg" % original.name, None, thumb.len, None)
+            thumb = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpg" % original.name, None, thumb.len, None)
             request.FILES["thumb"] = thumb
             form = PhotoInsertForm(request.POST, request.FILES)
             assert form.is_valid(), "Form should always be valid here."
@@ -142,24 +141,24 @@ def get_insert_dialog(request):
 
 @login_required
 @require_POST
-def update(request, id):
+def update(request, photo_id):
     form = PhotoUpdateForm(request.POST)
     if form.is_valid():
         photo = None
         try:
-            id = int(id)
-            #TODO we need to update the used_space cookie
-            logger.info("User %d is trying to update Photo %d." % (request.user.pk, id))
-            photo = Photo.objects.get(pk = id)
+            photo_id = int(photo_id)
+            # TODO we need to update the used_space cookie
+            logger.info("User %d is trying to update Photo %d." % (request.user.pk, photo_id))
+            photo = Photo.objects.get(pk = photo_id)
             if not is_authorized(photo, request.user):
-                logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, id))
+                logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, photo_id))
                 return error("not your photo")
         except Photo.DoesNotExist:
-            logger.warn("Photo %d does not exist. Aborting." % id)
+            logger.warn("Photo %d does not exist. Aborting." % photo_id)
             return error("photo does not exist")
         form = PhotoUpdateForm(request.POST, instance = photo)
         form.save()
-        logger.info("Photo %d updated." % id)
+        logger.info("Photo %d updated." % photo_id)
         return success()
     else:
         return error(str(form.errors))
@@ -170,37 +169,40 @@ def update(request, id):
 def update_multiple(request):
     try:
         json_photos = json.loads(request.POST["photos"])
-    except Exception:
-        return error("The json does not look like an array of photos")
     
-    if len(json_photos) == 0:
-        return error("The array of photo is empty")
+        if len(json_photos) == 0:
+            return error("The array of photo is empty")
+
+        # Collected instances first and update them in one go.
+        # This way it is not possible to leave the Db in an inconsistent state.
+        photos_dirty = []
+        # Check all photos_dirty
+        for json_photo in json_photos:
+            form = PhotoUpdateForm(json_photo)
+            # fields are incomplete or invalid
+            if not form.is_valid():
+                return error(str(form.errors))
+            
+            # Id cannot be retrieved from form.cleaned_data
+            photo_id = int(form.data["id"])
+            photo = Photo.objects.get(pk = photo_id)
+        
+            # photo does not belong to the user
+            if not is_authorized(photo, request.user):
+                logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, photo_id))
+                return error("not your photo")
+            
+            photos_dirty.append((photo, json_photo))
+    except Exception, e:
+        logger.warn("Something unexpected happened: %s" % str(e))
+        return error(str(e))
+        
     
-    # 2-tuple of original photo and fields that must be updated
-    photos_dirty = []
-    # check all photos_dirty
-    for updated_fields in json_photos:
-        form = PhotoUpdateForm(updated_fields)
-        # fields are incomplete or invalid
-        if not form.is_valid():
-            return error(str(form.errors))
-        id = form.cleaned_data["id"]
-        try:
-            photo = Photo.objects.get(pk = id)
-        except Photo.DoesNotExist:
-            logger.warn("Photo %d does not exist. Aborting." % id)
-            return error("photo does not exist")
-        # photo does not belong to the user
-        if not is_authorized(photo, request.user):
-            logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, id))
-            return error("not your photo")
-        photos_dirty.append((photo, updated_fields))
-    
-    # update photo order
-    for (photo, updated_fields) in photos_dirty:
+    # Update all photos in one go.
+    for (photo, json_photo) in photos_dirty:
         logger.info("User %d is trying to update Photo %d." % (request.user.pk, photo.pk))
-        form = PhotoUpdateForm(updated_fields, instance = photo)
-        assert form.is_valid() # we checked this before. this must be valid
+        form = PhotoUpdateForm(json_photo, instance = photo)
+        assert form.is_valid()  # we checked this before. this must be valid
         form.save()
         logger.info("Photo %d updated." % photo.pk)
     
@@ -209,19 +211,19 @@ def update_multiple(request):
 
 @login_required
 @require_http_methods(["DELETE"])
-def delete(request, id):
+def delete(request, photo_id):
     try:
-        id = int(id)
-        logger.info("User %d is trying to delete Photo %d." % (request.user.pk, id))
-        photo = Photo.objects.get(pk = id)
+        photo_id = int(photo_id)
+        logger.info("User %d is trying to delete Photo %d." % (request.user.pk, photo_id))
+        photo = Photo.objects.get(pk = photo_id)
         if not is_authorized(photo, request.user):
-            logger.warn("User %s not authorized to delete Photo %d. Aborting." % (request.user, id))
+            logger.warn("User %s not authorized to delete Photo %d. Aborting." % (request.user, photo_id))
             return error("not your photo")
         
         used_space = update_used_space(request.user, -1 * photo.size)
-        logger.info("Photo %d deleted." % id)
+        logger.info("Photo %d deleted." % photo_id)
         photo.delete()
-        response =  success()
+        response = success()
         set_cookie(response, "used_space", used_space)
         return response
     except (KeyError, Photo.DoesNotExist), e:
@@ -241,11 +243,11 @@ def generate_filenames(user, place):
     userjoined = user.date_joined.strftime("%Y-%m-%d")
     
     if 'test' in sys.argv:
-        filename = "test/%s.jpeg" % (uuid.uuid4())
+        filename = "test/%s.jpg" % (uuid.uuid4())
     else:
-        filename = "%s-%s/%s-%s.jpeg" % (user.pk, userjoined, place.pk, uuid.uuid4())
+        filename = "%s-%s/%s-%s.jpg" % (user.pk, userjoined, place.pk, uuid.uuid4())
         
-    thumb = filename.replace(".jpeg", ".0.jpeg")
+    thumb = filename.replace(".jpg", ".0.jpg")
     
     return filename, thumb
 
@@ -260,8 +262,8 @@ def handle_upload(user, place, original, thumb):
 def upload_photo(photo, filename):
     bucket = getbucket()
     key = bucket.new_key(filename)
-    key.set_contents_from_file(photo, headers = {"content_type" : "image/jpeg"})
-    key.set_acl("public-read")
+    key.set_contents_from_file(photo, headers = {"Content-Type" : "image/jpeg"}, policy = "public-read")
+#    key.set_acl("public-read")
     
 
 

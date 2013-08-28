@@ -3,7 +3,8 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block extrajs %}
+{% block js %}
+{{ block.super }}
 {% load compress %}
 {% compress js %}
 <script type="text/javascript" src="/static/js/keiken/main/landingpage.js"></script>
@@ -17,55 +18,53 @@
 {% block pageID %}landingpage{% endblock %}
 
 {% block background_image %}
-	<!-- if passed along the "day"-parameter gives the current weekday from sunday = 0 to saturday = 6; each day there is a different background -->
-	{% if day %}
-		<img src="/static/images/backgrounds/bg{{ day }}.jpg" alt="background couldn't be loaded" class="background-image"/>
-	{% else %}
-		<img src="/static/images/backgrounds/bg0.jpg" alt="background couldn't be loaded" class="background-image"/>
-	{% endif %}
-	<div class="background-overlay-black"></div>
+<!-- if passed along the "day"-parameter gives the current weekday from sunday = 0 to saturday = 6; each day there is a different background -->
+{% if day %}
+<img src="/static/images/backgrounds/bg{{ day }}.jpg" alt="background couldn't be loaded" class="background-image"/>
+{% else %}
+<img src="/static/images/backgrounds/bg0.jpg" alt="background couldn't be loaded" class="background-image"/>
+{% endif %}
+<div class="background-overlay-black"></div>
 {% endblock %}
 
 {% block non_interactive_content %}
-  
-  <section id="keiken-intro" class="keiken-intro">
-	<h2><span>{% trans "Welcome to KEIKEN!" %}</span></h2>
-	<span>{% trans "KEIKEN_ABSTRACT" %}</span>
-	{% block keiken_intro %}{% endblock %}
-  </section>
-  
+<!-- If one warning is present, it will push the content wrapper below the footer, making parts of it inaccessible. -->
+{% include "warnings.html" %}
+<section id="keiken-intro" class="keiken-intro">
+  <h2><span>{% trans "Welcome to KEIKEN!" %}</span></h2>
+  <span>{% trans "KEIKEN_ABSTRACT" %}</span>
+  {% block keiken_intro %}
+  <div class="mp-landing-page-links">
+    {% if user.is_authenticated %}
+    <p>
+      <input type="button" id="mp-dashboard-button" class="mp-landingpage-button" title='{% trans "TO_DASHBOARD" %}' value='{% trans "TO_DASHBOARD" %}' />
+    </p>
+    {% else %}
+    <p>
+      <input type="button" id="mp-demo-button" class="mp-landingpage-button" title='{% trans "VIEW_ALBUM" %}' value='{% trans "VIEW_ALBUM" %}' />
+    </p>
+    <p>
+      <input type="button" id="mp-test-button" class="mp-landingpage-button" title='{% trans "TRY_KEIKEN" %}' value='{% trans "TRY_KEIKEN" %}' />
+    </p>
+    {% endif %}
+  </div>
+  {% endblock %}
+</section>
+
 <section id="keiken-login">
   <div id="mp-login-switch">
-  	<span id="mp-switch-to-register"><a href="#mp-register">{% trans "Sign Up" %}?</a></span>
-  	<span id="mp-switch-to-login" class="mp-nodisplay"><a href="#mp-login">{% trans "Login" %}?</a></span>
+    <span id="mp-switch-to-register"><a href="#mp-register">{% trans "Sign Up" %}?</a></span>
+    <span id="mp-switch-to-login" class="mp-nodisplay"><a href="#mp-login">{% trans "Login" %}?</a></span>
   </div>
   <div class="mp-login-tab" id="mp-login">
-  	<h2>{% trans "Login" %}</h2>
+    <h2>{% trans "Login" %}</h2>
     <!-- action is necessary because this template is also populated by /test -->
-    <form class="mp-form" action="/account/auth/login" method="post">
-      <p>
-        <label for="login_email">{% trans "Email" %}:</label>
-        <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>
-      </p>
-      <p>
-        <label for="login_password">{% trans "Password" %}:</label>
-        <input type="password" name="password" id="login_password" required="required" value="" placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}" data-required/>
-      </p>
-      <p class="mp-nodisplay">
-      	<input type="hidden" name="next" value="{{ next }}" />
-      </p>
-      <p class="mp-nodisplay">
-      	<input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
-      </p>
-      <p>
-		<input id="login_submit" class="mp-landingpage-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
-      </p>
-    </form>
+    {% include "login-form.html" %}
     <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
   </div>
   
   <div class="mp-login-tab mp-nodisplay" id="mp-register">
-  	<h2>{% trans "Registration" %}</h2>
+    <h2>{% trans "Registration" %}</h2>
     <!-- action is necessary because this template is also populated by /test -->
     <form class="mp-form" action="/register" method="post">
       <p>
@@ -89,7 +88,7 @@
         <input type="password" name="confirm" id="register_confirm" />
       </p>
       <p>
-		<input class="mp-landingpage-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' />
+	<input class="mp-landingpage-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' />
       </p>
     </form>
   </div>

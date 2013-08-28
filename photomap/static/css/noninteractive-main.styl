@@ -60,9 +60,14 @@ address
     margin-right 3%
     float left
     width 25%
+  label.mp-form-big-label
+    width 72%
   input, textarea
     margin 1% 0
     width 72% // 100% - 3% label margin right (= space between laveb and input) - 25% label width
+  input[type="radio"]
+    width 25%
+  
 .mp-form label.error
   display none !important // prevents errors from being shown
   
@@ -433,8 +438,12 @@ section#keiken-login
 #mp-account-settings-options
   margin-bottom 30px
 
-.mp-account-settings-form
+.mp-account-settings-form 
   display none
+  form
+    width 50%
+    min-width 600px
+
 
 /* ------ end account ------ */
 

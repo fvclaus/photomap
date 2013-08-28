@@ -27,7 +27,7 @@ define(["dojo/_base/declare",
                      QUnit.ok$text($photoNumber, "");
                      QUnit.ok($image.attr("data-keiken-id") === undefined, "The fullscreen image should not have a data attribute");
                  }
-               },
+               }
 
            }),
                test = new SlideshowTest({});

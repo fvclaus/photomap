@@ -131,7 +131,7 @@ def load_debug_data():
     from django.test.client import Client
     print "Inserting Album & Place..." 
     print sub.check_output(LOAD_DATA)
-    client = Client(HTTP_USER_AGENT = "Firefox/15")
+    client = Client(HTTP_USER_AGENT = "Firefox/22")
     client.login(username = "test", password = "test")
     TITLE_SHORT = "Chuck Norris hat mehr Kreditkarten als Max Mustermann."
     TITLE_LONG = "Chuck Norris ist vor 10 Jahren gestorben. Der TOD hatte bis jetzt nur noch nicht den Mut es ihm zu sagen."
@@ -147,8 +147,8 @@ def load_debug_data():
                 }
     
     print "Inserting Photos..."
-    print client.post("/insert-photo", get_data(TITLE_SHORT))
-    print client.post("/insert-photo", get_data(TITLE_LONG))
+    print client.post("/photo/", get_data(TITLE_SHORT))
+    print client.post("/photo/", get_data(TITLE_LONG))
     print "Done."
 
 def load_production_data():

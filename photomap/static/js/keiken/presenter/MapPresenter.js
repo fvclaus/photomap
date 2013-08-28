@@ -45,7 +45,7 @@ define([
             this.markerPresenter = this.initMarkers(this.markerModelCollection.getAll());
             // show the map depending on amount of markers
             if (this.markerModelCollection.size() === 1) {
-               this.view.expandBounds(this.markerModelCollection.getByIndex(1));
+               this.view.expandBounds(this.markerModelCollection.getByIndex(0));
             } else {
                this._fitMapToMarkers(this.markerModelCollection.getAll());
             }

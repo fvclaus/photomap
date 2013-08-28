@@ -3,61 +3,6 @@
 
 "use strict";
 
-/**
- * evaluates form, submits it via ajax (type = post) and displays results (error messages depend on what failed)
- * @param {jQuery} $form Selector
- * @param {Function} onSuccess handler to be called if the request was succesful
- * @param {Function} onFail handler to be called if request failed 
- */
-function submitForm ($form, onSuccess, onFail) {
-   var formData = {}, 
-      $requestFail = $form.find(".mp-request-fail"),
-      $submitFail = $form.find(".mp-submit-fail"),
-      $success = $form.find(".mp-request-success");
-            
-   $.each($form.serializeArray(), function(i, field) {
-      formData[field.name] = field.value;
-   });
-     
-   $.ajax({
-      url: $form.attr("action"),
-      type: "POST",
-      data: formData,
-      success: function (data) {
-         $submitFail.empty();
-         $success.hide();
-         //empty all input fields - if you want a value to stay you have to define that in onSuccess/Fail and return the value from server
-         $form.find("input").not("input[type='hidden']").not("input[type='submit']").each(function (i, field) {
-            console.log(field);
-            $(field).val("");
-         });
-         
-         if (data) {
-            console.log(data);
-            if (data.success) {
-               $success.show()
-               if (onSuccess) {
-                 onSuccess.call(null, data);
-               }
-            } else {
-               $requestFail.text(data.error);
-               if (onFail) {
-                  onFail.call(null, data);
-               }
-            }
-            
-         } else {
-            $requestFail.text(gettext("REQUEST_UNKNOWN_FAIL"));
-         }
-      },
-      error: function (jqXHR, textStatus, errorThrown) {
-         $success.hide();
-         $requestFail.empty();
-         $submitFail.text(textStatus + ": " + errorThrown);
-      }
-   });
-}
-
 $(document).ready(function () {
    var spaceUsage = [];
    // show correct space usage in MB
@@ -65,7 +10,7 @@ $(document).ready(function () {
    spaceUsage.push(parseFloat($("#mp-user-used-space").text()));
    spaceUsage.push(spaceUsage[0] - spaceUsage[1]);
    $.each(spaceUsage, function (index, spaceInBytes) {
-      spaceUsage[index] = (spaceInBytes / Math.pow(2, 20)).toFixed(2).toString()
+      spaceUsage[index] = (spaceInBytes / Math.pow(2, 20)).toFixed(2).toString();
    });
    $("#mp-user-quota").text(spaceUsage[0]);
    $("#mp-user-used-space").text(spaceUsage[1]);
@@ -95,28 +40,50 @@ $(document).ready(function () {
             .addClass("mp-current-form");
       }
    });
-   //submit the current form
-   $(".mp-settings-form-submit").on("click", function (event) {
-      if ($form.parent().attr("id") !== "mp-delete-account-form") {
-         event.preventDefault();
-         var formData = {},
-            $form = $(this).parents("form"),
-            onSuccess = null;
+   $(".mp-form").each(function () {
+      // Reset validator settings attached by startFormValidator.
+      // This is dangerous, because existing listeners are not removed.
+      $.data(this, "validator", null); 
+      var $form = $(this);
+      $form.validate({
+         debug : true,
+         success : "valid",
+         errorPlacement : function () {},
+         submitHandler : function () {
+            var $requestFail = $form.find(".mp-request-fail"),
+                $submitFail = $form.find(".mp-submit-fail"),
+                $success = $form.find(".mp-request-success");
+   
             
-         if ($form.parent().hasClass("mp-current-form") && $form.valid()) {
-            
-            if ($form.parent().attr("id") === "mp-update-email-form") {
-               onSuccess = function (data) {
-                  $(".mp-user-email").text(data.email);
+            $.ajax({
+               url: $form.attr("action"),
+               type: $form.attr("method"),
+               data: $form.serialize(),
+               success: function (data) {
+                  $submitFail.empty();
+                  $success.hide();
+                  //empty all input fields - if you want a value to stay you have to define that in onSuccess/Fail and return the value from server
+                  $form.find("input").not("input[type='hidden']").not("input[type='submit']").each(function (i, field) {
+                     console.log(field);
+                     $(field).val("");
+                  });
+
+                  if (data.success) {
+                     $success.show();
+                     if (data.email) {
+                        $(".mp-user-email").text(data.email);                              
+                     }
+                  } else {
+                     $requestFail.text(gettext("REQUEST_UNKNOWN_FAIL"));
+                  }
+               },
+               error: function (jqXHR, textStatus, errorThrown) {
+                  $success.hide();
+                  $requestFail.empty();
+                  $submitFail.text(textStatus + ": " + errorThrown);
                }
-            } else if ($form.parent().attr("id") === "mp-delete-account-form") {
-               if (confirm(gettext("DELETE_ACCOUNT_CONFIRM"))) {
-                  submitForm($form);
-               }
-               return;
-            }
-            submitForm($form, onSuccess);
+            });
          }
-      }
+      });
    });
 });

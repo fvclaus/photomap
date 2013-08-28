@@ -4,28 +4,31 @@ Created on Jun 19, 2013
 @author: Marc
 '''
 
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest
-from django.shortcuts import render_to_response, redirect
+from django.http import HttpResponseRedirect, HttpResponseBadRequest
+from django.shortcuts import render_to_response 
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, loader
 from django.core.mail import send_mail
-from django.contrib.auth.models import User
-from django.contrib.auth.views import password_reset, password_reset_confirm
-from django.contrib.auth.tokens import default_token_generator
 from django.contrib.sites.models import get_current_site
-from django.contrib.sessions.backends.db import SessionStore
+from django.contrib.auth.views import password_reset, password_reset_confirm
+
+from django.views.decorators.csrf import csrf_protect
+from django.template import RequestContext
+
 from django.utils.translation import ugettext as _
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.cache import never_cache
-from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 from django.conf import settings
+from django.contrib.auth import logout
 
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 
-from pm.form.account import UserUpdatePasswordForm, UserUpdateEmailForm, UserDeleteAccountForm, UserDeleteAccountReasonsForm
+from pm.mail import send_mail
+
+from pm.form.account import UpdatePasswordForm, UpdateEmailForm, DeleteAccountForm, DeleteAccountReasonsForm
 
 from message import success, error, request_fail_error, request_not_allowed_error
 
@@ -38,36 +41,36 @@ logger = logging.getLogger(__name__)
 @require_GET
 def view(request):
     albums = Album.objects.all().filter(user = request.user)
-    total_albums = len(albums)
-    total_places = 0
-    total_photos = 0
+    n_albums = len(albums)
+    n_places = 0
+    n_photos = 0
     for album in albums:
         places = Place.objects.all().filter(album = album)
-        total_places += len(places)
+        n_places += len(places)
         for place in places:
-            total_photos += Photo.objects.filter(place = place).count()
+            n_photos += Photo.objects.filter(place = place).count()
     data = {
-            "total_albums": total_albums,
-            "total_places": total_places,
-            "total_photos": total_photos
+            "n_albums": n_albums,
+            "n_places": n_places,
+            "n_photos": n_photos,
+            "is_test_user": is_test_user(request.user) 
             }
-    return render_to_response("account-active.html", data, context_instance = RequestContext(request))
+    return render_to_response("account/active.html", data, context_instance = RequestContext(request))
 
-@sensitive_post_parameters()
 @csrf_protect
-@login_required
+@sensitive_post_parameters()
 @require_POST
+@login_required
 def update_password(request):
     user = request.user
     if is_test_user(user):
         return request_not_allowed_error()
-    form = UserUpdatePasswordForm(request.POST)
+    form = UpdatePasswordForm(request.POST)
     if form.is_valid():
         old_password = form.cleaned_data["old_password"]
         new_password = form.cleaned_data["new_password"]
-        new_password_repeat = form.cleaned_data["new_password_repeat"]
         logger.info("Trying to update password of User %d." % user.id)
-        if user.check_password(old_password) and new_password == new_password_repeat:
+        if user.check_password(old_password):
             user.set_password(new_password)
             user.save()
             logger.info("User %d password updated." % user.id)
@@ -85,7 +88,7 @@ def update_email(request):
     user = request.user
     if is_test_user(user):
         return request_not_allowed_error()
-    form = UserUpdateEmailForm(request.POST)
+    form = UpdateEmailForm(request.POST)
     if form.is_valid():
         new_email = form.cleaned_data["new_email"]
         confirm_password = form.cleaned_data["confirm_password"]
@@ -95,76 +98,52 @@ def update_email(request):
         if user.check_password(confirm_password):
             user.email = new_email
             user.save()
-            logger.info("User email updated. New email = %s" % new_email)
+            logger.info("User %d email updated." % user.id)
             return success(email = new_email)
         else:
             return request_fail_error()
     else:
         return error(str(form.errors))
-
+    
 @csrf_protect
 @login_required
-@require_http_methods(["DELETE"])
+@sensitive_post_parameters("user_password")
 def delete(request):
-    user = request.user
-    if is_test_user(user):
-        return HttpResponseRedirect("/account/delete/error")
-    form = UserDeleteAccountForm(request.POST)
-    if form.is_valid():
-        id = user.id
-        user_email = form.cleaned_data["user_email"]
-        user_password = form.cleaned_data["user_password"]
-        logger.info("Trying to delete User %d." % id)
-        if user.email == user_email and user.check_password(user_password):
-            user.delete()
-            send_delete_mail(user_email, request)
-            session = SessionStore()
-            session["user_deleted"] = True
-            session.save()
-            logger.info("User %d account deleted." % id)
-            return HttpResponseRedirect("/account/delete/complete?username=" + user_email)
-        else:
-            return HttpResponseRedirect("/account/delete/error")
-    else:
-        return HttpResponseRedirect("/account/delete/error")
-
-@csrf_protect
-def delete_account_complete(request):
     if request.method == "GET":
-        session = SessionStore()
-        if session.get("user_deleted", default=False):
-            return render_to_response("account-deleted.html", {"username": username}, context_instance = RequestContext(request))
-        else:
-            return HttpResponseRedirect("/url/invalid")
-    if request.method == "POST":
-        form = UserDeleteAccountReasonsForm(request.POST)
+        form = DeleteAccountForm()
+        return render_to_response("account/delete.html", { "form" : form }, context_instance = RequestContext(request))
+    else:
+        user = request.user
+        form = DeleteAccountForm(request.POST, auto_id = False)
         if form.is_valid():
-            try:
-                message = format_message(form.cleaned_data["username"],
-                                         form.cleaned_data["cause"],
-                                         form.cleaned_data["cause_message"],
-                                         form.cleaned_data["optional_message"])
+            user_id = user.id
+            user_email = form.cleaned_data["user_email"]
+            user_password = form.cleaned_data["user_password"]
+            logger.info("Trying to delete User %d." % user_id)
+            if (user.email == user_email and user.check_password(user_password)):
+                logout(request)
+                user.delete()
+                try:
+                    send_delete_mail(user_email, request)
+                    if request.POST.has_key("cause") or request.POST.has_key("cause_message"):
+                        message = "Cause %d\nMessage %s" % (request.POST.get("cause", default = "No cause selected."),
+                                                        request.POST.get("cause_message", default = "No message entered."))
+                        send_mail("Account deleted", message)
+                except Exception, e:
+                    logger.error(str(e))
+                finally:
+                    return HttpResponseRedirect("/account/delete/success")
+            else:
+                form.errors["__all__"] = form.error_class([_("EMAIL_OR_PASSWORD_WRONG")])
+                return render_to_response("account/delete.html", { "form" : form }, context_instance = RequestContext(request))
+        else:
+            return render_to_response("account/delete.html", { "form" : form }, context_instance = RequestContext(request))
+            
                 
-                send_mail("Reasons for account deletion",
-                          message,
-                          settings.EMAIL_HOST_USER,
-                          [settings.EMAIL_HOST_USER]
-                          )
-                send_thankyou_mail(form.cleaned_data["username"], request)
-                return HttpResponseRedirect("/") 
-            except Exception, e:
-                return HttpResponseRedirect("/")
-    else:
-        return HttpResponseBadRequest()
-
 def is_test_user(user):
-    if user.email == settings.EMAIL_TEST_USER:
-        return True
-    else:
-        return False
+    return user.email == settings.EMAIL_TEST_USER
 
-def format_message(user, reason, message, optional):
-    return "Account: %s\nReason: %s\n%s\n Additional Notes: %s" % (user, reason, message, optional)
+
 def send_mail_to_user(user_email, subject, message):
     send_mail(subject,
               message,
@@ -190,20 +169,21 @@ def send_thankyou_mail(user_email, request):
 
 @csrf_protect
 def reset_password(request):
+    logger.debug("here")
     email = "email/reset-password-email.html"
     subject = "email/reset-password-subject.txt"
     redirect_to = "/account/password/reset/requested"
-    return password_reset(request, template_name = "reset-password.html", email_template_name = email, subject_template_name = subject, post_reset_redirect = redirect_to)
+    return password_reset(request, template_name = "account/reset-password.html", email_template_name = email, subject_template_name = subject, post_reset_redirect = redirect_to)
 
 def reset_password_requested(request):
-    return render_to_response("reset-password-requested.html", context_instance = RequestContext(request))
+    return render_to_response("account/reset-password-requested.html", context_instance = RequestContext(request))
 
 @sensitive_post_parameters()
 @never_cache
 def reset_password_confirm(request, uidb36, token):
     redirect_to = "/account/password/reset/complete"
-    return password_reset_confirm(request, uidb36, token, template_name = "reset-password-confirm.html", post_reset_redirect = redirect_to)
+    return password_reset_confirm(request, uidb36, token, template_name = "account/reset-password-confirm.html", post_reset_redirect = redirect_to)
 
 def reset_password_complete(request):
-    return render_to_response("reset-password-complete.html", context_instance = RequestContext(request))
+    return render_to_response("account/reset-password-complete.html", context_instance = RequestContext(request))
     

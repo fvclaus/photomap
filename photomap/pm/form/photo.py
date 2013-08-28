@@ -1,7 +1,7 @@
 '''
 Created on Jul 3, 2012
 
-@author: fredo
+@author: Frederik Claus
 '''
 
 from django import forms

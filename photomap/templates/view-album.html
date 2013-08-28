@@ -25,7 +25,12 @@
 
 {% block pageID %}albumview{% endblock %}
 
-{% block left-column %}
+
+{% block content_top %}
+<section class="mp-fullscreen" id="mp-fullscreen"></section>
+{% endblock %}
+
+{% block content_inner_left %}
 <section class="mp-map" id="mp-map">
   <div class="mp-map-wrapper" id="map"></div>
 </section>
@@ -33,37 +38,7 @@
 {% endblock %}
 
 
-{% block right-column %}
+{% block content_inner_right %}
 <section class="mp-slideshow" id="mp-slideshow">
 </section>
-{% endblock %}
-
-{% block outside-of-columns %}
-<section class="mp-fullscreen" id="mp-fullscreen"></section>
-{% endblock %}
-
-{% block content_interactive %}
-<!-- jqote2 templates for gallery, slideshow and fullscreen -->
-<script id="hiddenPhotosTmpl" type="text/html">
-  <% for (src in this.sources) { %>
-  <img class="mp-nodisplay" src="<%= this.sources[src] %>" />
-  <% }; %>
-</script>
-
-<script id="galleryFullscreenTmpl" type="text/html">
-  <div id="mp-image-overlay" class="mp-image-overlay">
-    <img class="mp-dark-loader" src="/static/images/dark-loader.gif" />
-    <img class="mp-image-zoom" src="/static/images/zoom.png" />
-    <img class="mp-image-full" src="<%= this.tmplPhotoData.source %>" style="display:none;" />
-    <div class="mp-image-overlay-desc">
-      <div class="mp-image-nav">
-	<img class="mp-image-nav-prev mp-cursor-pointer mp-control" src="/static/images/image-arrow-left.png" />
-	<img class="mp-image-nav-next mp-cursor-pointer mp-control" src="/static/images/image-arrow-right.png" />
-	<img class="mp-image-overlay-close mp-cursor-pointer mp-control" src="/static/images/close.png" />
-      </div>
-      <h2 class="mp-fullscreen-photo-title"><%= this.tmplPhotoData.description %></h2>
-    </div>
-  </div>
-</script>
-
 {% endblock %}

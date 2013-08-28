@@ -1,7 +1,7 @@
 define({
    root : {
       update : "Update",
-      delete : "Delete",
+      "delete" : "Delete",
       share : "Share"
    },
    de : true

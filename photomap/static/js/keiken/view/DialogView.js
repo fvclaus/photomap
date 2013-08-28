@@ -8,13 +8,6 @@
  * @class Handles any form of input. Takes care of form validation, error handling and closing the input dialog
  */
 
-$.extend($.ui.dialog.prototype.options, {
-   autoOpen: false,
-   modal: true,
-   zIndex: 3000,
-   draggable: false,
-   closeOnEscape : false
-});
 
 define([
    "dojo/_base/declare",
@@ -25,6 +18,14 @@ define([
    "dojo/domReady!"
 ],
    function (declare, View, DialogMessageView, PhotoEditorView, communicator) {
+      $.extend($.ui.dialog.prototype.options, {
+         autoOpen: false,
+         modal: true,
+         zIndex: 3000,
+         draggable: false,
+         closeOnEscape : false
+      });
+
       return declare(View, {
          constructor : function () {
             
@@ -120,9 +121,8 @@ define([
                         text : gettext("SAVE"),
                         click : function () {
                            instance._submitForm();
-                        },
-                     },
-      
+                        }
+                     }
                   ]
                });
                break;
@@ -206,7 +206,7 @@ define([
                //limit maximum height
                "maxHeight" : this.height,
                //set the width to allow percentage styling
-               "width": this.options.width || this.width,
+               "width": this.options.width || this.width
                // "heightStyle": "content"
             });
          },

@@ -8,43 +8,31 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/keiken/util/noconsole.js" ></script>
-<script type="text/javascript" src="/static/js/lib/jquery.jqote2.min.js" ></script>
-<!-- the modified version supports translations via gettext -->
-
-<script type="text/javascript" src="/static/js/keiken/main/init.js" ></script>
+<script type="text/javascript" src="/static/js/lib/jquery.jqote2.js" ></script>
+<script type="text/javascript" src="/static/js/lib/jquery.hotkeys.js"></script>
+<!-- Feature currently disabled -->
+<!-- <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script> -->
+<!-- <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.min.js" ></script> -->
 {% endcompress %}
-<!-- mapjs does not work here. why? -->
-<!-- <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"> </script> -->
 {% endblock %}
 
-{% block mapjs %}
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWnE-Kkl7ifiNjQVLv-N3UwY_KxuYqm_Q&sensor=false"> </script>
-{% endblock %}
 
 {% block content %}
+<!-- If one warning is present, it will push the content wrapper below the footer, making parts of it inaccessible. -->
+{% include "warnings.html" %}
+{% block content_top %}
+{% endblock %}
 
-{% block outside-of-columns %}{% endblock %}
-
-<span class="ui-state-highlight ui-corner-all ui-button-text-icon-primary mp-nodisplay" id="mp-status-message">
-  <span class="ui-button-icon-primary ui-icon ui-icon-info "></span>
-  <strong class="ui-button-text"></strong>
-</span>
-
-<section id="mp-full-page" class="mp-full-page">
-	{% block full-page %}
-	{% endblock %}
-</section>
 
 <section id="mp-left-column" class="mp-left-column">
   <section class="mp-full-column mp-full-left-column mp-nodisplay" id="mp-full-left-column"> </section>
-  {% block left-column %}
+  {% block content_inner_left %}
   {% endblock %}
 </section>
 
 
 <section id="mp-right-column" class="mp-right-column">
-  {% block right-column %}
+  {% block content_inner_right %}
   {% endblock %}
 
   <section class="mp-full-column" id="mp-detail" >
@@ -64,29 +52,30 @@
     <div id="mp-detail-teaser-description-wrapper" class="mp-wrapper">
       <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;" class="mp-insert-description" href="#" title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
     </div>
-    <!-- <p id="mp-detail-teaser-description"><em>{% trans "NO_DESCRIPTION" %}</em></p> -->
   </section>
 </section>
-
-{% block content_interactive %}
-{% endblock %}
-
-<div class="mp-ui-loading" id="mp-ui-loading">
-  <p class="mp-loading-img">
-    <img src="/static/images/content-loader.gif" />
-  </p>
-  <p class="mp-loading-msg">
-    {% trans "Data Loading" %}
-  </p>
-</div>
-
 
 <!-- ff does not change the width of the conrols wrapper, unless it is a span tag -->
 <!-- changing the display to inline-block alone does not do the trick -->
 <span class="mp-controls-wrapper ui-corner-all mp-nodisplay" id="mp-controls"> </span>
 <!-- div for UIInput. The dimensions are defined in input.sty -->
 <div id="mp-dialog"></div>
-<!-- helpers for selenium ide. remove from production system -->
-{% include "selenium-test.html" %}
 
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDWnE-Kkl7ifiNjQVLv-N3UwY_KxuYqm_Q&sensor=false"> </script>
+
+{% if debug %}
+<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript" src="/static/js/keiken/main/init.js" ></script>
+{% else %}
+<script type="text/javascript">
+  var dojoConfig = {
+    baseUrl : "/static/CACHE/js/",
+    async : true
+  };
+</script>
+<script type="text/javascript" src="/static/CACHE/js/main.js"> </script>
+<script type="text/javascript">
+  require(["keiken/main/init"], function () {});
+</script>
+{% endif %}
 {% endblock %}

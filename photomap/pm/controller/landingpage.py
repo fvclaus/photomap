@@ -13,15 +13,17 @@ import datetime
 
 @ensure_csrf_cookie
 @csrf_protect
-def get_current(request):
+def view(request):
     if request.method == "GET":
         today = datetime.date.today().strftime("%w")
         next = request.GET.get("next")
-        return render_to_response("index-main.html", {"day": today, "next": next}, context_instance = RequestContext(request))
+        return render_to_response("index.html", {"day": today, "next": next}, context_instance = RequestContext(request))
     else:
         return HttpResponseBadRequest()
     
-def get_guest_current(request):
+    
+def view_album_login(request):
+    """ Renders the album login for guests. """
     if request.method == "GET":
         today = datetime.date.today()
         return render_to_response("album-share-login.html", {"day": today.strftime("%w") }, context_instance = RequestContext(request))
