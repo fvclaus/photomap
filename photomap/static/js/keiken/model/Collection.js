@@ -18,7 +18,9 @@ define(["dojo/_base/declare"],
          constructor: function (modelList, options) {
          
             this.defaults = {
-               orderBy: null
+               orderBy: null, // optional
+               modelConstructor: null, // mandatory, constructor function of the model-type, used in insertRaw
+               modelType: "Model" // mandatory, should resemble model-type which can be retrieved with model.getType()
             };
             this.options = $.extend({}, this.defaults, options);
             
@@ -39,7 +41,19 @@ define(["dojo/_base/declare"],
           */
          insert : function (model) {
             
-            this.models.push(model);
+            var index;
+            
+            if (this.has(model.getId()) !== -1) {
+               throw new Error("ModelDuplicationError");
+            }
+            
+            if (!this.options.orderBy) {
+               this.models.push(model);
+            } else {
+               index = this._getCorrectIndex(model);
+               this.models.splice(index, 0, model);
+            }
+            
             this._bindModelListener([model]);
             
             this._trigger("inserted", model);
@@ -52,9 +66,12 @@ define(["dojo/_base/declare"],
           */
          "delete" : function (model) {
             console.log(model);
-            assertTrue(this.has(model.getId()), "Selected model is not part of the collection");
             
-            this.models.splice(this.models.indexOf(model), 1);
+            if (this.has(model) < 0) {
+               throw new Error("UnknownModelError");
+            }
+            
+            this.models.splice(this.has(model), 1);
             
             this._trigger("deleted", model);
             
@@ -70,13 +87,10 @@ define(["dojo/_base/declare"],
             })[0];
          },
          /**
-          * @description Retrieves a model from the collection, without deleting or modifying it. ! return undefined when model doesn't exist in collection
+          * @description Retrieves a model from the collection, without deleting or modifying it. (!) returns undefined when model doesn't exist in collection
           * @param {Integer} id Id of the model
           */
          get : function (id) {
-            if (!id) {
-               return null;
-            }
             return this.models.filter(function (model) {
                return (model.getId() === id);
             })[0];
@@ -91,11 +105,16 @@ define(["dojo/_base/declare"],
             return this.models.length;
          },
          /**
-          * @description Checks if the Collection contains a certain model
-          * @param {Integer} id Id of the model (id is unique!)
+          * @description Checks if the Collection contains a certain model.
+          * @param {Object} id Id of the model (id is unique!) or model itself
+          * @return Index of the model. Returns -1 if model doesn't exist.
           */
          has : function (id) {
-            return (this.get(id) !== undefined);
+            var model = (typeof id === "number") ? this.get(id) : id;
+            if (!model) {
+               return -1;
+            }
+            return this.models.indexOf(model);
          },
          /**
           * @description Sorts the models by the property given in options.orderBy. If this options is undefined or null, the models won't be sorted!
@@ -262,12 +281,32 @@ define(["dojo/_base/declare"],
             
             return this;
          },
+         _getCorrectIndex : function (model) {
+            
+            var i = this.size(),
+               newOrder = model.getOrder(),
+               currentOrder;
+            
+            if (!this.options.orderBy) {
+               return i;
+            }
+            
+            do {
+               i--;
+               currentOrder = this.getByIndex(i)[this.options.orderBy];
+               if (currentOrder === newOrder) {
+                  throw new Error("OrderDuplicationError");
+               }
+            } while (newOrder < currentOrder);
+            
+            return i + 1;
+         },
          _bindModelListener : function (models) {
             var instance = this;
             $.each(models, function (i, model) {
                model
                   .onUpdate(function (model) {
-                     instance._trigger("updated.Model", model);
+                     instance._trigger("updated", model);
                   })
                   .onDelete(function (model) {
                      instance["delete"](model);
@@ -277,7 +316,7 @@ define(["dojo/_base/declare"],
          /**
           * @description Wraps jQuery .trigger() - triggers event on the collection.
           * @param {String} eventName
-          * @param {Object} data Data to be passed to the handler. data mayb be an Array, Object or basically anything else
+          * @param {Object} data Data to be passed to the handler. data may be an Array, Object or basically anything else
           */
          _trigger : function (eventName, data) {
             $(this).trigger(eventName, data);
