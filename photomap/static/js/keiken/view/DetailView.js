@@ -17,7 +17,7 @@ define([
    "../model/Album",
    "../presenter/DetailPresenter",
    "../util/Communicator",
-   "../util/Tools",
+   "../util/Tools"
 ],
    function (declare, View, Photo, Place, Album, DetailPresenter, communicator, tools) {
       return declare(View, {

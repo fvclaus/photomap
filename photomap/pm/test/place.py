@@ -22,7 +22,7 @@ class PlaceControllerTest(ApiTestCase):
         #=======================================================================
         # define url for post requests
         #=======================================================================
-        self.url = "/insert-place"
+        self.url = "/place/"
         #=======================================================================
         # without description
         #=======================================================================
@@ -60,34 +60,37 @@ class PlaceControllerTest(ApiTestCase):
     
         
     def test_update(self):
-        self.url = "/update-place"
+        self.url = "/place/"
         #=======================================================================
-        # without description
+        # Without description
         #=======================================================================
         data = {"id": 1,
                 "title": "Some other title"}
         (place, content) = self.assertUpdates(data)
         self.assertEqual(place.title, data["title"])
         #=======================================================================
-        # with description
+        # With description
         #=======================================================================
         data["description"] = "Some other description"
         (place, content) = self.assertUpdates(data)
         self.assertEqual(place.description, data["description"])
         #=======================================================================
-        # something that doesnt belong to you
+        # Something that doesn't belong to you
         #=======================================================================
         data["id"] = 2
         self.assertError(data)
         #=======================================================================
-        # something invalid
+        # Something invalid
         #=======================================================================
         data["id"] = 9999
         self.assertError(data)
+        #=======================================================================
+        # Wrong parameter
+        #=======================================================================
+        self.assert404("/place/abc/", method = "POST")
         
-    
     def test_delete(self):
-        self.url = "/delete-place"
+        self.url = "/place/"
         #=======================================================================
         # valid request
         #=======================================================================
@@ -99,10 +102,14 @@ class PlaceControllerTest(ApiTestCase):
             self.assertPhotoDeleted(photo)
         self.assertEqual(self.user.userprofile.used_space, 329796)
         #=======================================================================
-        # not yours
+        # Not owner
         #=======================================================================
         self.assertError({"id" : 2})
         #=======================================================================
-        # not valid
+        # Not valid
         #=======================================================================
         self.assertError({"id" : 9999})
+        #=======================================================================
+        # Use wrong parameter.
+        #=======================================================================
+        self.assert404("/place/abc/", method = "DELETE")

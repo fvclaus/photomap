@@ -6,7 +6,6 @@ Created on Sep 28, 2012
 
 import logging
 import re
-import sys
 from django.shortcuts import render_to_response
 from django.conf import settings
 from pm.controller import album, dashboard, authentication

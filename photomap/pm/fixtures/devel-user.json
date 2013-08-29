@@ -1,5 +1,33 @@
 [ 
    {
+      "pk": 4,
+      "model": "auth.user",
+      "fields": {
+         "username": "delete_me",
+         "first_name": "",
+         "last_name": "",
+         "is_active": true,
+         "is_superuser": false,
+         "is_staff": false,
+         "last_login": "2012-07-27T18:01:47.672",
+         "groups": [],
+         "user_permissions": [],
+         "password": "pbkdf2_sha256$10000$el4zJoknyrub$S/HXUQTs9PiV4OO9hPxFIVrGqSkhjVm3znsZozNJBgU=",
+         "email": "delete_me@keiken.de",
+         "date_joined": "2012-07-27T18:01:47.672"
+      }
+   },
+   {
+      "pk": 4,
+      "model": "pm.userprofile",
+      "fields": {
+         "picture": "",
+         "used_space": 0,
+         "user": 4, 
+         "quota": 367001600
+      }
+   },
+   {
       "pk": 3,
       "model": "auth.user",
       "fields": {

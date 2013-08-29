@@ -4,7 +4,7 @@ Created on Jul 10, 2012
 @author: fredo
 '''
 
-from django.http import HttpResponseRedirect, HttpResponse, HttpResponseBadRequest 
+from django.http import HttpResponse, HttpResponseBadRequest 
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -25,15 +25,14 @@ from pm.controller import landingpage
 from pm.exception import OSMException
 
 from pm.osm import reversegecode
-from pm.form.album import AlbumInsertForm, AlbumUpdateForm, AlbumPasswordUpdateForm, AlbumShareLoginForm
+from pm.form.album import AlbumInsertForm, AlbumUpdateForm, AlbumPasswordUpdateForm
 
 import json
 import logging
 import decimal
 
-import os
 import string
-import random
+import datetime
 
 SECRET_KEY_POOL = string.ascii_letters + string.digits
 
@@ -42,15 +41,15 @@ logger = logging.getLogger(__name__)
 
 @login_required
 @require_POST
-def update_password(request, id):
+def update_password(request, album_id):
     user = request.user
     form = AlbumPasswordUpdateForm(request.POST)
     if form.is_valid():
         try:
-            album_id = int(id)
+            album_id = int(album_id)
             logger.debug("User %d is trying to set new password for Album %d." % (request.user.pk, album_id))
             album = Album.objects.get(pk = album_id, user = user)
-            password = hashers.make_password(form.cleaned_data["album_password"])
+            password = hashers.make_password(form.cleaned_data["password"])
             album.password = password
             album.save()
             return success()
@@ -61,38 +60,26 @@ def update_password(request, id):
     else:
         return error(str(form.errors))
 
-#
-#def view(request):
-##    if not request.user.is_authenticated():
-##        return HttpResponseRedirect('/login')
-#    if request.method == "GET":
-#        return render_to_response("view-album.html",
-#                                  {"testphotopath": data.TEST_PHOTO},
-#                                  context_instance = RequestContext(request))
-#    else:
-#        return HttpResponseBadRequest()
-
 
 def demo(request):
     if request.method == "GET":
-        demo = User.objects.get(username="demo")
+        demo = User.objects.get(username = "demo")
         album = Album.objects.get(user = demo)
         request.session["album_%d" % album.pk] = True
         return redirect("/album/%d/view/%s/" % (album.pk, album.secret))
     else:
         return HttpResponseBadRequest()
 
-def view(request, id, secret):
+def view(request, album_id, secret):
     try:
-        album_id = int(id)
-        album = Album.objects.get(pk=album_id)
+        album_id = int(album_id)
+        album = Album.objects.get(pk = album_id)
         
         logger.debug("User is trying to access album %d with secret %s." % (album_id, secret))
         
         if album.secret != secret:
-            #TODO better name
+            # TODO better name
             logger.debug("Secret does not match.")
-            logger.debug("%s is not %s" % (secret, album.secret))
             return render_to_response("album-share-failure.html")
     
         if request.method == "GET":
@@ -107,7 +94,7 @@ def view(request, id, secret):
                 logger.debug("Album does not has a password yet.")
                 return render_to_response("album-share-failure.html")
             
-            return landingpage.get_guest_current(request)
+            return landingpage.view_album_login(request)
         else:
             password = request.POST["album_password"]
             
@@ -116,7 +103,8 @@ def view(request, id, secret):
                 return redirect("/album/%d/view/%s/" % (album_id, album.secret))
             else:
                 logger.debug("Password %s is incorrect." % password)
-                return render_to_response("album-share-login.html", 
+                today = datetime.date.today().strftime("%w")
+                return render_to_response("album-share-login.html",
                                           {"password_incorrect_error": "Passwort is not correct.",
                                            "day": today.strftime("%w")})
     except Exception, e:
@@ -125,11 +113,10 @@ def view(request, id, secret):
 
 
 @require_GET
-def get(request, id):
+def get(request, album_id):
     try:
         user = request.user
-        album_id = int(id)
-        
+        album_id = int(album_id)
         
         logger.info("User %s is trying to get Album %d." % (str(request.user), album_id))    
     
@@ -137,31 +124,14 @@ def get(request, id):
             if not request.session.get("album_%d" % album_id):
                 return error("You are not authorized to view this album.")
             else:
-                album  = Album.objects.get(pk = album_id)
+                album = Album.objects.get(pk = album_id)
         else:
             album = Album.objects.get(user = request.user, pk = album_id)
             
-#            # no album_id -- try to take newest album of this user
-#            else:
-#                if not album_id:
-#                    albums = Album.objects.all(user = request.user)
-#                    album = albums[len(albums) - 1]
-#                    logger.info("No ID has been specified. Returning album %d." % album.pk)
-#                else:
-#                   
-
-            
         data = album.toserializable()
-        if album.user == user:
-            data["isOwner"] = True
-        else:
-            data["isOwner"] = False
-            
+        data["isOwner"] = (album.user == user)
         data["success"] = True
-            
-        logger.debug("--------------------------------ALBUM %d--------------------------------------" % album.pk) 
-        logger.debug("%s", json.dumps(data, cls = DecimalEncoder, indent = 4))
-        logger.debug("------------------------------------------------------------------------------") 
+
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
     except (KeyError, Album.DoesNotExist), e:
         return error(str(e))
@@ -170,6 +140,7 @@ def get(request, id):
 @login_required
 @require_POST
 def insert(request):
+    # auto_id to false prevents the default prefixes for form fields.
     form = AlbumInsertForm(request.POST, auto_id = False)
     if form.is_valid():
         album = form.save(commit = False)
@@ -182,6 +153,7 @@ def insert(request):
 #                return error("osm is temporarily not available. please try again later")
             return error(str(e))
         secret = crypto.get_random_string(length = 50)
+        # Mark the album as 'not shared', e.g. inactive.
         password = hashers.make_password(None)
         logger.info("Adding secret %s to Album." % secret)
         album.secret = secret
@@ -194,39 +166,40 @@ def insert(request):
 
 @login_required
 @require_POST
-def update(request, id):
+def update(request, album_id):
     form = AlbumUpdateForm(request.POST)
     if form.is_valid():
-        id = int(id)
+        album_id = int(album_id)
         album = None
-        logger.info("Trying to update Album %d." % id)
+        logger.info("Trying to update Album %d." % album_id)
         try:
-            album = Album.objects.get(user = request.user, pk = id)
-        except Album.DoesNotExist:
-            logger.warn("Album %d does not exist" % id)
-            return error("album does not exist")
+            album = Album.objects.get(user = request.user, pk = album_id)
+        except Album.DoesNotExist, e:
+            logger.warn("Album %d does not exist" % album_id)
+            return error(str(e))
         form = AlbumUpdateForm(request.POST, instance = album)
         form.save()
-        logger.info("Album %d updated." % id)
+        logger.info("Album %d updated." % album_id)
         return success()
     else:
         return error(str(form.errors))
 
 @login_required
 @require_http_methods(["DELETE"])
-def delete(request, id):
+def delete(request, album_id):
     try:
-        id = int(id)
-        logger.info("User %d is trying to delete Album %d." % (request.user.pk, id))
-        album = Album.objects.get(user = request.user, pk = id)
+        album_id = int(album_id)
+        logger.info("User %d is trying to delete Album %d." % (request.user.pk, album_id))
+        album = Album.objects.get(user = request.user, pk = album_id)
         size = 0
         for place in Place.objects.filter(album = album):
             for photo in Photo.objects.filter(place = place):
                 size += photo.size
         album.delete()
+        # Free space for user.
         used_space = update_used_space(request.user, -1 * size)
-        logger.info("Album %d deleted." % id)
-        response =  success()
+        logger.info("Album %d deleted." % album_id)
+        response = success()
         set_cookie(response, "used_space", used_space)
         return response
     except (KeyError, Album.DoesNotExist), e:

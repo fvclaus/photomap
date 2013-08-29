@@ -6,7 +6,7 @@ Created on Jul 8, 2012
 
 from django.test import TestCase
 from django.test.client import Client
-from data import TEST_PASSWORD, TEST_USER
+from data import TEST_PASSWORD, TEST_USER, TEST_EMAIL
 
 import logging
 import json
@@ -14,12 +14,16 @@ from datetime import datetime
 from time import mktime
 from pm.model.photo import Photo
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.test.utils import override_settings
 from pm.model.userprofile import UserProfile
-import os, types
 from urllib import urlopen
+from copy import deepcopy
+import os
 
+@override_settings(EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend')
 class ApiTestCase(TestCase):
-    """ loads the simple-test fixtues, appends a logger and logs the client in """
+    """ loads the simple-test fixtures, appends a logger and logs the client in """
     
     fixtures = ["devel-user", 'simple-test']
     logger = logging.getLogger(__name__)
@@ -32,10 +36,13 @@ class ApiTestCase(TestCase):
     
     def setUp(self):
         self.c = self.createClient()
+        self.TEST_EMAIL = TEST_EMAIL
+        self.TEST_PASSWORD = TEST_PASSWORD
         self.assertTrue(self.c.login(username = TEST_USER, password = TEST_PASSWORD))
         self.logger = ApiTestCase.logger
-        self.user = self.get_user()
-        
+        # Delete all leftover mails
+        self.read_and_delete_mails()
+                
     def tearDown(self):
         # remove all photos from s3 again
         photos = Photo.objects.all()
@@ -43,24 +50,37 @@ class ApiTestCase(TestCase):
             photos.delete()
 
         
-    def assertSuccess(self, data):
+    def assertSuccess(self, url, data, method = "POST"):
         """ makes a request and checks if the json return is defined according to web api specification. returns content """
-        content = self.json(data)
+        content = self.json(url, data, method)
         self.assertTrue(content != None)
         if not content["success"]:
             self.assertTrue(content["success"], "Request is supposed to be successful but returned error: %s" % content["error"])
         self.assertRaises(KeyError, content.__getitem__, "error")
         return content
         
-    def assertError(self, data, method = "POST"):
+    def assertError(self, data = {}, method = "POST"):
         """ makes a request and checks if the json return is defined according to web api specification """
-        content = self.json(data, method = method)
+        if self.url:
+            url = self.url
+        if data.has_key("id"):
+            url = self.url + str(data["id"]) + "/"
+        content = self.json(url, data, method)
         self.assertTrue(content != None)
         self.assertFalse(content["success"])
         self.assertNotEqual(content["error"], "")
         self.assertEqual(len(content.keys()), 2)
         return content
     
+    def assert404(self, url, method = "POST"):
+        response = self.request(url, {}, method)
+        self.assertEqual(response.status_code, 404)
+        
+    def assertLoginRequired(self, url, method):
+        response = self.request(url, method = method, loggedin = False)
+        self.assertTrue(response.has_header("location"))
+        self.assertTrue(response.get("location").find("login") != -1)
+        
     def assertCreates(self, data, model = None, check = None):
         if not model:
             model = self.getmodel()
@@ -69,7 +89,7 @@ class ApiTestCase(TestCase):
         if check is None:
             check = self.assertSuccess
         now = self.getunixtime()
-        content = check(data)
+        content = check(self.url, data)
         self.assertEqual(len(model.objects.all()), length + 1)
         instance = model.objects.all()[length]
         create = mktime(instance.date.timetuple())
@@ -98,6 +118,9 @@ class ApiTestCase(TestCase):
         content = json.loads(response.content)
         self.assertFalse(content["success"])
         
+    def assertRedirectToSuccess(self, response):
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.get("Location").find("success") != -1)
     
     def assertUpdates(self, data, model = None):
         if not model:
@@ -105,15 +128,19 @@ class ApiTestCase(TestCase):
         
         length = len(model.objects.all())
         now = self.getunixtime()
-        content = self.assertSuccess(data)
+        model_id = data["id"]
+        # Do not alter input data.
+        data_copy = deepcopy(data)
+        del data_copy["id"]
+        content = self.assertSuccess(self.url + str(model_id) + "/", data_copy)
         self.assertEqual(len(model.objects.all()), length)
         
-        if data.has_key("id"):
-            updated_instances = model.objects.get(pk = data["id"])
-            updated = mktime(updated_instances.date.timetuple())
-            self.assertNotAlmostEqual(now, updated, delta = self.TIME_DELTA, msg = "date is probably included in the form")
-        else:
-            updated_instances = None
+#        if data.has_key("model_id"):
+        updated_instances = model.objects.get(pk = model_id)
+        updated = mktime(updated_instances.date.timetuple())
+        self.assertNotAlmostEqual(now, updated, delta = self.TIME_DELTA, msg = "date is probably included in the form")
+#        else:
+#            updated_instances = None
             
         return (updated_instances, content)
     
@@ -122,9 +149,13 @@ class ApiTestCase(TestCase):
             model = self.getmodel()
         
         length = len(model.objects.all())
-        content = self.assertSuccess(data)
+        model_id = data["id"]
+        # Do not alter input data.
+        data_copy = deepcopy(data)
+        del data_copy["id"]
+        content = self.assertSuccess(self.url + str(model_id) + "/", data_copy, method = "DELETE")
         self.assertEqual(len(model.objects.all()), length - 1)
-        self.assertRaises(model.DoesNotExist, model.objects.get, pk = data["id"])
+        self.assertRaises(model.DoesNotExist, model.objects.get, pk = model_id)
         return content
     
     def assertDoesNotExist(self, pk, model = None):
@@ -170,33 +201,54 @@ class ApiTestCase(TestCase):
         else:
             return self.model
         
-    def get_user(self):
+    @property
+    def user(self):
+        # User could be modified during test cases
         return User.objects.all().get(username = TEST_USER)
     
     @property
     def userprofile(self):
+        # Userprofile could be modified during test cases
         return UserProfile.objects.get(user = self.user)
         
-    def json(self, data = {} , url = None, method = "POST", loggedin = True):
+    def json(self, url, data = {} , method = "POST", loggedin = True):
         """ 
             @author: Frederik Claus
             @summary: makes a post request to url or self.url returns the content jsonified
         """ 
+        response = self.request(url, data, method, loggedin)
+        self.assertEqual(response["Content-Type"], "text/json")
+        return json.loads(response.content)
+    
+    
+    def read_and_delete_mails(self):
+        mails = []
+        for filename in os.listdir(settings.EMAIL_FILE_PATH):
+            path = os.path.join(settings.EMAIL_FILE_PATH, filename)
+            mail = open(path, "r")
+            mails.append(mail.readlines())
+            mail.close()
+            os.remove(path)
+        return mails
+        
+        
+    
+    def request (self, url, data = {}, method = "POST", loggedin = True):
         if loggedin:
             client = self.c
         else:
             client = self.createClient()
-        if not url:
-            if not self.url:
-                raise RuntimeError("self.url is not defined and url was not in parameters")
-            url = self.url
+#        if not url:
+#            if not self.url:
+#                raise RuntimeError("self.url is not defined and url was not in parameters")
+#            url = self.url
         if method == "POST":
             response = client.post(url, data)
         elif method == "GET":
             response = client.get(url, data)
-            
-        self.assertEqual(response["Content-Type"], "text/json")
-        return json.loads(response.content)
+        elif method == "DELETE":
+            response = client.delete(url, data)
+        return response
     
     def getunixtime(self):
         return mktime(datetime.now().timetuple()) 

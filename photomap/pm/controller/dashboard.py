@@ -1,16 +1,13 @@
 '''
 Created on 21.07.2012
 
-@author: MrPhil
+@author: Frederik Claus
 '''
 
-from django.http import HttpResponseRedirect, HttpResponse 
+from django.http import HttpResponse 
 from django.shortcuts import render_to_response
 from django.template import RequestContext
-
-from message import success, error
 from pm.model.album import Album
-from pm.model.invitation import Invitation
 import json
 import logging
 import decimal
@@ -23,23 +20,20 @@ logger = logging.getLogger(__name__)
 def view(request):
     if request.method == "GET":
         return render_to_response("dashboard.html", context_instance = RequestContext(request))
-
+    
+@login_required
 @require_GET
 def get(request):
-    logger.debug("dashboard: entered view function")
-    
     user = request.user
-    
+    logger.debug("User %d is trying to get all albums." % user.id)
     albums = Album.objects.all().filter(user = user) 
-    
     data = []
     
     for album in albums:
         albumflat = album.toserializable(includeplaces = False)
         albumflat["isOwner"] = True
         data.append(albumflat)
-        
-    logger.debug("dashboard: %s", json.dumps(data, cls = DecimalEncoder, indent = 4))
+    
     return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
         
         

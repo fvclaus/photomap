@@ -45,7 +45,7 @@ define(["dojo/_base/declare",
                    afterLoad : function () {},
                    onUpdate : function () {},
                    navigateToInsertedPhoto : false,
-                   context : this,
+                   context : this
                 };
                 
                 this.carouselAnimation = new CarouselAnimation();
@@ -534,7 +534,7 @@ define(["dojo/_base/declare",
              _ping : function () {
                 console.log("PhotoCarouselView: _ping");
                 this.$photos.length * 2;
-             },
+             }
           });
        });
    

@@ -4,9 +4,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH = os.path.join(PROJECT_PATH, "static")
@@ -20,7 +18,7 @@ RES_PATH = os.path.join(PROJECT_PATH, "res")
 TEST_PATH = os.path.join(RES_PATH, "test")
 
 # this is needed for django to discover the javascript translations
-LOCALE_PATHS = ( 
+LOCALE_PATHS = (
     os.path.join(PROJECT_PATH, "locale"),
     )
 
@@ -29,7 +27,7 @@ CSS_PATH = os.path.join(STATIC_PATH, "css")
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
 LATEX_PATH = os.path.join(RES_PATH, "latex")
 DEBUG_PATH = os.path.join(RES_PATH, "debug") 
-MANAGERS = ADMINS
+
 
 LOGGING = {
     'version': 1,
@@ -187,6 +185,7 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
                                'django.contrib.auth.context_processors.auth',
                                'django.core.context_processors.i18n',
+                                "django.core.context_processors.debug",
                                'django.core.context_processors.request',
                                )
 
@@ -243,12 +242,12 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
-
+INTERNAL_IPS = ("127.0.0.1")
 
 AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
 LOGIN_REDIRECT_URL = "/dashboard/"
-LOGIN_URL = "account/auth/login"
-LOGOUT_URL = "account/auth/logout"
+LOGIN_URL = "/account/auth/login"
+LOGOUT_URL = "/account/auth/logout"
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
@@ -256,4 +255,11 @@ EMAIL_HOST_USER = "team.keiken@gmail.com"
 EMAIL_HOST_PASSWORD = "lichtapothekepferdbrot"
 EMAIL_USE_TLS = True
 
-EMAIL_TEST_USER = "test@keiken.app"
+EMAIL_TEST_USER = "test@keiken.de"
+EMAIL_FILE_PATH = os.path.join(TEST_PATH, "mail")
+
+
+ADMINS = (('Team.Keiken', EMAIL_HOST_USER)
+              # ('Your Name', 'your_email@example.com'),
+)
+MANAGERS = ADMINS

@@ -13,7 +13,7 @@ define(["dojo/_base/declare",
                  assertFunction(this.assertInfoTextPresence, "Every PhotoWidget needs to define a assertInfoText function.");
                  assertNumber(this.infoTextPresenceAssertions, "Every PhotoWidget needs to define a infoTextPresence number of assertions.");
                  this.options = $.extend({}, {
-                    navigateToInsertedPhoto : false,
+                    navigateToInsertedPhoto : false
                  }, this.options);
               },
               testRunAssertions : function () {
@@ -188,14 +188,14 @@ define(["dojo/_base/declare",
 
                  QUnit.raiseError(this.widget.deletePhoto, this.widget);
                  // Delete from the next page. This should not change anything.
-                 this.photoCollection.delete(this.getFirstPhoto(2));
+                 this.photoCollection["delete"](this.getFirstPhoto(2));
 
                  setTimeout(lang.hitch(this, function () {
                     // Make sure the image counter is decremented properly.
                     // Make sure the this.widget navigates to the 2nd photo.
                     this.assertPhotosInWidget(this.getPage(1));
                     // Delete from current page. Expect refresh.
-                    this.photoCollection.delete(this.getFirstPhoto(1));
+                    this.photoCollection["delete"](this.getFirstPhoto(1));
 
                     setTimeout(lang.hitch(this, function () {
                        if (this.photos.length <= this.nPhotosInWidget) {
@@ -204,7 +204,7 @@ define(["dojo/_base/declare",
                           this.assertPhotosInWidget(this.getPage(1));
                        }
                        //Delete the first photo from the first page.
-                       this.photoCollection.delete(this.photos[0]);
+                       this.photoCollection["delete"](this.photos[0]);
                        setTimeout(lang.hitch(this, function () {
                           if (this.photos.length <= this.nPhotosInWidget) {
                              

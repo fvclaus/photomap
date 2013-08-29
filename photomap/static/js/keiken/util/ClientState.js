@@ -9,9 +9,10 @@
  */
 
 define(["dojo/_base/declare",
+        "dojo/date",
         "./Communicator",
         "./Tools"],
-   function (declare, communicator, tools) {
+       function (declare, date, communicator, tools) {
       var ClientState = declare(null,  {
          constructor : function () {
             this.visitedCookie = $.cookie("visited") || "";
@@ -19,8 +20,9 @@ define(["dojo/_base/declare",
             this._parseValue(this.visitedCookie);
             
             this._year = 356 * 24 * 60 * 60 * 1000;
+            this._expirationDate = date.add(new Date(), "year", 1);
             this._cookieSettings = {
-               expires : new Date().add({years : 1}),
+               expires : this._expirationDate,
                maxAge : this._year
             };
             this.usedSpace = null;

@@ -1,0 +1,14 @@
+{% extends "account/base.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block name %}{% trans "Login Error" %}{% endblock %}
+
+{% block account_info %}
+<p>{% trans "LOGIN_ERROR_NOTE" %}</p>
+{% endblock %}
+{% block account_settings %}
+{% include "login-form.html" %}
+    <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
+{% endblock %}

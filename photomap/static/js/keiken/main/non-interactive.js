@@ -44,14 +44,15 @@ function decodeEmail ($email) {
 
 // adds a validator and button styling to all forms
 function startFormValidator () {
+   console.log("Attaching $.validate to every .mp-form");
    $(".mp-form")
       .find(".mp-form-submit")
       .button({ icons : { primary : "ui-icon-play" } })
-      .end()
-      .validate({
-         success : "valid",
-         errorPlacement : function () {} //don't show any errors
-      });
+      .end();
+      // .validate({
+      //    success : "valid",
+      //    errorPlacement : function () {} //don't show any errors
+      // });
 }
 
 // there is no need to use initialize here. initialize just bloats the whole application and starts later
