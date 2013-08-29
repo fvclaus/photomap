@@ -57,7 +57,9 @@ define(["dojo/_base/declare"],
           * @public
           * @description Subscribe to one or multiple events.
           * @param {String/Object} events May be a String of one or more space-separated event/event-types. May also be an object with one of the following structures:
-          * (1) {event: handler, event: handler} || (2) {event: {handler: "function", context: "object", counter: "number"}, event: {...}}
+          * (1) {event: handler, event: handler} || (2) {event: {handler: "function", context: "object", counter: "number"}, event: {...}}.
+          * (!) about (2): all the options given in the event-object will overwrite the "default"-options given as additional parameter to subscribe 
+          * (eg. subscribe(..., context, counter)) -> it is possible to use the default for some events and specify different options for another in the same .subscribe() call
           * (!) At least 1 event/event-type and 1 handler have to be passed to subscribe. Counter and context are optional and default to null.
           */
          subscribe : function (events, handler, name, context, counter) {
@@ -187,14 +189,13 @@ define(["dojo/_base/declare"],
          _removeEvent : function (event) {
             var typeAndName = this._separateTypeAndName(event),
                type = this._getType(typeAndName[0]),
-               name = this._getName(type, typeAndName[0]);
-            
+               name = this._getName(typeAndName[0], typeAndName[1]);
             if (type && name) {
-               console.log("Communicator - Deleted named handler collection " + typeAndName[1] + " of the Event-Type: " + typeAndName[0]);
+               console.log("Communicator - Deleted named handler collection '" + typeAndName[1] + "' of the Event-Type: " + typeAndName[0]);
             }
             delete this.events[typeAndName[0]][typeAndName[1]];
             
-            if (Object.keys(type).length === 0) {
+            if (Object.keys(this.events[typeAndName[0]]).length === 0) {
                this._removeType(typeAndName[0]);
             }
 
@@ -211,13 +212,13 @@ define(["dojo/_base/declare"],
             }
             handlerCollection = this._getName(typeAndName[0], typeAndName[1]);
             if (handlerCollection) {
-               handlerCollection = handlerCollection.filter(function (eventObject) {
+               this.events[typeAndName[0]][typeAndName[1]] = handlerCollection.filter(function (eventObject) {
                   if (eventObject.handler === handler) {
                      console.log("Communicator - Deleted given handler from event: " + event);
                   }
                   return (eventObject.handler !== handler);
                });
-               if (handlerCollection.length === 0) {
+               if (this.events[typeAndName[0]][typeAndName[1]].length === 0) {
                   this._removeEvent(typeAndName.join(":"));
                }
             }
@@ -247,12 +248,14 @@ define(["dojo/_base/declare"],
             var instance = this;
             if (!this.events.hasOwnProperty(type)) {
                console.log("Communicator - Event-Type: " + type + "doesn't exists.");
+               return;
             }
             $.each(this.events[type], function (name, namedCollection) {
                namedCollection.forEach(function (eventObject) {
                   instance._triggerHandler(eventObject, data);
                });
             });
+            console.log("Communicator - Successfully triggered Event-Type: " + type);
          },
          /**
           * @description Trigger a certain Event-Name. Executes all handlers associated with this name.
@@ -270,6 +273,8 @@ define(["dojo/_base/declare"],
             });
             if (!hasName) {
                console.log("Communicator - There is no handler associated with the Event-Name: " + name);
+            } else {
+               console.log("Communicator - Successfully triggered Event-Name: :" + name);
             }
          },
          /**
@@ -282,11 +287,13 @@ define(["dojo/_base/declare"],
             
             if (!namedCollection) {
                console.log("Communicator - Event: " + event + " doesn't exist.");
+               return;
             }
             if (namedCollection) {
                namedCollection.forEach(function (eventObject) {
                   instance._triggerHandler(eventObject, data);
                });
+               console.log("Communicator - Successfully triggered Event: " + event);
             }
          },
          /**

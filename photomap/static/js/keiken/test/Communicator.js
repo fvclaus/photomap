@@ -8,13 +8,6 @@ define([
    "./TestFixture"
 ],
    function (communicator, TestFixture) {
-      //TODO setup: need a few random event-types (maybe 5 or 6), a few event-names (like 2 or 3) and a random object which can be passed as thisReference (can be empty, but can also be used to hold the needed handlers as attributes)
-      //TODO test subscribing to events in all possible forms:
-      // single event, multiple events as string, multiple events as object, with/without namespace, with/without context, with/without counter
-      //TODO test unsubscribing to events
-      //TODO test subscribeOnce
-      //TODO test publishing of events in all possible forms (execution of event handler)
-      // with/without namespace, with/without data, with/without counter, with/without context
       
       function getShuffledIntegerArray(nInteger) {
          var x = [],
@@ -105,9 +98,9 @@ define([
          expectedEvent3 = $.extend({}, defaultEvent, {type: validEventTypes[0], name: validEventNames[1]}),
          expectedEvent4 = $.extend({}, defaultEvent, {type: validEventTypes[1], name: name45}),
          expectedEvent5 = $.extend({}, defaultEvent, {type: validEventTypes[2], name: name45}),
-         expectedEvent6 = $.extend({}, defaultEvent, {type: validEventTypes[2], name: validEventNames[1], handler: handlerObject.handler, context: thisRef, counter: 1}),
+         expectedEvent6 = {type: validEventTypes[2], name: validEventNames[1], handler: handlerObject.handler, context: thisRef, counter: 1},
          expectedEvent7 = $.extend({}, defaultEvent, {type: validEventTypes[1], name: validEventNames[0]}),
-         expectedEvent8 = $.extend({}, defaultEvent, {type: validEventTypes[0], name: "unnamed", handler: handlerObject.handler, context: thisRef, counter: 1});
+         expectedEvent8 = {type: validEventTypes[0], name: "unnamed", handler: handlerObject.handler, context: thisRef, counter: 1};
       
       module("Communicator", {
          setup: function () {
@@ -165,7 +158,7 @@ define([
                   counter: "1"
                }
             });
-         }, /InvalidInputError/, "testing whether event-options-types cause error");
+         }, /InvalidInputError/, "testing whether invalid event-options-types cause error");
          QUnit.throws(function () {
             communicator.subscribe(":" + validEventNames[0], handlerObject.doNothingHandler);
          }, /InvalidEventType/, "testing whether subscribing to a name (without event-type specified) throws error");
@@ -221,19 +214,28 @@ define([
          communicator.publish(event8); // +1
          QUnit.equal(Object.keys(communicator.events).length, 0, "testing if handler was successfully deleted from unnamed collection"); // +1
       });
-      QUnit.test(".subscribeOnce(events, handler)", 3, function () {
+      QUnit.test(".subscribeOnce(events, handler)", 5, function () {
          
          communicator.subscribeOnce(event6, handlerObject.handler, thisRef);
+         communicator.subscribeOnce(event8, handlerObject.handler, thisRef);
          assertEventObject(communicator.events[validEventTypes[2]][validEventNames[1]][0], expectedEvent6); // +1
+         assertEventObject(communicator.events[validEventTypes[0]].unnamed[0], expectedEvent8); // +1
          communicator.publish(event6); // +1
-         QUnit.equal(Object.keys(communicator.events).length, 0, "testing if handler was successfully deleted after 1st publish"); // +1
+         communicator.publish(event8); // +1
+         QUnit.equal(Object.keys(communicator.events).length, 0, "testing if events were successfully deleted after 1 publish"); // +1
       });
-      QUnit.test(".unsubscribe(events, handler)", 2, function () {
+      QUnit.test(".unsubscribe(events, handler)", 4, function () {
          
          communicator.subscribe(event1, handlerObject.doNothingHandler, name45, handlerObject, nTimes);
+         communicator.subscribe(event2, handlerObject.doNothingHandler, name45, handlerObject, nTimes);
+         communicator.subscribe(event7, handlerObject.doNothingHandler, name45, handlerObject, nTimes);
          assertEventObject(communicator.events[validEventTypes[0]][validEventNames[0]][0], expectedEvent1);
+         assertEventObject(communicator.events[validEventTypes[0]][validEventNames[1]][0], expectedEvent2);
+         assertEventObject(communicator.events[validEventTypes[1]][validEventNames[0]][0], expectedEvent7);
          communicator.unsubscribe(event1, handlerObject.doNothingHandler);
-         QUnit.equal(Object.keys(communicator.events).length, 0, "testing if handler was successfully deleted and if the removing bubbles up and removes type when empty");
+         communicator.unsubscribe(event2, handlerObject.doNothingHandler);
+         communicator.unsubscribe(event7, handlerObject.doNothingHandler);
+         QUnit.equal(Object.keys(communicator.events).length, 0, "testing if events were successfully deleted and if the removing bubbles up and removes type when empty");
          
       });
       QUnit.test(".unsubscribe(events) where events is an event, event-name or an event-type", 7, function () {
