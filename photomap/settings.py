@@ -4,9 +4,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH = os.path.join(PROJECT_PATH, "static")
@@ -29,7 +27,7 @@ CSS_PATH = os.path.join(STATIC_PATH, "css")
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
 LATEX_PATH = os.path.join(RES_PATH, "latex")
 DEBUG_PATH = os.path.join(RES_PATH, "debug") 
-MANAGERS = ADMINS
+
 
 LOGGING = {
     'version': 1,
@@ -257,4 +255,11 @@ EMAIL_HOST_USER = "team.keiken@gmail.com"
 EMAIL_HOST_PASSWORD = "lichtapothekepferdbrot"
 EMAIL_USE_TLS = True
 
-EMAIL_TEST_USER = "test@keiken.app"
+EMAIL_TEST_USER = "test@keiken.de"
+EMAIL_FILE_PATH = os.path.join(TEST_PATH, "mail")
+
+
+ADMINS = (('Team.Keiken', EMAIL_HOST_USER)
+              # ('Your Name', 'your_email@example.com'),
+)
+MANAGERS = ADMINS

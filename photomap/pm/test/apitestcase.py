@@ -6,7 +6,7 @@ Created on Jul 8, 2012
 
 from django.test import TestCase
 from django.test.client import Client
-from data import TEST_PASSWORD, TEST_USER
+from data import TEST_PASSWORD, TEST_USER, TEST_EMAIL
 
 import logging
 import json
@@ -14,10 +14,14 @@ from datetime import datetime
 from time import mktime
 from pm.model.photo import Photo
 from django.contrib.auth.models import User
+from django.conf import settings
+from django.test.utils import override_settings
 from pm.model.userprofile import UserProfile
 from urllib import urlopen
 from copy import deepcopy
+import os
 
+@override_settings(EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend')
 class ApiTestCase(TestCase):
     """ loads the simple-test fixtures, appends a logger and logs the client in """
     
@@ -32,10 +36,13 @@ class ApiTestCase(TestCase):
     
     def setUp(self):
         self.c = self.createClient()
+        self.TEST_EMAIL = TEST_EMAIL
+        self.TEST_PASSWORD = TEST_PASSWORD
         self.assertTrue(self.c.login(username = TEST_USER, password = TEST_PASSWORD))
         self.logger = ApiTestCase.logger
-        self.user = self.get_user()
-        
+        # Delete all leftover mails
+        self.read_and_delete_mails()
+                
     def tearDown(self):
         # remove all photos from s3 again
         photos = Photo.objects.all()
@@ -111,6 +118,9 @@ class ApiTestCase(TestCase):
         content = json.loads(response.content)
         self.assertFalse(content["success"])
         
+    def assertRedirectToSuccess(self, response):
+        self.assertEqual(response.status_code, 302)
+        self.assertTrue(response.get("Location").find("success") != -1)
     
     def assertUpdates(self, data, model = None):
         if not model:
@@ -191,11 +201,14 @@ class ApiTestCase(TestCase):
         else:
             return self.model
         
-    def get_user(self):
+    @property
+    def user(self):
+        # User could be modified during test cases
         return User.objects.all().get(username = TEST_USER)
     
     @property
     def userprofile(self):
+        # Userprofile could be modified during test cases
         return UserProfile.objects.get(user = self.user)
         
     def json(self, url, data = {} , method = "POST", loggedin = True):
@@ -206,6 +219,19 @@ class ApiTestCase(TestCase):
         response = self.request(url, data, method, loggedin)
         self.assertEqual(response["Content-Type"], "text/json")
         return json.loads(response.content)
+    
+    
+    def read_and_delete_mails(self):
+        mails = []
+        for filename in os.listdir(settings.EMAIL_FILE_PATH):
+            path = os.path.join(settings.EMAIL_FILE_PATH, filename)
+            mail = open(path, "r")
+            mails.append(mail.readlines())
+            mail.close()
+            os.remove(path)
+        return mails
+        
+        
     
     def request (self, url, data = {}, method = "POST", loggedin = True):
         if loggedin:

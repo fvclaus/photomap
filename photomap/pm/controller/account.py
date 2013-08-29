@@ -8,7 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render_to_response 
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext, loader
-from django.core.mail import send_mail
+from django.core.mail import send_mail, mail_managers
 from django.contrib.sites.models import get_current_site
 from django.contrib.auth.views import password_reset, password_reset_confirm
 
@@ -25,8 +25,6 @@ from django.contrib.auth import logout
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
-
-from pm.mail import send_mail
 
 from pm.form.account import UpdatePasswordForm, UpdateEmailForm, DeleteAccountForm, DeleteAccountReasonsForm
 
@@ -126,9 +124,9 @@ def delete(request):
                 try:
                     send_delete_mail(user_email, request)
                     if request.POST.has_key("cause") or request.POST.has_key("cause_message"):
-                        message = "Cause %d\nMessage %s" % (request.POST.get("cause", default = "No cause selected."),
+                        message = "Cause: %s\nMessage: %s" % (request.POST.get("cause", default = "No cause selected."),
                                                         request.POST.get("cause_message", default = "No message entered."))
-                        send_mail("Account deleted", message)
+                        mail_managers("Account deleted", message)
                 except Exception, e:
                     logger.error(str(e))
                 finally:
