@@ -98,7 +98,7 @@
 
       <footer class="mp-page-footer column span-24 last" id="mp-page-footer">
 	{% if user.is_authenticated %}
-          <span id="mp-user"><span class="mp-user-email">{{user.email}}</span></span>
+          <span id="mp-user"><span class="mp-user-email">{{user.username}}</span></span>
           <span>|</span>
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
 	{% else %}

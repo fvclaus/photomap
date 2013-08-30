@@ -137,7 +137,7 @@ def get_insert_dialog(request):
         place = request.GET["place"]
     except:
         pass
-    return render_to_response("insert-photo.html", {"form":form, "place":place})
+    return render_to_response("form/insert/photo.html", {"form":form, "place":place})
 
 @login_required
 @require_POST
