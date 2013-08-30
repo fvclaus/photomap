@@ -71,7 +71,7 @@ define(["dojo/_base/declare",
                 var instance = this;
                 $container.on({
                    "click.ActivateView, focus.ActivateView": function () {
-                     communicator.publish("activate:view", view);
+                     communicator.publish("activated:View", view);
                      console.log(view + " is now active.");
                    }
                });

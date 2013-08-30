@@ -28,6 +28,7 @@ define([
          fullscreen = main.getFullscreen(),
          adminGallery = main.getAdminGallery(),
          pageTitle = main.getPageTitleWidget(),
+         quota = main.getQuotaWidget(),
          controls = main.getControls(),
          dialog = main.getInput();
       
@@ -54,23 +55,27 @@ define([
                      instance.ignoreNextAppStateChange = false;
                   }
                });
-            communicator.subscribeOnce("init", this._init, this);
-            communicator.subscribe("activate:view", this._viewActivation);
             
+            /* ----------------------- Model -------------------------- */
+            // @see AppModelController
             communicator.subscribe({
-               "updated:model": function (model) {
-                  clientstate.updateUsedSpace();
+               "inserted": function () {
+                  quota.update(clientstate.getUsedSpace(), clientstate.getLimit());
+               },
+               "updated": function (model) {
+                  quota.update(clientstate.getUsedSpace(), clientstate.getLimit());
                   description.update(model);
                },
-               "deleted:model": function (model) {
-                  clientstate.updateUsedSpace();
+               "deleted": function (model) {
+                  quota.update(clientstate.getUsedSpace(), clientstate.getLimit());
                   description.empty(model);
                   this._hideDetail();
                }
-            }, this);
+            }, "Model", this);
             
+            /* ------------------------- Marker -------------------- */
             communicator.subscribe({
-               "mouseover:marker": function (marker) {
+               "mouseover": function (marker) {
                   controls.show({
                      modelInstance : marker.getModel(),
                      offset: map.getPositionInPixel(marker),
@@ -79,10 +84,10 @@ define([
                      }
                   });
                },
-               "mouseout:marker": function () {
+               "mouseout": function () {
                   controls.hide(true);
                },
-               "click:marker": function (markerPresenter) {
+               "clicked": function (markerPresenter) {
                   this._showDetail(markerPresenter.getModel());
                   map.updateMarkerStatus(markerPresenter, "select");
                   if (markerPresenter.getModel().getType() === "Album") {
@@ -91,7 +96,7 @@ define([
                      appState.updateSelectedPlace(markerPresenter.getModel().getId());
                   }
                },
-               "dblClick:marker": function (markerPresenter) {
+               "dblClicked": function (markerPresenter) {
                   if (markerPresenter.getModel().getType() === "Album") {
                      // build url -> format models/model/(id/)request
                      window.location.href = '/album/' + markerPresenter.model.getId() + '/view/' + markerPresenter.model.getSecret() + "/";
@@ -101,44 +106,62 @@ define([
                      appState.updateOpenedPlace(markerPresenter.getModel().getId());
                   }
                }
-            }, this);
-            communicator.subscribe({
-               "close:detail": function () {
-                  map.resetSelectedMarker();
-                  this._hideDetail();
-                  appState.updateDescription(null);
-               },
-               "click:photoDetailOpen": function () {
-                  appState.updateDescription("photo");
-               }
+            }, "Marker", this);
+            
+            /* ----------------------- Description  -------------------- */
+            communicator.subscribe("closed:Detail", function () {
+               map.resetSelectedMarker();
+               this._hideDetail();
+               appState.updateDescription(null);
             }, this);
             
-            communicator.subscribe("change:usedSpace", function (data) {
-               description.updateUsedSpace(data);
+            communicator.subscribe("opened:PhotoDetail", function () {
+               appState.updateDescription("photo");
             });
             
+            /* ---------- Other non-page-specific events ---------- */
+            communicator.subscribeOnce("init", this._init, this);
+            communicator.subscribe("activated:View", this._viewActivation);
+            
+            /* ------------------ ALBUMVIEW EVENTS --------------------- */
             if (state.isAlbumView()) {
                
+               /* ---------------------- Gallery --------------------------- */
                communicator.subscribe({
-                  "mouseleave:galleryThumb": function () {
+                  "mouseleave": function () {
                      controls.hide(true);
                   },
-                  "click:galleryThumb": function (photo) {
+                  "clicked": function (photo) {
                      map.resetSelectedMarker();
                      this._hideDetail();
                      this._navigateSlideshow(photo);
                      appState.updatePhoto(photo.getId());
                   },
-                  "opened:GalleryPage": function (pageIndex) {
-                     appState.updatePage(pageIndex);
+                  "hovered": function (data) {
+                     controls.show({
+                        modelInstance : data.photo,
+                        offset : data.element.offset(),
+                        dimension : {
+                           width : tools.getRealWidth(data.element)
+                        }
+                     });
                   }
-               }, this);
+               }, "GalleryPhoto", this);
                
+               communicator.subscribe("opened:GalleryPage", function (pageIndex) {
+                  appState.updatePage(pageIndex);
+               });
+               
+               communicator.subscribe("clicked:GalleryOpenButton", function () {
+                  adminGallery.run();
+               });
+               
+               /* ------------------------ Slideshow ------------------------ */
                communicator.subscribe({
-                  "beforeLoad:slideshow": function () {
+                  "beforeLoad": function () {
                      this._hideDetail();
                   },
-                  "update:slideshow": function (photo) {
+                  "updated": function (photo) {
                      if (!this.ignoreNextSlideshowUpdate) {
                         description.update(photo);
                         gallery.navigateIfNecessary(photo);
@@ -150,36 +173,28 @@ define([
                      } else {
                         this.ignoreNextSlideshowUpdate = false;
                      }
-                  },
-                  "click:slideshowImage": function () {
-                     fullscreen.show();
-                     appState.updateFullscreen(true);
                   }
-               }, this);
+               }, "Slideshow", this);
                
+               communicator.subscribe("clicked:SlideshowPhoto", function () {
+                  fullscreen.show();
+                  appState.updateFullscreen(true);
+               });
+               
+               /* -------------- Fullscreen ----------------- */
                communicator.subscribe({
-                  "navigate:fullscreen": function (direction) {
+                  "navigated": function (direction) {
                      slideshow.navigateWithDirection(direction);
                   },
-                  "click:fullscreenClose": function () {
+                  "closed": function () {
                      appState.updateFullscreen(false);
                   }
-               });
-               communicator.subscribe("click:pageTitle", function () {
+               }, "Fullscreen");
+               
+               /* --------------- Other Albumview Events ----------------- */
+               communicator.subscribe("clicked:PageTitle", function () {
                   description.update(state.getAlbum());
                   appState.updateDescription("album");
-               });
-               communicator.subscribe("clicked:GalleryOpenButton", function () {
-                  adminGallery.run();
-               });
-               communicator.subscribe("hover:GalleryPhoto", function (data) {
-                  controls.show({
-                     modelInstance : data.photo,
-                     offset : data.element.offset(),
-                     dimension : {
-                        width : tools.getRealWidth(data.element)
-                     }
-                  });
                });
             }
          },
@@ -207,7 +222,6 @@ define([
                map.startup(albums, false);
                state.setAlbums(albums);
             }
-            clientstate.init();
          },
          _updateState : function (newState, initialCall) {
             //ignore next AppChange - why? some browser trigger popstate after page load and some don't, for those who do the appstate will be initialized and then changed which is not necessary and causes troubles at some occasions..

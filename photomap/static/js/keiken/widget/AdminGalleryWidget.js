@@ -151,7 +151,7 @@ define(["dojo/_base/declare",
                    assertString(photo.title, "photo title has to be a string");
                 });
 
-                communicator.publish("change:photoOrder", photos);
+                communicator.publish("changed:PhotoOrder", photos);
              },
              /**
               * @private

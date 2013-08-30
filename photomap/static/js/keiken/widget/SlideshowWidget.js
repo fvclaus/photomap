@@ -123,7 +123,7 @@ define(["dojo/_base/declare",
                    // on the other events, beforeLoad & afterLoad, the photo src is not set yet
                    this._updatePhotoNumber();
                 }
-                communicator.publish("update:slideshow", this.currentPhoto);
+                communicator.publish("updated:Slideshow", this.currentPhoto);
                 this.setDisabled(false);
              },
              /**
@@ -135,7 +135,7 @@ define(["dojo/_base/declare",
                 assert(typeof $photos, "object", "input parameter $photos has to be a jQuery object");
                 // trigger event to tell UI that slideshow is about to change
                 // This will hide the detail view.
-                communicator.publish("beforeLoad:slideshow");
+                communicator.publish("beforeLoad:Slideshow");
                 this.setDisabled(true);
              },
              /**
@@ -193,7 +193,7 @@ define(["dojo/_base/declare",
                    event.stopPropagation();
 
                    console.log("Image clicked. Publishing event.");
-                   communicator.publish("click:slideshowImage");
+                   communicator.publish("clicked:SlideshowPhoto");
 
                 });
                 

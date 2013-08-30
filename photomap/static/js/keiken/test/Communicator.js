@@ -146,7 +146,7 @@ define([
                   counter: 1
                }
             });
-         }, /InvalidInputError/, "testing whether missing handler throws error when events input is {name: {handler: function () {}}}");
+         }, /InvalidInputError/, "testing whether invalid handler type throws error when events input is {name: {handler: function () {}}}");
          QUnit.throws(function () {
             communicator.subscribe(2, handlerObject.doNothingHandler);
          }, /InvalidInputError/, "testing whether events invalid 'events'-input-type throws error");

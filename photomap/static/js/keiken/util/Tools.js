@@ -197,10 +197,6 @@ define(["dojo/_base/declare"],
             }
             return total;
          },
-         bytesToMbyte : function (bytesAsString) {
-                  
-            return (parseFloat(bytesAsString) / Math.pow(2, 20)).toFixed(1).toString();
-         },
          /*
           * @private
           */
