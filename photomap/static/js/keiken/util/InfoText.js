@@ -43,16 +43,14 @@ define(["dojo/_base/declare"],
           * @return returns this instance of the InfoText in case you want to call another method after starting it - eg. .open()
           */
          start : function () {
-            var $infoText = $("<div style='display: none' class='mp-infotext' id='mp-infotext-" + this.id + "'><span></span></div>");
+            var $infoText = $("<div style='display: none' class='mp-infotext' id='mp-infotext-" + this.id + "'><div><span></span></div></div>");
             
             if (!this.started) {
                this.$container.append($infoText);
                this.$infoText = $infoText;
                this.$infoText.find("span").html(this.message);
                this._bindListener();
-               this._resize();
                this._position();
-               this._bindResizeListener();
                this.started = true;
             }
             
@@ -178,7 +176,7 @@ define(["dojo/_base/declare"],
             if ($("#mp-infoalert").length > 0) {
                this.alertAttributes.$textContainer = $("#mp-infoalert");
             } else {
-               this.alertAttributes.$textContainer = $("<div id='mp-infoalert'><span></span></div>").appendTo("body");
+               this.alertAttributes.$textContainer = $("<div id='mp-infoalert'><div><span></span></div></div>").appendTo("body");
             }
             this.alertAttributes.$textContainer.append("<div id='mp-infotext-closing-help'>" + gettext("CLOSE_INFOTEXT_ALERT") + "</div>");
             this._bindAlertListener();
@@ -196,12 +194,6 @@ define(["dojo/_base/declare"],
                return true;
             }
             return false;
-         },
-         _resize : function () {
-            this.$infoText.css({
-               width : this.$container.outerWidth(),
-               height: this.$container.outerHeight()
-            });
          },
          _position : function () {
             var zIndex = parseInt(this.$container.css("z-index"), 10),
@@ -230,15 +222,6 @@ define(["dojo/_base/declare"],
                };
             this.alertAttributes.$mask.on("click", click);
             this.alertAttributes.$textContainer.on("click", click);
-         },
-         _bindResizeListener : function () {
-            var instance = this;
-            $(window).on("resize.InfoText-" + this.id, function () {
-               if (instance.started) {
-                  instance._resize();
-                  instance._position();
-               }
-            });
          },
          _unbindListener : function () {
             this.$infoText.off(".InfoText");
