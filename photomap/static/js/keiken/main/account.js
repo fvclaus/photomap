@@ -46,7 +46,7 @@ $(document).ready(function () {
       $.data(this, "validator", null); 
       var $form = $(this);
       $form.validate({
-         debug : true,
+         // debug : true,
          success : "valid",
          errorPlacement : function () {},
          submitHandler : function () {
@@ -74,7 +74,7 @@ $(document).ready(function () {
                         $(".mp-user-email").text(data.email);                              
                      }
                   } else {
-                     $requestFail.text(gettext("REQUEST_UNKNOWN_FAIL"));
+                     $requestFail.text(data.error);
                   }
                },
                error: function (jqXHR, textStatus, errorThrown) {

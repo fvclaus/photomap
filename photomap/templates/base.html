@@ -92,7 +92,7 @@
       <ul id="menu" class="mp-nodisplay mp-dropup-menu">
         <li><a href="/dashboard/">{% trans "Dashboard" %}</a></li>
         <li id="mp-goto-account"><a href="/account">{% trans "Settings" %}</a></li>
-        <li><a href="/account/auth/logout">Logout</a></li>
+        <li><a href="/account/logout/">Logout</a></li>
       </ul>
 
 
@@ -103,13 +103,13 @@
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
 	{% else %}
 	  <span class="mp-login-link mp-button">
-	    <a href="/account/auth/login" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
+	    <a href="/account/login/" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
 	  </span>
         {% endif %}
 	  <section class="mp-internal-links">
 	    <a href="/payment" title='{% trans "Spenden" %}'>|{% trans "Spenden" %} </a> 	
 	    <a href="/team" title='{% trans "link-title-team" %}'>|{% trans "Team" %} </a>
-	    <a href="/contact" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
+	    <a href="/contact/" title='{% trans "link-title-contact" %}'>|{% trans "Kontakt" %} </a>
 	    <a href="/privacy" title='{% trans "link-title-privacy" %}'>|{% trans "Datenschutz" %} </a>
 	    <a href="/copyright" title='{% trans "link-title-copyright" %}'>|{% trans "Urheberrecht" %} </a>
 	    <a href="/help" title='{% trans "link-title-help" %}'>|{% trans "Hilfe" %} </a>

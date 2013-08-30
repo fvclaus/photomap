@@ -3,12 +3,17 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block name %}{% trans "Login Error" %}{% endblock %}
+{% block name %}{% trans "LOGIN" %}{% endblock %}
 
 {% block account_info %}
-<p>{% trans "LOGIN_ERROR_NOTE" %}</p>
+<p>{% trans "LOGIN" %}</p>
 {% endblock %}
+
 {% block account_settings %}
+{{ form.non_field_errors }}
+{% for field in form %}
+  {{ field.errors }}
+{% endfor %}
 {% include "login-form.html" %}
     <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
 {% endblock %}

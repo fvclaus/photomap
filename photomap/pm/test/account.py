@@ -6,8 +6,9 @@ Created on Aug 29, 2013
 
 from apitestcase import ApiTestCase
 from django.contrib.auth.models import User
+from pm.test.data import TEST_EMAIL
 
-class AccountControllerTest(ApiTestCase):
+class AccountViewTest(ApiTestCase):
     
     def test_update_password(self):
         self.url = "/account/password/"
@@ -19,9 +20,17 @@ class AccountControllerTest(ApiTestCase):
         self.user.set_password(data["old_password"])
         self.user.save()
         #=======================================================================
-        # Something invalid
+        # Passwort repetition wrong
         #=======================================================================
-        data["new_password_repeat"] = "admin21"
+        data = {"old_password" : "admin2",
+                "new_password" : self.TEST_PASSWORD,
+                "new_password_repeat" : "wrong"}
+        self.assertError(data)
+        #=======================================================================
+        # Password wrong
+        #=======================================================================
+        data["new_password_repeat"] = "admin"
+        data["old_password"] = "wrong"
         self.assertError(data)
         
     def test_update_mail(self):
@@ -29,16 +38,16 @@ class AccountControllerTest(ApiTestCase):
         data = {"new_email" : "admin2@keiken.de",
                 "confirm_password" : self.TEST_PASSWORD}
         self.assertSuccess(self.url, data)
-        self.assertEqual(self.user.email, data["new_email"])
+        self.assertEqual(User.objects.get(username = data["new_email"]).username, data["new_email"])
         #=======================================================================
         # No valid email
         #=======================================================================
         data["new_email"] = "admin2@keiken"
         self.assertError(data)
         #=======================================================================
-        # Old email
+        # Email from sb else
         #=======================================================================
-        data["new_email"] = "admin2@keiken.de"
+        data["new_email"] = "test@keiken.de"
         self.assertError(data)
         #=======================================================================
         # Wrong password
@@ -56,7 +65,7 @@ class AccountControllerTest(ApiTestCase):
                 "user_password" : self.TEST_PASSWORD,
                 "cause" : "Just testing!"}
         response = self.request(self.url, data)
-        self.assertRedirectToSuccess(response)
+        self.assertRedirectToComplete(response)
         messages = self.read_and_delete_mails()
         self.assertEqual(len(messages), 2)
         self.assertRaises(User.DoesNotExist, self.checkUser)
@@ -66,7 +75,7 @@ class AccountControllerTest(ApiTestCase):
         data = {"user_email" : self.TEST_EMAIL,
                 "user_password" : self.TEST_PASSWORD}
         response = self.request(self.url, data)
-        self.assertRedirectToSuccess(response)
+        self.assertRedirectToComplete(response)
         messages = self.read_and_delete_mails()
         self.assertEqual(len(messages), 1)
         self.assertRaises(User.DoesNotExist, self.checkUser)

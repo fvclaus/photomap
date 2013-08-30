@@ -14,15 +14,14 @@ import logging
 logger = logging.getLogger(__name__)
 
 class Album(Description):
-   
-    lat = models.DecimalField(decimal_places = 140, max_digits = 150)
-    lon = models.DecimalField(decimal_places = 140, max_digits = 150)
+    lat = models.DecimalField(decimal_places = 7, max_digits = 9)
+    lon = models.DecimalField(decimal_places = 7, max_digits = 9)
     user = models.ForeignKey(User)
     country = models.CharField(max_length = 2)
     secret = models.TextField()
     password = models.TextField()
     
-    def toserializable(self,includeplaces = True, guest = False):
+    def toserializable(self, includeplaces = True, guest = False):
         # avoid circular import
         from pm.model.place import Place
         

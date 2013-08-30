@@ -1,5 +1,5 @@
 {% load i18n %}
-<form id="mp-login-form" class="mp-form" action="/account/auth/login" method="post">
+<form id="mp-login-form" class="mp-form" action="/account/login/" method="post">
   <p>
     <label for="login_email">{% trans "Email" %}:</label>
     <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>
@@ -9,7 +9,7 @@
     <input type="password" name="password" id="login_password" required="required" value="" placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}" data-required/>
   </p>
   <p class="mp-nodisplay">
-    <input type="hidden" name="next" value="{{ next }}" />
+    <input type="hidden" name="next" value="{{ next|default:'' }}" />
   </p>
   <p class="mp-nodisplay">
     <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />

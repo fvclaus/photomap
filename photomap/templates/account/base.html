@@ -3,13 +3,6 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block js %}
-{% load compress %}
-{{ block.super }}
-{% compress js %}
-<script type="text/javascript" src="/static/js/keiken/main/account.js" ></script>
-{% endcompress %}
-{% endblock %}
 
 {% block title %}{% trans "Account" %}{% endblock %}
 

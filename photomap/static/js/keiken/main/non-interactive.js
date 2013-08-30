@@ -48,11 +48,11 @@ function startFormValidator () {
    $(".mp-form")
       .find(".mp-form-submit")
       .button({ icons : { primary : "ui-icon-play" } })
-      .end();
-      // .validate({
-      //    success : "valid",
-      //    errorPlacement : function () {} //don't show any errors
-      // });
+      .end()
+      .validate({
+         success : "valid",
+         errorPlacement : function () {} //don't show any errors
+      });
 }
 
 // there is no need to use initialize here. initialize just bloats the whole application and starts later

@@ -11,10 +11,8 @@ from album import Album
 import json
 
 class Place(Description):
-     
-   
-    lat = models.DecimalField(decimal_places = 140, max_digits = 150)
-    lon = models.DecimalField(decimal_places = 140, max_digits = 150)
+    lat = models.DecimalField(decimal_places = 7, max_digits = 9)
+    lon = models.DecimalField(decimal_places = 7, max_digits = 9)
     album = models.ForeignKey(Album)
     
     def toserializable(self):

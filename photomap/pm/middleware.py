@@ -8,7 +8,7 @@ import logging
 import re
 from django.shortcuts import render_to_response
 from django.conf import settings
-from pm.controller import album, dashboard, authentication
+from pm.view import album, dashboard, authentication
 
 
 class NoSupportMiddleware():

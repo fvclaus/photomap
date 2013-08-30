@@ -5,6 +5,14 @@
 
 {% block name %}{% trans "Account Info & Settings" %}{% endblock %}
 
+{% block js %}
+{% load compress %}
+{{ block.super }}
+{% compress js %}
+<script type="text/javascript" src="/static/js/keiken/main/account.js" ></script>
+{% endcompress %}
+{% endblock %}
+
 {% block account_info %}
 	
 <h2>{% trans "Account Info" %}</h2>

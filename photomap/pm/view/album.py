@@ -20,8 +20,8 @@ from pm.test import data
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
-from pm.controller import set_cookie, update_used_space
-from pm.controller import landingpage
+from pm.view import set_cookie, update_used_space
+from pm.view import landingpage
 from pm.exception import OSMException
 
 from pm.osm import reversegecode

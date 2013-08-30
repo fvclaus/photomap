@@ -212,7 +212,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    "pm.controller.authentication.EmailBackend",
+#    "pm.controller.authentication.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 
@@ -230,10 +230,12 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     "compressor",
     "pm",
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    "registration",
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
@@ -242,12 +244,23 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
+# Use this for the debug variable in template context
 INTERNAL_IPS = ("127.0.0.1")
 
-AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
+# AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
+
+#===============================================================================
+# Registration configuration
+#===============================================================================
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_OPEN = True
+
+#===============================================================================
+# Mail configuration
+#===============================================================================
 LOGIN_REDIRECT_URL = "/dashboard/"
-LOGIN_URL = "/account/auth/login"
-LOGOUT_URL = "/account/auth/logout"
+LOGIN_URL = "/account/login/"
+LOGOUT_URL = "/account/logout/"
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587

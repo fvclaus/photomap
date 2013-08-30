@@ -8,9 +8,9 @@ from message import success, error
 from pm.form.place import InsertPlaceForm, UpdatePlaceForm
 from pm.model.place import Place
 from pm.model.photo import Photo
-from pm.controller.authentication import is_authorized
+from pm.view.authentication import is_authorized
 import logging
-from pm.controller import set_cookie, update_used_space
+from pm.view import set_cookie, update_used_space
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
 

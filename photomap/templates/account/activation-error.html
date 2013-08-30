@@ -1,0 +1,11 @@
+{% extends "account/base.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+<!-- This templates is used, when the the activation key is expired or wrong. -->
+{% block name %}{% trans "ACTIVATION_ERROR" %}{% endblock %}
+
+{% block account_info %}
+	<p>{% trans "ACTIVATION_ERROR_EXPLAINED" %}</p>
+{% endblock %}

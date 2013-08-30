@@ -8,8 +8,8 @@ from django.shortcuts import render_to_response
 
 from pm.model.photo import Photo
 from pm.util.s3 import getbucket
-from pm.controller.authentication import is_authorized
-from pm.controller import set_cookie, update_used_space
+from pm.view.authentication import is_authorized
+from pm.view import set_cookie, update_used_space
 
 from message import success, error 
 from pm.form.photo import PhotoInsertForm, PhotoUpdateForm, PhotoCheckForm

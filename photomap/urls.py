@@ -8,14 +8,16 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 from django.contrib.auth.views import logout
+from registration.views import activate
+from registration.views import register
 
 
+from pm.view import album, place, photo
+from pm.view import dashboard
+from pm.view import footer
+from pm.view import landingpage
+from pm.view import account
 
-from pm.controller import album, place, photo
-from pm.controller import dashboard
-from pm.controller import footer
-from pm.controller import landingpage
-from pm.controller import account
 # from pm.controller.router import method_mapper
 
 # admin.site.register(model.album.Album)
@@ -56,30 +58,66 @@ def method_mapper(regex, controller_name, get = None, post = None, put = None, d
     handlers = { GET: get, POST: post, PUT: put, DELETE: delete, HEAD: head, OPTIONS: options, TRACE: trace }
     return url(regex, dispatch, handlers, controller_name)
 
+registration_backend = "pm.backend.register.RegistrationBackend"
+
 #================================================================
 # user-account hooks
 #================================================================
-auth_patterns = patterns("pm.controller.authentication",
-                         url(r'^login$', "login"),
-                         url(r'^login/error/$', "login_error"),
-                         url(r'^logout$', logout, { "next_page" : "/" })
-                         )
-account_password_patterns = patterns("pm.controller.account",
-                                     url(r'^', "update_password"),  # accepts only POST
+
+
+account_password_patterns = patterns("pm.view.account",
+                                     url(r'^$', "update_password"),  # accepts only POST
                                      url(r'^reset$', "reset_password"),
                                      url(r'^reset/requested$', "reset_password_requested"),
                                      url(r'^reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$', "reset_password_confirm", name = "reset_password_confirm"),
                                      url(r'^reset/complete$', "reset_password_complete")
                                      )
-account_patterns = patterns("pm.controller.account",
+
+
+account_patterns = patterns("pm.view.account",
                             method_mapper(r'^$', "account", get = account.view, delete = account.delete),
                             url(r'^delete$', "delete"),
-                            url(r'^auth/', include(auth_patterns)),
+#                            url(r'^auth/', include(auth_patterns)),
                             url(r'^inactive$', direct_to_template, {"template": "account/inactive.html"}),
                             url(r'^password/', include(account_password_patterns)),
                             url(r'^email/$', "update_email"),  # accepts only POST
-                            url(r'^delete/success$', direct_to_template, {"template" : "account/delete-success.html"})
+                            url(r'^delete/complete/$', direct_to_template, {"template" : "account/delete-complete.html"}),
+
                             )
+account_patterns += patterns("pm.view.authentication",
+                         url(r'^login/$', "login"),
+                         url(r'^logout/$', logout, { "next_page" : "/" })
+                         )
+
+account_patterns += patterns('',
+                       url(r'^activate/complete/$',
+                           direct_to_template,
+                           {'template': 'account/activation-complete.html'},
+                           name = 'registration_activation_complete'),
+                       # Activation keys get matched by \w+ instead of the more specific
+                       # [a-fA-F0-9]{40} because a bad activation key should still get to the view;
+                       # that way it can return a sensible "invalid key" message instead of a
+                       # confusing 404.
+                       url(r'^activate/(?P<activation_key>\w+)/$',
+                           activate,
+                           {'backend': registration_backend,
+                            "template_name": "account/activation-error.html" },
+                           name = 'registration_activate'),
+                       url(r'^register/$',
+                           register,
+                           {'backend': registration_backend,
+                            "template_name": "account/registration.html"},
+                           name = 'registration_register'),
+                       url(r'^register/complete/$',
+                           direct_to_template,
+                           {'template': 'account/registration-complete.html'},
+                           name = 'registration_complete'),
+                       url(r'^register/closed/$',
+                           direct_to_template,
+                           {'template': 'account/registration-closed.html'},
+                           name = 'registration_disallowed'),
+                       (r'', include('registration.auth_urls')),
+                       )
 #================================================================
 # dialog hooks
 #================================================================
@@ -95,7 +133,7 @@ form_patterns = patterns("",
 #================================================================
 # album hooks
 #================================================================
-album_patterns = patterns("pm.controller.album",
+album_patterns = patterns("pm.view.album",
                            url(r'^$', "insert"),  # accepts only POST
                            method_mapper(r'^(?P<album_id>\d+)/$', "album", get = album.get, post = album.update, delete = album.delete),
                            url(r'^(?P<album_id>\d+)/view/(?P<secret>.+)/$', "view"),
@@ -105,14 +143,14 @@ album_patterns = patterns("pm.controller.album",
 #================================================================
 # place hooks
 #================================================================
-place_patterns = patterns("pm.controller.place",
+place_patterns = patterns("pm.view.place",
                            url(r'^$', "insert"),  # accepts only POST
                            method_mapper(r'^(?P<place_id>\d+)/$', "place", post = place.update, delete = place.delete),
                            )
 #================================================================
 # photo hooks
 #================================================================
-photo_patterns = patterns("pm.controller.photo",
+photo_patterns = patterns("pm.view.photo",
                            url(r'^$', "insert"),  # accepts only POST
                            method_mapper(r'^(?P<photo_id>\d+)/$', "photo", post = photo.update, delete = photo.delete),
                            )
@@ -135,8 +173,8 @@ urlpatterns = patterns("",
                        url(r'^impressum$', direct_to_template, {"template": "footer/impressum.html"}),
                        url(r'^privacy$', direct_to_template, {"template": "footer/privacy.html"}),
                        url(r'^copyright$', direct_to_template, {"template": "footer/copyright.html"}),
-                       url(r'^contact$', footer.contact),
-                       url(r'^contact/success$', footer.contact_success),
+                       url(r'^contact/$', footer.contact),
+                       url(r'^contact/complete/$', direct_to_template, {"template": "footer/contact-complete.html"}),
                        url(r'^help$', direct_to_template, {"template": "footer/help.html"}),
                        url(r'^team$', direct_to_template, {"template": "footer/team.html"}),
                        url(r'^payment$', direct_to_template, {"template": "footer/payment.html"}),
@@ -166,6 +204,7 @@ urlpatterns = patterns("",
                        # user-account hooks
                        #================================================================
                        url(r'^account/', include(account_patterns)),
+#                       url(r'^accounts/', include(registration)),
                        )
 
 

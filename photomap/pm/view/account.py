@@ -90,16 +90,15 @@ def update_email(request):
     if form.is_valid():
         new_email = form.cleaned_data["new_email"]
         confirm_password = form.cleaned_data["confirm_password"]
-        if user.email == new_email:
-            return error(_("EMAIL_MATCH_ERROR"))
+
         logger.info("Trying to update email of User %d." % user.id)
         if user.check_password(confirm_password):
-            user.email = new_email
+            user.username = new_email
             user.save()
             logger.info("User %d email updated." % user.id)
             return success(email = new_email)
         else:
-            return request_fail_error()
+            return error(_("CREDENTIALS_ERROR"))
     else:
         return error(str(form.errors))
     
@@ -107,10 +106,10 @@ def update_email(request):
 @login_required
 @sensitive_post_parameters("user_password")
 def delete(request):
-    if request.method == "GET":
-        form = DeleteAccountForm()
-        return render_to_response("account/delete.html", { "form" : form }, context_instance = RequestContext(request))
-    else:
+    
+    form = DeleteAccountForm()
+
+    if request.method == "POST":
         user = request.user
         form = DeleteAccountForm(request.POST, auto_id = False)
         if form.is_valid():
@@ -118,7 +117,7 @@ def delete(request):
             user_email = form.cleaned_data["user_email"]
             user_password = form.cleaned_data["user_password"]
             logger.info("Trying to delete User %d." % user_id)
-            if (user.email == user_email and user.check_password(user_password)):
+            if (user.username == user_email and user.check_password(user_password)):
                 logout(request)
                 user.delete()
                 try:
@@ -130,12 +129,11 @@ def delete(request):
                 except Exception, e:
                     logger.error(str(e))
                 finally:
-                    return HttpResponseRedirect("/account/delete/success")
+                    return HttpResponseRedirect("/account/delete/complete/")
             else:
-                form.errors["__all__"] = form.error_class([_("EMAIL_OR_PASSWORD_WRONG")])
-                return render_to_response("account/delete.html", { "form" : form }, context_instance = RequestContext(request))
-        else:
-            return render_to_response("account/delete.html", { "form" : form }, context_instance = RequestContext(request))
+                form.errors["__all__"] = form.error_class([_("CREDENTIALS_ERROR")])
+            
+    return render_to_response("account/delete.html", { "form" : form }, context_instance = RequestContext(request))
             
                 
 def is_test_user(user):

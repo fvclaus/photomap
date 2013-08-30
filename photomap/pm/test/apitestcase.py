@@ -25,20 +25,20 @@ import os
 class ApiTestCase(TestCase):
     """ loads the simple-test fixtures, appends a logger and logs the client in """
     
-    fixtures = ["devel-user", 'simple-test']
+    fixtures = ['simple-test']
     logger = logging.getLogger(__name__)
     
         
     TIME_DELTA = 1000
     
     def createClient(self):
-        return Client(HTTP_USER_AGENT = "Firefox/15")
+        return Client(HTTP_USER_AGENT = "Firefox/19")
     
     def setUp(self):
-        self.c = self.createClient()
+        self.client = self.createClient()
         self.TEST_EMAIL = TEST_EMAIL
         self.TEST_PASSWORD = TEST_PASSWORD
-        self.assertTrue(self.c.login(username = TEST_USER, password = TEST_PASSWORD))
+        self.assertTrue(self.client.login(username = TEST_USER, password = TEST_PASSWORD))
         self.logger = ApiTestCase.logger
         # Delete all leftover mails
         self.read_and_delete_mails()
@@ -118,9 +118,9 @@ class ApiTestCase(TestCase):
         content = json.loads(response.content)
         self.assertFalse(content["success"])
         
-    def assertRedirectToSuccess(self, response):
+    def assertRedirectToComplete(self, response):
         self.assertEqual(response.status_code, 302)
-        self.assertTrue(response.get("Location").find("success") != -1)
+        self.assertTrue(response.get("Location").find("complete") != -1)
     
     def assertUpdates(self, data, model = None):
         if not model:
@@ -204,7 +204,7 @@ class ApiTestCase(TestCase):
     @property
     def user(self):
         # User could be modified during test cases
-        return User.objects.all().get(username = TEST_USER)
+        return User.objects.all().get(username = TEST_EMAIL)
     
     @property
     def userprofile(self):
@@ -235,7 +235,7 @@ class ApiTestCase(TestCase):
     
     def request (self, url, data = {}, method = "POST", loggedin = True):
         if loggedin:
-            client = self.c
+            client = self.client
         else:
             client = self.createClient()
 #        if not url:

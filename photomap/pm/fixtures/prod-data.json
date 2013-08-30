@@ -3,7 +3,7 @@
       "pk": 1,
       "model": "auth.user",
       "fields": {
-         "username": "admin",
+         "username": "admin@keiken.de",
          "first_name": "",
          "last_name": "",
          "is_active": true,
@@ -13,7 +13,7 @@
          "groups": [],
          "user_permissions": [],
          "password": "pbkdf2_sha256$10000$eRDCihSB3YmN$C5jfQtJ5mYqnfUEWM7+NrrMfpLCuLzFozmDA8n/vf4c=",
-         "email": "admin@keiken.app",
+         "email": "",
          "date_joined": "2012-07-27T18:01:47.672"
       }
    },
@@ -21,7 +21,7 @@
       "pk": 2,
       "model": "auth.user",
       "fields": {
-         "username": "test",
+         "username": "test@keiken.de",
          "first_name": "",
          "last_name": "",
          "is_active": true,
@@ -31,7 +31,7 @@
          "groups": [],
          "user_permissions": [],
          "password": "pbkdf2_sha256$10000$sh0z0NvaYBTj$wDQGlwcpTuN8K6qI+duJCiyvNOvNKFchz9dNZj99/I4=",
-         "email": "test@keiken.app",
+         "email": "",
          "date_joined": "2012-07-27T18:01:47.672"
       }
    },
@@ -39,7 +39,7 @@
       "pk": 3,
       "model": "auth.user",
       "fields": {
-         "username": "demo",
+         "username": "demo@keiken.de",
          "first_name": "",
          "last_name": "",
          "is_active": true,
@@ -49,7 +49,7 @@
          "groups": [],
          "user_permissions": [],
          "password": "pbkdf2_sha256$10000$HUuJBmwOc6Mx$4DZYZ4hvPcvixBxaTr+7+ooSP0/8WET3vxbpuQiXCEs=",
-         "email": "demo@keiken.app",
+         "email": "",
          "date_joined": "2012-07-27T18:01:47.672"
       }
    },
@@ -57,7 +57,7 @@
       "pk": 4, 
       "model": "auth.user", 
       "fields": {
-         "username": "", 
+         "username": "anna.lena.hoenig@gmail.com", 
          "first_name": "", 
          "last_name": "", 
          "is_active": true, 
@@ -67,7 +67,7 @@
          "groups": [], 
          "user_permissions": [], 
          "password": "pbkdf2_sha256$10000$WfPxk3egkOHk$R1U3icb2G2wb8MJ9VqbxNXXOnEtyvaJL/4RUcMVSam4=", 
-         "email": "anna.lena.hoenig@gmail.com", 
+         "email": "", 
          "date_joined": "2012-09-05T13:48:55.966"
       }
    },
@@ -75,7 +75,7 @@
       "pk": 5, 
       "model": "auth.user", 
       "fields": {
-         "username": "wawasande", 
+         "username": "wawasande@yahoo.com", 
          "first_name": "", 
          "last_name": "", 
          "is_active": true, 
@@ -85,7 +85,7 @@
          "groups": [], 
          "user_permissions": [], 
          "password": "pbkdf2_sha256$10000$NkzkpXy0TFmq$1O89SYa9kcx6VP3OdesPQzHa/EDrfDHrIXFvt+NXyRY=", 
-         "email": "wawasande@yahoo.com", 
+         "email": "", 
          "date_joined": "2013-01-30T14:45:59.766"
       }
    }

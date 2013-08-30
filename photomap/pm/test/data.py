@@ -8,11 +8,16 @@ import os
 from django.conf import settings
 from decimal import Decimal
 
-TEST_USER = "admin"
+TEST_USER = "admin@keiken.de"
 TEST_PASSWORD = "admin"
-TEST_EMAIL = "admin@keiken.app"
+TEST_EMAIL = "admin@keiken.de"
 TEST_PHOTO = os.path.join(settings.TEST_PATH, "test.jpeg")
 TEST_PHOTO_WATER = os.path.join(settings.TEST_PATH, "water.jpeg")
 TEST_PHOTO_MOUNTAIN = os.path.join(settings.TEST_PATH, "mountain.jpeg")
 
-GPS_MANNHEIM_SCHLOSS = {"lat":Decimal(48.01230012), "lon":Decimal(8.0123123)}
+QUANTIZE_EXPONENT = Decimal("0.0000001")
+
+GPS_MANNHEIM_SCHLOSS = {"lat":Decimal(48.01230012).quantize(QUANTIZE_EXPONENT),
+                        "lon":Decimal(8.0123123).quantize(QUANTIZE_EXPONENT)}
+
+ACTIVATION_KEY = "f7737a8b5f8ec344b938a2ce8a3a5a0efd54c4cf"

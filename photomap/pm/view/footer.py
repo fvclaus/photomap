@@ -1,19 +1,20 @@
 '''
 Created on Feb 10, 2013
 
-@author: fredo
+@author: Frederik Claus
 '''
 
 from django.shortcuts import render_to_response, redirect
 from pm.form.footer import ContactForm
-from django.http import HttpResponseBadRequest
+
 from django.template import RequestContext
 from django.core.mail import mail_managers
+from django.utils.translation import ugettext as _
 
 def contact(request):
-    if request.method == "GET":
-        return render_to_response("footer/contact.html", {"form" : ContactForm()}, context_instance = RequestContext(request))
-    else:
+    form = ContactForm()
+    
+    if request.method == "POST":
         form = ContactForm(request.POST, auto_id = True)
         if form.is_valid():
             try:
@@ -23,21 +24,14 @@ def contact(request):
                 # This almost never fails.
                 mail_managers(form.cleaned_data["subject"],
                           message)
-                return redirect("/contact/success") 
+                return redirect("/contact/complete/") 
             except Exception, e:
-                form.errors["__all__"] = form.error_class([str(e)])
-                return render_to_response("footer/contact.html", {"form": form}, context_instance = RequestContext(request))
-                
-        else:
-            return render_to_response("footer/contact.html", {"form": form}, context_instance = RequestContext(request))
+                form.errors["__all__"] = form.error_class([_("MAIL_ERROR")])
+            
+    return render_to_response("footer/contact.html", {"form": form}, context_instance = RequestContext(request))
         
 def format_message(name, from_email, message):
     return "From %s<%s>:\n%s" % (name, from_email, message)
 
-def contact_success(request):
-    if request.method == "GET":
-        return render_to_response("footer/contact-success.html", context_instance = RequestContext(request))
-    else:
-        return HttpResponseBadRequest()
         
         

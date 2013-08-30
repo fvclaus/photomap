@@ -6,9 +6,7 @@ Created on Jun 19, 2013
 from django.utils.translation import ugettext as _
 from django import forms
 from django.core.exceptions import ValidationError
-
-
-
+from django.contrib.auth.models import User
 
 class UpdatePasswordForm(forms.Form):
     old_password = forms.CharField(widget = forms.PasswordInput)
@@ -19,13 +17,20 @@ class UpdatePasswordForm(forms.Form):
         new_password = self.cleaned_data.get("new_password")
         new_password_repeat = self.cleaned_data.get("new_password_repeat")
         if new_password != new_password_repeat:
-            raise ValidationError(_("PASSWORD_REPETITION_WRONG"), code = "invalid")
+            raise ValidationError(_("PASSWORD_REPETITION_ERROR"), code = "invalid")
         return self.cleaned_data
         
         
 class UpdateEmailForm(forms.Form):
     new_email = forms.EmailField()
     confirm_password = forms.CharField(widget = forms.PasswordInput)
+    
+    def clean(self):
+        new_email = self.cleaned_data.get("new_email")
+        if len(User.objects.filter(username = new_email)) == 1:
+            raise ValidationError(_("EMAIL_ALREADY_EXISTS_ERROR"))
+        return self.cleaned_data
+        
         
 class DeleteAccountForm(forms.Form):
     user_email = forms.EmailField()

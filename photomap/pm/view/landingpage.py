@@ -8,6 +8,7 @@ from django.http import HttpResponseBadRequest
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
+from pm.form.registration import RegistrationForm
 
 import datetime
 
@@ -17,7 +18,8 @@ def view(request):
     if request.method == "GET":
         today = datetime.date.today().strftime("%w")
         next = request.GET.get("next")
-        return render_to_response("index.html", {"day": today, "next": next}, context_instance = RequestContext(request))
+        registration_form = RegistrationForm()
+        return render_to_response("index.html", {"day": today, "next": next, "registration_form" : registration_form}, context_instance = RequestContext(request))
     else:
         return HttpResponseBadRequest()
     

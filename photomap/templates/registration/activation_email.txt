@@ -1,0 +1,5 @@
+Activate your KEIKEN account by clicking on the following link:
+
+{{ site }}/account/activate/{{ activation_key }}/
+
+You must activate your account within {{ expiration_days }} days.

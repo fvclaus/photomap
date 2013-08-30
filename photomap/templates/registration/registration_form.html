@@ -1,0 +1,17 @@
+{% extends "account/base.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block name %}{% trans "REGISTRATION" %}{% endblock %}
+
+{% block account_info %}
+<p>{% trans "REGISRATION" %}</p>
+{% endblock %}
+{% block account_settings %}
+<form id="mp-login-form" class="mp-form" action="" method="post">
+  {{ form.as_p }}
+  <p>
+    <input class="mp-landingpage-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' />
+  </p>
+{% endblock %}
