@@ -132,7 +132,7 @@ def load_debug_data():
     print "Inserting Album & Place..." 
     print sub.check_output(LOAD_DATA)
     client = Client(HTTP_USER_AGENT = "Firefox/22")
-    client.login(username = "test", password = "test")
+    client.login(username = "test@keiken.de", password = "test")
     TITLE_SHORT = "Chuck Norris hat mehr Kreditkarten als Max Mustermann."
     TITLE_LONG = "Chuck Norris ist vor 10 Jahren gestorben. Der TOD hatte bis jetzt nur noch nicht den Mut es ihm zu sagen."
     DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\r\n\"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
