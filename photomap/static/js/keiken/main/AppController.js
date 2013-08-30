@@ -43,7 +43,7 @@ define([
             this.ignoreNextSlideshowUpdate = false;
             this.ignoreNextAppStateChange = true;
             
-            /* -------- hash management -------- */
+            /* ------------ window events -------------- */
             $(window)
                .on("popstate", function () {
                   if (!instance.ignoreNextAppStateChange) {
@@ -54,6 +54,14 @@ define([
                   } else {
                      instance.ignoreNextAppStateChange = false;
                   }
+               })
+               .on("load", function () {
+                  var $load = $("#mp-loading-screen"),
+                      hide = function () { $load.hide(); };
+                  $load.find("div:nth-of-type(2)").text("Yay. The app is ready.");
+                  $load.find("div:nth-of-type(3)").hide();
+                  $load.find("div:last").show();
+                  window.setTimeout(hide, 1500);
                });
             
             /* ----------------------- Model -------------------------- */
