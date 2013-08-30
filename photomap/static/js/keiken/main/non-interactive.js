@@ -44,7 +44,7 @@ function decodeEmail ($email) {
 
 // adds a validator and button styling to all forms
 function startFormValidator () {
-   console.log("Attaching $.validate to every .mp-form");
+   //console.log("Attaching $.validate to every .mp-form");
    $(".mp-form")
       .find(".mp-form-submit")
       .button({ icons : { primary : "ui-icon-play" } })

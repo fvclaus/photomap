@@ -102,7 +102,7 @@
           <span>|</span>
           <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
 	{% else %}
-	  <span class="mp-login-link mp-button">
+	  <span id="mp-login-link" class="mp-login-link mp-button">
 	    <a href="/account/login/" title ='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
 	  </span>
         {% endif %}
