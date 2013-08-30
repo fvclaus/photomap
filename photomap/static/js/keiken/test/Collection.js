@@ -43,6 +43,7 @@ define([
          arrayOfPhotos.forEach(function (photo) {
             orders.push(photo.order);
          });
+         
          return orders;
       }
       
@@ -141,17 +142,16 @@ define([
             QUnit.ok(1, "testing if 'deleted' is triggered after delete");
          });
          photoCollection["delete"](photo2);
-         QUnit.equal(photoCollection.has(idPhoto2), -1, "testing if photo2 is still in Collection after delete");
+         QUnit.equal(photoCollection.has(idPhoto2), -1, "testing if model is really removed from Collection after delete");
       });
       // test 6 - passing through of model events and reaction to model.delete
-      QUnit.test("reactions to model events", 5, function () {
-         $(photoCollection).on("deleted updated", function (event, model) {
+      QUnit.test("reactions to model events", 3, function () {
+         $(photoCollection).on("deleted updated", function (event) {
             QUnit.ok(1, "testing if event (" + event.type + ") is also triggered on Collection");
-            QUnit.equal(model, photo2, "testing if returned model is same model as the one the event is triggered on");
          });
          $(photo2).trigger("updated", photo2);
          $(photo2).trigger("deleted", photo2);
-         QUnit.equal(photoCollection.has(idPhoto2), -1, "testing if collection deleted photo2 after 'deleted' was triggered on it");
+         QUnit.equal(photoCollection.has(idPhoto2), -1, "testing if Collection deleted model after 'deleted' was triggered on the model");
       });
       // test 7 - adding and removing of events or event handlers on the collection (not testing ajax events!)
       QUnit.test("adding and removing event listeners", 8, function () {
@@ -183,6 +183,21 @@ define([
          triggerAll(); // should trigger 3
          photoCollection.removeEvents("Test");
          triggerAll(); // should trigger 0
-         
+      });
+      // test 8 - passing of model when handlers are bound by onInsert/...
+      QUnit.test("passing of models to event handlers, bound by using onInsert/Update/Delete", 3, function () {
+         photoCollection
+            .onInsert(function (model) {
+               QUnit.equal(model, photo2, "testing if onInsert passes the correct model");
+            }, null, "Test")
+            .onUpdate(function (model) {
+               QUnit.equal(model, photo2, "testing if onUpdate passes the correct model");
+            }, null, "Test")
+            .onDelete(function (model) {
+               QUnit.equal(model, photo2, "testing if onDelete passes the correct model");
+            }, null, "Test");
+         $(photoCollection).trigger("inserted", photo2);
+         $(photo2).trigger("updated", photo2);
+         $(photo2).trigger("deleted", photo2);
       });
    });

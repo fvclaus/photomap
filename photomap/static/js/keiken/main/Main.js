@@ -20,16 +20,18 @@ define([
    "../widget/GalleryWidget",
    "../view/DialogView",
    "../widget/PageTitleWidget",
+   "../widget/QuotaWidget",
    "./UIState",
    "dojo/domReady!"
 ],
-   function (declare, MapView, ModelOperationWidget, DetailView,  SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, state) {
+       function (declare, MapView, ModelOperationWidget, DetailView,  SlideshowWidget, AdminGalleryWidget, FullscreenWidget, GalleryWidget, DialogView, PageTitleWidget, QuotaWidget, state) {
 
       var Main = declare(null, {
          
          constructor : function () {
             var instance = this;
             this.map = new MapView();
+            this.quota = new QuotaWidget();
             this.controls = new ModelOperationWidget(null, $("#mp-controls").get(0));
             this.controls.startup({ shareOperation : state.isDashboardView()});
             this.input = new DialogView();
@@ -86,6 +88,9 @@ define([
          },
          getPageTitleWidget : function () {
             return this.pageTitle;
+         },
+         getQuotaWidget : function () {
+            return this.quota;
          }
       }),
           _instance = new Main();

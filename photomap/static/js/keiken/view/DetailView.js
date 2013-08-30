@@ -92,10 +92,6 @@ define([
             this.$explanationContainer.addClass("mp-nodisplay");
             this.$teaserContainer.removeClass("mp-nodisplay");
          },
-         updateUsedSpace : function (data) {
-            
-            $("#mp-user-limit").text(data.used + "/" + data.total + " MB");
-         },
          slideIn : function () {
             var instance = this;
             this.$container.animate({left: "50%"}, 300);
@@ -164,10 +160,10 @@ define([
                // this would overwrite the photos description
                instance._updateDetail(instance.currentPhoto);
                instance._showDetail();
-               communicator.publish("click:photoDetailOpen");
+               communicator.publish("opened:PhotoDetail");
             });
             $(".mp-close-full-description").on("click", function (event) {
-               communicator.publish("close:detail");
+               communicator.publish("closed:Detail");
             });
             this._bindInsertDescriptionListener();
          },
@@ -181,7 +177,7 @@ define([
                   } else {
                      model = "Marker";
                   }
-                  communicator.publish("insert:description", {
+                  communicator.publish("clicked:DescriptionInsert", {
                      "event": event,
                      "model": model
                   });

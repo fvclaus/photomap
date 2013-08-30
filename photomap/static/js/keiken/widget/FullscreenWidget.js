@@ -105,39 +105,39 @@ define(["dojo/_base/declare",
                    console.log("FullscreenWidget: navigating left");
                    instance.carousel.navigateLeft();
        
-                   communicator.publish("navigate:fullscreen", "left");
+                   communicator.publish("navigated:Fullscreen", "left");
                 });
                 this.$navRight.on("click.Fullscreen", function () {
                    console.log("FullscreenWidget: navigating right");
                    instance.carousel.navigateRight();
 
-                   communicator.publish("navigate:fullscreen", "right");
+                   communicator.publish("navigated:Fullscreen", "right");
 
                 });
                 this.$close.on("click.Fullscreen", function () {
                    console.log("FullscreenWidget: close");
                    instance.hide();
-                   communicator.publish("click:fullscreenClose");
+                   communicator.publish("closed:Fullscreen");
                 });
                 $("body")
                    .on("keyup.Fullscreen", null, "esc", function () {
                       if (instance.active) {
                          instance.hide();
-                         communicator.publish("click:fullscreenClose");
+                         communicator.publish("closed:Fullscreen");
                       }
                    })
                    .on("keyup.Fullscreen", null, "left", function () {
                       if (instance.active) {
                          instance.carousel.navigateLeft();
                          console.log("FullscreenWidget: navigating left");
-                         communicator.publish("navigate:fullscreen", "left");
+                         communicator.publish("navigated:Fullscreen", "left");
                       }
                    })
                    .on("keyup.Fullscreen", null, "right", function () {
                       if (instance.active) {
                          instance.carousel.navigateRight();
                          console.log("FullscreenWidget: navigating right");
-                         communicator.publish("navigate:fullscreen", "right");
+                         communicator.publish("navigated:Fullscreen", "right");
                       }
                    });
              }

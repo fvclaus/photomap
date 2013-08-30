@@ -177,7 +177,7 @@ a
 .mp-light-loader
   max-width 32px
   max-height 32px
-  
+ 
 .mp-infotext,
 #mp-infoalert
   width 100%
@@ -187,13 +187,16 @@ a
   top 0
   left 0
   overflow auto
-  display table // to vertically center the text
   background rgba(15,15,15,0.8)
   color white
   text-align center
   -moz-box-sizing border-box
   -webkit-box-sizing border-box
   box-sizing border-box
+  div
+    width 100%
+    height 100%
+    display table // to vertically center the text
   a
     color white
   span
@@ -229,6 +232,26 @@ a
   float right
   font-size 20px !important
   cursor pointer
+
+#mp-loading-screen
+  width 100%
+  height 79.99%
+  position absolute
+  top 13% //header size
+  left 0
+  z-index 100
+  background-color rgba(0, 0, 0, 0.95)
+  color white
+  div
+    width 60%
+    margin 20px auto
+    text-align center
+#mp-loading-done
+  display none
+#mp-loading-screen #mp-placeholder-block
+  width 100%
+  height 35%
+  display block
 
 /* ---------- end core classes ----------- */
 

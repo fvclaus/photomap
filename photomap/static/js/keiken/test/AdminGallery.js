@@ -82,7 +82,7 @@ define(["dojo/_base/declare",
                         img0Pos = $img0.position(),
                         img1Pos = $img1.position();
                     
-                    communicator.subscribeOnce("change:photoOrder", 
+                    communicator.subscribeOnce("changed:PhotoOrder", 
                                                lang.hitch(this, function (photos) {
                                                   QUnit.ok(this.photos instanceof Array);
                                                   photos.forEach(function (photo, index) {

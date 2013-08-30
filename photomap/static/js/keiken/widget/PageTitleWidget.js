@@ -14,7 +14,7 @@ define(["dojo/_base/declare",
          _bindListener : function () {
             var instance = this;
             this.$pageTitle.on('click', function () {
-               communicator.publish("click:pageTitle");
+               communicator.publish("clicked:PageTitle");
             });
          },
          update : function (text) {

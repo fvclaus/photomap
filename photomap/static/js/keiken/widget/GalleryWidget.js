@@ -295,10 +295,10 @@ define(["dojo/_base/declare",
                          photo = $.grep(instance.carousel.getAllPhotos(), function (e, i) {
                             return e.thumb === $el.attr("src");
                          })[0];
-                         communicator.publish("hover:GalleryPhoto", {contex : this, element: $el, "photo" : photo});
+                         communicator.publish("hovered:GalleryPhoto", {contex : this, element: $el, "photo" : photo});
                    })
                    .on('mouseleave.Gallery', "img.mp-thumb", function (event) {
-                         communicator.publish("mouseleave:galleryThumb");
+                         communicator.publish("mouseleave:GalleryPhoto");
                    });
 
                 this.$open.on("click", function (event) {
@@ -315,7 +315,7 @@ define(["dojo/_base/declare",
                 });
              },
              _insert : function () {
-                communicator.publish("click:GalleryInsert");
+                communicator.publish("clicked:GalleryInsert");
              },
              /**
               * @private
@@ -333,7 +333,7 @@ define(["dojo/_base/declare",
                          //TODO navigating to a photo provides a better abstraction then navigation to a specific index
                          // navigating to an index means that we know implementation details of the slideshow, namely
                          // how many photos are displayed per page(!)
-                         communicator.publish("click:galleryThumb", instance._getPhotoOfImage($el));
+                         communicator.publish("clicked:GalleryPhoto", instance._getPhotoOfImage($el));
                       }
                    });
              }

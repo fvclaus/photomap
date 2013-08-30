@@ -111,16 +111,16 @@ define(["dojo/_base/declare",
          _bindMarkerListener : function () {
             var instance = this;
             this.addListener("mouseover", function () {
-               communicator.publish("mouseover:marker", instance.presenter);
+               communicator.publish("mouseover:Marker", instance.presenter);
             });
             this.addListener("mouseout", function () {
                // hide EditControls after a small timeout, when the EditControls are not entered
                // the EditControls-Box is never seamlessly connected to a place, so we need to give the user some time
-               communicator.publish("mouseout:marker", instance.presenter);
+               communicator.publish("mouseout:Marker", instance.presenter);
             });
             this.addListener("dblclick", function () {
                instance.isSingleClick = false;
-               communicator.publish("dblClick:marker", instance.presenter);
+               communicator.publish("dblClicked:Marker", instance.presenter);
             });
             this.addListener("click", function () {
                // since google map does trigger click even if user is doubleclicking we have to prevent this event from bubbling up if the user is actually doubleclicking
@@ -128,7 +128,7 @@ define(["dojo/_base/declare",
                window.setTimeout(function () {
                   if (instance.isSingleClick) {
                      instance.isSingleClick = false;
-                     communicator.publish("click:marker", instance.presenter);
+                     communicator.publish("clicked:Marker", instance.presenter);
                   }
                }, 800);
             });

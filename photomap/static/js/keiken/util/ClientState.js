@@ -47,24 +47,11 @@ define(["dojo/_base/declare",
                this._writePhotoCookie();
             }
          },
-         init : function () {
-            this.quota = tools.bytesToMbyte($.cookie("quota"));
-            this.updateUsedSpace();
-         },
          getUsedSpace : function () {
-            return this.usedSpace;
+            return this._bytesToMbyte($.cookie("used_space"));
          },
-         getQuota : function () {
-            return this.quota;
-         },
-         updateUsedSpace : function () {
-            
-            var instance = this;
-            this.usedSpace =  tools.bytesToMbyte($.cookie("used_space"));
-            communicator.publish("change:usedSpace", {
-               used: instance.usedSpace,
-               total: instance.quota
-            });
+         getLimit : function () {
+            return this._bytesToMbyte($.cookie("quota"));
          },
          write : function (ns, key, value) {
             var data = $.cookie(ns);
@@ -106,6 +93,9 @@ define(["dojo/_base/declare",
             } else {
                return defaultValue;
             }
+         },
+         _bytesToMByte : function (bytesAsString) {
+           return (parseFloat(bytesAsString) / Math.pow(2, 20)).toFixed(1).toString(); 
          },
          /**
           * @description Takes current cookie, checks it for non-integer values, and rewrites cookie with just integer values.

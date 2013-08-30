@@ -30,12 +30,12 @@ define([
          
          constructor : function () {
             
-            communicator.subscribe("click:GalleryInsert", this._openPhotoInsertDialog);
-            communicator.subscribe("click:Map", this._openMarkerInsertDialog);
+            communicator.subscribe("clicked:GalleryInsert", this._openPhotoInsertDialog);
+            communicator.subscribe("clicked:Map", this._openMarkerInsertDialog);
             communicator.subscribe("clicked:UpdateOperation", this._openModelUpdateDialog);
             communicator.subscribe("clicked:DeleteOperation", this._openModelDeleteDialog);
             communicator.subscribe("clicked:ShareOperation", this._openAlbumShareDialog);
-            communicator.subscribe("change:photoOrder", this._openPhotosUpdateDialog);
+            communicator.subscribe("changed:PhotoOrder", this._openPhotosUpdateDialog);
          },
          /*
           * --------------------------------------------------
@@ -44,7 +44,7 @@ define([
           */
          _openPhotoInsertDialog : function () {
             var place = map.getOpenedMarker().getModel(),
-                photoCollection = place.getPhotos();
+               photoCollection = place.getPhotos();
             
             dialog.show({
                load : function () {
@@ -57,7 +57,7 @@ define([
                   photoCollection
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
-                        clientstate.updateUsedSpace();
+                        communicator.publish("inserted:Model");
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
@@ -96,7 +96,7 @@ define([
                   markerCollection
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
-                        clientstate.updateUsedSpace();
+                        communicator.publish("inserted:Model");
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
@@ -117,7 +117,7 @@ define([
                   model
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
-                        communicator.publish("updated:model", model);
+                        communicator.publish("updated:Model", model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
@@ -139,7 +139,7 @@ define([
                   model
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
-                        communicator.publish("deleted:model", model);
+                        communicator.publish("deleted:Model", model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
