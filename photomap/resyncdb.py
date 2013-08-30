@@ -129,6 +129,7 @@ def load_user():
 
 def load_debug_data():
     from django.test.client import Client
+    import settings
     print "Inserting Album & Place..." 
     print sub.check_output(LOAD_DATA)
     client = Client(HTTP_USER_AGENT = "Firefox/22")
@@ -139,16 +140,20 @@ def load_debug_data():
     from pm.test.data import TEST_PHOTO
     from pm.model.place import Place
     
-    def get_data(title):
-        return {"title" : title,
-                "description": DESCRIPTION,
-                "photo" : open(TEST_PHOTO, "rb"),
-                "place" : 1
+    def get_data(index, place_id, title, description = DESCRIPTION):
+        data =  {"title" : title,
+                "description": description,
+                "photo" : open(os.path.join(settings.STATIC_PATH, "test", "photo%d.jpg" % ((index % 7 ) + 1)), "rb"),
+                "place" : place_id
                 }
+        return data
     
     print "Inserting Photos..."
-    print client.post("/photo/", get_data(TITLE_SHORT))
-    print client.post("/photo/", get_data(TITLE_LONG))
+    for place_id in range(3):
+        for photo_index in range(place_id ):
+            print client.post("/photo/", get_data(photo_index , place_id + 1, TITLE_SHORT))
+            print client.post("/photo/", get_data(photo_index + 1, place_id + 1, TITLE_LONG))
+            print client.post("/photo/", get_data(photo_index + 2, place_id + 1, TITLE_SHORT))
     print "Done."
 
 def load_production_data():
