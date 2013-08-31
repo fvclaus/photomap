@@ -269,8 +269,9 @@ a
     padding 0
 
 .mp-keiken-logo
- height 95%
- margin-left 3%
+  height 95%
+  margin-left 3%
+  border none
 
 .mp-top-panel
   height 100%
@@ -314,22 +315,27 @@ a
   background-color $background-color // other menu will be visible through transparent menu
 
 .mp-internal-links
+  padding .4em // to sync with jqury-ui widget padding
   display inline-block
-  float right
+  position absolute
+  right 5px // float right won't work in IE<8 -> absolute positioning 
   a
     text-decoration none
     color $font-color
     padding-right 5px
   a:hover
-    background-color $border-color
+    color #118811 // same green but darker as the one on black background
 
 #mp-user,
 #mp-login-link
   letter-spacing 1px
   a
     text-decoration none
+    letter-spacing 2px
+    color $font-color
+    text-shadow 0 0 1px #AAAAAA
   a:hover
+    color #118811 // same green as links on black background just darker
     text-decoration none
-
 
 /* ------------- end footer ------------- */

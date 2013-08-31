@@ -19,6 +19,19 @@
   position relative
   font-size .7em
   cursor pointer
+  color white
+  text-decoration none
+#mp-user-password-forgot:hover
+  background url(/static/images/ie-rgba-black-alpha-0.png) repeat
+  background rgba(0,0,0,0)
+  color #88ff88
+  text-decoration none
+#account #mp-user-password-forgot
+  color #000
+#account #mp-user-password-forgot:hover 
+  background none
+  color #118811 // same green as links on black background just darker
+  text-decoration none
 
 /* ------ end general ------ */
 
@@ -32,11 +45,12 @@
   // margin 0 20%
   padding 0 1%
   a
-    text-decoration none
+    text-decoration underline
+    letter-spacing 2px
     color $font-color
-    letter-spacing 0.25em
+    text-shadow 0 0 1px #AAAAAA
   a:hover
-    background-color $border-color
+    color #118811 // same green as links on black background just darker
     text-decoration underline
   li
     margin 5px
@@ -223,26 +237,25 @@ address
 
 #landingpage .mp-content
   background-color #000 //#dadada
+  position relative
 
 #landingpage .background-image,
 #landingpage .background-overlay-black,
 #landingpage .mp-non-interactive-content
   width 100%
-  height 80%
+  height 100%
   position absolute
-  top 13%
+  top 0
   left 0
 
 #landingpage .background-image
-  height  80% //auto //80%
-  max-height 80%
   opacity 0.5
   
   
 #landingpage .background-overlay-black
   z-index 1
-  background-color rgba(0,0,0,0.01)
-  //display none
+  background url(/static/images/ie-rgba-black-alpha-10.png) repeat
+  background rgba(0,0,0,0.01)
 
 #landingpage .mp-non-interactive-content
   height 100%
@@ -268,7 +281,8 @@ section.keiken-intro
   position absolute
   top 5%
   left 1%
-  background-color rgba(0,0,0,0.6)
+  background url(/static/images/ie-rgba-black-alpha-60.png) repeat
+  background rgba(0,0,0,0.6)
   text-align left
   overflow auto
   h2
@@ -282,13 +296,19 @@ section.keiken-intro
 .mp-landing-page-links
   width 100%
   
+#landingpage #keiken-login #login_submit,
+#landingpage #keiken-login .mp-form-submit,
 .mp-landingpage-button
-  width 100%
-  min-width 80%
   margin-top 5px
   font-size .8em
   padding 3px
 
+.mp-landingpage-button
+  width 100%
+  min-width 80%
+
+#landingpage #keiken-login #login_submit:hover,
+#landingpage #keiken-login .mp-form-submit:hover,
 .mp-landingpage-button:hover
   cursor pointer
   color #88ff88
@@ -321,6 +341,7 @@ section#keiken-login
   position absolute
   top 5%
   left 100%
+  background url(/static/images/ie-rgba-black-alpha-60.png) repeat
   background-color rgba(0,0,0,0.6)
   font-size .8em
   visibility hidden
@@ -332,52 +353,39 @@ section#keiken-login
   a
     color #bababa
     font-size .8em
+    text-decoration none
 #mp-login-switch span:hover
   cursor pointer
   a
     color #88ff88
+    text-decoration none
 #mp-login-switch span a:hover
   text-decoration none
   background none
 
 #keiken-login .mp-login-tab
   overflow auto
-  label
-    padding 3px
   .mp-form-submit
     color white //#050505
   h2
     text-align center
     padding 5px
     margin-top 10px
+//  label
+//    padding 3px
     
 #landingpage .mp-login-tab input,
 .mp-landingpage-button
-  background-color rgba(0,0,0,0.5)
+  background url(/static/images/ie-rgba-black-alpha-50.png) repeat
+  background rgba(0,0,0,0.5)
   color white
   border-radius 5px
   box-shadow(inset 0px 0px 5px rgba(255,255,255,0.8))
   padding 3px
   
-#keiken-login .mp-login-tab p .mp-landingpage-form-submit
+#landingpage #keiken-login #login_submit,
+#landingpage #keiken-login .mp-form-submit,
   margin-left 28% //instead of using mp-form-submit
-#keiken-login .mp-login-tab p .mp-landingpage-form-submit:hover
-  cursor pointer
-  color #88ff88
-  background-color black
-
-#mp-user-password-forgot 
-  color white
-#mp-user-password-forgot:hover 
-  background-color rgba(0,0,0,0)
-  color #88ff88
-  text-decoration none
-#account #mp-user-password-forgot
-  color #000
-#account #mp-user-password-forgot:hover 
-  background none
-  color #7a7a7a
-  text-decoration none
     
 #mp-login-register
   width 50%

@@ -30,7 +30,7 @@ $(document).ready(function () {
    });
    // automatically sign in when users selects "Try KEIKEN yourself"
    $("#mp-test-button").on("click", function (event) {
-      $("#login_email").val("test@keiken.app");
+      $("#login_email").val("test@keiken.de");
       $("#login_password").val("test");
       $("#login_submit").trigger("click");
    });
@@ -38,7 +38,6 @@ $(document).ready(function () {
    if ($(".mp-login-link").size() > 0) {
       //open the login-box automatically when coming from another non-interactive by clicking on "Login/Registration"
       if (window.location.pathname === "/account/auth/login") {
-         console.log(window.location.pathname);
          $(window).load(function () {
             $(".mp-login-link").find("a").trigger("click");
             $("#login_email").focus();
@@ -53,7 +52,6 @@ $(document).ready(function () {
          $("#keiken-login").css("visibility", "visible").animate({
             left : "69%"
          }, 400);
-         $("#keiken-login").tabs("option", "active", 0);
       });
    }
 

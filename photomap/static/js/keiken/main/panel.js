@@ -3,23 +3,6 @@
 
 "use strict";
 
-/**
- * @description Redirects to dashboard if user is logged in, to landing page otherwise
- */
-function bindLogoListener () {
-   $(".mp-logo img").on("click", function (event) {
-      // prevent the default anchor forward action
-      // the anchor around the logo is needed in case js is disabled or failed
-      event.preventDefault();
-      
-      if ($("#mp-user").size() > 0) {
-         window.location.href = DASHBOARD_VIEW;
-      } else {
-         window.location.href = "/";
-      }
-   });
-}
-
 function setFontSizeInVH ($el, vh) {
    assertTrue($el.size() > 0, "input parameter $el must not be undefined");
    var fontSize =  (vh / 100) * $("body").height();
@@ -85,7 +68,6 @@ $(document).ready(function () {
    
    resizeFont();
 
-   bindLogoListener();
    // this will probably not work in ie or similiar
    // css3 allows resizing the font in % of the viewport height
    // this is currently not supported by ff
