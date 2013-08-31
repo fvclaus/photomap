@@ -70,8 +70,8 @@ class AlbumControllerTest(ApiTestCase):
         # 'ocean test'
         #=======================================================================
         data = {"title": "Atlantis",
-                "lat" : Decimal(17.375803),
-                "lon": Decimal(-34.628906)}
+                "lat" : Decimal("17.375803"),
+                "lon": Decimal("-34.628906")}
         (album, content) = self.assertCreates(data)
         self.assertTrue(album.secret != None)
         self.assertEqual(album.country, "oc")
@@ -93,6 +93,11 @@ class AlbumControllerTest(ApiTestCase):
         data["description"] = u'Some text,text,... Testing some umlauts üäß and other special characters <javascript></javascript>'
         (album, content) = self.assertCreates(data)
         self.assertEqual(album.description, data["description"])
+        #=======================================================================
+        # Too many decimal places for coordinates
+        #=======================================================================
+        data["lat"] = Decimal(1.23123)
+        self.assertError(data)
         #=======================================================================
         # insert somthing that is not valid
         #=======================================================================

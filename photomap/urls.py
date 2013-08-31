@@ -1,7 +1,7 @@
 '''
 Created on Jun 22, 2012
 
-@author: fredo
+@author: Frederik Claus
 '''
 
 from django.conf.urls.defaults import patterns, include, url

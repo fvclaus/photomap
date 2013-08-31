@@ -15,4 +15,4 @@ class InsertPlaceForm(forms.ModelForm):
 class UpdatePlaceForm(forms.ModelForm):
     class Meta:
         model = Place
-        exclude = ("album", "lat", "lon","date")
+        exclude = ("album", "lat", "lon", "date")
