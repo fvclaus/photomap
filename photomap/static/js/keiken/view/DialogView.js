@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, define, mpEvents, gettext, CONFIRM_DIALOG, INPUT_DIALOG */
+/*global $, main, define, mpEvents, gettext, CONFIRM_DIALOG, INPUT_DIALOG, ALERT_DIALOG, assertTrue */
 
 "use strict";
 
@@ -14,10 +14,11 @@ define([
    "./View",
    "./DialogMessageView",
    "../view/PhotoEditorView",
+   "../util/PhotoFileValidator",
    "../util/Communicator",
    "dojo/domReady!"
 ],
-   function (declare, View, DialogMessageView, PhotoEditorView, communicator) {
+       function (declare, View, DialogMessageView, PhotoEditorView, PhotoFileValidator, communicator) {
       $.extend($.ui.dialog.prototype.options, {
          autoOpen: false,
          modal: true,
@@ -30,6 +31,7 @@ define([
          constructor : function () {
             
             this.$container = $("#mp-dialog");
+            assertTrue(this.$container.size() === 1);
             this.viewName = "Dialog";
             
             this.$dialog = $("#mp-dialog");
@@ -41,7 +43,8 @@ define([
             this.visible = false;
             // indicates if the user submitted the form
             this.abort = true;
-            this.editor = new PhotoEditorView();
+            // this.editor = new PhotoEditorView();
+            this.photoValidator = new PhotoFileValidator();
             
             //temporary properties, when dialog is loaded and opened
             this.message = null;
@@ -67,12 +70,11 @@ define([
       
             this.$dialog.dialog("option", {
                close: function () {
-                  communicator.publish("enable:ui");
                   instance.$dialog.empty();
                   instance.$dialog.dialog("destroy");
                   instance.setVisibility(false);
                   instance.setActive(false);
-                  console.log("Dialog closed.");
+                  console.log("DialogView: closed");
                   // in case the user did not submit or a network/server error occurred and the dialog is closed
                   if (instance.abort) {
                      instance._trigger(instance.options, "abort");
@@ -126,6 +128,21 @@ define([
                   ]
                });
                break;
+
+            case ALERT_DIALOG : 
+               this.$dialog.dialog("option", {
+                  buttons : [
+                     {
+                        id : "mp-dialog-button-ok",
+                        text : gettext("OK"),
+                        click : function () {
+                           $(this).dialog("close");
+                           return false;
+                        }
+                     }
+                  ]
+               });
+               break;
             }
             //if we open the dialog earlier the open callback from above will never be called
             this.$dialog.dialog("open");
@@ -134,6 +151,7 @@ define([
          setVisibility : function (bool) {
             this.visible = bool;
          },
+         // TODO dialog("close") seems to trigger another dialog("open") which will set the visiblity to true again. See the DialogViewTest autoClose. Wtf?!
          isVisible : function () {
             return this.visible;
          },
@@ -145,11 +163,12 @@ define([
             this.$form = null;
          },
          showResponseMessage : function (response) {
+            var height = this.$container.children().eq(0).height();
             if (!response.success) {
                this.$loader.hide();
-               this._scrollToMessage(this.message);
                this.message.showFailure(response.error);
-               this.$buttons.button("enable");
+               this._scrollToMessage(height);
+               this.$close.button("enable");
                return;
             }
             // set only when the request did not produce an error
@@ -160,8 +179,8 @@ define([
                this.close();
             } else {
                this.$loader.hide();
-               this._scrollToMessage(this.message);
                this.message.showSuccess();
+               this._scrollToMessage(height);
                this.$close.button("enable");
             }
          },
@@ -169,17 +188,22 @@ define([
             this.$loader.hide();
             this._scrollToMessage(this.message);
             this.message.showFailure(gettext("NETWORK_ERROR"));
-            this.$buttons.button("enable");
+            this.$close.button("enable");
          },
          setInputValue : function (name, value) {
             assertTrue(this.$form, "Form has to be loaded before settings its input values");
-            this.$form.find("[name='" + name +  "']").val(value);
+            var $input = this.$form.find("[name='" + name +  "']");
+            assertTrue($input.size() === 1, "The selected input field does not exist.");
+            $input.val(value);
          },
+         //TODO This feature has been put on hold temporarily.
          startPhotoEditor : function () {
-            assertTrue(instance.$form, "Form has to be loaded before settings its input values");
+            assertTrue(this.$form, "Form has to be loaded before settings its input values");
             assertTrue(this.options.isPhotoUpload, "Editor is not available unless it is a photo upload");
+            var instance = this;
             this.$form.find("input[name='" + this.options.photoInputName + "']").bind('change', function (event) {
-               input.editor.edit.call(input.editor, event);
+               instance.photoValidator.validate($(this), event);
+               // input.editor.edit.call(input.editor, event);
             });
          },
          _prepareDialog : function (url){
@@ -195,10 +219,6 @@ define([
             //resize the dialog to fit the content without scrolling
             //we must add a new dialog here
             this.$dialog.dialog({
-               //this can only be called here, because we must create the dialog here
-               create: function (event, ui) {
-                  communicator.publish("disable:ui");
-               },
                "title": title,
                //TODO height is a messy business. height includes the title bar (wtf?!)
                //the dialog content is styled in percent of the parent. 
@@ -236,8 +256,9 @@ define([
                   html = res;
                },
                error: function (error) {
-                  //TODO we need to change the type of the dialog to INPUT_DIALOG to prevent the buttons from showing
                   html = gettext("NETWORK_ERROR");
+                  //we need to change the type of the dialog to INPUT_DIALOG to prevent the buttons from showing
+                  instance.options.type = ALERT_DIALOG;
                }
             });
             return html;
@@ -253,6 +274,7 @@ define([
             this.$form = $widget.find("form");
             this.message = new DialogMessageView($widget);
             this.$close = $widget.find("ui-dialog-titlebar-close");
+            // No need to add the ok button, because it just closes the dialog.
             this.$buttons = this.$form
                               .find("button, input[type='submit']")
                               .add($("#mp-dialog-button-yes"))
@@ -284,7 +306,7 @@ define([
             
             if (this.options.isPhotoUpload) {
                $relevantInput = $relevantInput.not("input[name='" + this.options.photoInputName + "']");
-               formData[this.options.photoInputName] = this.editor.getAsFile();
+               formData[this.options.photoInputName] = this.photoValidator.getFile();
             }
             
             $.each($relevantInput, function (index, input) {
@@ -294,8 +316,9 @@ define([
             return formData;
          },
          _scrollToMessage : function (message) {
+            var scrollTop = 0;
             this.$dialog.stop().animate({
-               scrollTop : message.getOffset().top
+               scrollTop : message
             }, 300);
          },
          _trigger : function (options, name, args) {

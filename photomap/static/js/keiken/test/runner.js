@@ -75,7 +75,7 @@ function getTestCasesFromQueryString() {
 }
 
 
-var allTestCases = ["Collection", "Slideshow", "AdminGallery", "Gallery", "Fullscreen", "PhotoPages", "PhotoCarousel", "CarouselAnimation", "Communicator"],
+var allTestCases = ["Collection", "Model", "Photo", "Place", "ClientState", "DialogView", "Slideshow", "AdminGallery", "Gallery", "Fullscreen", "PhotoPages", "PhotoCarousel", "CarouselAnimation", "Communicator"],
     testCases = getTestCasesFromQueryString(),
     testCaseIndex;
 

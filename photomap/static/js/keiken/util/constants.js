@@ -35,6 +35,7 @@ var DASHBOARD_VIEW = "/dashboard/",
     
     INPUT_DIALOG = 0,
     CONFIRM_DIALOG = 1,
+    ALERT_DIALOG = 2,
     
     KEY_CODES = {
        8: "BACKSPACE",

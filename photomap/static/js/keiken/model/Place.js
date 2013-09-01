@@ -16,7 +16,6 @@ define(["dojo/_base/declare",
         "./Collection",
         "../util/Communicator"],
    function (declare, MarkerModel, Photo, Collection) {
-      console.log("Place: start");
       return declare(MarkerModel, {
          constructor : function (data) {
          

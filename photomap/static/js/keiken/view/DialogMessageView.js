@@ -33,7 +33,7 @@ define([
          showFailure : function (error) {
             this.$container.show();
             this.$failure.show("slow");
-            this.$error.text(error.toString());
+            this.$error.html(error.toString());
          },
          isAvailable : function () {
             return this.$el.length > 0;
@@ -45,17 +45,20 @@ define([
           * @private
           */
          _bindListener : function () {
-            this.$autoClose.click(function () {
-               var autoClose = false;
-               if ($(this).is(":checked")) {
-                  autoClose = true;
-               }
+            var instance = this;
+            this.$autoClose.bind("change", function () {
+               var autoClose = $(this).is(":checked");
                clientstate.setDialogAutoClose(autoClose);
-               this.autoClose = autoClose;
+               instance.autoClose = autoClose;
             });
          },
-         getOffset : function () {
-            return this.$container.offset();
+         getOffsetBottom : function () {
+            var offset = null;
+            assertTrue(this.$container.is(":hidden"));
+            this.$container.show();
+            offset =  this.$container.offset();
+            this.$container.hide();
+            return offset.top + this.$container;
          }
       });
    });
