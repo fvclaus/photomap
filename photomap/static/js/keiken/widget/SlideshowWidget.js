@@ -110,7 +110,7 @@ define(["dojo/_base/declare",
               * @private
               * @description Executed after photo is updated (=displayed)
               */
-             _update : function () {
+             _update : function ($photoSuccess, $photoError) {
                 console.log("_update");
                 this._findCurrentPhoto();
                 // deleted last photo
@@ -123,8 +123,11 @@ define(["dojo/_base/declare",
                    // on the other events, beforeLoad & afterLoad, the photo src is not set yet
                    this._updatePhotoNumber();
                 }
-                communicator.publish("updated:Slideshow", this.currentPhoto);
-                this.setDisabled(false);
+                // The communicator event should be published when there really is some movement, e.g. the Widget navigates to another photo.
+                // It should not be published, when only the photo number was updated, e.g. a photo before or after the current one gets deleted or a new photo is inserted.
+                if ($photoSuccess.size() + $photoError.size() === 1) {
+                   communicator.publish("updated:Slideshow", this.currentPhoto);
+                }
              },
              /**
               * @private
@@ -136,7 +139,6 @@ define(["dojo/_base/declare",
                 // trigger event to tell UI that slideshow is about to change
                 // This will hide the detail view.
                 communicator.publish("beforeLoad:Slideshow");
-                this.setDisabled(true);
              },
              /**
               * @private

@@ -35,7 +35,7 @@
     </tr>
     <tr>
       <td>{% trans "Username/Email" %}</td>
-      <td><span class="mp-user-email">{{ user.email }}</span></td>
+      <td><span class="mp-user-email">{{ user.username }}</span></td>
     </tr>
     <tr>
       <td>{% trans "Account-Status" %}</td>
@@ -56,10 +56,12 @@
       <td>{% trans "Usage" %}</td>
       <td>{{ n_albums }} {% trans "Albums" %} -- {{ n_places }} {% trans "Places" %} -- {{ n_photos }} {% trans "Photos" %}</td>
     </tr>
+    {% if not is_test_user %}
     <tr>
       <td></td>
       <td><a href="delete">{% trans "DELETE_ACCOUNT" %}</a></td>
     </tr>
+    {% endif %}
   </tbody>
   
 </table>

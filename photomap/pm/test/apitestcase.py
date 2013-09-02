@@ -99,7 +99,7 @@ class ApiTestCase(TestCase):
         self.assertTrue(instance != None)
         return (instance, content)
     
-    def assertPublicAccess(self, url):
+    def assertPublicAccess(self, url, mime_type = "image/jpeg"):
         
         if url.startswith("/"):  
             c = self.createClient()
@@ -108,10 +108,13 @@ class ApiTestCase(TestCase):
         else:
             response = urlopen(url)
             code = response.getcode()
+            if mime_type:
+                self.assertEqual(response.headers.get("Content-Type"), mime_type)
             
         self.assertEqual(200, code)
         return response
-        
+    
+
     def assertNoPublicAccess(self, url):
         c = self.createClient()
         response = c.get(url)

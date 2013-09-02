@@ -265,6 +265,7 @@ LOGOUT_URL = "/account/logout/"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "team.keiken@gmail.com"
+SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = "lichtapothekepferdbrot"
 EMAIL_USE_TLS = True
 
@@ -272,7 +273,7 @@ EMAIL_TEST_USER = "test@keiken.de"
 EMAIL_FILE_PATH = os.path.join(TEST_PATH, "mail")
 
 
-ADMINS = (('Team.Keiken', EMAIL_HOST_USER)
+ADMINS = (('Team.Keiken', EMAIL_HOST_USER),
               # ('Your Name', 'your_email@example.com'),
 )
 MANAGERS = ADMINS

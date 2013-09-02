@@ -89,8 +89,8 @@ define([
                   if (modelType === "Place") {
                      dialog.setInputValue("album", state.getAlbum().getId());
                   }
-                  dialog.setInputValue("lat", eventData.lat);
-                  dialog.setInputValue("lon", eventData.lng);
+                  dialog.setInputValue("lat", eventData.lat.toFixed(7));
+                  dialog.setInputValue("lon", eventData.lng.toFixed(7));
                },
                submit: function (data) {
                   markerCollection

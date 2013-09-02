@@ -107,7 +107,7 @@ define(["dojo/_base/declare",
                    this.currentPage = this.dataPage.getPage("last");
                    this._load();
                 } else if (this.isStarted) { // Call _update to correct photo number, etc
-                   this.options.onUpdate.call(this.options.context, $());
+                   this.options.onUpdate.call(this.options.context, $(), $());
                 }
                    
              },
@@ -153,6 +153,8 @@ define(["dojo/_base/declare",
                       onFadeOut.apply(instance);
                    });
                    this._deleteThread = onFadeOut;
+                } else if (index < firstIndexOfCurrentPage && this.size === 1) { // If there is only one photo, don't move around. Although logical, it feels quite awkward to the end user.
+                   this.options.onUpdate.call(this.options.context, $(), $());
                 }  else if (index < firstIndexOfCurrentPage) {  // Did we delete from a previous page?
                    // Refresh the whole page.
                    // Everything is moving to the left.
@@ -160,7 +162,7 @@ define(["dojo/_base/declare",
                    this._deleteThread = onFadeOut;
                    onFadeOut.apply(instance);
                 } else if (this.isStarted) { // Call _update to correct photo number, etc
-                   this.options.onUpdate.call(this.options.context, $());
+                   this.options.onUpdate.call(this.options.context, $(), $());
                 }
              },
              /**

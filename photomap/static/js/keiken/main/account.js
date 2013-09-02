@@ -64,7 +64,7 @@ $(document).ready(function () {
                   $success.hide();
                   //empty all input fields - if you want a value to stay you have to define that in onSuccess/Fail and return the value from server
                   $form.find("input").not("input[type='hidden']").not("input[type='submit']").each(function (i, field) {
-                     console.log(field);
+                     // console.log(field);
                      $(field).val("");
                   });
 
@@ -74,7 +74,7 @@ $(document).ready(function () {
                         $(".mp-user-email").text(data.email);                              
                      }
                   } else {
-                     $requestFail.text(data.error);
+                     $requestFail.html(data.error);
                   }
                },
                error: function (jqXHR, textStatus, errorThrown) {

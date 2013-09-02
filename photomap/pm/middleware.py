@@ -17,8 +17,8 @@ class NoSupportMiddleware():
         IS_OK = re.compile("(?P<version>}d{1,2})")
     else:
         IS_OK = re.compile("(?P<browser>Firefox|Chrome)/(?P<version>\d{2})")
-    MIN_VERSION_FF = 19
-    MIN_VERSION_CHROME = 20
+    MIN_VERSION_FF = 16
+    MIN_VERSION_CHROME = 14
     
     def process_view(self, request, view_func, view_args, view_kwargs):
         logger = logging.getLogger(__name__)

@@ -10,8 +10,6 @@
 {% block pageID %}help{% endblock %}
 
 {% block non_interactive_content %}
-<!-- If one warning is present, it will push the content wrapper below the footer, making parts of it inaccessible. -->
-{% include "javascript-warning.html" %}
 <nav id="help-navigation">
 	<a class="mp-active-link" href="#mp-project-introduction" name="introduction">{% trans "Introduction" %}</a>
 	<a href="#mp-tutorial" name="tutorial">{% trans "Tutorial" %}</a>

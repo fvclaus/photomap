@@ -22,7 +22,7 @@ def contact(request):
                                          form.cleaned_data["email"],
                                          form.cleaned_data["message"])
                 # This almost never fails.
-                mail_managers(form.cleaned_data["subject"],
+                mail_managers("%s: %s" % ("Contact", form.cleaned_data["subject"]),
                           message)
                 return redirect("/contact/complete/") 
             except Exception, e:

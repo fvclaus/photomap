@@ -117,7 +117,7 @@ define(["dojo/_base/declare"],
             return this.models.indexOf(model);
          },
          /**
-          * @description Sorts the models by the property given in options.orderBy. If this options is undefined or null, the models won't be sorted!
+          * @description Sorts the models by the property given in options.orderBy. If this.options is undefined or null, the models won't be sorted!
           */
          sort : function () {
             var instance = this;
@@ -299,9 +299,9 @@ define(["dojo/_base/declare"],
             do {
                i--;
                currentOrder = this.getByIndex(i)[this.options.orderBy];
-               if (currentOrder === newOrder) {
-                  throw new Error("OrderDuplicationError");
-               }
+               // if (currentOrder === newOrder) {
+               //    throw new Error("OrderDuplicationError");
+               // }
             } while (newOrder < currentOrder);
             
             return i + 1;
