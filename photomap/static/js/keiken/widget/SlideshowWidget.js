@@ -19,8 +19,8 @@ define(["dojo/_base/declare",
         "dojo/text!./templates/Slideshow.html",
         "dojo/i18n",
         "dojo/i18n!./nls/Slideshow"],
-       function (declare, SinglePhotoWidget, Photo, communicator, tools, InfoText, template, i18n) {
-          return declare([SinglePhotoWidget], {
+       function (declare, OnePhotoPerPageWidget, Photo, communicator, tools, InfoText, template, i18n) {
+          return declare([OnePhotoPerPageWidget], {
              templateString : template,
 
              viewName : "Slideshow",

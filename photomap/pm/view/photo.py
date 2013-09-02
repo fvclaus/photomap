@@ -122,7 +122,7 @@ def insert(request):
         photo.save()
         logger.debug("Photo %d inserted with order %d and size %d." % (photo.pk, photo.order, photo.size))
         
-        response = success(id = photo.id, photo = photo.getphotourl(), thumb = photo.getthumburl(), url = photo.getphotourl())
+        response = success(id = photo.id, photo = photo.getphotourl(), thumb = photo.getthumburl(), url = photo.getphotourl(), order = nphotos)
         set_cookie(response, "used_space", userprofile.used_space)
         return response
     else:

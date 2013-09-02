@@ -48,7 +48,7 @@ define([
             
             dialog.show({
                load : function () {
-                  $("#insert-photo-tabs").tabs();
+                  // $("#insert-photo-tabs").tabs();
                   dialog.setInputValue("place", place.getId());
                   //start the editor
                   dialog.startPhotoEditor();

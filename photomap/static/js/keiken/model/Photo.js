@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, define */
+/*global $, main, define, assertTrue */
 
 "use strict";
 
@@ -47,6 +47,7 @@ define(["dojo/_base/declare",
                 return Number(this.id).toString();
              },
              save : function (newData) {
+                assertTrue(typeof newData === "object" && newData !== null, "Must provide data to update.");
                 var instance = this,
                    settings = {
                       url: "/" + this.type.toLowerCase() + "/",
@@ -56,10 +57,11 @@ define(["dojo/_base/declare",
                       success: function (data, status, xhr) {
                          if (data.success) {
                             instance._trigger("success", [data, status, xhr]);
-                            instance._setProperties(data);
                             if (instance.id > -1) {
+                               instance._setProperties(data);
                                instance._trigger("updated", instance);
                             } else {
+                               instance._setProperties(data);
                                //set id, photo and thumb of the new Photo
                                instance._trigger("inserted", instance);
                             }

@@ -59,8 +59,10 @@ class PhotoControllerTest(ApiTestCase):
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
         self.assertEqual(photo.order, 2)
+        self.assertPublicAccess(content["thumb"])
         self.assertPublicAccess(content["url"])
         self.assertThumbSize(content["thumb"])
+        self.assertEqual(content["order"], 2)
         self.assertEqual(photo.size, self._get_photo_size())
         self.assertEqual(self.userprofile.used_space, 4 * 164898 + self._get_photo_size())
         #=======================================================================
@@ -73,6 +75,8 @@ class PhotoControllerTest(ApiTestCase):
         self.assertEqual(photo.order, 3)
         self.assertEqual(photo.size, self._get_photo_size())
         self.assertPublicAccess(content["url"])
+        self.assertPublicAccess(content["thumb"])
+        self.assertEqual(content["order"], 3)
         self.assertThumbSize(content["thumb"])
         self.assertEqual(self.userprofile.used_space, 4 * 164898 + 2 * self._get_photo_size())
         #=======================================================================

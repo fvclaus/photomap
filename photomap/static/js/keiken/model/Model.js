@@ -23,7 +23,6 @@ define(["dojo/_base/declare"],
             }
             // reading from input elements will return '' if nothing has been entered
             this.description = (data.description === "") ? null : data.description;
-            this.assertValidity();
          },
          /**
           * @description sets any attribute of the model to the 

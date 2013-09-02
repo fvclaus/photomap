@@ -267,6 +267,11 @@ define(["dojo/_base/declare"],
                   instance._trigger("success", [data, status, xhr]);
                   
                   // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true                     // for development it is needed though to assure that the new IDU-Design works
+                  // if (model.assertValidity()) {
+                  //    instance.insert(model);
+                  // }
+               })
+               .onInsert(function (model) {
                   if (model.assertValidity()) {
                      instance.insert(model);
                   }

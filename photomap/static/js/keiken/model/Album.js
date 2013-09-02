@@ -20,7 +20,7 @@ define(["dojo/_base/declare",
          constructor : function (data) {
          
             this.type = 'Album';
-            this.owner = data.isOwner || false;
+            this.owner = (typeof data.isOwner === "boolean")? data.isOwner : false;
             this.secret = data.secret || "";
             
             var places = [],
