@@ -110,8 +110,8 @@ def insert(request):
         # add order 
         #===================================================================
         photo = form.save(commit = False)
-        nphotos = len(Photo.objects.all().filter(place = photo.place))
-        photo.order = nphotos
+#        nphotos = len(Photo.objects.all().filter(place = photo.place))
+        photo.order = 0
         #===================================================================
         # add size
         #===================================================================
@@ -122,7 +122,7 @@ def insert(request):
         photo.save()
         logger.debug("Photo %d inserted with order %d and size %d." % (photo.pk, photo.order, photo.size))
         
-        response = success(id = photo.id, photo = photo.getphotourl(), thumb = photo.getthumburl(), url = photo.getphotourl(), order = nphotos)
+        response = success(id = photo.id, photo = photo.getphotourl(), thumb = photo.getthumburl(), url = photo.getphotourl(), order = photo.order)
         set_cookie(response, "used_space", userprofile.used_space)
         return response
     else:

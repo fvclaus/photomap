@@ -210,35 +210,46 @@ define([
          },
          _openPhotosUpdateDialog : function (photos) {
             var instance = this;
-            this.publish("load:dialog", {
-               load : function () {
-                  $("input[name='photos']").val(JSON.stringify(photos));
-               },
-               success : function () {
+            dialog.show({
+               submit : function () {
                   var place = map.getOpenedMarker().getModel();
-                  // update the 'real' photo order
-                  photos.forEach(function (photo, index) {
-                     place.getPhoto(photo.photo).order = photo.order;
-                     console.log("Update order of photo %d successful.", index);
+                  $.ajax({
+                     type : "POST",
+                     dataType : "json",
+                     data : {
+                        "photos" : JSON.stringify(photos)
+                     },
+                     success : function (response) {
+                        dialog.showResponseMessage(response);
+                        // update the 'real' photo order
+                        photos.forEach(function (photo, index) {
+                           place.getPhotos().get(photo.id).set("order", photo.order);
+                           console.log("AppModelController: Update order of photo %d successful.", index);
+                        });
+                        
+                        console.log("AppModelController: All Photos updated. Updating photo widgets.");
+                        place.getPhotos().sort();
+                        
+                        photos = place.getPhotos().getAll();
+                        
+                        gallery.update(photos);
+                        slideshow.update(photos);
+                        adminGallery.refresh();
+                        slideshow.update(photos);
+                     },
+                     error : function () {
+                        dialog.showNetworkError();
+                     },
+                     url : "/photos"
                   });
-                  
-                  console.log("All Photos updated. Updating Gallery.");
-                  place.sortPhotos();
-                  
-                  photos = place.getPhotos().getAll();
-                  gallery.restart(photos);
-                  if (slideshow.isStarted()) {
-                     slideshow.restart(photos);
-                  }
                },
                abort : function () {
-                  console.log("UIFullGallery: Aborted updating order. Restoring old order");
                   instance.publish("abort:photoOrder");
                   //TODO this could be done better
                   adminGallery.refresh();
                },
                type : CONFIRM_DIALOG,
-               url : "/update-photos"
+               url : "/form/update/photos"
             });
          }
       });

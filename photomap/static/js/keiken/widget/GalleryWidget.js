@@ -118,12 +118,6 @@ define(["dojo/_base/declare",
                    this._showHelpText();
                 }
              },
-             /* 
-              * @description Restarts the slideshow if for example the photo order was changed.
-              */
-             restart : function (photos) {
-                this.carousel.update(photos);
-             },
              /**
               * @deprecated Use navigateTo instead.
               */

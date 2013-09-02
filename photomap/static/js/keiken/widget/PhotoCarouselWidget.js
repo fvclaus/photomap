@@ -71,8 +71,10 @@ define(["dojo/_base/declare",
              },
              update : function (photos) {
                 this.dataPage.update(photos);
-                this.currentPage = this.dataPage.getPage("current");
-                this._load();
+                if (this.isStarted) {
+                   this.currentPage = this.dataPage.getPage("current");
+                   this._load();
+                }
              },
              /**
               * @description Starts the carousel by loading the first or the requested page
@@ -435,7 +437,7 @@ define(["dojo/_base/declare",
                 if (photos.length > 0) {
                    this.carouselAnimation.start({
                       items: instance.$photos.slice(from, to),
-                      loader: this.options.loader,
+                      loader: this.options.loader.slice(from, to),
                       animation: this.options.effect,
                       animationTime: this.options.duration,
                       complete : loadPhotos

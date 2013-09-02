@@ -188,7 +188,8 @@ define(["dojo/_base/declare",
                             $currentTile = instance.$photoContainer.find('img[data-keiken-id="' + photo.id + '"]').parent();
                             // make a deep copy
                             jsonPhoto = $.extend(true, {}, photo);
-                            jsonPhoto.order = instance.$photoContainer.children().index($currentTile);
+                            // Reverse sorting
+                            jsonPhoto.order = (photos.length - 1) - instance.$photoContainer.children().index($currentTile);
                             console.log("Changing order of Photo %s from %d to %d", photo.title, photo.order, jsonPhoto.order);
                             jsonPhotos.push(jsonPhoto);
                             // when all photos with new order are in jsonPhotos, save the order

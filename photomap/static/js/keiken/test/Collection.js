@@ -38,6 +38,16 @@ define([
          }
          QUnit.ok(isRising);
       }
+      function assertFallingValues(array) {
+         var i, isFalling = true;
+         for (i = 0; i < array.length; i++) {
+            if (array[i] <= array[i + 1]) {
+               isFalling = false;
+               break;
+            }
+         }
+         QUnit.ok(isFalling);
+      }
       function getOrders(arrayOfPhotos) {
          var orders = [];
          arrayOfPhotos.forEach(function (photo) {
@@ -48,22 +58,22 @@ define([
       }
       
       var collection,
-         testFixture = new TestFixture(),
-         idPhoto1 = 539,
-         orderPhoto1 = 500,
-         photo1,
-         idPhoto2 = 987,
-         orderPhoto2 = 800,
-         photo2,
-         idPhoto3 = 1726,
-         photo3,
-         titlePhoto2 = "No title.",
-         indexPhoto2,
-         nPhotos = 1 + parseInt(Math.random() * 10, 10),
-         photos,
-         photoOrders = getShuffledIntegerArray(nPhotos),
-         photoCollection,
-         i;
+          testFixture = new TestFixture(),
+          idPhoto1 = 539,
+          orderPhoto1 = 500,
+          photo1,
+          idPhoto2 = 987,
+          orderPhoto2 = 800,
+          photo2,
+          idPhoto3 = 1726,
+          photo3,
+          titlePhoto2 = "No title.",
+          indexPhoto2 = 0,
+          nPhotos = 1 + parseInt(Math.random() * 10, 10),
+          photos,
+          photoOrders = getShuffledIntegerArray(nPhotos),
+          photoCollection,
+          i;
       
       module("Collection", {
          setup: function () {
@@ -72,7 +82,7 @@ define([
             photo3 = testFixture.getRandomPhoto(idPhoto3);
             photo2.title = titlePhoto2;
             photos = testFixture.getRandomPhotos(nPhotos);
-            indexPhoto2 = photos.push(photo2) - 1;
+            photos.push(photo2);
             for (i = 0; i < nPhotos; i++) {
                photos[i].order = photoOrders[i];
             }
@@ -91,7 +101,7 @@ define([
       // test 1 - sorting upon creation
       QUnit.test("initial sorting", 1, function () {
          // Collections should get sorted upon creation
-         assertRisingValues(getOrders(photoCollection.getAll()));
+         assertFallingValues(getOrders(photoCollection.getAll()));
       });
       // test 2 - manual sorting
       QUnit.test("manual sorting", 1, function () {
@@ -101,7 +111,7 @@ define([
          });
          // test sorting again
          photoCollection.sort();
-         assertRisingValues(getOrders(photoCollection.getAll()));
+         assertFallingValues(getOrders(photoCollection.getAll()));
       });
       // test 3 - accessor methods
       QUnit.test("accessor methods", 9, function () {
@@ -116,22 +126,19 @@ define([
          QUnit.equal(photoCollection.size(), nPhotos + 1, "testing Collection.size (should return amount of models in the collection)");
       });
       //test 4 - insert
-      QUnit.test("insert", 6, function () {
+      QUnit.test("insert", 5, function () {
          QUnit.throws(function () {
             photoCollection.insert(photo2);
          }, /ModelDuplicationError/, "testing if Collection throws error when the inserted model already exists in the collection (models have to be unique)");
-         QUnit.throws(function () {
-            photoCollection.insert(photo3);
-         }, /OrderDuplicationError/, "testing if Collection throws error when the inserted model has the same order as an existing model (in case the Collection.options.orderBy is defined)");
          $(photoCollection).on("inserted", function () {
             QUnit.ok(1, "testing if 'inserted' is triggered after insert");
          });
          photoCollection.insert(photo1);
          QUnit.equal(photoCollection.get(idPhoto1), photo1, "testing if model is in Collection after insert");
          // photo1 should be the second last model -> should have index equal to nPhotos
-         QUnit.equal(photoCollection.has(idPhoto1), nPhotos, "testing if model is inserted at the correct index in case Collection.options.orderBy is defined");
+         QUnit.equal(photoCollection.has(idPhoto1), 1, "testing if model is inserted at the correct index in case Collection.options.orderBy is defined");
          // doublecheck: test again whether the Collection still is in order
-         assertRisingValues(getOrders(photoCollection.getAll()));
+         assertFallingValues(getOrders(photoCollection.getAll()));
       });
       // test 5 - delete
       QUnit.test("delete", 3, function () {
@@ -199,5 +206,16 @@ define([
          $(photoCollection).trigger("inserted", photo2);
          $(photo2).trigger("updated", photo2);
          $(photo2).trigger("deleted", photo2);
+      });
+
+      // Bug: _getCorrectIndex assumed that modelList was not empty.
+      QUnit.test("emptyCollection", function () {
+         photoCollection = new Collection([], {
+            modelConstructor : Photo,
+            orderBy :  "order",
+            modelType : "photo"
+         });
+         photoCollection.insert(photo2);
+         QUnit.ok(photoCollection.getByIndex(0) !== undefined);
       });
    });

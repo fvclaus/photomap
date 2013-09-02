@@ -75,13 +75,6 @@ define(["dojo/_base/declare",
                    this.updateMessage();
                 }
              },
-             /* 
-              * @presenter
-              * @description Restarts the slideshow if for example the photo order was changed. E.g. before load() and run()
-              */
-             restart : function (photos) {
-                this.carousel.update(photos);
-             },
              /*
               * @presenter
               * @description Shows or hides information message, regarding the usage.
@@ -111,7 +104,7 @@ define(["dojo/_base/declare",
               * @description Executed after photo is updated (=displayed)
               */
              _update : function ($photoSuccess, $photoError) {
-                console.log("_update");
+                console.log("SlideshowWidget: _update");
                 this._findCurrentPhoto();
                 // deleted last photo
                 if (this.currentPhoto  === null) {
@@ -125,6 +118,8 @@ define(["dojo/_base/declare",
                 }
                 // The communicator event should be published when there really is some movement, e.g. the Widget navigates to another photo.
                 // It should not be published, when only the photo number was updated, e.g. a photo before or after the current one gets deleted or a new photo is inserted.
+                //TODO This is an hack. Think of something better.
+                //E.g. This also happens when deleting a photo, but(!) because the Gallery is on the same page, it does not move.
                 if ($photoSuccess.size() + $photoError.size() === 1) {
                    communicator.publish("updated:Slideshow", this.currentPhoto);
                 }
