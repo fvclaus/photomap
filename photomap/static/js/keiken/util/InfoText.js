@@ -51,6 +51,8 @@ define(["dojo/_base/declare"],
                this.$infoText.find("span").html(this.message);
                this._bindListener();
                this._position();
+               this._resize();
+               this._bindResizeListener();
                this.started = true;
             }
             
@@ -211,6 +213,19 @@ define(["dojo/_base/declare"],
                "top" : top,
                "left": left,
                "z-index": zIndex + 1
+            });
+         },
+         _resize : function () {
+            this.$infoText.css({
+               "maxWidth" : this.$container.outerWidth(),
+               "maxHeight": this.$container.outerHeight()
+            });
+         },
+         _bindResizeListener : function () {
+            var instance = this;
+            $(window).on("resize", function () {
+               instance._position();
+               instance._resize();
             });
          },
          _bindAlertListener : function () {

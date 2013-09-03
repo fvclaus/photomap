@@ -40,7 +40,9 @@
 <form class="mp-form" id="mp-contact" method="post">
   <h2>{% trans "Contact Form" %}</h2>
   <!-- network error during mail delivery, etc.. -->
-  {{ form.non_field_errors}}
+  <p class="mp-form-errors">
+    {{ form.non_field_errors}}
+  </p>
   <p>
     <label for="contactform-name">{% trans "NAME" %}
       <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup>

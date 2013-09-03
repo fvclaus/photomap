@@ -16,7 +16,9 @@
 <form class="mp-form" method="POST" action="">
   <h2>{% trans "Delete Form" %}</h2>
   <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-  {{ form.non_field_errors }}
+  <p class="mp-form-errors">
+    {{ form.non_field_errors}}
+  </p>
   <p>
     <label for="user-email">{% trans "Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
     <input type="email" name="user_email" id="user-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required value="{{ form.data.user_email }}"/>
