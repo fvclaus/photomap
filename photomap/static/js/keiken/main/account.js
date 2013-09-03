@@ -17,7 +17,7 @@ $(document).ready(function () {
    $("#mp-user-free-space").text(spaceUsage[2]);
    
    // show correct update-form on demand
-   $("#mp-account-settings-options a").on("click", function (event) {
+   $("#mp-account-settings-options a").not("#delete-account-link").on("click", function (event) {
       event.preventDefault();
       
       var $formWrapper = $($(this).attr("href")),

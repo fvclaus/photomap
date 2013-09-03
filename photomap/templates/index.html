@@ -56,42 +56,12 @@
     <span id="mp-switch-to-login" class="mp-nodisplay"><a href="#mp-login">{% trans "Login" %}?</a></span>
   </div>
   <div class="mp-login-tab" id="mp-login">
-    <h2>{% trans "Login" %}</h2>
     <!-- action is necessary because this template is also populated by /test -->
     {% include "login-form.html" %}
-    <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
   </div>
   
   <div class="mp-login-tab mp-nodisplay" id="mp-register">
-    <h2>{% trans "Registration" %}</h2>
     {% include "registration-form.html" %}
-    <!-- action is necessary because this template is also populated by /test -->
-    <!-- <form class="mp-form" action="/account/registration/" method="post"> -->
-    <!--   {{ registration_form.as_p }} -->
-      <!-- <p> -->
-      <!--   <label for="register_first_name">{% trans "First name" %}:</label> -->
-      <!--   <input type="text" name="first_name" id="register_first_name" autofocus="autofocus" /> -->
-      <!-- </p> -->
-      <!-- <p> -->
-      <!--   <label for="register_last_name">{% trans "Last name" %}:</label> -->
-      <!--   <input type="text" name="last_name" id="register_last_name" /> -->
-      <!-- </p> -->
-      <!-- <p> -->
-      <!--   <label for="register_email">{% trans "Email" %}:</label> -->
-      <!--   <input type="text" name="email" id="register_email" /> -->
-      <!-- </p> -->
-      <!-- <p> -->
-      <!--   <label for="register_password">{% trans "Password" %}:</label> -->
-      <!--   <input type="password" name="password" id="register_password" /> -->
-      <!-- </p> -->
-      <!-- <p> -->
-      <!--   <label for="id_confirm">{% trans "Confirm Password" %}:</label> -->
-      <!--   <input type="password" name="confirm" id="register_confirm" /> -->
-      <!-- </p>  -->
-    <!--   <p> -->
-    <!--     <input class="mp-landingpage-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' /> -->
-    <!--   </p> -->
-    <!-- </form> -->
   </div>
 </section>
 
