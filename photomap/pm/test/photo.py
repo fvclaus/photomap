@@ -58,9 +58,11 @@ class PhotoControllerTest(ApiTestCase):
         self._openphoto(data)
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.title, data["title"])
-        self.assertEqual(photo.order, 2)
-        self.assertPublicAccess(content["url"])
+        self.assertEqual(photo.order, 0)
+        self.assertPublicAccess(content["thumb"])
+        self.assertPublicAccess(content["photo"])
         self.assertThumbSize(content["thumb"])
+        self.assertEqual(content["order"], 0)
         self.assertEqual(photo.size, self._get_photo_size())
         self.assertEqual(self.userprofile.used_space, 4 * 164898 + self._get_photo_size())
         #=======================================================================
@@ -70,9 +72,11 @@ class PhotoControllerTest(ApiTestCase):
         data["description"] = u'Some text,text,... Testing some umlauts äüö and other special characters 晚上好 <javascript></javascript>'
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
-        self.assertEqual(photo.order, 3)
+        self.assertEqual(photo.order, 0)
         self.assertEqual(photo.size, self._get_photo_size())
-        self.assertPublicAccess(content["url"])
+        self.assertPublicAccess(content["photo"])
+        self.assertPublicAccess(content["thumb"])
+        self.assertEqual(content["order"], 0)
         self.assertThumbSize(content["thumb"])
         self.assertEqual(self.userprofile.used_space, 4 * 164898 + 2 * self._get_photo_size())
         #=======================================================================

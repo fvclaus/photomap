@@ -27,6 +27,8 @@
 
 {% block background_image %}{% endblock %}
 <section class="mp-non-interactive-content span-16" id="mp-non-interactive-content">
+  <!-- If one warning is present, it will push the content wrapper below the footer, making parts of it inaccessible. -->
+  {% include "warnings.html" %}
   {% block non_interactive_content %}
   {% endblock %}
 </section>

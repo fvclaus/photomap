@@ -19,7 +19,7 @@
     <meta property="og:type" content="website" />
     <meta property="og:image" content="http://www.keiken.de/static/images/icon.png" />
     <meta property="og:url" content="http://www.keiken.de" />
-    <meta property="og:description" content="{{ KEIKEN_SHORT }}" />
+    <meta property="og:description" content="{% trans 'KEIKEN_SHORT' %}"/>
     
     <!-- used for google verification, linking keiken search results to keiken-google+ page and to generally improve search results -->
     <meta name="google-site-verification" content="FfCsCzP68IIoV3bVbLsDAUoeUHBXQZl2EvbOD942AnE" />
@@ -43,7 +43,7 @@
     {% compress js %}
     <script type="text/javascript" src="/static/js/lib/noconsole.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery-1.7.2.js"></script>
-    <script type="text/javascript" src="/static/js/lib/flexie.min.js"></script>
+
     <script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
     <script type="text/javascript" src="/static/js/lib/jquery.cookie.js" ></script>
@@ -53,6 +53,7 @@
     <!-- <script type="text/javascript" src="/static/js/lib/ie.js" ></script> -->
     <!-- FF 4+ and Chrome 7+  support FormData -->
     <!-- <script type="text/javascript" src="/static/js/lib/formdata.js"></script> -->
+    <!-- <script type="text/javascript" src="/static/js/lib/flexie.min.js"></script> -->
     <!-- This is necessary for all side pages. -->
     <script type="text/javascript" src="/static/js/lib/html5shiv.js"></script>
 

@@ -117,7 +117,7 @@ define(["dojo/_base/declare"],
             return this.models.indexOf(model);
          },
          /**
-          * @description Sorts the models by the property given in options.orderBy. If this options is undefined or null, the models won't be sorted!
+          * @description Sorts the models by the property given in options.orderBy. If this.options is undefined or null, the models won't be sorted!
           */
          sort : function () {
             var instance = this;
@@ -126,8 +126,8 @@ define(["dojo/_base/declare"],
                return false;
             }
             
-            this.models.sort(function (model, copy) {
-               return model[instance.options.orderBy] - copy[instance.options.orderBy];
+            this.models.sort(function (a, b) {
+               return b[instance.options.orderBy] - a[instance.options.orderBy];
             });
             return true;
          },
@@ -267,6 +267,11 @@ define(["dojo/_base/declare"],
                   instance._trigger("success", [data, status, xhr]);
                   
                   // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true                     // for development it is needed though to assure that the new IDU-Design works
+                  // if (model.assertValidity()) {
+                  //    instance.insert(model);
+                  // }
+               })
+               .onInsert(function (model) {
                   if (model.assertValidity()) {
                      instance.insert(model);
                   }
@@ -283,23 +288,30 @@ define(["dojo/_base/declare"],
          },
          _getCorrectIndex : function (model) {
             
-            var i = this.size(),
+            var index = this.size(),
                newOrder = model.getOrder(),
                currentOrder;
-            
-            if (!this.options.orderBy) {
-               return i;
+
+            if (!this.options.orderBy || index === 0) {
+               return index;
             }
             
-            do {
-               i--;
-               currentOrder = this.getByIndex(i)[this.options.orderBy];
-               if (currentOrder === newOrder) {
-                  throw new Error("OrderDuplicationError");
-               }
-            } while (newOrder < currentOrder);
+            // do {
+            //    i--;
+            //    currentOrder = this.getByIndex(i)[this.options.orderBy];
+            //    // if (currentOrder === newOrder) {
+            //    //    throw new Error("OrderDuplicationError");
+            //    // }
+            // } while (newOrder <= currentOrder);
             
-            return i + 1;
+            // return i + 1;
+            for (index = this.size() - 1; index >= 0; index--) {
+               currentOrder = this.getByIndex(index)[this.options.orderBy];
+               if (newOrder <= currentOrder) {
+                  return index + 1;
+               }
+            }
+            return 0;
          },
          _bindModelListener : function (models) {
             var instance = this;

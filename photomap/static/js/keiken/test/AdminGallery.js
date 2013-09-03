@@ -88,9 +88,9 @@ define(["dojo/_base/declare",
                                                   photos.forEach(function (photo, index) {
                                                      QUnit.ok(photo.order > -1);
                                                      if (index === 0) {
-                                                        QUnit.ok(photo.order === 1);
+                                                        QUnit.ok(photo.order === 18);
                                                      } else if (index === 1) {
-                                                        QUnit.ok(photo.order === 0);
+                                                        QUnit.ok(photo.order === 19);
                                                      }
                                                   });
                                                   QUnit.start();

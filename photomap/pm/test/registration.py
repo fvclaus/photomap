@@ -65,4 +65,4 @@ class RegistrationViewTest(ApiTestCase):
         response = self.request("/account/activate/%s/" % ACTIVATION_KEY)
         user = User.objects.get(username = "test2@keiken.de")
         self.assertFalse(user.is_active)
-        
+                

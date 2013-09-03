@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main, assertNumber, assertString, assertTrue */
+/*global $, define, main, assertNumber, assertString, assertFalse, assertTrue */
 
 "use strict";
 
@@ -28,14 +28,9 @@ define(["dojo/_base/declare"],
           * @description sets any attribute of the model to the 
           */
          set : function (name, value) {
-            if (name === "id" || name === "type") {
-               throw new Error("RequestNotAllowedError");
-            }
-            if (this.hasOwnProperty(name)) {
-               this[name] = value;
-            } else {
-               throw new Error("UnknownAttributeError");
-            }
+            assertFalse(name === "id" || name === "type", "Id or type must be set upon construction.");
+            assertTrue(this.hasOwnProperty(name), "Cannot set _builtin properties.");
+            this[name] = value;
          },
          getTitle : function () {
             return this.title;

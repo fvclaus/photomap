@@ -9,10 +9,8 @@
  */
 
 define(["dojo/_base/declare",
-        "dojo/date",
-        "./Communicator",
-        "./Tools"],
-       function (declare, date, communicator, tools) {
+        "dojo/date"],
+       function (declare, date) {
       var ClientState = declare(null,  {
          constructor : function () {
             this.visitedCookie = $.cookie("visited") || "";
@@ -32,7 +30,7 @@ define(["dojo/_base/declare",
          getDialogAutoClose : function () {
             return this.read("DialogMessage", "dialogAutoClose", false);
          },
-         setDialogAutoClose : function (autoClose) {
+          setDialogAutoClose : function (autoClose) {
             this.write("DialogMessage", "dialogAutoClose", autoClose);
          },
          isVisitedPhoto : function (photo) {
@@ -48,16 +46,22 @@ define(["dojo/_base/declare",
             }
          },
          getUsedSpace : function () {
-            return this._bytesToMbyte($.cookie("used_space"));
+            return this._bytesToMByte($.cookie("used_space"));
          },
          getLimit : function () {
-            return this._bytesToMbyte($.cookie("quota"));
+            return this._bytesToMByte($.cookie("quota"));
          },
          write : function (ns, key, value) {
-            var data = $.cookie(ns);
+            var jsonData = $.cookie(ns),
+                data = null;
             
-            if (data === null) {
-               console.log("Ns %s does not exist. Creating a new one", ns);
+            try {
+               data = JSON.parse(jsonData);
+            } catch (parseError) {
+               console.log("ClientState: Ns %s seems to have invalid data %s.", ns, data);
+            }
+
+            if (typeof data !== "object" || data === null) {
                data = {};
             }
             
@@ -66,11 +70,11 @@ define(["dojo/_base/declare",
             try {
                data = JSON.stringify(data);
             } catch (stringifyError) {
-               console.log("Could not stringify value %s. Received error %s.", value, stringifyError.toString());
+               console.log("ClientState: Could not stringify value %s. Received error %s.", value, stringifyError.toString());
                return;
             }
             
-            console.log("Storing value %s in key %s in ns %s", value, key, ns);
+            console.log("ClientState: Storing value %s in key %s in ns %s", value, key, ns);
             $.cookie(ns, data, this._cookieSettings);
          },
          read : function (ns, key, defaultValue) {
@@ -79,12 +83,12 @@ define(["dojo/_base/declare",
             try {
                data = JSON.parse(data);
             } catch (parseError) {
-               console.log("Ns %s seems to have invalid data %s.", ns, data);
+               console.log("ClientState: Ns %s seems to have invalid data %s.", ns, data);
                return defaultValue;
             }
             
             if (data === null) {
-               console.log("Ns %s does not exist returing defaultValue %s", ns, defaultValue);
+               console.log("ClientState: Ns %s does not exist returing defaultValue %s", ns, defaultValue);
                return defaultValue;
             }
             
@@ -95,7 +99,14 @@ define(["dojo/_base/declare",
             }
          },
          _bytesToMByte : function (bytesAsString) {
-           return (parseFloat(bytesAsString) / Math.pow(2, 20)).toFixed(1).toString(); 
+            var mByte = null;
+            try {
+               mByte =  (parseFloat(bytesAsString) / Math.pow(2, 20)).toFixed(1).toString(); 
+            } catch (parseError) {
+               mByte = "NaN";
+               console.log("ClientState: Could not parse %s into MBytes.", bytesAsString);
+            }
+            return mByte;
          },
          /**
           * @description Takes current cookie, checks it for non-integer values, and rewrites cookie with just integer values.

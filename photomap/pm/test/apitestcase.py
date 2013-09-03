@@ -6,7 +6,7 @@ Created on Jul 8, 2012
 
 from django.test import TestCase
 from django.test.client import Client
-from data import TEST_PASSWORD, TEST_USER, TEST_EMAIL
+from data import ADMIN_PASSWORD, ADMIN_USER, ADMIN_EMAIL, TEST_USER, TEST_PASSWORD 
 
 import logging
 import json
@@ -36,9 +36,9 @@ class ApiTestCase(TestCase):
     
     def setUp(self):
         self.client = self.createClient()
-        self.TEST_EMAIL = TEST_EMAIL
-        self.TEST_PASSWORD = TEST_PASSWORD
-        self.assertTrue(self.client.login(username = TEST_USER, password = TEST_PASSWORD))
+        self.ADMIN_EMAIL = ADMIN_EMAIL
+        self.ADMIN_PASSWORD = ADMIN_PASSWORD
+        self.assertTrue(self.client.login(username = ADMIN_USER, password = ADMIN_PASSWORD))
         self.logger = ApiTestCase.logger
         # Delete all leftover mails
         self.read_and_delete_mails()
@@ -99,7 +99,7 @@ class ApiTestCase(TestCase):
         self.assertTrue(instance != None)
         return (instance, content)
     
-    def assertPublicAccess(self, url):
+    def assertPublicAccess(self, url, mime_type = "image/jpeg"):
         
         if url.startswith("/"):  
             c = self.createClient()
@@ -108,19 +108,28 @@ class ApiTestCase(TestCase):
         else:
             response = urlopen(url)
             code = response.getcode()
+            if mime_type:
+                self.assertEqual(response.headers.get("Content-Type"), mime_type)
             
         self.assertEqual(200, code)
         return response
-        
+    
+
     def assertNoPublicAccess(self, url):
         c = self.createClient()
         response = c.get(url)
         content = json.loads(response.content)
         self.assertFalse(content["success"])
         
-    def assertRedirectToComplete(self, response):
+    def assertRedirect(self, response):
         self.assertEqual(response.status_code, 302)
+        redirect_response = self.request(response.get("Location"), method = "GET")
+        self.assertEqual(redirect_response.status_code, 200)
+        
+    def assertRedirectToComplete(self, response):
         self.assertTrue(response.get("Location").find("complete") != -1)
+        self.assertRedirect(response)
+        
     
     def assertUpdates(self, data, model = None):
         if not model:
@@ -194,6 +203,10 @@ class ApiTestCase(TestCase):
         self.assertTrue(instance["id"])
         self.assertTrue(instance["description"])
         self.assertTrue(instance["date"])
+    
+    def login_test_user(self):
+        self.client.login(username = TEST_USER, password = TEST_PASSWORD)
+    
         
     def getmodel(self):
         if not self.model:
@@ -204,7 +217,7 @@ class ApiTestCase(TestCase):
     @property
     def user(self):
         # User could be modified during test cases
-        return User.objects.all().get(username = TEST_EMAIL)
+        return User.objects.all().get(username = ADMIN_EMAIL)
     
     @property
     def userprofile(self):
@@ -231,7 +244,7 @@ class ApiTestCase(TestCase):
             os.remove(path)
         return mails
         
-        
+    
     
     def request (self, url, data = {}, method = "POST", loggedin = True):
         if loggedin:

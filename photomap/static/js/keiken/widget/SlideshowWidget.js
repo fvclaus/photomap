@@ -19,8 +19,8 @@ define(["dojo/_base/declare",
         "dojo/text!./templates/Slideshow.html",
         "dojo/i18n",
         "dojo/i18n!./nls/Slideshow"],
-       function (declare, SinglePhotoWidget, Photo, communicator, tools, InfoText, template, i18n) {
-          return declare([SinglePhotoWidget], {
+       function (declare, OnePhotoPerPageWidget, Photo, communicator, tools, InfoText, template, i18n) {
+          return declare([OnePhotoPerPageWidget], {
              templateString : template,
 
              viewName : "Slideshow",
@@ -75,13 +75,6 @@ define(["dojo/_base/declare",
                    this.updateMessage();
                 }
              },
-             /* 
-              * @presenter
-              * @description Restarts the slideshow if for example the photo order was changed. E.g. before load() and run()
-              */
-             restart : function (photos) {
-                this.carousel.update(photos);
-             },
              /*
               * @presenter
               * @description Shows or hides information message, regarding the usage.
@@ -110,8 +103,8 @@ define(["dojo/_base/declare",
               * @private
               * @description Executed after photo is updated (=displayed)
               */
-             _update : function () {
-                console.log("_update");
+             _update : function ($photoSuccess, $photoError) {
+                console.log("SlideshowWidget: _update");
                 this._findCurrentPhoto();
                 // deleted last photo
                 if (this.currentPhoto  === null) {
@@ -123,8 +116,13 @@ define(["dojo/_base/declare",
                    // on the other events, beforeLoad & afterLoad, the photo src is not set yet
                    this._updatePhotoNumber();
                 }
-                communicator.publish("updated:Slideshow", this.currentPhoto);
-                this.setDisabled(false);
+                // The communicator event should be published when there really is some movement, e.g. the Widget navigates to another photo.
+                // It should not be published, when only the photo number was updated, e.g. a photo before or after the current one gets deleted or a new photo is inserted.
+                //TODO This is an hack. Think of something better.
+                //E.g. This also happens when deleting a photo, but(!) because the Gallery is on the same page, it does not move.
+                if ($photoSuccess.size() + $photoError.size() === 1) {
+                   communicator.publish("updated:Slideshow", this.currentPhoto);
+                }
              },
              /**
               * @private
@@ -136,7 +134,6 @@ define(["dojo/_base/declare",
                 // trigger event to tell UI that slideshow is about to change
                 // This will hide the detail view.
                 communicator.publish("beforeLoad:Slideshow");
-                this.setDisabled(true);
              },
              /**
               * @private

@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, define */
+/*global $, main, define, assertTrue */
 
 "use strict";
 
@@ -20,7 +20,7 @@ define(["dojo/_base/declare",
                 this.photo = data.photo;
                 this.thumb = data.thumb;
                 this.order = data.order;
-                this.visited = data.visited;
+                this.visited = (data.visited)? true : false;
              },
              getOrder : function () {
                 return this.order;
@@ -43,12 +43,11 @@ define(["dojo/_base/declare",
              isVisited : function () {
                 return this.visited;
              },
-             //TODO Every model has a method .getId() (and getter for all other properties too)-> this method is sort of obsolete..
              toString : function () {
-                //return this.id;
-                throw new Error("DoNotUseThisError");
+                return Number(this.id).toString();
              },
              save : function (newData) {
+                assertTrue(typeof newData === "object" && newData !== null, "Must provide data to update.");
                 var instance = this,
                    settings = {
                       url: "/" + this.type.toLowerCase() + "/",
@@ -59,10 +58,11 @@ define(["dojo/_base/declare",
                          if (data.success) {
                             instance._trigger("success", [data, status, xhr]);
                             if (instance.id > -1) {
+                               instance._setProperties(data);
                                instance._trigger("updated", instance);
                             } else {
-                               //set id, photo and thumb of the new Photo
                                instance._setProperties(data);
+                               //set id, photo and thumb of the new Photo
                                instance._trigger("inserted", instance);
                             }
                          } else {
@@ -99,7 +99,7 @@ define(["dojo/_base/declare",
                 formData.append('description', data.description);
                 formData.append('photo', data.photo);
                 
-                return formdata;
+                return formData;
              }
           });
        });

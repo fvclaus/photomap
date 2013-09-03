@@ -26,7 +26,7 @@ from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 
-from pm.form.account import UpdatePasswordForm, UpdateEmailForm, DeleteAccountForm, DeleteAccountReasonsForm
+from pm.form.account import UpdatePasswordForm, UpdateEmailForm, DeleteAccountForm, PasswordResetForm
 
 from message import success, error, request_fail_error, request_not_allowed_error
 
@@ -112,7 +112,9 @@ def delete(request):
     if request.method == "POST":
         user = request.user
         form = DeleteAccountForm(request.POST, auto_id = False)
-        if form.is_valid():
+        if is_test_user(request.user):
+            form.errors["__all__"] = form.error_class([_("REQUEST_NOT_ALLOWED")])
+        elif form.is_valid():
             user_id = user.id
             user_email = form.cleaned_data["user_email"]
             user_password = form.cleaned_data["user_password"]
@@ -137,7 +139,7 @@ def delete(request):
             
                 
 def is_test_user(user):
-    return user.email == settings.EMAIL_TEST_USER
+    return user.username == settings.EMAIL_TEST_USER
 
 
 def send_mail_to_user(user_email, subject, message):
@@ -165,11 +167,10 @@ def send_thankyou_mail(user_email, request):
 
 @csrf_protect
 def reset_password(request):
-    logger.debug("here")
     email = "email/reset-password-email.html"
     subject = "email/reset-password-subject.txt"
-    redirect_to = "/account/password/reset/requested"
-    return password_reset(request, template_name = "account/reset-password.html", email_template_name = email, subject_template_name = subject, post_reset_redirect = redirect_to)
+    redirect_to = "/account/password/reset/requested" 
+    return password_reset(request, template_name = "account/reset-password.html", email_template_name = email, password_reset_form = PasswordResetForm, subject_template_name = subject, post_reset_redirect = redirect_to)
 
 def reset_password_requested(request):
     return render_to_response("account/reset-password-requested.html", context_instance = RequestContext(request))

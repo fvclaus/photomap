@@ -88,6 +88,12 @@ define(["dojo/_base/declare",
                 // initialize carousel
                 this.carousel.start(photo);
              },
+             /* 
+              * @description Updates the widget with new photos. It will only refresh, if it has been started already.
+              */
+             update : function (photos) {
+                this.carousel.update(photos);
+             },
              /**
               * @public
               * @description Inserts a new Photo. This will not move the Carousel or do anything else.

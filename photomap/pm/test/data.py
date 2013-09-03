@@ -8,9 +8,20 @@ import os
 from django.conf import settings
 from decimal import Decimal
 
-TEST_USER = "admin@keiken.de"
-TEST_PASSWORD = "admin"
-TEST_EMAIL = "admin@keiken.de"
+#===============================================================================
+# Admin credentials
+#===============================================================================
+ADMIN_USER = "admin@keiken.de"
+ADMIN_PASSWORD = "admin"
+ADMIN_EMAIL = "admin@keiken.de"
+
+#===============================================================================
+# Test user credentials
+#===============================================================================
+TEST_USER = "test@keiken.de"
+TEST_PASSWORD = "test"
+
+
 TEST_PHOTO = os.path.join(settings.TEST_PATH, "test.jpeg")
 TEST_PHOTO_WATER = os.path.join(settings.TEST_PATH, "water.jpeg")
 TEST_PHOTO_MOUNTAIN = os.path.join(settings.TEST_PATH, "mountain.jpeg")
