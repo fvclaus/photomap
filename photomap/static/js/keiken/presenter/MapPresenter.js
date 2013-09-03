@@ -176,6 +176,9 @@ define([
          showAll : function () {
             this._fitMapToMarkers(this.markerModelCollection.getAll());
          },
+         showWorld : function () {
+            this.view.showWorld();
+         },
          /* ----------------------------------- */
          /* --------- private methods --------- */
          _setMapMessage : function (albumview, admin) {

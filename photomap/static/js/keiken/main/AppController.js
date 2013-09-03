@@ -240,8 +240,6 @@ define([
                album = state.getAlbums().get(newState.album);
                if (album) {
                   map.updateMarkerStatus(album, "select");
-               } else if (newState.album) {
-                  this.infoText.alert(gettext("INVALID_SELECTED_ALBUM"));
                } else if (!newState.album) {
                   map.resetSelectedMarker();
                }

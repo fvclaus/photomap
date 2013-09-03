@@ -10,8 +10,8 @@ define([
 ],
    function (declare, Presenter, communicator) {
       return declare (Presenter, {
-         constructor : function (isDashboard) {
-            this.isSLider = isDashboard;
+         constructor : function (view, isSlider) {
+            this.isSlider = isSlider;
          },
          hideDetail : function () {
             this.view.hideDetail();

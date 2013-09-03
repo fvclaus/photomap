@@ -180,7 +180,7 @@ define(["dojo/_base/declare"],
             } else {
                this.alertAttributes.$textContainer = $("<div id='mp-infoalert'><div><span></span></div></div>").appendTo("body");
             }
-            this.alertAttributes.$textContainer.append("<div id='mp-infotext-closing-help'>" + gettext("CLOSE_INFOTEXT_ALERT") + "</div>");
+            this.alertAttributes.$textContainer.append("<p id='mp-infotext-closing-help'>" + gettext("CLOSE_INFOTEXT_ALERT") + "</p>");
             this._bindAlertListener();
             this.alertAttributes.prepared = true;
          },

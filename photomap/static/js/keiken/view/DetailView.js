@@ -21,7 +21,7 @@ define([
 ],
    function (declare, View, Photo, Place, Album, DetailPresenter, communicator, tools) {
       return declare(View, {
-         constructor : function () {
+         constructor : function (isSlider) {
             this.$container = $("#mp-right-column");
             
             this.$explanationContainer = $("#mp-detail");
@@ -42,7 +42,7 @@ define([
             this.currentPlaceOrAlbum = null;
             this._bindListener();
             
-            this.presenter = new DetailPresenter(this);
+            this.presenter = new DetailPresenter(this, isSlider);
             
          },
          /**

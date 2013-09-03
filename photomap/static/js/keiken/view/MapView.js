@@ -179,6 +179,10 @@ define([
             }
             // fit these bounds to the map
             this.map.fitBounds(bounds);
+            
+            if (markersinfo.length < 2) {
+               this.map.setZoom(10);
+            }
          },
          getOverlay : function () {
             return this.overlay;
