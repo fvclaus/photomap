@@ -1,29 +1,35 @@
 {% load i18n %}
 <form id="mp-login-form" class="mp-form" action="/account/register/" method="post">
-    <p>
-      <label for="id_username">{% trans "Email" %}</label>
-      <input id="id_username" type="text" name="username" maxlength="30" required="required" /> 
-      <!-- <span class="helptext">Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</span> -->
-    </p>
-    <p>
-      <label for="id_password1">{% trans "Password" %}</label>
-      <input type="password" name="password1" id="id_password1" required=
-"required" />
-    </p>
-    <p>
-      <label for="id_password2">{% trans "Confirm Password" %}</label> 
-      <input type="password" name="password2" id="id_password2" required="required" /> 
-      <!-- <span class="helptext">Enter the same password as above, for verification.</span> -->
-    </p>
-    <p>
-      <label for="id_first_name">{% trans "First name" %}</label> 
-      <input id="id_first_name" type="text" name="first_name" maxlength="50" required="required" />
-    </p>
-    <p>
-      <label for="id_last_name">{% trans "Last name" %}</label> 
-      <input id="id_last_name" type="text" name="last_name" maxlength="50" required="required" />
-    </p>
-    <p>
-      <input class="mp-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' />
-    </p>
+  <h2>{% trans "Registration" %}</h2>
+  <div id="mp-form-errors">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {{ field.errors }}
+    {% endfor %}
+  </div>
+  <p>
+    <label for="id_username">{% trans "Email" %}</label>
+    <input id="id_username" type="text" name="username" maxlength="30" required="required" /> 
+    <!-- <span class="helptext">Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</span> -->
+  </p>
+  <p>
+    <label for="id_password1">{% trans "Password" %}</label>
+    <input type="password" name="password1" id="id_password1" required="required" />
+  </p>
+  <p>
+    <label for="id_password2">{% trans "Confirm Password" %}</label> 
+    <input type="password" name="password2" id="id_password2" required="required" /> 
+    <!-- <span class="helptext">Enter the same password as above, for verification.</span> -->
+  </p>
+  <p>
+    <label for="id_first_name">{% trans "First name" %}</label> 
+    <input id="id_first_name" type="text" name="first_name" maxlength="50" required="required" />
+  </p>
+  <p>
+    <label for="id_last_name">{% trans "Last name" %}</label> 
+    <input id="id_last_name" type="text" name="last_name" maxlength="50" required="required" />
+  </p>
+  <p>
+    <input class="mp-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' />
+  </p>
 </form>

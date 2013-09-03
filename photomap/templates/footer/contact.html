@@ -11,7 +11,9 @@
 
 {% block non_interactive_content %}
 
+<div id="left-column">
 <article>
+  <h2>{% trans "Contact Information" %}</h2>
   <div>
     <p>
       {% trans "contact form intro" %}
@@ -32,9 +34,11 @@
     </p>
   </div>
 </article>
+</div>
 
-
+<div id="right-column">
 <form class="mp-form" id="mp-contact" method="post">
+  <h2>{% trans "Contact Form" %}</h2>
   <!-- network error during mail delivery, etc.. -->
   {{ form.non_field_errors}}
   <p>
@@ -68,7 +72,9 @@
     <textarea name="message" id="contactform-message" required="required" rows="10">{{ form.data.message }} </textarea>
     {{ form.message.errors }}
   </p>
-  <p style="font-size: 0.8em; text-align: right;">{% trans "MANDATORY_FIELDS_NOTE" %}</p>
+  <p id="mandatory-note">{% trans "MANDATORY_FIELDS_NOTE" %}</p>
   <input type="submit" class="mp-form-submit" value="{% trans 'Senden' %}" />
 </form>
+</div>
+
 {% endblock %}

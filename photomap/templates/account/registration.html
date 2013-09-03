@@ -6,15 +6,10 @@
 {% block name %}{% trans "REGISTRATION" %}{% endblock %}
 
 {% block account_info %}
-<p>{% trans "REGISTRATION" %}</p>
+<h2>{% trans "Registration Information" %}</h2>
+<p>{% trans "REGISTRATION_INFO" %}</p>
 {% endblock %}
 
 {% block account_settings %}
-<div style="width:50%">
-  {{ form.non_field_errors }}
-  {% for field in form %}
-    {{ field.errors }}
-  {% endfor %}
   {% include "registration-form.html" %}
-</div>
 {% endblock %}

@@ -1,4 +1,4 @@
-{% extends "base-non-interactive.html" %}
+{% extends "account/base.html" %}
 
 <!-- for the translation with django -->
 {% load i18n %}
@@ -7,44 +7,50 @@
 
 {% block name %}{% trans "DELETE_ACCOUNT" %}{% endblock %}
 
-{% block non_interactive_content %}
+{% block account_info %}
+<h2>{% trans "Delete Account" %}</h2>
+<p>{% trans "DELETE_ACCOUNT_INFO" %}</p>
+{% endblock %}
 
-<div id="mp-account-settings" class="">
-  <p><strong>{% trans "DELETE_ACCOUNT_INFO" %}</strong></p>
-  <div style="width:50%">
-    <form class="mp-form" method="POST" action="">
-      <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
-      {{ form.non_field_errors }}
-      <p>
-        <label for="user-email">{% trans "Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
-        <input type="email" name="user_email" id="user-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required value="{{ form.data.user_email }}"/>
-        {{ form.user_email.errors }}
-
-      </p>
-      <p>
-        <label for="user-password">{% trans "Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
-        <input type="password" name="user_password" id="user-password" required="required" size="40" placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}" data-required value="{{ form.data.user_password }}"/>
-        {{ form.user_password.errors }}
-      </p>
-      <p>
-        <input id="cause_testing" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_TESTING' %}" />{% trans "DELETION_FORM_CAUSE_TESTING" %}<br />
-        <input id="cause_alternative" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_ALTERNATIVE' %}" />{% trans 'DELETION_FORM_CAUSE_ALTERNATIVE' %}<br />
-        <input id="cause_service" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_SERVICE' %}" />{% trans 'DELETION_FORM_CAUSE_SERVICE' %}<br />
-        <input id="cause_usage" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_USAGE' %}" />{% trans 'DELETION_FORM_CAUSE_USAGE' %}<br />
-        <input id="cause_limitations" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_LIMITATIONS' %}" />{% trans 'DELETION_FORM_CAUSE_LIMITATIONS' %}<br />
-        <input id="cause_need" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_NEED' %}" />{% trans 'DELETION_FORM_CAUSE_NEED' %}<br />
-        <input id="cause_like" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_LIKE' %}" />{% trans 'DELETION_FORM_CAUSE_LIKE' %}
-      </p>
-      <p>
-        <label id="cause-label" for="cause_message">{% trans "DELETION_FORM_CAUSE_MESSAGE" %}</label>
-        <textarea id="cause_message" name="cause_message" rows="5"></textarea>
-      </p>
-      <p>
-      <p>
-        <input type="submit" class="mp-form-submit mp-settings-form-submit" value='{% trans "Delete Account" %}' />
-      </p>
-    </form>
-    </div>
-</div>
-
+{% block account_settings %}
+<form class="mp-form" method="POST" action="">
+  <h2>{% trans "Delete Form" %}</h2>
+  <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}">
+  {{ form.non_field_errors }}
+  <p>
+    <label for="user-email">{% trans "Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+    <input type="email" name="user_email" id="user-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required value="{{ form.data.user_email }}"/>
+    {{ form.user_email.errors }}
+    
+  </p>
+  <p>
+    <label for="user-password">{% trans "Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
+    <input type="password" name="user_password" id="user-password" required="required" size="40" placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}" data-required value="{{ form.data.user_password }}"/>
+    {{ form.user_password.errors }}
+  </p>
+  <p class="mp-checkboxes">
+    <label for="cause_testing">{% trans "DELETION_FORM_CAUSE_TESTING" %}</label>
+    <input id="cause_testing" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_TESTING' %}" /><span></span><br />
+    <label for="cause_alternative">{% trans "DELETION_FORM_CAUSE_ALTERNATIVE" %}</label>
+    <input id="cause_alternative" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_ALTERNATIVE' %}" /><br />
+    <label for="cause_service">{% trans "DELETION_FORM_CAUSE_SERVICE" %}</label>
+    <input id="cause_service" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_SERVICE' %}" /><br />
+    <label for="cause_usage">{% trans "DELETION_FORM_CAUSE_USAGE" %}</label>
+    <input id="cause_usage" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_USAGE' %}" /><br />
+    <label for="cause_limitations">{% trans "DELETION_FORM_CAUSE_LIMITATIONS" %}</label>
+    <input id="cause_limitations" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_LIMITATIONS' %}" /><br />
+    <label for="cause_need">{% trans "DELETION_FORM_CAUSE_NEED" %}</label>
+    <input id="cause_need" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_NEED' %}" /><br />
+    <label for="cause_like">{% trans "DELETION_FORM_CAUSE_LIKE" %}</label>
+    <input id="cause_like" type="radio" name="cause" value="{% trans 'DELETION_FORM_CAUSE_LIKE' %}" />
+  </p>
+  <p>
+    <label id="cause-label" for="cause_message">{% trans "DELETION_FORM_CAUSE_MESSAGE" %}</label>
+    <textarea id="cause_message" name="cause_message" rows="5"></textarea>
+  </p>
+  <p>
+  <p>
+    <input type="submit" class="mp-form-submit mp-settings-form-submit" value='{% trans "Delete Account" %}' />
+  </p>
+</form>
 {% endblock %}

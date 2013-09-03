@@ -15,20 +15,26 @@
 /* ---- general styling ---- */
 
 #mp-user-password-forgot
-  margin 10% 0 0 28%
+  padding-left 28%
   position relative
   font-size .7em
+
+#mp-user-password-forgot a
   cursor pointer
   color white
   text-decoration none
-#mp-user-password-forgot:hover
+#mp-user-password-forgot a:hover
   background url(/static/images/ie-rgba-black-alpha-0.png) repeat
   background rgba(0,0,0,0)
   color #88ff88
   text-decoration none
+
 #account #mp-user-password-forgot
+  padding 0
+  text-align right
+#account #mp-user-password-forgot a
   color #000
-#account #mp-user-password-forgot:hover 
+#account #mp-user-password-forgot a:hover 
   background none
   color #118811 // same green as links on black background just darker
   text-decoration none
@@ -48,7 +54,6 @@
     text-decoration underline
     letter-spacing 2px
     color $font-color
-    text-shadow 0 0 1px #AAAAAA
   a:hover
     color #118811 // same green as links on black background just darker
     text-decoration underline
@@ -336,13 +341,13 @@ section#keiken-login
   overflow auto
   width 30%
   max-height 85%
-  min-height 60%
+  min-height 40%
   padding 10px
   position absolute
   top 5%
   left 100%
   background url(/static/images/ie-rgba-black-alpha-60.png) repeat
-  background-color rgba(0,0,0,0.6)
+  background rgba(0,0,0,0.6)
   font-size .8em
   visibility hidden
 
@@ -398,15 +403,6 @@ section#keiken-login
 /* ------ end landing page ------ */
 
 /* ------------------------------ */
-/* -- styling for contact page -- */
-
-#mp-contact
-  width 50%
-  margin-left 10%
-
-/* ------ end contact page ------ */
-
-/* ------------------------------ */
 /* -- impressum -- */
 
 .mp-impressum-contact aside
@@ -424,35 +420,85 @@ section#keiken-login
   background-color black
   height 3px
   
-#mp-account-info a
-  font-style italic
-  color blue
-#mp-account-info a:hover
-  color #030303
-  text-decoration underline
-
-#mp-account-info
-  width 80%
-  margin 30px 10%
-  table
-    width 100%
-  	tr td:nth-of-type(2)
-  	  text-align right
-
-#mp-account-settings
-  width 80%
-  min-height 300px
-  margin 0 10%
-  
 #mp-account-settings-options
   margin-bottom 30px
 
 .mp-account-settings-form 
   display none
-  form
-    width 50%
-    min-width 600px
-
 
 /* ------ end account ------ */
 
+
+/* ------------------------------- */
+/* --------- form pages ---------- */
+
+#contact .mp-non-interactive-content,
+#account .mp-non-interactive-content
+  position relative
+  h2
+    margin-bottom 25px
+    text-align center
+
+#left-column
+  width 40%
+  padding-right 3%
+  position absolute
+  left 10px
+  text-align justify
+
+#left-column article
+  width 100%
+  div
+    font-size 1.1em
+
+#right-column
+  width 60%
+  padding 10px
+  padding-top 0
+  position absolute
+// right 0px @see non-ie.css
+
+#right-column form
+  padding 5px
+  border 1px solid black
+  border-radius 5px
+  label
+    height 40px
+    font-size 20px
+  input
+    height 40px
+    font-size 20px
+    padding 3px
+  input[type='radio']
+    height 20px
+    font-size 12px
+    padding 0
+  p
+    padding 0 15px
+    background-color #EEEEEE
+    border-radius 5px
+  p:last-of-type
+    background-color #FFFFFF
+  #mandatory-note
+    background-color #FFFFFF
+    font-size 0.8em
+    text-align right
+  p.mp-checkboxes label
+    width 60%
+    height 20px
+    font-size 12px
+    margin 0
+    margin-top 5px
+  p.mp-checkboxes
+    min-height 140px
+
+/* ------------------------------ */
+/* -- styling for contact page -- */
+
+// @see *styling for form pages*
+
+/* ------ end contact page ------ */
+
+
+/* ------ end form pages -------- */
+/* ------------------------------ */

@@ -6,12 +6,9 @@
 {% block name %}{% trans "REGISTRATION" %}{% endblock %}
 
 {% block account_info %}
-<p>{% trans "REGISRATION" %}</p>
+<h2>{% trans "Registration Information" %}</h2>
+<p>{% trans "REGISTRATION_INFO" %}</p>
 {% endblock %}
 {% block account_settings %}
-<form id="mp-login-form" class="mp-form" action="" method="post">
-  {{ form.as_p }}
-  <p>
-    <input class="mp-landingpage-form-submit" type="submit" name="register" value='{% trans "Sign Up" %}' />
-  </p>
+{% include "registration-form.html" %}
 {% endblock %}

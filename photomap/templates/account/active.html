@@ -56,16 +56,9 @@
       <td>{% trans "Usage" %}</td>
       <td>{{ n_albums }} {% trans "Albums" %} -- {{ n_places }} {% trans "Places" %} -- {{ n_photos }} {% trans "Photos" %}</td>
     </tr>
-    <tr>
-      <td></td>
-      <td><a href="delete">{% trans "DELETE_ACCOUNT" %}</a></td>
-    </tr>
   </tbody>
   
 </table>
-
-<br /><br />
-<hr />
 {% endblock %}
 
 {% block account_settings %}
@@ -73,6 +66,7 @@
 <div id="mp-account-settings-options">
   <a id="mp-option-update-password" href="#mp-update-password-form" class="mp-button">{% trans "Update Password" %}</a>
   <a id="mp-option-update-email" href="#mp-update-email-form" class="mp-button">{% trans "Update Email" %}</a>
+  <a id="delete-account-link" href="delete" class="mp-button">{% trans "DELETE_ACCOUNT" %}</a>
   <!-- <a id="mp-option-update-picture" href="#mp-update-picture-form" class="mp-button mp-nodisplay">{% trans "Update Profile Picture" %}</a> -->
 </div>
 

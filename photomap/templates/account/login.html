@@ -6,14 +6,10 @@
 {% block name %}{% trans "LOGIN" %}{% endblock %}
 
 {% block account_info %}
-<p>{% trans "LOGIN" %}</p>
+<h2>{% trans "Login Information" %}</h2>
+<p>{% trans "LOGIN_INFO" %}</p>
 {% endblock %}
 
 {% block account_settings %}
-{{ form.non_field_errors }}
-{% for field in form %}
-  {{ field.errors }}
-{% endfor %}
 {% include "login-form.html" %}
-    <a href="/account/password/reset" id="mp-user-password-forgot">{% trans "Help, I forgot my password!" %}</a>
 {% endblock %}

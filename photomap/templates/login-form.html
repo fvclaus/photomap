@@ -1,5 +1,12 @@
 {% load i18n %}
 <form id="mp-login-form" class="mp-form" action="/account/login/" method="post">
+  <h2>{% trans "Login" %}</h2>
+  <div id="mp-form-errors">
+    {{ form.non_field_errors }}
+    {% for field in form %}
+    {{ field.errors }}
+    {% endfor %}
+  </div>
   <p>
     <label for="login_email">{% trans "Email" %}:</label>
     <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>
@@ -16,5 +23,8 @@
   </p>
   <p>
     <input id="login_submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
+  </p>
+  <p id="mp-user-password-forgot">
+    <a href="/account/password/reset">{% trans "Help, I forgot my password!" %}</a>
   </p>
 </form>
