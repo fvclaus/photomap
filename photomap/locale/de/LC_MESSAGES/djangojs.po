@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-16 13:58+0200\n"
+"POT-Creation-Date: 2013-09-03 20:47+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,66 +18,29 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: static/js/main/AppInitializer.js:95 static/js/util/ClientServer.js:116
+#: static/js/keiken/main/AppController.js:264
+msgid "INVALID_OPENED_PLACE"
+msgstr "Der Platz ist leider nicht verfügbar, eventuell wurde er bereits gelöscht. Bitte wenden Sie sich an den "
+"Besitzer des Albums."
+
+#: static/js/keiken/main/AppController.js:274
+msgid "INVALID_LOADED_PHOTO"
+msgstr "Das Photo ist leider nicht verfügbar, eventuell wurde es bereits gelöscht. Bitte wenden Sie sich an den "
+"Besitzer des Albums."
+
+#: static/js/keiken/main/AppInitializer.js:82
 msgid "GET_ALBUM_ERROR"
 msgstr "Beim Laden des Albums trat folgender Fehler auf: "
 
-#: static/js/main/AppInitializer.js:99 static/js/util/ClientServer.js:120
-#: static/js/view/DialogView.js:164 static/js/view/DialogView.js.c:233
+#: static/js/keiken/main/AppInitializer.js:86
+#: static/js/keiken/view/DialogView.js:190
+#: static/js/keiken/view/DialogView.js:259
 msgid "NETWORK_ERROR"
 msgstr ""
 "Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
 
-#: static/js/main/account.js:50
-msgid "REQUEST_UNKNOWN_FAIL"
-msgstr ""
-"Huch, da ist wohl was schief gelaufen. Bitte versuchen Sie es erneut. Sollte "
-"dieser Fehler wieder erscheinen, nehmen Sie bitte mit uns Kontakt auf!"
-
-#: static/js/main/account.js:113
-msgid "DELETE_ACCOUNT_CONFIRM"
-msgstr ""
-"Wollen Sie Ihren Account wirklich löschen? Der Vorgang kann nicht mehr "
-"rückgängig gemacht werden. "
-
-#: static/js/util/InfoText.js:164
-msgid "CLOSE_INFOTEXT_ALERT"
-msgstr ""
-"Drücken Sie Escape oder klicken sie auf die Seite um diese Nachricht zu "
-"schließen."
-
-#: static/js/view/DialogView.js:90
-msgid "YES"
-msgstr "Ja"
-
-#: static/js/view/DialogView.js:98
-msgid "NO"
-msgstr "Nein"
-
-#: static/js/view/DialogView.js:113
-msgid "SAVE"
-msgstr "Speichern"
-
-#: static/js/view/MapView.js:322
-msgid "MAP_NO_PLACES_ADMIN"
-msgstr ""
-"Uups, dieses Album hat noch keine Plätze. Sie können neue Plätze hinzufügen, "
-"indem Sie die Karte zu den Koordinaten bewegen, bei denen Sie einen Platz "
-"einfügen wollen. Dann klicken auf die gewünschte Stelle und folgen den "
-"Anweisungen im sich öffnenden Dialog. Sobald der neue Platz eingefügt wurde, "
-"können Sie Fotos hinzufügen. Beachten Sie dafür die Tipps in der Galerie "
-"unter der Karte. "
-
-#: static/js/view/MapView.js:324
-msgid "MAP_NO_PLACES_GUEST"
-msgstr ""
-"Oh weh! Da hat der Besitzer dieses Album mit dir geteilt und völlig "
-"vergessen, irgendwelche Plätze und Fotos hochzuladen. Wärst du so nett und "
-"sagst ihm oder ihr, dass ein Photoalbum ohne Fotos ein bisschen langweilig "
-"anzuschauen ist?"
-
-#: static/js/view/MapView.js:333
+#: static/js/keiken/presenter/MapPresenter.js:183
 msgid "MAP_NO_ALBUMS"
 msgstr ""
 "<p> Hallo du! Willkommen zu deinem eigenen Photoalbum! Ich habe das Gefühl, "
@@ -121,21 +84,71 @@ msgstr ""
 "solltest du die Maus aus der Karte heraus bewegen (auf den Kopf oder Fuß der "
 "Seite). </p>"
 
-#: static/js/view/PhotoEditorView.js:70
+#: static/js/keiken/presenter/MapPresenter.js:190
+msgid "MAP_NO_PLACES_ADMIN"
+msgstr ""
+"Uups, dieses Album hat noch keine Plätze. Sie können neue Plätze hinzufügen, "
+"indem Sie die Karte zu den Koordinaten bewegen, bei denen Sie einen Platz "
+"einfügen wollen. Dann klicken auf die gewünschte Stelle und folgen den "
+"Anweisungen im sich öffnenden Dialog. Sobald der neue Platz eingefügt wurde, "
+"können Sie Fotos hinzufügen. Beachten Sie dafür die Tipps in der Galerie "
+"unter der Karte. "
+
+#: static/js/keiken/presenter/MapPresenter.js:192
+msgid "MAP_NO_PLACES_GUEST"
+msgstr ""
+"Oh weh! Da hat der Besitzer dieses Album mit dir geteilt und völlig "
+"vergessen, irgendwelche Plätze und Fotos hochzuladen. Wärst du so nett und "
+"sagst ihm oder ihr, dass ein Photoalbum ohne Fotos ein bisschen langweilig "
+"anzuschauen ist?"
+
+#: static/js/keiken/util/InfoText.js:183
+msgid "CLOSE_INFOTEXT_ALERT"
+msgstr ""
+"Drücken Sie Escape oder klicken sie auf die Seite um diese Nachricht zu "
+"schließen."
+
+#: static/js/keiken/util/PhotoFileValidator.js:43
+#: static/js/keiken/view/PhotoEditorView.js:71
 msgid "TOO_MANY_PHOTOS"
 msgstr "Bitte wählen Sie nur ein Photo auf einmal aus."
 
-#: static/js/view/PhotoEditorView.js:73
+#: static/js/keiken/util/PhotoFileValidator.js:45
+#: static/js/keiken/view/PhotoEditorView.js:74
 msgid "EXTENSION_NOT_SUPPORTED"
 msgstr ""
 "Dieses Format wird leider nicht unterstützt. Bitte wählen Sie ein JPEG oder "
 "PNG Photos aus."
 
-#: static/js/view/PhotoEditorView.js:127
+#: static/js/keiken/util/PhotoFileValidator.js:62
+#, fuzzy
+msgid "LARGE_PHOTO_ERROR"
+msgstr ""
+"Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren Sie "
+"es zu einem späteren Zeitpunkt noch einmal."
+
+#: static/js/keiken/view/DialogView.js:100
+msgid "YES"
+msgstr "Ja"
+
+#: static/js/keiken/view/DialogView.js:108
+msgid "NO"
+msgstr "Nein"
+
+#: static/js/keiken/view/DialogView.js:123
+msgid "SAVE"
+msgstr "Speichern"
+
+#: static/js/keiken/view/DialogView.js:137
+msgid "OK"
+msgstr ""
+
+#: static/js/keiken/view/PhotoEditorView.js:128
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "Keine Rotation mehr möglich, nachdem das Photo bearbeitet wurde."
 
-#: static/js/widget/GalleryWidget.js:65 static/js/widget/GalleryWidget.js:181
+#: static/js/keiken/widget/GalleryWidget.js:82
+#: static/js/keiken/widget/GalleryWidget.js:171
 msgid "GALLERY_NO_PLACE_SELECTED"
 msgstr ""
 "Um die Galerie zu starten öffnen Sie bitte einen Platz, indem Sie auf einen "
@@ -143,7 +156,7 @@ msgstr ""
 "Bilder dieses Platzes ansehen.<strong>Wenn es noch keinen Platz gibt, folgen "
 "Sie den Instruktionen in der Karte.</strong>"
 
-#: static/js/widget/GalleryWidget.js:193
+#: static/js/keiken/widget/GalleryWidget.js:183
 msgid "GALLERY_NO_PHOTOS_ADMIN"
 msgstr ""
 "Sie können neue Photos zum aktuell geöffneten Platz hinzufügen, indem Sie "
@@ -151,13 +164,13 @@ msgstr ""
 "oder den <img style='max-width: 15px; height: auto;' src='/static/images/add."
 "png' alt='Camera Record-' /> auf der rechten Seite der Galerie nutzen. "
 
-#: static/js/widget/GalleryWidget.js:198
+#: static/js/keiken/widget/GalleryWidget.js:188
 msgid "GALLERY_NO_PHOTOS_GUEST"
 msgstr ""
 "Huch, dieser Platz hat keine Fotos. Vielleicht hat der Besitzer des Albums "
 "vergessen, welche hochzuladen? ;)"
 
-#: static/js/widget/SlideshowWidget.js:108
+#: static/js/keiken/widget/SlideshowWidget.js:86
 msgid "SLIDESHOW_GALLERY_NOT_STARTED"
 msgstr ""
 "Um Bilder in der Slideshow anzusehen, müssen Sie zuerst die Galerie "
@@ -167,7 +180,7 @@ msgstr ""
 "keine Photos geben, folgen Sie bitte den Instruktionen in der Galerie.</"
 "strong>"
 
-#: static/js/widget/SlideshowWidget.js:118
+#: static/js/keiken/widget/SlideshowWidget.js:96
 msgid "SLIDESHOW_NO_PHOTOS"
 msgstr ""
 "Um Bilder in der Slideshow anzusehen, klicken Sie auf das gewünschte Bild in "
@@ -175,13 +188,19 @@ msgstr ""
 "rechts der Slideshow. Wenn Sie auf das aktuelle Bild in der Slideshow "
 "klicken, öffnet sich die Fullscreen-Ansicht des Bildes. "
 
+#~ msgid "REQUEST_UNKNOWN_FAIL"
+#~ msgstr ""
+#~ "Huch, da ist wohl was schief gelaufen. Bitte versuchen Sie es erneut. "
+#~ "Sollte dieser Fehler wieder erscheinen, nehmen Sie bitte mit uns Kontakt "
+#~ "auf!"
+
+#~ msgid "DELETE_ACCOUNT_CONFIRM"
+#~ msgstr ""
+#~ "Wollen Sie Ihren Account wirklich löschen? Der Vorgang kann nicht mehr "
+#~ "rückgängig gemacht werden. "
+
 #~ msgid "COPIED_TO_CLIPBOARD"
 #~ msgstr "Text wurde in die Zwischenablage kopiert!"
-
-#~ msgid "PHOTO_LOADING_ERROR"
-#~ msgstr ""
-#~ "Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren "
-#~ "Sie es zu einem späteren Zeitpunkt noch einmal."
 
 #~ msgid "LOGIN_INVALID"
 #~ msgstr "Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "

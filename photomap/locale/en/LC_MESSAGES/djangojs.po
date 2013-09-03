@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-08-16 13:58+0200\n"
+"POT-Creation-Date: 2013-09-03 20:48+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,59 +16,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/main/AppInitializer.js:95 static/js/util/ClientServer.js:116
+#: static/js/keiken/main/AppController.js:264
+msgid "INVALID_OPENED_PLACE"
+msgstr "The requested place is not available. It might be deleted. Please consult the owner of the album."
+
+#: static/js/keiken/main/AppController.js:274
+msgid "INVALID_LOADED_PHOTO"
+msgstr ""
+
+#: static/js/keiken/main/AppInitializer.js:82
 msgid "GET_ALBUM_ERROR"
 msgstr "The following error occurred while loading the album:  "
 
-#: static/js/main/AppInitializer.js:99 static/js/util/ClientServer.js:120
-#: static/js/view/DialogView.js:164 static/js/view/DialogView.js.c:233
+#: static/js/keiken/main/AppInitializer.js:86
+#: static/js/keiken/view/DialogView.js:190
+#: static/js/keiken/view/DialogView.js:259
 msgid "NETWORK_ERROR"
 msgstr "A network error occurred. Please try again later."
 
-#: static/js/main/account.js:50
-msgid "REQUEST_UNKNOWN_FAIL"
-msgstr ""
-"Uups. Something went wrong and we don't know what! Please try again, if you "
-"get this message another time, please contact support. "
-
-#: static/js/main/account.js:113
-msgid "DELETE_ACCOUNT_CONFIRM"
-msgstr ""
-"Are you sure you want to delete the account? This can't be undone later on. "
-
-#: static/js/util/InfoText.js:164
-msgid "CLOSE_INFOTEXT_ALERT"
-msgstr "Press Escape or click anywhere on the page to close this message."
-
-#: static/js/view/DialogView.js:90
-msgid "YES"
-msgstr "Yes"
-
-#: static/js/view/DialogView.js:98
-msgid "NO"
-msgstr "No"
-
-#: static/js/view/DialogView.js:113
-msgid "SAVE"
-msgstr "Save"
-
-#: static/js/view/MapView.js:322
-msgid "MAP_NO_PLACES_ADMIN"
-msgstr ""
-"Uups, you have no places yet! To add places to the opened album move the map "
-"to the coordinates where you want to insert a place. Then click at the "
-"chosen point and follow the instructions in the dialog. Afterwards you can "
-"add photos to this place, check the gallery below for informations on how to "
-"do that."
-
-#: static/js/view/MapView.js:324
-msgid "MAP_NO_PLACES_GUEST"
-msgstr ""
-"Oh dear! The owner shared this album with you, but didn't add any places or "
-"photos. Would you be so kind and remind him or her that an photoalbum "
-"without photos is quite boring to look at?"
-
-#: static/js/view/MapView.js:333
+#: static/js/keiken/presenter/MapPresenter.js:183
 msgid "MAP_NO_ALBUMS"
 msgstr ""
 "<p> Hi there! I sense you must be new to KEIKEN since you have no albums, "
@@ -104,19 +70,63 @@ msgstr ""
 "It'll automatically open again once you move your mouse out of the map (onto "
 "header or footer). </p>"
 
-#: static/js/view/PhotoEditorView.js:70
+#: static/js/keiken/presenter/MapPresenter.js:190
+msgid "MAP_NO_PLACES_ADMIN"
+msgstr ""
+"Uups, you have no places yet! To add places to the opened album move the map "
+"to the coordinates where you want to insert a place. Then click at the "
+"chosen point and follow the instructions in the dialog. Afterwards you can "
+"add photos to this place, check the gallery below for informations on how to "
+"do that."
+
+#: static/js/keiken/presenter/MapPresenter.js:192
+msgid "MAP_NO_PLACES_GUEST"
+msgstr ""
+"Oh dear! The owner shared this album with you, but didn't add any places or "
+"photos. Would you be so kind and remind him or her that an photoalbum "
+"without photos is quite boring to look at?"
+
+#: static/js/keiken/util/InfoText.js:183
+msgid "CLOSE_INFOTEXT_ALERT"
+msgstr "Press Escape or click anywhere on the page to close this message."
+
+#: static/js/keiken/util/PhotoFileValidator.js:43
+#: static/js/keiken/view/PhotoEditorView.js:71
 msgid "TOO_MANY_PHOTOS"
 msgstr "Please only select one photo at a time."
 
-#: static/js/view/PhotoEditorView.js:73
+#: static/js/keiken/util/PhotoFileValidator.js:45
+#: static/js/keiken/view/PhotoEditorView.js:74
 msgid "EXTENSION_NOT_SUPPORTED"
 msgstr "Currently there is support for only JPEG and PNG photos."
 
-#: static/js/view/PhotoEditorView.js:127
+#: static/js/keiken/util/PhotoFileValidator.js:62
+#, fuzzy
+msgid "LARGE_PHOTO_ERROR"
+msgstr "The requested image couldn't be loaded. Please try again later."
+
+#: static/js/keiken/view/DialogView.js:100
+msgid "YES"
+msgstr "Yes"
+
+#: static/js/keiken/view/DialogView.js:108
+msgid "NO"
+msgstr "No"
+
+#: static/js/keiken/view/DialogView.js:123
+msgid "SAVE"
+msgstr "Save"
+
+#: static/js/keiken/view/DialogView.js:137
+msgid "OK"
+msgstr ""
+
+#: static/js/keiken/view/PhotoEditorView.js:128
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "No rotation possible, after the photo was modified."
 
-#: static/js/widget/GalleryWidget.js:65 static/js/widget/GalleryWidget.js:181
+#: static/js/keiken/widget/GalleryWidget.js:82
+#: static/js/keiken/widget/GalleryWidget.js:171
 msgid "GALLERY_NO_PLACE_SELECTED"
 msgstr ""
 "To start the gallery, please select a place in the map above, by double-"
@@ -124,7 +134,7 @@ msgstr ""
 "then. <strong>If there is no place yet, follow the instructions given in the "
 "map.</strong>"
 
-#: static/js/widget/GalleryWidget.js:193
+#: static/js/keiken/widget/GalleryWidget.js:183
 msgid "GALLERY_NO_PHOTOS_ADMIN"
 msgstr ""
 "To add a photo to the current place you can either drop the photo into the "
@@ -132,13 +142,13 @@ msgstr ""
 "15px; height: auto;' src='/static/images/add.png' alt='Camera Record-' /> "
 "button on the right side of the gallery."
 
-#: static/js/widget/GalleryWidget.js:198
+#: static/js/keiken/widget/GalleryWidget.js:188
 msgid "GALLERY_NO_PHOTOS_GUEST"
 msgstr ""
 "Oh no, this place has no photos! Maybe the owner of the album forgot to add "
 "some? ;)"
 
-#: static/js/widget/SlideshowWidget.js:108
+#: static/js/keiken/widget/SlideshowWidget.js:86
 msgid "SLIDESHOW_GALLERY_NOT_STARTED"
 msgstr ""
 "To view pictures in the slideshow you need to start the gallery (below the "
@@ -146,7 +156,7 @@ msgstr ""
 "the navigation-buttons of the slideshow to view the photos. <strong>If there "
 "are no photos yet, follow the instructions given in the gallery.</strong>"
 
-#: static/js/widget/SlideshowWidget.js:118
+#: static/js/keiken/widget/SlideshowWidget.js:96
 msgid "SLIDESHOW_NO_PHOTOS"
 msgstr ""
 "To view pictures in the slideshow, click on a thumbnail in the gallery below "
@@ -154,11 +164,18 @@ msgstr ""
 "click on the current photo in the slideshow, a fullscreen-view of the photo "
 "will open. "
 
+#~ msgid "REQUEST_UNKNOWN_FAIL"
+#~ msgstr ""
+#~ "Uups. Something went wrong and we don't know what! Please try again, if "
+#~ "you get this message another time, please contact support. "
+
+#~ msgid "DELETE_ACCOUNT_CONFIRM"
+#~ msgstr ""
+#~ "Are you sure you want to delete the account? This can't be undone later "
+#~ "on. "
+
 #~ msgid "COPIED_TO_CLIPBOARD"
 #~ msgstr "Text was copied successfully to your clipboard!"
-
-#~ msgid "PHOTO_LOADING_ERROR"
-#~ msgstr "The requested image couldn't be loaded. Please try again later."
 
 #~ msgid "LOGIN_INVALID"
 #~ msgstr "Please check your email and password and submit again."
