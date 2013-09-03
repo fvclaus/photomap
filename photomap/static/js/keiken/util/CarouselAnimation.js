@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main, window, assert, assertTrue, assertString */
+/*global $, define, main, window, assert, assertTrue, assertString, assertObject */
 
 "use strict";
 
@@ -195,7 +195,7 @@ define(["dojo/_base/declare",
               * @description Raises an error, if this instance has been destroyed.
               */
              _ping : function () {
-                this.defaults.items * 2;
+               var a = this.defaults.items * 2;
              }
           });
        });

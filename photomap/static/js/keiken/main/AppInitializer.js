@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, init, initTest, finalizeInit, assertTrue, gettext */
+/*global $, define, window, init, initTest, finalizeInit, assertTrue, gettext */
 
 "use strict";
 
@@ -15,10 +15,11 @@ define([
    "./AppModelController",
    "../util/Communicator",
    "./UIState",
+   "../util/ClientState",
    "../model/Album",
    "../util/InfoText"
 ],
-   function (declare, main, AppController, AppModelController, communicator, state, Album, InfoText) {
+       function (declare, main, AppController, AppModelController, communicator, state, clientstate, Album, InfoText) {
       return declare(null, {
          
          start : function () {
@@ -90,9 +91,21 @@ define([
          _processInitialData : function (data) {
             assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview");
             
-            var processedData;
+            var processedData,
+                placeIndex = 0,
+                photoIndex = 0,
+                place = null,
+                photo = null;
             
             if (state.isAlbumView()) {
+               // Set the visited attribute on every photo.
+               for (placeIndex = 0; placeIndex < data.places.length; placeIndex++){
+                  place = data.places[placeIndex];
+                  for (photoIndex = 0; photoIndex < place.photos.length; photoIndex++) {
+                     photo = place.photos[photoIndex];
+                     photo.visited = clientstate.isVisitedPhoto(photo);
+                  }
+               }
                processedData = new Album(data);
             } else if (state.isDashboardView()) {
                processedData = [];

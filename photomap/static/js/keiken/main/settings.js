@@ -1,5 +1,5 @@
 /*jslint */
-/*global $ */
+/*global $, document, navigator */
 
 "use strict";
 
@@ -29,7 +29,7 @@ $.ajaxSetup({
 function areCookiesEnabled() {
     var cookieEnabled = (navigator.cookieEnabled) ? true : false;
 
-    if (typeof navigator.cookieEnabled == "undefined" && !cookieEnabled) { 
+    if (typeof navigator.cookieEnabled === "undefined" && !cookieEnabled) { 
         $.cookie("testcookie", "test");
         cookieEnabled = ($.cookie("testcookie")) ? true : false;
         $.cookie("testcookie", null);
@@ -39,8 +39,8 @@ function areCookiesEnabled() {
 
 $(document).ready(function () {
    if (!areCookiesEnabled()) {
-      $("#mp-no-cookies").show()
+      $("#mp-no-cookies").show();
    } else {
-      $("#mp-no-cookies").hide()
+      $("#mp-no-cookies").hide();
    }
-})
+});

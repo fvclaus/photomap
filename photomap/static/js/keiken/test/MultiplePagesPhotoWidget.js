@@ -260,7 +260,7 @@ define(["dojo/_base/declare",
                  if (nPages % 1 !== 0) {
                     nPages += 1;
                  }
-                 return parseInt(nPages);
+                 return parseInt(nPages, 10);
               },
               getFirstPhoto : function (pageIndex) {
                  var photoIndex = -1;

@@ -25,11 +25,11 @@ require(["dojo/_base/declare"],
                  });
 
                  for (attribute in this) {
-                    if (attribute.match(/^test/)) {
+                    if (this.hasOwnProperty(attribute) && attribute.match(/^test/)) {
                        testName = attribute;
                        nAssertions = null;
                        try {
-                          nAssertions = parseInt(this[testName + "Assertions"]);
+                          nAssertions = parseInt(this[testName + "Assertions"], 10);
                        } catch (e) {
                           console.warn("Did not the expected number of assertions for " + testName);
                        }

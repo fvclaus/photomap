@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, define */
+/*global $, main, define, assertTrue */
 
 "use strict";
 
@@ -34,6 +34,7 @@ define(["dojo/_base/declare",
             this.write("DialogMessage", "dialogAutoClose", autoClose);
          },
          isVisitedPhoto : function (photo) {
+            assertTrue(photo !== undefined, "Must provide parameter photo.");
             if (this.visitedPhotos.indexOf(photo.id) === -1) {
                return false;
             }

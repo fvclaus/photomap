@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, define, main, init, initTest, finalizeInit, assertTrue, gettext */
+/*global $, window, define, main, init, initTest, finalizeInit, assertTrue, gettext, CONFIRM_DIALOG */
 
 "use strict";
 
@@ -33,6 +33,7 @@ define([
             communicator.subscribe("clicked:GalleryInsert", this._openPhotoInsertDialog);
             communicator.subscribe("clicked:Map", this._openMarkerInsertDialog);
             communicator.subscribe("clicked:UpdateOperation", this._openModelUpdateDialog);
+            communicator.subscribe("clicked:DescriptionInsert", this._openModelUpdateDialog);
             communicator.subscribe("clicked:DeleteOperation", this._openModelDeleteDialog);
             communicator.subscribe("clicked:ShareOperation", this._openAlbumShareDialog);
             communicator.subscribe("changed:PhotoOrder", this._openPhotosUpdateDialog);
@@ -57,12 +58,17 @@ define([
                   photoCollection
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
+                     })
+                     .onInsert(function () {
                         communicator.publish("inserted:Model");
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
                      })
-                     .onError(dialog.showNetworkError)
+                     .onError(function () {
+                        // this needs to be dialog
+                        dialog.showNetworkError();
+                     })
                      .insertRaw(data);
                },
                url : "/form/insert/photo",
@@ -96,12 +102,17 @@ define([
                   markerCollection
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
+                     })
+                     .onInsert(function () {
                         communicator.publish("inserted:Model");
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
                      })
-                     .onError(dialog.showNetworkError)
+                     .onError(function () {
+                        // this needs to be dialog
+                        dialog.showNetworkError();
+                     })
                      .insertRaw(data);
                },
                url : "/form/insert/" + modelType.toLowerCase()
@@ -117,12 +128,17 @@ define([
                   model
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
+                     })
+                     .onUpdate(function () {
                         communicator.publish("updated:Model", model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
                      })
-                     .onError(dialog.showNetworkError)
+                     .onError(function () {
+                        // this needs to be dialog.
+                        dialog.showNetworkError();
+                     })
                      .save(data);
                },
                url : "/form/update/model"
@@ -139,12 +155,17 @@ define([
                   model
                      .onSuccess(function (data) {
                         dialog.showResponseMessage(data);
+                     })
+                     .onDelete(function () {
                         communicator.publish("deleted:Model", model);
                      })
                      .onFailure(function (data) {
                         dialog.showResponseMessage(data);
                      })
-                     .onError(dialog.showNetworkError);
+                     .onError(function () {
+                        // this needs to be dialog
+                        dialog.showNetworkError();
+                     });
                   
                   model["delete"](model, true);
                },

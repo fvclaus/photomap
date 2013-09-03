@@ -23,7 +23,7 @@ define(["dojo/_base/declare",
                   if (photo) {
                      QUnit.ok$visible($image);
                      QUnit.ok$text($title, photo.title);
-                     QUnit.ok(parseInt($image.attr("data-keiken-id")) === photo.id, "The fullscreen image should display the photo with id " + photo.id);
+                     QUnit.ok(parseInt($image.attr("data-keiken-id"), 10) === photo.id, "The fullscreen image should display the photo with id " + photo.id);
                   } else {
                      QUnit.ok($image.attr("src") === undefined);
                      QUnit.ok$text($title, "");

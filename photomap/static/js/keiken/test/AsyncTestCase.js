@@ -1,3 +1,4 @@
+/*jslint forin : true */
 /*global define, QUnit, assertFunction, assertString*/
 
 "use strict";
@@ -28,6 +29,7 @@ define(["dojo/_base/declare"],
                  });
 
                  for (attribute in this) {
+                    // Most of these tests are inherited.
                     if (attribute.match(/^test/) && typeof this[attribute] === "function" && attribute.search("Assertions") === -1) {
                        testName = attribute;
                        testAssertions = this[testName + "Assertions"];
@@ -39,13 +41,14 @@ define(["dojo/_base/declare"],
                        } 
 
                        if (typeof nAssertions === "number" && !isNaN(nAssertions)) {
+                          // Create functions in a loop to preserver the testName in a closure. Otherwise it will be overwritten.
                           (function () {
                              var thisTestName = testName,
                                  testFunction = function () {
                                     instance[thisTestName].apply(instance);
                                  };
                              QUnit.asyncTest(testName, nAssertions, testFunction);
-                          })();
+                          }());
                              
                        } else {
                           (function () {
@@ -55,7 +58,7 @@ define(["dojo/_base/declare"],
                                  };
                              console.warn("AsyncTestCase: Did not specify expected number of assertions for " + testName);
                              QUnit.asyncTest(testName, testFunction);
-                          })();
+                          }());
 
 
                        }

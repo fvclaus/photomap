@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, document */
+/*global $, document, window */
 
 /**
  * @description Provides common setup for all non-interactive pages.

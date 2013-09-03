@@ -1,5 +1,5 @@
 /*jslint sloppy : true*/
-/*global $, define, window, assertInstance, assertFunction, assert, assertTrue, gettext */
+/*global $, define, window, assertInstance, assertFunction, assert, assertTrue, gettext, assertObject, assertString */
 
 // No use strict with this.inherited(arguments);
 // "use strict";

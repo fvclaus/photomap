@@ -1,4 +1,4 @@
-/*global require, QUnit, AssertionError*/
+/*global require, QUnit, AssertionError, window*/
 
 "use strict";
 
@@ -55,6 +55,12 @@ QUnit.ok$text = function ($element, text) {
    QUnit.ok($element.text() === text, "Selector '" + $element.selector + " text content should be '" + text + "'.");
 };
 
+QUnit.throwsError = function (block, expected, message) {
+   // throws is a reserved word and jslint will complain about its use.
+   var throwsName = "throws";
+   QUnit[throwsName](block, expected, message);
+};
+
 // Prevent test from running straight away.
 // Start them once all modules have registered the test cases.
 // QUnit does some optimization and runs the failed once fist.
@@ -63,11 +69,13 @@ QUnit.config.autostart = false;
 
 // @author http://www.idealog.us/2006/06/javascript_to_p.html
 function getTestCasesFromQueryString() {
-   var query = window.location.search.substring(1);
-   var vars = query.split('&');
-   for (var i = 0; i < vars.length; i++) {
-      var pair = vars[i].split('=');
-      if (decodeURIComponent(pair[0]) == "tests") {
+   var query = window.location.search.substring(1),
+       vars = query.split('&'),
+       i = 0,
+       pair = null;
+   for (i = 0; i < vars.length; i++) {
+      pair = vars[i].split('=');
+      if (decodeURIComponent(pair[0]) === "tests") {
          return decodeURIComponent(pair[1]).split(",");
       }
    }
@@ -79,7 +87,7 @@ var allTestCases = ["Collection", "Model", "Marker", "Album", "Photo", "Place", 
     testCases = getTestCasesFromQueryString(),
     testCaseIndex;
 
-if (testCases.length == 0) {
+if (testCases.length === 0) {
    testCases = allTestCases;
 }
 

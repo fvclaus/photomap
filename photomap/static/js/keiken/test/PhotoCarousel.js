@@ -30,7 +30,7 @@ define(["../widget/PhotoCarouselWidget",
                   }
                   photos.forEach(function(photo, index) {
                      if (photo) {
-                        QUnit.ok(parseInt($photos.eq(index + from).attr("data-keiken-id")) === photo.getId());
+                        QUnit.ok(parseInt($photos.eq(index + from).attr("data-keiken-id"), 10) === photo.getId());
                      } else {
                         QUnit.ok($photos.eq(index + from).attr("src") === undefined);
                      }
@@ -53,7 +53,7 @@ define(["../widget/PhotoCarouselWidget",
                  $container = $("<section id=mp-photocarousel style='height:100%; width=100%'> </section>");
 
                  for ($photoIndex = 0; $photoIndex < n$photos; $photoIndex++) {
-                    $container.append("<div style='width:" + (parseInt(100/n$photos) - 1) + "%; height:30%; border:2px solid black; float:left'> <img style='max-width:90%; max-height:90%; left:5%; top:5%; position:relative'/> <div/>");
+                    $container.append("<div style='width:" + (parseInt(100/n$photos, 10) - 1) + "%; height:30%; border:2px solid black; float:left'> <img style='max-width:90%; max-height:90%; left:5%; top:5%; position:relative'/> <div/>");
                  }
                  
                  $testBody
@@ -111,7 +111,7 @@ define(["../widget/PhotoCarouselWidget",
                           var $photo = $photos.eq(index);
                           if (photo) {
                              QUnit.ok(typeof $photo.attr("src") === "string");
-                             QUnit.ok(typeof parseInt($photo.attr("data-keiken-id")) === "number");
+                             QUnit.ok(typeof parseInt($photo.attr("data-keiken-id"), 10) === "number");
                           } else {
                              QUnit.ok($photo.attr("src") === undefined);
                              QUnit.ok($photo.attr("data-keiken-id") === undefined);
@@ -317,5 +317,32 @@ define(["../widget/PhotoCarouselWidget",
                  }, 2 *  animationTime);
               }, animationTime);
            });
+           // Bug that caused the Widget to crash when inserting on first page without photos and withou calling starting before.
+           QUnit.test("insertOnFirstPage", function() {
+              QUnit.expect(0);
+              // Remove photos
+              photos.splice(0, nPhotos);
+              photoCarousel.update(photos);
+              photos.push(testFixture.getRandomPhoto());
+              photoCarousel.insertPhoto(photos[0]);
+           });
+
+           QUnit.asyncTest("update", function () {
+              expectedPhotos = photos.slice(0, 5);
+              photoCarousel.start();
+              setTimeout(function () {
+                 photo = photos[0];
+                 // Change the order of the first & and second photo.
+                 photos[0] = photos[1];
+                 photos[1] = photo;
+                 expectedPhotos = photos.slice(0, 5);
+                 photoCarousel.update(photos);
+                 setTimeout(function() {
+                    assertPhotosInWidget(expectedPhotos);
+                    QUnit.start();
+                 }, animationTime);
+              }, animationTime);
+           });
+              
         });
            

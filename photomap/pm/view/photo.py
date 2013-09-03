@@ -12,7 +12,7 @@ from pm.view.authentication import is_authorized
 from pm.view import set_cookie, update_used_space
 
 from message import success, error 
-from pm.form.photo import PhotoInsertForm, PhotoUpdateForm, PhotoCheckForm
+from pm.form.photo import PhotoInsertForm, PhotoUpdateForm, PhotoCheckForm, MultiplePhotosUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core import files
@@ -178,7 +178,7 @@ def update_multiple(request):
         photos_dirty = []
         # Check all photos_dirty
         for json_photo in json_photos:
-            form = PhotoUpdateForm(json_photo)
+            form = MultiplePhotosUpdateForm(json_photo)
             # fields are incomplete or invalid
             if not form.is_valid():
                 return error(str(form.errors))
@@ -201,7 +201,7 @@ def update_multiple(request):
     # Update all photos in one go.
     for (photo, json_photo) in photos_dirty:
         logger.info("User %d is trying to update Photo %d." % (request.user.pk, photo.pk))
-        form = PhotoUpdateForm(json_photo, instance = photo)
+        form = MultiplePhotosUpdateForm(json_photo, instance = photo)
         assert form.is_valid()  # we checked this before. this must be valid
         form.save()
         logger.info("Photo %d updated." % photo.pk)

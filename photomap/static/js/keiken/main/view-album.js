@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, $$, main, mpEvents */
+/*global $, document, mpEvents */
 
 "use strict";
 

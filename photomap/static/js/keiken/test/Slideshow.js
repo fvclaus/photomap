@@ -21,7 +21,7 @@ define(["dojo/_base/declare",
                     expectedText = "Photo " + (this.photos.indexOf(photo) + 1) +  "/" + this.photos.length;
                     QUnit.ok$visible($image);
                     QUnit.ok$text($photoNumber, expectedText);
-                    QUnit.ok(parseInt($image.attr("data-keiken-id")) === photo.id, "The slideshow image should display the photo with id " + photo.id);
+                    QUnit.ok(parseInt($image.attr("data-keiken-id"), 10) === photo.id, "The slideshow image should display the photo with id " + photo.id);
                  } else {
                     QUnit.ok($image.attr("src") === undefined);
                      QUnit.ok$text($photoNumber, "");

@@ -116,21 +116,22 @@ define([
       // Test invalid input
       QUnit.test("invalid event strings", 6, function () {
          invalidEvents.forEach(function (event) {
-            QUnit.throws(function () {
+            QUnit.throwsError(function () {
                communicator.subscribe(event, handlerObject.doNothingHandler);
             }, /InvalidEventSyntax/, "testing if following wrong event-syntax passes the assertions in Communicator: " + event);
          });
       });
+
       QUnit.test("invalid subscribe input", 11, function () {
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe(event1);
          }, /InvalidInputError/, "testing whether missing handler throws error when events-input is string");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe({
                "event": 1
             });
          }, /InvalidInputError/, "testing whether missing handler throws error when events input is {name: handler}");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe({
                "event": {
                   context: null,
@@ -138,7 +139,7 @@ define([
                }
             });
          }, /InvalidInputError/, "testing whether missing handler throws error when events input is {name: {handler: function () {}}}");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe({
                "event": {
                   handler: "NoHandler",
@@ -147,10 +148,10 @@ define([
                }
             });
          }, /InvalidInputError/, "testing whether invalid handler type throws error when events input is {name: {handler: function () {}}}");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe(2, handlerObject.doNothingHandler);
          }, /InvalidInputError/, "testing whether events invalid 'events'-input-type throws error");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe({
                "event": {
                   handler: handlerObject.doNothingHandler,
@@ -159,21 +160,21 @@ define([
                }
             });
          }, /InvalidInputError/, "testing whether invalid event-options-types cause error");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe(":" + validEventNames[0], handlerObject.doNothingHandler);
          }, /InvalidEventType/, "testing whether subscribing to a name (without event-type specified) throws error");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe(validEventTypes[0], handlerObject.doNothingHandler, ":" + validEventNames[0]);
          }, /InvalidNameSyntax/, "testing whether wrong name input (eg. subscribe('click', handler, ':Gallery')) throws error");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe({
                "event": handlerObject.doNothingHandler
             }, 1, 2);
          }, /DuplicatedArgumentType/, "testing whether duplicated input parameter types cause error ");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribe("event", handlerObject.doNothingHandler, 2, 5);
          }, /DuplicatedArgumentType/, "testing whether duplicated input parameter types cause error ");
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             communicator.subscribeOnce("event", handlerObject.doNothingHandler, 1);
          }, /DuplicatedArgumentType/, "testing whether passing a counter to subscribeOnce causes error");
       });
