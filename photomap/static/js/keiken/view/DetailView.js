@@ -105,7 +105,7 @@ define([
             // use text() instead of html() to prevent script tag injection or similiar
             if (!description) {
                this.$description.html(this.noDescription);
-               this._bindInsertDescriptionListener();
+               this._bindInsertDescriptionListener(model);
             } else {
                this.$description.text(description);
             }
@@ -128,7 +128,7 @@ define([
                description = this.noDescription;
                // this is from a trusted source and might be html
                this.$teaserDescription.html(shortDescription);
-               this._bindInsertDescriptionListener();
+               this._bindInsertDescriptionListener(model);
             }
             
             this.$teaserTitle.text(title);
@@ -165,23 +165,14 @@ define([
             $(".mp-close-full-description").on("click", function (event) {
                communicator.publish("closed:Detail");
             });
-            this._bindInsertDescriptionListener();
          },
-         _bindInsertDescriptionListener : function () {
-            var instance = this,
-                model;
-            $(".mp-insert-description").on("click", function (event) {
-               if (!instance.isDisabled()) {
-                  if (/teaser/.test($(this).parents(".mp-wrapper").attr("id"))) {
-                     model = "Photo";
-                  } else {
-                     model = "Marker";
-                  }
-                  communicator.publish("clicked:DescriptionInsert", {
-                     "event": event,
-                     "model": model
-                  });
-               }
+         _bindInsertDescriptionListener : function (model) {
+            assertTrue(model !== undefined, "Must provide model parameter.");
+            var instance = this;
+
+            $(".mp-insert-description").off("click").on("click", function (event) {
+               
+               communicator.publish("clicked:DescriptionInsert", model);
             });
          }
       });

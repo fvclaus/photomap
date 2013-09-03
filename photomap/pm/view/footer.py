@@ -31,7 +31,7 @@ def contact(request):
     return render_to_response("footer/contact.html", {"form": form}, context_instance = RequestContext(request))
         
 def format_message(name, from_email, message):
-    return "From %s<%s>:\n%s" % (name, from_email, message)
+    return "From %s<%s>:\nMessage: %s" % (name, from_email, message)
 
         
         

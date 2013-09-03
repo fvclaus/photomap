@@ -127,7 +127,7 @@ define([
       });
       //test 4 - insert
       QUnit.test("insert", 5, function () {
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             photoCollection.insert(photo2);
          }, /ModelDuplicationError/, "testing if Collection throws error when the inserted model already exists in the collection (models have to be unique)");
          $(photoCollection).on("inserted", function () {
@@ -142,7 +142,7 @@ define([
       });
       // test 5 - delete
       QUnit.test("delete", 3, function () {
-         QUnit.throws(function () {
+         QUnit.throwsError(function () {
             photoCollection["delete"](photo1);
          }, /UnknownModelError/, "testing if Collection.delete throws error when an unknown model is given");
          $(photoCollection).on("deleted", function () {

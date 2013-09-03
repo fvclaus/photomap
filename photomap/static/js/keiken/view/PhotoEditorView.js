@@ -246,7 +246,7 @@ define(["dojo/_base/declare",
                          options[$(this).attr("name")] = parseFloat($(this).val());
                       }
                       else if (dataType === "int"){
-                         options[$(this).attr("name")] = parseInt($(this).val());
+                         options[$(this).attr("name")] = parseInt($(this).val(), 10);
                       }
                    }
                 });

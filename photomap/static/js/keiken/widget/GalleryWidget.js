@@ -238,7 +238,7 @@ define(["dojo/_base/declare",
               */
              _getPhotoOfImage : function ($image) {
                 assertTrue($image.attr("data-keiken-id"), "Id attribute of input parameter $image must not be undefined");
-                var id  = parseInt($image.attr("data-keiken-id")),
+                var id  = parseInt($image.attr("data-keiken-id"), 10),
                     photo = this._photos.get(id);
                 assertNotNull(photo, "There must be a photo for every img element.");
                 return photo;

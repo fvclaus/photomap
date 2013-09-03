@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, document */
+/*global $, document, window */
 
 "use strict";
 
@@ -12,6 +12,7 @@ $(document).ready(function () {
       var $active = $(this),
          $inactive = $("#mp-login-switch").children().not(this);
       
+      // Every tab stores the id of its body. Select it and fade it out.
       $($inactive.find("a").attr("href")).fadeOut(100, function () {
          $($active.find("a").attr("href")).fadeIn(100);
       });
@@ -20,13 +21,13 @@ $(document).ready(function () {
       $inactive.removeClass("mp-nodisplay");
       
    });
-   //change href of login-link to prevent reloading of the page
-   $(".mp-login-link").find("a").attr("href", "#login");
+
+   // Turn the buttons into links.
    $("#mp-demo-button").on("click", function () {
-      window.location.href = "/demo"   
+      window.location.href = "/demo";
    });
    $("#mp-dashboard-button").on("click", function () {
-      window.location.href = "/dashboard/"   
+      window.location.href = "/dashboard/";
    });
    // automatically sign in when users selects "Try KEIKEN yourself"
    $("#mp-test-button").on("click", function (event) {
@@ -34,17 +35,23 @@ $(document).ready(function () {
       $("#login_password").val("test");
       $("#login_submit").trigger("click");
    });
+
+
+   var $loginWrapper = $(".mp-login-link"),
+       $loginLink = $loginWrapper.find("a"),
+       isLoggedIn = $loginWrapper.size() === 0;
    //check whether user is logged in or not
-   if ($(".mp-login-link").size() > 0) {
+   if (!isLoggedIn) {
+      //TODO This does not work anymore. This script only executes on the landingpage. The location will always be /
       //open the login-box automatically when coming from another non-interactive by clicking on "Login/Registration"
-      if (window.location.pathname === "/account/auth/login") {
-         $(window).load(function () {
-            $(".mp-login-link").find("a").trigger("click");
-            $("#login_email").focus();
-         });
-      }
+      // if (window.location.pathname !== $loginLink.attr("href")) {
+         // $(window).load(function () {
+         //    $loginLink.trigger("click");
+         //    $("#login_email").focus();
+         // });
+      // }
       //slide-in login-box
-      $(".mp-login-link").find("a").on("click", function (event) {
+      $loginLink.on("click", function (event) {
          //prevent page from reloading
          if (event) {
             event.preventDefault();

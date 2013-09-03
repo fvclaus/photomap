@@ -39,11 +39,11 @@ define([
          getRandomPhoto : function (id) {
             if (id === null || id === undefined) {
                console.warn("Did not provide Id for test photo. Using random one.");
-               id = parseInt(Math.random() * 1000);
+               id = parseInt(Math.random() * 1000, 10);
             }
             var photoAndThumb = this._getRandomPhotoAndThumb(),
-                nWordsTitle = parseInt(Math.random() * 20),
-                nWordsDescription = parseInt(Math.random() * 300),
+                nWordsTitle = parseInt(Math.random() * 20, 10),
+                nWordsDescription = parseInt(Math.random() * 300, 10),
                 title = this._generateString(nWordsTitle),
                 description = this._generateString(nWordsDescription);
             return new Photo({
@@ -59,7 +59,7 @@ define([
           * @description Returns a random photo and its thumb from the test image folder.
           */
          _getRandomPhotoAndThumb : function () {
-            var photo = this._photos[parseInt(Math.random() * this._photos.length + 1) - 1];
+            var photo = this._photos[parseInt(Math.random() * this._photos.length + 1, 10) - 1];
             return {
                "photo" : this._toUrl(photo),
                "thumb" : this._toUrl(photo)
@@ -85,7 +85,7 @@ define([
           * @description Gets a random word from the standard lipsum.
           */
          _getRandomWord : function () {
-            return this._words[parseInt(Math.random() * this._words.length + 1) - 1];
+            return this._words[parseInt(Math.random() * this._words.length + 1, 10) - 1];
          },
          /*
           * @private

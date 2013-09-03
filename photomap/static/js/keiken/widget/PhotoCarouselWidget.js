@@ -101,7 +101,9 @@ define(["dojo/_base/declare",
                 var from = this.dataPage.getLocalPhotoIndex(photo);
                 
                 // Did we insert on the current page? Then we need to update it
-                if (from !== -1){
+                if (!this.isStarted) {
+                   console.log("PhotoCarouselWidget: Not started. Ignoring insert photo.");
+                } else if (from !== -1){
                    console.log("PhotoCarouselWidget: New photo is inserted on current page. Reload current page from index %d.", from);
                    this._load(from, from + 1);
                 } else if (this.options.navigateToInsertedPhoto) {
@@ -537,7 +539,7 @@ define(["dojo/_base/declare",
               */
              _ping : function () {
                 console.log("PhotoCarouselView: _ping");
-                this.$photos.length * 2;
+                var a = this.$photos.length * 2;
              }
           });
        });

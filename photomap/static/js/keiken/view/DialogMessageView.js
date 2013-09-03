@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, gettext, define */
+/*global $, main, gettext, define, assertTrue */
 
 "use strict";
 

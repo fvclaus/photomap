@@ -24,7 +24,7 @@ define(["dojo/_base/declare",
                 var photos = this.carousel.getAllPhotos(),
                     currentPhoto = null,
                     // The PhotoCarousel will set the id of the photo as an attribute of the img element.
-                    id = parseInt(this.$image.attr(this.carousel.ID_HTML_ATTRIBUTE));
+                    id = parseInt(this.$image.attr(this.carousel.ID_HTML_ATTRIBUTE), 10);
 
                 // if it is the only (empty) page the entry is null
                 if (photos.length > 0) {

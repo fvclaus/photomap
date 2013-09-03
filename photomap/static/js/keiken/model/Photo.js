@@ -1,5 +1,5 @@
 /*jslint */
-/*global $, main, define, assertTrue */
+/*global $, main, define, assertTrue, FormData */
 
 "use strict";
 
@@ -49,6 +49,7 @@ define(["dojo/_base/declare",
              save : function (newData) {
                 assertTrue(typeof newData === "object" && newData !== null, "Must provide data to update.");
                 var instance = this,
+
                    settings = {
                       url: "/" + this.type.toLowerCase() + "/",
                       type: "post",
@@ -57,11 +58,12 @@ define(["dojo/_base/declare",
                       success: function (data, status, xhr) {
                          if (data.success) {
                             instance._trigger("success", [data, status, xhr]);
-                            if (instance.id > -1) {
-                               instance._setProperties(data);
+                            instance._setProperties(data);
+                            instance._setProperties(instance._newTitleAndDescription);
+                            // Server will return the new id upon insertion.
+                            if (data.id === undefined) {
                                instance._trigger("updated", instance);
                             } else {
-                               instance._setProperties(data);
                                //set id, photo and thumb of the new Photo
                                instance._trigger("inserted", instance);
                             }
@@ -73,6 +75,13 @@ define(["dojo/_base/declare",
                          instance._trigger("error", [xhr, status, error]);
                       }
                    };
+                // newData will go out of scope and the server does not echo the POST data.
+                //TODO why does newData + anything that is not instance in the var declaration go out of scope?
+                // Maybe newData is being garbage collected?
+                this._newTitleAndDescription = {
+                       title : newData.title,
+                       description : newData.description
+                };
                 // add id if model exists -> for Update (id does not exist before Insert -> not needed)
                 if (this.id > -1) {
                    settings.url += this.id + "/";

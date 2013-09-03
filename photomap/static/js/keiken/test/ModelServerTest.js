@@ -1,3 +1,4 @@
+/*jslint forin : true */
 /*global define, $, QUnit, FormData, assertFalse*/
 
 "use strict";
@@ -39,7 +40,9 @@ define(["dojo/_base/declare"],
                        delete instance._expectedData.isPhotoUpload;
                     } else {
                        for (attribute in instance._expectedData) {
-                          QUnit.ok(originalOptions.data[attribute] !== undefined);
+                          if (instance._expectedData.hasOwnProperty(attribute)) {
+                             QUnit.ok(originalOptions.data[attribute] !== undefined);
+                          }
                        }
                     }
                     jqXHR.abort();

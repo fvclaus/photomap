@@ -122,8 +122,7 @@ class PhotoControllerTest(ApiTestCase):
         # test something valid without description
         #=======================================================================
         data = {"id" : 1,
-                "title" : "EO changed",
-                "order" : 1}
+                "title" : "EO changed"}
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.title, data["title"])
         self.assertEqual(self.userprofile.used_space, 4 * 164898)
@@ -133,12 +132,6 @@ class PhotoControllerTest(ApiTestCase):
         data["description"] = "The description changed"
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.description, data["description"])
-        #=======================================================================
-        # with order
-        #=======================================================================
-        data["order"] = 3
-        (photo, content) = self.assertUpdates(data)
-        self.assertEqual(photo.order, data["order"])
         #=======================================================================
         # somebody elses photo
         #=======================================================================
