@@ -65,8 +65,8 @@
 {% if not is_test_user  %}
 <div id="mp-account-settings-options">
   <a id="mp-option-update-password" href="#mp-update-password-form" class="mp-button">{% trans "Update Password" %}</a>
-  <a id="mp-option-update-email" href="#mp-update-email-form" class="mp-button">{% trans "Update Email" %}</a>
-  <a id="delete-account-link" href="delete" class="mp-button">{% trans "DELETE_ACCOUNT" %}</a>
+  <!-- <a id="mp-option-update-email" href="#mp-update-email-form" class="mp-button">{% trans "Update Email" %}</a> -->
+  <!-- <a id="delete-account-link" href="delete" class="mp-button">{% trans "DELETE_ACCOUNT" %}</a> -->
   <!-- <a id="mp-option-update-picture" href="#mp-update-picture-form" class="mp-button mp-nodisplay">{% trans "Update Profile Picture" %}</a> -->
 </div>
 
@@ -94,25 +94,25 @@
       </p>
     </form>
   </div>
-  <div id="mp-update-email-form" class="mp-account-settings-form">
-    <p>{% trans "UPDATE_EMAIL_INFO" %}</p>
-    <form class="mp-form" method="post" action="{{ request.path }}email/">
-      <p class="mp-request-fail mp-warning"></p>
-      <p class="mp-submit-fail mp-warning"></p>
-      <p class="mp-request-success">{% trans "UPDATE_EMAIL_SUCCESS" %}</p>
-      <p>
-	<label for="new-email">{% trans "New Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
-	<input type="email" name="new_email" id="new-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'NEW_EMAIL_PLACEHOLDER' %}" data-required/>
-      </p>
-      <p>
-	<label for="confirm-password">{% trans "Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label>
-	<input type="password" name="confirm_password" id="confirm-password" required="required" size="40" placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}" data-required/>
-      </p>
-      <p>
-	<input type="submit" class="mp-form-submit mp-settings-form-submit" value='{% trans "Save" %}' />
-      </p>
-    </form>
-  </div>
+  <!-- <div id="mp-update-email-form" class="mp-account-settings-form"> -->
+  <!--   <p>{% trans "UPDATE_EMAIL_INFO" %}</p> -->
+  <!--   <form class="mp-form" method="post" action="{{ request.path }}email/"> -->
+  <!--     <p class="mp-request-fail mp-warning"></p> -->
+  <!--     <p class="mp-submit-fail mp-warning"></p> -->
+  <!--     <p class="mp-request-success">{% trans "UPDATE_EMAIL_SUCCESS" %}</p> -->
+  <!--     <p> -->
+  <!--       <label for="new-email">{% trans "New Email" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label> -->
+  <!--       <input type="email" name="new_email" id="new-email" required="required" size="40" autofocus="autofocus" placeholder="{% trans 'NEW_EMAIL_PLACEHOLDER' %}" data-required/> -->
+  <!--     </p> -->
+  <!--     <p> -->
+  <!--       <label for="confirm-password">{% trans "Password" %} <sup title='{% trans "MANDATORY_FIELD" %}'>*</sup></label> -->
+  <!--       <input type="password" name="confirm_password" id="confirm-password" required="required" size="40" placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}" data-required/> -->
+  <!--     </p> -->
+  <!--     <p> -->
+  <!--       <input type="submit" class="mp-form-submit mp-settings-form-submit" value='{% trans "Save" %}' /> -->
+  <!--     </p> -->
+  <!--   </form> -->
+  <!-- </div> -->
   <!-- <div id="mp-update-picture-form" class="mp-account-settings-form"> -->
   <!--   <form class="mp-form" method="post" action="{{ request.path }}picture/"> -->
   <!--     <\!-- not used atm -\-> -->

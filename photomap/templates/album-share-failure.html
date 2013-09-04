@@ -3,9 +3,9 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block title %}Error{% endblock %}
+{% block title %}{% trans "Error" %}{% endblock %}
 
-{% block name %}Error{% endblock %}
+{% block name %}{% trans "Error" %}{% endblock %}
 
 {% block non_interactive_content %}
 <p>{% trans "ALBUM_SHARE_FAILURE_NOTE" %}</p>

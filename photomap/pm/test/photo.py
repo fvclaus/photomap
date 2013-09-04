@@ -63,8 +63,10 @@ class PhotoControllerTest(ApiTestCase):
         self.assertPublicAccess(content["photo"])
         self.assertThumbSize(content["thumb"])
         self.assertEqual(content["order"], 0)
-        self.assertEqual(photo.size, self._get_photo_size())
-        self.assertEqual(self.userprofile.used_space, 4 * 164898 + self._get_photo_size())
+        self.assertTrue(photo.size < self._get_photo_size())
+        used_space = 4 * 164898
+        # Photo gets resized. Size must be smaller than photo size
+        self.assertTrue(self.userprofile.used_space > used_space and self.userprofile.used_space < used_space + self._get_photo_size())
         #=======================================================================
         # insert something valid with description
         #=======================================================================
@@ -73,12 +75,12 @@ class PhotoControllerTest(ApiTestCase):
         (photo, content) = self.assertCreates(data)
         self.assertEqual(photo.description, data["description"])
         self.assertEqual(photo.order, 0)
-        self.assertEqual(photo.size, self._get_photo_size())
+        self.assertTrue(photo.size < self._get_photo_size())
         self.assertPublicAccess(content["photo"])
         self.assertPublicAccess(content["thumb"])
         self.assertEqual(content["order"], 0)
         self.assertThumbSize(content["thumb"])
-        self.assertEqual(self.userprofile.used_space, 4 * 164898 + 2 * self._get_photo_size())
+        self.assertTrue(self.userprofile.used_space < 4 * 164898 + 2 * self._get_photo_size())
         #=======================================================================
         # try to upload over the limit
         #=======================================================================

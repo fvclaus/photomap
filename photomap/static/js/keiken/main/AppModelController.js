@@ -66,7 +66,7 @@ define([
                         dialog.showResponseMessage(data);
                      })
                      .onError(function () {
-                        // this needs to be dialog
+                        // this keyword needs to be dialog
                         dialog.showNetworkError();
                      })
                      .insertRaw(data);
@@ -175,6 +175,9 @@ define([
          _openAlbumShareDialog : function (album) {
             dialog.show({
                load : function () {
+                  var url = album.getUrl("http://" + window.location.host),
+                      $save = $("#mp-dialog-button-save"),
+                      $url = $("a#album-url");
                   $("#mp-open-album-password-form").on("click", function () {
                      var $form = $("#mp-album-password-form");
                      if ($form.is(":hidden")) {
@@ -194,22 +197,12 @@ define([
                      }
                   });
                   $("form[name='update-album-password']").attr("action", "/album/" + album.getId() + "password");
-                  console.log("http://" + window.location.host + "/album/" + album.getId() + "/view/" + album.getSecret() + "/");
-                  $("a#album-url").text("http://" + window.location.host + "/album/" + album.getId() + "/view/" + album.getSecret() + "/");
-                  $("a#album-url").attr("href", "http://" + window.location.host + "/album/" + album.getId()  + "/view/" + album.getSecret() + "/");
-                  $("a#album-url").css("cursor", "default");
-                  $("#mp-dialog-button-save").button("disable");
-                  $("#album-password")
-                     .on("keyup keypress", null, function () {
-                        if (this.value.length > 0) {
-                           $("#mp-dialog-button-save").button("enable");
-                        }
-                     })
-                     .on("keyup", null, "backspace", function () {
-                        if (this.value.length === 0) {
-                           $("#mp-dialog-button-save").button("disable");
-                        }
-                     });
+                  console.log("AppModelController : " + url);
+                  $url
+                     .text(url)
+                     .attr("href", url)
+                     .css("cursor", "default");
+
                },
                submit: function (formData) {
                   $.ajax({

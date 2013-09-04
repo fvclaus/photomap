@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-03 20:47+0200\n"
+"POT-Creation-Date: 2013-09-04 17:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,21 +18,23 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: static/js/keiken/main/AppController.js:264
+#: static/js/keiken/main/AppController.js:283
 msgid "INVALID_OPENED_PLACE"
-msgstr "Der Platz ist leider nicht verfügbar, eventuell wurde er bereits gelöscht. Bitte wenden Sie sich an den "
-"Besitzer des Albums."
+msgstr ""
+"Der Platz ist leider nicht verfügbar, eventuell wurde er bereits gelöscht. "
+"Bitte wenden Sie sich an den Besitzer des Albums."
 
-#: static/js/keiken/main/AppController.js:274
+#: static/js/keiken/main/AppController.js:293
 msgid "INVALID_LOADED_PHOTO"
-msgstr "Das Photo ist leider nicht verfügbar, eventuell wurde es bereits gelöscht. Bitte wenden Sie sich an den "
-"Besitzer des Albums."
+msgstr ""
+"Das Photo ist leider nicht verfügbar, eventuell wurde es bereits gelöscht. "
+"Bitte wenden Sie sich an den Besitzer des Albums."
 
-#: static/js/keiken/main/AppInitializer.js:82
+#: static/js/keiken/main/AppInitializer.js:83
 msgid "GET_ALBUM_ERROR"
 msgstr "Beim Laden des Albums trat folgender Fehler auf: "
 
-#: static/js/keiken/main/AppInitializer.js:86
+#: static/js/keiken/main/AppInitializer.js:87
 #: static/js/keiken/view/DialogView.js:190
 #: static/js/keiken/view/DialogView.js:259
 msgid "NETWORK_ERROR"
@@ -40,7 +42,7 @@ msgstr ""
 "Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
 
-#: static/js/keiken/presenter/MapPresenter.js:183
+#: static/js/keiken/presenter/MapPresenter.js:186
 msgid "MAP_NO_ALBUMS"
 msgstr ""
 "<p> Hallo du! Willkommen zu deinem eigenen Photoalbum! Ich habe das Gefühl, "
@@ -84,7 +86,7 @@ msgstr ""
 "solltest du die Maus aus der Karte heraus bewegen (auf den Kopf oder Fuß der "
 "Seite). </p>"
 
-#: static/js/keiken/presenter/MapPresenter.js:190
+#: static/js/keiken/presenter/MapPresenter.js:193
 msgid "MAP_NO_PLACES_ADMIN"
 msgstr ""
 "Uups, dieses Album hat noch keine Plätze. Sie können neue Plätze hinzufügen, "
@@ -94,7 +96,7 @@ msgstr ""
 "können Sie Fotos hinzufügen. Beachten Sie dafür die Tipps in der Galerie "
 "unter der Karte. "
 
-#: static/js/keiken/presenter/MapPresenter.js:192
+#: static/js/keiken/presenter/MapPresenter.js:195
 msgid "MAP_NO_PLACES_GUEST"
 msgstr ""
 "Oh weh! Da hat der Besitzer dieses Album mit dir geteilt und völlig "
@@ -121,11 +123,9 @@ msgstr ""
 "PNG Photos aus."
 
 #: static/js/keiken/util/PhotoFileValidator.js:62
-#, fuzzy
 msgid "LARGE_PHOTO_ERROR"
 msgstr ""
-"Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren Sie "
-"es zu einem späteren Zeitpunkt noch einmal."
+"Diese Bild ist sehr groß. Große Bilder brauchen sehr lange um zu laden. Bitte ziehen Sie in Betracht kleinere Bilder zu verwenden. Nähreres erfahren sie unter Hilfe." 
 
 #: static/js/keiken/view/DialogView.js:100
 msgid "YES"
@@ -187,38 +187,3 @@ msgstr ""
 "der Galerie unter der Karte, oder nutzen Sie die Navigationstasten links und "
 "rechts der Slideshow. Wenn Sie auf das aktuelle Bild in der Slideshow "
 "klicken, öffnet sich die Fullscreen-Ansicht des Bildes. "
-
-#~ msgid "REQUEST_UNKNOWN_FAIL"
-#~ msgstr ""
-#~ "Huch, da ist wohl was schief gelaufen. Bitte versuchen Sie es erneut. "
-#~ "Sollte dieser Fehler wieder erscheinen, nehmen Sie bitte mit uns Kontakt "
-#~ "auf!"
-
-#~ msgid "DELETE_ACCOUNT_CONFIRM"
-#~ msgstr ""
-#~ "Wollen Sie Ihren Account wirklich löschen? Der Vorgang kann nicht mehr "
-#~ "rückgängig gemacht werden. "
-
-#~ msgid "COPIED_TO_CLIPBOARD"
-#~ msgstr "Text wurde in die Zwischenablage kopiert!"
-
-#~ msgid "LOGIN_INVALID"
-#~ msgstr "Bitte überprüfen Sie ihre Eingaben und versuchen Sie es erneut. "
-
-#~ msgid "LOGIN_FORM_INVALID"
-#~ msgstr ""
-#~ "Sie haben ungültige Eingaben gemacht. Bitte überprüfen Sie ihre Eingaben "
-#~ "und versuchen Sie es erneut. Falls dieser Fehler mit ihren normalen Login-"
-#~ "Daten erscheint, kontaktieren Sie bitte den Support."
-
-#~ msgid "LOGIN_USER_INACTIVE"
-#~ msgstr ""
-#~ "Ihr Account ist leider nicht aktiv. Bitte wenden Sie sich an den Support. "
-
-#~ msgid "NO_DESCRIPTION"
-#~ msgstr "Es ist keine Beschreibung vorhanden."
-
-#~ msgid "INITIALISATION_NOT_POSSIBLE"
-#~ msgstr ""
-#~ "Die Applikation konnte leider nicht gestartet werden. Bitte wenden Sie "
-#~ "sich an den Kundensupport. Wir entschuldigen uns für das Ärgernis."

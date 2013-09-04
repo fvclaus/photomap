@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-03 20:46+0200\n"
+"POT-Creation-Date: 2013-09-04 13:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,100 +17,57 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: pm/form/account.py:22
-#, fuzzy
 msgid "PASSWORD_REPETITION_ERROR"
-msgstr ""
-"Hi there,\n"
-"\n"
-"\n"
-"Someone requested a password-reset for your user account at KEIKEN.\n"
-"\n"
-"To reset your password please follow the link below and choose a new "
-"password:"
+msgstr "The new password and its repetition do not match."
 
 #: pm/form/account.py:33
-#, fuzzy
 msgid "EMAIL_ALREADY_EXISTS_ERROR"
-msgstr ""
-"The email you've given matches the email connected to your user account. "
+msgstr "This email is already taken."
 
-#: pm/form/account.py:52 pm/view/message.py:38
+#: pm/form/account.py:52 pm/view/account.py:119 pm/view/message.py:30
 msgid "REQUEST_NOT_ALLOWED_ERROR"
-msgstr "You do not have permission for this request. "
+msgstr "This action is not allowed. "
 
-#: pm/view/account.py:101 pm/view/account.py:136
-#, fuzzy
-msgid "CREDENTIALS_ERROR"
-msgstr "We weren't able to process your request. Please try again. "
-
-#: pm/view/account.py:116
-#, fuzzy
-msgid "REQUEST_NOT_ALLOWED"
-msgstr "You do not have permission for this request. "
-
+#: pm/view/account.py:77 pm/view/account.py:105 pm/view/account.py:139
 #: pm/view/authentication.py:55
-#, fuzzy
-msgid "PASSWORD_OR_EMAIL_WRONG"
-msgstr ""
-"Hi there,\n"
-"\n"
-"\n"
-"Someone requested a password-reset for your user account at KEIKEN.\n"
-"\n"
-"To reset your password please follow the link below and choose a new "
-"password:"
+msgid "CREDENTIALS_ERROR"
+msgstr "Email and password do not match. Please check again."
 
 #: pm/view/footer.py:29
-#, fuzzy
 msgid "MAIL_ERROR"
 msgstr ""
-"The email you've given matches the email connected to your user account. "
+"An error occured while sending the email. Please try again later or use our "
+"email address above. "
 
 #: pm/view/message.py:26
-msgid "REQUEST_FAIL_ERROR"
-msgstr "We weren't able to process your request. Please try again. "
-
-#: pm/view/message.py:30
-msgid "FORM_INVALID_ERROR"
-msgstr ""
-"The data you inserted into the form seems to be invalid. Please make sure "
-"your input has the correct format for the given input field. Eg. an email "
-"input field accepts just an email address as input. "
-
-#: pm/view/message.py:34
 msgid "USER_INACTIVE_ERROR"
 msgstr ""
 "Your account is currently inactive. Please contact the KEIKEN-Team for more "
 "information."
 
-#: templates/404.html:6
-#, fuzzy
+#: templates/404.html:6 templates/album-share-failure.html:6
+#: templates/album-share-failure.html:8
 msgid "Error"
-msgstr "Login Error"
+msgstr "Error"
 
 #: templates/404.html:8
-msgid "Invalid URL"
-msgstr ""
+msgid "INVALID_URL"
+msgstr "This URL does not exist."
 
 #: templates/404.html:14
 msgid "INVALID_URL_ERROR"
-msgstr "The given URL is invalid."
+msgstr ""
+"You are seeing this page, because the requested URL does not exist. If you "
+"believe this is a mistake on our part, please drop us an email via the "
+"contact page. Don't forget to mention where you got the link from.\n"
+"Thanks!"
 
 #: templates/album-share-failure.html:11
-#, fuzzy
 msgid "ALBUM_SHARE_FAILURE_NOTE"
 msgstr ""
-"Copy the link and insert it wherever you want to share the album. (This can "
-"be an email, blog, status message on social networks or instant messengers.) "
-"Before sharing the album for the first time you need to define a password to "
-"protect it. Every visitor needs this password to confirm that he or she may "
-"see your album. Be aware that every time you change the password you need to "
-"notify all your contacts or else they won't have access to your album "
-"anymore. <strong>Visitors can just view your album but not change anything!</"
-"strong> <br /> <br /> By the way, the link is identical to the URL of the "
-"albumview of this album, which means that in case you opened an album you "
-"can just copy the url and share it, so long as you already defined a "
-"password."
+"This link does not refer to an existing album. Please make sure that the "
+"author of the album shared it by setting a password (albums start with no "
+"password) and providing the correct link."
 
 #: templates/album-share-login.html:7
 msgid "KEIKEN_GUEST_LOGIN"
@@ -227,9 +184,10 @@ msgstr "Legal Terms (Impressum)"
 #: templates/cookie-warning.html:4
 msgid "COOKIES_DISABLED_WARNING"
 msgstr ""
-"You have disabled cookies in your browser settings. KEIKEN uses cookies to authenticate your sessions "
-", so in order to use KEIKEN you have to activate it. Kindly refer to our privacy page for more information "
-"to KEIKENs use of cookies."
+"You have disabled cookies in your browser settings. KEIKEN uses cookies to "
+"authenticate your sessions , so in order to use KEIKEN you have to activate "
+"it. Kindly refer to our privacy page for more information to KEIKENs use of "
+"cookies."
 
 #: templates/dialog.html:10
 msgid "FAILURE"
@@ -361,29 +319,29 @@ msgid "Albumsansicht"
 msgstr "Albumview"
 
 #: templates/account/activation-complete.html:6
-#, fuzzy
 msgid "ACCOUNT_ACTIVATED"
-msgstr ""
-"Your account was deactivated. Please <a href='/contact'>contact the KEIKEN-"
-"Team</a> for more information. "
+msgstr "Account activated"
 
 #: templates/account/activation-complete.html:9
-#, fuzzy
 msgid "ACCOUNT_ACTIVATED_EXPLANATION"
 msgstr ""
-"Your account was deactivated. Please <a href='/contact'>contact the KEIKEN-"
-"Team</a> for more information. "
+"Your account has been activated successfully. You can now log in aand use "
+"KEIKEN. If you have trouble, use the contact form. Thanks for signing up!"
 
 #: templates/account/activation-error.html:7
-#, fuzzy
 msgid "ACTIVATION_ERROR"
-msgstr ""
-"Your account is currently inactive. Please contact the KEIKEN-Team for more "
-"information."
+msgstr "Activation error"
 
 #: templates/account/activation-error.html:10
 msgid "ACTIVATION_ERROR_EXPLAINED"
 msgstr ""
+"Your activation key is either wrong or expired. If you waited longer than "
+"the period mentioned in the activation email, you can not activate your "
+"account anymore. Unactivated accounts will be collected and deleted every "
+"week. You can try to sign up again and in case registration fails, wait a "
+"day or two and try again. If your account activation has not expired yet, "
+"make sure that you are using the correct link. If everything fails, please "
+"use the contact page or write us an email. Thank you!"
 
 #: templates/account/active.html:6
 msgid "Account Info & Settings"
@@ -455,8 +413,9 @@ msgid "Update Email"
 msgstr "Update Email"
 
 #: templates/account/active.html:69 templates/account/delete.html:8
+#: templates/account/delete.html.py:11 templates/account/delete.html:55
 msgid "DELETE_ACCOUNT"
-msgstr "Account Deletion"
+msgstr "Delete your account"
 
 #: templates/account/active.html:70
 msgid "Update Profile Picture"
@@ -536,26 +495,24 @@ msgstr "Enter your new email.."
 
 #: templates/account/active.html:124
 msgid "ACCOUNTS_TEST_USER_INFO"
-msgstr "This is just a test-account. You cannot modify any settings. "
+msgstr "This is just a test account. You cannot modify any settings. "
 
 #: templates/account/base.html:7 templates/account/delete.html:6
 msgid "Account"
 msgstr "Account"
 
 #: templates/account/delete-complete.html:6
-msgid "Account Deleted"
+msgid "ACCOUNT_DELETED"
 msgstr "Account Deleted"
 
 #: templates/account/delete-complete.html:9
-msgid "ACCOUNT_DELETE_EXPLANATION"
+msgid "ACCOUNT_DELETED_EXPLANATION"
 msgstr ""
-"Your account was successfully deleted. Too bad you decided to not continue using KEIKEN. "
-"We wish you exciting new adventures and experiences on your road through life and the inner strength to enjoy them! :) "
-"In case you ever feel the need for an app like KEIKEN again you are very welcome to register again!"
-
-#: templates/account/delete.html:11 templates/account/delete.html.py:55
-msgid "Delete Account"
-msgstr "Delete Account"
+"Your account was successfully deleted. Too bad you decided to not continue "
+"using KEIKEN. We wish you exciting new adventures and experiences on your "
+"road through life and the inner strength to enjoy them! :) In case you ever "
+"feel the need for an app like KEIKEN again you are very welcome to register "
+"again!"
 
 #: templates/account/delete.html:12
 msgid "DELETE_ACCOUNT_INFO"
@@ -608,9 +565,9 @@ msgstr "Account Inactive"
 #: templates/account/inactive.html:11
 msgid "ACCOUNT_INACTIVE_NOTIFY"
 msgstr ""
-"Your account is deactivated. If you have just registered please follow the link given "
-"in the activation-mail you received. Else please <a href='/contact'>contact the KEIKEN-"
-"Team</a> for more information. "
+"Your account is deactivated. If you have just registered please follow the "
+"link given in the activation-mail you received. Else please contact the "
+"KEIKEN-Team for more information. "
 
 #: templates/account/inactive.html:13
 msgid "ACCOUNT_NOT_INACTIVE_NOTIFY"
@@ -629,71 +586,57 @@ msgstr "Login Information"
 
 #: templates/account/login.html:10
 msgid "LOGIN_INFO"
-msgstr "Please enter your login-data on the right in order to sign in. In case "
-"you experience troubles with the login please contact the KEIKEN-Team."
+msgstr ""
+"Please enter your login-data on the right in order to sign in. In case you "
+"experience troubles with the login please contact the KEIKEN-Team."
 
 #: templates/account/registration-closed.html:6
 msgid "REGISTRATION_CLOSED"
-msgstr ""
+msgstr "Registration closed"
 
 #: templates/account/registration-closed.html:9
-#, fuzzy
 msgid "REGISTRATION_CLOSED_EXPLANATION"
 msgstr ""
-"A place is very similar to an album. It is linked to the map, represented by "
-"a marker, needs a title and has an option for a description. You need to "
-"create a place before being able to upload photos. All photos will get "
-"linked to the currently opened place. You can have as many places in an "
-"album as you want and theoretically there is no limit to the amount of "
-"photos a place can hold. We do in fact limit the webspace of each user, "
-"which then again limits the total amount of images a user can upload. (More "
-"under 'General'>'Webspace')"
+"Due to volume of request we have been receiving, we had to temporarily close "
+"the registration. Thanks for your interest in KEIKEN. Please come back at "
+"some later time. We hope to find a solution fast and open up the "
+"registration again."
 
 #: templates/account/registration-complete.html:6
 msgid "ACTIVATE_ACCOUNT"
-msgstr ""
+msgstr "Activate your account"
 
 #: templates/account/registration-complete.html:9
-#, fuzzy
 msgid "ACTIVATE_ACCOUNT_EXPLANATION"
 msgstr ""
-"A place is very similar to an album. It is linked to the map, represented by "
-"a marker, needs a title and has an option for a description. You need to "
-"create a place before being able to upload photos. All photos will get "
-"linked to the currently opened place. You can have as many places in an "
-"album as you want and theoretically there is no limit to the amount of "
-"photos a place can hold. We do in fact limit the webspace of each user, "
-"which then again limits the total amount of images a user can upload. (More "
-"under 'General'>'Webspace')"
+"You have successfully created an account. Now, all you need to do is look in "
+"your email inbox and click on the activation link that you received in your "
+"activation email."
 
 #: templates/account/registration.html:6
-#: templates/registration/registration_form.html:6
 msgid "REGISTRATION"
 msgstr "Registration"
 
 #: templates/account/registration.html:9
-#: templates/registration/registration_form.html:9
 msgid "Registration Information"
 msgstr "Registration Information"
 
 #: templates/account/registration.html:10
-#: templates/registration/registration_form.html:10
 msgid "REGISTRATION_INFO"
 msgstr ""
 "Please use the form on the right to sign up for KEIKEN. Please do provide "
-"your full name besides your email-adress as it simplifies the administration of your "
-"account. All personal data will not be shared with others and will just be visible for yourself. "
-"After the form is sent you'll receive an email with information on how to activate your account."
+"your full name besides your email-adress as it simplifies the administration "
+"of your account. All personal data will not be shared with others and will "
+"just be visible for yourself. After the form is sent you'll receive an email "
+"with information on how to activate your account."
 
 #: templates/account/reset-password-complete.html:6
-msgid "Reset Password Success"
-msgstr "Reset Password Success"
+msgid "RESET_PASSWORD_COMPLETE"
+msgstr "Password resetted"
 
 #: templates/account/reset-password-complete.html:10
-msgid "RESET_PASSWORD_COMPLETE"
-msgstr ""
-"Your new password has been set. You may go ahead and <a href='/account/auth/"
-"login'>log in</a> now."
+msgid "RESET_PASSWORD_COMPLETE_EXPLANATION"
+msgstr "Your new password has been set. You may go ahead and log in now."
 
 #: templates/account/reset-password-confirm.html:8
 msgid "Define New Password"
@@ -702,8 +645,9 @@ msgstr "Define New Password"
 #: templates/account/reset-password-confirm.html:10
 msgid "Link Invalid"
 msgstr ""
-"This link is not valid anymore. This may be the case if you used the link already, exceeded the usage-limit of the link, "
-"or requested a new link already. If you want to reset your password, you need to order another link."
+"This link is not valid anymore. This may be the case if you used the link "
+"already, exceeded the usage-limit of the link, or requested a new link "
+"already. If you want to reset your password, you need to order another link."
 
 #: templates/account/reset-password-confirm.html:18
 msgid "RESET_PASSWORD_GIVE_NEW_PASSWORD"
@@ -712,11 +656,11 @@ msgstr ""
 "errors and submit."
 
 #: templates/account/reset-password-confirm.html:44
-msgid "RESET_PASSWORD_FAILURE_H1"
+msgid "RESET_PASSWORD_ERROR"
 msgstr "Password reset not possible."
 
 #: templates/account/reset-password-confirm.html:45
-msgid "RESET_PASSWORD_FAILURE_P"
+msgid "RESET_PASSWORD_ERROR_EXPLANATION"
 msgstr ""
 "The password reset link was invalid, possibly because it has already been "
 "used or is outdated. Please request a new password reset."
@@ -806,9 +750,10 @@ msgstr ""
 #: templates/footer/contact-complete.html:5
 msgid "CONTACT_SUCCESS"
 msgstr ""
-"Thank you for your request. We'll try to answer as soon as possible! Kindly note that we are a small "
-"team of students, so please don't send the request again if we weren't able to answer for one or two days as "
-"it will make it harder for us to filter the original requests from fakes and duplicates."
+"Thank you for your request. We'll try to answer as soon as possible! Kindly "
+"note that we are a small team of students, so please don't send the request "
+"again if we weren't able to answer for one or two days as it will make it "
+"harder for us to filter the original requests from fakes and duplicates."
 
 #: templates/footer/contact.html:16
 msgid "Contact Information"
@@ -827,8 +772,7 @@ msgid "EMAIL_ONLY_WITH_JS"
 msgstr ""
 "The email address is encoded to prevent crawlers to abuse the address and "
 "therefor just viewable, if you have javascript enabled. Even without "
-"javascript you can reach us as easy by using the <a href='/contact' "
-"title='Contact us'>contact form</a>."
+"javascript you can reach us as easy by using the contact form."
 
 #: templates/footer/contact.html:28
 msgid "contact privacy note"
@@ -1088,11 +1032,13 @@ msgstr ""
 "JPG, which compresses images quite effective (most cameras already use this "
 "format!). Also you probably won't need photos of a size bigger than 8MP "
 "(=Megapixel) which is about 3264 x 2448. So you might want to think about "
-"scaling your pictures down to that size. If the 350Mb limit changes we will "
-"notify all our users. Right now there is no option to increase the amount of "
-"webspace for an account. That said, if you do need more space, please "
-"contact us and we will try to help you using your webspace more effectively "
-"or consider offering webspace-extensions after all."
+"scaling your pictures down to that size. We recommend scaling the largest "
+"side of your picture to 1200 pixels that will usually create photos of the "
+"size 0.3 - 0.7 Megabyte. If the 350Mb limit changes we will notify all our "
+"users. Right now there is no option to increase the amount of webspace for "
+"an account. That said, if you do need more space, please contact us and we "
+"will try to help you using your webspace more effectively or consider "
+"offering webspace-extensions after all."
 
 #: templates/footer/help.html:67
 msgid "TUTORIAL_COOKIES"
@@ -1291,11 +1237,12 @@ msgstr "Place or album is neither opened nor selected. All photos are visited."
 #: templates/footer/help.html:202 templates/footer/help.html.py:232
 msgid "TUTORIAL_SHARE_PP"
 msgstr ""
-"To share a place or a photo you first need to define a password for the album (-> dashboard "
-"mouseover on marker -> 'Share'-Option in Controls-Box). After that you can open a place and "
-"load a picture into the Slideshow, copy the URL (eg. http://www.keiken.de/album/1/view/ashsfOHsak"
-"aposkS89Skw/#!/place/3/photo/47) and share it with others. "
-"All your friends need to view the place/photo is the link and the password you set earlier."
+"To share a place or a photo you first need to define a password for the "
+"album (-> dashboard mouseover on marker -> 'Share'-Option in Controls-Box). "
+"After that you can open a place and load a picture into the Slideshow, copy "
+"the URL (eg. http://www.keiken.de/album/1/view/ashsfOHsakaposkS89Skw/#!/"
+"place/3/photo/47) and share it with others. All your friends need to view "
+"the place/photo is the link and the password you set earlier."
 
 #: templates/footer/help.html:205
 msgid "TUTORIAL_OPEN_PLACE"
@@ -1782,175 +1729,3 @@ msgstr "Update order of photos"
 #: templates/form/update/photos.html:11
 msgid "UPDATE_PHOTOS_CONFIRMATION"
 msgstr "Do you really want to update the photo order?"
-
-#~ msgid "Account Delete Failure"
-#~ msgstr "Account Delete Failure"
-
-#, fuzzy
-#~ msgid "ACCOUNT_DELETE_SUCCESS"
-#~ msgstr "You successfully changed your email adress."
-
-#~ msgid "Data Loading"
-#~ msgstr "The requested data is now loading. Please be patient!"
-
-#~ msgid "control-title delete"
-#~ msgstr "Delete"
-
-#~ msgid "control-title modify"
-#~ msgstr "Edit"
-
-#~ msgid "control-title share"
-#~ msgstr "Share"
-
-#~ msgid "Register"
-#~ msgstr "Register"
-
-#~ msgid "Welcome to Keiken"
-#~ msgstr "Welcome to Keiken"
-
-#~ msgid "LOGIN_GUEST_WELCOME_1"
-#~ msgstr ""
-#~ "Keiken is not a place to upload photos of temporary interest and meaning. "
-#~ "If you are looking for that, there are lots of social networks to do such "
-#~ "things. Keiken is also not the place to upload whole photo-folders. It is "
-#~ "not about unpersonal sharing of experiences or overwhelming your friends "
-#~ "and family by spamming them with photos."
-
-#~ msgid "LOGIN_GUEST_WELCOME_2"
-#~ msgstr ""
-#~ "Keiken structures your albums in places and photos. Each album can "
-#~ "contain as many places as you wish and each place can contain any number "
-#~ "of photos."
-
-#~ msgid "LOGIN_GUEST_WELCOME_3"
-#~ msgstr ""
-#~ "This may help you to experience the adventures and stories told by the "
-#~ "album more easily. Yes we are talking to you overloaded DCIM-Folder on "
-#~ "our digital camera. ;) Of course every adventure is different.! Therefor "
-#~ "a place can be as big as a country eg. when you travel around the world. "
-#~ "Or it can be as small as an interesting sight when visiting a city."
-
-#~ msgid "LOGIN_GUEST_WELCOME_4"
-#~ msgstr ""
-#~ "Photos are.. well photos and not actual experiences. But nevertheless "
-#~ "photos do tell of experiences and we try to give those photos the meaning "
-#~ "they actually have. This is why a title is mandatory for all photos - "
-#~ "firm look at 'IMG_13072013_1718.JPG' - and of course it would be great if "
-#~ "you would also use the optional description-box to tell about your own "
-#~ "experiences."
-
-#~ msgid "LOGIN_GUEST_WELCOME_5"
-#~ msgstr ""
-#~ "We hope you still know photo-albums. That were those nice dusty big "
-#~ "books, which you had to look at with your parents and family after big "
-#~ "trips."
-
-#~ msgid "LOGIN_GUEST_WELCOME_6"
-#~ msgstr ""
-#~ "We did a little dusting and created a digital, dust-repelling, "
-#~ "interactive version of those albums and give you the opportunity to "
-#~ "document your journeys and to give everybody you want to share them with "
-#~ "the chance to 'listen' and experience your experiences."
-
-#~ msgid "Zum Login"
-#~ msgstr "Sign in"
-
-#~ msgid "Login Error"
-#~ msgstr "Login Error"
-
-#~ msgid "Previous Page"
-#~ msgstr "Previous Page"
-
-#~ msgid "Open Full Gallery"
-#~ msgstr "Open Full Gallery"
-
-#~ msgid "Next Page"
-#~ msgstr "Next Page"
-
-#~ msgid "Add Image"
-#~ msgstr "Add Image"
-
-#~ msgid "Previous Image"
-#~ msgstr "Previous Image"
-
-#~ msgid "Next Image"
-#~ msgstr "Next Image"
-
-#~ msgid "Bild"
-#~ msgstr "Image"
-
-#~ msgid "UPDATE_PHOTO"
-#~ msgstr "Update Photo"
-
-#~ msgid "UPDATE_PLACE"
-#~ msgstr "Update Place"
-
-#~ msgid "DELETE_ALBUM"
-#~ msgstr "Delete Album?"
-
-#~ msgid "DELETE_PHOTO"
-#~ msgstr "Delete Photo?"
-
-#~ msgid "DELETE_PHOTO_QUESTION"
-#~ msgstr "Do you really want to delete Photo "
-
-#~ msgid "DELETE_PLACE"
-#~ msgstr "Delete Place?"
-
-#~ msgid "DELETE_PLACE_QUESTION"
-#~ msgstr "Do you really want to delete Place "
-
-#~ msgid "To Login"
-#~ msgstr "Login"
-
-#, fuzzy
-#~ msgid "INPUT_OLD_PASSWORD"
-#~ msgstr ""
-#~ "Not necessary, if you've already defined a password for this album.."
-
-#, fuzzy
-#~ msgid "INPUT_NEW_PASSWORD"
-#~ msgstr ""
-#~ "Not necessary, if you've already defined a password for this album.."
-
-#, fuzzy
-#~ msgid "INPUT_CONFIRM_PASSWORD"
-#~ msgstr ""
-#~ "Not necessary, if you've already defined a password for this album.."
-
-#, fuzzy
-#~ msgid "INPUT_DELETE_USER_PASSWORD"
-#~ msgstr ""
-#~ "Not necessary, if you've already defined a password for this album.."
-
-#~ msgid "GALLERY_NOT_STARTED"
-#~ msgstr ""
-#~ "Please select a place by clicking on a marker on the map above in order "
-#~ "to start the gallery."
-
-#~ msgid "GALLERY_IS_EMPTY"
-#~ msgstr ""
-#~ "The selected place does not contain photos yet. You can add a photo by "
-#~ "dropping it into the gallery or using the 'Add Photo'-Button on the right "
-#~ "side."
-
-#~ msgid "Please choose a photo in your gallery to start the slideshow."
-#~ msgstr "Please choose a photo in your gallery to start the slideshow."
-
-#~ msgid "Login und Registrierung"
-#~ msgstr "Login and Registration"
-
-#~ msgid "Guest-Login"
-#~ msgstr "Guest-Login"
-
-#~ msgid "Alben"
-#~ msgstr "Albums"
-
-#~ msgid "Plätze"
-#~ msgstr "Places"
-
-#~ msgid "Galerie"
-#~ msgstr "Gallery"
-
-#~ msgid "Speichern"
-#~ msgstr "Save"

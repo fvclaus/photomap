@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-03 20:48+0200\n"
+"POT-Creation-Date: 2013-09-04 17:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,25 +16,27 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: static/js/keiken/main/AppController.js:264
+#: static/js/keiken/main/AppController.js:283
 msgid "INVALID_OPENED_PLACE"
-msgstr "The requested place is not available. It might be deleted. Please consult the owner of the album."
+msgstr ""
+"The requested place is not available. It might be deleted. Please consult "
+"the owner of the album."
 
-#: static/js/keiken/main/AppController.js:274
+#: static/js/keiken/main/AppController.js:293
 msgid "INVALID_LOADED_PHOTO"
 msgstr ""
 
-#: static/js/keiken/main/AppInitializer.js:82
+#: static/js/keiken/main/AppInitializer.js:83
 msgid "GET_ALBUM_ERROR"
 msgstr "The following error occurred while loading the album:  "
 
-#: static/js/keiken/main/AppInitializer.js:86
+#: static/js/keiken/main/AppInitializer.js:87
 #: static/js/keiken/view/DialogView.js:190
 #: static/js/keiken/view/DialogView.js:259
 msgid "NETWORK_ERROR"
 msgstr "A network error occurred. Please try again later."
 
-#: static/js/keiken/presenter/MapPresenter.js:183
+#: static/js/keiken/presenter/MapPresenter.js:186
 msgid "MAP_NO_ALBUMS"
 msgstr ""
 "<p> Hi there! I sense you must be new to KEIKEN since you have no albums, "
@@ -70,7 +72,7 @@ msgstr ""
 "It'll automatically open again once you move your mouse out of the map (onto "
 "header or footer). </p>"
 
-#: static/js/keiken/presenter/MapPresenter.js:190
+#: static/js/keiken/presenter/MapPresenter.js:193
 msgid "MAP_NO_PLACES_ADMIN"
 msgstr ""
 "Uups, you have no places yet! To add places to the opened album move the map "
@@ -79,7 +81,7 @@ msgstr ""
 "add photos to this place, check the gallery below for informations on how to "
 "do that."
 
-#: static/js/keiken/presenter/MapPresenter.js:192
+#: static/js/keiken/presenter/MapPresenter.js:195
 msgid "MAP_NO_PLACES_GUEST"
 msgstr ""
 "Oh dear! The owner shared this album with you, but didn't add any places or "
@@ -101,9 +103,10 @@ msgid "EXTENSION_NOT_SUPPORTED"
 msgstr "Currently there is support for only JPEG and PNG photos."
 
 #: static/js/keiken/util/PhotoFileValidator.js:62
-#, fuzzy
 msgid "LARGE_PHOTO_ERROR"
-msgstr "The requested image couldn't be loaded. Please try again later."
+msgstr ""
+"This photo is large. Large photos take a long time to load. Please consider "
+"using photo that are smaller than one megabyte. For more information go to Help."
 
 #: static/js/keiken/view/DialogView.js:100
 msgid "YES"
@@ -163,38 +166,3 @@ msgstr ""
 "the map or use the navigation-buttons at the side of the slideshow. When you "
 "click on the current photo in the slideshow, a fullscreen-view of the photo "
 "will open. "
-
-#~ msgid "REQUEST_UNKNOWN_FAIL"
-#~ msgstr ""
-#~ "Uups. Something went wrong and we don't know what! Please try again, if "
-#~ "you get this message another time, please contact support. "
-
-#~ msgid "DELETE_ACCOUNT_CONFIRM"
-#~ msgstr ""
-#~ "Are you sure you want to delete the account? This can't be undone later "
-#~ "on. "
-
-#~ msgid "COPIED_TO_CLIPBOARD"
-#~ msgstr "Text was copied successfully to your clipboard!"
-
-#~ msgid "LOGIN_INVALID"
-#~ msgstr "Please check your email and password and submit again."
-
-#~ msgid "LOGIN_FORM_INVALID"
-#~ msgstr ""
-#~ "You used invalid input in the login form. Please check your email and "
-#~ "password. If you get this error message with your valid login-data please "
-#~ "contact the support. "
-
-#~ msgid "LOGIN_USER_INACTIVE"
-#~ msgstr ""
-#~ "Your account is not active. Please contact the support for more "
-#~ "information. "
-
-#~ msgid "NO_DESCRIPTION"
-#~ msgstr "There's no description available."
-
-#~ msgid "INITIALISATION_NOT_POSSIBLE"
-#~ msgstr ""
-#~ "The application failed to start. Please contact the support. We apologize "
-#~ "for any inconvenience this might cause!"

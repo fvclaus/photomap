@@ -138,7 +138,7 @@ album_patterns = patterns("pm.view.album",
                            method_mapper(r'^(?P<album_id>\d+)/$', "album", get = album.get, post = album.update, delete = album.delete),
                            url(r'^(?P<album_id>\d+)/view/(?P<secret>.+)/$', "view"),
                            url(r'^(?P<album_id>\d+)/password$', "update_password"),  # accepts only POST
-                           url(r'^album/demo$', "demo")
+                           url(r'^demo$', "demo")
                            )
 #================================================================
 # place hooks

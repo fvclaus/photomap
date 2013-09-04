@@ -209,17 +209,22 @@ define(["dojo/_base/declare"],
                top = this.$container.position().top;
                left = this.$container.position().left;
             }
-            this.$infoText.css({
-               "top" : top,
-               "left": left,
-               "z-index": zIndex + 1
-            });
+            //TODO this is sometimes null when called from the window.resize event. Why?
+            if (this.$infoText) {
+               this.$infoText.css({
+                  "top" : top,
+                  "left": left,
+                  "z-index": zIndex + 1
+               });
+            }
          },
          _resize : function () {
-            this.$infoText.css({
-               "maxWidth" : this.$container.outerWidth(),
-               "maxHeight": this.$container.outerHeight()
-            });
+            if (this.$infoText) {
+               this.$infoText.css({
+                  "maxWidth" : this.$container.outerWidth(),
+                  "maxHeight": this.$container.outerHeight()
+               });
+            }
          },
          _bindResizeListener : function () {
             var instance = this;

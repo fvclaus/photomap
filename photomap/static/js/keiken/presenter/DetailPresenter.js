@@ -13,6 +13,9 @@ define([
          constructor : function (view, isSlider) {
             this.isSlider = isSlider;
          },
+         removeAddDescriptionLink : function () {
+            this.view.removeAddDescriptionLink();
+         },
          hideDetail : function () {
             this.view.hideDetail();
          },

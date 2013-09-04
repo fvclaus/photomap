@@ -74,6 +74,13 @@ define(["dojo/_base/declare"],
          centerElement : function ($element, direction) {
             assertTrue(direction === "vertical" || direction === "horizontal", "direction has to be either vertical or horizontal");
       
+            // Element not loaded yet. Centering now will push the element to the middle.
+            // This will make it overlap with elements below depending on css overflow setting.
+            // In any case this is probably not the intended effect and much worse than not centering at all.
+            if ($element.height() === 0 && $element.width() === 0) {
+               return;
+            }
+
             var margin = 0, 
                 $parent = $element.parent(),
                 heightDifference = $parent.height() - $element.height(),

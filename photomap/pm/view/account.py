@@ -28,7 +28,7 @@ from pm.model.photo import Photo
 
 from pm.form.account import UpdatePasswordForm, UpdateEmailForm, DeleteAccountForm, PasswordResetForm
 
-from message import success, error, request_fail_error, request_not_allowed_error
+from message import success, error, request_not_allowed_error
 
 import logging
 
@@ -74,7 +74,7 @@ def update_password(request):
             logger.info("User %d password updated." % user.id)
             return success()
         else:
-            return request_fail_error()
+            return error(_("CREDENTIALS_ERROR"))
     else:
         return error(str(form.errors))
 
@@ -83,6 +83,10 @@ def update_password(request):
 @require_POST
 @sensitive_post_parameters("confirm_password")
 def update_email(request):
+    # There is currently no system to confirm that the new email is actually valid.
+    # This is a problem because user might change their email to something invalid and thereby disguise their identity. 
+    return request_not_allowed_error()
+
     user = request.user
     if is_test_user(user):
         return request_not_allowed_error()
@@ -106,14 +110,13 @@ def update_email(request):
 @login_required
 @sensitive_post_parameters("user_password")
 def delete(request):
-    
     form = DeleteAccountForm()
 
     if request.method == "POST":
         user = request.user
         form = DeleteAccountForm(request.POST, auto_id = False)
         if is_test_user(request.user):
-            form.errors["__all__"] = form.error_class([_("REQUEST_NOT_ALLOWED")])
+            form.errors["__all__"] = form.error_class([_("REQUEST_NOT_ALLOWED_ERROR")])
         elif form.is_valid():
             user_id = user.id
             user_email = form.cleaned_data["user_email"]

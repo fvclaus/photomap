@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-09-03 20:45+0200\n"
+"POT-Creation-Date: 2013-09-04 13:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,111 +18,58 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: pm/form/account.py:22
-#, fuzzy
 msgid "PASSWORD_REPETITION_ERROR"
-msgstr ""
-"Guten Tag,\n"
-"\n"
-"\n"
-"jemand hat eine Zurücksetzung des Passworts für Ihren User Account bei "
-"KEIKEN beantragt.\n"
-"\n"
-"Um Ihr aktuelles Passwort zurückzusetzen, gehen folgen Sie bitte dem Link "
-"und bestimmen Sie ein neues Passwort:"
+msgstr "Das neue Passwort und die Passwortwiederholung stimment nicht überein."
 
 #: pm/form/account.py:33
-#, fuzzy
 msgid "EMAIL_ALREADY_EXISTS_ERROR"
-msgstr ""
-"Die von Ihnen angegebene Email-Adresse entspricht der bei uns bereits "
-"gespeicherten."
+msgstr "Diese Email ist bereits registriert."
 
-#: pm/form/account.py:52 pm/view/message.py:38
+#: pm/form/account.py:52 pm/view/account.py:119 pm/view/message.py:30
 msgid "REQUEST_NOT_ALLOWED_ERROR"
-msgstr "Für diese Anfrage fehlt es Ihnen an der nötigen Berechtigung. "
+msgstr "Diese Aktion ist nicht erlaubt. "
 
-#: pm/view/account.py:101 pm/view/account.py:136
-#, fuzzy
+#: pm/view/account.py:77 pm/view/account.py:105 pm/view/account.py:139
+#: pm/view/authentication.py:55
 msgid "CREDENTIALS_ERROR"
 msgstr ""
-"Die Anfrage konnte leider nicht verarbeitet werden. Überprüfen Sie ihre "
-"Daten und versuchen Sie es erneut. "
-
-#: pm/view/account.py:116
-#, fuzzy
-msgid "REQUEST_NOT_ALLOWED"
-msgstr "Für diese Anfrage fehlt es Ihnen an der nötigen Berechtigung. "
-
-#: pm/view/authentication.py:55
-#, fuzzy
-msgid "PASSWORD_OR_EMAIL_WRONG"
-msgstr ""
-"Guten Tag,\n"
-"\n"
-"\n"
-"jemand hat eine Zurücksetzung des Passworts für Ihren User Account bei "
-"KEIKEN beantragt.\n"
-"\n"
-"Um Ihr aktuelles Passwort zurückzusetzen, gehen folgen Sie bitte dem Link "
-"und bestimmen Sie ein neues Passwort:"
+"Email und Password stimmen nicht überein. Bitte versuchen Sie es erneut. "
 
 #: pm/view/footer.py:29
-#, fuzzy
 msgid "MAIL_ERROR"
 msgstr ""
-"Die von Ihnen angegebene Email-Adresse entspricht der bei uns bereits "
-"gespeicherten."
+"Beim Senden der Email ist ein Fehler aufgetreten. Bitte versuchen Sie es "
+"später erneute oder schicken Sie uns persönlich eine Email."
 
 #: pm/view/message.py:26
-msgid "REQUEST_FAIL_ERROR"
-msgstr ""
-"Die Anfrage konnte leider nicht verarbeitet werden. Überprüfen Sie ihre "
-"Daten und versuchen Sie es erneut. "
-
-#: pm/view/message.py:30
-msgid "FORM_INVALID_ERROR"
-msgstr ""
-"Bei der Verarbeitung der von Ihnen ins Formular eingegebenen Daten trat ein "
-"Fehler auf. Bitte stellen Sie sicher, dass ein den entsprechenden Feldern "
-"auch nur passende Eingaben gemacht werden. Bsp: In ein Email-Feld muss auch "
-"eine Email-Adresse stehen. "
-
-#: pm/view/message.py:34
 msgid "USER_INACTIVE_ERROR"
 msgstr ""
 "Ihr Nutzer-Account is momentan inaktiv. Bitte kontaktieren Sie das KEIKEN "
 "Team für mehr Informationen. "
 
-#: templates/404.html:6
-#, fuzzy
+#: templates/404.html:6 templates/album-share-failure.html:6
+#: templates/album-share-failure.html:8
 msgid "Error"
-msgstr "Fehler bei der Anmeldung"
+msgstr "Fehler"
 
 #: templates/404.html:8
-msgid "Invalid URL"
-msgstr ""
+msgid "INVALID_URL"
+msgstr "Diese Addresse existiert nicht."
 
 #: templates/404.html:14
 msgid "INVALID_URL_ERROR"
-msgstr "Die angegebene URL ist ungültig."
+msgstr ""
+"Sie sehen diese Seite, weil die von ihnen angefrage Addresse nicht "
+"existiert. Wenn Sie glauben, dass wir einen Fehler gemacht haben, dann "
+"informieren Sie uns über das Kontakt Formular. Bitte vergessen Sie nicht zu "
+"erwähnen, woher Sie die fehlerhafte Addresse bezogen haben."
 
 #: templates/album-share-failure.html:11
-#, fuzzy
 msgid "ALBUM_SHARE_FAILURE_NOTE"
 msgstr ""
-"Kopieren Sie den Link und fügen Sie ihn an der Stelle ein, an der Sie ihr "
-"Album mit anderen teilen wollen. (Das kann zB. eine Email, ein Blog, ein "
-"Statusnachricht bei ihrem sozialen Netzwerk oder Instant Messenger sein.) "
-"Vor dem ersten Teilen müssen Sie ein Passwort festlegen, welches Besucher "
-"Ihres Albums benötigen um die Berechtigung zum Ansehen ihres Albums zu "
-"bestätigen. Jedes Mal wenn Sie ein neues Passwort festlegen, müssen Sie Ihre "
-"Freunde und Verwandten über die Änderung informieren, gesetzt den Fall, das "
-"diese weiterhin Zugriff auf das Album haben sollen. <strong>Besucher Ihres "
-"Album können ihr Album nur ansehen, aber nichts verändern!</strong> <br /> "
-"<br /> Nebenbei bemerkt: Der Link ist identisch mit der URL der "
-"Albumsansicht des Albums, wenn sie also bereits ein Passwort festgelegt "
-"haben und ein ALbum geöffnet haben, können Sie einfach die URL kopieren und "
-"teilen."
+"Diese Addresse gehört zu keinen Album. Bitte stellen Sie sicher, dass der "
+"Autor des Album ein Password gesetzt hat (Alben starten ohnen Password) und "
+"ihnen die richtige Addresse übergegeben hat."
 
 #: templates/album-share-login.html:7
 msgid "KEIKEN_GUEST_LOGIN"
@@ -240,10 +187,10 @@ msgstr "Impressum"
 #: templates/cookie-warning.html:4
 msgid "COOKIES_DISABLED_WARNING"
 msgstr ""
-"Sie haben Cookies in Ihren Browsereinstellungen deaktiviert. KEIKEN nutzt Cookies, "
-"um Ihre Sitzung zu authentifizieren, bitte aktivieren Sie also Cookies auf KEIKEN. "
-"Sie können auf unserer Seite zur Privatssphäre nachlesen, was für Cookies auf KEIKEN "
-"verwendet werden."
+"Sie haben Cookies in Ihren Browsereinstellungen deaktiviert. KEIKEN nutzt "
+"Cookies, um Ihre Sitzung zu authentifizieren, bitte aktivieren Sie also "
+"Cookies auf KEIKEN. Sie können auf unserer Seite zur Privatssphäre "
+"nachlesen, was für Cookies auf KEIKEN verwendet werden."
 
 #: templates/dialog.html:10
 msgid "FAILURE"
@@ -377,29 +324,33 @@ msgid "Albumsansicht"
 msgstr "Albumsansicht"
 
 #: templates/account/activation-complete.html:6
-#, fuzzy
 msgid "ACCOUNT_ACTIVATED"
-msgstr ""
-"Ihr Account wurde deaktiviert. Bitte <a href='/contact'>wenden Sie sich an "
-"das KEIKEN-Team</a> für mehr Informationen."
+msgstr "Account aktiviert"
 
 #: templates/account/activation-complete.html:9
-#, fuzzy
 msgid "ACCOUNT_ACTIVATED_EXPLANATION"
 msgstr ""
-"Ihr Account wurde deaktiviert. Bitte <a href='/contact'>wenden Sie sich an "
-"das KEIKEN-Team</a> für mehr Informationen."
+"Ihr Account wurde erfolgreich aktiviert. Sie können sich nun einloggen und "
+"KEIKEN benutzten. Wenn Sie Probleme haben, dann benutzten Sie bitte unser "
+"Kontakt Formular. Danke das Sie KEIKEN benutzten."
 
 #: templates/account/activation-error.html:7
-#, fuzzy
 msgid "ACTIVATION_ERROR"
-msgstr ""
-"Ihr Nutzer-Account is momentan inaktiv. Bitte kontaktieren Sie das KEIKEN "
-"Team für mehr Informationen. "
+msgstr "Aktivierungsfehler"
 
 #: templates/account/activation-error.html:10
 msgid "ACTIVATION_ERROR_EXPLAINED"
 msgstr ""
+"Ihr Aktivierungsschlüssel ist entweder abgelaufen oder falsch. Wenn Sie "
+"länger als die Aktivierungsperiode, die in der Aktivierungsemail genannt "
+"wurde, gewartet haben, dann können Sie ihren Account nicht mehr aktivieren."
+"Nicht aktivierte Accounts werden wöchentlich gesammelt und gelöscht.Sie "
+"können versuchen sich neu zu registrieren und im Falle, das die "
+"Registrierung fehlschlägt, ein paar Tage warten.Wenn ihr "
+"Aktivierungsschlüssel nicht abgelaufen ist, dann stellen Sie bitte sicher, "
+"dass die eingegebene Addresse korrekt ist. Falls keine der Lösung "
+"funktionert, dann wenden Sie sich bitte an uns und benutzten das Kontakt "
+"Formular."
 
 #: templates/account/active.html:6
 msgid "Account Info & Settings"
@@ -471,6 +422,7 @@ msgid "Update Email"
 msgstr "Email ändern"
 
 #: templates/account/active.html:69 templates/account/delete.html:8
+#: templates/account/delete.html.py:11 templates/account/delete.html:55
 msgid "DELETE_ACCOUNT"
 msgstr "Account löschen"
 
@@ -563,21 +515,17 @@ msgid "Account"
 msgstr "Account"
 
 #: templates/account/delete-complete.html:6
-msgid "Account Deleted"
+msgid "ACCOUNT_DELETED"
 msgstr "Account gelöscht"
 
 #: templates/account/delete-complete.html:9
-#, fuzzy
-msgid "ACCOUNT_DELETE_EXPLANATION"
+msgid "ACCOUNT_DELETED_EXPLANATION"
 msgstr ""
-"Ihr Account wurder erfolgreich gelöscht. Schade dass Sie sich gegen die weitere Nutzung von "
-"KEIKEN entschieden haben. Wir wünschen Ihnen weiterhin eine spannende und erfahrungsreiche Reise "
-"durch Ihr Leben und zudem die innere Stärke diese Reise gut zu bewältigen. Sollten Sie jemals wieder "
-"eine App wie KEIKEN benötigen, sind natürlich gerne willkommen!"
-
-#: templates/account/delete.html:11 templates/account/delete.html.py:55
-msgid "Delete Account"
-msgstr "Account löschen"
+"Ihr Account wurder erfolgreich gelöscht. Schade dass Sie sich gegen die "
+"weitere Nutzung von KEIKEN entschieden haben. Wir wünschen Ihnen weiterhin "
+"eine spannende und erfahrungsreiche Reise durch Ihr Leben und zudem die "
+"innere Stärke diese Reise gut zu bewältigen. Sollten Sie jemals wieder eine "
+"App wie KEIKEN benötigen, sind natürlich gerne willkommen!"
 
 #: templates/account/delete.html:12
 msgid "DELETE_ACCOUNT_INFO"
@@ -630,9 +578,10 @@ msgstr "Account Inaktiv"
 #: templates/account/inactive.html:11
 msgid "ACCOUNT_INACTIVE_NOTIFY"
 msgstr ""
-"Ihr Account ist deaktiviert. Falls Sie sich neu registriert haben, folgen Sie den "
-"Andweisung in der Ihnen zugeschickten Aktivierungs-Email. Ansonsten wenden Sie sich "
-"bitte <a href='/contact'>an das KEIKEN-Team</a> für mehr Informationen."
+"Ihr Account ist deaktiviert. Falls Sie sich neu registriert haben, folgen "
+"Sie den Andweisung in der Ihnen zugeschickten Aktivierungs-Email. Ansonsten "
+"wenden Sie sich bitte <a href='/contact'>an das KEIKEN-Team</a> für mehr "
+"Informationen."
 
 #: templates/account/inactive.html:13
 msgid "ACCOUNT_NOT_INACTIVE_NOTIFY"
@@ -653,69 +602,58 @@ msgstr "Informationen zum Login"
 #: templates/account/login.html:10
 msgid "LOGIN_INFO"
 msgstr ""
-"Bitte geben Sie rechts Ihre Login-Daten ein. Sollten Sie Probleme beim Login haben, "
-"nehmen Sie bitte mit dem KEIKEN-Team Kontakt auf."
+"Bitte geben Sie rechts Ihre Login-Daten ein. Sollten Sie Probleme beim Login "
+"haben, nehmen Sie bitte mit dem KEIKEN-Team Kontakt auf."
 
 #: templates/account/registration-closed.html:6
 msgid "REGISTRATION_CLOSED"
 msgstr ""
 
 #: templates/account/registration-closed.html:9
-#, fuzzy
 msgid "REGISTRATION_CLOSED_EXPLANATION"
 msgstr ""
-"Plätze gleichen Alben. Sie sind mit der Karte verbunden, werden durch einen "
-"Marker repräsentiert und haben einen Titel und optional auch eine "
-"Beschreibung. Sie müssen einen Platz erstellen, bevor Sie Bilder hochladen "
-"können. Jedes hochgeladene Photo wird zum aktuellen Platz hinzugefügt. Die "
-"Anzahl an Plätzen ist unbegrenzt, auch die Anzahl der Fotos die ein Platz "
-"halten kann ist theoretisch ungegrenzt. Wir limitieren, jedoch den "
-"Speicherplatz eines jeden Users , wodurch auch die Gesamtanzahl an Bildern "
-"begrenzt wird. (Näheres unter 'Allgemeines'>'Speicherplatz')"
+"Aufgrund der Anzahl der Anfragen mussten wir die Registrierung vorübergehend "
+"schließen. Vielen Dank für Interesse an KEIKEN. Bitte versuchen Sie es in "
+"ein paar Tagen nochmal. Wir hoffen, dass wir schnell eine Lösung finden "
+"können, um die Registrierung wieder zu öffnen."
 
 #: templates/account/registration-complete.html:6
 msgid "ACTIVATE_ACCOUNT"
 msgstr ""
 
 #: templates/account/registration-complete.html:9
-#, fuzzy
 msgid "ACTIVATE_ACCOUNT_EXPLANATION"
 msgstr ""
-"Plätze gleichen Alben. Sie sind mit der Karte verbunden, werden durch einen "
-"Marker repräsentiert und haben einen Titel und optional auch eine "
-"Beschreibung. Sie müssen einen Platz erstellen, bevor Sie Bilder hochladen "
-"können. Jedes hochgeladene Photo wird zum aktuellen Platz hinzugefügt. Die "
-"Anzahl an Plätzen ist unbegrenzt, auch die Anzahl der Fotos die ein Platz "
-"halten kann ist theoretisch ungegrenzt. Wir limitieren, jedoch den "
-"Speicherplatz eines jeden Users , wodurch auch die Gesamtanzahl an Bildern "
-"begrenzt wird. (Näheres unter 'Allgemeines'>'Speicherplatz')"
+"Sie haben erfolgreich einen Account erstellt. Jetzt müssen Sie nur noch "
+"ihren Account aktivieren. Klicken Sie hierzu auf den Aktivierungslink, der "
+"ihnen in der Aktivierungsemail zugeschickt wurde."
 
 #: templates/account/registration.html:6
-#: templates/registration/registration_form.html:6
 msgid "REGISTRATION"
 msgstr "Registration"
 
 #: templates/account/registration.html:9
-#: templates/registration/registration_form.html:9
 msgid "Registration Information"
 msgstr "Informationen zur Registrierung"
 
 #: templates/account/registration.html:10
-#: templates/registration/registration_form.html:10
 msgid "REGISTRATION_INFO"
 msgstr ""
-"Nutzen Sie das Formular auf der rechten Seite um einen KEIKEN-Account zu erstellen. "
-"Bitte geben Sie dafür ausser Ihrer Email-Adresse auch Ihren vollen Namen an. Die von Ihnen "
-"angegebenen Daten werden nur für die Verwaltung Ihres Accounts genutzt und können von keinem ausser "
-"Ihnen selbst gesehen werden. <br /><br /> "
-"Nach dem Absenden des Formular, bekommen Sie eine Email welche Details zur Aktivierung ihres Accounts enthält. "
+"Nutzen Sie das Formular auf der rechten Seite um einen KEIKEN-Account zu "
+"erstellen. Bitte geben Sie dafür ausser Ihrer Email-Adresse auch Ihren "
+"vollen Namen an. Die von Ihnen angegebenen Daten werden nur für die "
+"Verwaltung Ihres Accounts genutzt und können von keinem ausser Ihnen selbst "
+"gesehen werden. <br /><br /> Nach dem Absenden des Formular, bekommen Sie "
+"eine Email welche Details zur Aktivierung ihres Accounts enthält. "
 
 #: templates/account/reset-password-complete.html:6
-msgid "Reset Password Success"
-msgstr "Passwort zurücksetzen - Erfolg"
+msgid "RESET_PASSWORD_COMPLETE"
+msgstr ""
+"Ihr Password wurde erfolgreich geändert. Sie können Sich nun <a href='/"
+"account/auth/login'>einloggen</a>. "
 
 #: templates/account/reset-password-complete.html:10
-msgid "RESET_PASSWORD_COMPLETE"
+msgid "RESET_PASSWORD_COMPLETE_EXPLANATION"
 msgstr ""
 "Ihr Password wurde erfolgreich geändert. Sie können Sich nun <a href='/"
 "account/auth/login'>einloggen</a>. "
@@ -727,10 +665,10 @@ msgstr "Passwort zurücksetzen - Bestätigung"
 #: templates/account/reset-password-confirm.html:10
 msgid "Link Invalid"
 msgstr ""
-"Der von Ihnen genutze Link ist leider ungültig. Dies kann der, wenn Sie "
-"den Link bereits einmal genutzt haben, die Nutzungs-Frist abgelaufen ist oder wenn Sie "
-"einen neuen Link angefordert haben. Falls Sie Ihr Passwort zurücksetzen möchten, "
-"fordern Sie bitte einen neuen Link an."
+"Der von Ihnen genutze Link ist leider ungültig. Dies kann der, wenn Sie den "
+"Link bereits einmal genutzt haben, die Nutzungs-Frist abgelaufen ist oder "
+"wenn Sie einen neuen Link angefordert haben. Falls Sie Ihr Passwort "
+"zurücksetzen möchten, fordern Sie bitte einen neuen Link an."
 
 #: templates/account/reset-password-confirm.html:18
 msgid "RESET_PASSWORD_GIVE_NEW_PASSWORD"
@@ -739,14 +677,16 @@ msgstr ""
 "zu vermeiden. "
 
 #: templates/account/reset-password-confirm.html:44
-msgid "RESET_PASSWORD_FAILURE_H1"
-msgstr "Passwort zurücksetzen nicht möglich."
+msgid "RESET_PASSWORD_ERROR"
+msgstr ""
+"Ihr Password wurde erfolgreich geändert. Sie können Sich nun <a href='/"
+"account/auth/login'>einloggen</a>. "
 
 #: templates/account/reset-password-confirm.html:45
-msgid "RESET_PASSWORD_FAILURE_P"
+msgid "RESET_PASSWORD_ERROR_EXPLANATION"
 msgstr ""
-"Der Link, um das Passwort zurück zu setzen ist entweder veraltet oder "
-"bereits genutzt worden. Bitte fordern Sie einen neuen an. "
+"Wir haben einen Link zum Zurücksetzen des Passworts an die von Ihnen "
+"angegebene Email-Adresse geschickt. Sie sollten sie in Kürze empfangen. "
 
 #: templates/account/reset-password-requested.html:6
 msgid "Reset Email Sent"
@@ -837,9 +777,10 @@ msgstr ""
 #: templates/footer/contact-complete.html:5
 msgid "CONTACT_SUCCESS"
 msgstr ""
-"Vielen Dank für Ihre Anfrage. Wir werden versuchen Ihnen möglichst bald zu antworten. "
-"Bitte bedenken Sie, dass wir nur ein kleines Team aus Studenten sind, und vermeiden es daher "
-"Ihre Anfrage erneut zu senden, sollten wir nicht in den nächsten zwei Tagen geantwortet haben. "
+"Vielen Dank für Ihre Anfrage. Wir werden versuchen Ihnen möglichst bald zu "
+"antworten. Bitte bedenken Sie, dass wir nur ein kleines Team aus Studenten "
+"sind, und vermeiden es daher Ihre Anfrage erneut zu senden, sollten wir "
+"nicht in den nächsten zwei Tagen geantwortet haben. "
 
 #: templates/footer/contact.html:16
 msgid "Contact Information"
@@ -1357,12 +1298,14 @@ msgstr ""
 #: templates/footer/help.html:202 templates/footer/help.html.py:232
 msgid "TUTORIAL_SHARE_PP"
 msgstr ""
-"Um Plätze oder Photos zu teilen, müssen Sie zuerst im Dashboard über die Album-Settings "
-"(öffnen sich beim Bewegen der Maus über den Marker) im 'Teilen'-Dialog dem Album ein Passwort "
-"geben. Danach können Sie einen beliebigen Platz öffnen oder ein Photo in die Slideshow laden "
-"und anschließend die URL (Adresse dieser Website Bsp: http://www.keiken.de/album/1/view/ashsfOHsak"
-"aposkS89Skw/#!/place/3/photo/47) kopieren und mit Ihren Bekannten teilen. Diese können über "
-"den Link und das von Ihnen bestimmte Passwort, das von Ihnen geteilte Photo, oder den Platz, ansehen."
+"Um Plätze oder Photos zu teilen, müssen Sie zuerst im Dashboard über die "
+"Album-Settings (öffnen sich beim Bewegen der Maus über den Marker) im "
+"'Teilen'-Dialog dem Album ein Passwort geben. Danach können Sie einen "
+"beliebigen Platz öffnen oder ein Photo in die Slideshow laden und "
+"anschließend die URL (Adresse dieser Website Bsp: http://www.keiken.de/"
+"album/1/view/ashsfOHsakaposkS89Skw/#!/place/3/photo/47) kopieren und mit "
+"Ihren Bekannten teilen. Diese können über den Link und das von Ihnen "
+"bestimmte Passwort, das von Ihnen geteilte Photo, oder den Platz, ansehen."
 
 #: templates/footer/help.html:205
 msgid "TUTORIAL_OPEN_PLACE"
@@ -1862,197 +1805,19 @@ msgstr "Bearbeiten der Photo-Reihenfolge"
 msgid "UPDATE_PHOTOS_CONFIRMATION"
 msgstr "Wollen Sie die neue Reihenfolge bestätigen?"
 
-#~ msgid "Account Delete Failure"
-#~ msgstr "Fehler beim Löschen des Accounts"
+#~ msgid "Account Deleted"
+#~ msgstr "Account gelöscht"
 
-#, fuzzy
-#~ msgid "ACCOUNT_DELETE_SUCCESS"
-#~ msgstr "Ihre Email wurde erfolgreich geändert. "
+#~ msgid "Delete Account"
+#~ msgstr "Account löschen"
 
-#~ msgid "Data Loading"
+#~ msgid "Reset Password Success"
+#~ msgstr "Passwort zurücksetzen - Erfolg"
+
+#~ msgid "RESET_PASSWORD_FAILURE_H1"
+#~ msgstr "Passwort zurücksetzen nicht möglich."
+
+#~ msgid "RESET_PASSWORD_FAILURE_P"
 #~ msgstr ""
-#~ "Die angefragten Daten werden momentan geladen. Bitte haben Sie einen "
-#~ "Moment Geduld!"
-
-#~ msgid "control-title delete"
-#~ msgstr "Löschen"
-
-#~ msgid "control-title modify"
-#~ msgstr "Bearbeiten"
-
-#~ msgid "control-title share"
-#~ msgstr "Teilen"
-
-#~ msgid "Register"
-#~ msgstr "Registrieren"
-
-#~ msgid "Welcome to Keiken"
-#~ msgstr "Hezlich Willkommen zu Keiken"
-
-#~ msgid "LOGIN_GUEST_WELCOME_1"
-#~ msgstr ""
-#~ "Keiken ist kein Ort, an dem man Bilder von vergänglichem Interesse. "
-#~ "Sollte man so etwas suchen, gibt es bereits genug Websites dafür. Keiken "
-#~ "ist auch nicht dafür da ganze Ordner voll mit Bildern einfach ins Web "
-#~ "hochzuladen. Es geht bei Keiken weder um unpersönliches Teilen von "
-#~ "Erfahrungen, noch um das Überwältigen der Bekannten und Verwandten, in "
-#~ "dem man sie mit einer Unmenge an Bildern überschwemmt."
-
-#~ msgid "LOGIN_GUEST_WELCOME_2"
-#~ msgstr ""
-#~ "Bei Keiken werden Alben in Plätze und Photos strukturiert. Jedes Album "
-#~ "kann beliebig viele Plätze beinhalten und jeder Platz beliebig viele "
-#~ "Photos.."
-
-#~ msgid "LOGIN_GUEST_WELCOME_3"
-#~ msgstr ""
-#~ "Das kann dabei helfen die Abenteuer und Geschichten, welche durch das "
-#~ "Album erzählt werden, besser zu erfahren. Ja wir meinen DICH überladener "
-#~ "DCIM-Ordner auf der Digitalkamera! ;) Aber natürlich ist jedes Abenteuer "
-#~ "anders! Ein Platz kann die Größe eines ganzen Landes haben, wenn man "
-#~ "beispielsweise auf einer Weltreise ist. Und bei einer Städtetour kann ein "
-#~ "Platz auch nur so groß wie eine besondere Sehenswürdigkeit sein."
-
-#~ msgid "LOGIN_GUEST_WELCOME_4"
-#~ msgstr ""
-#~ "Photos sind.. naja nur Photos halt und keine tatsächlich spürbare "
-#~ "Erfahrung. Trotzdem erzählen Bilder von Erfahrungen und wir versuchen die "
-#~ "Bedeutung der Bilder hervorzuheben. Darum ist es verpflichtend jedem Bild "
-#~ "einen Titel zu geben - nachdrücklicher Blick auf 'IMG_13072013_1718.JPG' "
-#~ "- und natürlich wäre es super, wenn man auch das optionale "
-#~ "Beschreibungsfeld ausnutzt um von seiner Reise zu erzählen. "
-
-#~ msgid "LOGIN_GUEST_WELCOME_5"
-#~ msgstr ""
-#~ "Wir hoffen Sie kennen noch Photo-Alben. Das sind die netten verstaubten "
-#~ "großen Bücher, die man sich als Kind immer mit den Eltern anschauen "
-#~ "musste."
-
-#~ msgid "LOGIN_GUEST_WELCOME_6"
-#~ msgstr ""
-#~ "Wir haben ein bisschen Staub gewischt und eine digitale, nicht "
-#~ "verstaubbare, interaktive Version dieser Alben erstellt und ermöglichen "
-#~ "Ihnen hier all Ihre Reisen festzuhalten und jedem dem Ihr Eure "
-#~ "Geschichten erzählen wollt die Möglichkeit zu geben 'zuzuhören' und Eure "
-#~ "Erfahrungen selbst zu erfahren."
-
-#~ msgid "Zum Login"
-#~ msgstr "Zur Anmeldung"
-
-#~ msgid "Login Error"
-#~ msgstr "Fehler bei der Anmeldung"
-
-#~ msgid "Previous Page"
-#~ msgstr "Vorherige Seite"
-
-#~ msgid "Open Full Gallery"
-#~ msgstr "Vollständige Galerie öffnen"
-
-#~ msgid "Next Page"
-#~ msgstr "Nächste Seite"
-
-#~ msgid "Add Image"
-#~ msgstr "Bild hinzufügen"
-
-#~ msgid "Previous Image"
-#~ msgstr "Vorheriges Bild"
-
-#~ msgid "Next Image"
-#~ msgstr "Nächstes Bild"
-
-#~ msgid "Bild"
-#~ msgstr "Bild"
-
-#~ msgid "UPDATE_PHOTO"
-#~ msgstr "Photo bearbeiten"
-
-#~ msgid "UPDATE_PLACE"
-#~ msgstr "Platz bearbeiten"
-
-#~ msgid "DELETE_ALBUM"
-#~ msgstr "Album löschen?"
-
-#~ msgid "DELETE_PHOTO"
-#~ msgstr "Photo löschen?"
-
-#~ msgid "DELETE_PHOTO_QUESTION"
-#~ msgstr "Wollen Sie das folgende Photo wirklich löschen: "
-
-#~ msgid "DELETE_PLACE"
-#~ msgstr "Platz löschen?"
-
-#~ msgid "DELETE_PLACE_QUESTION"
-#~ msgstr "Wollen Sie den folgenden Platz wirklich löschen: "
-
-#~ msgid "To Login"
-#~ msgstr "Anmeldung"
-
-#, fuzzy
-#~ msgid "INPUT_OLD_PASSWORD"
-#~ msgstr ""
-#~ "Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt "
-#~ "haben.."
-
-#, fuzzy
-#~ msgid "INPUT_NEW_PASSWORD"
-#~ msgstr ""
-#~ "Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt "
-#~ "haben.."
-
-#, fuzzy
-#~ msgid "INPUT_CONFIRM_PASSWORD"
-#~ msgstr ""
-#~ "Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt "
-#~ "haben.."
-
-#, fuzzy
-#~ msgid "INPUT_DELETE_USER_PASSWORD"
-#~ msgstr ""
-#~ "Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt "
-#~ "haben.."
-
-#, fuzzy
-#~ msgid "LOGIN_ERROR_INVALID_DATA"
-#~ msgstr ""
-#~ "Das eingegebene Passwort passt nicht zu Ihrer Email-Adresse. Bitte "
-#~ "versuchen Sie es erneut!"
-
-#, fuzzy
-#~ msgid "LOGIN_ERROR_UNKNOWN_ERROR"
-#~ msgstr ""
-#~ "Das eingegebene Passwort passt nicht zu Ihrer Email-Adresse. Bitte "
-#~ "versuchen Sie es erneut!"
-
-#~ msgid "GALLERY_NOT_STARTED"
-#~ msgstr ""
-#~ "Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der "
-#~ "Karte klicken, um die Galerie zu starten."
-
-#~ msgid "GALLERY_IS_EMPTY"
-#~ msgstr ""
-#~ "Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, "
-#~ "ziehen Sie diese in die Galerie oder nutzen Sie den 'Bild hinzufügen'-"
-#~ "Button rechts der Galerie."
-
-#~ msgid "Please choose a Photo in your gallery to start the slideshow."
-#~ msgstr ""
-#~ "Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu "
-#~ "starten."
-
-#~ msgid "Login und Registrierung"
-#~ msgstr "Login und Registrierung"
-
-#~ msgid "Guest-Login"
-#~ msgstr "Gast-Login"
-
-#~ msgid "Alben"
-#~ msgstr "Alben"
-
-#~ msgid "Plätze"
-#~ msgstr "Plätze"
-
-#~ msgid "Galerie"
-#~ msgstr "Gallery"
-
-#~ msgid "Speichern"
-#~ msgstr "Save"
+#~ "Der Link, um das Passwort zurück zu setzen ist entweder veraltet oder "
+#~ "bereits genutzt worden. Bitte fordern Sie einen neuen an. "

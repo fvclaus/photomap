@@ -41,6 +41,10 @@ define(["dojo/_base/declare",
          },
          getPlaces : function () {
             return this.places;
+         },
+         getUrl : function (protocolAndHost) {
+            return protocolAndHost + "/album/" + this.getId() + "/view/" + this.getSecret() + "/";
          }
       });
+
    });

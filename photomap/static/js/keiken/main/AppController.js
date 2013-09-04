@@ -75,6 +75,12 @@ define([
                   description.update(model);
                },
                "deleted": function (model) {
+                  if (model === this._loadedPlace) {
+                     slideshow.reset();
+                     gallery.reset();
+                     adminGallery.reset();
+                     fullscreen.reset();
+                  }
                   quota.update(clientstate.getUsedSpace(), clientstate.getLimit());
                   description.empty(model);
                   this._hideDetail();
@@ -84,13 +90,15 @@ define([
             /* ------------------------- Marker -------------------- */
             communicator.subscribe({
                "mouseover": function (marker) {
-                  controls.show({
-                     modelInstance : marker.getModel(),
-                     offset: map.getPositionInPixel(marker),
-                     dimension : {
-                        width : marker.getView().getSize().width
-                     }
-                  });
+                  if (this._isAdmin === true) {
+                     controls.show({
+                        modelInstance : marker.getModel(),
+                        offset: map.getPositionInPixel(marker),
+                        dimension : {
+                           width : marker.getView().getSize().width
+                        }
+                     });
+                  }
                },
                "mouseout": function () {
                   controls.hide(true);
@@ -109,6 +117,7 @@ define([
                      // build url -> format models/model/(id/)request
                      window.location.href = '/album/' + markerPresenter.model.getId() + '/view/' + markerPresenter.model.getSecret() + "/";
                   } else {
+                     this._loadedPlace = markerPresenter.getModel();
                      this._startPhotoWidgets(markerPresenter.getModel());
                      map.updateMarkerStatus(markerPresenter, "open");
                      appState.updateOpenedPlace(markerPresenter.getModel().getId());
@@ -146,13 +155,15 @@ define([
                      appState.updatePhoto(photo.getId());
                   },
                   "hovered": function (data) {
-                     controls.show({
-                        modelInstance : data.photo,
-                        offset : data.element.offset(),
-                        dimension : {
-                           width : tools.getRealWidth(data.element)
-                        }
-                     });
+                     if (this._isAdmin === true) {
+                        controls.show({
+                           modelInstance : data.photo,
+                           offset : data.element.offset(),
+                           dimension : {
+                              width : tools.getRealWidth(data.element)
+                           }
+                        });
+                     }
                   }
                }, "GalleryPhoto", this);
                
@@ -219,10 +230,19 @@ define([
                // set initial state -> opened description, and maybe place or even photo
                initialState = appState.setInitialState();
                pageTitle.update(albumData.getTitle());
+               this._isAdmin = albumData.isOwner();
                map.startup(albumData, true, albumData.isOwner());
                gallery.startup({ adminMode : albumData.isOwner() });
                this._updateState(initialState, true);
+               // Guests should not see the Add description link.
+               //TODO This is a hack
+               if (this._isAdmin === false) {
+                  $(".mp-insert-description").remove();
+                  description.removeAddDescriptionLink();
+               }
+
             } else {
+               this._isAdmin = true;
                albums = new Collection(albumData, {
                   modelConstructor: Album,
                   modelType: "Album"
@@ -230,6 +250,7 @@ define([
                map.startup(albums, false);
                state.setAlbums(albums);
             }
+
          },
          _updateState : function (newState, initialCall) {
             //ignore next AppChange - why? some browser trigger popstate after page load and some don't, for those who do the appstate will be initialized and then changed which is not necessary and causes troubles at some occasions..

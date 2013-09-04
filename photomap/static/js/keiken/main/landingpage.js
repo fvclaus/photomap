@@ -24,7 +24,7 @@ $(document).ready(function () {
 
    // Turn the buttons into links.
    $("#mp-demo-button").on("click", function () {
-      window.location.href = "/demo";
+      window.location.href = "/album/demo";
    });
    $("#mp-dashboard-button").on("click", function () {
       window.location.href = "/dashboard/";

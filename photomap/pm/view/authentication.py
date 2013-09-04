@@ -52,7 +52,7 @@ def login(request):
                 else:
                     return HttpResponseRedirect("/account/inactive")
             else:
-                form.errors["__all__"] = form.error_class([_("PASSWORD_OR_EMAIL_WRONG")])
+                form.errors["__all__"] = form.error_class([_("CREDENTIALS_ERROR")])
                 
   
     return render_to_response("account/login.html", { "form" : form, "next" : next }, context_instance = RequestContext(request))

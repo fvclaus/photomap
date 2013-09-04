@@ -19,47 +19,67 @@ from django.core import files
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 
 from StringIO import StringIO
-from PIL import Image
+from PIL import Image, ImageFile
 import json 
 import  logging, sys, uuid
 
+ImageFile.MAXBLOCK = 2 ** 20
 
 logger = logging.getLogger(__name__)
 
-LONGEST_SIDE = 100
+LONGEST_SIDE_THUMB = 100
+LONGEST_SIDE = 1200
+
 
 def get_size(original):
     if isinstance(original, files.File):
         return original.size
     else:
         return original.len
+    
+def calculate_size(longest_side, other_side, limit):
+    resize_factor = limit / float(longest_side)
+    return (limit, int(resize_factor * other_side))
+
+def resize(size, limit):
+    if size[0] >= size[1]:
+        size = calculate_size(size[0], size[1], limit)
+    else:
+        size = calculate_size(size[1], size[0], limit)
+    return size
 
 def create_thumb(buf):
     image = Image.open(buf)
     size = image.size
     thumb = StringIO()
     
-    if size[0] >= size[1]:
-        resize_factor = LONGEST_SIDE / float(size[0])
-        size = (LONGEST_SIDE, int(resize_factor * size[1]))
-    else:
-        resize_factor = LONGEST_SIDE / float(size[1])
-        size = (int(resize_factor * size[0]), LONGEST_SIDE)
-    
-    logger.debug("Resizing photo to %s." % str(size))
-    resized_image = image.resize(size)
+    thumb_size = resize(size, LONGEST_SIDE_THUMB)
+        
+    logger.debug("Resizing photo to %s." % str(thumb_size))
+    resized_image = image.resize(thumb_size)
     resized_image.save(thumb, "JPEG", optimize = True)
     thumb.seek(0)
     
-    if image.format != "JPEG":
-        logger.debug("Photo needs to be converted to JPEG format.")
+    if size[0] > LONGEST_SIDE or size[1] > LONGEST_SIDE:
+        original_size = resize(size, LONGEST_SIDE)
+        logger.debug("Resizing photo to %s." % str(original_size))
         original = StringIO()
-        image.save(original, "JPEG", optimize = True)
+#        buf.open()
+#        image = Image.open(buf)
+        resized_image = image.resize(original_size)
+        resized_image.save(original, "JPEG", quality = 80, optimize = True, progressive = True)
         original.seek(0)
         return original, thumb
     else:
-        buf.open()
-        return buf, thumb
+        if image.format != "JPEG":
+            logger.debug("Photo needs to be converted to JPEG format.")
+            original = StringIO()
+            image.save(original, "JPEG", optimize = True)
+            original.seek(0)
+            return original, thumb
+        else:
+            buf.open()
+            return buf, thumb
     
 
 @login_required
@@ -77,26 +97,31 @@ def insert(request):
             logger.warn("User %s not authorized to insert a new Photo in Place %d. Aborting." % (request.user, place.pk))
             return error("This is not your place!")
         #===================================================================
-        # check upload limit
-        #===================================================================
-        size = get_size(request.FILES["photo"])
-        userprofile = request.user.userprofile
-        if userprofile.used_space + size > userprofile.quota:
-            return error("No more space left. Delete or resize some older photos.")
-        #===================================================================
         # check & convert image
         #===================================================================
+        name = request.FILES["photo"].name
         try:
             original, thumb = create_thumb(request.FILES["photo"])
         except Exception, e:
             return error(str(e))
         #===================================================================
+        # check upload limit
+        #===================================================================
+        size = get_size(original)
+        userprofile = request.user.userprofile
+        if userprofile.used_space + size > userprofile.quota:
+            return error("No more space left. Delete or resize some older photos.")
+        #===================================================================
         # insert in correct form and upload if necessary
         #===================================================================
         if settings.DEBUG:
-            request.FILES["photo"] = original
             from django.core.files.uploadedfile import InMemoryUploadedFile
-            thumb = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpg" % original.name, None, thumb.len, None)
+            
+            if (not isinstance(original, files.File)):
+                original = InMemoryUploadedFile(original, "image", "%s.jpg" % name, None, original.len, None)
+            
+            request.FILES["photo"] = original
+            thumb = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpg" % name, None, thumb.len, None)
             request.FILES["thumb"] = thumb
             form = PhotoInsertForm(request.POST, request.FILES)
             assert form.is_valid(), "Form should always be valid here."

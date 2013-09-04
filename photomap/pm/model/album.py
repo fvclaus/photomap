@@ -42,7 +42,7 @@ class Album(Description):
         if includeplaces:
             places_dump = []
             places = Place.objects.all().filter(album = self)
-            logger.debug("toserializable(): %s", places)
+#            logger.debug("toserializable(): %s", places)
             
             for place in places:
                 places_dump.append(place.toserializable())

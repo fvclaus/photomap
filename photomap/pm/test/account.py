@@ -47,31 +47,33 @@ class AccountViewTest(ApiTestCase):
         self.url = "/account/email/"
         data = {"new_email" : "admin2@keiken.de",
                 "confirm_password" : self.ADMIN_PASSWORD}
-        self.assertSuccess(self.url, data)
-        self.assertEqual(User.objects.get(username = data["new_email"]).username, data["new_email"])
-        #=======================================================================
-        # No valid email
-        #=======================================================================
-        data["new_email"] = "admin2@keiken"
         self.assertError(data)
-        #=======================================================================
-        # Email from sb else
-        #=======================================================================
-        data["new_email"] = "test@keiken.de"
-        self.assertError(data)
-        #=======================================================================
-        # Wrong password
-        #=======================================================================
-        data = {"new_email" : "admin3@keiken.de",
-                "confirm_password" : "wrong"}
-        self.assertError(data)
-        #=======================================================================
-        # Test account modification not allowed.
-        #=======================================================================
-        self.login_test_user()
-        data = {"new_email" : "somthing@else.com",
-                "confirm_password" : TEST_PASSWORD}
-        self.assertError(data)
+        # This is currently disabled, because their is no confirmation of the other email.        
+#        self.assertSuccess(self.url, data)
+#        self.assertEqual(User.objects.get(username = data["new_email"]).username, data["new_email"])
+#        #=======================================================================
+#        # No valid email
+#        #=======================================================================
+#        data["new_email"] = "admin2@keiken"
+#        self.assertError(data)
+#        #=======================================================================
+#        # Email from sb else
+#        #=======================================================================
+#        data["new_email"] = "test@keiken.de"
+#        self.assertError(data)
+#        #=======================================================================
+#        # Wrong password
+#        #=======================================================================
+#        data = {"new_email" : "admin3@keiken.de",
+#                "confirm_password" : "wrong"}
+#        self.assertError(data)
+#        #=======================================================================
+#        # Test account modification not allowed.
+#        #=======================================================================
+#        self.login_test_user()
+#        data = {"new_email" : "somthing@else.com",
+#                "confirm_password" : TEST_PASSWORD}
+#        self.assertError(data)
 
     def checkUser(self):
         print self.user

@@ -63,7 +63,7 @@ def update_password(request, album_id):
 
 def demo(request):
     if request.method == "GET":
-        demo = User.objects.get(username = "demo")
+        demo = User.objects.get(username = "demo@keiken.de")
         album = Album.objects.get(user = demo)
         request.session["album_%d" % album.pk] = True
         return redirect("/album/%d/view/%s/" % (album.pk, album.secret))

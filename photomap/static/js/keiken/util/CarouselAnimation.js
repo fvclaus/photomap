@@ -147,15 +147,23 @@ define(["dojo/_base/declare",
                       }
 
                       // Give the element its later dimensions.
-                      $photo.attr("src", photoSource);
                       console.log("CarouselAnimation: Setting src %s on photo thumb %d.", photoSource, index);
-                      tools.centerElement($photo, "vertical");
-                      // Remove the img again to fade it in nicely.
-                      $photo.removeAttr("src");
                       if (photoSource) {
                          $photo.attr("src", photoSource);
+                         // This happens sometimes for nearly inserted photos.
+                         // If there is a little delay, the photo gets its height and width.
+                         if ($photo.width() === 0 && $photo.height() === 0) {
+                            setTimeout(function () {
+                               tools.centerElement($photo, "vertical");
+                            }, 50);
+                         } else {
+                            tools.centerElement($photo, "vertical");
+                         }
+                          // $photo.attr("src", photoSource);
                          if (instance.animation === instance.FADE) {
-                            $photo.hide().fadeIn(options.animationTime);
+                            setTimeout(function () {
+                               $photo.hide().fadeIn(options.animationTime);
+                            }, 100);
                          } else {
                             // Scale it to 0 first to scale it to 1 later.
                             // This should happen instantly without delay.

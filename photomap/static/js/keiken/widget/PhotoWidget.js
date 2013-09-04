@@ -59,10 +59,14 @@ define(["dojo/_base/declare",
                 // Resets to state after startup().
                 this.reset();
                 this._loaded = true;
+                if (this._photos) {
+                   this._photos.removeEvents(this.viewName, "inserted");
+                   this._photos.removeEvents(this.viewName, "deleted");
+                }
                 this._photos = photos;
                 
-                photos.onInsert(this.insertPhoto, this);
-                photos.onDelete(this.deletePhoto, this);
+                photos.onInsert(this.insertPhoto, this, this.viewName);
+                photos.onDelete(this.deletePhoto, this, this.viewName);
                 this.carousel = new PhotoCarouselView(this.$photos, photos.getAll(), this._srcPropertyName, this._carouselOptions);
              },
              /*

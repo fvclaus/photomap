@@ -22,14 +22,6 @@ def error(*args, **kwargs):
     
     return HttpResponse(jsonify(data), content_type = "text/json")
 
-def request_fail_error(**kwargs):
-    msg = _("REQUEST_FAIL_ERROR")
-    return error(msg, **kwargs)
-
-def form_invalid_error(**kwargs):
-    msg = _("FORM_INVALID_ERROR")
-    return error(msg, **kwargs)
-
 def user_inactive_error(**kwargs):
     msg = _("USER_INACTIVE_ERROR")
     return error(msg, **kwargs)

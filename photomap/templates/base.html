@@ -71,7 +71,7 @@
 	 <link rel="stylesheet" type="text/css" href="/static/css/non-ie.css" /> 
     <!--<![endif]-->
     <!--[if IE 7]>
-    <link rel="stylesheet" type="text/css" href="/static/css/ie7.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/ie7.css" />
     <![endif]-->
   </head>
   <body id="{% block pageID %} {% endblock %}"> <!-- TODO What happened with the body id -->
@@ -80,7 +80,7 @@
 
       <header class="mp-page-header column span-24 last" id="mp-page-header">
         <section class="mp-logo column span-6">
-          <a style="height : 100%" href="/">
+          <a style="height : 100%" {% if not request.user.is_authenticated %} href="/" {% else %} href="/dashboard" {% endif %}>
            <img src="/static/images/beta-logo.png" class="mp-control mp-cursor-pointer mp-keiken-logo" alt="KEIKEN"/>
           </a>
         </section>

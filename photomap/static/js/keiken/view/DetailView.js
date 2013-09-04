@@ -35,15 +35,27 @@ define([
             this.$teaserDescription = this.$teaserDescriptionWrapper.children("p");
             this.$teaserTitle = $("#mp-detail-teaser-title");
             
-            this.noDescription = this.$description.html();
-            this.noTeaserDescription = this.$teaserDescription.html();
-            
             this.currentPhoto = null;
             this.currentPlaceOrAlbum = null;
             this._bindListener();
+            this.noDescription = this.$description.html();
+            this.noTeaserDescription = this.$teaserDescription.html();
             
             this.presenter = new DetailPresenter(this, isSlider);
             
+         },
+         // TODO this is a hack to exclude the add description link for guests
+         removeAddDescriptionLink : function () {
+            this.noDescription = this._removeDescriptionLink(this.noDescription);
+            this.noTeaserDescription = this._removeDescriptionLink(this.noTeaserDescription);
+         },
+         /**
+          * @private
+          */
+         _removeDescriptionLink : function (description) {
+            var $description = $("<div/>").html(description);
+            $description.find("a").remove();
+            return $description.html();
          },
          /**
           * @public

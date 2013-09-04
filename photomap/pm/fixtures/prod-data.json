@@ -88,5 +88,23 @@
          "email": "", 
          "date_joined": "2013-01-30T14:45:59.766"
       }
+   },
+      {
+      "pk": 6,
+      "model": "auth.user",
+      "fields": {
+         "username": "philippbanhardt@googlemail.com",
+         "first_name": "",
+         "last_name": "",
+         "is_active": true,
+         "is_superuser": false,
+         "is_staff": false,
+         "last_login": "2013-04-19T09:04:41.601",
+         "groups": [],
+         "user_permissions": [],
+         "password": "pbkdf2_sha256$10000$BcZ5HN0yCiYM$DkW7hQFORPO8tIVrkb7RXIUf1cYcwYZOZwW/ymUWk74=",
+         "email": "",
+         "date_joined": "2013-04-17T17:14:39.402"
+      }
    }
 ] 
