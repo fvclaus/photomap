@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-28 16:35+0100\n"
+"POT-Creation-Date: 2013-09-04 17:02+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,59 +18,172 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: static/js/main/init.js:29
-msgid "INITIALISATION_NOT_POSSIBLE"
+#: static/js/keiken/main/AppController.js:283
+msgid "INVALID_OPENED_PLACE"
 msgstr ""
-"Die Applikation konnte leider nicht gestartet werden. Bitte wenden Sie sich an den "
-"Kundensupport. Wir entschuldigen uns für das Ärgernis."
+"Der Platz ist leider nicht verfügbar, eventuell wurde er bereits gelöscht. "
+"Bitte wenden Sie sich an den Besitzer des Albums."
 
-#: static/js/ui/UIFullscreen.js:108
-msgid "PHOTO_LOADING_ERROR"
+#: static/js/keiken/main/AppController.js:293
+msgid "INVALID_LOADED_PHOTO"
 msgstr ""
-"Das gewünschte Bild konnte leider nicht geladen werden. Bitte probieren Sie "
-"es zu einem späteren Zeitpunkt noch einmal."
+"Das Photo ist leider nicht verfügbar, eventuell wurde es bereits gelöscht. "
+"Bitte wenden Sie sich an den Besitzer des Albums."
 
-#: static/js/ui/UIGallery.js:456
-msgid "PHOTOS_DIRTY"
-msgstr ""
+#: static/js/keiken/main/AppInitializer.js:83
+msgid "GET_ALBUM_ERROR"
+msgstr "Beim Laden des Albums trat folgender Fehler auf: "
 
-#: static/js/ui/UIInput.js:77
-msgid "YES"
-msgstr "Ja"
-
-#: static/js/ui/UIInput.js:85
-msgid "NO"
-msgstr "Nein"
-
-#: static/js/ui/UIInput.js:100
-msgid "SAVE"
-msgstr "Speichern"
-
-#: static/js/ui/UIInput.js:169 static/js/ui/UIInput.js.c:230
-#: static/js/util/ClientServer.js:126
+#: static/js/keiken/main/AppInitializer.js:87
+#: static/js/keiken/view/DialogView.js:190
+#: static/js/keiken/view/DialogView.js:259
 msgid "NETWORK_ERROR"
 msgstr ""
 "Ein Netzwerkfehler ist aufgetreten. Bitte probieren Sie es zu einem späteren "
 "Zeitpunkt nochmal."
 
-#: static/js/ui/UIPhotoEditor.js:70
+#: static/js/keiken/presenter/MapPresenter.js:186
+msgid "MAP_NO_ALBUMS"
+msgstr ""
+"<p> Hallo du! Willkommen zu deinem eigenen Photoalbum! Ich habe das Gefühl, "
+"dass du neu hier bist, da du ja noch gar keine Alben hast. Darum würde ich "
+"dir gerne eine kleine Einführung geben! Hoffentlich stört es dich nicht, "
+"dass ich dich duze - so ein Photoalbum ist ja schließlich was persönliches "
+"-, falls doch melde dich bitte beim KEIKEN-Team. </p><p> Ich fange einfach "
+"mal damit an dir zu erklären, was du hier so alles gerade sehen kannst. Im "
+"Kopf der Seite findest du das KEIKEN-Logo und den aktuellen Seitennamen (in "
+"der Albumsansicht entspricht er dem Albumsnamen!). Wenn du angemeldest bist "
+"kannst du auf das Logo klicken um zurück zum Dashboard zu kommen. Ganz unten "
+"auf der Seite siehst du den Footer mit ganz vielen Links, die dich zu mehr "
+"oder weniger interessanten Seiten führen. Natürlich würde es das KEIKEN-Team "
+"sehr freuen, wenn du der <a href='/payment'>Spenden Seite</a> einen Besuch "
+"abstatten würdest. Links neben den Links findest du das Nutzermenü, hier "
+"kannst du dich ausloggen und deine Einstellungen ändern. </p><p> Zwischen "
+"Kopf und Fuß der Seite ist der wichtigste Teil von KEIKEN. Weil du dich "
+"gerade im Dashboard befindest, siehst du eine große Karte auf der du alle "
+"deine Alben findest und viele neue hinzufügen kannst. Sobald du ein Album "
+"hinzugefügt hast (Klicke dafür auf die gewünschte Stelle in der Karte) oder "
+"doppelt auf ein existierendes Album klickst, wirst du auf die Albumsansicht "
+"desselben weitergeleitet. Dort kannst du Plätze und Photos hinzufügen und "
+"alle deiner Bilder un Beschreibungen in der Galerie, der Slideshow oder "
+"sogar im Vollbild ansehen. <br />Wenn du ein Album ändern oder löschen "
+"willst (oder auch einen Platz oder ein Photo) bewege deine Maus über den "
+"entsprechenden Marker (oder das Bild) und wähle 'Löschen' oder 'Editieren' "
+"in dem kleinen Control-Panel. </p><p> Wenn du dann ein Album mit Plätzen und "
+"Bildern hast, kannst du es mit anderen teilen. Dafür musst du in dem eben "
+"erwähnten Control-Panel 'Teilen' auswählen und dann den Anweisungen im sich "
+"öffnenden Dialog folgen. Beim <strong>ersten mal</strong> musst du dem Album "
+"ein Passwort zuweisen. Danach kannst du deinen Freunden und Bekannten die "
+"Adresse und das Passwort des Albums geben, damit diese deine Arbeit "
+"bewundern können. </p><p> Ok, ich will nicht mehr lange mit meinem Gerede "
+"aufhalten - ich bin sicher du willst KEIKEN selbst ausprobieren und all "
+"deinen Freunden und deiner Familie deine Erfahrungen zeigen. Viel Spaß und "
+"zögere nicht zu fragen, wenn es Probleme gibt! </p><p> Für weitere "
+"information zu KEIKEN und einem kleinen Tutorial/FAQ besuche doch unsere <a "
+"href='/help'>Hilfe-Seite</a> oder <a href='/contact'>schreibe dem KEIKEN-"
+"Team</a>. </p><p style='font-size: 0.7em'> Du kannst diese Meldung "
+"schließen, indem du darauf klickst. Sie wird sich automatisch wieder öffnen "
+"solltest du die Maus aus der Karte heraus bewegen (auf den Kopf oder Fuß der "
+"Seite). </p>"
+
+#: static/js/keiken/presenter/MapPresenter.js:193
+msgid "MAP_NO_PLACES_ADMIN"
+msgstr ""
+"Uups, dieses Album hat noch keine Plätze. Sie können neue Plätze hinzufügen, "
+"indem Sie die Karte zu den Koordinaten bewegen, bei denen Sie einen Platz "
+"einfügen wollen. Dann klicken auf die gewünschte Stelle und folgen den "
+"Anweisungen im sich öffnenden Dialog. Sobald der neue Platz eingefügt wurde, "
+"können Sie Fotos hinzufügen. Beachten Sie dafür die Tipps in der Galerie "
+"unter der Karte. "
+
+#: static/js/keiken/presenter/MapPresenter.js:195
+msgid "MAP_NO_PLACES_GUEST"
+msgstr ""
+"Oh weh! Da hat der Besitzer dieses Album mit dir geteilt und völlig "
+"vergessen, irgendwelche Plätze und Fotos hochzuladen. Wärst du so nett und "
+"sagst ihm oder ihr, dass ein Photoalbum ohne Fotos ein bisschen langweilig "
+"anzuschauen ist?"
+
+#: static/js/keiken/util/InfoText.js:183
+msgid "CLOSE_INFOTEXT_ALERT"
+msgstr ""
+"Drücken Sie Escape oder klicken sie auf die Seite um diese Nachricht zu "
+"schließen."
+
+#: static/js/keiken/util/PhotoFileValidator.js:43
+#: static/js/keiken/view/PhotoEditorView.js:71
 msgid "TOO_MANY_PHOTOS"
 msgstr "Bitte wählen Sie nur ein Photo auf einmal aus."
 
-#: static/js/ui/UIPhotoEditor.js:73
+#: static/js/keiken/util/PhotoFileValidator.js:45
+#: static/js/keiken/view/PhotoEditorView.js:74
 msgid "EXTENSION_NOT_SUPPORTED"
 msgstr ""
 "Dieses Format wird leider nicht unterstützt. Bitte wählen Sie ein JPEG oder "
 "PNG Photos aus."
 
-#: static/js/ui/UIPhotoEditor.js:127
+#: static/js/keiken/util/PhotoFileValidator.js:62
+msgid "LARGE_PHOTO_ERROR"
+msgstr ""
+"Diese Bild ist sehr groß. Große Bilder brauchen sehr lange um zu laden. Bitte ziehen Sie in Betracht kleinere Bilder zu verwenden. Nähreres erfahren sie unter Hilfe." 
+
+#: static/js/keiken/view/DialogView.js:100
+msgid "YES"
+msgstr "Ja"
+
+#: static/js/keiken/view/DialogView.js:108
+msgid "NO"
+msgstr "Nein"
+
+#: static/js/keiken/view/DialogView.js:123
+msgid "SAVE"
+msgstr "Speichern"
+
+#: static/js/keiken/view/DialogView.js:137
+msgid "OK"
+msgstr ""
+
+#: static/js/keiken/view/PhotoEditorView.js:128
 msgid "UIPHOTOEDITOR_ROTATION_DISABLED"
 msgstr "Keine Rotation mehr möglich, nachdem das Photo bearbeitet wurde."
 
-#: static/js/util/ClientServer.js:122
-msgid "GET_ALBUM_ERROR"
-msgstr "Beim Laden des Albums trat folgender Fehler auf: "
+#: static/js/keiken/widget/GalleryWidget.js:82
+#: static/js/keiken/widget/GalleryWidget.js:171
+msgid "GALLERY_NO_PLACE_SELECTED"
+msgstr ""
+"Um die Galerie zu starten öffnen Sie bitte einen Platz, indem Sie auf einen "
+"Marker in der Karte oberhalb der Galerie klicken. Sie können dann alle "
+"Bilder dieses Platzes ansehen.<strong>Wenn es noch keinen Platz gibt, folgen "
+"Sie den Instruktionen in der Karte.</strong>"
 
-#: static/js/zeroclipboard/jquery.zclip.js:87
-msgid "COPIED_TO_CLIPBOARD"
-msgstr "Text wurde in die Zwischenablage kopiert!"
+#: static/js/keiken/widget/GalleryWidget.js:183
+msgid "GALLERY_NO_PHOTOS_ADMIN"
+msgstr ""
+"Sie können neue Photos zum aktuell geöffneten Platz hinzufügen, indem Sie "
+"diese einfach in das Browserfenster ziehen, auf eine leere Kachel klicken "
+"oder den <img style='max-width: 15px; height: auto;' src='/static/images/add."
+"png' alt='Camera Record-' /> auf der rechten Seite der Galerie nutzen. "
+
+#: static/js/keiken/widget/GalleryWidget.js:188
+msgid "GALLERY_NO_PHOTOS_GUEST"
+msgstr ""
+"Huch, dieser Platz hat keine Fotos. Vielleicht hat der Besitzer des Albums "
+"vergessen, welche hochzuladen? ;)"
+
+#: static/js/keiken/widget/SlideshowWidget.js:86
+msgid "SLIDESHOW_GALLERY_NOT_STARTED"
+msgstr ""
+"Um Bilder in der Slideshow anzusehen, müssen Sie zuerst die Galerie "
+"(unterhalb der Karte) starten. Dann können Sie auf ein Bild in der Galerie "
+"klicken oder die Navigationstasten (zur Rechten und linken Seite) nutzen um "
+"die Slideshow mit den Bildern der Galerie zu starten. <strong>Sollte es noch "
+"keine Photos geben, folgen Sie bitte den Instruktionen in der Galerie.</"
+"strong>"
+
+#: static/js/keiken/widget/SlideshowWidget.js:96
+msgid "SLIDESHOW_NO_PHOTOS"
+msgstr ""
+"Um Bilder in der Slideshow anzusehen, klicken Sie auf das gewünschte Bild in "
+"der Galerie unter der Karte, oder nutzen Sie die Navigationstasten links und "
+"rechts der Slideshow. Wenn Sie auf das aktuelle Bild in der Slideshow "
+"klicken, öffnet sich die Fullscreen-Ansicht des Bildes. "

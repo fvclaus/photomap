@@ -17,20 +17,18 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/main/non-interactive.js" ></script>
-<script type="text/javascript" src="/static/js/ui/UITools.js" ></script>
-<script type="text/javascript" src="/static/js/ui/default/UI.js" ></script>
-<script type="text/javascript" src="/static/js/main/default/Main.js" ></script>
+<script type="text/javascript" src="/static/js/keiken/main/non-interactive.js" ></script>
 {% endcompress %}
+<!-- {% block extrajs %} -->
+<!-- {% endblock %} -->
 {% endblock %}
-
-{% block extrajs %}
-{% endblock %}
-
-
 
 {% block content %}
+
+{% block background_image %}{% endblock %}
 <section class="mp-non-interactive-content span-16" id="mp-non-interactive-content">
+  <!-- If one warning is present, it will push the content wrapper below the footer, making parts of it inaccessible. -->
+  {% include "warnings.html" %}
   {% block non_interactive_content %}
   {% endblock %}
 </section>

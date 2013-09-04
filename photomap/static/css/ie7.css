@@ -1,0 +1,15 @@
+#contact .mp-container .mp-non-interactive-content #left-column {
+    width: 450px;
+    position: absolute;
+    left: 10px;
+    top: 0;
+}
+#contact .mp-container .mp-non-interactive-content #right-column {
+    width: 500px;
+    position: absolute;
+    margin-left: 470px;
+    right: none;
+}
+#contact {
+    max-width: 100%;
+}

@@ -1,9 +1,12 @@
 {% extends "base-non-interactive.html" %}
 
-{% block title %}Error{% endblock %}
+<!-- for the translation with django -->
+{% load i18n %}
 
-{% block name %}Error{% endblock %}
+{% block title %}{% trans "Error" %}{% endblock %}
+
+{% block name %}{% trans "Error" %}{% endblock %}
 
 {% block non_interactive_content %}
-<p> Please check the url provided </p>
+<p>{% trans "ALBUM_SHARE_FAILURE_NOTE" %}</p>
 {% endblock %}

@@ -1,0 +1,6 @@
+{
+	"name": "keiken",
+	"version":"1.9.1",
+	"main": "main/init",
+	"dojoBuild": "profile.js"
+}

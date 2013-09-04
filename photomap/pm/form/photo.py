@@ -1,7 +1,7 @@
 '''
 Created on Jul 3, 2012
 
-@author: fredo
+@author: Frederik Claus
 '''
 
 from django import forms
@@ -33,8 +33,12 @@ class PhotoInsertForm(forms.ModelForm):
 
 
 class PhotoUpdateForm(forms.ModelForm):
-    id = forms.IntegerField()
+    class Meta:
+        model = Photo
+        exclude = ("photo", "order", "place", "thumb", "date", "size")
         
+        
+class MultiplePhotosUpdateForm(forms.ModelForm):
     class Meta:
         model = Photo
         exclude = ("photo", "place", "thumb", "date", "size")

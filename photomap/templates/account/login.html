@@ -1,0 +1,15 @@
+{% extends "account/base.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block name %}{% trans "LOGIN" %}{% endblock %}
+
+{% block account_info %}
+<h2>{% trans "Login Information" %}</h2>
+<p>{% trans "LOGIN_INFO" %}</p>
+{% endblock %}
+
+{% block account_settings %}
+{% include "login-form.html" %}
+{% endblock %}

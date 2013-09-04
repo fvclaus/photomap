@@ -15,10 +15,20 @@ html
   // width // see comment above!
   // height // see comment above!
 
+/* make every element a border-box
+ * this makes styling the grid more easy, cause you can define the width one time
+ * without the need to adjust it every time you add paddings and such.
+ * Also you can now add paddings and borders with "px" even though the grid is defined with "%" widths
+ */
+*
+  -moz-box-sizing border-box
+  -webkit-box-sizing border-box
+  box-sizing border-box
+
 aside
   width 80%
   padding 5px
-  border 2px dashed black
+  border 2px solid gray
   margin 10px auto
   font-size 95%
   border-radius 5px
@@ -43,10 +53,22 @@ a
   height 100%
   min-height 100%
 
-#mp-no-script div
+#mp-no-script div, #mp-no-cookies
   margin 0 auto // center element
   width 75%
   padding 0.7em
+  
+.mp-warning
+  font-weight bolder
+  color red
+  font-size 1.1em
+  a
+    margin 0 5px
+    
+.mp-reference
+  letter-spacing 1px
+  font-size .9em
+  font-weight bolder
 
 .mp-placeholder-halfheight
   height 50%
@@ -58,11 +80,13 @@ a
   opacity 0.5
 
 .mp-content
- height 77% // 80% - 1% padding. Padding 1% will make the element 1% bigger and vertical scrollbars will appear
- padding 1% 0 .5% 0
- h2
-  max-width 90%
+ height 80%
+ padding 20px 10px 10px 10px
+ h2, h3, ol
+  max-width 100% //90% Why was this 90%?
   margin 5px auto
+ ol
+  padding-left 50px
 
 .mp-zoom
   cursor -moz-zoom-in
@@ -100,11 +124,38 @@ a
 .mp-bold
   font-weight bold
 
-.mp-animate-02s
+.mp-animate-100
+  transition(0.1s)
+.mp-animate-200
   transition(0.2s)
-
-.mp-animate-08s
+.mp-animate-300
+  transition(0.3s)
+.mp-animate-400
+  transition(0.4s)
+.mp-animate-500
+  transition(0.5s)
+.mp-animate-600
+  transition(0.6s)
+.mp-animate-700
+  transition(0.7s)
+.mp-animate-800
   transition(0.8s)
+.mp-animate-900
+  transition(0.9s)
+.mp-animate-1000
+  transition(1s)
+.mp-animate-2000
+  transition(2s)
+.mp-animate-5000
+  transition(5s)
+  
+.mp-delay-100
+  delayTransition(0.1s)
+.mp-delay-200
+  delayTransition(0.2s)
+.mp-delay-500
+  delayTransition(0.5s)
+
 
 .mp-rotate-Y-90
   transform(rotateY(90deg))
@@ -112,11 +163,95 @@ a
 .mp-rotate-Y-0
   transform(rotateY(0deg))
 
-.mp-scale-X-0
+.mp-scaleX-0
   transform(scaleX(0))
-
-.mp-scale-X-1
+.mp-scaleX-1
   transform(scaleX(1))
+.mp-flipX
+  transform(scaleX(-1))
+  
+.mp-clearing
+  clear both
+  
+.mp-dark-loader,
+.mp-light-loader
+  max-width 32px
+  max-height 32px
+ 
+.mp-infotext,
+#mp-infoalert
+  width 100%
+  height 100%
+  padding 0 10%
+  position absolute
+  top 0
+  left 0
+  overflow auto
+  background rgba(15,15,15,0.8)
+  color white
+  text-align center
+  -moz-box-sizing border-box
+  -webkit-box-sizing border-box
+  box-sizing border-box
+  div
+    width 100%
+    height 100%
+    display table // to vertically center the text
+  a
+    color white
+  span
+    display table-cell
+    vertical-align middle
+
+#mp-infoalert
+  width 60%
+  height 20%
+  top 40%
+  left 20%
+  z-index 101
+
+#mp-mask
+  width 100%
+  height 100%
+  position absolute
+  top 0
+  left 0
+  z-index 100
+  background-color rgba(244, 244, 244, 0.5)
+  
+#mp-infotext-closing-help
+  position absolute
+  right 0
+  bottom 0
+  font-size .7em
+
+.mp-infotext-close
+  width auto
+  height 10px
+  max-height 10px
+  float right
+  font-size 20px !important
+  cursor pointer
+
+#mp-loading-screen
+  width 100%
+  height 79.99%
+  position absolute
+  top 13% //header size
+  left 0
+  z-index 100
+  background-color rgba(0, 0, 0, 0.95)
+  color white
+  div
+    width 60%
+    margin 20px auto
+    text-align center
+#mp-loading-done
+  display none
+#mp-loading-screen #mp-placeholder-block
+  width 100%
+  height 35%
+  display block
 
 /* ---------- end core classes ----------- */
 
@@ -134,9 +269,9 @@ a
     padding 0
 
 .mp-keiken-logo
- height 95%
- margin-left 3%
-
+  height 95%
+  margin-left 3%
+  border none
 
 .mp-top-panel
   height 100%
@@ -159,8 +294,10 @@ a
 .mp-dropup-menu
   padding 10px
   position absolute
+  display none
   background-color $background-color // #dadada
   box-shadow(5px 5px 25px #A4A4A4)
+  z-index 50
 
 /* ------------ end drop up -------------- */
 
@@ -168,34 +305,37 @@ a
 /* ---------- footer styling ----------- */
 
 .mp-page-footer
-  height 5%
-  padding-top 0.5% // buffer for other margins and varying glyphs
+  height 7%
+  padding-top 6px // buffer for other margins and varying glyphs
   /* this is done with js now */
   // font-size 2.4vh /* source: http://dev.w3.org/csswg/css3-values/#vw-unit. Scales to 2% of the viewport height */
   border-top 1px solid black
-  position relative
   letter-spacing 2px
   z-index 50 // cover menu
   background-color $background-color // other menu will be visible through transparent menu
 
 .mp-internal-links
+  padding .4em // to sync with jqury-ui widget padding
   display inline-block
-  float right
+  position absolute
+  right 5px // float right won't work in IE<8 -> absolute positioning 
   a
     text-decoration none
     color $font-color
     padding-right 5px
   a:hover
-    background-color $border-color
+    color #118811 // same green but darker as the one on black background
 
-.mp-user,
-.mp-login-link
-  margin-left 1%
+#mp-user,
+#mp-login-link
+  letter-spacing 1px
   a
     text-decoration none
+    letter-spacing 2px
     color $font-color
+    text-shadow 0 0 1px #AAAAAA
   a:hover
-    background-color $border-color
-
+    color #118811 // same green as links on black background just darker
+    text-decoration none
 
 /* ------------- end footer ------------- */

@@ -6,10 +6,9 @@ Created on Sep 28, 2012
 
 import logging
 import re
-import sys
 from django.shortcuts import render_to_response
 from django.conf import settings
-from pm.controller import album, dashboard, authentication
+from pm.view import album, dashboard, authentication
 
 
 class NoSupportMiddleware():
@@ -18,8 +17,8 @@ class NoSupportMiddleware():
         IS_OK = re.compile("(?P<version>}d{1,2})")
     else:
         IS_OK = re.compile("(?P<browser>Firefox|Chrome)/(?P<version>\d{2})")
-    MIN_VERSION_FF = 19
-    MIN_VERSION_CHROME = 20
+    MIN_VERSION_FF = 16
+    MIN_VERSION_CHROME = 14
     
     def process_view(self, request, view_func, view_args, view_kwargs):
         logger = logging.getLogger(__name__)

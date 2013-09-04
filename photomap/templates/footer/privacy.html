@@ -1,0 +1,75 @@
+{% extends "base-non-interactive.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+{% trans "Datenschutz" %}
+
+{% block title %}{% trans "Datenschutz" %}{% endblock %}
+
+{% block name %}{% trans "Richtlinien zum Datenschutz" %}{% endblock %}
+
+{% block pageID %}privacy{% endblock %}
+
+{% block non_interactive_content %}
+
+	<article class="mp-textbox" id="privacy">
+		<div>
+			<h2>{% trans "privacy-topic Datenschutzerklärung" %}</h2>
+			<p>{% trans "privacy-topic Datenschutzerklärung -> description" %}</p>
+		</div>
+		<div>
+			<h2>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt" %}</h2>
+			<p>{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> description" %}</p>
+		</div>
+		<div>
+			<h3>{% trans "privacy-subtopic Nutzung der email-Adresse" %}</h3>
+			<p>
+				{% trans "privacy-subtopic Nutzung der email-Adresse -> description" %}
+			</p>
+			<h3>{% trans "privacy-subtopic Nutzung des Namens" %}</h3>
+			<p>
+				{% trans "privacy-subtopic Nutzung des Namens -> description" %}
+			</p>
+		</div>
+		<div>
+			<p>
+				<strong>
+					{% trans "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee" %}
+				</strong>
+			</p>	
+		</div>
+		<div>
+			<h2>{% trans "privacy-topic Cookies" %}</h2>
+			<p>	
+				{% trans "privacy-topic Cookies -> cookie-introduction" %}
+			</p>
+			<ol>
+				<li>{% trans "privacy-topic Cookies - sessioncookie" %}</li>
+				<li>{% trans "privacy-topic Cookies - 'visited'-cookie" %}</li>
+				<li>{% trans "privacy-topic Cookies - 'quota'- and 'used-space'-cookie" %}</li>
+			</ol>
+			<p>
+				{% trans "privacy-topic Cookies -> redirection to wiki" %} <a href='{% trans "privacy-topic Cookies -> link to wiki" %}'
+				title='{% trans "link-title Wikipedia-Eintrag zu Cookies" %}'>{% trans "privacy-topic Cookies -> name of link to wiki" %}</a>.
+			</p>
+		</div>
+		<div>
+			<h2 id="mp-emails">{% trans "privacy-topic Emails und Kontaktformulare" %}</h2>
+			<ol>
+				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-1" %}</li>
+				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-2" %}</li>
+				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-4" %}</li>
+				<li>{% trans "privacy-topic Emails und Kontaktformulare list-item-5" %}</li>
+			</ol>
+		</div>
+		<div>
+			<h2>{% trans "privacy-topic Auskunftsrecht" %}</h2>
+			<p>
+				{% trans "privacy-topic Auskunftsrecht -> paragraph1" %}
+				<a href="/contact">{% trans "Kontaktformular" %}</a>.
+				{% trans "privacy-topic Auskunftsrecht -> paragraph2" %}
+			</p>
+		</div>
+	</article>
+
+{% endblock %}

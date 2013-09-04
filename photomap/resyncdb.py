@@ -129,26 +129,31 @@ def load_user():
 
 def load_debug_data():
     from django.test.client import Client
+    import settings
     print "Inserting Album & Place..." 
     print sub.check_output(LOAD_DATA)
-    client = Client(HTTP_USER_AGENT = "Firefox/15")
-    client.login(username = "test", password = "test")
+    client = Client(HTTP_USER_AGENT = "Firefox/22")
+    client.login(username = "test@keiken.de", password = "test")
     TITLE_SHORT = "Chuck Norris hat mehr Kreditkarten als Max Mustermann."
     TITLE_LONG = "Chuck Norris ist vor 10 Jahren gestorben. Der TOD hatte bis jetzt nur noch nicht den Mut es ihm zu sagen."
     DESCRIPTION = "Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"\r\n\r\n\"Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
     from pm.test.data import TEST_PHOTO
     from pm.model.place import Place
     
-    def get_data(title):
-        return {"title" : title,
-                "description": DESCRIPTION,
-                "photo" : open(TEST_PHOTO, "rb"),
-                "place" : 1
+    def get_data(index, place_id, title, description = DESCRIPTION):
+        data =  {"title" : title,
+                "description": description,
+                "photo" : open(os.path.join(settings.STATIC_PATH, "test", "photo%d.jpg" % ((index % 7 ) + 1)), "rb"),
+                "place" : place_id
                 }
+        return data
     
     print "Inserting Photos..."
-    print client.post("/insert-photo", get_data(TITLE_SHORT))
-    print client.post("/insert-photo", get_data(TITLE_LONG))
+    for place_id in range(3):
+        for photo_index in range(place_id ):
+            print client.post("/photo/", get_data(photo_index , place_id + 1, TITLE_SHORT))
+            print client.post("/photo/", get_data(photo_index + 1, place_id + 1, TITLE_LONG))
+            print client.post("/photo/", get_data(photo_index + 2, place_id + 1, TITLE_SHORT))
     print "Done."
 
 def load_production_data():

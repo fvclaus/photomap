@@ -4,9 +4,7 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
-)
+
 
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH = os.path.join(PROJECT_PATH, "static")
@@ -20,7 +18,7 @@ RES_PATH = os.path.join(PROJECT_PATH, "res")
 TEST_PATH = os.path.join(RES_PATH, "test")
 
 # this is needed for django to discover the javascript translations
-LOCALE_PATHS = ( 
+LOCALE_PATHS = (
     os.path.join(PROJECT_PATH, "locale"),
     )
 
@@ -29,7 +27,7 @@ CSS_PATH = os.path.join(STATIC_PATH, "css")
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
 LATEX_PATH = os.path.join(RES_PATH, "latex")
 DEBUG_PATH = os.path.join(RES_PATH, "debug") 
-MANAGERS = ADMINS
+
 
 LOGGING = {
     'version': 1,
@@ -187,6 +185,8 @@ TEMPLATE_LOADERS = (
 TEMPLATE_CONTEXT_PROCESSORS = (
                                'django.contrib.auth.context_processors.auth',
                                'django.core.context_processors.i18n',
+                                "django.core.context_processors.debug",
+                               'django.core.context_processors.request',
                                )
 
 # stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
@@ -212,7 +212,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-    "pm.controller.authentication.EmailBackend",
+#    "pm.controller.authentication.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 
@@ -230,10 +230,12 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     "compressor",
     "pm",
+    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
+    "registration",
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
@@ -242,13 +244,36 @@ INSTALLED_APPS = (
     # 'django.contrib.admindocs',
 )
 
+# Use this for the debug variable in template context
+INTERNAL_IPS = ("127.0.0.1")
 
+# AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
 
-AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
-LOGIN_URL = "/login"
+#===============================================================================
+# Registration configuration
+#===============================================================================
+ACCOUNT_ACTIVATION_DAYS = 7
+REGISTRATION_OPEN = True
+
+#===============================================================================
+# Mail configuration
+#===============================================================================
+LOGIN_REDIRECT_URL = "/dashboard/"
+LOGIN_URL = "/account/login/"
+LOGOUT_URL = "/account/logout/"
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
 EMAIL_HOST_USER = "team.keiken@gmail.com"
+SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = "lichtapothekepferdbrot"
 EMAIL_USE_TLS = True
+
+EMAIL_TEST_USER = "test@keiken.de"
+EMAIL_FILE_PATH = os.path.join(TEST_PATH, "mail")
+
+
+ADMINS = (('Team.Keiken', EMAIL_HOST_USER),
+              # ('Your Name', 'your_email@example.com'),
+)
+MANAGERS = ADMINS

@@ -1,10 +1,16 @@
 {% extends "base-non-interactive.html" %}
-{% block title %}Page not found{% endblock %}
-{% block name %}Page not found{% endblock %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+{% block title %}{% trans "Error" %}{% endblock %}
+
+{% block name %}{% trans "INVALID_URL" %}{% endblock %}
+
+{% block pageID %}error{% endblock %}
 
 {% block non_interactive_content %}
-<article class="mp-textbox">
-  <h1>Page not found</h1>
-  <p>Sorry, but the requested page could not be found.</p>
-</article>
+
+<p style="text-align: center">{% trans "INVALID_URL_ERROR" %}</p>
+
 {% endblock %}

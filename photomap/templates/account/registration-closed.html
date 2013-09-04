@@ -1,0 +1,10 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+
+{% block name %} {% trans "REGISTRATION_CLOSED" %} {% endblock %}
+
+{% block account_info %}
+<p>{% trans "REGISTRATION_CLOSED_EXPLANATION" %}</p>
+{% endblock %}

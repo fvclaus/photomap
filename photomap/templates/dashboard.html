@@ -21,17 +21,20 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/main/dashboard.js" ></script>
+<script type="text/javascript" src="/static/js/keiken/main/dashboard.js" ></script>
 {% endcompress %}
 {% endblock %}
 
-{% block left-column %}
-<section class="mp-map mp-map-dashboard" id="mp-map">
-  <div class="mp-map-wrapper" id="map"></div>
+{% block pageID %}dashboard{% endblock %}
+
+{% block content_top %}
+<section id="mp-full-page" class="mp-full-page">
+  <section class="mp-map" id="mp-map">
+    <div class="mp-map-wrapper" id="map"></div>
+  </section>
 </section>
 {% endblock %}
 
-{% block controls %}
-<img class="mp-cursor-pointer mp-control mp-option-share" src="/static/images/share.png" title='{% trans "control-title share" %}' />
-{% endblock %}
+
+
 

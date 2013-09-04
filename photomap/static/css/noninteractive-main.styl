@@ -11,37 +11,96 @@
 
 /* -------- end imports --------- */
 
+/* ------------------------- */
+/* ---- general styling ---- */
+
+#mp-user-password-forgot
+  padding-left 28%
+  position relative
+  font-size .7em
+
+#mp-user-password-forgot a
+  cursor pointer
+  color white
+  text-decoration none
+#mp-user-password-forgot a:hover
+  background url(/static/images/ie-rgba-black-alpha-0.png) repeat
+  background rgba(0,0,0,0)
+  color #88ff88
+  text-decoration none
+
+#account #mp-user-password-forgot
+  padding 0
+  text-align right
+#account #mp-user-password-forgot a
+  color #000
+#account #mp-user-password-forgot a:hover 
+  background none
+  color #118811 // same green as links on black background just darker
+  text-decoration none
+
+#privacy h2,
+#privacy h3,
+#copyright h2,
+#impressum h2
+  margin 10px 0 20px 0
+
+/* ------ end general ------ */
+
 /* ------------------------------- */
 /* -------- core stylings -------- */
 
 .mp-non-interactive-content
   overflow auto
-  width 95% // 100% - 5% padding
+  width 100%
   height 100%
   // margin 0 20%
-  padding-left 5%
+  padding 0 1%
   a
-    text-decoration none
+    text-decoration underline
+    letter-spacing 2px
     color $font-color
-    letter-spacing 0.25em
   a:hover
-    background-color $border-color
+    color #118811 // same green as links on black background just darker
     text-decoration underline
   li
     margin 5px
+    
+article
+  p
+    width 100% //90% Why this?
+    margin 8px auto
+    padding 0 0 0 10px
 
-
+address
+  width 90%
+  margin 8px auto
+  padding 0 0 0 10px
 
 .mp-form
   .mp-form-submit
-    margin-left 25% // position under last input field
+    margin-left 28% // position under last input field => 3% label margin-right + 25% label width
   label
     margin 1% 0
+    margin-right 3%
     float left
-    width 25% 
+    width 25%
+  label.mp-form-big-label
+    width 72%
   input, textarea
     margin 1% 0
-    width 72% // 1% is buffer for browser stylesheets like border 1px...
+    width 72% // 100% - 3% label margin right (= space between laveb and input) - 25% label width
+  input[type="radio"]
+    width 25%
+  
+.mp-form label.error
+  display none !important // prevents errors from being shown
+  
+.mp-request-success
+  color blue
+  font-weight bold
+  font-size 1.1em
+  display none
 
 // this is djangos css class for errors
 .errorlist
@@ -49,55 +108,107 @@
 
 /* --------- end core --------- */
 
+/* ------------------------------ */
+/* -- styling for payment page -- */
 
+.mp-payment-info
+  width 40%
+  border 1px solid gray
+  margin 5px auto
+  border-radius 5px
+  span
+    font-weight bolder
 
-
-/* ---------------------------- */
-/* -- styling for login page -- */
-
-.mp-login-tab
-  overflow auto
-
- #mp-login-register
-  width 50%
-  margin-left 25%
-/* -------- end login -------- */    
-
+/* --------- end payment -------- */  
 
 /* --------------------------- */
 /* -- styling for help page -- */
 
-.mp-faq-entry
-  padding 5px
-  border 1px dashed black
-  margin 3px 0
-  .mp-faq-question
-    cursor pointer
-    font-weight bold
-  .mp-faq-answer
-    cursor pointer
-    display none
+#help-navigation
+  margin-bottom 40px
+  text-align center
+  background-color #eaeaea
+  a
+    padding 0 20px
+    letter-spacing .25em
+  .mp-active-link
+   background-color #fff
+   text-decoration underline
     
-.mp-tutorial-wrapper
+
+#mp-project-introduction h2,
+#mp-project-introduction h3
+  text-align center
+  
+.mp-keiken-before,
+.mp-keiken-reasons
+  clear both
+.mp-keiken-reasons
+  margin-bottom 30px
+
+.mp-keiken-alternatives
+  position relative
+.mp-keiken-alternative
+  width 26%
+  margin 20px 2%
+  float left
+
+.mp-keiken-presentation-text
+  width 60%
+  float left
+  p
+    margin 0
+    padding 5px 0
+    
+.mp-keiken-presentation-text .mp-keiken-presentation-text-firsty
   padding-top 10px
-  border-top 4px solid $background-color-dark
-  margin-top 30px
-.mp-tutorial-entry
-  padding 5px
-  border 1px dashed black
-  margin 1px 0
-  .mp-tutorial-description
-    font-size 95%
-    h5
-      font-size 105%
+.mp-keiken-presentation-text .mp-keiken-presentation-text-lasty
+  padding-bottom 10px
+
+.mp-keiken-presentation-graphic
+  width 40%
+  float left
+  img
+    width 100%
+    max-width 646px
+    height auto
+    max-height 630px
+
+.mp-tutorial-color-table
+  max-width 80%
+  margin 0 auto
+  background-color #eaeaea
+  td
+    background-color white
+  th
+    background-color white
+
+.mp-tutorial-color-table tr
+  td:first-child
+    text-align center
+
+.ui-tabs-vertical
+  width 55em
+  .ui-tabs-nav
+    width 12em
+    padding .2em .1em .2em  .2em
+    float left
     li
-      border 1px dashed black
-      margin 3px
-      list-style-type none
-  .mp-tutorial-subtopic
-    font-weight bold
-  .mp-tutorial-subtopic-desc
-    display none
+      width 100%
+      border-bottom-width 1px !important
+      border-right-width 0 !important
+      margin 0 -1px .2em 0
+      clear left
+      a
+        display block
+    li.ui-tabs-active
+      padding-bottom 0
+      padding-right .1em
+      border-right-width 1px
+  .ui-tabs-panel
+    width 40em
+    padding 1em
+    float right
 
 /* -------- end help --------- */
 
@@ -133,37 +244,169 @@
 /* ------------------------------ */
 /* -- styling for landing page -- */
 
-#mp-intro
-  font-size 1.3em // make it a little bigger
-  div 
-    margin 2% 0
+/* ....... general styles ........*/
 
+#landingpage .mp-content
+  background-color #000 //#dadada
+  position relative
+
+#landingpage .background-image,
+#landingpage .background-overlay-black,
+#landingpage .mp-non-interactive-content
+  width 100%
+  height 100%
+  position absolute
+  top 0
+  left 0
+
+#landingpage .background-image
+  opacity 0.5
+  
+  
+#landingpage .background-overlay-black
+  z-index 1
+  background url(/static/images/ie-rgba-black-alpha-10.png) repeat
+  background rgba(0,0,0,0.01)
+
+#landingpage .mp-non-interactive-content
+  height 100%
+  position relative
+  top 0%
+  background none
+  font-size 1.2em
+  color #dadada
+  overflow hidden
+  z-index 2
+
+#landingpage .mp-reference
+  color white
+#landingpage .mp-reference:hover
+  color #88ff88
+  background none
+  text-decoration none
+
+section.keiken-intro
+  width 30%
+  max-height 85%
+  padding 30px
+  position absolute
+  top 5%
+  left 1%
+  background url(/static/images/ie-rgba-black-alpha-60.png) repeat
+  background rgba(0,0,0,0.6)
+  text-align left
+  overflow auto
+  h2
+    margin-bottom 30px
+    margin-left 0
+    text-align left
+  div
+    margin-bottom 10px
+
+/* ....... main styles ....... */
 .mp-landing-page-links
   width 100%
-  position relative
-  text-align center
+  
+#landingpage #keiken-login #login_submit,
+#landingpage #keiken-login .mp-form-submit,
+.mp-landingpage-button
+  margin-top 5px
+  font-size .8em
+  padding 3px
 
-.mp-dashboard-button
-  max-width 50%
-  margin 0 auto
+.mp-landingpage-button
+  width 100%
+  min-width 80%
 
-.mp-demo-button,
-.mp-test-button
+#landingpage #keiken-login #login_submit:hover,
+#landingpage #keiken-login .mp-form-submit:hover,
+.mp-landingpage-button:hover
+  cursor pointer
+  color #88ff88
+  background-color black
+  
+/* ....... guest styles ..... */
+section.keiken-intro
+  form input
+    width 47%
+    min-height 25px
+    float left
+  .submit-guest-password
+    margin-left 6%
+    cursor pointer
+    box-shadow(0px 0px 5px rgba(255,255,255,0.8))
+    
+.mp-guest-login-explain
+  margin-top 30px
+  font-size .8em
+  font-style italic
+
+/* ......... login styles ...... */ 
+
+section#keiken-login
+  overflow auto
+  width 30%
+  max-height 85%
+  min-height 40%
+  padding 10px
+  position absolute
+  top 5%
+  left 100%
+  background url(/static/images/ie-rgba-black-alpha-60.png) repeat
+  background rgba(0,0,0,0.6)
+  font-size .8em
+  visibility hidden
+
+#mp-login-switch span
+  position absolute
+  right 5px
+  top 5px
+  a
+    color #bababa
+    font-size .8em
+    text-decoration none
+#mp-login-switch span:hover
+  cursor pointer
+  a
+    color #88ff88
+    text-decoration none
+#mp-login-switch span a:hover
+  text-decoration none
+  background none
+
+#keiken-login .mp-login-tab
+  overflow auto
+  .mp-form-submit
+    color white //#050505
+  h2
+    text-align center
+    padding 5px
+    margin-top 10px
+//  label
+//    padding 3px
+    
+#landingpage .mp-login-tab input,
+.mp-landingpage-button
+  background url(/static/images/ie-rgba-black-alpha-50.png) repeat
+  background rgba(0,0,0,0.5)
+  color white
+  border-radius 5px
+  box-shadow(inset 0px 0px 5px rgba(255,255,255,0.8))
+  padding 3px
+  
+#landingpage #keiken-login #login_submit,
+#landingpage #keiken-login .mp-form-submit,
+  margin-left 28% //instead of using mp-form-submit
+    
+#mp-login-register
   width 50%
-  max-width 50%
-  float left
-  text-align center
+  margin-left 25%
+  
+#mp-login-error
+  width 80%
+  margin 0 10%
 
 /* ------ end landing page ------ */
-
-/* ------------------------------ */
-/* -- styling for contact page -- */
-
-#mp-contact
-  width 50%
-  margin-left 10%
-
-/* ------ end contact page ------ */
 
 /* ------------------------------ */
 /* -- impressum -- */
@@ -174,3 +417,94 @@
   font-size .9em
 
 /* ------ end impressum ------ */
+
+/* -- styling for account settings -- */
+
+#account h2
+  margin-left 0
+#account hr
+  background-color black
+  height 3px
+  
+#mp-account-settings-options
+  margin-bottom 30px
+
+.mp-account-settings-form 
+  display none
+
+/* ------ end account ------ */
+
+
+/* ------------------------------- */
+/* --------- form pages ---------- */
+
+#contact .mp-non-interactive-content,
+#account .mp-non-interactive-content
+  position relative
+  h2
+    margin-bottom 25px
+    text-align center
+
+#left-column
+  width 40%
+  padding-right 3%
+  position absolute
+  left 10px
+  text-align justify
+
+#left-column article
+  width 100%
+  div
+    font-size 1.1em
+
+#right-column
+  width 60%
+  padding 10px
+  padding-top 0
+  position absolute
+// right 0px @see non-ie.css
+
+#right-column form
+  padding 5px
+  border 1px solid black
+  border-radius 5px
+  label
+    height 40px
+    font-size 20px
+  input
+    height 40px
+    font-size 20px
+    padding 3px
+  input[type='radio']
+    height 20px
+    font-size 12px
+    padding 0
+  p
+    padding 0 15px
+    background-color #EEEEEE
+    border-radius 5px
+  p:last-of-type
+    background-color #FFFFFF
+  #mandatory-note
+    background-color #FFFFFF
+    font-size 0.8em
+    text-align right
+  p.mp-checkboxes label
+    width 60%
+    height 20px
+    font-size 12px
+    margin 0
+    margin-top 5px
+  p.mp-checkboxes
+    min-height 140px
+
+/* ------------------------------ */
+/* -- styling for contact page -- */
+
+// @see *styling for form pages*
+
+/* ------ end contact page ------ */
+
+
+/* ------ end form pages -------- */
+/* ------------------------------ */

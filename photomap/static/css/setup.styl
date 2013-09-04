@@ -51,12 +51,12 @@ $mp-dialog-margin-top = 5px
 /* --------- mixins --------- */
 
 box()
-/*  display box
+/*
   display -webkit-box
-*//*
-  display flex
+  display -moz-box
+  display -ms-flexbox
   display -webkit-flex
-  display -moz-flex
+  display flex
 */
 centerChildren()
 /*  box-orient horizontal
@@ -112,6 +112,13 @@ transition(time)
   -o-transition-timing-function ease-in-out
   -ms-transition-timing-function ease-in-out
   transition-timing-function ease-in-out
+  
+delayTransition(delay)
+  -webkit-transition-delay delay
+  -moz-transition-delay delay
+  -o-transition-delay delay
+  -ms-transition-delay delay
+  transition-delay delay
 
 transform(transformation)
   -webkit-transform transformation

@@ -27,12 +27,12 @@ _htmlparser = HTMLParser.HTMLParser()
 
 DEMO_PASSWORD = "aeGoh7"
 EXPORT_FOLDER = os.path.join(settings.RES_PATH, "export")
-MIN_SIZE = 1024
+MIN_SIZE = 1200
 
 client = Client(HTTP_USER_AGENT = "Firefox/15")
 
 from django.conf import settings
-assert settings.DEBUG is False, "Make sure settings_prod is used."
+# assert settings.DEBUG is False, "Make sure settings_prod is used."
 
 
 def unescape(data):
@@ -86,7 +86,7 @@ def download_photo(url, id):
     
 
 
-def convert(path, data):
+def convert(path, data, save = True):
     assert os.path.isfile(path)
     user = data["user"]
     conn = sqlite3.connect(path)
@@ -102,26 +102,29 @@ def convert(path, data):
                 "title" : unescape(albumdb['title']),
                 "description" : unescape(albumdb['description'])}
                     
-                
-        response = client.post("/insert-album", data = album_data)
-        content = json.loads(response.content)
-        if content["success"]:
-            print "Saved album %s." % str(unescape(album_data["title"]))
-            album = Album.objects.latest("pk")
-        else:
-            raise RuntimeError, "Expected success, got error %s instead." % str(content["error"])
-        
+        if save :         
+            response = client.post("/insert-album", data = album_data)
+            content = json.loads(response.content)
+            if content["success"]:
+                print "Saved album %s." % str(unescape(album_data["title"]))
+                album = Album.objects.latest("pk")
+            else:
+                raise RuntimeError, "Expected success, got error %s instead." % str(content["error"])
+            
         
         places = c.execute("select * from pm_place where album_id = ?", (albumdb['id'],)).fetchall()
         
         for placedb in places:
-            place = Place(lat = decimal.Decimal(placedb['lat']),
-                          lon = decimal.Decimal(placedb['lon']),
-                          title = unescape(placedb['title']),
-                          description = unescape(placedb['description']),
-                          album = album)
-            place.save()
-            print "Saved place %s." % str(place)
+
+            if save:
+                place = Place(lat = decimal.Decimal(placedb['lat']),
+                              lon = decimal.Decimal(placedb['lon']),
+                              title = unescape(placedb['title']),
+                              description = unescape(placedb['description']),
+                              album = album)
+                place.save()
+                print "Saved place %s." % str(place)
+
             
             photos = c.execute("select * from pm_photo where place_id = ?", (placedb['id'],)).fetchall()
             counter = 0
@@ -132,23 +135,24 @@ def convert(path, data):
                     continue
                 order = photodb['order'] or counter 
                 
-                data = {"title": unescape(photodb['title']),
+                if save:
+                    data = {"title": unescape(photodb['title']),
                         "description": unescape(photodb['description']),
                         "photo": File(source),
                         "order": order,
                         "place": place.pk}
-                
-                response = client.post("/insert-photo", data = data)
-                content = json.loads(response.content)
-                if content["success"]:
-                    print "Saved photo %s." % str(unescape(photodb["title"]))
-                else:
-                    raise RuntimeError, "Expected success, got error %s instead." % str(content["error"])
+                    response = client.post("/insert-photo", data = data)
+                    content = json.loads(response.content)
+                    if content["success"]:
+                        print "Saved photo %s." % str(unescape(photodb["title"]))
+                    else:
+                        raise RuntimeError, "Expected success, got error %s instead." % str(content["error"])
                 
                 
             
 
 if __name__ == "__main__":
-    assert client.login(username = "anna.lena.hoenig@gmail.com", password = "Yaish8"), "Login data seems to be wrong!"
-    data = {"user": User.objects.get(email = "anna.lena.hoenig@gmail.com"), "id" : 4}
-    convert(os.path.join(settings.PROJECT_PATH, "export.sqlite3"), data)
+    assert client.login(username = "demo@keiken.de", password = "aeGoh7"), "Login data seems to be wrong!"
+    user = User.objects.get(username = "demo@keiken.de")
+    data = {"user": user, "id" : user.pk}
+    convert(os.path.join(settings.PROJECT_PATH, "export.sqlite3"), data, save = False)

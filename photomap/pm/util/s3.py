@@ -5,6 +5,7 @@ Created on Aug 28, 2012
 '''
 
 import boto
+from boto.s3.acl import CannedACLStrings
 import settings
 
 S3_URL = "https://s3-eu-west-1.amazonaws.com"
@@ -20,4 +21,5 @@ def build_url(key):
 
 def delete_key(key):
     bucket = getbucket()
-    bucket.delete_key(key)
+    if bucket.get_key(key):
+        bucket.delete_key(key)

@@ -1,35 +1,79 @@
+/*global String*/
 "use strict";
 
-function croak(actual, expected, file, method, subject) {
-   throw new Error(file + " > " + method + " : " + subject + " : " + actual + " is not " + expected);
+function AssertionError (message) {
+   this.message = message;
 }
 
-function assert(actual, expected, file, method, subject) {
+AssertionError.prototype.toString = function () {
+   return this.message;
+};
+
+function croak(actual, expected, message) {
+   if (message === undefined || typeof message !== "string") {
+      throw new Error("AssertMustProvideMessage");
+   }
+   throw new AssertionError(actual + " is not " + expected + " -- " + message);
+}
+
+function assert(actual, expected, message) {
    if (actual !== expected) {
-      croak(actual, expected, file, method, subject);
+      croak(actual, expected, message);
    }
 }
 
-function assertTrue(actual, file, method, subject) {
+function assertTrue(actual, message) {
    if (!actual) {
-      croak(actual, true, file, method, subject);
+      croak(actual, true, message);
    }
 }
 
-function assertFalse(actual, file, method, subject) {
+function assertEqual(actual, expected, message) {
+   if (actual !== expected) {
+      croak(actual, expected, message);
+   }
+}
+
+function assertFalse(actual, message) {
    if (actual) {
-      croak(actual, false, file, method, subject);
+      croak(actual, false, message);
    }
 }
 
-function assertNumber(actual, file, method, subject) {
+function assertNumber(actual, message) {
    if (!(typeof actual === "number")) {
-      croak(typeof actual, "number", file, method, subject);
+      croak(typeof actual, "number", message);
    }
 }
 
-function assertString(actual, file, method, subject) {
-   if (!(typeof actual === "string")){
-      croak(typeof actual, "string", file, method, subject);
+function assertFunction(actual, message) {
+   if (!(typeof actual === "function")) {
+      croak(typeof actual, "function", message);
+   }
+}
+
+
+function assertString(actual, message) {
+   if (!(typeof actual === "string")) {
+      croak(typeof actual, "string", message);
+   }
+}
+
+function assertInstance(instance, clazz, message) {
+   if (!(instance instanceof clazz)){
+      croak(typeof instance, clazz, message);
+   }
+}
+
+function assertObject(actual, message) {
+   if (!(typeof actual === "object")) {
+      croak(typeof actual, "object", message);
+   }
+}
+
+
+function assertNotNull(actual, message) {
+   if (actual === null || actual === undefined) {
+      croak(actual, null, message);
    }
 }

@@ -2,7 +2,7 @@
 '''
 Created on 22.07.2012
 
-@author: MrPhil
+@author: Frederik Claus
 '''
 
 from apitestcase import ApiTestCase
@@ -28,7 +28,7 @@ class AlbumControllerTest(ApiTestCase):
         #=======================================================================
         # define url for requests
         #=======================================================================
-        self.url = "/delete-album"
+        self.url = "/album/"
         #=======================================================================
         # delete something that exists
         #=======================================================================
@@ -60,18 +60,18 @@ class AlbumControllerTest(ApiTestCase):
         #=======================================================================
         # use wrong paramater
         #=======================================================================
-        self.assertError({"wrong" : "abc"})
+        self.assert404("/album/abc/", method = "DELETE")
         
         
         
     def test_insert(self):
-        self.url = "/insert-album"
+        self.url = "/album/"
         #=======================================================================
         # 'ocean test'
         #=======================================================================
         data = {"title": "Atlantis",
-                "lat" : Decimal(17.375803),
-                "lon": Decimal(-34.628906)}
+                "lat" : Decimal("17.375803"),
+                "lon": Decimal("-34.628906")}
         (album, content) = self.assertCreates(data)
         self.assertTrue(album.secret != None)
         self.assertEqual(album.country, "oc")
@@ -94,6 +94,11 @@ class AlbumControllerTest(ApiTestCase):
         (album, content) = self.assertCreates(data)
         self.assertEqual(album.description, data["description"])
         #=======================================================================
+        # Too many decimal places for coordinates
+        #=======================================================================
+        data["lat"] = Decimal(1.23123)
+        self.assertError(data)
+        #=======================================================================
         # insert somthing that is not valid
         #=======================================================================
         data2 = deepcopy(data)
@@ -107,7 +112,7 @@ class AlbumControllerTest(ApiTestCase):
         self.assertError(data3)
         
     def test_update(self):
-        self.url = "/update-album"
+        self.url = "/album/"
         #=======================================================================
         # test something valid without description
         #=======================================================================
@@ -122,34 +127,33 @@ class AlbumControllerTest(ApiTestCase):
         (album, content) = self.assertUpdates(data)
         self.assertEqual(album.description, data["description"])
         #=======================================================================
-        # wrong id test
+        # Wrong id test
         #=======================================================================
         data["id"] = 999  # does not exist
         self.assertError(data)
         #=======================================================================
-        # no id test
-        #=======================================================================
-        del data["id"]
-        self.assertError(data)
-        #=======================================================================
-        # update something that does not belong to you
+        # Not owner
         #=======================================================================
         data["id"] = 2
         self.assertError(data)
+        #=======================================================================
+        # Wrong parameter
+        #=======================================================================
+        self.assert404("/album/abc/", method = "POST")
         
     def test_update_password(self):
-        self.url = "/update-album-password"
-        data = {"album" : 1, "password" : "blah"}
-        self.assertSuccess(data)
-        album = Album.objects.get(pk=1)
+        self.url = "/album/1/password"
+        data = {"password" : "blah"}
+        self.assertSuccess(self.url, data)
+        album = Album.objects.get(pk = 1)
         from django.contrib.auth import hashers 
         self.assertTrue(hashers.is_password_usable(album.password))
         
         
     def test_get(self):
-        self.url = "/get-album"
-        data = {"id" : 1}
-        album = self.json(data, method = "GET")
+        self.url = "/album/"
+#        data = {"id" : 1}
+        album = self.json(self.url + "1/", method = "GET")
         self.assertAlbumComplete(album)
         self.assertTrue(album["places"])
         places = album["places"]
@@ -162,13 +166,19 @@ class AlbumControllerTest(ApiTestCase):
                 self.assertTrue(photo["description"] is None)
                 
         #=======================================================================
-        # something invalid
+        # Something invalid
         #=======================================================================
-        self.assertError({"id" : 9999}, method = "GET")
+        self.url = "/album/999/"
+        self.assertError(method = "GET")
         #=======================================================================
-        # does not belong to you
+        # Not owner
         #=======================================================================
-        self.assertError({"id" : 2}, method = "GET")
+        self.url = "/album/2/"
+        self.assertError(method = "GET")
+        #=======================================================================
+        # Wrong parameter.
+        #=======================================================================
+        self.assert404("/album/abc/", method = "GET")
         
 #    def test_share(self):
 #        self.url = "/get-album-share"

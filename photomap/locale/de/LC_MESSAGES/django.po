@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-03-09 13:35+0100\n"
+"POT-Creation-Date: 2013-09-04 13:00+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,290 +17,180 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: templates/base-interactive.html:71 templates/base-interactive.html.py:87
-#: templates/view-album.html:113
+#: pm/form/account.py:22
+msgid "PASSWORD_REPETITION_ERROR"
+msgstr "Das neue Passwort und die Passwortwiederholung stimment nicht überein."
+
+#: pm/form/account.py:33
+msgid "EMAIL_ALREADY_EXISTS_ERROR"
+msgstr "Diese Email ist bereits registriert."
+
+#: pm/form/account.py:52 pm/view/account.py:119 pm/view/message.py:30
+msgid "REQUEST_NOT_ALLOWED_ERROR"
+msgstr "Diese Aktion ist nicht erlaubt. "
+
+#: pm/view/account.py:77 pm/view/account.py:105 pm/view/account.py:139
+#: pm/view/authentication.py:55
+msgid "CREDENTIALS_ERROR"
+msgstr ""
+"Email und Password stimmen nicht überein. Bitte versuchen Sie es erneut. "
+
+#: pm/view/footer.py:29
+msgid "MAIL_ERROR"
+msgstr ""
+"Beim Senden der Email ist ein Fehler aufgetreten. Bitte versuchen Sie es "
+"später erneute oder schicken Sie uns persönlich eine Email."
+
+#: pm/view/message.py:26
+msgid "USER_INACTIVE_ERROR"
+msgstr ""
+"Ihr Nutzer-Account is momentan inaktiv. Bitte kontaktieren Sie das KEIKEN "
+"Team für mehr Informationen. "
+
+#: templates/404.html:6 templates/album-share-failure.html:6
+#: templates/album-share-failure.html:8
+msgid "Error"
+msgstr "Fehler"
+
+#: templates/404.html:8
+msgid "INVALID_URL"
+msgstr "Diese Addresse existiert nicht."
+
+#: templates/404.html:14
+msgid "INVALID_URL_ERROR"
+msgstr ""
+"Sie sehen diese Seite, weil die von ihnen angefrage Addresse nicht "
+"existiert. Wenn Sie glauben, dass wir einen Fehler gemacht haben, dann "
+"informieren Sie uns über das Kontakt Formular. Bitte vergessen Sie nicht zu "
+"erwähnen, woher Sie die fehlerhafte Addresse bezogen haben."
+
+#: templates/album-share-failure.html:11
+msgid "ALBUM_SHARE_FAILURE_NOTE"
+msgstr ""
+"Diese Addresse gehört zu keinen Album. Bitte stellen Sie sicher, dass der "
+"Autor des Album ein Password gesetzt hat (Alben starten ohnen Password) und "
+"ihnen die richtige Addresse übergegeben hat."
+
+#: templates/album-share-login.html:7
+msgid "KEIKEN_GUEST_LOGIN"
+msgstr ""
+"Bitte bestätigen Sie, dass Sie dazu berechtigt sind das Album anzusehen, "
+"indem Sie in das nachfolgende Eingabefeld das korrekte Passwort eintragen."
+
+#: templates/album-share-login.html:10
+msgid "Enter password..."
+msgstr "Passwort eingeben..."
+
+#: templates/album-share-login.html:11
+msgid "View Album"
+msgstr "Album ansehen"
+
+#: templates/base-interactive.html:39
 msgid "Schließen"
 msgstr "Schließen"
 
-#: templates/base-interactive.html:90
+#: templates/base-interactive.html:42
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr ""
 "Wenn Sie einen Platz oder ein Album auswählen, wird die Beschreibung des "
 "ausgewählten Objekts hier angezeigt."
 
-#: templates/base-interactive.html:92 templates/base-interactive.html:100
-#: templates/base-interactive.html:102
+#: templates/base-interactive.html:44 templates/base-interactive.html.py:52
 msgid "NO_DESCRIPTION"
-msgstr "Keine Beschreibung"
+msgstr "Keine Beschreibung "
 
-#: templates/base-interactive.html:98 templates/photo-editor.html:4
+#: templates/base-interactive.html:44 templates/base-interactive.html.py:52
+msgid "ADD_DESCRIPTION"
+msgstr " Beschreibung hinzufügen ..."
+
+#: templates/base-interactive.html:50 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Bitte wählen Sie ein Photo aus."
 
-#: templates/base-interactive.html:114
-msgid "Data Loading"
+#: templates/base.html:22 templates/footer/help.html:19
+msgid "KEIKEN_SHORT"
 msgstr ""
-"Die angefragten Daten werden momentan geladen. Bitte haben Sie einen Moment "
-"Geduld!"
+"Erzähle deinen Freunde und der Familie von deinen Erfahrungen im Ausland!"
 
-#: templates/base-interactive.html:122
-msgid "control-title delete"
-msgstr "Löschen"
+#: templates/base.html:101 templates/footer/help.html:53
+msgid "Dashboard"
+msgstr "Dashboard"
 
-#: templates/base-interactive.html:123
-msgid "control-title modify"
-msgstr "Bearbeiten"
+#: templates/base.html:102
+msgid "Settings"
+msgstr "Einstellungen"
 
-#: templates/base.html:103 templates/index-guest.html:30
-msgid "JS_DISABLED_WARNING"
-msgstr ""
-"Sie haben Javascript in Ihren Browsereinstellungen deaktiviert. Um Keiken "
-"nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
-"die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
-
-#: templates/base.html:124
+#: templates/base.html:114
 msgid "Login or Register"
 msgstr "Anmelden oder Registrieren"
 
-#: templates/base.html:124
+#: templates/base.html:114
 msgid "Anmelden/Registrierung"
 msgstr "Anmeldung und Registrierung"
 
-#: templates/base.html:128 templates/not-supported-old.html:64
+#: templates/base.html:118 templates/footer/payment.html:6
+msgid "Spenden"
+msgstr "Spenden"
+
+#: templates/base.html:119
 msgid "link-title-team"
 msgstr "Vorstellung des Projekts und der Verantwortlichen"
 
-#: templates/base.html:128 templates/team.html:6 templates/team.html.py:8
+#: templates/base.html:119 templates/footer/team.html:6
+#: templates/footer/team.html.py:8
 msgid "Team"
 msgstr "Team"
 
-#: templates/base.html:129 templates/not-supported-old.html:62
+#: templates/base.html:120
 msgid "link-title-contact"
 msgstr "Für Support, Fragen, Anmerkungen und Kritik.."
 
-#: templates/base.html:129 templates/contact.html:6
-#: templates/contact.html.py:8 templates/impressum.html:30
+#: templates/base.html:120 templates/footer/contact.html:6
+#: templates/footer/contact.html.py:8 templates/footer/impressum.html:37
 msgid "Kontakt"
 msgstr "Kontakt"
 
-#: templates/base.html:130 templates/not-supported-old.html:60
+#: templates/base.html:121
 msgid "link-title-privacy"
 msgstr "Erläuterungen zur Nutzung von persönlichen Daten beim Projekt"
 
-#: templates/base.html:130 templates/privacy.html:5
-#: templates/privacy.html.py:7
+#: templates/base.html:121 templates/footer/privacy.html:5
+#: templates/footer/privacy.html.py:7
 msgid "Datenschutz"
 msgstr "Datenschutz"
 
-#: templates/base.html:131 templates/not-supported-old.html:61
+#: templates/base.html:122
 msgid "link-title-copyright"
 msgstr "Details zum Urheberrecht"
 
-#: templates/base.html:131 templates/copyright.html:6
+#: templates/base.html:122 templates/footer/copyright.html:6
 msgid "Urheberrecht"
 msgstr "Copyright"
 
-#: templates/base.html:132 templates/not-supported-old.html:63
+#: templates/base.html:123
 msgid "link-title-help"
 msgstr "Hilfe zu den Funktionen und FAQ"
 
-#: templates/base.html:132 templates/help.html:6
+#: templates/base.html:123 templates/footer/help.html:6
 msgid "Hilfe"
 msgstr "Hilfe"
 
-#: templates/base.html:133 templates/not-supported-old.html:59
+#: templates/base.html:124
 msgid "link-title-impressum"
-msgstr "Zum Impressum von NAME DES PROJEKTS"
+msgstr "Zum Impressum von KEIKEN"
 
-#: templates/base.html:133 templates/impressum.html:6
-#: templates/impressum.html.py:8
+#: templates/base.html:124 templates/footer/impressum.html:6
+#: templates/footer/impressum.html.py:8
 msgid "Impressum"
 msgstr "Impressum"
 
-#: templates/contact.html:13
-msgid "contact-intro-article1-line1"
-msgstr "Sollten Sie Probleme, Anregungen oder Fragen, welche nicht auf der"
-
-#: templates/contact.html:13
-msgid "contact-linkto-help"
-msgstr "Hilfe-Seite"
-
-#: templates/contact.html:14
-msgid "contact-intro-article1-line2"
+#: templates/cookie-warning.html:4
+msgid "COOKIES_DISABLED_WARNING"
 msgstr ""
-", beantwortet wurden, haben, dann schreiben Sie uns doch bitte eine Mail an"
-
-#: templates/contact.html:18
-msgid "email just in javascript"
-msgstr ""
-"-- Bitte aktivieren Sie JavaScript in ihren Browsereinstellungen und laden "
-"Sie die Seite erneut, um die Email-Adresse lesen zu können. --"
-
-#: templates/contact.html:22
-msgid "contact-intro-article1-line3"
-msgstr "Alternativ können Sie auch das nachfolgende Kontaktformular ausfüllen."
-
-#: templates/contact.html:23
-msgid "contact-intro-article1-line4"
-msgstr "Bitte beachten Sie die hierfür gültigen"
-
-#: templates/contact.html:23
-msgid "contact-linkto-privacy"
-msgstr "Datenschutzgrundsätze"
-
-#: templates/contact.html:31 templates/insert-album.html:10
-#: templates/insert-photo.html:20 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:12
-msgid "NAME"
-msgstr "Name"
-
-#: templates/contact.html:32 templates/contact.html.py:40
-#: templates/contact.html:48 templates/contact.html.py:56
-#: templates/insert-album.html:10 templates/insert-photo.html:20
-#: templates/insert-photo.html.py:28 templates/insert-place.html:10
-#: templates/update-album.html:11 templates/update-photo.html:12
-#: templates/update-place.html:12
-msgid "MANDATORY_FIELD"
-msgstr "Dieses Feld ist ein Pflichtfeld."
-
-#: templates/contact.html:39 templates/login.html:24
-#: templates/login.html.py:53
-msgid "Email"
-msgstr "Email"
-
-#: templates/contact.html:47
-msgid "SUBJECT"
-msgstr "Betreff"
-
-#: templates/contact.html:55
-msgid "MESSAGE"
-msgstr "Nachricht"
-
-#: templates/contact.html:61
-msgid "MANDATORY_FIELDS_NOTE"
-msgstr "* Diese Felder sind Pflichtfelder."
-
-#: templates/contact.html:62
-msgid "Senden"
-msgstr "Senden"
-
-#: templates/copyright.html:8
-msgid "Urheberrechtserklärung"
-msgstr "Urheberrechtserklärung"
-
-#: templates/copyright.html:13
-msgid "Urheberrecht bei internen Inhalten"
-msgstr "Urheberrecht der Entwickler der Website"
-
-#: templates/copyright.html:16
-msgid "Urheberrecht bei internen Inhalten list-item-1"
-msgstr ""
-"Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
-"Erstellung der Website verantwortlich ist. Ihre Namen sind im Impressum "
-"aufgeführt."
-
-#: templates/copyright.html:17
-msgid "Urheberrecht bei internen Inhalten list-item-2"
-msgstr ""
-"'Code hinter der Website' beinhaltet alle serverseitigen Skripte, sowie den "
-"Javascript-Code im Front End."
-
-#: templates/copyright.html:18
-msgid "Urheberrecht bei internen Inhalten list-item-3"
-msgstr ""
-"Alle Inhalte die von der Entwicklern der Website veröffentlicht werden, "
-"genauso wie der Code hinter der Website sind durch das deutsche Urheberrecht "
-"geschützt."
-
-#: templates/copyright.html:19
-msgid "Urheberrecht bei internen Inhalten list-item-4"
-msgstr ""
-"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
-"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
-"Autors."
-
-#: templates/copyright.html:22
-msgid "Urheberrecht der Nutzer"
-msgstr "Urheberrecht der Nutzer"
-
-#: templates/copyright.html:25
-msgid "Urheberrecht der Nutzer list-item-1"
-msgstr ""
-"Inhalte die von Nutzern der Website geschaffen und veröffentlicht werden, "
-"können aus Bildern und Texten als Titel, Beschreibung und Kommentaren "
-"bestehen."
-
-#: templates/copyright.html:26
-msgid "Urheberrecht der Nutzer list-item-2"
-msgstr "Solche Inhalte sind durch das Urheberrecht geschützt."
-
-#: templates/copyright.html:27
-msgid "Urheberrecht der Nutzer list-item-3"
-msgstr ""
-"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
-"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
-"Autors."
-
-#: templates/copyright.html:30
-msgid "Urheberrecht Dritter"
-msgstr "Urheberrecht Dritter"
-
-#: templates/copyright.html:33
-msgid "Urheberrecht Dritter list-item-1"
-msgstr ""
-"Code und Inhalte die auf dieser Website veröffentlicht bzw. genutzt werden "
-"und weder von den Entwicklern noch von Nutzern erstellt wurde sind Inhalte "
-"Dritter. "
-
-#: templates/copyright.html:34
-msgid "Urheberrecht Dritter list-item-2"
-msgstr "Inhalte Dritter müssen als solche gekennzeichnet werden."
-
-#: templates/copyright.html:35
-msgid "Urheberrecht Dritter list-item-3"
-msgstr "Inhalte Dritter sind durch das Urheberrecht geschützt."
-
-#: templates/copyright.html:36
-msgid "Urheberrecht Dritter list-item-4"
-msgstr ""
-"Die Urheberrechts-Informationen von veröffentlichten oder genutzten Inhalten "
-"Dritter müssen nahe beim Inhalt platziert sein."
-
-#: templates/copyright.html:37
-msgid "Urheberrecht Dritter list-item-5"
-msgstr ""
-"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
-"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
-"Autors."
-
-#: templates/dashboard.html:30
-msgid "control-title share"
-msgstr "Teilen"
-
-#: templates/delete-album.html:5
-msgid "DELETE_ALBUM"
-msgstr "Album löschen?"
-
-#: templates/delete-album.html:11
-msgid "DELETE_ALBUM_QUESTION"
-msgstr "Wollen Sie dieses Album  wirklich löschen?"
-
-#: templates/delete-photo.html:5
-msgid "DELETE_PHOTO"
-msgstr "Photo löschen?"
-
-#: templates/delete-photo.html:11
-msgid "DELETE_PHOTO_QUESTION"
-msgstr "Wollen Sie dieses Photo wirklich löschen?"
-
-#: templates/delete-place.html:5
-msgid "DELETE_PLACE"
-msgstr "Platz löschen?"
-
-#: templates/delete-place.html:11
-msgid "DELETE_PLACE_QUESTION"
-msgstr "Wollen Sie diesen Platz wirklich löschen?"
+"Sie haben Cookies in Ihren Browsereinstellungen deaktiviert. KEIKEN nutzt "
+"Cookies, um Ihre Sitzung zu authentifizieren, bitte aktivieren Sie also "
+"Cookies auf KEIKEN. Sie können auf unserer Seite zur Privatssphäre "
+"nachlesen, was für Cookies auf KEIKEN verwendet werden."
 
 #: templates/dialog.html:10
 msgid "FAILURE"
@@ -314,551 +204,76 @@ msgstr "Erfolg"
 msgid "CLOSE_ON_SUCCESS"
 msgstr "Bei Erfolg automatisch schließen?"
 
-#: templates/help.html:8
-msgid "Hilfe und Support"
-msgstr "Hilfe und Support"
-
-#: templates/help.html:22
-msgid "help-intro-paragraph"
-msgstr ""
-"Momentan steht Ihnen leider noch keine sehr umfangreiche Hilfe-Seite zur "
-"Verfügung. Wir arbeiten jedoch daran. Ein Basis-Tutorial, das die "
-"wichtigsten Funktionen umfasst, gibt es bereits. Wenn Sie noch nicht "
-"beantwortete Fragen haben, schreiben Sie uns doch gerne eine Email; wir "
-"werden bald mit Ihnen in Kontakt treten."
-
-#: templates/help.html:25
-msgid "help-faq-title"
-msgstr "FAQ"
-
-#: templates/help.html:27
-msgid "help-faq topic 'Warum Klarnamen?' question"
-msgstr "Warum Klarnamen?"
-
-#: templates/help.html:28
-msgid "help-faq topic 'Warum Klarnamen?' answer"
-msgstr ""
-"Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
-"Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
-"ganz persönliches digitales Online-Poesie-Album. Wir garantieren, dass nur "
-"die Personen, denen Sie Zugang zu einem ihrer Alben gestatten, das Album und "
-"Ihren Namen auch tatsächlich sehen können. Und unserer Meinung nach ist es "
-"viel ansprechender den Namen eines Freundes zusehen als ein mehr oder minder "
-"abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
-"nicht nur praktischer, sondern auch schöner."
-
-#: templates/help.html:31
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' question"
-msgstr "Warum Klarnamen?"
-
-#: templates/help.html:33
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part1"
-msgstr ""
-"Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
-"Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
-"ganz persönliches digitales Online-Poesie-Album. Wir garantieren, dass nur "
-"die Personen, denen Sie Zugang zu einem ihrer Alben gestatten, das Album und "
-"Ihren Namen auch tatsächlich sehen können. Und unserer Meinung nach ist es "
-"viel ansprechender den Namen eines Freundes zusehen als ein mehr oder minder "
-"abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
-"nicht nur praktischer, sondern auch schöner."
-
-#: templates/help.html:34
-msgid "link-title passwort security comic"
-msgstr ""
-
-#: templates/help.html:34
-msgid "link to password security comic"
-msgstr ""
-
-#: templates/help.html:35
-msgid "help-faq topic 'Was ist ein sicheres Passwort?' answer part2"
-msgstr ""
-"Manch einen mag es zuerst nicht gefallen seinen wahren Namen hier anzugeben. "
-"Das ganze Projekt soll jedoch etwas sehr persönliches sein. Es ist quasi Ihr "
-"ganz persönliches digitales Online-Poesie-Album. Wir garantieren, dass nur "
-"die Personen, denen Sie Zugang zu einem ihrer Alben gestatten, das Album und "
-"Ihren Namen auch tatsächlich sehen können. Und unserer Meinung nach ist es "
-"viel ansprechender den Namen eines Freundes zusehen als ein mehr oder minder "
-"abstraktes Pseudonym. Altmodisch? Keineswegs! Für ein Poesie-Album ist dies "
-"nicht nur praktischer, sondern auch schöner."
-
-#: templates/help.html:40
-msgid "help-tutorial-title"
-msgstr "Tutorial"
-
-#: templates/help.html:42
-msgid "help-tutorial topic: Dashboard"
-msgstr "Dashboard"
-
-#: templates/help.html:44
-msgid "help-tutorial topic: Dashboard -> description"
-msgstr "Im Dashboard werden alle Ihre Alben auf der Karte angezeigt."
-
-#: templates/help.html:46
-msgid "Alben"
-msgstr "Alben"
-
-#: templates/help.html:49
-msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Add"
-msgstr "Album hinzufügen"
-
-#: templates/help.html:50
-msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Add -> description"
-msgstr ""
-"Sie können Alben hinzufügen, indem Sie auf einen beliebigen Punkt der Karte "
-"klicken. In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und "
-"Beschreibung des Albums angeben können. Nach dem Senden wird an dem "
-"ausgewählten Punkt ein neues Album erstellt, welches durch einen Marker "
-"(Kamera) auf der Karte gekennzeichnet ist."
-
-#: templates/help.html:53
-msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify"
-msgstr "Album löschen/bearbeiten"
-
-#: templates/help.html:54
-msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Delete/Modify -> "
-"description"
-msgstr ""
-"Wenn Sie mit der Maus über einen Album-Marker fahren, öffnet sich ein "
-"kleines Fenster mit drei Symbolen. Durch Anklicken des entsprechenden "
-"Symbols wird ein Dialog zum Bearbeiten, Löschen oder Teilen aufgerufen."
-
-#: templates/help.html:57
-msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Select"
-msgstr "Album auswählen/Öffnen der Albumsansicht"
-
-#: templates/help.html:58
-msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Select -> "
-"description"
-msgstr ""
-"Indem Sie auf einen Album-Marker doppelklicken, wählen Sie ein bestimmtes "
-"Album aus. Daraufhin werden Sie auf die Albumsansicht des entsprechenden "
-"Albums weitergeleitet, in welcher Sie die Plätze und Bilder des Albums sehen "
-"können."
-
-#: templates/help.html:61
-msgid "help-tutorial topic: Dashboard, subtopic: Alben, function: Share"
-msgstr "Album teilen"
-
-#: templates/help.html:63
-msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
-"description"
-msgstr ""
-"Um ein Album zu teilen müssen Sie den 'Teilen'-Dialog öffnen. Sie werden "
-"dort den Link zu ihrem aktuellen Album finden, welchen Sie kopieren können "
-"um das Album mit anderen zu teilen. Vorher müssen Sie allerdings noch ein "
-"Passwort für Ihr Album festlegen. Danach können Sie ihr Album mit jedem auf "
-"die Art und Weise teilen, die Ihnen Recht ist (Soziale Netzwerke, Email, "
-"Chat-Programme, Briefe, ...). Die Person mit der Sie ein Album geteilt haben "
-"wird auf eine Gast-Seite geleitet auf der sie das von Ihnen definierte "
-"Passwort angeben muss. Danach kann der Gast ihr Album anschauen, jedoch "
-"nichts verändern. Sie können das Passwort jederzeit ändern, indem Sie den "
-"'Teilen'-Dialog nochmals öffnen und ein neues Passwort definieren. Ausserdem "
-"können Sie, sollten Sie schon ein Passwort für ein Album definiert haben, "
-"die URL in der Albumsansicht kopieren, um das Album zu teilen."
-
-#: templates/help.html:64
-msgid ""
-"help-tutorial topic: Dashboard, subtopic: Alben, function: Share -> "
-"attention!"
-msgstr ""
-"Um ein Album zu teilen müssen Sie den 'Teilen'-Dialog öffnen. Sie werden "
-"dort den Link zu ihrem aktuellen Album finden, welchen Sie kopieren können "
-"um das Album mit anderen zu teilen. Vorher müssen Sie allerdings noch ein "
-"Passwort für Ihr Album festlegen. Danach können Sie ihr Album mit jedem auf "
-"die Art und Weise teilen, die Ihnen Recht ist (Soziale Netzwerke, Email, "
-"Chat-Programme, Briefe, ...). Die Person mit der Sie ein Album geteilt haben "
-"wird auf eine Gast-Seite geleitet auf der sie das von Ihnen definierte "
-"Passwort angeben muss. Danach kann der Gast ihr Album anschauen, jedoch "
-"nichts verändern. Sie können das Passwort jederzeit ändern, indem Sie den "
-"'Teilen'-Dialog nochmals öffnen und ein neues Passwort definieren. Ausserdem "
-"können Sie, sollten Sie schon ein Passwort für ein Album definiert haben, "
-"die URL in der Albumsansicht kopieren, um das Album zu teilen."
-
-#: templates/help.html:72 templates/view-album.html:6
-msgid "Albumsansicht"
-msgstr "Albumsansicht"
-
-#: templates/help.html:74
-msgid "help-tutorial topic: Albumview -> description"
-msgstr ""
-"In der Albumsansicht können Sie einzelne Plätze zu ihrem Album hinzufügen. "
-"Anschließend können Sie, für diese Plätze, Bilder hochladen, welche man in "
-"der Gallerie (Kasten auf der rechten Seite) anschauen kann. Zudem gibt es "
-"noch die Möglichkeiten die Bilder in einer kleinen Slideshow innerhalb der "
-"Gallerie oder sogar als Vollbild anschauen zu können."
-
-#: templates/help.html:76
-msgid "Plätze"
-msgstr "Plätze"
-
-#: templates/help.html:79
-msgid "help-tutorial topic: Albumview, subtopic: Places, function:Add"
-msgstr "Platz hinzufügen"
-
-#: templates/help.html:80
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Places, function: Add -> "
-"description"
-msgstr ""
-"Sie können Plätze hinzufügen, indem Sie auf einen beliebigen Punkt der Karte "
-"klicken. In diesem Fall öffnet sich ein Dialog, in dem Sie Titel und "
-"Beschreibung des Platzes angeben können. Nach dem Senden wird an dem "
-"ausgewählten Punkt ein neuer Platz erstellt, welcher durch einen Marker auf "
-"der Karte gekennzeichnet ist."
-
-#: templates/help.html:83
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify"
-msgstr "Platz löschen/bearbeiten"
-
-#: templates/help.html:84
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Places, function: Delete/Modify -> "
-"description"
-msgstr ""
-"Wenn Sie mit der Maus über einen Platz-Marker fahren, öffnet sich ein "
-"kleines Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden "
-"Symbols wird ein Dialog zum bearbeiten/löschen aufgerufen."
-
-#: templates/help.html:87
-msgid "help-tutorial topic: Albumview, subtopic: Places, function: Select"
-msgstr "Platz auswählen/Öffnen der Gallerie"
-
-#: templates/help.html:88
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Places, function: Select -> "
-"description"
-msgstr ""
-"Indem Sie auf einen Platz-Marker doppelt klicken, wählen Sie einen "
-"bestimmten Platz aus. Daraufhin werden die Bilder des Platzes in der "
-"Gallerie unterhalb der Karte angezeigt."
-
-#: templates/help.html:91
-msgid "Gallerie"
-msgstr "Gallerie"
-
-#: templates/help.html:94
-msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Add"
-msgstr "Photo hinzufügen"
-
-#: templates/help.html:95
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Gallery, function: Add -> "
-"description"
-msgstr ""
-"Sie können Photos hinzufügen, indem Sie auf das Hinzufügen-Symbol (ein "
-"'Aufnehmen'-Knopf) rechts der Galerie klicken. In diesem Fall öffnet sich "
-"ein Dialog, in dem Sie Titel und Beschreibung des Photos angeben können und "
-"das gewünschte Photo auf ihrem Computer auswählen können. Die Bilder werden "
-"dann dem ausgewählten Platz hinzugefügt. Sie können Bilder auch direkt aus "
-"den Bilder-Ordnern auf ihrem Computer in die Galerie ziehen."
-
-#: templates/help.html:98
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify"
-msgstr "Photo löschen/bearbeiten"
-
-#: templates/help.html:99
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Gallery, function: Delete/Modify -"
-"> description"
-msgstr ""
-"Wenn Sie mit der Maus über einen Photo fahren, öffnet sich ein kleines "
-"Fenster mit zwei Symbolen. Durch Anklicken des entsprechenden Symbols wird "
-"ein Dialog zum bearbeiten/löschen aufgerufen."
-
-#: templates/help.html:102
-msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow"
-msgstr "Photo auswählen/Slideshow starten"
-
-#: templates/help.html:103
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Gallery, function: Slideshow -> "
-"description"
-msgstr ""
-"Indem Sie auf ein Photo in der Gallerie klicken, wird eine Slideshow auf der "
-"rechten Seite der Karte gestartet. Sie können durch Anklicken der Pfeile die "
-"Bilder wechseln."
-
-#: templates/help.html:106
-msgid "help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen"
-msgstr "Bild im Vollbild-Modus ansehen"
-
-#: templates/help.html:107
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Gallery, function: Fullscreen -> "
-"description"
-msgstr ""
-"Indem Sie auf das aktuelle Bild in der Slideshow klicken, wird das Photo im "
-"Fullscreen angezeigt. Auch hier können Sie über die Pfeile die Bilder "
-"wechseln."
-
-#: templates/help.html:110
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop"
-msgstr "Drag'n'Drop der Photos"
-
-#: templates/help.html:111
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Gallery, function: Drag'n'Drop -> "
-"description"
-msgstr ""
-"Nachdem Sie die gesamte Galerie geöffnet haben (Klick auf den 'Play'-Button "
-"links der Galerie), können Sie die Bilder neu anordnen, indem Sie innerhalb "
-"der Gallerie ein Photo an die gewünschte Stelle ziehen."
-
-#: templates/help.html:114 templates/insert-album.html:14
-#: templates/insert-photo.html:11 templates/insert-photo.html.py:24
-#: templates/insert-place.html:14 templates/update-album.html:15
-#: templates/update-photo.html:16 templates/update-place.html:16
-msgid "DESCRIPTION"
-msgstr "Beschreibung"
-
-#: templates/help.html:117
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Description, function: toggle "
-"visibility"
-msgstr "Platz auswählen/Öffnen der Gallerie"
-
-#: templates/help.html:118
-msgid ""
-"help-tutorial topic: Albumview, subtopic: Description, function: toggle "
-"visibility -> description"
-msgstr ""
-"Indem Sie auf einen Platz-Marker doppelt klicken, wählen Sie einen "
-"bestimmten Platz aus. Daraufhin werden die Bilder des Platzes in der "
-"Gallerie unterhalb der Karte angezeigt."
-
-#: templates/impressum.html:13
-msgid "impressum Angaben gemäß § 5 TMG"
-msgstr "Angaben gemäß § 5 TMG"
-
-#: templates/impressum.html:21
-msgid "impressum Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
-msgstr "Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
-
-#: templates/impressum.html:22
-msgid "impressum Anschrift wie oben"
-msgstr "Anschrift wie oben"
-
-#: templates/impressum.html:24
-msgid "impressum Vertreten durch"
-msgstr "Vertreten durch"
-
-#: templates/impressum.html:32 templates/impressum.html.py:33
-msgid "Telefon"
-msgstr "Telefon"
-
-#: templates/impressum.html:32 templates/impressum.html.py:33
-msgid "Handy"
-msgstr "Handy"
-
-#: templates/impressum.html:34
-msgid "Email-Adresse"
-msgstr "Email-Adresse"
-
-#: templates/impressum.html:37
-msgid "EMAIL_ONLY_WITH_JS"
-msgstr ""
-"Die email-Adresse ist verschlüsselt damit man sie nicht von Crawlern für "
-"Spam-Mails missbraucht wird,  daher können Sie die Adresse nicht sehen "
-"solange Sie javascript nicht aktiviert haben. Sie können uns jedoch genauso "
-"leicht erreichen, indem Sie das nachfolgend verlinkte Kontaktformular "
-"nutzen. "
-
-#: templates/impressum.html:41
-msgid "impressum-sidenote Missbrauch von Kontaktdaten"
-msgstr "Missbrauch von Kontaktdaten"
-
-#: templates/impressum.html:42
-msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
-msgstr ""
-"Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
-"Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich "
-"angeforderter Werbung und Informationsmaterialien, sowie anderweitigem "
-"Missbrauch wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten "
-"behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
-"Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
-
-#: templates/index-guest.html:6 templates/index-guest.html.py:8
-#: templates/index.html:6 templates/index.html.py:8
+#: templates/index.html:14 templates/index.html.py:16
 msgid "Willkommen"
 msgstr "Willkommen"
 
-#: templates/index-guest.html:32 templates/index-guest.html.py:40
-#: templates/login.html:75 templates/login.html.py:83
-msgid "Welcome to Keiken"
-msgstr "Hezlich Willkommen zu Keiken"
-
-#: templates/index-guest.html:33 templates/login.html:76
-msgid "LOGIN_GUEST_WELCOME_1"
-msgstr ""
-"Keiken ist kein Ort, an dem man Bilder von vergänglichem Interesse. Sollte "
-"man so etwas suchen, gibt es bereits genug Websites dafür. Keiken ist auch "
-"nicht dafür da ganze Ordner voll mit Bildern einfach ins Web hochzuladen. Es "
-"geht bei Keiken weder um unpersönliches Teilen von Erfahrungen, noch um das "
-"Überwältigen der Bekannten und Verwandten, in dem man sie mit einer Unmenge "
-"an Bildern überschwemmt."
-
-#: templates/index-guest.html:34 templates/login.html:77
-msgid "LOGIN_GUEST_WELCOME_2"
-msgstr ""
-"Bei Keiken werden Alben in Plätze und Photos strukturiert. Jedes Album kann "
-"beliebig viele Plätze beinhalten und jeder Platz beliebig viele Photos.."
-
-#: templates/index-guest.html:34 templates/login.html:77
-msgid "LOGIN_GUEST_WELCOME_3"
-msgstr ""
-"Das kann dabei helfen die Abenteuer und Geschichten, welche durch das Album "
-"erzählt werden, besser zu erfahren. Ja wir meinen DICH überladener DCIM-"
-"Ordner auf der Digitalkamera! ;) Aber natürlich ist jedes Abenteuer anders! "
-"Ein Platz kann die Größe eines ganzen Landes haben, wenn man beispielsweise "
-"auf einer Weltreise ist. Und bei einer Städtetour kann ein Platz auch nur so "
-"groß wie eine besondere Sehenswürdigkeit sein."
-
-#: templates/index-guest.html:35 templates/login.html:78
-msgid "LOGIN_GUEST_WELCOME_4"
-msgstr ""
-"Photos sind.. naja nur Photos halt und keine tatsächlich spürbare Erfahrung. "
-"Trotzdem erzählen Bilder von Erfahrungen und wir versuchen die Bedeutung der "
-"Bilder hervorzuheben. Darum ist es verpflichtend jedem Bild einen Titel zu "
-"geben - nachdrücklicher Blick auf 'IMG_13072013_1718.JPG' - und natürlich "
-"wäre es super, wenn man auch das optionale Beschreibungsfeld ausnutzt um von "
-"seiner Reise zu erzählen. "
-
-#: templates/index-guest.html:37 templates/login.html:80
-msgid "LOGIN_GUEST_WELCOME_5"
-msgstr ""
-"Wir hoffen Sie kennen noch Photo-Alben. Das sind die netten verstaubten "
-"großen Bücher, die man sich als Kind immer mit den Eltern anschauen musste."
-
-#: templates/index-guest.html:38 templates/login.html:81
-msgid "LOGIN_GUEST_WELCOME_6"
-msgstr ""
-"Wir haben ein bisschen Staub gewischt und eine digitale, nicht verstaubbare, "
-"interaktive Version dieser Alben erstellt und ermöglichen Ihnen hier all "
-"Ihre Reisen festzuhalten und jedem dem Ihr Eure Geschichten erzählen wollt "
-"die Möglichkeit zu geben 'zuzuhören' und Eure Erfahrungen selbst zu erfahren."
-
-#: templates/index-guest.html:41
-msgid "Zum Login"
-msgstr "Zur Anmeldung"
-
-#: templates/index.html:13
-msgid "KEIKEN_SHORT"
-msgstr ""
-"Erzähle deinen Freunde und der Familie von deinen Erfahrungen im Ausland!"
-
-#: templates/index.html:15
-msgid "KEIKEN_BEFORE"
-msgstr ""
-"Bevor wir KEIKEN entwickelt haben, hatten wir Schwierigkeiten unsere "
-"Auslandserfahrungen anderen nahe zu bringen."
-
-#: templates/index.html:18
-msgid "KEIKEN_ALTERNATIVE_EMAIL"
-msgstr ""
-"Sie können ihre Photos und die Beschreibung per Email verschicken, aber es "
-"ist schwierig das passende Bild zur Beschreibung zu finden."
-
-#: templates/index.html:22
-msgid "KEIKEN_ALTERNATIVE_PRESENTATION"
-msgstr ""
-"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
-"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
-"einen kleinen Kreis."
-
-#: templates/index.html:26
-msgid "KEIKEN_ALTERNATIVE_NETWORK"
-msgstr ""
-"Sie können die Photos in das soziale Netzwerk ihrer Wahl hochladen, aber "
-"dadurch werden oft Leute (zB. Großeltern) ausgeschlossen."
-
-#: templates/index.html:29
-msgid "KEIKEN_REASONS"
-msgstr ""
-"Darum haben wir uns entschlossen KEIKEN zu starten. Wir hoffen Ihnen die "
-"Möglichkeit zu bieten, ihre Erfahrungen mit allen Freunden & Verwandten "
-"jederzeit teilen zu können."
-
 #: templates/index.html:33
+msgid "Welcome to KEIKEN!"
+msgstr "Herzlich Willkommen bei KEIKEN!"
+
+#: templates/index.html:34
+msgid "KEIKEN_ABSTRACT"
+msgstr ""
+"KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='Was ist "
+"KEIKEN?'>[*]</a></sup> ist ein kostenloses Online-Reise-Album dass Dir dabei "
+"helfen soll deine Auslandserfahrungen mit jedem zu teilen. Melde dich an und "
+"erzähle deinen Freunden und Bekannten jetzt von deinen Abenteuern!"
+
+#: templates/index.html:39
 msgid "TO_DASHBOARD"
 msgstr "Zum Dashboard"
 
-#: templates/index.html:37
+#: templates/index.html:43
 msgid "VIEW_ALBUM"
 msgstr "Unser erstes Album betrachten"
 
-#: templates/index.html:40
+#: templates/index.html:46
 msgid "TRY_KEIKEN"
 msgstr "KEIKEN selber ausprobieren"
 
-#: templates/insert-album.html:5
-msgid "INSERT_ALBUM"
-msgstr "Album hinzufügen"
+#: templates/index.html:55 templates/registration-form.html:33
+msgid "Sign Up"
+msgstr "Registrieren"
 
-#: templates/insert-photo.html:5
-msgid "INSERT_PHOTO"
-msgstr "Photo hinzufügen"
-
-#: templates/insert-photo.html:11
-msgid "TITLE"
-msgstr "Titel"
-
-#: templates/insert-photo.html:28
-msgid "INSERT_PHOTO_UPLOAD"
-msgstr "Photo zum Hochladen auswählen (nur *.png und *.jpg)"
-
-#: templates/insert-place.html:5
-msgid "INSERT_PLACE"
-msgstr "Platz hinzufügen"
-
-#: templates/login.html:6 templates/login.html.py:8
-msgid "Login und Registrierung"
-msgstr "Login und Registrierung"
-
-#: templates/login.html:14
+#: templates/index.html:56 templates/login-form.html:3
 msgid "Login"
 msgstr "Anmeldung"
 
-#: templates/login.html:15
-msgid "Registration"
-msgstr "Registration"
+#: templates/javascript-warning.html:5
+msgid "JS_DISABLED_WARNING"
+msgstr ""
+"Sie haben Javascript in Ihren Browsereinstellungen deaktiviert. Um Keiken "
+"nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
+"die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
 
-#: templates/login.html:30 templates/login.html.py:57 templates/login.html:85
+#: templates/login-form.html:11 templates/registration-form.html:11
+#: templates/account/delete.html:23 templates/account/reset-password.html:18
+#: templates/footer/contact.html:55
+msgid "Email"
+msgstr "Email"
+
+#: templates/login-form.html:12 templates/account/delete.html:24
+msgid "USER_EMAIL_PLACEHOLDER"
+msgstr "Email eingeben.."
+
+#: templates/login-form.html:15 templates/registration-form.html:16
+#: templates/account/active.html:108 templates/account/delete.html:29
 msgid "Password"
 msgstr "Passwort"
 
-#: templates/login.html:36 templates/login.html.py:88
+#: templates/login-form.html:16 templates/account/active.html:109
+#: templates/account/delete.html:30
+msgid "USER_PASSWORD_PLACEHOLDER"
+msgstr "Passwort eingeben.."
+
+#: templates/login-form.html:25
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: templates/login.html:45
-msgid "First name"
-msgstr "Vorname"
-
-#: templates/login.html:49
-msgid "Last name"
-msgstr "Nachname"
-
-#: templates/login.html:61
-msgid "Confirm Password"
-msgstr "Passwort bestätigen"
-
-#: templates/login.html:65
-msgid "Register"
-msgstr "Registrieren"
-
-#: templates/login.html:73
-msgid "Guest-Login"
-msgstr "Gast-Login"
+#: templates/login-form.html:28
+msgid "Help, I forgot my password!"
+msgstr "Hilfe, ich habe mein Passwort vergessen!"
 
 #: templates/photo-editor.html:13
 msgid "SHARPEN"
@@ -888,15 +303,1234 @@ msgstr "Rotieren"
 msgid "REVERT"
 msgstr "Rückgängig machen"
 
-#: templates/privacy.html:9
+#: templates/registration-form.html:3
+msgid "Registration"
+msgstr "Registration"
+
+#: templates/registration-form.html:20
+msgid "Confirm Password"
+msgstr "Passwort bestätigen"
+
+#: templates/registration-form.html:25
+msgid "First name"
+msgstr "Vorname"
+
+#: templates/registration-form.html:29
+msgid "Last name"
+msgstr "Nachname"
+
+#: templates/view-album.html:6
+msgid "Albumsansicht"
+msgstr "Albumsansicht"
+
+#: templates/account/activation-complete.html:6
+msgid "ACCOUNT_ACTIVATED"
+msgstr "Account aktiviert"
+
+#: templates/account/activation-complete.html:9
+msgid "ACCOUNT_ACTIVATED_EXPLANATION"
+msgstr ""
+"Ihr Account wurde erfolgreich aktiviert. Sie können sich nun einloggen und "
+"KEIKEN benutzten. Wenn Sie Probleme haben, dann benutzten Sie bitte unser "
+"Kontakt Formular. Danke das Sie KEIKEN benutzten."
+
+#: templates/account/activation-error.html:7
+msgid "ACTIVATION_ERROR"
+msgstr "Aktivierungsfehler"
+
+#: templates/account/activation-error.html:10
+msgid "ACTIVATION_ERROR_EXPLAINED"
+msgstr ""
+"Ihr Aktivierungsschlüssel ist entweder abgelaufen oder falsch. Wenn Sie "
+"länger als die Aktivierungsperiode, die in der Aktivierungsemail genannt "
+"wurde, gewartet haben, dann können Sie ihren Account nicht mehr aktivieren."
+"Nicht aktivierte Accounts werden wöchentlich gesammelt und gelöscht.Sie "
+"können versuchen sich neu zu registrieren und im Falle, das die "
+"Registrierung fehlschlägt, ein paar Tage warten.Wenn ihr "
+"Aktivierungsschlüssel nicht abgelaufen ist, dann stellen Sie bitte sicher, "
+"dass die eingegebene Addresse korrekt ist. Falls keine der Lösung "
+"funktionert, dann wenden Sie sich bitte an uns und benutzten das Kontakt "
+"Formular."
+
+#: templates/account/active.html:6
+msgid "Account Info & Settings"
+msgstr "Account Info & Einstellungen"
+
+#: templates/account/active.html:18
+msgid "Account Info"
+msgstr "Informationen zu ihrem Account"
+
+#: templates/account/active.html:29
+msgid "Profile picture"
+msgstr "Profilbild"
+
+#: templates/account/active.html:33 templates/footer/team.html:36
+#: templates/footer/team.html.py:48 templates/footer/team.html:60
+msgid "Name"
+msgstr "Name"
+
+#: templates/account/active.html:37
+msgid "Username/Email"
+msgstr "Nutzername/Email"
+
+#: templates/account/active.html:41
+msgid "Account-Status"
+msgstr "Account-Status"
+
+#: templates/account/active.html:42
+msgid "Active"
+msgstr "Aktiv"
+
+#: templates/account/active.html:42
+msgid "Inactive"
+msgstr "Inaktiv"
+
+#: templates/account/active.html:45
+msgid "Storage Space"
+msgstr "Speicherplatz"
+
+#: templates/account/active.html:48
+msgid "Already in use:"
+msgstr "Davon bereits genutzt:"
+
+#: templates/account/active.html:52
+msgid "Free space left"
+msgstr "Freier Speicherplatz"
+
+#: templates/account/active.html:56
+msgid "Usage"
+msgstr "Nutzung"
+
+#: templates/account/active.html:57 templates/footer/help.html:78
+msgid "Albums"
+msgstr "Alben"
+
+#: templates/account/active.html:57 templates/footer/help.html:140
+msgid "Places"
+msgstr "Plätze"
+
+#: templates/account/active.html:57 templates/footer/help.html:141
+msgid "Photos"
+msgstr "Fotos"
+
+#: templates/account/active.html:67
+msgid "Update Password"
+msgstr "Passwort ändern"
+
+#: templates/account/active.html:68
+msgid "Update Email"
+msgstr "Email ändern"
+
+#: templates/account/active.html:69 templates/account/delete.html:8
+#: templates/account/delete.html.py:11 templates/account/delete.html:55
+msgid "DELETE_ACCOUNT"
+msgstr "Account löschen"
+
+#: templates/account/active.html:70
+msgid "Update Profile Picture"
+msgstr "Profilbild ändern"
+
+#: templates/account/active.html:75
+msgid "UPDATE_PASSWORD_INFO"
+msgstr ""
+"Legen Sie ein neues Passwort an (bitte zweimal eingeben um Tippfehler zu "
+"vermeiden) und bestätigen Sie dies mit Ihrem alten. "
+
+#: templates/account/active.html:79
+msgid "UPDATE_PASSWORD_SUCCESS"
+msgstr "Ihr Passwort wurde erfolgreich geändert. "
+
+#: templates/account/active.html:81
+msgid "Old Password"
+msgstr "Altes Passwort"
+
+#: templates/account/active.html:81 templates/account/active.html.py:85
+#: templates/account/active.html:89 templates/account/active.html.py:104
+#: templates/account/active.html:108 templates/account/delete.html:23
+#: templates/account/delete.html.py:29
+#: templates/account/reset-password-confirm.html:27
+#: templates/account/reset-password-confirm.html:34
+#: templates/footer/contact.html:48 templates/footer/contact.html.py:56
+#: templates/footer/contact.html:64 templates/footer/contact.html.py:72
+#: templates/form/insert/album.html:10 templates/form/insert/photo.html:20
+#: templates/form/insert/photo.html:28 templates/form/insert/place.html:10
+#: templates/form/update/model.html:10
+msgid "MANDATORY_FIELD"
+msgstr "Dieses Feld ist ein Pflichtfeld."
+
+#: templates/account/active.html:82
+msgid "OLD_PASSWORD_PLACEHOLDER"
+msgstr "Altes Passwort eingeben.."
+
+#: templates/account/active.html:85
+#: templates/account/reset-password-confirm.html:27
+#: templates/form/update/album-password.html:28
+msgid "New Password"
+msgstr "Neues Passwort"
+
+#: templates/account/active.html:86
+msgid "NEW_PASSWORD_PLACEHOLDER"
+msgstr "Bestimmen Sie ein neues Passwort.."
+
+#: templates/account/active.html:89
+#: templates/account/reset-password-confirm.html:34
+msgid "Repeat New Password"
+msgstr "Neues Passwort (Wdh.)"
+
+#: templates/account/active.html:90
+msgid "NEW_PASSWORD_REPEAT_PLACEHOLDER"
+msgstr "Wiederholen Sie das neue Passwort.."
+
+#: templates/account/active.html:93 templates/account/active.html.py:112
+#: templates/account/reset-password-confirm.html:39
+msgid "Save"
+msgstr "Speichern"
+
+#: templates/account/active.html:98
+msgid "UPDATE_EMAIL_INFO"
+msgstr ""
+"Geben Sie Ihre neue Email-Adresse ein und bestätigen Sie die EIngabe mit "
+"Ihrem Passwort. "
+
+#: templates/account/active.html:102
+msgid "UPDATE_EMAIL_SUCCESS"
+msgstr "Ihre Email wurde erfolgreich geändert. "
+
+#: templates/account/active.html:104
+msgid "New Email"
+msgstr "Neue Email"
+
+#: templates/account/active.html:105
+msgid "NEW_EMAIL_PLACEHOLDER"
+msgstr "Neue Email-Adresse eingeben.."
+
+#: templates/account/active.html:124
+msgid "ACCOUNTS_TEST_USER_INFO"
+msgstr ""
+"Dies ist nur ein Testaccount. Darum können Sie keine Einstellungen "
+"verändern. "
+
+#: templates/account/base.html:7 templates/account/delete.html:6
+msgid "Account"
+msgstr "Account"
+
+#: templates/account/delete-complete.html:6
+msgid "ACCOUNT_DELETED"
+msgstr "Account gelöscht"
+
+#: templates/account/delete-complete.html:9
+msgid "ACCOUNT_DELETED_EXPLANATION"
+msgstr ""
+"Ihr Account wurder erfolgreich gelöscht. Schade dass Sie sich gegen die "
+"weitere Nutzung von KEIKEN entschieden haben. Wir wünschen Ihnen weiterhin "
+"eine spannende und erfahrungsreiche Reise durch Ihr Leben und zudem die "
+"innere Stärke diese Reise gut zu bewältigen. Sollten Sie jemals wieder eine "
+"App wie KEIKEN benötigen, sind natürlich gerne willkommen!"
+
+#: templates/account/delete.html:12
+msgid "DELETE_ACCOUNT_INFO"
+msgstr ""
+"Um Ihren Account zu löschen, geben Sie bitte Ihre Email und Ihr Passwort "
+"ein. Bedenken Sie bitte, dass mit Ihrem Account auch alle Ihre Daten "
+"unwiederbringlich gelöscht werden. Fahren Sie also bitte nur fort, wenn Sie "
+"sich sicher sind, dass Sie diesen Account nicht mehr nutzen wollen! "
+
+#: templates/account/delete.html:17
+msgid "Delete Form"
+msgstr "Formular zum Löschen des Accounts"
+
+#: templates/account/delete.html:34 templates/account/delete.html.py:35
+msgid "DELETION_FORM_CAUSE_TESTING"
+msgstr "Habe KEIKEN nur ausprobiert."
+
+#: templates/account/delete.html:36 templates/account/delete.html.py:37
+msgid "DELETION_FORM_CAUSE_ALTERNATIVE"
+msgstr "Ich nutze noch eine andere App, welche ich bevorzuge."
+
+#: templates/account/delete.html:38 templates/account/delete.html.py:39
+msgid "DELETION_FORM_CAUSE_SERVICE"
+msgstr "Der Service bei KEIKEN hat mir nicht gefallen."
+
+#: templates/account/delete.html:40 templates/account/delete.html.py:41
+msgid "DELETION_FORM_CAUSE_USAGE"
+msgstr "Die Nutzung der App ist umständlich."
+
+#: templates/account/delete.html:42 templates/account/delete.html.py:43
+msgid "DELETION_FORM_CAUSE_LIMITATIONS"
+msgstr "Der Umfang der App ist zu beschränkt."
+
+#: templates/account/delete.html:44 templates/account/delete.html.py:45
+msgid "DELETION_FORM_CAUSE_NEED"
+msgstr "Ich brauche KEIKEN nicht (mehr)."
+
+#: templates/account/delete.html:46 templates/account/delete.html.py:47
+msgid "DELETION_FORM_CAUSE_LIKE"
+msgstr "Ich mag KEIKEN nicht."
+
+#: templates/account/delete.html:50
+msgid "DELETION_FORM_CAUSE_MESSAGE"
+msgstr "Zusätzliche Informationen:"
+
+#: templates/account/inactive.html:6
+msgid "Account Inactive"
+msgstr "Account Inaktiv"
+
+#: templates/account/inactive.html:11
+msgid "ACCOUNT_INACTIVE_NOTIFY"
+msgstr ""
+"Ihr Account ist deaktiviert. Falls Sie sich neu registriert haben, folgen "
+"Sie den Andweisung in der Ihnen zugeschickten Aktivierungs-Email. Ansonsten "
+"wenden Sie sich bitte <a href='/contact'>an das KEIKEN-Team</a> für mehr "
+"Informationen."
+
+#: templates/account/inactive.html:13
+msgid "ACCOUNT_NOT_INACTIVE_NOTIFY"
+msgstr ""
+"Da scheint wohl ein Fehler aufgetreten zu sein. Ihr Account ist natürlich "
+"noch aktiv! Probieren Sie doch bitte nochmal was Sie machen wollten, bevor "
+"Sie diese Seite sahen. Wenn Sie wieder hierher weitergeleitet werden, nehmen "
+"Sie bitte mit dem KEIKEN-Team Kontakt auf. "
+
+#: templates/account/login.html:6
+msgid "LOGIN"
+msgstr "Login"
+
+#: templates/account/login.html:9
+msgid "Login Information"
+msgstr "Informationen zum Login"
+
+#: templates/account/login.html:10
+msgid "LOGIN_INFO"
+msgstr ""
+"Bitte geben Sie rechts Ihre Login-Daten ein. Sollten Sie Probleme beim Login "
+"haben, nehmen Sie bitte mit dem KEIKEN-Team Kontakt auf."
+
+#: templates/account/registration-closed.html:6
+msgid "REGISTRATION_CLOSED"
+msgstr ""
+
+#: templates/account/registration-closed.html:9
+msgid "REGISTRATION_CLOSED_EXPLANATION"
+msgstr ""
+"Aufgrund der Anzahl der Anfragen mussten wir die Registrierung vorübergehend "
+"schließen. Vielen Dank für Interesse an KEIKEN. Bitte versuchen Sie es in "
+"ein paar Tagen nochmal. Wir hoffen, dass wir schnell eine Lösung finden "
+"können, um die Registrierung wieder zu öffnen."
+
+#: templates/account/registration-complete.html:6
+msgid "ACTIVATE_ACCOUNT"
+msgstr ""
+
+#: templates/account/registration-complete.html:9
+msgid "ACTIVATE_ACCOUNT_EXPLANATION"
+msgstr ""
+"Sie haben erfolgreich einen Account erstellt. Jetzt müssen Sie nur noch "
+"ihren Account aktivieren. Klicken Sie hierzu auf den Aktivierungslink, der "
+"ihnen in der Aktivierungsemail zugeschickt wurde."
+
+#: templates/account/registration.html:6
+msgid "REGISTRATION"
+msgstr "Registration"
+
+#: templates/account/registration.html:9
+msgid "Registration Information"
+msgstr "Informationen zur Registrierung"
+
+#: templates/account/registration.html:10
+msgid "REGISTRATION_INFO"
+msgstr ""
+"Nutzen Sie das Formular auf der rechten Seite um einen KEIKEN-Account zu "
+"erstellen. Bitte geben Sie dafür ausser Ihrer Email-Adresse auch Ihren "
+"vollen Namen an. Die von Ihnen angegebenen Daten werden nur für die "
+"Verwaltung Ihres Accounts genutzt und können von keinem ausser Ihnen selbst "
+"gesehen werden. <br /><br /> Nach dem Absenden des Formular, bekommen Sie "
+"eine Email welche Details zur Aktivierung ihres Accounts enthält. "
+
+#: templates/account/reset-password-complete.html:6
+msgid "RESET_PASSWORD_COMPLETE"
+msgstr ""
+"Ihr Password wurde erfolgreich geändert. Sie können Sich nun <a href='/"
+"account/auth/login'>einloggen</a>. "
+
+#: templates/account/reset-password-complete.html:10
+msgid "RESET_PASSWORD_COMPLETE_EXPLANATION"
+msgstr ""
+"Ihr Password wurde erfolgreich geändert. Sie können Sich nun <a href='/"
+"account/auth/login'>einloggen</a>. "
+
+#: templates/account/reset-password-confirm.html:8
+msgid "Define New Password"
+msgstr "Passwort zurücksetzen - Bestätigung"
+
+#: templates/account/reset-password-confirm.html:10
+msgid "Link Invalid"
+msgstr ""
+"Der von Ihnen genutze Link ist leider ungültig. Dies kann der, wenn Sie den "
+"Link bereits einmal genutzt haben, die Nutzungs-Frist abgelaufen ist oder "
+"wenn Sie einen neuen Link angefordert haben. Falls Sie Ihr Passwort "
+"zurücksetzen möchten, fordern Sie bitte einen neuen Link an."
+
+#: templates/account/reset-password-confirm.html:18
+msgid "RESET_PASSWORD_GIVE_NEW_PASSWORD"
+msgstr ""
+"Bitte geben Sie ein neues Passwort ein und wiederholen Sie es um Tippfehler "
+"zu vermeiden. "
+
+#: templates/account/reset-password-confirm.html:44
+msgid "RESET_PASSWORD_ERROR"
+msgstr ""
+"Ihr Password wurde erfolgreich geändert. Sie können Sich nun <a href='/"
+"account/auth/login'>einloggen</a>. "
+
+#: templates/account/reset-password-confirm.html:45
+msgid "RESET_PASSWORD_ERROR_EXPLANATION"
+msgstr ""
+"Wir haben einen Link zum Zurücksetzen des Passworts an die von Ihnen "
+"angegebene Email-Adresse geschickt. Sie sollten sie in Kürze empfangen. "
+
+#: templates/account/reset-password-requested.html:6
+msgid "Reset Email Sent"
+msgstr "Passwort zurücksetzen - Email gesendet"
+
+#: templates/account/reset-password-requested.html:10
+msgid "RESET_PASSWORD_EMAIL_SENT"
+msgstr ""
+"Wir haben einen Link zum Zurücksetzen des Passworts an die von Ihnen "
+"angegebene Email-Adresse geschickt. Sie sollten sie in Kürze empfangen. "
+
+#: templates/account/reset-password.html:5
+msgid "Reset Password"
+msgstr "Passwort zurücksetzen"
+
+#: templates/account/reset-password.html:8
+msgid "RESET_PASSWORD_GIVE_EMAIL"
+msgstr ""
+"Bitte geben Sie eine Email-Adresse an, damit wir Ihnen eine Email mit "
+"Instruktionen zum Zurücksetzen des Passworts zuschicken können. "
+
+#: templates/email/delete-account-email.html:1
+msgid "DELETE_ACCOUNT_NOTIFY_MAIL_INTRO"
+msgstr ""
+"Guten Tag,\n"
+"\n"
+"\n"
+"Sie haben soeben erfolgreich Ihren Account "
+
+#: templates/email/delete-account-email.html:1
+msgid "DELETE_ACCOUNT_NOTIFY_MAIL_OUTRO"
+msgstr ""
+" bei KEIKEN gelöscht.\n"
+"\n"
+"Schade, dass Sie dagegen entschieden haben, KEIKEN weiter zu nutzen. Wir "
+"hoffen, dass Sie in der Zeit, in der Sie KEIKEN genutzt haben, wenigsten ein "
+"wenig Nutzen daraus ziehen konnten!\n"
+"\n"
+"\n"
+"Viel Erfolg auf Ihren nächsten Abenteuern und Reisen!\n"
+"\n"
+"Das KEIKEN Team."
+
+#: templates/email/delete-account-thankyou-email.html:1
+msgid "DELETE_ACCOUNT_FEEDBACK_THANK_MAIL"
+msgstr ""
+"Guten Tag,\n"
+"\n"
+"\n"
+"Danke, dass Sie sich die Zeit genommen haben unsere Fragen zu beantworten! "
+"Wir werden Ihre Antworten bei unseren nächsten Team-Konferenzen "
+"berücksichtigen!\n"
+"\n"
+"\n"
+"Mit freundlichen Grüßen \n"
+"\n"
+"Das KEIKEN Team."
+
+#: templates/email/reset-password-email.html:1
+msgid "PASSWORD_RESET_MAIL_INTRO"
+msgstr ""
+"Guten Tag,\n"
+"\n"
+"\n"
+"jemand hat eine Zurücksetzung des Passworts für Ihren User Account bei "
+"KEIKEN beantragt.\n"
+"\n"
+"Um Ihr aktuelles Passwort zurückzusetzen, gehen folgen Sie bitte dem Link "
+"und bestimmen Sie ein neues Passwort:"
+
+#: templates/email/reset-password-email.html:7
+msgid "PASSWORD_RESET_MAIL_USERNAME_REMINDER"
+msgstr "Ihr Nutzername - wird für die Anmeldung gebraucht - ist "
+
+#: templates/email/reset-password-email.html:9
+msgid "PASSWORD_RESET_MAIL_OUTRO"
+msgstr ""
+"Sollten Sie keine Zurücksetzung des Passworts beantragt haben oder sollte "
+"Ihnen Ihr Passwort wieder eingefallen sein, können Sie die Mail einfach "
+"ignorieren. Ihr Passwort bleibt dann unverändert.\n"
+"\n"
+"\n"
+"Danke, dass Sie unsere App nutzen und weiterhin viel Spaß beim erstellen und "
+"teilen ihrer eigenen Fotoalben.\n"
+"\n"
+"Das KEIKEN Team."
+
+#: templates/footer/contact-complete.html:5
+msgid "CONTACT_SUCCESS"
+msgstr ""
+"Vielen Dank für Ihre Anfrage. Wir werden versuchen Ihnen möglichst bald zu "
+"antworten. Bitte bedenken Sie, dass wir nur ein kleines Team aus Studenten "
+"sind, und vermeiden es daher Ihre Anfrage erneut zu senden, sollten wir "
+"nicht in den nächsten zwei Tagen geantwortet haben. "
+
+#: templates/footer/contact.html:16
+msgid "Contact Information"
+msgstr "Informationen zum Kontakt"
+
+#: templates/footer/contact.html:19
+msgid "contact form intro"
+msgstr ""
+"Sollten Sie Fragen oder Probleme haben, die nicht bereits auf der <a href='/"
+"help#tutorial'>Hilfe-Seite</a> beantwortet oder gelöst werden konnten, "
+"nutzen Sie bitte das Kontaktformular oder schreiben Sie uns eine Email an "
+
+#: templates/footer/contact.html:24 templates/footer/impressum.html:44
+#: templates/footer/payment.html:56
+msgid "EMAIL_ONLY_WITH_JS"
+msgstr ""
+"Die email-Adresse ist verschlüsselt damit man sie nicht von Crawlern für "
+"Spam-Mails missbraucht wird, daher können Sie die Adresse nicht sehen "
+"solange Sie javascript nicht aktiviert haben. Sie können uns jedoch genauso "
+"leicht erreichen, indem Sie <a href='/contact' title='Schreiben Sie "
+"uns'>Kontaktformular</a> nutzen. "
+
+#: templates/footer/contact.html:28
+msgid "contact privacy note"
+msgstr ""
+"Bitte beachten Sie dabei die hierfür gültigen <a href='/privacy#mp-"
+"emails'>Datenschutzgrundsätze</a>."
+
+#: templates/footer/contact.html:33
+msgid "contact form social networks info"
+msgstr ""
+"Sie können uns auch auf Facebook (<a href='https://www.facebook.com/keiken."
+"webapp'>keiken.webapp</a>) oder auf Google+ (<a href='https://plus.google."
+"com/111238553236963807299'>Keiken</a>) besuchen."
+
+#: templates/footer/contact.html:41
+msgid "Contact Form"
+msgstr "Kontaktformular"
+
+#: templates/footer/contact.html:47 templates/form/insert/album.html:10
+#: templates/form/insert/photo.html:20 templates/form/insert/place.html:10
+#: templates/form/update/model.html:10
+msgid "NAME"
+msgstr "Name"
+
+#: templates/footer/contact.html:63
+msgid "SUBJECT"
+msgstr "Betreff"
+
+#: templates/footer/contact.html:71
+msgid "MESSAGE"
+msgstr "Nachricht"
+
+#: templates/footer/contact.html:77
+msgid "MANDATORY_FIELDS_NOTE"
+msgstr "* Diese Felder sind Pflichtfelder."
+
+#: templates/footer/contact.html:78
+msgid "Senden"
+msgstr "Senden"
+
+#: templates/footer/copyright.html:8
+msgid "Urheberrechtserklärung"
+msgstr "Urheberrechtserklärung"
+
+#: templates/footer/copyright.html:15
+msgid "Urheberrecht bei internen Inhalten"
+msgstr "Urheberrecht der Entwickler der Website"
+
+#: templates/footer/copyright.html:18
+msgid "Urheberrecht bei internen Inhalten list-item-1"
+msgstr ""
+"Die Entwickler der Website sind die Mitglieder des Teams, welches für die "
+"Erstellung der Website verantwortlich ist. Ihre Namen sind im Impressum "
+"aufgeführt."
+
+#: templates/footer/copyright.html:19
+msgid "Urheberrecht bei internen Inhalten list-item-3"
+msgstr ""
+"Alle Inhalte die von der Entwicklern der Website veröffentlicht werden, "
+"genauso wie der von ihnen kreierte JavaScript und Python Code sind durch das "
+"deutsche Urheberrecht geschützt."
+
+#: templates/footer/copyright.html:20
+msgid "Urheberrecht bei internen Inhalten list-item-4"
+msgstr ""
+"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
+"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
+"Autors."
+
+#: templates/footer/copyright.html:23
+msgid "Urheberrecht der Nutzer"
+msgstr "Urheberrecht der Nutzer"
+
+#: templates/footer/copyright.html:26
+msgid "Urheberrecht der Nutzer list-item-1"
+msgstr ""
+"Inhalte die von Nutzern der Website geschaffen und veröffentlicht werden, "
+"können aus Bildern und Texten als Titel, Beschreibung und Kommentaren "
+"bestehen."
+
+#: templates/footer/copyright.html:27
+msgid "Urheberrecht der Nutzer list-item-2"
+msgstr "Solche Inhalte sind durch das Urheberrecht geschützt."
+
+#: templates/footer/copyright.html:28
+msgid "Urheberrecht der Nutzer list-item-3"
+msgstr ""
+"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
+"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
+"Autors."
+
+#: templates/footer/copyright.html:31
+msgid "Urheberrecht Dritter"
+msgstr "Urheberrecht Dritter"
+
+#: templates/footer/copyright.html:34
+msgid "Urheberrecht Dritter list-item-1"
+msgstr ""
+"Code und Inhalte die auf dieser Website veröffentlicht bzw. genutzt werden "
+"und weder von den Entwicklern noch von Nutzern erstellt wurde sind Inhalte "
+"Dritter. "
+
+#: templates/footer/copyright.html:35
+msgid "Urheberrecht Dritter list-item-2"
+msgstr "Inhalte Dritter müssen als solche gekennzeichnet werden."
+
+#: templates/footer/copyright.html:36
+msgid "Urheberrecht Dritter list-item-3"
+msgstr "Inhalte Dritter sind durch das Urheberrecht geschützt."
+
+#: templates/footer/copyright.html:37
+msgid "Urheberrecht Dritter list-item-4"
+msgstr ""
+"Die Urheberrechts-Informationen von veröffentlichten oder genutzten Inhalten "
+"Dritter müssen nahe beim Inhalt platziert sein."
+
+#: templates/footer/copyright.html:38
+msgid "Urheberrecht Dritter list-item-5"
+msgstr ""
+"Vervielfachung, Verteilung und jedwede andere Nutzung die gegen das "
+"Urheberrecht verstößt, benötigt eine schriftliche Erlaubnis des jeweiligen "
+"Autors."
+
+#: templates/footer/help.html:8
+msgid "Hilfe und Support"
+msgstr "Hilfe und Support"
+
+#: templates/footer/help.html:14
+msgid "Introduction"
+msgstr "Einführung"
+
+#: templates/footer/help.html:15
+msgid "Tutorial"
+msgstr "Tutorial"
+
+#: templates/footer/help.html:20
+msgid "KEIKEN_BEFORE"
+msgstr ""
+"Bevor wir KEIKEN entwickelt haben, hatten wir Schwierigkeiten unsere "
+"Auslandserfahrungen anderen nahe zu bringen."
+
+#: templates/footer/help.html:23
+msgid "KEIKEN_ALTERNATIVE_EMAIL"
+msgstr ""
+"Sie können ihre Photos und die Beschreibung per Email verschicken, aber es "
+"ist schwierig das passende Bild zur Beschreibung zu finden."
+
+#: templates/footer/help.html:26
+msgid "KEIKEN_ALTERNATIVE_PRESENTATION"
+msgstr ""
+"Sie können eine Presentation geben, wenn Sie zurückkommen. Das ist mit "
+"Sicherheit die allerbeste Möglichkeit, allerdings erreicht man damit nur "
+"einen kleinen Kreis."
+
+#: templates/footer/help.html:29
+msgid "KEIKEN_ALTERNATIVE_NETWORK"
+msgstr ""
+"Sie können die Photos in das soziale Netzwerk ihrer Wahl hochladen, aber "
+"dadurch werden oft Leute (zB. Großeltern) ausgeschlossen."
+
+#: templates/footer/help.html:32
+msgid "KEIKEN_REASONS"
+msgstr ""
+"Darum haben wir uns entschlossen KEIKEN zu starten. Wir hoffen Ihnen die "
+"Möglichkeit zu bieten, ihre Erfahrungen mit allen Freunden & Verwandten "
+"jederzeit teilen zu können."
+
+#: templates/footer/help.html:35
+msgid "KEIKEN_PRESENTATION_MEANING"
+msgstr ""
+"Der Name KEIKEN kommt aus dem Japanischen und bedeutet so viel wie "
+"'erfahren' oder 'Erfahrung'. Die Idee dahinter ist die Reisen und Erlebnisse "
+"eines anderen mit Hilfe der Bilder, Beschreibungen und der Karte ein Stück "
+"weit 'mit zu erfahren'."
+
+#: templates/footer/help.html:36
+msgid "KEIKEN_PRESENTATION_NOT"
+msgstr ""
+"Als (digitales) Fotoalbum soll KEIKEN die Bilder und Geschichten Ihrer "
+"Reisen auf angenehme und kreative Art und Weise all jenen präsentieren, mit "
+"denen Sie diese teilen wollen. Diesem Anspruch lassen sich zwei zentrale "
+"Punkte entnehmen: "
+
+#: templates/footer/help.html:37
+msgid "KEIKEN_PRESENTATION_BUT_1"
+msgstr ""
+"Als (digitales) Fotoalbum soll KEIKEN die Bilder und Geschichten Ihrer "
+"Reisen auf angenehme und kreative Art und Weise all jenen präsentieren, mit "
+"denen Sie diese teilen wollen. Diesem Anspruch lassen sich zwei zentrale "
+"Punkte entnehmen: "
+
+#: templates/footer/help.html:38
+msgid "KEIKEN_PRESENTATION_BUT_2"
+msgstr ""
+"(1) Alle Bilder müssen geordnet und mit Namen versehen werden. Darum sind "
+"Titel bei KEIKEN verpflichtend und Ihre Alben werden in Plätze unterteilt, "
+"die an bestimmte Punkte auf der Karte gebunden sind. "
+
+#: templates/footer/help.html:39
+msgid "KEIKEN_PRESENTATION_BUT_3"
+msgstr ""
+"(2) Alle Alben, die Sie teilen wollen müssen einfach zugänglich sein. Anders "
+"als bei vielen anderen Websites und Diensten müssen Sie nicht bei KEIKEN "
+"registriert sein um ein Album anschauen zu dürfen. Sie brauchen lediglich "
+"eine Internetverbindung, den Link zum Album und das Password, welches Ihnen "
+"der Autor des Albums geben muss. "
+
+#: templates/footer/help.html:40
+msgid "KEIKEN_PRESENTATION_STRUCTURE_1"
+msgstr ""
+"Zurück zum Design von KEIKEN. Wie schon erwähnt werden Alben in Plätze "
+"unterteilt. Diese wiederum enthalten dann die Photos. Diese Struktur soll "
+"Ihnen dabei helfen, eine Übersicht über Ihre Erlebnisse zu bekommen und es "
+"soll Ihren Bekannten helfen, Ihre Abenteuer selbst zu erkunden."
+
+#: templates/footer/help.html:41
+msgid "KEIKEN_PRESENTATION_STRUCTURE_2"
+msgstr ""
+"Nun ist aber jedes Abenteuer und jede Reise anders; darum haben Alben und "
+"Plätze keine Begrenzungen hinsichtlich der Größe. Ein Album kann also eine "
+"ganze Weltreise beinhalten und jeder Platz symbolisiert ein ganzes Land. Ein "
+"anderes Album kann eine Städtereise präsentieren, in dem jeder Platz eine "
+"Sehenswürdigkeit ist. "
+
+#: templates/footer/help.html:42
+msgid "KEIKEN_PRESENTATION_STRUCTURE_3"
+msgstr ""
+"Und die Fotos? Naja Fotos sind Fotos. Sie werden nicht mehr groß "
+"strukturiert, zu beachten ist, dass auch Fotos Titel haben, die angegeben "
+"werden müssen. KEIKEN nimmt dabei nicht die Bildnamen, die Sie auf Ihrem "
+"Computer sehen, sondern fordert Sie dazu auf selber einen Namen einzugeben "
+"und wir sind zuversichtlich, dass Ihnen schönere und aussagekräftigere Namen "
+"als IMG_20122708_2014.jpg einfallen. ;) "
+
+#: templates/footer/help.html:43
+msgid "KEIKEN_PRESENTATION_STRUCTURE_4"
+msgstr ""
+"Stellen Sie sich Ihr KEIKEN als ein Fotoalbum vor, in das man ein gutes "
+"Stück Zeit investiert, um es anschaulich zu gestalten; genauso wie die "
+"Fotoalben, die wir immer mit unseren Eltern anschauen mussten, als wir noch "
+"Kinder waren. "
+
+#: templates/footer/help.html:52
+msgid "General"
+msgstr "Allgemeines"
+
+#: templates/footer/help.html:54
+msgid "Albumview"
+msgstr "Albumsansicht"
+
+#: templates/footer/help.html:58
+msgid "Webspace"
+msgstr "Speicherplatz"
+
+#: templates/footer/help.html:59
+msgid "Cookies"
+msgstr "Cookies"
+
+#: templates/footer/help.html:60
+msgid "Contact"
+msgstr "Kontakt"
+
+#: templates/footer/help.html:61
+msgid "Sharing &amp; Security"
+msgstr "Sicherheit beim Teilen"
+
+#: templates/footer/help.html:64
+msgid "TUTORIAL_WEBSPACE"
+msgstr ""
+"Momentan begrenzen wir den Speicherplatz auf 350Mb pro Nutzer. Das Erstellen "
+"von Alben und Plätzen ist dabei quasi gratis, da diese beinahe keinen "
+"Speicherplatz verbrauchen. Dadurch stehen Ihnen die 350Mb komplett für "
+"Bilder zur Verfügung. Je geringer die Qualität ihrer Fotos ist, desto mehr "
+"können Sie hochladen. Bedenken Sie, dass die meisten Kameras heutzutage "
+"Bilder in Größen ermöglichen, die auf Bildschirmen gar nicht darzustellen "
+"sind. 8MP (=MegaPixel, -> 3264 x 2448) sind vollkommen ausreichend. Sie "
+"könnten sich also überlegen, Ihre 12MP oder 14MP auf diese Größe "
+"runterzuskalieren. Ausserdem verbrauchen verschiedene Formate verschieden "
+"viel Speicherplatz. *.JPG (oder *.JPEG) komprimiert Fotos recht effektiv und "
+"ist daher ideal für das Internet. Die meisten Kameras speichern Fotos "
+"bereits im jpeg-Format; Sie können sich aber nochmals versichern, indem Sie "
+"die Dateiendung prüfen. Wir bieten in diesem Moment keine Erweiterungen des "
+"Speicherplatz an, sollten Sie jedoch doch mehr Platz brauchen schreiben Sie "
+"uns doch eine Email und wir werden versuchen Ihnen dabei zu helfen, den "
+"Speicherplatz besser auszunutzen, oder vielleicht doch überlegen "
+"Speicherplatzerweiterungen zu ermöglichen. "
+
+#: templates/footer/help.html:67
+msgid "TUTORIAL_COOKIES"
+msgstr ""
+"Wir nutzen verschiedene Cookies, um die Sitzung zu authentizieren und "
+"Informationen über den bereits genutzten Speicherplatz, sowie darüber, "
+"welche Fotos bereits angesehen wurden bereitzustellen. Bitte aktivieren Sie "
+"Cookies in Ihren Browsereinstellungen, um KEIKEN in vollem Umfang nutzen zu "
+"können. "
+
+#: templates/footer/help.html:70
+msgid "TUTORIAL_CONTACT"
+msgstr ""
+"Wenn Sie Fragen oder Ideen haben, zögern Sie nicht <a href='/contact' "
+"title='Zum Kontaktformular'>uns zu kontaktieren</a>. Wir versuchen alle "
+"Nachrichten möglichst schnell zu beantworten. Da dieses Projekt jedoch mehr "
+"ein Hobby ist und wir alle Vollzeit-Studenten sind, kann es doch manchmal "
+"ein oder zwei Tage dauern. Wir bitten um Ihr Verständnis und hoffen, dass es "
+"keine allzu großen Umstände bereitet."
+
+#: templates/footer/help.html:73
+msgid "TUTORIAL_SHARESECURITY"
+msgstr ""
+"Jedes Album ist mit einem Passwort geschützt, welches Sie vor dem ersten "
+"Teilen festlegen müssen. Damit jemand also Ihr Album ansehen, kann braucht "
+"er die URL (=Adresse) ihres Albums und das entsprechende Passwort. Wir "
+"können aber natürlich nicht kontrollieren, was Sie mit diesen beiden "
+"Informationen machen bzw. wie und wo Sie diese teilen. Bitte bedenken Sie "
+"also, dass Informationen, die ohne Sichtbarkeits-Restriktionen auf "
+"öffentlich zugänglichen Seiten wie Blogs oder ihrem Facebook-Profil gepostet "
+"werden, vielen Leuten zugänglich sind, welche dann auch alle Zugriff auf Ihr "
+"Album haben. Auch wenn Besucher ihres Albums nichts ändern können, wollen "
+"Sie wahrscheinlich nicht jedes Ihrer Erlebnisse mit jedem auf ihrer "
+"'Freundschafts'-liste teilen. Sollte Ihr Passwort in die falschen Hände "
+"geraten, können Sie dem Album ein neues Passwort bestimmen, in dem Sie den "
+"'Teilen'-Dialog öffnen und ein neues Passwort abschicken. Sollten Sie Hilfe "
+"benötigen, zögern Sie nicht <a href='/contact' title='Zum "
+"Kontaktformular'>uns zu kontaktieren</a>."
+
+#: templates/footer/help.html:82 templates/footer/help.html.py:145
+#: templates/footer/help.html:210
+msgid "What is this?"
+msgstr "Was ist das?"
+
+#: templates/footer/help.html:83 templates/footer/help.html.py:146
+msgid "Meaning of Colors"
+msgstr "Bedeutung der Farben"
+
+#: templates/footer/help.html:84 templates/footer/help.html.py:147
+#: templates/footer/help.html:211
+msgid "Insert"
+msgstr "Einfügen"
+
+#: templates/footer/help.html:85 templates/footer/help.html.py:148
+#: templates/footer/help.html:212
+msgid "Update"
+msgstr "Ändern"
+
+#: templates/footer/help.html:86 templates/footer/help.html.py:149
+#: templates/footer/help.html:213
+msgid "Delete"
+msgstr "Löschen"
+
+#: templates/footer/help.html:87 templates/footer/help.html.py:150
+#: templates/footer/help.html:214
+msgid "Share"
+msgstr "Teilen"
+
+#: templates/footer/help.html:88 templates/footer/help.html.py:151
+msgid "Open"
+msgstr "Öffnen"
+
+#: templates/footer/help.html:91
+msgid "TUTORIAL_ALBUMS_EXPLANATION"
+msgstr ""
+"Bevor Sie Fotos hochladen und zu Plätzen hinzufügen können, müssen Sie ein "
+"Album erstellen. Alben sind an die Karte gebunden und repräsentieren damit "
+"bestimmte Koordinaten. Jedes Album kann eine unbegrenzte Anzahl an Plätzen "
+"und Photos enthalten(; diese müssen nicht am selben Ort auf der Karte, wie "
+"das Album, sein). Im Dashboard können Sie alle Ihre Alben, sehen und mit "
+"einem Doppelklick auf den Marker eines Albums öffnen Sie die Albumsansicht "
+"des zugehörigen Albums. Genau wie für alle anderen Objekte bei KEIKEN ist "
+"der Titel obligatorisch, die Beschreibung eines Albums ist optional; es mag "
+"jedoch hilfreich für Gäste sein, wenn sie das Album und die Erfahrungen, die "
+"das Album darstellt, mit ein paar Worten beschreiben. "
+
+#: templates/footer/help.html:101 templates/footer/help.html.py:164
+msgid "Color"
+msgstr "Farbe"
+
+#: templates/footer/help.html:102 templates/footer/help.html.py:165
+msgid "Meaning"
+msgstr "Bedeutung"
+
+#: templates/footer/help.html:107 templates/footer/help.html.py:170
+msgid "Green"
+msgstr "Grün"
+
+#: templates/footer/help.html:108 templates/footer/help.html.py:171
+msgid "TUTORIAL_MARKER_MEANING_GREEN"
+msgstr ""
+"Platz oder Album ist nicht ausgewählt oder geöffnet. Es wurden noch nicht "
+"alle Bilder angesehen."
+
+#: templates/footer/help.html:111 templates/footer/help.html.py:174
+msgid "Yellow"
+msgstr "Gelb"
+
+#: templates/footer/help.html:112 templates/footer/help.html.py:175
+msgid "TUTORIAL_MARKER_MEANING_YELLOW"
+msgstr ""
+"Platz oder Album ist aktuell ausgewählt. Seine Beschreibung ist auf der "
+"rechten Seite geöffnet."
+
+#: templates/footer/help.html:115 templates/footer/help.html.py:186
+msgid "Gray"
+msgstr "Grau"
+
+#: templates/footer/help.html:116 templates/footer/help.html.py:187
+msgid "TUTORIAL_MARKER_MEANING_GRAY"
+msgstr ""
+"Platz oder Album ist deaktiviert. Sollte momentan nichts geladen werden und "
+"kein Dialog offen sein, nehmen Sie bitte mit dem Support Kontakt auf."
+
+#: templates/footer/help.html:122 templates/footer/help.html.py:193
+msgid "TUTORIAL_INSERT_PA"
+msgstr ""
+"Sie können ein Album oder einen Platz einfügen, in dem Sie auf die Karte "
+"klicken. Ein Dialog wird Sie durch den Rest des Einfüge-Prozesses leiten. "
+"Das Album wird an die Koordinaten gebunden, auf die Sie geklickt haben und "
+"durch einen Marker an diesem Punkt angezeigt."
+
+#: templates/footer/help.html:125 templates/footer/help.html.py:196
+#: templates/footer/help.html:226
+msgid "TUTORIAL_UPDATE_PPA"
+msgstr ""
+"Sie können Titel und Beschreibung von Album/Platz und Photo nachträglich "
+"ändern, in dem Sie den 'Ändern'-Dialog nutzen. Um diesen aufzurufen, müssen "
+"Sie mit der Maus über den entsprechenden Marker oder das entsprechende Bild "
+"in der Galerie bewegen. Dabei öffnet sich ein kleines Fenster in dem sie "
+"auswählen können, ob Sie das Objekt löschen oder verändern wollen."
+
+#: templates/footer/help.html:128 templates/footer/help.html.py:199
+#: templates/footer/help.html:229
+msgid "TUTORIAL_DELETE_PPA"
+msgstr ""
+"Sie können Titel und Beschreibung von Album/Platz und Photo wieder löschen, "
+"in dem Sie den 'Löschen'-Dialog nutzen. Um diesen aufzurufen, müssen Sie mit "
+"der Maus über den entsprechenden Marker oder das entsprechende Bild in der "
+"Galerie bewegen. Dabei öffnet sich ein kleines Fenster in dem sie auswählen "
+"können, ob Sie das Objekt löschen oder verändern wollen."
+
+#: templates/footer/help.html:131
+msgid "TUTORIAL_SHARE_ALBUM"
+msgstr ""
+"Das Öfnnen des 'Teilen'-Dialogs funktioniert genauso, wie beim "
+"'Ändern'/'Löschen'-Dialog. Der 'Teilen'-Dialog zeigt Ihnen ein Inputfeld mit "
+"dem Link zu ihrem Album. Dieser ist identisch mit der URL des Albums, welche "
+"Sie in der Adresszeile der Albumsansicht sehen. Ausserdem können Sie ein "
+"Passwort für das Album festlegen, welches Gäste brauchen, um sich Ihr Album "
+"anzusehen. Sie müssen diese Passwort nur beim ersten Mal festlegen. Denken "
+"Sie daran, dass sie jedes Mal, wenn Sie das Passwort ändern, auch jedem Gast "
+"das neue Passwort mitzuteilen. Sobald Sie also zum ersten Mal ein Passwort "
+"festgelegt haben, können Sie den Link in Ihrem präferierten Sozialen "
+"Netzwerk, Blog, per Email, handschriftlich oder auf jede andere Art und "
+"Weise, die Ihnen einfällt, mit anderen teilen. "
+
+#: templates/footer/help.html:134
+msgid "TUTORIAL_OPEN_ALBUM"
+msgstr ""
+"Ein einfacher Klick auf einen Albummarker öffnet die Beschreibung des Albums "
+"und zentriert das Album in der linken Hälfte der Seite. Ein Doppelklick auf "
+"einen Albummarker öffnet die Albumsansicht des Albums, in welcher Sie Plätze "
+"und Photos hinzufügen können - Gäste können nur diese Albumsansicht sehen. "
+
+#: templates/footer/help.html:154
+msgid "TUTORIAL_PLACE_EXPLANATION"
+msgstr ""
+"Plätze gleichen Alben. Sie sind mit der Karte verbunden, werden durch einen "
+"Marker repräsentiert und haben einen Titel und optional auch eine "
+"Beschreibung. Sie müssen einen Platz erstellen, bevor Sie Bilder hochladen "
+"können. Jedes hochgeladene Photo wird zum aktuellen Platz hinzugefügt. Die "
+"Anzahl an Plätzen ist unbegrenzt, auch die Anzahl der Fotos die ein Platz "
+"halten kann ist theoretisch ungegrenzt. Wir limitieren, jedoch den "
+"Speicherplatz eines jeden Users , wodurch auch die Gesamtanzahl an Bildern "
+"begrenzt wird. (Näheres unter 'Allgemeines'>'Speicherplatz')"
+
+#: templates/footer/help.html:178
+msgid "Orange"
+msgstr "Orange"
+
+#: templates/footer/help.html:179
+msgid "TUTORIAL_MARKER_MEANING_ORANGE"
+msgstr ""
+"Platz ist geöffnet. Bilder des Platzes können in der Galerie und in der "
+"Slideshow angesehen werden."
+
+#: templates/footer/help.html:182
+msgid "Red"
+msgstr "Rot"
+
+#: templates/footer/help.html:183
+msgid "TUTORIAL_MARKER_MEANING_RED"
+msgstr ""
+"Platz oder Album ist weder ausgewählt noch geöffnet. Alle Bilder wurden "
+"bereits angesehen."
+
+#: templates/footer/help.html:202 templates/footer/help.html.py:232
+msgid "TUTORIAL_SHARE_PP"
+msgstr ""
+"Um Plätze oder Photos zu teilen, müssen Sie zuerst im Dashboard über die "
+"Album-Settings (öffnen sich beim Bewegen der Maus über den Marker) im "
+"'Teilen'-Dialog dem Album ein Passwort geben. Danach können Sie einen "
+"beliebigen Platz öffnen oder ein Photo in die Slideshow laden und "
+"anschließend die URL (Adresse dieser Website Bsp: http://www.keiken.de/"
+"album/1/view/ashsfOHsakaposkS89Skw/#!/place/3/photo/47) kopieren und mit "
+"Ihren Bekannten teilen. Diese können über den Link und das von Ihnen "
+"bestimmte Passwort, das von Ihnen geteilte Photo, oder den Platz, ansehen."
+
+#: templates/footer/help.html:205
+msgid "TUTORIAL_OPEN_PLACE"
+msgstr ""
+"Genau wie bei Alben öffnet ein einfacher Klick auf den Platzmarker die "
+"Beschreibung, während ein Doppelklick den Platz öffnet und die Galerie mit "
+"den Fotos, des Platzes öffnet."
+
+#: templates/footer/help.html:215
+msgid "Start Slideshow"
+msgstr "Slideshow starten"
+
+#: templates/footer/help.html:216
+msgid "Open Fullscreen"
+msgstr "Vollbild öffnen"
+
+#: templates/footer/help.html:217
+msgid "Sort Photos/Open FullGallery"
+msgstr "Fotos sortieren"
+
+#: templates/footer/help.html:220
+msgid "TUTORIAL_PHOTO_EXPLANATION"
+msgstr ""
+"Natürlich sind Fotos sehr wichtig bei KEIKEN, es ist ja schließlich ein "
+"Fotoalbum. Darum gibt es verschieden Darstellungsarten Ihrer Fotos. Zum "
+"einen gibt es die Galerie, unterhalb der Karte. Diese zeigt alle Fotos des "
+"aktuellen Platzes als kleine Kacheln. Zum anderen gibt es die Slideshow, "
+"welche auf der rechten Seite der Karte positioniert ist. Diese kann "
+"gestartet werden in dem Sie auf ein Photo in der Galerie klicken. Ausserdem "
+"gibt es dann noch den Vollbild-Modus. Sie können jedes aktuelle Bild der "
+"Slideshow im Vollbild sehen, in dem Sie darauf klicken.Alle angesehenen "
+"Bilder werden mit einem Haken versehen. Die Informationen darüber welche "
+"Bilder Sie bereits gesehen haben, wird in einem Cookie vermerkt. Wenn Sie "
+"diese Information nicht verlieren wollen, sollten Sie Cookies von KEIKEN "
+"nicht löschen."
+
+#: templates/footer/help.html:223
+msgid "TUTORIAL_INSERT_PHOTO"
+msgstr ""
+"Sie können Photos hochladen, in dem Sie auf den 'Aufnahme' Knopf rechts "
+"unten in der Galerie klicken, oder in dem Sie Bilder einfach von ihrem "
+"Desktop in das Browserfenster ziehen <strong>(Funktion momentan nicht "
+"verfügbar)</strong>."
+
+#: templates/footer/help.html:235
+msgid "TUTORIAL_OPEN_SLIDESHOW"
+msgstr ""
+"Um die Slideshow zu Starten können sie entweder auf eine Photo-Kachel in der "
+"Galerie klicken, oder einfach die Navigationstasten der Slideshow nutzen. "
+
+#: templates/footer/help.html:238
+msgid "TUTORIAL_OPEN_FULLSCREEN"
+msgstr ""
+"Beim Anklicken des aktuellen Fotos in der Slideshow wird die Vollbildansicht "
+"des Bildes gestartet."
+
+#: templates/footer/help.html:241
+msgid "TUTORIAL_OPEN_FULLGALLERY"
+msgstr ""
+"Sie haben die Möglichkeit Fotos nachträglich zu sortieren. Dazu müssen Sie "
+"auf den 'Play' Knopf auf der linken unteren Seite der Galerie klicken. Dies "
+"öffnet die Vollansicht Ihrer Galerie. Das Sortieren funktioniert ganz "
+"einfach per Drag'n'Drop; d.h. Sie klicken auf ein Bild und ziehen es an die "
+"gewünschte Stelle."
+
+#: templates/footer/impressum.html:16
+msgid "impressum Angaben gemäß § 5 TMG"
+msgstr "Angaben gemäß § 5 TMG"
+
+#: templates/footer/impressum.html:24
+msgid "impressum Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
+msgstr "Inhaltlich Verantwortlicher gemäß § 55 Abs. 2 RStV:"
+
+#: templates/footer/impressum.html:25
+msgid "impressum Anschrift wie oben"
+msgstr "Anschrift wie oben"
+
+#: templates/footer/impressum.html:29
+msgid "impressum Vertreten durch"
+msgstr "Vertreten durch"
+
+#: templates/footer/impressum.html:39 templates/footer/impressum.html.py:40
+msgid "Telefon"
+msgstr "Telefon"
+
+#: templates/footer/impressum.html:39 templates/footer/impressum.html.py:40
+msgid "Handy"
+msgstr "Handy"
+
+#: templates/footer/impressum.html:41
+msgid "Email-Adresse"
+msgstr "Email-Adresse"
+
+#: templates/footer/impressum.html:48
+msgid "impressum-sidenote Missbrauch von Kontaktdaten"
+msgstr "Missbrauch von Kontaktdaten"
+
+#: templates/footer/impressum.html:49
+msgid "impressum-sidenote Missbrauch von Kontaktdaten -> description"
+msgstr ""
+"Der Nutzung von, im Rahmen der Impressumspflicht veröffentlichten, "
+"Kontaktdaten durch Dritte zur Übersendung von nicht ausdrücklich "
+"angeforderter Werbung und Informationsmaterialien, sowie anderweitigem "
+"Missbrauch wird hiermit ausdrücklich widersprochen. Die Betreiber der Seiten "
+"behalten sich ausdrücklich rechtliche Schritte im Falle der unverlangten "
+"Zusendung von Werbeinformationen, etwa durch Spam-Mails, vor."
+
+#: templates/footer/payment.html:8
+msgid "Spenden und Zahlungsbedingungen"
+msgstr "Projektvorstellung und Spendenaufruf"
+
+#: templates/footer/payment.html:15
+msgid "payment headline 'Projekt Vorstellung'"
+msgstr "Projekt Vorstellung"
+
+#: templates/footer/payment.html:17
+msgid "payment text 'project intro' p1"
+msgstr ""
+"Jedesmal wenn wir wegen Reiselust oder Auslandssemestern in weitentfernte  "
+"Länder reisten, wollten selbstverständlich viele unserer Freunde und "
+"Verwandten über unsere Erlebnisse informiert werden und nachdem wir "
+"zurückgekommen waren, eine ausführliche, bebilderte Erzählung von all "
+"unseren Erfahrungen und Abenteuern hören. Keine der aktuell verfügbaren Apps "
+"oder Online-Dienste/Sozialen Netzwerke konnte uns wirklich dabei helfen. Das "
+"liegt vor allem daran, dass nicht jeder im selben Netzwerk ist und manche "
+"sogar in gar keinem."
+
+#: templates/footer/payment.html:18
+msgid "payment text 'project intro' p2"
+msgstr ""
+"Glücklicherweise haben wir eine Web-Applikation namens 'Photomap' gefunden "
+"die uns dabei half schon während unserer Reisen von unseren Erlebnissen zu "
+"erzählen und zwar so, dass jeder unserer Freunde und Verwandten Zugang dazu "
+"hatte. Das hat so gut funktioniert, dass wir viele Anfragen bekommen haben, "
+"ob wir nicht auch anderen helfen könnten diesen Service bei ihnen "
+"einzurichten. Wenn man Photomap nutzen wollte, kam man aber leider nicht "
+"darum herum ein wenig über HTML, CSS und Javascript zu lernen und ausserdem "
+"musste man sich Webspace besorgen, um die Photos und Beschreibungen "
+"hochzuladen. Darum kam uns die Idee, dass es viel praktischer wäre eine Web-"
+"App zu entwickeln, mit der jeder einen Account erstellen kann und dann seine "
+"eigenen Erlebnisse mit allen seinen Freunden und Verwandten teilen kann, "
+"ohne sich über Sachen wie 'Webspace' und 'Javascript' Gedanken machen zu "
+"müssen."
+
+#: templates/footer/payment.html:19
+msgid "payment text 'project intro' p3"
+msgstr ""
+"Darum haben wir im Juni 2012 angefangen KEIKEN zu entwickeln. Die Nutzung "
+"von KEIKEN ist kostenlos und wir machen in keiner Weise Geld mit der App. "
+"Weder verkaufen wir die Daten der Nutzer, noch stopfen wir die Website voll "
+"mit Werbung. Wir haben eine Menge Spaß daran KEIKEN zu entwickeln und wollen "
+"auch weiterhin daran arbeiten die App zu verbessern."
+
+#: templates/footer/payment.html:21
+msgid "payment headline 'Kosten und Spenden'"
+msgstr "Kosten und Spenden"
+
+#: templates/footer/payment.html:23
+msgid "payment text 'reason for donations'"
+msgstr ""
+"Das Herz von KEIKEN ist das Hochladen von Bildern, das Organisieren "
+"derselben und die Verlinkung mit den Koordinaten. Der Großteil dieser "
+"Funktionen ist nicht sehr teuer und wir kommen gerne für diese Unkosten auf. "
+"Das Speichern der Bilder kostet uns jedoch ein bisschen mehr. Vor allem mit "
+"steigender Nutzerzahl und damit einer steigenden Größe des Onlinespeichers, "
+"den wir für die Lagerung der Bilder reservieren müssen, steigen auch die "
+"Kosten etwas über unser Limit. "
+
+#: templates/footer/payment.html:24
+msgid "payment text 'call for donations'"
+msgstr ""
+"Wir möchten trotz dieser Kosten KEIKEN jedem frei zur Verfügung stellen! "
+"Wenn Sie also unsere App mögen und uns und die weitere Entwicklung "
+"unterstützen möchten, bitte tun Sie das mit einer kleinen Spende. Jeder noch "
+"so kleine Betrag ist bereits von großer Hilfe für uns!"
+
+#: templates/footer/payment.html:30
+msgid "payment headline 'payment info'"
+msgstr "Zahlungsinformationen"
+
+#: templates/footer/payment.html:34
+msgid "payment text 'payment info'"
+msgstr ""
+"Momentan können Sie uns nur per direkter Überweisung spenden. Nutzen Sie "
+"dazu folgende Daten: "
+
+#: templates/footer/payment.html:38
+msgid "Kontoinhaber"
+msgstr "Kontoinhaber"
+
+#: templates/footer/payment.html:39
+msgid "Kontonummer"
+msgstr "Kontonummer"
+
+#: templates/footer/payment.html:40
+msgid "BLZ"
+msgstr "BLZ"
+
+#: templates/footer/payment.html:41
+msgid "Kreditinstitut"
+msgstr "Kreditinstitut"
+
+#: templates/footer/payment.html:44
+msgid "PAYMENT_SIGN_IN_TO_VIEW_BANK"
+msgstr ""
+"Bitte <a href='/account/auth/login?next=/payment' title='Zur "
+"Anmeldung'>melden Sie sich an</a>, um die Bank-Daten zu sehen."
+
+#: templates/footer/payment.html:48
+msgid "payment 'thank you note'"
+msgstr ""
+"Vielen Dank für Ihr Interesse an KEIKEN und für Ihre Unterstützung. Sollten "
+"Sie Fragen oder Anmerkungen/Ideen haben, laden wir sie dazu ein unser <a "
+"href='/contact' title='Kontaktformulat'>Kontaktformular</a> zu nutzen. Sie "
+"können uns natürlich auch eine Email schreiben, an: "
+
+#: templates/footer/privacy.html:9
 msgid "Richtlinien zum Datenschutz"
 msgstr "Richtlinien zum Datenschutz"
 
-#: templates/privacy.html:14
+#: templates/footer/privacy.html:17
 msgid "privacy-topic Datenschutzerklärung"
 msgstr "Datenschutzerklärung"
 
-#: templates/privacy.html:15
+#: templates/footer/privacy.html:18
 msgid "privacy-topic Datenschutzerklärung -> description"
 msgstr ""
 "Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst und halten uns an "
@@ -904,57 +1538,44 @@ msgstr ""
 "einen Überblick darüber, welche Art von Daten zu welchem Zweck erhoben "
 "werden und in welchem Umfang diese Daten Dritten zugänglich gemacht werden."
 
-#: templates/privacy.html:16
+#: templates/footer/privacy.html:21
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt"
 msgstr "Datenverarbeitung bei diesem Projekt"
 
-#: templates/privacy.html:17
+#: templates/footer/privacy.html:22
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> description"
 msgstr ""
-"Um ein eigenes Photoalbum zu bekommen, werden Sie bei der Registrierung "
+"Um ein eigenes Reisealbum zu bekommen, werden Sie bei der Registrierung "
 "gebeten, als persönliche Daten Ihre email-Adresse und Ihren vollen Namen - "
 "Nachname ist optional - anzugeben. Diese Daten werden in der Datenbank unter "
 "Ihrer automatisch generierten User-ID gespeichert. "
 
-#: templates/privacy.html:19
+#: templates/footer/privacy.html:25
 msgid "privacy-subtopic Nutzung der email-Adresse"
 msgstr "Nutzung der email-Adresse"
 
-#: templates/privacy.html:20
+#: templates/footer/privacy.html:27
 msgid "privacy-subtopic Nutzung der email-Adresse -> description"
 msgstr ""
 "Die email-Adresse wird nur für das einloggen, also das Bestätigen Ihrer "
 "Identität, benötigt. Sie wird unten links auf der Seite angezeigt, wenn Sie "
 "angemeldet sind, ist aber nur für Sie sichtbar."
 
-#: templates/privacy.html:23
+#: templates/footer/privacy.html:29
 msgid "privacy-subtopic Nutzung des Namens"
 msgstr "Nutzung des vollen Namens"
 
-#: templates/privacy.html:24
+#: templates/footer/privacy.html:31
 msgid "privacy-subtopic Nutzung des Namens -> description"
 msgstr ""
-"Ihr Name wird als Benutzername verwendet und ist momentan noch nicht von "
-"großer Bedeutung. (Später bei kommenden Features wie Kommentaren und News-"
-"Feeds zu den von Ihnen abbonierten Alben wird der Ihr Name bei registrierten "
-"Nutzern, denen Sie erlaubt haben eines ihrer Alben anzusehen, bei "
-"Informationen die Ihnen zugehörig sind angezeigt."
+"Ihr Name wird als Benutzername verwendet. Bitte überlegen Sie sich Ihren "
+"echten Namen anstatt eines Nicknames oder Pseudonyms zu verwenden. KEIKEN "
+"ist Ihr persönliches Reisealbum und es ist viel schöner für Ihre Freunde und "
+"Verwandten Ihren richtigen Namen zu sehen und nicht einen seltsames "
+"Pseudonym. Ausserdem sorgt KEIKEN dafür, dass keiner Ihre Informationen "
+"sehen kann, ausser Sie teilen sie mit dieser Person."
 
-#: templates/privacy.html:26
-msgid "privacy-sidenote Pseudonyme"
-msgstr "Notiz zu Pseudonymen"
-
-#: templates/privacy.html:27
-msgid "privacy-sidenote Pseudonyme -> description"
-msgstr ""
-"Wir kontrollieren die von Ihnen gewählten Namen nicht, d.h. Sie können auch "
-"Pseudonyme verwenden. Bedenken Sie jedoch das dies jediglich ein Online-"
-"Poesie-Album ist. Nur die Personen denen Sie Zugang zu einem ihrer Alben "
-"gestatten können das Album und ihren Namen auch tatsächlich sehen. Ein Photo-"
-"Album ist doch sehr viel persönlicher und ansprechender, wenn man einen "
-"richtigen Namen dabei hat anstatt eines abstrakten Pseudonyms."
-
-#: templates/privacy.html:32
+#: templates/footer/privacy.html:37
 msgid "privacy-topic Datenverarbeitung bei diesem Projekt -> guarantee"
 msgstr ""
 "Wir gewährleisten, dass die von Ihnen angegebenen Daten in keiner anderen, "
@@ -964,15 +1585,15 @@ msgstr ""
 "Ihr Handeln; seien Sie also bitte achtsam mit ihren Daten, vor allem wenn "
 "sie Alben mit anderen Leuten teilen."
 
-#: templates/privacy.html:35
+#: templates/footer/privacy.html:42
 msgid "privacy-topic Cookies"
 msgstr "Cookies"
 
-#: templates/privacy.html:37
+#: templates/footer/privacy.html:44
 msgid "privacy-topic Cookies -> cookie-introduction"
 msgstr "Diese Website verwendet folgende Cookies:"
 
-#: templates/privacy.html:39
+#: templates/footer/privacy.html:47
 msgid "privacy-topic Cookies - sessioncookie"
 msgstr ""
 "Sitzungs-Cookie: Der Sitzungs-Cookie enthält Ihre Sitzungs-ID, welche "
@@ -981,7 +1602,7 @@ msgstr ""
 "Authentifikation zu validieren, besonders bei Aktionen wie dem Erstellen, "
 "Bearbeiten und Löschen von Alben, Plätzen und Bildern."
 
-#: templates/privacy.html:40
+#: templates/footer/privacy.html:48
 msgid "privacy-topic Cookies - 'visited'-cookie"
 msgstr ""
 "'visited'-Cookie: der 'visited'-Cookie enthält Informationen dazu, welche "
@@ -990,203 +1611,213 @@ msgstr ""
 "und bei welchen Sie evtl. ein Photo übersehen haben oder ein neues "
 "hinzugekommen ist."
 
-#: templates/privacy.html:44
+#: templates/footer/privacy.html:49
+msgid "privacy-topic Cookies - 'quota'- and 'used-space'-cookie"
+msgstr ""
+"‘Quota’- & ’Used-Space’-Cookies: Die ‘quota’- & ’used-space’-Cookies "
+"enthalten Informationen darüber, wie viel Speicherplatz Ihnen zur Verfügung "
+"steht und wie viel Sie bereits davon nutzen."
+
+#: templates/footer/privacy.html:52
 msgid "privacy-topic Cookies -> redirection to wiki"
 msgstr ""
 "Für weitere Information zu Cookies und der Nutzung derselben würden wir Sie "
 "gerne zu folgendem Artikel weiterleiten: "
 
-#: templates/privacy.html:44
+#: templates/footer/privacy.html:52
 msgid "privacy-topic Cookies -> link to wiki"
 msgstr "http://de.wikipedia.org/wiki/HTTP-Cookie"
 
-#: templates/privacy.html:45
+#: templates/footer/privacy.html:53
 msgid "link-title Wikipedia-Eintrag zu Cookies"
 msgstr "Wikipedia-Eintrag zu Cookies"
 
-#: templates/privacy.html:45
+#: templates/footer/privacy.html:53
 msgid "privacy-topic Cookies -> name of link to wiki"
 msgstr "Wikipedia-Artikel zu HTTP-Cookies"
 
-#: templates/privacy.html:48
+#: templates/footer/privacy.html:57
 msgid "privacy-topic Emails und Kontaktformulare"
 msgstr "Emails und Kontaktformulare"
 
-#: templates/privacy.html:51
+#: templates/footer/privacy.html:59
 msgid "privacy-topic Emails und Kontaktformulare list-item-1"
 msgstr ""
 "Nutzer und Besucher können dem Photomap-Team Fragen stellen oder Anregungen "
 "und Kritik anbringen, indem Sie eine Email schreiben oder das "
 "Kontaktformular benutzen."
 
-#: templates/privacy.html:52
+#: templates/footer/privacy.html:60
 msgid "privacy-topic Emails und Kontaktformulare list-item-2"
 msgstr ""
 "Die von Ihnen an uns gesendeten Nachrichten werden zu Dokumentation und "
 "Weiterverarbeitung bei uns gespeichert. Dies beinhaltet sämtliche von Ihnen "
 "angegebenen und für die Verarbeitung notwendigen Daten."
 
-#: templates/privacy.html:53
-msgid "privacy-topic Emails und Kontaktformulare list-item-3"
-msgstr ""
-"Die Daten im Kontaktformular werden in keiner Weise überprüft, die "
-"Verwendung von Pseudonymen ist somit möglich, allerdings nicht "
-"empfehlenswerte da es die Verarbeitung erschwert und wir Ihnen dadurch "
-"eventuell nicht so präzise weiterhelfen können, wie wir es gerne würden."
-
-#: templates/privacy.html:54
+#: templates/footer/privacy.html:61
 msgid "privacy-topic Emails und Kontaktformulare list-item-4"
 msgstr ""
 "Nach Abschluss des Dialogs mit Ihnen werden die Daten wieder gelöscht, es "
 "sei denn es wurde mit Ihnen ausgemacht die Daten zu speichern."
 
-#: templates/privacy.html:55
+#: templates/footer/privacy.html:62
 msgid "privacy-topic Emails und Kontaktformulare list-item-5"
 msgstr ""
 "Wenn wir eine Nachricht längerfristig speichern wollen, werden wir das "
 "vorher mit Ihnen besprechen."
 
-#: templates/privacy.html:58
+#: templates/footer/privacy.html:66
 msgid "privacy-topic Auskunftsrecht"
 msgstr "Auskunftsrecht"
 
-#: templates/privacy.html:60
+#: templates/footer/privacy.html:68
 msgid "privacy-topic Auskunftsrecht -> paragraph1"
 msgstr ""
-"Gerne geben wir Ihnen alle Informationen die von Ihnen auf unserem Server "
+"Gerne geben wir Ihnen alle Informationen, die von Ihnen auf unserem Server "
 "gespeichert wurden. Wenn Sie diese Informationen abrufen wollen, schreiben "
 "Sie uns eine Email oder nutzen Sie das "
 
-#: templates/privacy.html:61
+#: templates/footer/privacy.html:69
 msgid "Kontaktformular"
 msgstr "Kontaktformular"
 
-#: templates/privacy.html:62
+#: templates/footer/privacy.html:70
 msgid "privacy-topic Auskunftsrecht -> paragraph2"
 msgstr ""
 "Wir werden Ihnen im Rahmen der gesetzlichen Auskunftsansprüche in Kürze alle "
 "verfügbaren Information zu schicken."
 
-#: templates/team.html:34 templates/team.html.py:46 templates/team.html:58
-#: templates/debug/dialogdimension.html:14
-msgid "Name"
-msgstr "Name"
-
-#: templates/team.html:36 templates/team.html.py:48 templates/team.html:60
+#: templates/footer/team.html:38 templates/footer/team.html.py:50
+#: templates/footer/team.html:62
 msgid "Verantwortlich für"
 msgstr "Verantwortlich für"
 
-#: templates/team.html:37 templates/team.html.py:49
+#: templates/footer/team.html:39 templates/footer/team.html.py:51
 msgid "Back End"
-msgstr "Back End"
+msgstr "Backend"
 
-#: templates/team.html:37 templates/team.html.py:61
+#: templates/footer/team.html:39 templates/footer/team.html.py:63
 msgid "Front End"
-msgstr "Front End"
+msgstr "Frontend"
 
-#: templates/team.html:37 templates/team.html.py:61
+#: templates/footer/team.html:39 templates/footer/team.html.py:63
 msgid "Design"
 msgstr "Design"
 
-#: templates/team.html:38 templates/team.html.py:50 templates/team.html:62
+#: templates/footer/team.html:40 templates/footer/team.html.py:52
+#: templates/footer/team.html:64
 msgid "Motivation am Projekt"
 msgstr "Motivation am Projekt"
 
-#: templates/update-album-password.html:5
+#: templates/form/delete/model.html:5
+msgid "DELETE_CONFIRM"
+msgstr "Löschen bestätigen"
+
+#: templates/form/delete/model.html:10
+msgid "DELETE_MODEL_QUESTION"
+msgstr "Bitte bestätigen Sie das Löschen von: "
+
+#: templates/form/insert/album.html:5
+msgid "INSERT_ALBUM"
+msgstr "Album hinzufügen"
+
+#: templates/form/insert/album.html:11 templates/form/insert/photo.html:21
+#: templates/form/insert/place.html:11 templates/form/update/model.html:11
+msgid "INPUT_PLACEHOLDER_TITLE"
+msgstr "Bestimmen Sie einen Titel."
+
+#: templates/form/insert/album.html:14 templates/form/insert/photo.html:11
+#: templates/form/insert/photo.html:24 templates/form/insert/place.html:14
+#: templates/form/update/model.html:14
+msgid "DESCRIPTION"
+msgstr "Beschreibung"
+
+#: templates/form/insert/album.html:15 templates/form/insert/photo.html:25
+#: templates/form/insert/place.html:15 templates/form/update/model.html:15
+msgid "INPUT_PLACEHOLDER_DESCRIPTION"
+msgstr "(Optional) Fügen Sie eine Beschreibung hinzu.."
+
+#: templates/form/insert/photo.html:5
+msgid "INSERT_PHOTO"
+msgstr "Photo hinzufügen"
+
+#: templates/form/insert/photo.html:11
+msgid "TITLE"
+msgstr "Titel"
+
+#: templates/form/insert/photo.html:28
+msgid "INSERT_PHOTO_UPLOAD"
+msgstr "<span style='cursor: help;' title='(nur *.png und *.jpg)'>Photo</span>"
+
+#: templates/form/insert/place.html:5
+msgid "INSERT_PLACE"
+msgstr "Platz hinzufügen"
+
+#: templates/form/update/album-password.html:5
 msgid "UPDATE_ALBUM_PASSWORD"
-msgstr "TODO: DER TITEL SOLLTE KLARMACHEN DASS ES UMS TEILEN GEHT!"
+msgstr "Link zum Teilen & Album Passwort"
 
-#: templates/update-album-password.html:11
-msgid "mp-copy-link-title"
-msgstr "Link kopieren"
+#: templates/form/update/album-password.html:12
+msgid "Album share url"
+msgstr "Link zum Teilen des Albums"
 
-#: templates/update-album-password.html:21
-msgid "How to Share"
-msgstr "Wie teilt man den Link?"
+#: templates/form/update/album-password.html:16
+#: templates/form/update/album-password.html:21
+msgid "INPUT_SHARE_ALBUM_TITEL"
+msgstr "Wie teilt man?"
 
-#: templates/update-album-password.html:24
-msgid "How to Share -> description"
+#: templates/form/update/album-password.html:17
+msgid "Assign new album password"
+msgstr "Ein neues Password bestimmen"
+
+#: templates/form/update/album-password.html:24
+msgid "INPUT_SHARE_ALBUM_INFO"
 msgstr ""
-"TODO: HIER SOLLTE STEHEN WIE MAN TEILT UND WAS DAS MIT DEM PASSWORT SOLL"
+"Kopieren Sie den Link und fügen Sie ihn an der Stelle ein, an der Sie ihr "
+"Album mit anderen teilen wollen. (Das kann zB. eine Email, ein Blog, ein "
+"Statusnachricht bei ihrem sozialen Netzwerk oder Instant Messenger sein.) "
+"Vor dem ersten Teilen müssen Sie ein Passwort festlegen, welches Besucher "
+"Ihres Albums benötigen um die Berechtigung zum Ansehen ihres Albums zu "
+"bestätigen. Jedes Mal wenn Sie ein neues Passwort festlegen, müssen Sie Ihre "
+"Freunde und Verwandten über die Änderung informieren, gesetzt den Fall, das "
+"diese weiterhin Zugriff auf das Album haben sollen. <strong>Besucher Ihres "
+"Album können ihr Album nur ansehen, aber nichts verändern!</strong> <br /> "
+"<br /> Nebenbei bemerkt: Der Link ist identisch mit der URL der "
+"Albumsansicht des Albums, wenn sie also bereits ein Passwort festgelegt "
+"haben und ein ALbum geöffnet haben, können Sie einfach die URL kopieren und "
+"teilen."
 
-#: templates/update-album-password.html:27
-msgid "How to Share -> attention!"
+#: templates/form/update/album-password.html:29
+msgid "INPUT_PLACEHOLDER_SHARE_PASSWORD"
 msgstr ""
-"Bitte beachten Sie, dass, was auch immer Sie momentan im Zwischenspeicher "
-"haben (also das, was Sie als letztes kopiert haben), beim Kopieren "
-"überschrieben wird."
+"Nicht nötig, sollten Sie schonmal ein Passwort für das Album festgelegt "
+"haben.."
 
-#: templates/update-album.html:5
-msgid "UPDATE_ALBUM"
-msgstr "Album bearbeiten"
+#: templates/form/update/model.html:5
+msgid "UPDATE_FORM"
+msgstr "Update-Formular"
 
-#: templates/update-photo.html:5
-msgid "UPDATE_PHOTO"
-msgstr "Photo bearbeiten"
-
-#: templates/update-photos.html:5
+#: templates/form/update/photos.html:5
 msgid "UPDATE_PHOTOS"
 msgstr "Bearbeiten der Photo-Reihenfolge"
 
-#: templates/update-photos.html:11
+#: templates/form/update/photos.html:11
 msgid "UPDATE_PHOTOS_CONFIRMATION"
 msgstr "Wollen Sie die neue Reihenfolge bestätigen?"
 
-#: templates/update-place.html:5
-msgid "UPDATE_PLACE"
-msgstr "Platz bearbeiten"
+#~ msgid "Account Deleted"
+#~ msgstr "Account gelöscht"
 
-#: templates/view-album.html:33
-msgid "Previous Page"
-msgstr "Vorherige Seite"
+#~ msgid "Delete Account"
+#~ msgstr "Account löschen"
 
-#: templates/view-album.html:37
-msgid "Open Full Gallery"
-msgstr "Vollstädige Galerie öffnen"
+#~ msgid "Reset Password Success"
+#~ msgstr "Passwort zurücksetzen - Erfolg"
 
-#: templates/view-album.html:44 templates/view-album.html.py:52
-msgid "GALLERY_NOT_STARTED"
-msgstr ""
-"Bitte wählen Sie einen Platz aus, indem Sie auf einen Marker auf der Karte "
-"klicken, um die Galerie zu starten."
+#~ msgid "RESET_PASSWORD_FAILURE_H1"
+#~ msgstr "Passwort zurücksetzen nicht möglich."
 
-#: templates/view-album.html:49 templates/view-album.html.py:53
-msgid "GALLERY_IS_EMPTY"
-msgstr ""
-"Der ausgewählte Platz hat noch keine Photos. Um neue Photos hinzuzufügen, "
-"ziehen Sie diese in die Galerie oder nutzen Sie den 'Bild hinzufügen'-Button "
-"rechts der Galerie."
-
-#: templates/view-album.html:65
-msgid "Next Page"
-msgstr "Nächste Seite"
-
-#: templates/view-album.html:69
-msgid "Add Image"
-msgstr "Bild hinzufügen"
-
-#: templates/view-album.html:82
-msgid "Previous Image"
-msgstr "Vorheriges Bild"
-
-#: templates/view-album.html:88
-msgid "Please choose a photo in your gallery to start the slideshow."
-msgstr ""
-"Bitte wählen Sie ein Bild in Ihrer Galerie aus, um die Slideshow zu starten."
-
-#: templates/view-album.html:92
-msgid "Next Image"
-msgstr "Nächstes Bild"
-
-#: templates/view-album.html:95
-msgid "Bild"
-msgstr "Bild"
-
-#: templates/debug/dialogdimension.html:18
-msgid "Beschreibung"
-msgstr ""
-
-#: templates/debug/dialogdimension.html:24
-msgid "Speichern"
-msgstr "Save"
-
+#~ msgid "RESET_PASSWORD_FAILURE_P"
+#~ msgstr ""
+#~ "Der Link, um das Passwort zurück zu setzen ist entweder veraltet oder "
+#~ "bereits genutzt worden. Bitte fordern Sie einen neuen an. "

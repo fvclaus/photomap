@@ -11,7 +11,7 @@ from django.db.models.signals import post_save
 from pm import appsettings
 
 # hack to make username not unique
-User._meta.get_field('username')._unique = False
+# User._meta.get_field('username')._unique = False
 
 BYTE_TO_MBYTE = pow(2, 20)
 
@@ -46,13 +46,11 @@ def create_user_profile(sender, instance, created, **kwargs):
     @author: Frederik Claus
     @summary: Adds the additional fields to a new user on creation
     """
+    import logging
+    logger = logging.getLogger(__name__)
     if kwargs['raw']:
-        import logging
-        logger = logging.getLogger(__name__)
         logger.debug("Skipping creating of userprofile. This is a raw query.")
     elif created:
-        import logging
-        logger = logging.getLogger(__name__)
         logger.debug("Creating userprofile")
         UserProfile.objects.using(kwargs["using"]).create(user = instance)
 

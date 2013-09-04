@@ -1,0 +1,26 @@
+{% extends "base-non-interactive.html" %}
+
+<!-- for the translation with django -->
+{% load i18n %}
+
+
+{% block title %}{% trans "Account" %}{% endblock %}
+
+{% block pageID %}account{% endblock %}
+
+{% block non_interactive_content %}
+
+<div id="left-column">
+  
+  {% block account_info %}{% endblock %}
+
+</div>
+<div id="right-column">
+  
+  {% block account_settings %}{% endblock %}
+  
+</div>
+
+
+
+{% endblock %}
