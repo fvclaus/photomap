@@ -11,7 +11,8 @@ from django.db.models.signals import post_save
 from pm import appsettings
 
 # hack to make username not unique
-# User._meta.get_field('username')._unique = False
+#TODO Do we need this?
+User._meta.get_field('username')._unique = False
 
 BYTE_TO_MBYTE = pow(2, 20)
 

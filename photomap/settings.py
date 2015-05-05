@@ -210,7 +210,7 @@ MIDDLEWARE_CLASSES = (
 )
 
 AUTHENTICATION_BACKENDS = (
-#    "pm.controller.authentication.EmailBackend",
+    "pm.view.authentication.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 

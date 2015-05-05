@@ -35,23 +35,27 @@ def login(request):
         next = request.GET.get("next", default = "/dashboard/")
     else:
         form = LoginForm(request.POST)
+        #TODO Do not overwrite built-in python functions.
         next = request.POST.get("next", default = "/dashboard/")
-#        if not next or not re.match("/", next):
-#            next = "/dashboard/"
         if form.is_valid():
-            user = authenticate(username = form.cleaned_data["email"], password = form.cleaned_data["password"])
+            mail = form.cleaned_data["email"]
+            logger.info("Trying to authenticate user %s", mail)
+            user = authenticate(username = mail, password = form.cleaned_data["password"])
             if len(next) == 0:
                 next = "/dashboard/"  
             if not (user == None or user.is_anonymous()):
                 if user.is_active:
+                    logger.info("User credentials are valid. Redirecting to %s", next)
                     auth_login(request, user)
                     response = HttpResponseRedirect(next)
                     set_cookie(response, "quota", user.userprofile.quota)
                     set_cookie(response, "used_space", user.userprofile.used_space)
                     return response
                 else:
+                    logger.info("User is inactive. Redirecting to inactive page.")
                     return HttpResponseRedirect("/account/inactive")
             else:
+                logger.info("Could not authenticate user with given credentials.")
                 form.errors["__all__"] = form.error_class([_("CREDENTIALS_ERROR")])
                 
   
