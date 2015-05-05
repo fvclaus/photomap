@@ -236,6 +236,10 @@ class ApiTestCase(TestCase):
     
     def read_and_delete_mails(self):
         mails = []
+
+        if not os.path.exists(settings.EMAIL_FILE_PATH):
+            os.mkdir(settings.EMAIL_FILE_PATH)
+
         for filename in os.listdir(settings.EMAIL_FILE_PATH):
             path = os.path.join(settings.EMAIL_FILE_PATH, filename)
             mail = open(path, "r")
