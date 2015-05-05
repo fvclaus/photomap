@@ -24,7 +24,7 @@ from pm.view import set_cookie, update_used_space
 from pm.view import landingpage
 from pm.exception import OSMException
 
-from pm.osm import reversegecode
+from pm.osm import reversegeocode
 from pm.form.album import AlbumInsertForm, AlbumUpdateForm, AlbumPasswordUpdateForm
 
 import json
@@ -147,7 +147,7 @@ def insert(request):
         logger.info("User %d is trying to insert a new Album." % request.user.pk)
         album.user = request.user
         try:
-            album.country = reversegecode(album.lat, album.lon)
+            album.country = reversegeocode(album.lat, album.lon)
         except OSMException, e:
             logger.warn("Could not resolve %f,%f. Reason: %s" % (album.lat, album.lon, str(e)))
 #                return error("osm is temporarily not available. please try again later")

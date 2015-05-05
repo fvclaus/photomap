@@ -24,7 +24,14 @@ ZOOM = 18
 
 logger = logging.getLogger(__name__)
 
-def reversegecode(lat, lon):
+# OSM has updated its usage policy and blocks all 
+# requests from http libraries. We should not try to
+# circumvent this requirement but find another solution instead.
+# Source: http://wiki.openstreetmap.org/wiki/Nominatim_usage_policy
+def reversegeocode(lat, lon):
+    return "??"
+
+def reversegeocode_deprecated(lat, lon):
     """Performs a lookup and return the nearest adress"""
     params = {}
     
@@ -41,7 +48,6 @@ def reversegecode(lat, lon):
     try :
         data = urllib.urlopen(url)
         response = data.read()
-        
         data = json.loads(response)
         logger.debug("Received OSM response %s" % data)
         return data["address"]["country_code"]
@@ -58,7 +64,7 @@ def reversegecode(lat, lon):
 
 if __name__ == "__main__":
     from pm.test.data import GPS_MANNHEIM_SCHLOSS
-    country_code = reversegecode(GPS_MANNHEIM_SCHLOSS["lat"], GPS_MANNHEIM_SCHLOSS["lon"])
+    country_code = reversegeocode(GPS_MANNHEIM_SCHLOSS["lat"], GPS_MANNHEIM_SCHLOSS["lon"])
     print country_code
 
 
