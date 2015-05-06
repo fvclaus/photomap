@@ -19,11 +19,10 @@ from django.core import files
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
 
 from StringIO import StringIO
-from PIL import Image, ImageFile
+from pymaging import Image
 import json 
 import  logging, sys, uuid
 
-ImageFile.MAXBLOCK = 2 ** 20
 
 logger = logging.getLogger(__name__)
 
@@ -41,33 +40,31 @@ def calculate_size(longest_side, other_side, limit):
     resize_factor = limit / float(longest_side)
     return (limit, int(resize_factor * other_side))
 
-def resize(size, limit):
+def resize(image, limit):
+    size = (image.width, image.height)
     if size[0] >= size[1]:
         size = calculate_size(size[0], size[1], limit)
     else:
         size = calculate_size(size[1], size[0], limit)
-    return size
+    logger.info("Resizing photo to %s.", str(size))
+    resized_image = image.resized(size[0], size[1])
+    resized_image.width = size[0]
+    resized_image.height = size[1]
+    return resized_image
 
 def create_thumb(buf):
     image = Image.open(buf)
-    size = image.size
+    size = (image.width, image.height)
     thumb = StringIO()
     
-    thumb_size = resize(size, LONGEST_SIDE_THUMB)
-        
-    logger.debug("Resizing photo to %s." % str(thumb_size))
-    resized_image = image.resize(thumb_size)
-    resized_image.save(thumb, "JPEG", optimize = True)
+    resized_image = resize(image, LONGEST_SIDE_THUMB)
+    resized_image.save(thumb, "png")
     thumb.seek(0)
     
     if size[0] > LONGEST_SIDE or size[1] > LONGEST_SIDE:
-        original_size = resize(size, LONGEST_SIDE)
-        logger.debug("Resizing photo to %s." % str(original_size))
+        resized_image = resize(image, LONGEST_SIDE)
         original = StringIO()
-#        buf.open()
-#        image = Image.open(buf)
-        resized_image = image.resize(original_size)
-        resized_image.save(original, "JPEG", quality = 80, optimize = True, progressive = True)
+        resized_image.save(original, "png")
         original.seek(0)
         return original, thumb
     else:
@@ -80,6 +77,12 @@ def create_thumb(buf):
         else:
             buf.open()
             return buf, thumb
+
+# pip install -e /home/fclaus/babatas/install/pymaging-master
+# pip install -e /home/fclaus/babatas/install/pymaging-jpg-master
+# pip install -e /home/fclaus/babatas/install/pymaging-png-master
+# import pymaging
+# pymaging.formats.get_format_objects()
     
 
 @login_required
