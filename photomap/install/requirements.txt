@@ -1,11 +1,12 @@
+# Lines ending with GAE indicate that this dependencies should be uploaded to GAE
 Django==1.4.1
 PIL==1.1.7
 argparse==1.2.1
-boto==2.6.0
-distribute==0.6.24
-django-appconf==0.5
-django-compressor==1.2
-django-registration==0.8
+boto==2.6.0 # GAE
+distribute==0.6.24 
+django-appconf==0.5 # GAE
+django-compressor==1.2 # GAE
+django-registration==0.8 # GAE
 latexcodec==0.2
 psycopg2==2.4.5
 wsgiref==0.1.2

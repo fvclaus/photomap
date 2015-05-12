@@ -1,4 +1,6 @@
 environment.py
+photomap/res/export/
+.gaedata/
 upload/
 dojo/
 dojox/
@@ -10,6 +12,7 @@ photomap-legacy/*.sqlite
 photomap/static/photo
 photomap/static/profile-picture
 photomap-legacy/public/stylesheets/main.css
+
 .metadata/
 debug/*
 *.*#
