@@ -9,18 +9,17 @@ from boto.s3.acl import CannedACLStrings
 import settings
 import os
 
-S3_URL = "https://s3-eu-west-1.amazonaws.com"
-BUCKET_NAME = "photomap"
-AWS_ACCESS_KEY = os.environ['AWS_ACCESS_KEY']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+import environment
+
 
 def getbucket():    
-    s3 = boto.connect_s3(AWS_ACCESS_KEY, AWS_SECRET_ACCESS_KEY)
-    bucket = s3.get_bucket(BUCKET_NAME)
+    s3 = boto.connect_s3(environment.AWS_ACCESS_KEY, enviroment.AWS_SECRET_ACCESS_KEY)
+    bucket = s3.get_bucket(enviroment.BUCKET_NAME)
     return bucket
 
 def build_url(key):
-    return "%s/%s/%s" % (S3_URL, BUCKET_NAME, key)
+    return "%s/%s/%s" % (environment.S3_URL, BUCKET_NAME, key)
 
 def delete_key(key):
     bucket = getbucket()

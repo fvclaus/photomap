@@ -64,7 +64,8 @@ def create_thumb(buf):
     if size[0] > LONGEST_SIDE or size[1] > LONGEST_SIDE:
         resized_image = resize(image, LONGEST_SIDE)
         original = StringIO()
-        resized_image.save(original, "png")
+        resized_image = image.resize(original_size)
+        resized_image.save(original, "JPEG", quality = 80, optimize = True, progressive = True)
         original.seek(0)
         return original, thumb
     else:

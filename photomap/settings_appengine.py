@@ -39,7 +39,7 @@ IS_APPENGINE = True
 # Activate django-dbindexer for the default database
 DATABASES['native'] = DATABASES['default']
 DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
-AUTOLOAD_SITECONF = 'geo.appengine.indexes'
+AUTOLOAD_SITECONF = 'pm.appengine.indexes'
 
 INSTALLED_APPS = INSTALLED_APPS + (
     'djangotoolbox',
