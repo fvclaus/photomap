@@ -28,7 +28,6 @@ COMPRESS_OFFLINE_CONTEXT = {
     "STATIC_URL" : STATIC_URL
     }
 
-
 # not NOT_ is a little confusing
 if not os.environ.has_key("DJANGO_NO_COMPRESS_OFFLINE") or os.environ["DJANGO_NO_COMPRESS_OFFLINE"] == "false":
     print WARNING + "You are using offline compressed files. Changes will not be reflected until you execute python manage.py compress" + ENDC

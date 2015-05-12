@@ -2,7 +2,6 @@
 # If you want to use a different backend you have to remove all occurences
 # of "djangoappengine" from this file.
 
-# Initialize App Engine SDK if necessary.
 try:
     from google.appengine.api import apiproxy_stub_map
 except ImportError:
@@ -11,10 +10,10 @@ except ImportError:
 
 from djangoappengine.utils import on_production_server, have_appserver
 
+print "Server is runnning on production server? {0}".format(on_production_server)
 
 # When on production server disable error messages
 # This never works on the local copy, because the appengine runserver does not implement --insecure
-#if on_production_server:
 
 if on_production_server:
     from settings_prod import *
@@ -28,6 +27,17 @@ else:
 from djangoappengine.settings_base import *
 
 # Set overwritten variables again
+
+# Initialize App Engine SDK if necessary.
+# TODO Which of these values do we need?
+COMPRESS_OFFLINE = True
+COMPRESS_JS_FILTERS = ["compressor.filters.closure.ClosureCompilerFilter"]
+COMPRESS_ENABLED = True
+COMPRESS_OFFLINE_CONTEXT = {
+    "STATIC_URL" : '/static/'
+    }
+COMPRESS_CLOSURE_COMPILER_BINARY = os.path.join(PROJECT_PATH, "lib", "compiler.jar")
+COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_level SIMPLE_OPTIMIZATIONS --language_in=ECMASCRIPT5"
 
 DEBUG = not on_production_server
 TEMPLATE_DEBUG = DEBUG
@@ -68,3 +78,4 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
+

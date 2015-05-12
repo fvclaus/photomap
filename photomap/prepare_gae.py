@@ -15,7 +15,7 @@ if not os.path.isdir(environment.DJANGO_EGGS_DIR):
 
 print "Linking django eggs..."
 
-DJANGO_EGGS = ["djangoappengine", "django-autoload", "django-dbindexer", "django-filetransfers", "django-nonrel", "djangotoolbox"]
+DJANGO_EGGS = ["djangoappengine", "autoload", "dbindexer", "filetransfers", "django", "djangotoolbox"]
 
 def is_ignored_path(path):
     is_python_bytecode = path.endswith(".pyc")
