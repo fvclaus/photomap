@@ -18,14 +18,16 @@ try:
 except ImportError:
     raise EnvironmentError("Cannot load python module environment. Please copy environment-sample and provide values for all keys.")
 
+import environment
+
 
 def getbucket():    
-    s3 = boto.connect_s3(environment.AWS_ACCESS_KEY, enviroment.AWS_SECRET_ACCESS_KEY)
-    bucket = s3.get_bucket(enviroment.BUCKET_NAME)
+    s3 = boto.connect_s3(environment.AWS_ACCESS_KEY, environment.AWS_SECRET_ACCESS_KEY)
+    bucket = s3.get_bucket(environment.BUCKET_NAME)
     return bucket
 
 def build_url(key):
-    return "%s/%s/%s" % (environment.S3_URL, BUCKET_NAME, key)
+    return "%s/%s/%s" % (environment.S3_URL, environment.BUCKET_NAME, key)
 
 def delete_key(key):
     bucket = getbucket()
