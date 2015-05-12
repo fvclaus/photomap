@@ -64,11 +64,6 @@ def create_thumb(buf):
         original_size = resize(size, LONGEST_SIDE)
         logger.debug("Resizing photo to %s." % str(original_size))
         original = StringIO()
-<<<<<<< HEAD
-=======
-#        buf.open()
-#        image = Image.open(buf)
->>>>>>> parent of a4e88d0... Migration from PIL to pymaging
         resized_image = image.resize(original_size)
         resized_image.save(original, "JPEG", quality = 80, optimize = True, progressive = True)
         original.seek(0)
