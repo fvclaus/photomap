@@ -199,18 +199,16 @@ class PhotoControllerTest(ApiTestCase):
         return photos
     
     def assertThumbSize(self, thumb_url):
-        from pymaging import Image
+        from PIL import Image
         import tempfile
         url_data = urllib2.urlopen(thumb_url)
         thumb, name = tempfile.mkstemp(suffix = ".jpg", text = False)
         thumb = open(name, "wb")
         thumb.write(url_data.read())
         thumb.close()
-
-        thumb = open(name, "rb")        
-        thumb_image = Image.open(thumb)
-        self.assertTrue(thumb.width is 100 or thumb.height is 100)
-        thumb.close()
+        
+        thumb = Image.open(name)
+        self.assertTrue(thumb.size[0] is 100 or thumb.size[1] is 100)
         
         
     def _openphoto(self, data):

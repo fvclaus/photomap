@@ -8,9 +8,15 @@ import boto
 from boto.s3.acl import CannedACLStrings
 import settings
 import os
+import logging
+
+logger = logging.getLogger(__name__)
 
 
-import environment
+try:
+    import environment
+except ImportError:
+    raise EnvironmentError("Cannot load python module environment. Please copy environment-sample and provide values for all keys.")
 
 
 def getbucket():    
