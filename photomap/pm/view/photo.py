@@ -55,7 +55,7 @@ def create_thumb(buf):
     
     thumb_size = resize(size, LONGEST_SIDE_THUMB)
         
-    logger.debug("Resizing photo to %s." % str(thumb_size))
+    logger.debug("Resizing thumbnail to %s." % str(thumb_size))
     resized_image = image.resize(thumb_size)
     resized_image.save(thumb, "JPEG", optimize = True)
     thumb.seek(0)
@@ -101,6 +101,7 @@ def insert(request):
         try:
             original, thumb = create_thumb(request.FILES["photo"])
         except Exception, e:
+            logger.error("Could not create thumb. Reason: %s", str(e)) 
             return error(str(e))
         #===================================================================
         # check upload limit
@@ -133,7 +134,6 @@ def insert(request):
         # add order 
         #===================================================================
         photo = form.save(commit = False)
-#        nphotos = len(Photo.objects.all().filter(place = photo.place))
         photo.order = 0
         #===================================================================
         # add size
@@ -143,7 +143,7 @@ def insert(request):
         
         userprofile.save()
         photo.save()
-        logger.debug("Photo %d inserted with order %d and size %d." % (photo.pk, photo.order, photo.size))
+        logger.info("Photo %d inserted with order %d and size %d." % (photo.pk, photo.order, photo.size))
         
         response = success(id = photo.id, photo = photo.getphotourl(), thumb = photo.getthumburl(), url = photo.getphotourl(), order = photo.order)
         set_cookie(response, "used_space", userprofile.used_space)
@@ -217,7 +217,7 @@ def update_multiple(request):
             
             photos_dirty.append((photo, json_photo))
     except Exception, e:
-        logger.warn("Something unexpected happened: %s" % str(e))
+        logger.error("Something unexpected happened: %s" % str(e))
         return error(str(e))
         
     
@@ -250,7 +250,7 @@ def delete(request, photo_id):
         set_cookie(response, "used_space", used_space)
         return response
     except (KeyError, Photo.DoesNotExist), e:
-        logger.warn("Something unexpected happened: %s" % str(e))
+        logger.error("Something unexpected happened: %s" % str(e))
         return error(str(e))
 
 

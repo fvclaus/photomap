@@ -8,9 +8,10 @@ from django.conf.urls.defaults import patterns, include, url
 from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 from django.contrib.auth.views import logout
+from django.conf import settings
+
 from registration.views import activate
 from registration.views import register
-
 
 from pm.view import album, place, photo
 from pm.view import dashboard
@@ -178,10 +179,6 @@ urlpatterns = patterns("",
                        url(r'^help$', direct_to_template, {"template": "footer/help.html"}),
                        url(r'^team$', direct_to_template, {"template": "footer/team.html"}),
                        url(r'^payment$', direct_to_template, {"template": "footer/payment.html"}),
-                       #========================================================
-                       # 3rd party apps
-                       #========================================================
-                       url(r'^admin/', include(admin.site.urls)),
                        #================================================================
                        # dialog hooks
                        #================================================================
@@ -207,4 +204,7 @@ urlpatterns = patterns("",
 #                       url(r'^accounts/', include(registration)),
                        )
 
-
+# TODO This does not work
+# if "django.contrib.admin" in settings.INSTALLED_APPS:
+#     # Admin raises error if app is not installed.
+#     urlpatterns += url(r'^admin/', include(admin.site.urls))

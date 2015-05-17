@@ -1,6 +1,9 @@
-# Initialize App Engine and import the default settings (DB backend, etc.).
-# If you want to use a different backend you have to remove all occurences
-# of "djangoappengine" from this file.
+import logging 
+import os
+
+logger = logging.getLogger(__name__)
+WARNING = '\033[93m'
+ENDC = '\033[0m'
 
 try:
     from google.appengine.api import apiproxy_stub_map
@@ -9,28 +12,16 @@ except ImportError:
     setup_env()
 
 from djangoappengine.utils import on_production_server, have_appserver
+logger.info("Server is runnning on production server? {0}".format(on_production_server))
 
-print "Server is runnning on production server? {0}".format(on_production_server)
-
-# When on production server disable error messages
-# This never works on the local copy, because the appengine runserver does not implement --insecure
-
-if on_production_server:
-    from settings_prod import *
-# Currently running on development server
-# Enable static file serving.
-else:
-    from settings import *
-
+from settings import *
 # Overwrite with appengine specific settings.
 # This will also setup the dev_appserver environment.      
 from djangoappengine.settings_base import *
 
 # Set overwritten variables again
-
-# Initialize App Engine SDK if necessary.
-# TODO Which of these values do we need?
 COMPRESS_OFFLINE = True
+logger.warn("You are using offline compressed files. Changes will not be reflected until you execute python manage.py compress")
 COMPRESS_JS_FILTERS = ["compressor.filters.closure.ClosureCompilerFilter"]
 COMPRESS_ENABLED = True
 COMPRESS_OFFLINE_CONTEXT = {
@@ -39,10 +30,8 @@ COMPRESS_OFFLINE_CONTEXT = {
 COMPRESS_CLOSURE_COMPILER_BINARY = os.path.join(PROJECT_PATH, "lib", "compiler.jar")
 COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_level SIMPLE_OPTIMIZATIONS --language_in=ECMASCRIPT5"
 
-DEBUG = not on_production_server
+DEBUG = False
 TEMPLATE_DEBUG = DEBUG
-
-import os
 
 IS_APPENGINE = True
 
@@ -50,6 +39,14 @@ IS_APPENGINE = True
 DATABASES['native'] = DATABASES['default']
 DATABASES['default'] = {'ENGINE': 'dbindexer', 'TARGET': 'native'}
 AUTOLOAD_SITECONF = 'pm.appengine.indexes'
+
+temp_app = tuple()
+
+for app in INSTALLED_APPS:
+    if not app == "django.contrib.admin":
+        temp_app += (app,)
+
+INSTALLED_APPS = temp_app
 
 INSTALLED_APPS = INSTALLED_APPS + (
     'djangotoolbox',
@@ -78,4 +75,3 @@ ADMIN_MEDIA_PREFIX = '/media/admin/'
 TEMPLATE_DIRS = (os.path.join(os.path.dirname(__file__), 'templates'),)
 
 ROOT_URLCONF = 'urls'
-

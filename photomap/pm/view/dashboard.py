@@ -1,3 +1,4 @@
+
 '''
 Created on 21.07.2012
 
@@ -25,8 +26,9 @@ def view(request):
 @require_GET
 def get(request):
     user = request.user
-    logger.debug("User %d is trying to get all albums." % user.id)
+    logger.info("User %d is trying to get all albums." % user.id)
     albums = Album.objects.all().filter(user = user) 
+    logger.info("Found %d albums for user %d", len(albums), user.id)
     data = []
     
     for album in albums:

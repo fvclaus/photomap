@@ -4,8 +4,6 @@ import os
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-
-
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 STATIC_PATH = os.path.join(PROJECT_PATH, "static")
 

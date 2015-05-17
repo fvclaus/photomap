@@ -12,6 +12,7 @@ from django.db.models.signals import post_delete
 import os
 from pm.util.s3 import getbucket, build_url, delete_key
 
+
 class Photo(Description):
   
     place = models.ForeignKey(Place)
