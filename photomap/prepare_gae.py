@@ -5,17 +5,11 @@ import pdb
 import re
 
 
-if not os.path.isdir(environment.PYTHON_EGGS_DIR):
-    print "{0} is not a directory.".format(environment.PYTHON_EGGS_DIR)
+if not os.path.isdir(environment.APPENGINE_EGGS_DIR):
+    print "{0} is not a directory.".format(environment.APPENGINE_EGGS_DIR)
     exit(1)
 
-if not os.path.isdir(environment.DJANGO_EGGS_DIR):
-    print "{0} is not a directory.".format(environment.DJANGO_EGGS_DIR)
-    exit(1)
-
-print "Linking django eggs..."
-
-DJANGO_EGGS = ["djangoappengine", "autoload", "dbindexer", "filetransfers", "django", "djangotoolbox"]
+print "Linking eggs..."
 
 def is_ignored_path(path):
     is_python_bytecode = path.endswith(".pyc")
@@ -30,9 +24,6 @@ def create_filesystem_link(path):
     if not os.path.exists(path):
         print "{0} does not exists. Cannot create link to nonexisting directory/file.".format(path)
         exit(1)
-    if is_ignored_path(path):
-        print "Egg {0} is not a real egg and should be ignored. Skipping.".format(egg)
-        return
 
     if not os.path.exists(link_path):
         subprocess.call(["ln", "-s", path, os.getcwd()])
@@ -41,20 +32,14 @@ def create_filesystem_link(path):
     else:
         print "Skipping {0}. Link already exists.".format(egg)
 
-for egg in DJANGO_EGGS:
-    path = os.path.join(environment.DJANGO_EGGS_DIR, egg)
-    if not os.path.isdir(path):
-        print "Cannot find egg {0} in dir {1}.".format(egg, environment.DJANGO_EGGS_DIR)
-        exit(1)
-    print "Linking django egg {0}".format(egg)
-    create_filesystem_link(path)
 
-
-for egg in os.listdir(environment.PYTHON_EGGS_DIR):
-    path = os.path.join(environment.PYTHON_EGGS_DIR, egg)
+for egg in os.listdir(environment.APPENGINE_EGGS_DIR):
+    path = os.path.join(environment.APPENGINE_EGGS_DIR, egg)
+    if is_ignored_path(path):
+        print "Egg {0} is not a real egg and should be ignored. Skipping.".format(egg)
+        continue
     print "Linking python egg {0}".format(egg)
     create_filesystem_link(path)
-
 
         
 
