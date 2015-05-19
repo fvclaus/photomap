@@ -1,13 +1,31 @@
+##########################################################################################
+# Environment setup
+##########################################################################################
+
+# 1. Local setup
 # Install dependencies for native code
 # For PIL:
 sudo apt-get install libjpeg-dev libfreetype6 libfreetype6-dev zlib1g-dev
 # For Postgres:
 sudo apt-get install libpq-dev
-# Create a virtualenv and install the python dependencies.
+# Create a virtualenv
+virtualenv keikenenv --no-site-packages
+# Install the python dependencies.
 pip install -r requirements.txt
+# Installing stylus. Stylus preprocesses our css.
+# Stylus requires node, so you might have to install that.
+# You can execute npm root to see where npm will install modules.
+# It is recommended not to install node modules with sudo,
+# rather install them in your home directory.
+# This can be achieved by install node with nvm
+# and then installing stylus with
+npm install -g stylus
+# It is important that the stylus command is in your PATH,
+# so that django can find it. You can test this, by running
+stylus --version
 
 
-# For GAE:
+# 2. Setup with GAE (only if you want to test on GAE or deploy to GAE)
 # Change to a directory you would like to install all dependencies. This should be a stable path you are not very likely to change later.
 # Create dummy virtualenv (seperate from the other one)
 virtualenv installenv --no-site-packages
@@ -17,7 +35,7 @@ mkdir appengine_keiken
 # Install the django dependencies into the newly created folder:
 pip install --build google_appengine_django/ --target appengine_keiken/ --no-download djangoappengine django-autoload django-dbindexer django-filetransfers django-nonrel djangotoolbox
 # The target folder path must be added to environment.py as a variable called DJANGO_EGGS_DIR.
-echo "DJANGO_EGGS_DIR = \"[path to appengine_django]\"" >> [path to environment.py]
+echo "APPENGINE_EGGS_DIR = \"[path to appengine_keiken]\"" >> [path to environment.py]
 
 # Download and install dependencies into the new folder:
 # Stuff like PIL, psycopg and django and standard python modules like argparse or wsgiref can be ignored.
@@ -27,5 +45,48 @@ cat [path to requirements.txt]  | grep "GAE$" > requirements.txt
 pip install --target appengine_keiken --requirement requirements.txt
 # Remove the requirements file, you don't need that anymore.
 rm requirements.txt
-# Add the folder to your environment.py as a variable called PYTHON_EGGS_DIR
-# Back in the project folder execute 
+
+
+##########################################################################################
+# Loading data
+##########################################################################################
+
+# Use settings=settings or settings=settings_appengine depending on your environment
+# All data is stored in the .json fixtures
+# Load the default users.
+# Use devel-users.json for development and 
+python manage.py loaddata pm/fixtures/devel-users.json --settings=[your settings file]
+# Load the data for the demo album.
+python manage.py loaddata pm/fixtures/demo-data.json --settings=[your settings file]
+
+
+##########################################################################################
+# Downloading dojo
+##########################################################################################
+
+# The javascript files require Dojo. Our current version can be downloaded here:
+# http://www.wuala.com/fclaus/public/dojo-release-1.9.1-src.tar.gz/
+# Extract the contents of the folder (the dijit/, dojo/ ...) folders to static/js.
+
+
+#########################################################################################
+# Running server in development (not GAE)
+##########################################################################################
+
+# That's it, the server should be ready now and can be started with
+python manage.py runserver --settings=settings
+
+
+#########################################################################################
+# Running server with GAE
+##########################################################################################
+
+# GAE runs with production settings, therefore we must precompress css and javascript files
+# and create a dojo deployment.
+# In the project folder execute the following:
+python manage.py compress --settings=settings_appengine
+./static/js/util/buildscripts/build.sh --profile build.profile.js
+# Now we can start the GAE server with
+python manage.py runserver --settings=settings_appengine
+
+
