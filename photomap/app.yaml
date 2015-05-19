@@ -1,4 +1,4 @@
-application: keiken-sandbox
+application: facebappz
 version: 1
 runtime: python27
 api_version: 1
@@ -27,6 +27,9 @@ handlers:
 - url: /static/CACHE/js
   static_dir: static/CACHE/js
 
+- url: /static/test
+  static_dir: static/test
+
 - url: /_ah/queue/deferred
   script: djangoappengine.deferred.handler.application
   login: admin
@@ -52,6 +55,8 @@ skip_files:
 - ^install/.*
 - ^.*\.sqlite3
 - ^static/photo/.*
+- ^static/js/.*
+- ^static/css/.*
 - ^res/.*
 - ^lib/.*
 - ^\.git/.*

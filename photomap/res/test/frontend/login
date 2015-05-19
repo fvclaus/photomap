@@ -13,13 +13,13 @@
 </thead><tbody>
 <tr>
 	<td>open</td>
-	<td>/login</td>
+	<td>/account/login</td>
 	<td></td>
 </tr>
 <tr>
 	<td>type</td>
 	<td>css=input[name=&quot;email&quot;]</td>
-	<td>test@keiken.app</td>
+	<td>test@keiken.de</td>
 </tr>
 <tr>
 	<td>type</td>
