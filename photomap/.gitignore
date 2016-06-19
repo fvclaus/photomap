@@ -18,4 +18,13 @@ res/export/
 
 # GAE
 .gaedata/
-
+django
+dbindexer
+djangotoolbox
+filetransfers
+autoload
+djangoappengine
+compressor
+boto
+registration
+appconf
