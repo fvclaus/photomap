@@ -35,7 +35,7 @@ npm install -g jslint
 
 
 # 2. Setup with GAE (only if you want to test on GAE or deploy to GAE)
-# Change to a directory you would like to install all dependencies. This should be a stable path you are not very likely to change later.
+# Change to a directory you would like to install all dependencies. This should be a stable path, external to the working directory, you are not very likely to change later.
 # Create dummy virtualenv (seperate from the other one)
 virtualenv installenv --no-site-packages
 # Create a folder that stores all project dependencies
@@ -55,11 +55,10 @@ rm requirements.txt
 # It is probably a good idea to create a local git repository, just in case
 # you add some debugging code in some python modules you can revert that more easily.
 cd keiken_appengine; git init; git commit -a -m "Initial commit";
-# The target folder path must be added to environment.py as a variable called APPENGINE_EGGS_DIR.
-echo "APPENGINE_EGGS_DIR = \"[path to appengine_keiken]\"" >> [path to environment.py]
 # In your project folder run
-python prepare_gae.py
-# This script will create symbolic links to the downloaded dependencies.
+APPENGINE_EGGS_DIR=~/mountpoint/install/appengine_keiken/ python prepare_gae.py
+# This script will create symbolic links in current directory to the downloaded dependencies.
+# These symbolic links will followed and the content of the directories will be uploaded when making a deployment to GAE.
 
 
 ##########################################################################################
