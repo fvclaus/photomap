@@ -1,0 +1,21 @@
+# Python
+*.pyc
+.pydevproject
+
+environment.py
+
+# Dojo dependencies
+dojo/
+dojox/
+dijit/
+build/
+
+# Static assets
+static/photo
+static/profile-picture
+static/js/util/
+res/export/
+
+# GAE
+.gaedata/
+

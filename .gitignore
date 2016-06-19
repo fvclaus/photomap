@@ -1,23 +1,14 @@
-environment.py
-photomap/res/export/
-.gaedata/
+res/export/
+
 upload/
-dojo/
-dojox/
-dijit/
-build/
-photomap/static/js/util/
-photomap/*.sql
+
 photomap-legacy/*.sqlite
-photomap/static/photo
-photomap/static/profile-picture
 photomap-legacy/public/stylesheets/main.css
 
 .metadata/
 debug/*
 *.*#
 *.dump
-*.pyc
 *.aux
 *.log
 *.bbl
@@ -39,4 +30,3 @@ debug/
 .settings
 *.sqlite3
 .#*
-.pydevproject
