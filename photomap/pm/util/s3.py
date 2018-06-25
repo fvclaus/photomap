@@ -18,8 +18,6 @@ try:
 except ImportError:
     raise EnvironmentError("Cannot load python module environment. Please copy environment-sample and provide values for all keys.")
 
-import environment
-
 
 def getbucket():    
     s3 = boto.connect_s3(environment.AWS_ACCESS_KEY, environment.AWS_SECRET_ACCESS_KEY)

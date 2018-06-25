@@ -21,6 +21,7 @@ LOCALE_PATHS = (
     )
 
 CSS_PATH = os.path.join(STATIC_PATH, "css")
+STYLES_PATH = os.path.join(STATIC_PATH, "styles")
 
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
 LATEX_PATH = os.path.join(RES_PATH, "latex")
@@ -89,19 +90,21 @@ if 'test' in sys.argv:
         }
     }
 else:
+    # Running locally so connect to either a local MySQL instance or connect to
+    # Cloud SQL via the proxy. To start the proxy via command line:
+    #
+    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    #
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',  # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-            'NAME': 'photomap',  # Or path to database file if using sqlite3.
-            'USER': 'django',  # Not used with sqlite3.
-            'PASSWORD': 'django',  # Not used with sqlite3.
-            'HOST': 'localhost',  # Set to empty string for localhost. Not used with sqlite3.
-            'PORT': '5432',  # Set to empty string for default. Not used with sqlite3.
-        },
-        "export": {
-                   "ENGINE" : 'django.db.backends.sqlite3',
-                   "NAME" : os.path.join(PROJECT_PATH, "export.sqlite3")
-                   }
+            'ENGINE': 'django.db.backends.mysql',
+            'HOST': '127.0.0.1',
+            'PORT': '3306',
+            'NAME': 'photomap',
+            'USER': 'photomap',
+            'PASSWORD': 'OQDsy5IYf1CdzDpsaiLQ',
+        }
     }
 
 # Local time zone for this installation. Choices can be found here:
@@ -187,19 +190,16 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 
 # stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
 COMPRESS_PRECOMPILERS = (
-                         ("text/x-stylus", "stylus < {infile} > {outfile} --include " + CSS_PATH),
+                         ("text/x-stylus", "stylus < {infile} > {outfile} --include " + STYLES_PATH),
                          )
 
-
-
-# COMPRESS_ROOT = "static/"
-COMPRESS_URL = "/static/"
 
 
 MIDDLEWARE_CLASSES = (
     'pm.middleware.NoSupportMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
+# TODO This doesn't work for some reason
+#    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     
 #    'django.middleware.csrf.CsrfViewMiddleware',
@@ -221,8 +221,7 @@ TEMPLATE_DIRS = (
     os.path.join(PROJECT_PATH, 'templates'),
 )
 
-# uses django compressor http://django_compressor.readthedocs.org/en/latest/settings/
-# pip install django_compressor
+# uses django compressor https://django-compressor.readthedocs.io/en/1.2/settings/
 INSTALLED_APPS = (
     "compressor",
     "pm",
@@ -260,9 +259,9 @@ LOGOUT_URL = "/account/logout/"
 
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "team.keiken@gmail.com"
+EMAIL_HOST_USER = "f.v.claus@googlemail.com"
 SERVER_EMAIL = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = "lichtapothekepferdbrot"
+EMAIL_HOST_PASSWORD = "itlukrtcgbqkqpcp"
 EMAIL_USE_TLS = True
 
 EMAIL_TEST_USER = "test@keiken.de"

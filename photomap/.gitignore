@@ -4,6 +4,8 @@
 
 environment.py
 
+python_libs/
+
 # Dojo dependencies
 dojo/
 dojox/
