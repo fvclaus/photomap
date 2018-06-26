@@ -36,6 +36,8 @@ COMPRESS_CLOSURE_COMPILER_BINARY = "java -jar " + os.path.join(PROJECT_PATH, "li
 COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_level SIMPLE_OPTIMIZATIONS --language_in=ECMASCRIPT5"
 
 
+EMAIL_BACKEND = 'pm.mail.GaeEmailBackend'
+
 temp_app = tuple()
 
 for app in INSTALLED_APPS:

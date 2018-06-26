@@ -30,6 +30,8 @@ from pm.form.account import UpdatePasswordForm, UpdateEmailForm, DeleteAccountFo
 
 from message import success, error, request_not_allowed_error
 
+import environment
+
 import logging
 
 logger = logging.getLogger(__name__)
@@ -146,11 +148,12 @@ def is_test_user(user):
 
 
 def send_mail_to_user(user_email, subject, message):
+    # TODO sender is not passed through send_mail correctly.
     send_mail(subject,
               message,
-              settings.EMAIL_HOST_USER,
-              [user_email]
-              )
+              environment.EMAIL_FROM,
+              [user_email])
+    
 def send_delete_mail(user_email, request):
     subject = loader.render_to_string("email/delete-account-subject.txt")
     dic = {
@@ -159,6 +162,7 @@ def send_delete_mail(user_email, request):
     }
     message = loader.render_to_string("email/delete-account-email.html", dic)
     send_mail_to_user(user_email, subject, message)
+    
 def send_thankyou_mail(user_email, request):
     subject = loader.render_to_string("email/delete-account-thankyou-subject.txt")
     dic = {
