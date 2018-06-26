@@ -2,7 +2,6 @@
 Django==1.4.1
 Pillow==2.8.1
 argparse==1.2.1
-boto==2.6.0 # GAE
 distribute==0.6.24 
 django-appconf==0.5 # GAE
 django-compressor==1.2 # GAE
