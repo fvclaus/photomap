@@ -10,7 +10,7 @@ from django.conf import settings
 from place import Place
 from django.db.models.signals import post_delete
 import os
-from pm.util.google_cloud_storage import build_url, delete_from_gc_storage
+from pm.util.file_storage import delete_file
 
 
 class Photo(Description):
@@ -56,25 +56,14 @@ class Photo(Description):
 
 def deletephoto(sender, **kwargs):
     instance = kwargs["instance"]
-    if settings.DEBUG:
-        try:
-            os.remove(instance.photo.path)
-        except:
-            pass
-        try:
-            os.remove(instance.thumb.path)
-        except:
-            pass
-    else:
-        try:
-            delete_from_gc_storage(instance.photo)
-        except:
-            pass
-        try:
-            delete_from_gc_storage(instance.thumb)
-        except:
-            pass
-    
+    try:
+        delete_file(instance.photo)
+    except:
+        pass
+    try:
+        delete_file(instance.thumb)
+    except:
+        pass
             
 
 post_delete.connect(deletephoto, sender = Photo)

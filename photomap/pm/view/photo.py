@@ -7,7 +7,6 @@ Created on Jun 30, 2012
 from django.shortcuts import render_to_response
 
 from pm.model.photo import Photo
-from pm.util.google_cloud_storage import upload_to_gc_storage
 from pm.view.authentication import is_authorized
 from pm.view import set_cookie, update_used_space
 
@@ -121,16 +120,15 @@ def insert(request):
                 original = InMemoryUploadedFile(original, "image", "%s.jpg" % name, None, original.len, None)
             
             request.FILES["photo"] = original
-            thumb = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpg" % name, None, thumb.len, None)
-            request.FILES["thumb"] = thumb
+            request.FILES["thumb"] = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpg" % name, None, thumb.len, None)
             form = PhotoInsertForm(request.POST, request.FILES)
-            assert form.is_valid(), "Form should always be valid here."
         else:
             photo_key, thumb_key = handle_upload(request.user, place, original, thumb)
             request.POST["photo"] = photo_key
             request.POST["thumb"] = thumb_key
             form = PhotoInsertForm(request.POST)
-            assert form.is_valid(), "Form should always be valid here."
+            
+        assert form.is_valid(), "Form should always be valid here."
         #===================================================================
         # add order 
         #===================================================================
@@ -276,6 +274,8 @@ def generate_filenames(user, place):
     return filename, thumb
 
 def handle_upload(user, place, original, thumb):
+    # Import here to avoid import error in DEBUG
+    from pm.util.google_cloud_storage import upload_to_gc_storage
     photo_key, thumb_key = generate_filenames(user, place)
     logger.debug("Upload photo %s and thumbnail %s..." % (photo_key, thumb_key))
     upload_to_gc_storage(original, photo_key)
