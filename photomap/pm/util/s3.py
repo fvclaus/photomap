@@ -27,7 +27,12 @@ def getbucket():
 def build_url(key):
     return "%s/%s/%s" % (environment.S3_URL, environment.BUCKET_NAME, key)
 
-def delete_key(key):
+def delete_from_s3(key):
     bucket = getbucket()
     if bucket.get_key(key):
         bucket.delete_key(key)
+
+def upload_to_s3(photo, filename):
+    bucket = getbucket()
+    key = bucket.new_key(filename)
+    key.set_contents_from_file(photo, headers = {"Content-Type" : "image/jpeg"}, policy = "public-read")

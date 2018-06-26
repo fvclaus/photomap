@@ -10,7 +10,7 @@ from django.conf import settings
 from place import Place
 from django.db.models.signals import post_delete
 import os
-from pm.util.s3 import getbucket, build_url, delete_key
+from pm.util.google_cloud_storage import build_url, delete_from_gc_storage
 
 
 class Photo(Description):
@@ -67,11 +67,11 @@ def deletephoto(sender, **kwargs):
             pass
     else:
         try:
-            delete_key(instance.photo)
+            delete_from_gc_storage(instance.photo)
         except:
             pass
         try:
-            delete_key(instance.thumb)
+            delete_from_gc_storage(instance.thumb)
         except:
             pass
     

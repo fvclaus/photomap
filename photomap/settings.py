@@ -154,6 +154,12 @@ STATIC_URL = '/static/'
 # Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
+
+# This is required by GAE
+FILE_UPLOAD_HANDLERS = ('django.core.files.uploadhandler.MemoryFileUploadHandler',)
+# 10 MB, default is 2.5 MB
+FILE_UPLOAD_MAX_MEMORY_SIZE = 10000000
+
 # Additional locations of static files
 STATICFILES_DIRS = (
                     os.path.join(PROJECT_PATH, 'static'),

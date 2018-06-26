@@ -7,7 +7,7 @@ Created on Jun 30, 2012
 from django.shortcuts import render_to_response
 
 from pm.model.photo import Photo
-from pm.util.s3 import getbucket
+from pm.util.google_cloud_storage import upload_to_gc_storage
 from pm.view.authentication import is_authorized
 from pm.view import set_cookie, update_used_space
 
@@ -83,6 +83,7 @@ def create_thumb(buf):
 @login_required
 @require_POST
 def insert(request):
+    logger.info("Request files %s; Request post %s" % (request.FILES, request.POST))
     form = PhotoCheckForm(request.POST, request.FILES, auto_id = False)
         
     if form.is_valid():
@@ -268,7 +269,7 @@ def generate_filenames(user, place):
     if 'test' in sys.argv:
         filename = "test/%s.jpg" % (uuid.uuid4())
     else:
-        filename = "%s-%s/%s-%s.jpg" % (user.pk, userjoined, place.pk, uuid.uuid4())
+        filename = "%s-%s-%s-%s.jpg" % (user.pk, userjoined, place.pk, uuid.uuid4())
         
     thumb = filename.replace(".jpg", ".0.jpg")
     
@@ -277,16 +278,10 @@ def generate_filenames(user, place):
 def handle_upload(user, place, original, thumb):
     photo_key, thumb_key = generate_filenames(user, place)
     logger.debug("Upload photo %s and thumbnail %s..." % (photo_key, thumb_key))
-    upload_photo(original, photo_key)
-    upload_photo(thumb, thumb_key)
+    upload_to_gc_storage(original, photo_key)
+    upload_to_gc_storage(thumb, thumb_key)
     logger.debug("Upload of %s done." % photo_key)
     return photo_key, thumb_key
-    
-def upload_photo(photo, filename):
-    bucket = getbucket()
-    key = bucket.new_key(filename)
-    key.set_contents_from_file(photo, headers = {"Content-Type" : "image/jpeg"}, policy = "public-read")
-#    key.set_acl("public-read")
     
 
 

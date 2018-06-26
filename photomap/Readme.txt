@@ -16,13 +16,17 @@ npm -g install stylus
 # Create tables:
 python manage.py syncdb -v 3
 
+# Start server on port 8080 (GAE uses same port)
+python manage.py runserver 8080
+
+
 # Connect to app engine db:
 ./cloud_sql_proxy -instances="keiken-208312:europe-west3:keikensql"=tcp:3306
 # In other tab:
 mysql --host 127.0.0.1 --user root  --password
 
 # Copy the django 1.9 release folders (dojo, dijit and dijitx) to src/static/js
-python manage.py compress --settings=settings_prod
+python manage.py compress --settings=settings_prod --verbose 3
 
 # Simulate production environment (Django does not serve static files in production):
 dev_appserver.py app.yaml
