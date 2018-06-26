@@ -10,7 +10,7 @@ from django.conf import settings
 from place import Place
 from django.db.models.signals import post_delete
 import os
-from pm.util.file_storage import delete_file
+from pm.util.file_storage import delete_file, build_url
 
 
 class Photo(Description):
@@ -24,19 +24,12 @@ class Photo(Description):
     if settings.DEBUG:
         photo = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)
         thumb = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)
-
-    
+        
     def getphotourl(self):
-        if settings.DEBUG:
-            return "/" + os.path.relpath(self.photo.path, settings.PROJECT_PATH)
-        else:
-            return build_url(self.photo)
+        return build_url(self.photo)
         
     def getthumburl(self):
-        if settings.DEBUG:
-            return "/" + os.path.relpath(self.thumb.path, settings.PROJECT_PATH)
-        else:
-            return build_url(self.thumb)
+        return build_url(self.thumb)
     
     def toserializable(self):
         return {"thumb": self.getthumburl(),
