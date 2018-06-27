@@ -274,7 +274,6 @@ EMAIL_TEST_USER = "test@keiken.de"
 EMAIL_FILE_PATH = os.path.join(TEST_PATH, "mail")
 
 
-ADMINS = (('Team.Keiken', EMAIL_HOST_USER),
-              # ('Your Name', 'your_email@example.com'),
-)
+ADMINS = (('Frederik Claus', 'f.v.claus@googlemail.com'),)
+
 MANAGERS = ADMINS

@@ -38,6 +38,8 @@ COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_lev
 
 EMAIL_BACKEND = 'pm.mail.GaeEmailBackend'
 
+IS_GAE = True
+
 temp_app = tuple()
 
 for app in INSTALLED_APPS:

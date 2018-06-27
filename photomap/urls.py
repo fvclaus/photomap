@@ -204,7 +204,15 @@ urlpatterns = patterns("",
 #                       url(r'^accounts/', include(registration)),
                        )
 
+if settings.IS_GAE:
+    gae_patterns = patterns("pm.view.gae",
+                            url(r'^mail/(?P<recipient>.+)$', "receive_incoming_mail"))
+    urlpatterns += patterns("",
+                    url(r'^_ah/', include(gae_patterns)))
+
 # TODO This does not work
 # if "django.contrib.admin" in settings.INSTALLED_APPS:
 #     # Admin raises error if app is not installed.
 #     urlpatterns += url(r'^admin/', include(admin.site.urls))
+
+

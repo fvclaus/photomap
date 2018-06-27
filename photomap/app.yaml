@@ -50,6 +50,9 @@ handlers:
 #   script: djangoappengine.main.application
 #   secure: never
 
+inbound_services:
+- mail
+
 
 skip_files:
 - ^(.*/)?#.*#

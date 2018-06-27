@@ -8,6 +8,7 @@ import logging
 
 logger = logging.getLogger(__name__)
 
+# https://cloud.google.com/appengine/docs/standard/python/mail/sending-mail-with-mail-api
 class GaeEmailBackend(BaseEmailBackend):
 
     def send_messages(self, email_messages):
@@ -15,6 +16,7 @@ class GaeEmailBackend(BaseEmailBackend):
             return
         num_sent = 0
         for message in email_messages:
+            logger.info("Sending mail %s to %s" % (message.subject, message.to))
             try:
                 # TODO sender is not passed through send_mail correctly.
                 mail.send_mail(sender=environment.EMAIL_FROM,
