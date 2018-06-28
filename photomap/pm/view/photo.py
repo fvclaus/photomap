@@ -5,17 +5,20 @@ Created on Jun 30, 2012
 '''
 
 from django.shortcuts import render_to_response
-
-from pm.model.photo import Photo
-from pm.view.authentication import is_authorized
-from pm.view import set_cookie, update_used_space
-
-from message import success, error 
-from pm.form.photo import PhotoInsertForm, PhotoUpdateForm, PhotoCheckForm, MultiplePhotosUpdateForm
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from django.core import files
 from django.views.decorators.http import require_http_methods, require_GET, require_POST
+
+
+from pm.model.photo import Photo
+from pm.view.authentication import is_authorized
+from pm.view import set_cookie, update_used_space
+from pm.util.file_storage import upload_file
+
+from message import success, error 
+from pm.form.photo import PhotoInsertForm, PhotoUpdateForm, PhotoCheckForm, MultiplePhotosUpdateForm
+
 
 from StringIO import StringIO
 from PIL import Image, ImageFile
@@ -31,10 +34,7 @@ LONGEST_SIDE = 1200
 
 
 def get_size(original):
-    if isinstance(original, files.File):
-        return original.size
-    else:
-        return original.len
+    return len(original.getvalue())
     
 def calculate_size(longest_side, other_side, limit):
     resize_factor = limit / float(longest_side)
@@ -50,6 +50,7 @@ def resize(size, limit):
 def create_thumb(buf):
     image = Image.open(buf)
     size = image.size
+    # BytesIO is probably more performant, but does not work on GAE.
     thumb = StringIO()
     
     thumb_size = resize(size, LONGEST_SIDE_THUMB)
@@ -113,20 +114,11 @@ def insert(request):
         #===================================================================
         # insert in correct form and upload if necessary
         #===================================================================
-        if settings.DEBUG:
-            from django.core.files.uploadedfile import InMemoryUploadedFile
-            
-            if (not isinstance(original, files.File)):
-                original = InMemoryUploadedFile(original, "image", "%s.jpg" % name, None, original.len, None)
-            
-            request.FILES["photo"] = original
-            request.FILES["thumb"] = InMemoryUploadedFile(thumb, "image", "%s_thumbnail.jpg" % name, None, thumb.len, None)
-            form = PhotoInsertForm(request.POST, request.FILES)
-        else:
-            photo_key, thumb_key = handle_upload(request.user, place, original, thumb)
-            request.POST["photo"] = photo_key
-            request.POST["thumb"] = thumb_key
-            form = PhotoInsertForm(request.POST)
+
+        photo_key, thumb_key = handle_upload(request.user, place, original, thumb)
+        request.POST["photo"] = photo_key
+        request.POST["thumb"] = thumb_key
+        form = PhotoInsertForm(request.POST)
             
         assert form.is_valid(), "Form should always be valid here."
         #===================================================================
@@ -265,7 +257,7 @@ def generate_filenames(user, place):
     userjoined = user.date_joined.strftime("%Y-%m-%d")
     
     if 'test' in sys.argv:
-        filename = "test/%s.jpg" % (uuid.uuid4())
+        filename = "%s.jpg" % (uuid.uuid4())
     else:
         filename = "%s/%s.jpg" % (place.pk, uuid.uuid4())
         
@@ -274,12 +266,10 @@ def generate_filenames(user, place):
     return filename, thumb
 
 def handle_upload(user, place, original, thumb):
-    # Import here to avoid import error in DEBUG
-    from pm.util.google_cloud_storage import upload_to_gc_storage
     photo_key, thumb_key = generate_filenames(user, place)
     logger.debug("Upload photo %s and thumbnail %s..." % (photo_key, thumb_key))
-    upload_to_gc_storage(original, photo_key)
-    upload_to_gc_storage(thumb, thumb_key)
+    upload_file(original, photo_key)
+    upload_file(thumb, thumb_key)
     logger.debug("Upload of %s done." % photo_key)
     return photo_key, thumb_key
     

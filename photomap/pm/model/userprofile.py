@@ -50,7 +50,8 @@ def create_user_profile(sender, instance, created, **kwargs):
     import logging
     logger = logging.getLogger(__name__)
     if kwargs['raw']:
-        logger.debug("Skipping creating of userprofile. This is a raw query.")
+        # Skipping creating of userprofile. This is a raw query."
+        pass
     elif created:
         logger.debug("Creating userprofile")
         UserProfile.objects.using(kwargs["using"]).create(user = instance)

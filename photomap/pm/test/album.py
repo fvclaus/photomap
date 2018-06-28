@@ -37,7 +37,7 @@ class AlbumControllerTest(ApiTestCase):
         photos = []
         
         for place in places:
-            photos.extend([(photo.pk, photo.getphotourl(), photo.getthumburl()) for photo in Photo.objects.all().filter(place = place)])
+            photos.extend([photo for photo in Photo.objects.all().filter(place = place)])
             
         self.assertDeletes({"id" : 1})
         

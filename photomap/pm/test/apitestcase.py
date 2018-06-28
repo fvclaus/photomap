@@ -173,12 +173,9 @@ class ApiTestCase(TestCase):
         self.assertRaises(model.DoesNotExist, model.objects.get, pk = pk)
         
     def assertPhotoDeleted(self, photo):
-        self.assertDoesNotExist(photo[0], model = Photo)
-        url = urlopen(photo[1])
-#        s3 error for access denied
-        self.assertEqual(url.getcode(), 403)
-        url = urlopen(photo[2])
-        self.assertEqual(url.getcode(), 403)
+        self.assertDoesNotExist(photo.pk, model = Photo)
+        self.assertFalse(os.path.exists(photo.photo))
+        self.assertFalse(os.path.exists(photo.thumb))
     
     def assertAlbumComplete(self, album): 
         self.assertDescriptionComplete(album)

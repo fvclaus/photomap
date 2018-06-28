@@ -70,5 +70,5 @@ skip_files:
 - ^\.git/.*
 
 env_variables:
-  DJANGO_SETTINGS_MODULE: "settings_prod"
+  DJANGO_SETTINGS_MODULE: "settings_gae"
   DJANGO_NO_COMPRESS_OFFLINE: "false"

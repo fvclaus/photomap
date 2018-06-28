@@ -20,10 +20,6 @@ class Photo(Description):
     photo = models.TextField()
     thumb = models.TextField()
     size = models.IntegerField()
-    
-    if settings.DEBUG:
-        photo = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)
-        thumb = models.ImageField(upload_to = settings.PHOTO_PATH, max_length = 500)
         
     def getphotourl(self):
         return build_url(self.photo)
