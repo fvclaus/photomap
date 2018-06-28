@@ -267,7 +267,7 @@ def generate_filenames(user, place):
     if 'test' in sys.argv:
         filename = "test/%s.jpg" % (uuid.uuid4())
     else:
-        filename = "%s-%s-%s-%s.jpg" % (user.pk, userjoined, place.pk, uuid.uuid4())
+        filename = "%s/%s.jpg" % (place.pk, uuid.uuid4())
         
     thumb = filename.replace(".jpg", ".0.jpg")
     
