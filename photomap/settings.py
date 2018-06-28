@@ -270,8 +270,13 @@ SERVER_EMAIL = EMAIL_HOST_USER
 EMAIL_HOST_PASSWORD = "itlukrtcgbqkqpcp"
 EMAIL_USE_TLS = True
 
+
 EMAIL_TEST_USER = "test@keiken.de"
 EMAIL_FILE_PATH = os.path.join(TEST_PATH, "mail")
+
+EMAIL_ADDRESS = "info@keiken.de"
+
+IS_GAE = False
 
 
 ADMINS = (('Frederik Claus', 'f.v.claus@googlemail.com'),)

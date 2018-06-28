@@ -37,6 +37,7 @@ COMPRESS_CLOSURE_COMPILER_ARGUMENTS = "--warning_level DEFAULT --compilation_lev
 
 
 EMAIL_BACKEND = 'pm.mail.GaeEmailBackend'
+EMAIL_ADDRESS = "info@keiken-208312.appspotmail.com"
 
 IS_GAE = True
 

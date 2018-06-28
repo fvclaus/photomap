@@ -5,11 +5,12 @@ Created on Feb 10, 2013
 '''
 
 from django.shortcuts import render_to_response, redirect
-from pm.form.footer import ContactForm
-
 from django.template import RequestContext
 from django.core.mail import mail_managers
 from django.utils.translation import ugettext as _
+
+from pm.form.footer import ContactForm
+from pm.views import ENCODED_MAIL_ADDRESS
 
 def contact(request):
     form = ContactForm()
@@ -28,7 +29,7 @@ def contact(request):
             except Exception, e:
                 form.errors["__all__"] = form.error_class([_("MAIL_ERROR")])
             
-    return render_to_response("footer/contact.html", {"form": form}, context_instance = RequestContext(request))
+    return render_to_response("footer/contact.html", {"form": form, "email_address":  ENCODED_MAIL_ADDRESS}, context_instance = RequestContext(request))
         
 def format_message(name, from_email, message):
     return "From %s<%s>:\nMessage: %s" % (name, from_email, message)

@@ -5,13 +5,14 @@ Created on Jun 22, 2012
 '''
 
 from django.conf.urls.defaults import patterns, include, url
-from django.views.generic.simple import direct_to_template
 from django.contrib import admin
 from django.contrib.auth.views import logout
 from django.conf import settings
 
 from registration.views import activate
 from registration.views import register
+
+from pm.views import direct_to_template
 
 from pm.view import album, place, photo
 from pm.view import dashboard
@@ -178,7 +179,8 @@ urlpatterns = patterns("",
                        url(r'^contact/complete/$', direct_to_template, {"template": "footer/contact-complete.html"}),
                        url(r'^help$', direct_to_template, {"template": "footer/help.html"}),
                        url(r'^team$', direct_to_template, {"template": "footer/team.html"}),
-                       url(r'^payment$', direct_to_template, {"template": "footer/payment.html"}),
+                       # Currently disabled, bank account is closed. If hosting is free remove.
+                       # url(r'^payment$', direct_to_template, {"template": "footer/payment.html"}),
                        #================================================================
                        # dialog hooks
                        #================================================================
