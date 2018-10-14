@@ -1,3 +1,20 @@
+# Install virtualenv
+pip3 install --user virtualenv
+# Add to path
+export PY_USER_BIN=$(python -c 'import site; print(site.USER_BASE + "/bin")')
+export PATH=$PY_USER_BIN:$PATH
+# Create virtualenv
+virtualenv -p /usr/bin/python3 photomap-env
+# Activate virtualenv
+source photomap-env/bin/activate
+# Install dependencies
+pip3 install -r requirements.txt
+
+Create database:
+CREATE USER photomap WITH LOGIN PASSWORD '$password';
+CREATE DATABASE photomap WITH OWNER photomap;
+
+
 virtualenv keiken-env
 mkdir python_libs
 pip install -t python_libs/ -r <(grep "GAE" install/requirements.txt)

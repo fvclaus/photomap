@@ -1,11 +1,4 @@
-'''
-Created on Jun 22, 2012
-
-@author: fredo
-'''
-
 import os
-from django.conf import settings
 
 MODEL_DEFINITION = ["model"]
 TEST_DEFINITION = ["test"]

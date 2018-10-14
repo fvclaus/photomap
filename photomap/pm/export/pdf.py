@@ -20,57 +20,53 @@ import latexcodec
 
 
 class LatexExport():
-    
-    
+
+
     INDEX_TEMPLATE = open(os.path.join(settings.LATEX_PATH, "index.tex"), "r").read()
     PLACE_TEMPLATE = open(os.path.join(settings.LATEX_PATH, "place.tex"), "r").read()
     PHOTO_TEMPLATE = open(os.path.join(settings.LATEX_PATH, "photo.tex"), "r").read()
     LATEX_ESCAPE = re.compile("title|description")
-    
-    
+
+
     def __init__(self, album):
         self.index = self.INDEX_TEMPLATE
         self.index = self.replace(self.index, [("!graphics-path!", settings.PHOTO_PATH + os.path.sep),
                                          ("!album-title!", album.title)])
         self.content = ""
         self.total = 1
-        
+
         places = Place.objects.all().filter(album = album)
-    
+
         for place in places:
             self.addplace(place)
             photos = Photo.objects.all().filter(place = place)
-            
-            
+
+
             for photo in photos:
                 self.addphoto(photo)
-        
-        self.index = self.index.replace("!content!", self.content)
-        
-#        for line in self.index.split():
-#            print line
-#            line.encode("euc-jp")
-        
+
+        self.index = self.index.replace("!content!", self.content
+
         open(os.path.join(settings.DEBUG_PATH, "out.tex"), "wb").write(self.index)
-        
+
 #        pdf, info = convert(self.index, 'LaTeX', 'PDF', 5)
-       
+
 #        open(os.path.join(settings.LATEX_PATH, "out.pdf"), "wb").write(pdf)
-        print self.index
-            
-    
+        print(self.index)
+
+
     def addplace(self, place):
         placelatex = self.PLACE_TEMPLATE
         placelatex = self.replace(placelatex, [("!place-title!", place.title),
                                                ("!place-description!", place.description)])
         self.content += placelatex
         self.placetotal = 0
-        
+
     def addphoto(self, photo):
         photolatex = self.PHOTO_TEMPLATE
         position = "right"
         if self.total % 2 == 1:
-            position = "left" 
+            position = "left"
         description = photo.description.replace("\n", " ")
         photolatex = self.replace(photolatex, [("!position!", position),
                                                ("!photo-path!", os.path.split(photo.photo.path)[1]),
@@ -84,7 +80,7 @@ class LatexExport():
             photolatex += "\clearpage"
             self.placetotal = 0
         self.content += photolatex
-    
+
     def replace(self, target, rules):
         for placeholder, content in rules:
             if self.LATEX_ESCAPE.match(placeholder):
@@ -100,7 +96,7 @@ class LatexExport():
 #                                                 ("m²", " Quadratmeter")])
             target = target.replace(placeholder, content)
         return target
-    
+
 if __name__ == "__main__":
     album = Album.objects.get(pk = 1)
     LatexExport(album)

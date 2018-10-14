@@ -1,7 +1,7 @@
 from django.core.mail.backends.base import BaseEmailBackend
 from google.appengine.api import mail
 
-import environment
+import os
 
 import logging
 
@@ -19,7 +19,7 @@ class GaeEmailBackend(BaseEmailBackend):
             logger.info("Sending mail %s to %s" % (message.subject, message.to))
             try:
                 # TODO sender is not passed through send_mail correctly.
-                mail.send_mail(sender=environment.EMAIL_FROM,
+                mail.send_mail(sender=os.environ["EMAIL_FROM"],
                                to=message.to,
                                subject=message.subject,
                                body=message.body)

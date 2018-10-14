@@ -25,7 +25,7 @@ STYLES_PATH = os.path.join(STATIC_PATH, "styles")
 
 LOG_PATH = os.path.join(PROJECT_PATH, "main.log")
 LATEX_PATH = os.path.join(RES_PATH, "latex")
-DEBUG_PATH = os.path.join(RES_PATH, "debug") 
+DEBUG_PATH = os.path.join(RES_PATH, "debug")
 
 
 LOGGING = {
@@ -40,13 +40,9 @@ LOGGING = {
         },
     },
     'handlers': {
-        'null': {
-            'level':'DEBUG',
-            'class':'django.utils.log.NullHandler',
-        },
-        'console':{
-            'level':'DEBUG',
-            'class':'logging.StreamHandler',
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
             'formatter': 'verbose'
         },
         'mail_admins': {
@@ -56,18 +52,18 @@ LOGGING = {
     },
     'loggers': {
         'django': {
-            'handlers':['null'],
+            'handlers': ['console'],
             'propagate': True,
-            'level':'INFO',
+            'level': 'INFO',
         },
         'django.request': {
             'handlers': ['console'],
             'level': 'DEBUG',
             'propagate': False,
         },
-        'django.db.backends':{
+        'django.db.backends': {
             'handlers': ['console'],
-            'level' : 'ERROR',
+            'level': 'ERROR',
             'propagate': False,
         },
         'pm': {
@@ -98,12 +94,11 @@ else:
     # See https://cloud.google.com/sql/docs/mysql-connect-proxy
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'HOST': '127.0.0.1',
-            'PORT': '3306',
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'HOST': 'localhost',
             'NAME': 'photomap',
             'USER': 'photomap',
-            'PASSWORD': 'OQDsy5IYf1CdzDpsaiLQ',
+            'PASSWORD': 'photomap',
         }
     }
 
@@ -207,7 +202,7 @@ MIDDLEWARE_CLASSES = (
 # TODO This doesn't work for some reason
 #    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-    
+
 #    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -231,12 +226,10 @@ TEMPLATE_DIRS = (
 INSTALLED_APPS = (
     "compressor",
     "pm",
-    
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.sites',
-    "registration",
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
@@ -250,15 +243,15 @@ INTERNAL_IPS = ("127.0.0.1")
 
 # AUTH_PROFILE_MODULE = "map.model.userprofile.UserProfile"
 
-#===============================================================================
+# ===============================================================================
 # Registration configuration
-#===============================================================================
+# ===============================================================================
 ACCOUNT_ACTIVATION_DAYS = 7
 REGISTRATION_OPEN = True
 
-#===============================================================================
+# ===============================================================================
 # Mail configuration
-#===============================================================================
+# ===============================================================================
 LOGIN_REDIRECT_URL = "/dashboard/"
 LOGIN_URL = "/account/login/"
 LOGOUT_URL = "/account/logout/"
@@ -282,3 +275,5 @@ IS_GAE = False
 ADMINS = (('Frederik Claus', 'f.v.claus@googlemail.com'),)
 
 MANAGERS = ADMINS
+
+# TODO Use password validation https://docs.djangoproject.com/en/2.1/releases/1.9/#password-validation

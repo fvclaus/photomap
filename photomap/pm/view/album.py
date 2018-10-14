@@ -1,10 +1,4 @@
-'''
-Created on Jul 10, 2012
-
-@author: fredo
-'''
-
-from django.http import HttpResponse, HttpResponseBadRequest 
+from django.http import HttpResponse, HttpResponseBadRequest
 from django.shortcuts import render_to_response, redirect
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
@@ -15,7 +9,7 @@ from django.views.decorators.http import require_POST, require_GET, require_http
 from django.utils import crypto
 from django.contrib.auth import hashers
 
-from message import success, error
+from .message import success, error
 from pm.test import data
 from pm.model.album import Album
 from pm.model.place import Place
@@ -53,8 +47,8 @@ def update_password(request, album_id):
             album.password = password
             album.save()
             return success()
-        
-        except (Album.DoesNotExist), e:
+
+        except Album.DoesNotExist as e:
             logger.warn("Something unexpected happened: %s" % str(e))
             return error(str(e))
     else:
@@ -74,14 +68,14 @@ def view(request, album_id, secret):
     try:
         album_id = int(album_id)
         album = Album.objects.get(pk = album_id)
-        
+
         logger.debug("User is trying to access album %d with secret %s." % (album_id, secret))
-        
+
         if album.secret != secret:
             # TODO better name
             logger.debug("Secret does not match.")
             return render_to_response("album-share-failure.html")
-    
+
         if request.method == "GET":
             # user owns the album
             if request.user == album.user or request.session.get("album_%d" % album_id):
@@ -93,11 +87,11 @@ def view(request, album_id, secret):
             if not hashers.is_password_usable(album.password):
                 logger.debug("Album does not has a password yet.")
                 return render_to_response("album-share-failure.html")
-            
+
             return landingpage.view_album_login(request)
         else:
             password = request.POST["album_password"]
-            
+
             if hashers.check_password(password, album.password):
                 request.session["album_%d" % album_id] = True
                 return redirect("/album/%d/view/%s/" % (album_id, album.secret))
@@ -107,7 +101,7 @@ def view(request, album_id, secret):
                 return render_to_response("album-share-login.html",
                                           {"password_incorrect_error": "Passwort is not correct.",
                                            "day": today.strftime("%w")})
-    except Exception, e:
+    except Exception as e:
         logger.info(str(e))
         return render_to_response("album-share-failure.html")
 
@@ -117,9 +111,9 @@ def get(request, album_id):
     try:
         user = request.user
         album_id = int(album_id)
-        
-        logger.info("User %s is trying to get Album %d." % (str(request.user), album_id))    
-    
+
+        logger.info("User %s is trying to get Album %d." % (str(request.user), album_id))
+
         if user.is_anonymous():
             if not request.session.get("album_%d" % album_id):
                 return error("You are not authorized to view this album.")
@@ -127,13 +121,13 @@ def get(request, album_id):
                 album = Album.objects.get(pk = album_id)
         else:
             album = Album.objects.get(user = request.user, pk = album_id)
-            
+
         data = album.toserializable()
         data["isOwner"] = (album.user == user)
         data["success"] = True
 
         return HttpResponse(json.dumps(data, cls = DecimalEncoder), content_type = "text/json")
-    except (KeyError, Album.DoesNotExist), e:
+    except (KeyError, Album.DoesNotExist) as e:
         return error(str(e))
 
 
@@ -148,7 +142,7 @@ def insert(request):
         album.user = request.user
         try:
             album.country = reversegeocode(album.lat, album.lon)
-        except OSMException, e:
+        except OSMException as e:
             logger.warn("Could not resolve %f,%f. Reason: %s" % (album.lat, album.lon, str(e)))
 #                return error("osm is temporarily not available. please try again later")
             return error(str(e))
@@ -174,7 +168,7 @@ def update(request, album_id):
         logger.info("Trying to update Album %d." % album_id)
         try:
             album = Album.objects.get(user = request.user, pk = album_id)
-        except Album.DoesNotExist, e:
+        except Album.DoesNotExist as e:
             logger.warn("Album %d does not exist" % album_id)
             return error(str(e))
         form = AlbumUpdateForm(request.POST, instance = album)
@@ -202,16 +196,13 @@ def delete(request, album_id):
         response = success()
         set_cookie(response, "used_space", used_space)
         return response
-    except (KeyError, Album.DoesNotExist), e:
+    except (KeyError, Album.DoesNotExist) as e:
         logger.warn("Something unexpected happened: %s" % str(e))
         return error(str(e))
-        
-        
+
+
 class DecimalEncoder(json.JSONEncoder):
     def default(self, o):
         if isinstance(o, decimal.Decimal):
             return float(o)
         return super(DecimalEncoder, self).default(o)
-
-
-    

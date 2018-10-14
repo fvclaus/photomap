@@ -1,10 +1,4 @@
-'''
-Created on Jul 8, 2012
-
-@author: fredo
-'''
-
-from message import success, error
+from .message import success, error
 from pm.form.place import InsertPlaceForm, UpdatePlaceForm
 from pm.model.place import Place
 from pm.model.photo import Photo
@@ -42,7 +36,7 @@ def update(request, place_id):
             place_id = int(place_id)
             logger.debug("User %d is trying to update Place %d." % (request.user.pk, place_id))
             place = Place.objects.get(pk = place_id)
-        except Place.DoesNotExist: 
+        except Place.DoesNotExist:
             logger.warn("Place %d does not exist.", place_id)
             # TODO Add localization.
             return error("place does not exist")
@@ -58,7 +52,7 @@ def update(request, place_id):
         return success()
     else:
         return error(str(form.errors))
-            
+
 
 @login_required
 @require_http_methods(["DELETE"])
@@ -76,11 +70,9 @@ def delete(request, place_id):
             size += photo.size
         used_space = update_used_space(request.user, -1 * size)
         place.delete()
-        logger.info("Place %d deleted." % place_id)    
+        logger.info("Place %d deleted." % place_id)
         response = success()
         set_cookie(response, "used_space", used_space)
         return response
-    except (OSError, Place.DoesNotExist), e:
+    except (OSError, Place.DoesNotExist) as e:
         return error(str(e))
-        
-    

@@ -28,9 +28,9 @@ class RegistrationViewTest(ApiTestCase):
         self.assertFalse(user.is_active)
         messages = self.read_and_delete_mails()
         self.assertEqual(len(messages), 1)
-        #=======================================================================
+        # =======================================================================
         # With first and last name.
-        #=======================================================================
+        # =======================================================================
         data["username"] = "something@else.com"
         data["first_name"] = "I.Am."
         data["last_name"] = "Alive"
@@ -49,19 +49,19 @@ class RegistrationViewTest(ApiTestCase):
         self.assertTrue(user.is_active)
         
     def test_templates(self):
-        #=======================================================================
+        # =======================================================================
         # Try the registration form.
-        #=======================================================================
+        # =======================================================================
         response = self.request("/account/register/", method = "GET")
         self.assertEqual(response.status_code, 200)
-        #=======================================================================
+        # =======================================================================
         # Try non-existing activation key.
-        #=======================================================================
+        # =======================================================================
         response = self.request("/account/activate/thisdoesnotexist/", method = "GET")
         self.assertEqual(response.status_code, 200)
-        #=======================================================================
+        # =======================================================================
         # Try to activate expired key.
-        #=======================================================================
+        # =======================================================================
         response = self.request("/account/activate/%s/" % ACTIVATION_KEY)
         user = User.objects.get(username = "test2@keiken.de")
         self.assertFalse(user.is_active)

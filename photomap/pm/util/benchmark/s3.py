@@ -28,9 +28,9 @@ s3 = Timer(stmt = s3request)
 ec2 = Timer(stmt = ec2request)
 google = Timer(stmt = googlerequest)
 
-#===============================================================================
+# ===============================================================================
 # calculate request times
-#===============================================================================
+# ===============================================================================
 print "starting s3 benchmark..."
 s3times = s3.repeat(repeat = repeat, number = 1)
 print "starting ec2 benchmark..."
@@ -38,9 +38,9 @@ ec2times = ec2.repeat(repeat = repeat , number = 1)
 print "starting google benchmark..."
 googletimes = google.repeat(repeat = repeat, number = 1)
 
-#===============================================================================
+# ===============================================================================
 # plot the data
-#===============================================================================
+# ===============================================================================
 requestcount = range(0, repeat)
 plot(googletimes, "google.de", "green")
 plot(s3times, "s3", "blue")
@@ -49,9 +49,9 @@ plot(ec2times, "ec2", "red")
 graphpath = os.path.join(settings.DEBUG_PATH, "ec2-s3-request-benchmark.png")
 plt.savefig(graphpath)
 
-#===============================================================================
+# ===============================================================================
 # dump into textfile
-#===============================================================================
+# ===============================================================================
 datapath = os.path.join(settings.DEBUG_PATH, "ec2-s3-request-benchmark.data")
 data = open(datapath, "w")
 

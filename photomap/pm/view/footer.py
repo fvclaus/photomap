@@ -14,7 +14,7 @@ from pm.views import ENCODED_MAIL_ADDRESS
 
 def contact(request):
     form = ContactForm()
-    
+
     if request.method == "POST":
         form = ContactForm(request.POST, auto_id = True)
         if form.is_valid():
@@ -25,14 +25,11 @@ def contact(request):
                 # This almost never fails.
                 mail_managers("%s: %s" % ("Contact", form.cleaned_data["subject"]),
                           message)
-                return redirect("/contact/complete/") 
-            except Exception, e:
+                return redirect("/contact/complete/")
+            except Exception as e:
                 form.errors["__all__"] = form.error_class([_("MAIL_ERROR")])
-            
+
     return render_to_response("footer/contact.html", {"form": form, "email_address":  ENCODED_MAIL_ADDRESS}, context_instance = RequestContext(request))
-        
+
 def format_message(name, from_email, message):
     return "From %s<%s>:\nMessage: %s" % (name, from_email, message)
-
-        
-        

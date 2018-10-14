@@ -18,9 +18,9 @@ class FooterViewTest(ApiTestCase):
         self.assertRedirectToComplete(response)
         messages = self.read_and_delete_mails()
         self.assertEqual(len(messages), 1)
-        #=======================================================================
+        # =======================================================================
         # Something invalid
-        #=======================================================================
+        # =======================================================================
         del data["message"]
         response = self.client.post("/contact/", data)
         # No redirect

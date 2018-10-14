@@ -1,27 +1,16 @@
 
 import os
-import appsettings
+import pm.appsettings as appsettings
 import re
 import sys
-from django.core.management import setup_environ
-import appsettings
-
-#===============================================================================
-# AUTOMATICALLY SELECT THE DEVEL SETTINGS
-#===============================================================================
-#sys.path.append(os.path.realpath(".."))
-#import settings
-#setup_environ(settings)
-
-
 
 def loaddefinitions(packages, importall = False, nglobals = globals()):
-    " Import every module in packages or import every definition from every module in packages. Probably not compatible with nested packages."  
-    
+    " Import every module in packages or import every definition from every module in packages. Probably not compatible with nested packages."
+
     filename = re.compile("__init__|test")
-    
+
     for package in packages:
-        try :
+        try:
             modulepaths = os.listdir(os.path.join(appsettings.APP_PATH,
                                               package.replace(".", os.sep)))
             for modulepath in modulepaths:
@@ -29,15 +18,14 @@ def loaddefinitions(packages, importall = False, nglobals = globals()):
                 if filename.search(name) or ext == ".pyc":
                     continue
                 modulename = appsettings.APP_NAME + "." + package + "." + name
-#                print "Trying to import %s" % (modulename)
+                print("Importing %s" % (modulename))
                 __import__(modulename)
                 if importall:
                     module = sys.modules[modulename]
                     for k in dir(module):
-#                        print k
                         nglobals[k] = module.__dict__[k]
-    
-    
+
+
         except Exception as e:
             raise
 
@@ -48,5 +36,3 @@ def loadtests(nglobals):
     loaddefinitions(packages = appsettings.TEST_DEFINITION, nglobals = nglobals, importall = True)
 
 #loadmodels()
-
-
