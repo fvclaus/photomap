@@ -1,20 +1,20 @@
-from django.shortcuts import render_to_response
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_http_methods, require_GET, require_POST
-
-
-from pm.model.photo import Photo
-from pm.view.authentication import is_authorized
-from pm.view import set_cookie, update_used_space
-
-from .message import success, error
-from pm.form.photo import PhotoInsertForm, PhotoUpdateForm, PhotoCheckForm, MultiplePhotosUpdateForm
-
-
-from io import StringIO
-from PIL import Image, ImageFile
 import json
 import logging
+from io import StringIO
+
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render_to_response
+from django.views.decorators.http import (require_GET, require_http_methods,
+                                          require_POST)
+from PIL import Image, ImageFile
+
+from pm.form.photo import (MultiplePhotosUpdateForm, PhotoCheckForm,
+                           PhotoInsertForm, PhotoUpdateForm)
+from pm.models.photo import Photo
+from pm.view import set_cookie, update_used_space
+from pm.view.authentication import is_authorized
+
+from .message import error, success
 
 ImageFile.MAXBLOCK = 2 ** 20
 
@@ -59,7 +59,8 @@ def create_thumb(buf):
         logger.debug("Resizing photo to %s." % str(original_size))
         original = StringIO()
         resized_image = image.resize(original_size)
-        resized_image.save(original, "JPEG", quality=80, optimize=True, progressive=True)
+        resized_image.save(original, "JPEG", quality=80,
+                           optimize=True, progressive=True)
         original.seek(0)
         return original, thumb
     else:
@@ -77,17 +78,20 @@ def create_thumb(buf):
 @login_required
 @require_POST
 def insert(request):
-    logger.info("Request files %s; Request post %s" % (request.FILES, request.POST))
+    logger.info("Request files %s; Request post %s" %
+                (request.FILES, request.POST))
     form = PhotoCheckForm(request.POST, request.FILES, auto_id=False)
 
     if form.is_valid():
         place = form.cleaned_data["place"]
-        logger.info("User %d is trying to insert a new Photo into Place %d." % (request.user.pk, place.pk))
+        logger.info("User %d is trying to insert a new Photo into Place %d." % (
+            request.user.pk, place.pk))
         # ===================================================================
         # check place
         # ===================================================================
         if not is_authorized(place, request.user):
-            logger.warn("User %s not authorized to insert a new Photo in Place %d. Aborting." % (request.user, place.pk))
+            logger.warn("User %s not authorized to insert a new Photo in Place %d. Aborting." % (
+                request.user, place.pk))
             return error("This is not your place!")
         # ===================================================================
         # check & convert image
@@ -124,7 +128,8 @@ def insert(request):
 
         userprofile.save()
         photo.save()
-        logger.info("Photo %d inserted with order %d and size %d." % (photo.pk, photo.order, photo.size))
+        logger.info("Photo %d inserted with order %d and size %d." %
+                    (photo.pk, photo.order, photo.size))
 
         response = success(id=photo.id, photo=photo.getphotourl(),
                            thumb=photo.getthumburl(), url=photo.getphotourl(),
@@ -156,10 +161,12 @@ def update(request, photo_id):
         try:
             photo_id = int(photo_id)
             # TODO we need to update the used_space cookie
-            logger.info("User %d is trying to update Photo %d." % (request.user.pk, photo_id))
+            logger.info("User %d is trying to update Photo %d." %
+                        (request.user.pk, photo_id))
             photo = Photo.objects.get(pk=photo_id)
             if not is_authorized(photo, request.user):
-                logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, photo_id))
+                logger.warn("User %s not authorized to update Photo %d. Aborting." % (
+                    request.user, photo_id))
                 return error("not your photo")
         except Photo.DoesNotExist:
             logger.warn("Photo %d does not exist. Aborting." % photo_id)
@@ -197,7 +204,8 @@ def update_multiple(request):
 
             # photo does not belong to the user
             if not is_authorized(photo, request.user):
-                logger.warn("User %s not authorized to update Photo %d. Aborting." % (request.user, photo_id))
+                logger.warn("User %s not authorized to update Photo %d. Aborting." % (
+                    request.user, photo_id))
                 return error("not your photo")
 
             photos_dirty.append((photo, json_photo))
@@ -205,10 +213,10 @@ def update_multiple(request):
         logger.error("Something unexpected happened: %s" % str(e))
         return error(str(e))
 
-
     # Update all photos in one go.
     for (photo, json_photo) in photos_dirty:
-        logger.info("User %d is trying to update Photo %d." % (request.user.pk, photo.pk))
+        logger.info("User %d is trying to update Photo %d." %
+                    (request.user.pk, photo.pk))
         form = MultiplePhotosUpdateForm(json_photo, instance=photo)
         assert form.is_valid()  # we checked this before. this must be valid
         form.save()
@@ -222,10 +230,12 @@ def update_multiple(request):
 def delete(request, photo_id):
     try:
         photo_id = int(photo_id)
-        logger.info("User %d is trying to delete Photo %d." % (request.user.pk, photo_id))
+        logger.info("User %d is trying to delete Photo %d." %
+                    (request.user.pk, photo_id))
         photo = Photo.objects.get(pk=photo_id)
         if not is_authorized(photo, request.user):
-            logger.warn("User %s not authorized to delete Photo %d. Aborting." % (request.user, photo_id))
+            logger.warn("User %s not authorized to delete Photo %d. Aborting." % (
+                request.user, photo_id))
             return error("not your photo")
 
         used_space = update_used_space(request.user, -1 * photo.size)

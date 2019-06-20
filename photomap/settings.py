@@ -1,5 +1,6 @@
 # Django settings for geotag project.
 import os
+import sys
 
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
@@ -11,14 +12,15 @@ UPLOAD_PATH = os.path.join("upload", "%Y", "%m", "%d")
 PHOTO_PATH = os.path.join(STATIC_PATH, "photo")
 PROFILE_PICTURE_PATH = os.path.join(STATIC_PATH, "profile-picture")
 IMAGES_PATH = os.path.join(STATIC_PATH, "images")
-DEFAULT_PROFILE_PICTURE = os.path.join(IMAGES_PATH, "default-profile-picture.png")
+DEFAULT_PROFILE_PICTURE = os.path.join(
+    IMAGES_PATH, "default-profile-picture.png")
 RES_PATH = os.path.join(PROJECT_PATH, "res")
 TEST_PATH = os.path.join(RES_PATH, "test")
 
 # this is needed for django to discover the javascript translations
 LOCALE_PATHS = (
     os.path.join(PROJECT_PATH, "locale"),
-    )
+)
 
 CSS_PATH = os.path.join(STATIC_PATH, "css")
 STYLES_PATH = os.path.join(STATIC_PATH, "styles")
@@ -74,15 +76,14 @@ LOGGING = {
     }
 }
 
-import sys
 if 'test' in sys.argv:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
             'NAME': os.path.join(PROJECT_PATH, "test_db.sqlite"),
-            'USER'       : '',
-            'PASSWORD' : '',
-            'HOST'     : '',
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',
         }
     }
 else:
@@ -151,13 +152,14 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 
 # This is required by GAE
-FILE_UPLOAD_HANDLERS = ('django.core.files.uploadhandler.MemoryFileUploadHandler',)
+FILE_UPLOAD_HANDLERS = (
+    'django.core.files.uploadhandler.MemoryFileUploadHandler',)
 # 10 MB, default is 2.5 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10000000
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-                    os.path.join(PROJECT_PATH, 'static'),
+    os.path.join(PROJECT_PATH, 'static'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -168,42 +170,40 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     "compressor.finders.CompressorFinder",
 )
 
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '_aoynhp*s8vn0=fgom9%(p^dl^r!gs7ltw7qs%^zu#^*=kcr6)'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
-)
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-                               'django.contrib.auth.context_processors.auth',
-                               'django.core.context_processors.i18n',
-                                "django.core.context_processors.debug",
-                               'django.core.context_processors.request',
-                               )
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'DIRS': [os.path.join(PROJECT_PATH, 'templates')],
+        'OPTIONS': {
+            'context_processors': [
+                'django.contrib.auth.context_processors.auth']
+        }
+    }
+]
 
 # stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
 COMPRESS_PRECOMPILERS = (
-                         ("text/x-stylus", "stylus < {infile} > {outfile} --include " + STYLES_PATH),
-                         )
-
+    ("text/x-stylus",
+     "stylus < {infile} > {outfile} --include " + STYLES_PATH),
+)
 
 
 MIDDLEWARE_CLASSES = (
     'pm.middleware.NoSupportMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-# TODO This doesn't work for some reason
-#    'django.middleware.locale.LocaleMiddleware',
+    # TODO This doesn't work for some reason
+    #    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
 
-#    'django.middleware.csrf.CsrfViewMiddleware',
+    #    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
 )
@@ -218,10 +218,6 @@ AUTH_PROFILE_MODULE = 'pm.Userprofile'
 
 ROOT_URLCONF = 'urls'
 
-TEMPLATE_DIRS = (
-    os.path.join(PROJECT_PATH, 'templates'),
-)
-
 # uses django compressor https://django-compressor.readthedocs.io/en/1.2/settings/
 INSTALLED_APPS = (
     "compressor",
@@ -233,7 +229,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     # Uncomment the next line to enable the admin:
-     'django.contrib.admin',
+    'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )

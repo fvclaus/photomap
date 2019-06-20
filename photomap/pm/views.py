@@ -17,9 +17,9 @@ def encode_mail_address(mail_address):
 ENCODED_MAIL_ADDRESS = encode_mail_address(settings.EMAIL_ADDRESS)
 
 
-def direct_to_template(request, template_name):
+def direct_to_template(template_name_param):
     class DefaultTemplateView(TemplateView):
-        template_name = template_name
+        template_name = template_name_param
 
         def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)

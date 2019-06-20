@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from django.conf import settings
 from django.db.models.signals import post_save
 from pm import appsettings
 import logging
@@ -11,8 +10,7 @@ BYTE_TO_MBYTE = pow(2, 20)
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    # TODO Change to BinaryField
-    picture = models.ImageField(upload_to=settings.PROFILE_PICTURE_PATH, blank=True, null=True)
+    picture = models.BinaryField(blank=True, null=True)
     quota = models.IntegerField(default=367001600)  # 350 mbyte
     used_space = models.IntegerField(default=0)
 
@@ -36,7 +34,7 @@ def create_user_profile(sender, instance, created, **kwargs):
         pass
     elif created:
         logger.debug("Creating userprofile")
-        UserProfile.objects.using(kwargs["using"]).create(user = instance)
+        UserProfile.objects.using(kwargs["using"]).create(user=instance)
 
 
-post_save.connect(create_user_profile, sender = User)
+post_save.connect(create_user_profile, sender=User)

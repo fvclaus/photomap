@@ -5,14 +5,17 @@ Created on Jul 3, 2012
 '''
 
 from django import forms
-from pm.model.photo import Photo
+
+from pm.models.photo import Photo
 
 
 class PhotoCheckForm(forms.ModelForm):
     photo = forms.ImageField()
+
     class Meta:
         model = Photo
         exclude = ("order", "date", "photo", "size", "thumb")
+
 
 class PhotoInsertForm(forms.ModelForm):
     """
@@ -28,8 +31,8 @@ class PhotoUpdateForm(forms.ModelForm):
     class Meta:
         model = Photo
         exclude = ("photo", "order", "place", "thumb", "date", "size")
-        
-        
+
+
 class MultiplePhotosUpdateForm(forms.ModelForm):
     class Meta:
         model = Photo

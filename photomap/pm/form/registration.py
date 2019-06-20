@@ -1,17 +1,13 @@
-'''
-Created on Aug 29, 2013
-
-@author: fredo
-'''
-from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from django.contrib.auth.models import User
+from django_registration.forms import UserCreationForm
+
 
 class RegistrationForm(UserCreationForm):
-    first_name = forms.CharField(max_length = 50, required = False)
-    last_name = forms.CharField(max_length = 50, required = False)
+    first_name = forms.CharField(max_length=50, required=False)
+    last_name = forms.CharField(max_length=50, required=False)
 
-    def save(self, commit = True):
+    def save(self, commit=True):
         user = super(UserCreationForm, self).save(commit)
         # Set username is required. Sync it with email.
         # With Django 1.5 it is possible to create a custom user model:

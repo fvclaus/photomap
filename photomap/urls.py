@@ -1,5 +1,6 @@
 from django.urls import include, path
 from django.conf.urls import url
+from django.views.i18n import JavaScriptCatalog
 
 from pm.views import direct_to_template
 
@@ -52,13 +53,13 @@ def method_mapper(regex, controller_name, get=None, post=None, put=None, delete=
 # ================================================================
 
 # TODO Convert to new path API: https://docs.djangoproject.com/en/2.1/releases/2.0/#simplified-url-routing-syntax
-account_password_patterns = [path(r'^$', "update_password"),  # accepts only POST
+account_password_patterns = [path(r'^$', account.update_password),  # accepts only POST
                              url(r'^reset$', account.reset_password),
                              url(r'^reset/requested$', account.reset_password_requested),
                              url(r'^reset/confirm/(?P<uidb36>[0-9A-Za-z]+)-(?P<token>.+)$', account.reset_password_confirm, name="reset_password_confirm"),
                              url(r'^reset/complete$', account.reset_password_complete)]
 
-account_patterns = [method_mapper(r'^$', account.account, get=account.view, delete=account.delete),
+account_patterns = [method_mapper(r'^$', "account", get=account.view, delete=account.delete),
                     url(r'^delete$', account.delete),
                     # url(r'^auth/', include(auth_patterns)),
                     url(r'^inactive$', direct_to_template("account/inactive.html")),
@@ -69,8 +70,7 @@ account_patterns = [method_mapper(r'^$', account.account, get=account.view, dele
 account_patterns += [url(r'^login/$', authentication.login),
                      url(r'^logout/$', authentication.logout, {"next_page": "/"})]
 
-account_patterns += [url(r'^activate/complete/$',
-                     direct_to_template('account/activation-complete.html')),
+account_patterns += [url(r'^activate/complete/$', direct_to_template('account/activation-complete.html')),
                      # Activation keys get matched by \w+ instead of the more specific
                      # [a-fA-F0-9]{40} because a bad activation key should still get to the view;
                      # that way it can return a sensible "invalid key" message instead of a
@@ -91,7 +91,8 @@ account_patterns += [url(r'^activate/complete/$',
                      url(r'^register/closed/$',
                          direct_to_template('account/registration-closed.html'),
                          name='registration_disallowed'),
-                     (r'', include('registration.auth_urls'))]
+                     url(r'^', include('django_registration.backends.activation.urls')),
+                     url(r'^', include('django.contrib.auth.urls'))]
 # ================================================================
 # dialog hooks
 # ================================================================
@@ -106,7 +107,7 @@ form_patterns = [url(r'^insert/album$', direct_to_template("form/insert/album.ht
 # album hooks
 # ================================================================
 album_patterns = [url(r'^$', album.insert),  # accepts only POST
-                  method_mapper(r'^(?P<album_id>\d+)/$', album.album, get=album.get, post=album.update, delete=album.delete),
+                  method_mapper(r'^(?P<album_id>\d+)/$', "album.album", get=album.get, post=album.update, delete=album.delete),
                   url(r'^(?P<album_id>\d+)/view/(?P<secret>.+)/$', album.view),
                   url(r'^(?P<album_id>\d+)/password$', album.update_password),  # accepts only POST
                   url(r'^demo$', album.demo)]
@@ -114,12 +115,12 @@ album_patterns = [url(r'^$', album.insert),  # accepts only POST
 # place hooks
 # ================================================================
 place_patterns = [url(r'^$', place.insert),  # accepts only POST
-                  method_mapper(r'^(?P<place_id>\d+)/$', place.place, post=place.update, delete=place.delete)]
+                  method_mapper(r'^(?P<place_id>\d+)/$', "place.place", post=place.update, delete=place.delete)]
 # ================================================================
 # photo hooks
 # ================================================================
 photo_patterns = [url(r'^$', photo.insert),  # accepts only POST
-                  method_mapper(r'^(?P<photo_id>\d+)/$', photo.photo, post=photo.update, delete=photo.delete)]
+                  method_mapper(r'^(?P<photo_id>\d+)/$', "photo.photo", post=photo.update, delete=photo.delete)]
 
 # ========================================================
 # main
@@ -127,7 +128,7 @@ photo_patterns = [url(r'^$', photo.insert),  # accepts only POST
 urlpatterns = [url(r'^$', landingpage.view),
                url(r'^dashboard/$', dashboard.view),
                url(r'^test$', direct_to_template("runner.html")),
-               url(r'^jsi18n/$', 'django.views.i18n.javascript_catalog'),
+               url(r'^jsi18n/$', JavaScriptCatalog.as_view(), name='javascript-catalog'),
                # ========================================================
                # hooks to non-interactive pages
                # ========================================================

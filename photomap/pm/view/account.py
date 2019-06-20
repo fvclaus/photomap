@@ -1,31 +1,28 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
-from django.contrib.auth.decorators import login_required
-from django.template import RequestContext, loader
-from django.core.mail import send_mail, mail_managers
-from django.contrib.sites.shortcuts import get_current_site
-import django.contrib.auth.views as authviews
-
-from django.views.decorators.csrf import csrf_protect
-
-from django.utils.translation import ugettext as _
-from django.views.decorators.debug import sensitive_post_parameters
-from django.views.decorators.cache import never_cache
-from django.views.decorators.http import require_GET, require_POST
-from django.conf import settings
-from django.contrib.auth import logout
-
-from pm.model.album import Album
-from pm.model.place import Place
-from pm.model.photo import Photo
-
-from pm.form.account import UpdatePasswordForm, UpdateEmailForm, DeleteAccountForm, PasswordResetForm
-
-from .message import success, error, request_not_allowed_error
-
+import logging
 import os
 
-import logging
+import django.contrib.auth.views as authviews
+from django.conf import settings
+from django.contrib.auth import logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
+from django.core.mail import mail_managers, send_mail
+from django.http import HttpResponseRedirect
+from django.shortcuts import render_to_response
+from django.template import RequestContext, loader
+from django.utils.translation import ugettext as _
+from django.views.decorators.cache import never_cache
+from django.views.decorators.csrf import csrf_protect
+from django.views.decorators.debug import sensitive_post_parameters
+from django.views.decorators.http import require_GET, require_POST
+
+from pm.form.account import (DeleteAccountForm, PasswordResetForm,
+                             UpdateEmailForm, UpdatePasswordForm)
+from pm.models.album import Album
+from pm.models.photo import Photo
+from pm.models.place import Place
+
+from .message import error, request_not_allowed_error, success
 
 logger = logging.getLogger(__name__)
 
@@ -113,7 +110,8 @@ def delete(request):
         user = request.user
         form = DeleteAccountForm(request.POST, auto_id=False)
         if is_test_user(request.user):
-            form.errors["__all__"] = form.error_class([_("REQUEST_NOT_ALLOWED_ERROR")])
+            form.errors["__all__"] = form.error_class(
+                [_("REQUEST_NOT_ALLOWED_ERROR")])
         elif form.is_valid():
             user_id = user.id
             user_email = form.cleaned_data["user_email"]
@@ -133,7 +131,8 @@ def delete(request):
                 finally:
                     return HttpResponseRedirect("/account/delete/complete/")
             else:
-                form.errors["__all__"] = form.error_class([_("CREDENTIALS_ERROR")])
+                form.errors["__all__"] = form.error_class(
+                    [_("CREDENTIALS_ERROR")])
 
     return render_to_response("account/delete.html", {"form": form}, context_instance=RequestContext(request))
 
@@ -159,10 +158,12 @@ def send_delete_mail(user_email, request):
 
 
 def send_thankyou_mail(user_email, request):
-    subject = loader.render_to_string("email/delete-account-thankyou-subject.txt")
+    subject = loader.render_to_string(
+        "email/delete-account-thankyou-subject.txt")
     dic = {"user": user_email,
            "site_name": get_current_site(request).name}
-    message = loader.render_to_string("email/delete-account-thankyou-email.html", dic)
+    message = loader.render_to_string(
+        "email/delete-account-thankyou-email.html", dic)
     send_mail_to_user(user_email, subject, message)
 
 

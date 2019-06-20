@@ -1,5 +1,6 @@
 from django import forms
-from pm.model.place import Place
+
+from pm.models.place import Place
 
 
 class InsertPlaceForm(forms.ModelForm):
