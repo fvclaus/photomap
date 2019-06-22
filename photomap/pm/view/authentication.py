@@ -33,24 +33,21 @@ def login(request):
     if request.method == "GET":
         form = LoginForm()
         # It is important to set next to a sensible default value if not defined so POST can avoid None values later.
-        next = request.GET.get("next", default="/dashboard/")
+        redirect_path = request.GET.get("next", default="/dashboard/")
     else:
         form = LoginForm(request.POST)
-        # TODO Do not overwrite built-in python functions.
-        next = request.POST.get("next", default="/dashboard/")
+        redirect_path = request.POST.get("next", default="/dashboard/")
         if form.is_valid():
             mail = form.cleaned_data["email"]
             logger.info("Trying to authenticate user %s", mail)
             user = authenticate(
                 username=mail, password=form.cleaned_data["password"])
-            if len(next) == 0:
-                next = "/dashboard/"
-            if not (user is None or user.is_anonymous()):
+            if user is not None:
                 if user.is_active:
                     logger.info(
-                        "User credentials are valid. Redirecting to %s", next)
+                        "User credentials are valid. Redirecting to %s", redirect_path)
                     auth_login(request, user)
-                    response = HttpResponseRedirect(next)
+                    response = HttpResponseRedirect(redirect_path)
                     set_cookie(response, "quota", user.userprofile.quota)
                     set_cookie(response, "used_space",
                                user.userprofile.used_space)
@@ -65,7 +62,7 @@ def login(request):
                 form.errors["__all__"] = form.error_class(
                     [_("CREDENTIALS_ERROR")])
 
-    return render(request, "account/login.html", {"form": form, "next": next})
+    return render(request, "account/login.html", {"form": form, "next": redirect_path})
 
 
 def is_valid_email(email):

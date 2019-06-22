@@ -48,30 +48,6 @@ def view(request):
 
 
 @csrf_protect
-@sensitive_post_parameters()
-@require_POST
-@login_required
-def update_password(request):
-    user = request.user
-    if is_test_user(user):
-        return request_not_allowed_error()
-    form = UpdatePasswordForm(request.POST)
-    if form.is_valid():
-        old_password = form.cleaned_data["old_password"]
-        new_password = form.cleaned_data["new_password"]
-        logger.info("Trying to update password of User %d." % user.id)
-        if user.check_password(old_password):
-            user.set_password(new_password)
-            user.save()
-            logger.info("User %d password updated." % user.id)
-            return success()
-        else:
-            return error(_("CREDENTIALS_ERROR"))
-    else:
-        return error(str(form.errors))
-
-
-@csrf_protect
 @login_required
 @require_POST
 @sensitive_post_parameters("confirm_password")
@@ -168,34 +144,4 @@ def send_thankyou_mail(user_email, request):
 
 
 class PasswordResetView(authviews.PasswordResetView):
-    template_name = "account/reset-password.html"
-    email_template_name = "email/reset-password-email.html"
     form_class = PasswordResetForm
-    subject_template_name = "email/reset-password-subject.txt"
-    redirect_to = "/account/password/reset/requested"
-
-
-@csrf_protect
-def reset_password(request):
-    return PasswordResetView.as_view(request)
-
-
-def reset_password_requested(request):
-    return render_to_response("account/reset-password-requested.html", context_instance=RequestContext(request))
-
-
-class PasswordResetConfirmView(authviews.PasswordResetConfirmView):
-    template_name = "account/reset-password-confirm.html"
-    redirect_to = "/account/password/reset/complete"
-
-
-# TODO This will most likely not work.
-@sensitive_post_parameters()
-@never_cache
-def reset_password_confirm(request, uidb64, token):
-    return PasswordResetConfirmView.as_view(request)
-    # return password_reset_confirm(request, uidb36, token, template_name=, post_reset_redirect = redirect_to)
-
-
-def reset_password_complete(request):
-    return render_to_response("account/reset-password-complete.html", context_instance=RequestContext(request))

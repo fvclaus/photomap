@@ -5,7 +5,6 @@ import logging
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
-from django.template import RequestContext
 from django.views.decorators.http import require_GET
 
 from pm.models.album import Album
@@ -14,9 +13,9 @@ logger = logging.getLogger(__name__)
 
 
 @login_required
+@require_GET
 def view(request):
-    if request.method == "GET":
-        return render_to_response("dashboard.html", context_instance=RequestContext(request))
+    return render_to_response("dashboard.html")
 
 
 @login_required

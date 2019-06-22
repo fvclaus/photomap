@@ -87,12 +87,6 @@ if 'test' in sys.argv:
         }
     }
 else:
-    # Running locally so connect to either a local MySQL instance or connect to
-    # Cloud SQL via the proxy. To start the proxy via command line:
-    #
-    #     $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
-    #
-    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -196,16 +190,15 @@ COMPRESS_PRECOMPILERS = (
 )
 
 
-MIDDLEWARE_CLASSES = (
-    'pm.middleware.NoSupportMiddleware',
+MIDDLEWARE = (
+    'pm.middleware.BrowserCompatibilityMiddleware',
+    'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    # TODO This doesn't work for some reason
-    #    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
-
-    #    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
 
 AUTHENTICATION_BACKENDS = (
@@ -228,7 +221,6 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # Uncomment the next line to enable the admin:
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
@@ -252,12 +244,14 @@ LOGIN_REDIRECT_URL = "/dashboard/"
 LOGIN_URL = "/account/login/"
 LOGOUT_URL = "/account/logout/"
 
-EMAIL_HOST = "smtp.gmail.com"
-EMAIL_PORT = 587
-EMAIL_HOST_USER = "f.v.claus@googlemail.com"
-SERVER_EMAIL = EMAIL_HOST_USER
-EMAIL_HOST_PASSWORD = "itlukrtcgbqkqpcp"
-EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# EMAIL_HOST = "smtp.gmail.com"
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = "f.v.claus@googlemail.com"
+# SERVER_EMAIL = EMAIL_HOST_USER
+# EMAIL_HOST_PASSWORD = "itlukrtcgbqkqpcp"
+# EMAIL_USE_TLS = True
 
 
 EMAIL_TEST_USER = "test@keiken.de"

@@ -1,0 +1,13 @@
+{
+    "html": {
+        "end_with_newline": true,
+        "wrap_line_length": 100,
+        "wrap_attributes": "force-aligned",
+        "js": {
+            "indent_size": 2
+        },
+        "css": {
+            "indent_size": 2
+        }
+    }
+}

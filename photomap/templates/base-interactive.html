@@ -1,6 +1,5 @@
 {% extends "base.html" %}
 
-<!-- for the translation with django -->
 {% load i18n %}
 
 {% block js %}
@@ -8,8 +7,10 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/lib/jquery.jqote2.js" ></script>
-<script type="text/javascript" src="/static/js/lib/jquery.hotkeys.js"></script>
+<script type="text/javascript"
+        src="/static/js/lib/jquery.jqote2.js"></script>
+<script type="text/javascript"
+        src="/static/js/lib/jquery.hotkeys.js"></script>
 <!-- Feature currently disabled -->
 <!-- <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script> -->
 <!-- <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.min.js" ></script> -->
@@ -23,60 +24,82 @@
 {% endblock %}
 
 
-<section id="mp-left-column" class="mp-left-column">
-  <section class="mp-full-column mp-full-left-column mp-nodisplay" id="mp-full-left-column"> </section>
+<section id="mp-left-column"
+         class="mp-left-column">
+  <section class="mp-full-column mp-full-left-column mp-nodisplay"
+           id="mp-full-left-column"> </section>
   {% block content_inner_left %}
   {% endblock %}
 </section>
 
 
-<section id="mp-right-column" class="mp-right-column">
+<section id="mp-right-column"
+         class="mp-right-column">
   {% block content_inner_right %}
   {% endblock %}
 
-  <section class="mp-full-column" id="mp-detail" >
+  <section class="mp-full-column"
+           id="mp-detail">
     <div class="mp-full-column-controls">
-      <span class="mp-control mp-cursor-pointer mp-full-column-closer mp-close-full-description">{% trans "Schließen" %}</span>
+      <span class="mp-control mp-cursor-pointer mp-full-column-closer mp-close-full-description">{%
+        trans "Schließen" %}</span>
     </div>
     <div id="mp-detail-wrapper">
       <p id="mp-detail-title">{% trans "SELECT_PLACE_OR_ALBUM" %}</p>
-      <div id="mp-detail-description-wrapper" class="mp-wrapper">
-        <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;" class="mp-insert-description" href="#" title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
+      <div id="mp-detail-description-wrapper"
+           class="mp-wrapper">
+        <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;"
+             class="mp-insert-description"
+             href="#"
+             title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
       </div>
     </div>
   </section>
-  
-  <section class="mp-description-wrapper mp-nodisplay" id="mp-detail-teaser">
+
+  <section class="mp-description-wrapper mp-nodisplay"
+           id="mp-detail-teaser">
     <p id="mp-detail-teaser-title">{% trans "SELECT_PHOTO" %}</p>
-    <div id="mp-detail-teaser-description-wrapper" class="mp-wrapper">
-      <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;" class="mp-insert-description" href="#" title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
+    <div id="mp-detail-teaser-description-wrapper"
+         class="mp-wrapper">
+      <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;"
+           class="mp-insert-description"
+           href="#"
+           title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
     </div>
   </section>
 </section>
 
 <!-- ff does not change the width of the conrols wrapper, unless it is a span tag -->
 <!-- changing the display to inline-block alone does not do the trick -->
-<span class="mp-controls-wrapper ui-corner-all mp-nodisplay" id="mp-controls"> </span>
+<span class="mp-controls-wrapper ui-corner-all mp-nodisplay"
+      id="mp-controls"> </span>
 <!-- div for UIInput. The dimensions are defined in input.sty -->
 <div id="mp-dialog"></div>
 
 {% include "loading-screen.html" %}
 
-<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyDWnE-Kkl7ifiNjQVLv-N3UwY_KxuYqm_Q&sensor=false"> </script>
+<script type="text/javascript"
+        src="//maps.googleapis.com/maps/api/js?key=AIzaSyDWnE-Kkl7ifiNjQVLv-N3UwY_KxuYqm_Q&sensor=false">
+</script>
 
 {% if debug %}
-<script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
-<script type="text/javascript" src="/static/js/keiken/main/init.js" ></script>
+<script type="text/javascript"
+        src="/static/js/dojo/dojo.js"></script>
+<script type="text/javascript"
+        src="/static/js/keiken/main/init.js"></script>
 {% else %}
 <script type="text/javascript">
   var dojoConfig = {
-    baseUrl : "/static/CACHE/js/",
-    async : true
+    baseUrl: "/static/CACHE/js/",
+    async: true
   };
+
 </script>
-<script type="text/javascript" src="/static/CACHE/js/main.js"> </script>
+<script type="text/javascript"
+        src="/static/CACHE/js/main.js"> </script>
 <script type="text/javascript">
-  require(["keiken/main/init"], function () {});
+  require(["keiken/main/init"], function() {});
+
 </script>
 {% endif %}
 {% endblock %}

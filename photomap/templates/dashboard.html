@@ -1,6 +1,5 @@
 {% extends "base-interactive.html" %}
 
-<!-- for the translation with django -->
 {% load i18n %}
 
 {% block title %}Dashboard{% endblock %}
@@ -12,7 +11,9 @@
 {{ block.super }}
 {% load compress %}
 {% compress css %}
-<link rel="stylesheet" type="text/x-stylus" href="/static/styles/dashboard-main.styl" />
+<link rel="stylesheet"
+      type="text/x-stylus"
+      href="/static/styles/dashboard-main.styl" />
 {% endcompress %}
 {% endblock %}
 
@@ -21,20 +22,20 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/keiken/main/dashboard.js" ></script>
+<script type="text/javascript"
+        src="/static/js/keiken/main/dashboard.js"></script>
 {% endcompress %}
 {% endblock %}
 
 {% block pageID %}dashboard{% endblock %}
 
 {% block content_top %}
-<section id="mp-full-page" class="mp-full-page">
-  <section class="mp-map" id="mp-map">
-    <div class="mp-map-wrapper" id="map"></div>
+<section id="mp-full-page"
+         class="mp-full-page">
+  <section class="mp-map"
+           id="mp-map">
+    <div class="mp-map-wrapper"
+         id="map"></div>
   </section>
 </section>
 {% endblock %}
-
-
-
-

@@ -1,5 +1,8 @@
 {% load i18n %}
-<form id="mp-login-form" class="mp-form" action="/account/login/" method="post">
+<form id="mp-login-form"
+      class="mp-form"
+      action="/account/login/"
+      method="post">
   <h2>{% trans "Login" %}</h2>
   <p class="mp-form-errors">
     {{ form.non_field_errors }}
@@ -9,22 +12,42 @@
   </p>
   <p>
     <label for="login_email">{% trans "Email" %}:</label>
-    <input type="email" name="email" id="login_email" autofocus="autofocus" required="required" value="{{ email }}" placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}" data-required/>
+    <input type="email"
+           name="email"
+           id="login_email"
+           autofocus="autofocus"
+           required="required"
+           value="{{ form.email.value|default:'' }}"
+           placeholder="{% trans 'USER_EMAIL_PLACEHOLDER' %}"
+           data-required />
   </p>
   <p>
     <label for="login_password">{% trans "Password" %}:</label>
-    <input type="password" name="password" id="login_password" required="required" value="" placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}" data-required/>
+    <input type="password"
+           name="password"
+           id="login_password"
+           required="required"
+           placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}"
+           data-required />
   </p>
   <p class="mp-nodisplay">
-    <input type="hidden" name="next" value="{{ next|default:'' }}" />
+    <input type="hidden"
+           name="next"
+           value="{{ next|default:'' }}" />
   </p>
   <p class="mp-nodisplay">
-    <input type="hidden" name="csrfmiddlewaretoken" value="{{ csrf_token }}" />
+    <input type="hidden"
+           name="csrfmiddlewaretoken"
+           value="{{ csrf_token }}" />
   </p>
   <p>
-    <input id="login_submit" class="mp-form-submit" type="submit" name="login" value='{% trans "Sign in" %}' />
+    <input id="login_submit"
+           class="mp-form-submit"
+           type="submit"
+           name="login"
+           value='{% trans "Sign in" %}' />
   </p>
   <p id="mp-user-password-forgot">
-    <a href="/account/password/reset">{% trans "Help, I forgot my password!" %}</a>
+    <a href="{% url 'password_reset' %}">{% trans "Help, I forgot my password!" %}</a>
   </p>
 </form>
