@@ -7,7 +7,8 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/keiken/main/landingpage.js"></script>
+<script type="text/javascript"
+        src="/static/js/keiken/main/landingpage.js"></script>
 {% endcompress %}
 {% endblock %}
 
@@ -20,30 +21,47 @@
 {% block background_image %}
 <!-- if passed along the "day"-parameter gives the current weekday from sunday = 0 to saturday = 6; each day there is a different background -->
 {% if day %}
-<img src="/static/images/backgrounds/bg{{ day }}.jpg" alt="background couldn't be loaded" class="background-image"/>
+<img src="/static/images/backgrounds/bg{{ day }}.jpg"
+     alt="background couldn't be loaded"
+     class="background-image" />
 {% else %}
-<img src="/static/images/backgrounds/bg0.jpg" alt="background couldn't be loaded" class="background-image"/>
+<img src="/static/images/backgrounds/bg0.jpg"
+     alt="background couldn't be loaded"
+     class="background-image" />
 {% endif %}
 <div class="background-overlay-black"></div>
 {% endblock %}
 
 {% block non_interactive_content %}
 
-<section id="keiken-intro" class="keiken-intro">
+<section id="keiken-intro"
+         class="keiken-intro">
   <h2><span>{% trans "Welcome to KEIKEN!" %}</span></h2>
   <span>{% trans "KEIKEN_ABSTRACT" %}</span>
   {% block keiken_intro %}
   <div class="mp-landing-page-links">
     {% if user.is_authenticated %}
     <p>
-      <input type="button" id="mp-dashboard-button" class="mp-landingpage-button" title='{% trans "TO_DASHBOARD" %}' value='{% trans "TO_DASHBOARD" %}' />
+      <input type="button"
+             id="mp-dashboard-button"
+             class="mp-landingpage-button"
+             title='{% trans "TO_DASHBOARD" %}'
+             value='{% trans "TO_DASHBOARD" %}' />
     </p>
     {% else %}
     <p>
-      <input type="button" id="mp-demo-button" class="mp-landingpage-button" title='{% trans "VIEW_ALBUM" %}' value='{% trans "VIEW_ALBUM" %}' />
+      <input type="button"
+             id="mp-demo-button"
+             class="mp-landingpage-button"
+             title='{% trans "VIEW_ALBUM" %}'
+             value='{% trans "VIEW_ALBUM" %}' />
     </p>
     <p>
-      <input type="button" id="mp-test-button" class="mp-landingpage-button" title='{% trans "TRY_KEIKEN" %}' value='{% trans "TRY_KEIKEN" %}' />
+      <input type="button"
+             id="mp-test-button"
+             class="mp-landingpage-button"
+             title='{% trans "TRY_KEIKEN" %}'
+             value='{% trans "TRY_KEIKEN" %}' />
     </p>
     {% endif %}
   </div>
@@ -52,18 +70,18 @@
 
 <section id="keiken-login">
   <div id="mp-login-switch">
-    <span id="mp-switch-to-register"><a href="#mp-register">{% trans "Sign Up" %}?</a></span>
-    <span id="mp-switch-to-login" class="mp-nodisplay"><a href="#mp-login">{% trans "Login" %}?</a></span>
+    <span id="mp-switch-to-register"><a href="{% url 'registration_register' %}">
+        {% trans "Sign Up" %}?</a></span>
   </div>
-  <div class="mp-login-tab" id="mp-login">
-    <!-- action is necessary because this template is also populated by /test -->
+  <div class="mp-login-tab"
+       id="mp-login">
     {% include "login-form.html" %}
   </div>
-  
-  <div class="mp-login-tab mp-nodisplay" id="mp-register">
+
+  <div class="mp-login-tab mp-nodisplay"
+       id="mp-register">
     {% include "registration-form.html" %}
   </div>
 </section>
 
 {% endblock %}
-

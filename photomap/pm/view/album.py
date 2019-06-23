@@ -1,15 +1,12 @@
 import datetime
-import decimal
-import json
 import logging
 import string
 
 from django.contrib.auth import hashers
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponse, HttpResponseBadRequest
+from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render_to_response
-from django.template import RequestContext
 from django.utils import crypto
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
@@ -83,8 +80,7 @@ def view(request, album_id, secret):
             if request.user == album.user or request.session.get("album_%d" % album_id):
                 return render_to_response("view-album.html",
                                           {"test_photo_mountain": data.TEST_PHOTO_MOUNTAIN,
-                                           "test_photo_water": data.TEST_PHOTO_WATER},
-                                          context_instance=RequestContext(request))
+                                           "test_photo_water": data.TEST_PHOTO_WATER})
             # album does not has a password yet
             if not hashers.is_password_usable(album.password):
                 logger.debug("Album does not has a password yet.")
@@ -115,21 +111,14 @@ def get(request, album_id):
         album_id = int(album_id)
 
         logger.info("User %s is trying to get Album %d." %
-                    (str(request.user), album_id))
+                    (user.id, album_id))
 
-        if user.is_anonymous():
-            if not request.session.get("album_%d" % album_id):
-                return error("You are not authorized to view this album.")
-            else:
-                album = Album.objects.get(pk=album_id)
+        album = Album.objects.get(pk=album_id)
+
+        if album.user.id is not user.id and not request.session.get("album_%d" % album_id):
+            return error("You are not authorized to view this album.")
         else:
-            album = Album.objects.get(user=request.user, pk=album_id)
-
-        data = album.toserializable()
-        data["isOwner"] = (album.user == user)
-        data["success"] = True
-
-        return HttpResponse(json.dumps(data, cls=DecimalEncoder), content_type="text/json")
+            return success(album, isowner=album.user == user)
     except (KeyError, Album.DoesNotExist) as e:
         return error(str(e))
 
@@ -159,7 +148,7 @@ def insert(request):
         album.password = password
         album.save()
         logger.info("Album %d inserted." % album.pk)
-        return success(id=album.pk, secret=album.secret)
+        return success(album, isowner=True)
     else:
         return error(str(form.errors))
 
@@ -207,10 +196,3 @@ def delete(request, album_id):
     except (KeyError, Album.DoesNotExist) as e:
         logger.warn("Something unexpected happened: %s" % str(e))
         return error(str(e))
-
-
-class DecimalEncoder(json.JSONEncoder):
-    def default(self, o):
-        if isinstance(o, decimal.Decimal):
-            return float(o)
-        return super(DecimalEncoder, self).default(o)

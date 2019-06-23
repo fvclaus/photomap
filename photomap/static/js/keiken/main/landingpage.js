@@ -4,23 +4,6 @@
 "use strict";
 
 $(document).ready(function () {
-   
-   $("#mp-login-switch").find("a").on("click", function (event) {
-      event.preventDefault();
-   });
-   $("#mp-login-switch span").on("click", function () {
-      var $active = $(this),
-         $inactive = $("#mp-login-switch").children().not(this);
-      
-      // Every tab stores the id of its body. Select it and fade it out.
-      $($inactive.find("a").attr("href")).fadeOut(100, function () {
-         $($active.find("a").attr("href")).fadeIn(100);
-      });
-      
-      $active.addClass("mp-nodisplay");
-      $inactive.removeClass("mp-nodisplay");
-      
-   });
 
    // Turn the buttons into links.
    $("#mp-demo-button").on("click", function () {

@@ -1,8 +1,9 @@
+import logging
+
 from django.db import models
+
 from .description import Description
 from .userprofile import User
-
-import logging
 
 logger = logging.getLogger(__name__)
 
@@ -15,11 +16,11 @@ class Album(Description):
     secret = models.TextField()
     password = models.TextField()
 
-    def toserializable(self, includeplaces=True, guest=False):
+    def toserializable(self, includeplaces=True, isowner=True):
         # avoid circular import
-        from pm.model.place import Place
+        from pm.models.place import Place
 
-        if not guest:
+        if isowner:
             data = {"lat": self.lat,
                     "lon": self.lon,
                     "title": self.title,
@@ -33,10 +34,11 @@ class Album(Description):
                     "lon": self.lon,
                     "country": self.country}
 
+        data["isOwner"] = isowner
+
         if includeplaces:
             places_dump = []
             places = Place.objects.all().filter(album=self)
-#            logger.debug("toserializable(): %s", places)
 
             for place in places:
                 places_dump.append(place.toserializable())

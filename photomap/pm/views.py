@@ -1,8 +1,8 @@
-from django.views.generic import TemplateView
-from django.conf import settings
-
 import random
 import string
+
+from django.conf import settings
+from django.views.generic import TemplateView
 
 
 def encode_letter(letter):
@@ -24,6 +24,7 @@ def direct_to_template(template_name_param):
         def get_context_data(self, **kwargs):
             context = super().get_context_data(**kwargs)
             context["email_address"] = ENCODED_MAIL_ADDRESS
+            context["compress_enabled"] = settings.COMPRESS_ENABLED
             return context
 
     return DefaultTemplateView.as_view()

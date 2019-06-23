@@ -1,6 +1,7 @@
 from django.db import models
-from .description import Description
+
 from .album import Album
+from .description import Description
 
 
 class Place(Description):
@@ -10,7 +11,7 @@ class Place(Description):
 
     def toserializable(self):
         # avoid circular import
-        from pm.model.photo import Photo
+        from pm.models.photo import Photo
         photos = Photo.objects.all().filter(place=self)
         photos_dump = []
         for photo in photos:

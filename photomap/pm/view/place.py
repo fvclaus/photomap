@@ -28,7 +28,7 @@ def insert(request):
             return error("not your album")
         place = form.save()
         logger.info("Place %d inserted." % place.pk)
-        return success(id=place.pk)
+        return success(place)
     else:
         return error(str(form.errors))
 

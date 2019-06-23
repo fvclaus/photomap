@@ -98,7 +98,10 @@ place_patterns = [url(r'^$', place.insert),  # accepts only POST
 # photo hooks
 # ================================================================
 photo_patterns = [url(r'^$', photo.insert),  # accepts only POST
-                  method_mapper(r'^(?P<photo_id>\d+)/$', "photo.photo", post=photo.update, delete=photo.delete)]
+                  method_mapper(r'^(?P<photo_id>\d+)/$', "photo.photo",
+                                post=photo.update, delete=photo.delete),
+                  url(r'^(thumb|original)/(?P<photo_id>.+)/$',
+                      photo.get_photo_or_thumb)]
 
 # ========================================================
 # main

@@ -1,9 +1,3 @@
-'''
-Created on Jul 3, 2012
-
-@author: Frederik Claus
-'''
-
 from django import forms
 
 from pm.models.photo import Photo

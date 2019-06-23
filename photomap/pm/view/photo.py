@@ -1,8 +1,10 @@
 import json
 import logging
-from io import StringIO
+import uuid
+from io import BytesIO
 
 from django.contrib.auth.decorators import login_required
+from django.http.response import HttpResponse
 from django.shortcuts import render_to_response
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
@@ -25,7 +27,7 @@ LONGEST_SIDE = 1200
 
 
 def get_size(original):
-    return len(original.getvalue())
+    return len(original)
 
 
 def calculate_size(longest_side, other_side, limit):
@@ -44,35 +46,24 @@ def resize(size, limit):
 def create_thumb(buf):
     image = Image.open(buf)
     size = image.size
-    # BytesIO is probably more performant, but does not work on GAE.
-    thumb = StringIO()
+    thumb = BytesIO()
 
     thumb_size = resize(size, LONGEST_SIDE_THUMB)
 
     logger.debug("Resizing thumbnail to %s." % str(thumb_size))
-    resized_image = image.resize(thumb_size)
-    resized_image.save(thumb, "JPEG", optimize=True)
+    image.resize(thumb_size).save(thumb, "JPEG", optimize=True)
     thumb.seek(0)
 
     if size[0] > LONGEST_SIDE or size[1] > LONGEST_SIDE:
         original_size = resize(size, LONGEST_SIDE)
         logger.debug("Resizing photo to %s." % str(original_size))
-        original = StringIO()
-        resized_image = image.resize(original_size)
-        resized_image.save(original, "JPEG", quality=80,
-                           optimize=True, progressive=True)
-        original.seek(0)
-        return original, thumb
-    else:
-        if image.format != "JPEG":
-            logger.debug("Photo needs to be converted to JPEG format.")
-            original = StringIO()
-            image.save(original, "JPEG", optimize=True)
-            original.seek(0)
-            return original, thumb
-        else:
-            buf.open()
-            return buf, thumb
+        image = image.resize(original_size)
+
+    original = BytesIO()
+    image.save(original, "JPEG", quality=80,
+               optimize=True, progressive=True)
+    original.seek(0)
+    return original.getvalue(), thumb.getvalue()
 
 
 @login_required
@@ -108,22 +99,13 @@ def insert(request):
         userprofile = request.user.userprofile
         if userprofile.used_space + size > userprofile.quota:
             return error("No more space left. Delete or resize some older photos.")
-        # ===================================================================
-        # insert in correct form
-        # ===================================================================
-        request.POST["photo"] = original
-        request.POST["thumb"] = thumb
-        form = PhotoInsertForm(request.POST)
-        assert form.is_valid(), "Form should always be valid here."
-        # ===================================================================
-        # add order
-        # ===================================================================
-        photo = form.save(commit=False)
-        photo.order = 0
-        # ===================================================================
-        # add size
-        # ===================================================================
-        photo.size = size
+
+        photo = Photo(**form.cleaned_data, order=0, size=size)
+
+        # Necessary to avoid "multiple values for argument" error
+        photo.photo = original
+        photo.thumb = thumb
+
         userprofile.used_space += photo.size
 
         userprofile.save()
@@ -131,13 +113,23 @@ def insert(request):
         logger.info("Photo %d inserted with order %d and size %d." %
                     (photo.pk, photo.order, photo.size))
 
-        response = success(id=photo.id, photo=photo.getphotourl(),
-                           thumb=photo.getthumburl(), url=photo.getphotourl(),
-                           order=photo.order)
+        response = success(photo)
         set_cookie(response, "used_space", userprofile.used_space)
         return response
     else:
         return error(str(form.errors))
+
+
+@require_GET
+def get_photo_or_thumb(request, photo_id):
+    photo = Photo.objects.get(pk=uuid.UUID(photo_id))
+    if 'thumb' in request.path:
+        image = photo.thumb
+    elif 'photo' in request.path:
+        image = photo.photo
+    else:
+        raise ValueError("Unrecognized path %s" % (request.path, ))
+    return HttpResponse(bytes(image), content_type="image/jpeg")
 
 
 @login_required

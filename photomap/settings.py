@@ -120,28 +120,7 @@ USE_I18N = True
 # calendars according to the current locale
 USE_L10N = False
 
-# Absolute filesystem path to the directory that will hold user-uploaded files.
-# Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = STATIC_PATH
-
-# URL that handles the media served from MEDIA_ROOT. Make sure to use a
-# trailing slash.
-# Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
-
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
-
-# URL prefix for admin static files -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
 
@@ -153,10 +132,7 @@ FILE_UPLOAD_MAX_MEMORY_SIZE = 10000000
 
 # Additional locations of static files
 STATICFILES_DIRS = (
-    os.path.join(PROJECT_PATH, 'static'),
-    # Put strings here, like "/home/html/static" or "C:/www/django/static".
-    # Always use forward slashes, even on Windows.
-    # Don't forget to use absolute paths, not relative paths.
+    STATIC_PATH,
 )
 
 # List of finder classes that know how to find static files in
@@ -164,7 +140,6 @@ STATICFILES_DIRS = (
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
     'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-    #    'django.contrib.staticfiles.finders.DefaultStorageFinder',
     "compressor.finders.CompressorFinder",
 )
 
@@ -183,14 +158,14 @@ TEMPLATES = [
     }
 ]
 
+COMPRESS_ROOT = STATIC_PATH
 # stylus will not be called from the stylesheets directory, that's why it is necessary to add an absolute path to it
 COMPRESS_PRECOMPILERS = (
     ("text/x-stylus",
      "stylus < {infile} > {outfile} --include " + STYLES_PATH),
 )
 
-
-MIDDLEWARE = (
+MIDDLEWARE = [
     'pm.middleware.BrowserCompatibilityMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -199,7 +174,7 @@ MIDDLEWARE = (
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-)
+]
 
 AUTHENTICATION_BACKENDS = (
     "pm.view.authentication.EmailBackend",
@@ -225,6 +200,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+WSGI_APPLICATION = 'wsgi.application'
 
 # Use this for the debug variable in template context
 INTERNAL_IPS = ("127.0.0.1")

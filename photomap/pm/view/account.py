@@ -9,15 +9,14 @@ from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import mail_managers, send_mail
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
-from django.template import RequestContext, loader
+from django.template import loader
 from django.utils.translation import ugettext as _
-from django.views.decorators.cache import never_cache
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.http import require_GET, require_POST
 
 from pm.form.account import (DeleteAccountForm, PasswordResetForm,
-                             UpdateEmailForm, UpdatePasswordForm)
+                             UpdateEmailForm)
 from pm.models.album import Album
 from pm.models.photo import Photo
 from pm.models.place import Place
@@ -44,7 +43,7 @@ def view(request):
             "n_places": n_places,
             "n_photos": n_photos,
             "is_test_user": is_test_user(request.user)}
-    return render_to_response("account/active.html", data, context_instance=RequestContext(request))
+    return render_to_response("account/active.html", data)
 
 
 @csrf_protect
@@ -110,7 +109,7 @@ def delete(request):
                 form.errors["__all__"] = form.error_class(
                     [_("CREDENTIALS_ERROR")])
 
-    return render_to_response("account/delete.html", {"form": form}, context_instance=RequestContext(request))
+    return render_to_response("account/delete.html", {"form": form})
 
 
 def is_test_user(user):

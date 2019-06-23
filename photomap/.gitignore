@@ -14,7 +14,7 @@ dijit/
 build/
 
 # Static assets
-static/photo
+static/CACHE
 static/profile-picture
 static/js/util/
 res/export/

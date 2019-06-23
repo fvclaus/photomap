@@ -30,16 +30,12 @@
            placeholder="{% trans 'USER_PASSWORD_PLACEHOLDER' %}"
            data-required />
   </p>
-  <p class="mp-nodisplay">
-    <input type="hidden"
-           name="next"
-           value="{{ next|default:'' }}" />
-  </p>
-  <p class="mp-nodisplay">
-    <input type="hidden"
-           name="csrfmiddlewaretoken"
-           value="{{ csrf_token }}" />
-  </p>
+  <input type="hidden"
+         name="next"
+         value="{{ next|default:'' }}" />
+  <input type="hidden"
+         name="csrfmiddlewaretoken"
+         value="{{ csrf_token }}" />
   <p>
     <input id="login_submit"
            class="mp-form-submit"

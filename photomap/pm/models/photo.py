@@ -1,9 +1,13 @@
+import uuid
+
 from django.db import models
+
 from .description import Description
 from .place import Place
 
 
 class Photo(Description):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     order = models.IntegerField()
     photo = models.BinaryField()
@@ -11,16 +15,14 @@ class Photo(Description):
     size = models.IntegerField()
 
     def getphotourl(self):
-        # TODO secure these urls
-        return "/photo/original/%d" % (self.id, )
+        return "/photo/original/%s" % (self.id, )
 
     def getthumburl(self):
-        # TODO secure these urls
-        return "/photo/thumb/%d" % (self.thumb, )
+        return "/photo/thumb/%s" % (self.id, )
 
     def toserializable(self):
         return {"thumb": self.getthumburl(),
-                "id": self.pk,
+                "id": str(self.pk),
                 "photo": self.getphotourl(),
                 "title": self.title,
                 "description": self.description,
