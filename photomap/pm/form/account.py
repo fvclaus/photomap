@@ -1,6 +1,4 @@
 from django import forms
-from django.conf import settings
-from django.contrib.auth.forms import PasswordResetForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
@@ -29,28 +27,6 @@ class UpdateEmailForm(forms.Form):
         if len(User.objects.filter(username=new_email)) == 1:
             raise ValidationError(_("EMAIL_ALREADY_EXISTS_ERROR"))
         return self.cleaned_data
-
-
-class PasswordResetForm(PasswordResetForm):
-    def clean_email(self):
-        """
-        Validates that an active user exists with the given email address.
-        """
-        email = self.cleaned_data["email"]
-        self.users_cache = User.objects.filter(username=email,
-                                               is_active=True)
-        if not len(self.users_cache):
-            raise forms.ValidationError("unknown")
-        user = self.users_cache[0]
-        if user.username == settings.EMAIL_TEST_USER:
-            raise forms.ValidationError(_("REQUEST_NOT_ALLOWED_ERROR"))
-        # Tell PasswordResetForm where to send the email to.
-        # The user object will not be saved.
-        user.email = user.username
-#        if any((user.password == UNUSABLE_PASSWORD)
-#               for user in self.users_cache):
-#            raise forms.ValidationError(self.error_messages['unusable'])
-        return email
 
 
 class DeleteAccountForm(forms.Form):

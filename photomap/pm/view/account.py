@@ -15,8 +15,7 @@ from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from django.views.decorators.http import require_GET, require_POST
 
-from pm.form.account import (DeleteAccountForm, PasswordResetForm,
-                             UpdateEmailForm)
+from pm.form.account import DeleteAccountForm, UpdateEmailForm
 from pm.models.album import Album
 from pm.models.photo import Photo
 from pm.models.place import Place
@@ -142,5 +141,5 @@ def send_thankyou_mail(user_email, request):
     send_mail_to_user(user_email, subject, message)
 
 
-class PasswordResetView(authviews.PasswordResetView):
-    form_class = PasswordResetForm
+class PasswordChangeView(authviews.PasswordChangeView):
+    pass

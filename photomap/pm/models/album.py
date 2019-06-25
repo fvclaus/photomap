@@ -12,7 +12,6 @@ class Album(Description):
     lat = models.DecimalField(decimal_places=7, max_digits=10)
     lon = models.DecimalField(decimal_places=7, max_digits=10)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    country = models.CharField(max_length=2)
     secret = models.TextField()
     password = models.TextField()
 
@@ -24,7 +23,6 @@ class Album(Description):
             data = {"lat": self.lat,
                     "lon": self.lon,
                     "title": self.title,
-                    "country": self.country,
                     "description": self.description,
                     "date": self.date.isoformat(),
                     "secret": self.secret,

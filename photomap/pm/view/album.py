@@ -5,20 +5,16 @@ import string
 from django.contrib.auth import hashers
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect, render_to_response
 from django.utils import crypto
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 
-from pm.exception import OSMException
 from pm.form.album import (AlbumInsertForm, AlbumPasswordUpdateForm,
                            AlbumUpdateForm)
 from pm.models.album import Album
 from pm.models.photo import Photo
 from pm.models.place import Place
-from pm.osm import reversegeocode
-from pm.test import data
 from pm.view import landingpage, set_cookie, update_used_space
 
 from .message import error, success
@@ -52,16 +48,15 @@ def update_password(request, album_id):
         return error(str(form.errors))
 
 
+@require_GET
 def demo(request):
-    if request.method == "GET":
-        demo = User.objects.get(username="demo@keiken.de")
-        album = Album.objects.get(user=demo)
-        request.session["album_%d" % album.pk] = True
-        return redirect("/album/%d/view/%s/" % (album.pk, album.secret))
-    else:
-        return HttpResponseBadRequest()
+    demo = User.objects.get(username="demo@keiken.de")
+    album = Album.objects.get(user=demo)
+    request.session["album_%d" % album.pk] = True
+    return redirect("/album/%d/view/%s/" % (album.pk, album.secret))
 
 
+@require_http_methods(["GET", "POST"])
 def view(request, album_id, secret):
     try:
         album_id = int(album_id)
@@ -71,17 +66,13 @@ def view(request, album_id, secret):
             "User is trying to access album %d with secret %s." % (album_id, secret))
 
         if album.secret != secret:
-            # TODO better name
             logger.debug("Secret does not match.")
             return render_to_response("album-share-failure.html")
 
         if request.method == "GET":
             # user owns the album
             if request.user == album.user or request.session.get("album_%d" % album_id):
-                return render_to_response("view-album.html",
-                                          {"test_photo_mountain": data.TEST_PHOTO_MOUNTAIN,
-                                           "test_photo_water": data.TEST_PHOTO_WATER})
-            # album does not has a password yet
+                return render_to_response("view-album.html")
             if not hashers.is_password_usable(album.password):
                 logger.debug("Album does not has a password yet.")
                 return render_to_response("album-share-failure.html")
@@ -133,13 +124,6 @@ def insert(request):
         logger.info("User %d is trying to insert a new Album." %
                     request.user.pk)
         album.user = request.user
-        try:
-            album.country = reversegeocode(album.lat, album.lon)
-        except OSMException as e:
-            logger.warn("Could not resolve %f,%f. Reason: %s" %
-                        (album.lat, album.lon, str(e)))
-#                return error("osm is temporarily not available. please try again later")
-            return error(str(e))
         secret = crypto.get_random_string(length=50)
         # Mark the album as 'not shared', e.g. inactive.
         password = hashers.make_password(None)

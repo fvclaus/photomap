@@ -1,13 +1,12 @@
-# -*- coding: utf-8 -*-
-
-from apitestcase import ApiTestCase
-from data import TEST_PHOTO
-from pm.model.photo import Photo
-
 import json
 import os
 from copy import deepcopy
-import urllib2
+from urllib.request import urlopen
+
+from pm.models import Photo
+
+from .apitestcase import ApiTestCase
+from .data import TEST_PHOTO
 
 
 class PhotoControllerTest(ApiTestCase):
@@ -59,7 +58,8 @@ class PhotoControllerTest(ApiTestCase):
         self.assertTrue(photo.size < self._get_photo_size())
         used_space = 4 * 164898
         # Photo gets resized. Size must be smaller than photo size
-        self.assertTrue(self.userprofile.used_space > used_space and self.userprofile.used_space < used_space + self._get_photo_size())
+        self.assertTrue(self.userprofile.used_space >
+                        used_space and self.userprofile.used_space < used_space + self._get_photo_size())
         # =======================================================================
         # insert something valid with description
         # =======================================================================
@@ -74,7 +74,8 @@ class PhotoControllerTest(ApiTestCase):
         # self.assertPublicAccess(content["thumb"])
         # self.assertThumbSize(content["thumb"])
         self.assertEqual(content["order"], 0)
-        self.assertTrue(self.userprofile.used_space < 4 * 164898 + 2 * self._get_photo_size())
+        self.assertTrue(self.userprofile.used_space < 4 *
+                        164898 + 2 * self._get_photo_size())
         # =======================================================================
         # try to upload over the limit
         # =======================================================================
@@ -117,8 +118,8 @@ class PhotoControllerTest(ApiTestCase):
         # =======================================================================
         # test something valid without description
         # =======================================================================
-        data = {"id" : 1,
-                "title" : "EO changed"}
+        data = {"id": 1,
+                "title": "EO changed"}
         (photo, content) = self.assertUpdates(data)
         self.assertEqual(photo.title, data["title"])
         self.assertEqual(self.userprofile.used_space, 4 * 164898)
@@ -141,22 +142,22 @@ class PhotoControllerTest(ApiTestCase):
         # =======================================================================
         # Use wrong parameter.
         # =======================================================================
-        self.assert404("/photo/abc/", method = "POST")
+        self.assert404("/photo/abc/", method="POST")
 
     def test_update_multiple(self):
         self.url = "/photos"
         # =======================================================================
         # something valid
         # =======================================================================
-        data = [{"id" : 1,
-                 "title" : "New title 1",
-                 "order" : 1 },
-                {"id" : 2,
-                 "title" : "New title 2",
-                 "order" : 0 }]
+        data = [{"id": 1,
+                 "title": "New title 1",
+                 "order": 1},
+                {"id": 2,
+                 "title": "New title 2",
+                 "order": 0}]
         ids = [1, 2]
 
-        self.assertSuccess(self.url, {"photos" : json.dumps(data)})
+        self.assertSuccess(self.url, {"photos": json.dumps(data)})
         photos = self._get_photos(ids)
         self.assertEqual(photos[0].title, data[0]["title"])
         self.assertEqual(photos[0].order, data[0]["order"])
@@ -167,43 +168,42 @@ class PhotoControllerTest(ApiTestCase):
         # with description
         # =======================================================================
         data[0]["description"] = "The description changed"
-        self.assertSuccess(self.url, {"photos" : json.dumps(data)})
+        self.assertSuccess(self.url, {"photos": json.dumps(data)})
         photos = self._get_photos(ids)
         self.assertEqual(photos[0].description, data[0]["description"])
         # =======================================================================
         # Not owner
         # =======================================================================
         data[0]["id"] = 100
-        self.assertError({"photos" : json.dumps(data)})
+        self.assertError({"photos": json.dumps(data)})
         # =======================================================================
         # Wrong id test
         # =======================================================================
         data[0]["id"] = 999  # does not exist
-        self.assertError({"photos" : json.dumps(data)})
+        self.assertError({"photos": json.dumps(data)})
         # =======================================================================
         # Invalid json test
         # =======================================================================
         data = "This is {aa; not Js0n"
-        self.assertError({"photos" : data})
+        self.assertError({"photos": data})
 
     def _get_photos(self, ids):
         photos = []
         for id in ids:
-            photos.append(Photo.objects.get(pk = id))
+            photos.append(Photo.objects.get(pk=id))
         return photos
 
     def assertThumbSize(self, thumb_url):
         from PIL import Image
         import tempfile
-        url_data = urllib2.urlopen(thumb_url)
-        thumb, name = tempfile.mkstemp(suffix = ".jpg", text = False)
+        url_data = urlopen(thumb_url)
+        thumb, name = tempfile.mkstemp(suffix=".jpg", text=False)
         thumb = open(name, "wb")
         thumb.write(url_data.read())
         thumb.close()
 
         thumb = Image.open(name)
         self.assertTrue(thumb.size[0] is 100 or thumb.size[1] is 100)
-
 
     def _openphoto(self, data):
         photo = open(TEST_PHOTO, "rb")

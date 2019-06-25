@@ -1,24 +1,13 @@
 # -*- coding: utf-8 -*-
-'''
-Created on 22.07.2012
 
-@author: Frederik Claus
-'''
-
-from apitestcase import ApiTestCase
-
-
-from pm.model.album import Album
-from pm.model.place import Place
-from pm.model.photo import Photo
-from data import GPS_MANNHEIM_SCHLOSS
-
-
-
-from decimal import Decimal
 from copy import deepcopy
+from decimal import Decimal
 
-import re
+from pm.models import Album, Photo, Place
+
+from .apitestcase import ApiTestCase
+from .data import GPS_MANNHEIM_SCHLOSS
+
 
 class AlbumControllerTest(ApiTestCase):
 
@@ -32,14 +21,15 @@ class AlbumControllerTest(ApiTestCase):
         # =======================================================================
         # delete something that exists
         # =======================================================================
-        album = Album.objects.get(pk = 1)
-        places = [place.pk for place in Place.objects.all().filter(album = album)]
+        album = Album.objects.get(pk=1)
+        places = [place.pk for place in Place.objects.all().filter(album=album)]
         photos = []
 
         for place in places:
-            photos.extend([photo for photo in Photo.objects.all().filter(place = place)])
+            photos.extend(
+                [photo for photo in Photo.objects.all().filter(place=place)])
 
-        self.assertDeletes({"id" : 1})
+        self.assertDeletes({"id": 1})
 
         for place in places:
             self.assertDoesNotExist(place, model=Place)
@@ -52,17 +42,15 @@ class AlbumControllerTest(ApiTestCase):
         # =======================================================================
         # delete something that does not exist
         # =======================================================================
-        self.assertError({"id":9999})
+        self.assertError({"id": 9999})
         # =======================================================================
         # delete something that does not belong to you
         # =======================================================================
-        self.assertError({"id":2})
+        self.assertError({"id": 2})
         # =======================================================================
         # use wrong paramater
         # =======================================================================
-        self.assert404("/album/abc/", method = "DELETE")
-
-
+        self.assert404("/album/abc/", method="DELETE")
 
     def test_insert(self):
         self.url = "/album/"
@@ -70,12 +58,12 @@ class AlbumControllerTest(ApiTestCase):
         # 'ocean test'
         # =======================================================================
         data = {"title": "Atlantis",
-                "lat" : Decimal("17.375803"),
+                "lat": Decimal("17.375803"),
                 "lon": Decimal("-34.628906")}
         (album, content) = self.assertCreates(data)
         self.assertTrue(album.secret != None)
         #self.assertEqual(album.country, "oc")
-        #OSM geocoding has been disabled for the moment.
+        # OSM geocoding has been disabled for the moment.
         self.assertTrue(content["id"])
         self.assertTrue(content["secret"])
         # =======================================================================
@@ -88,7 +76,7 @@ class AlbumControllerTest(ApiTestCase):
         self.assertTrue(album.secret != None)
         self.assertEqual(album.title, data["title"])
         #self.assertEqual(album.country, "de")
-        #OSM geocoding has been disabled for the moment.
+        # OSM geocoding has been disabled for the moment.
         # =======================================================================
         # insert something valid with description
         # =======================================================================
@@ -118,8 +106,8 @@ class AlbumControllerTest(ApiTestCase):
         # =======================================================================
         # test something valid without description
         # =======================================================================
-        data = {"id" : 1,
-                "title" : "EO changed"}
+        data = {"id": 1,
+                "title": "EO changed"}
         (album, content) = self.assertUpdates(data)
         self.assertEqual(album.title, data["title"])
         # =======================================================================
@@ -141,13 +129,13 @@ class AlbumControllerTest(ApiTestCase):
         # =======================================================================
         # Wrong parameter
         # =======================================================================
-        self.assert404("/album/abc/", method = "POST")
+        self.assert404("/album/abc/", method="POST")
 
     def test_update_password(self):
         self.url = "/album/1/password"
-        data = {"password" : "blah"}
+        data = {"password": "blah"}
         self.assertSuccess(self.url, data)
-        album = Album.objects.get(pk = 1)
+        album = Album.objects.get(pk=1)
         from django.contrib.auth import hashers
         self.assertTrue(hashers.is_password_usable(album.password))
 
@@ -170,16 +158,16 @@ class AlbumControllerTest(ApiTestCase):
         # Something invalid
         # =======================================================================
         self.url = "/album/999/"
-        self.assertError(method = "GET")
+        self.assertError(method="GET")
         # =======================================================================
         # Not owner
         # =======================================================================
         self.url = "/album/2/"
-        self.assertError(method = "GET")
+        self.assertError(method="GET")
         # =======================================================================
         # Wrong parameter.
         # =======================================================================
-        self.assert404("/album/abc/", method = "GET")
+        self.assert404("/album/abc/", method="GET")
 
 #    def test_share(self):
 #        self.url = "/get-album-share"

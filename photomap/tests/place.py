@@ -1,8 +1,9 @@
-from apitestcase import ApiTestCase
-from pm.model.place import Place
-from pm.model.photo import Photo
-from data import GPS_MANNHEIM_SCHLOSS
 from copy import deepcopy
+
+from pm.models import Photo, Place
+
+from .apitestcase import ApiTestCase
+from .data import GPS_MANNHEIM_SCHLOSS
 
 
 class PlaceControllerTest(ApiTestCase):

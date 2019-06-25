@@ -7,7 +7,7 @@ from .place import Place
 
 
 class Photo(Description):
-    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     order = models.IntegerField()
     photo = models.BinaryField()
@@ -15,14 +15,14 @@ class Photo(Description):
     size = models.IntegerField()
 
     def getphotourl(self):
-        return "/photo/original/%s" % (self.id, )
+        return "/photo/original/%s" % (self.uuid, )
 
     def getthumburl(self):
-        return "/photo/thumb/%s" % (self.id, )
+        return "/photo/thumb/%s" % (self.uuid, )
 
     def toserializable(self):
         return {"thumb": self.getthumburl(),
-                "id": str(self.pk),
+                "id": self.pk,
                 "photo": self.getphotourl(),
                 "title": self.title,
                 "description": self.description,

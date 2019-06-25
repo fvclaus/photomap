@@ -64,6 +64,8 @@ account_patterns += [
     url(r'^register/$',
         registration.RegistrationView.as_view(),
         name='registration_register'),
+    path('password_change/', account.PasswordChangeView.as_view(),
+         name='password_change'),
     url(r'^', include('django_registration.backends.activation.urls')),
     # Make sure the password of the test user cannot be reset.
     url(r'^', include('django.contrib.auth.urls'))]

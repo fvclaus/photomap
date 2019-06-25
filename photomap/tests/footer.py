@@ -1,19 +1,14 @@
-'''
-Created on Aug 29, 2013
+from .apitestcase import ApiTestCase
 
-@author: Frederik Claus
-'''
-
-from apitestcase import ApiTestCase
 
 class FooterViewTest(ApiTestCase):
-    
+
     def test_contact(self):
-        data = {"name" : "Test",
-                "email" : "test@keiken.de",
-                "subject" : "Is the contact form working?",
-                "message" : "This should appear in the second line!" }
-        
+        data = {"name": "Test",
+                "email": "test@keiken.de",
+                "subject": "Is the contact form working?",
+                "message": "This should appear in the second line!"}
+
         response = self.client.post("/contact/", data)
         self.assertRedirectToComplete(response)
         messages = self.read_and_delete_mails()
@@ -27,6 +22,3 @@ class FooterViewTest(ApiTestCase):
         self.assertEqual(response.status_code, 200)
         messages = self.read_and_delete_mails()
         self.assertEqual(len(messages), 0)
-        
-        
-        
