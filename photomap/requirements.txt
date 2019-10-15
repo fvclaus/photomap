@@ -1,12 +1,7 @@
-# Lines ending with GAE indicate that this dependencies should be uploaded to GAE
 Django==2.1.2
 Pillow==2.8.1
-#argparse==1.2.1
-#distribute==0.6.24
-django-appconf==1.0.2 # GAE
-django-compressor==2.2 # GAE
-django-registration==3.0 # GAE
-#latexcodec==0.2
+django-appconf==1.0.2
+django-compressor==2.2
+django-registration==3.0
 flake8==3.5.0
 psycopg2-binary==2.7.5
-#wsgiref==0.1.2

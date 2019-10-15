@@ -7,7 +7,11 @@
 
 {% block account_info %}
 <h2>{% trans "Login Information" %}</h2>
-<p>{% trans "LOGIN_INFO" %}</p>
+{% url 'registration_register' as registration_url %}
+{% url 'contact' as contact_url %}
+<p>{% blocktrans %}Please enter your login-data on the right in order to sign in.
+ If you don't have an account yet, you can register <a href='{{ registration_url }}'>here</a>. In case you
+ experience troubles with the login please <a href='{{ contact_url }}'>contact</a> the KEIKEN-Team. {% endblocktrans %}</p>
 {% endblock %}
 
 {% block account_settings %}

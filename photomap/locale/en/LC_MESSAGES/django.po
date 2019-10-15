@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-22 17:53+0200\n"
+"POT-Creation-Date: 2019-10-14 22:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,30 +16,29 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: pm/form/account.py:19
+#: pm/form/account.py:17
 msgid "PASSWORD_REPETITION_ERROR"
 msgstr "The new password and its repetition do not match."
 
-#: pm/form/account.py:30
+#: pm/form/account.py:28
 msgid "EMAIL_ALREADY_EXISTS_ERROR"
 msgstr "This email is already taken."
 
-#: pm/form/account.py:46 pm/view/account.py:114 pm/view/message.py:30
-msgid "REQUEST_NOT_ALLOWED_ERROR"
-msgstr "This action is not allowed. "
-
-#: pm/view/account.py:69 pm/view/account.py:98 pm/view/account.py:135
-#: pm/view/authentication.py:66
+#: pm/view/account.py:72 pm/view/account.py:109 pm/view/authentication.py:63
 msgid "CREDENTIALS_ERROR"
 msgstr "Email and password do not match. Please check again."
 
-#: pm/view/footer.py:30
+#: pm/view/account.py:88 pm/view/message.py:47
+msgid "REQUEST_NOT_ALLOWED_ERROR"
+msgstr "This action is not allowed. "
+
+#: pm/view/footer.py:24
 msgid "MAIL_ERROR"
 msgstr ""
 "An error occured while sending the email. Please try again later or use our "
 "email address above. "
 
-#: pm/view/message.py:26
+#: pm/view/message.py:42
 msgid "USER_INACTIVE_ERROR"
 msgstr ""
 "Your account is currently inactive. Please contact the KEIKEN-Team for more "
@@ -212,7 +211,7 @@ msgid "NEW_EMAIL_PLACEHOLDER"
 msgstr "Enter your new email.."
 
 #: templates/account/active.html:114 templates/account/delete.html:29
-#: templates/login-form.html:25 templates/registration-form.html:16
+#: templates/login-form.html:25 templates/registration-form.html:23
 msgid "Password"
 msgstr "Password"
 
@@ -225,7 +224,7 @@ msgstr "Enter your password.."
 msgid "ACCOUNTS_TEST_USER_INFO"
 msgstr "This is just a test account. You cannot modify any settings. "
 
-#: templates/account/base.html:7 templates/account/delete.html:6
+#: templates/account/base.html:5 templates/account/delete.html:6
 msgid "Account"
 msgstr "Account"
 
@@ -255,7 +254,7 @@ msgid "Delete Form"
 msgstr "Delete Form"
 
 #: templates/account/delete.html:23 templates/footer/contact.html:55
-#: templates/login-form.html:14 templates/registration-form.html:11
+#: templates/login-form.html:14 templates/registration-form.html:14
 #: templates/registration/password_reset_form.html:19
 msgid "Email"
 msgstr "Email"
@@ -322,12 +321,6 @@ msgstr "Login"
 msgid "Login Information"
 msgstr "Login Information"
 
-#: templates/account/login.html:10
-msgid "LOGIN_INFO"
-msgstr ""
-"Please enter your login-data on the right in order to sign in. In case you "
-"experience troubles with the login please contact the KEIKEN-Team."
-
 #: templates/album-share-failure.html:11
 msgid "ALBUM_SHARE_FAILURE_NOTE"
 msgstr ""
@@ -349,25 +342,21 @@ msgstr "Enter Password..."
 msgid "View Album"
 msgstr "View Album"
 
-#: templates/base-interactive.html:39
-msgid "Schließen"
-msgstr "Close"
-
-#: templates/base-interactive.html:42
+#: templates/base-interactive.html:48
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr ""
 "When selecting a Place or an Album you will view the description of the "
 "selected object in this box."
 
-#: templates/base-interactive.html:44 templates/base-interactive.html:52
+#: templates/base-interactive.html:51 templates/base-interactive.html:64
 msgid "NO_DESCRIPTION"
 msgstr "No description "
 
-#: templates/base-interactive.html:44 templates/base-interactive.html:52
+#: templates/base-interactive.html:54 templates/base-interactive.html:67
 msgid "ADD_DESCRIPTION"
 msgstr " Add Description ..."
 
-#: templates/base-interactive.html:50 templates/photo-editor.html:4
+#: templates/base-interactive.html:61 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Please select a photo."
 
@@ -1553,40 +1542,36 @@ msgstr "Update order of photos"
 msgid "UPDATE_PHOTOS_CONFIRMATION"
 msgstr "Do you really want to update the photo order?"
 
-#: templates/index.html:14 templates/index.html:16
+#: templates/index.html:15 templates/index.html:17
 msgid "Willkommen"
 msgstr "Welcome"
 
-#: templates/index.html:33
+#: templates/index.html:39
 msgid "Welcome to KEIKEN!"
 msgstr "Welcome to KEIKEN!"
 
-#: templates/index.html:34
+#: templates/index.html:40
 msgid "KEIKEN_ABSTRACT"
 msgstr ""
 "KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='What is "
 "KEIKEN?'>[*]</a></sup> is a free online photo-book designed to make sharing "
 "your adventures abroad and other interesting experiences easy and vivid!"
 
-#: templates/index.html:39
+#: templates/index.html:48 templates/index.html:49
 msgid "TO_DASHBOARD"
 msgstr "Go to dashboard"
 
-#: templates/index.html:43
+#: templates/index.html:56 templates/index.html:57
 msgid "VIEW_ALBUM"
 msgstr "View our first album"
 
-#: templates/index.html:46
+#: templates/index.html:63 templates/index.html:64
 msgid "TRY_KEIKEN"
 msgstr "Try KEIKEN yourself"
 
-#: templates/index.html:55 templates/registration-form.html:33
+#: templates/index.html:74 templates/registration-form.html:58
 msgid "Sign Up"
 msgstr "Sign Up"
-
-#: templates/index.html:56 templates/login-form.html:6
-msgid "Login"
-msgstr "Login"
 
 #: templates/javascript-warning.html:5
 msgid "JS_DISABLED_WARNING"
@@ -1594,11 +1579,15 @@ msgstr ""
 "You have disabled javascript in your browser settings. KEIKEN makes heavy "
 "use of javascript, so in order to use KEIKEN you have to activate it. "
 
-#: templates/login-form.html:48
+#: templates/login-form.html:6
+msgid "Login"
+msgstr "Login"
+
+#: templates/login-form.html:44
 msgid "Sign in"
 msgstr "Sign in"
 
-#: templates/login-form.html:51
+#: templates/login-form.html:47
 msgid "Help, I forgot my password!"
 msgstr "Help, I forgot my password!"
 
@@ -1630,19 +1619,19 @@ msgstr "Rotate"
 msgid "REVERT"
 msgstr "Revert"
 
-#: templates/registration-form.html:3
+#: templates/registration-form.html:6
 msgid "Registration"
 msgstr "Registration"
 
-#: templates/registration-form.html:20
+#: templates/registration-form.html:30
 msgid "Confirm Password"
 msgstr "Confirm Password"
 
-#: templates/registration-form.html:25
+#: templates/registration-form.html:38
 msgid "First name"
 msgstr "First name"
 
-#: templates/registration-form.html:29
+#: templates/registration-form.html:45
 msgid "Last name"
 msgstr "Last name"
 
@@ -1650,7 +1639,7 @@ msgstr "Last name"
 msgid "RESET_PASSWORD_COMPLETE"
 msgstr "Password reset"
 
-#: templates/registration/password_reset_complete.html:10
+#: templates/registration/password_reset_complete.html:12
 msgid "RESET_PASSWORD_COMPLETE_EXPLANATION"
 msgstr ""
 "Your new password has been set. You may go ahead and <a "
@@ -1673,7 +1662,7 @@ msgstr ""
 "To set a password, please enter your new password twice to prevent typing "
 "errors and submit."
 
-#: templates/registration/password_reset_confirm.html:49
+#: templates/registration/password_reset_confirm.html:51
 msgid "RESET_PASSWORD_ERROR_EXPLANATION"
 msgstr ""
 "The password reset link was invalid, possibly because it has already been "
@@ -1683,12 +1672,6 @@ msgstr ""
 #: templates/registration/password_reset_done.html:6
 msgid "Reset Email Sent"
 msgstr "Reset Email Sent"
-
-#: templates/registration/password_reset_done.html:10
-msgid "RESET_PASSWORD_EMAIL_SENT"
-msgstr ""
-"We've emailed you instructions for setting your password to the email "
-"address you submitted. You should be receiving it shortly."
 
 #: templates/registration/password_reset_form.html:5
 msgid "Reset Password"
@@ -1703,27 +1686,3 @@ msgstr ""
 #: templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumview"
-
-#~ msgid "RESET_PASSWORD_ERROR"
-#~ msgstr "Password reset not possible."
-
-#~ msgid "Telefon"
-#~ msgstr "Telephone"
-
-#~ msgid "Handy"
-#~ msgstr "mobile phone"
-
-#~ msgid "Verantwortlich für"
-#~ msgstr "Responsible for"
-
-#~ msgid "Back End"
-#~ msgstr "Back end"
-
-#~ msgid "Front End"
-#~ msgstr "Frontend"
-
-#~ msgid "Design"
-#~ msgstr "Design"
-
-#~ msgid "Motivation am Projekt"
-#~ msgstr "Motivation for the project"

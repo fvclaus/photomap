@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-22 17:53+0200\n"
+"POT-Creation-Date: 2019-10-14 22:43+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: Marc-Leon Römer <marcleonroemer@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,31 +17,30 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: pm/form/account.py:19
+#: pm/form/account.py:17
 msgid "PASSWORD_REPETITION_ERROR"
 msgstr "Das neue Passwort und die Passwortwiederholung stimment nicht überein."
 
-#: pm/form/account.py:30
+#: pm/form/account.py:28
 msgid "EMAIL_ALREADY_EXISTS_ERROR"
 msgstr "Diese Email ist bereits registriert."
 
-#: pm/form/account.py:46 pm/view/account.py:114 pm/view/message.py:30
-msgid "REQUEST_NOT_ALLOWED_ERROR"
-msgstr "Diese Aktion ist nicht erlaubt. "
-
-#: pm/view/account.py:69 pm/view/account.py:98 pm/view/account.py:135
-#: pm/view/authentication.py:66
+#: pm/view/account.py:72 pm/view/account.py:109 pm/view/authentication.py:63
 msgid "CREDENTIALS_ERROR"
 msgstr ""
 "Email und Password stimmen nicht überein. Bitte versuchen Sie es erneut. "
 
-#: pm/view/footer.py:30
+#: pm/view/account.py:88 pm/view/message.py:47
+msgid "REQUEST_NOT_ALLOWED_ERROR"
+msgstr "Diese Aktion ist nicht erlaubt. "
+
+#: pm/view/footer.py:24
 msgid "MAIL_ERROR"
 msgstr ""
 "Beim Senden der Email ist ein Fehler aufgetreten. Bitte versuchen Sie es "
 "später erneute oder schicken Sie uns persönlich eine Email."
 
-#: pm/view/message.py:26
+#: pm/view/message.py:42
 msgid "USER_INACTIVE_ERROR"
 msgstr ""
 "Ihr Nutzer-Account is momentan inaktiv. Bitte kontaktieren Sie das KEIKEN "
@@ -216,7 +215,7 @@ msgid "NEW_EMAIL_PLACEHOLDER"
 msgstr "Neue Email-Adresse eingeben.."
 
 #: templates/account/active.html:114 templates/account/delete.html:29
-#: templates/login-form.html:25 templates/registration-form.html:16
+#: templates/login-form.html:25 templates/registration-form.html:23
 msgid "Password"
 msgstr "Passwort"
 
@@ -231,7 +230,7 @@ msgstr ""
 "Dies ist nur ein Testaccount. Darum können Sie keine Einstellungen "
 "verändern. "
 
-#: templates/account/base.html:7 templates/account/delete.html:6
+#: templates/account/base.html:5 templates/account/delete.html:6
 msgid "Account"
 msgstr "Account"
 
@@ -261,7 +260,7 @@ msgid "Delete Form"
 msgstr "Formular zum Löschen des Accounts"
 
 #: templates/account/delete.html:23 templates/footer/contact.html:55
-#: templates/login-form.html:14 templates/registration-form.html:11
+#: templates/login-form.html:14 templates/registration-form.html:14
 #: templates/registration/password_reset_form.html:19
 msgid "Email"
 msgstr "Email"
@@ -330,11 +329,16 @@ msgstr "Login"
 msgid "Login Information"
 msgstr "Informationen zum Login"
 
-#: templates/account/login.html:10
-msgid "LOGIN_INFO"
-msgstr ""
-"Bitte geben Sie rechts Ihre Login-Daten ein. Sollten Sie Probleme beim Login "
-"haben, nehmen Sie bitte mit dem KEIKEN-Team Kontakt auf."
+#: templates/account/login.html:11
+#, python-format
+msgid ""
+"Please enter your login-data on the right in order to sign in.\n"
+" If you don't have an account yet, you can registere here In case you "
+"register <a href='%(registration_url)s'>here</a>\n"
+" experience troubles with the login please contact the KEIKEN-Team. "
+msgstr "Bitte geben Sie rechts Ihre Login-Daten ein. Sollten Sie Probleme beim "
+"Login haben, nehmen Sie bitte mit dem KEIKEN-Team Kontakt auf. Wenn Sie "
+"noch keinen haben, dann registrieren Sie sich <a href='%(registration_url)s'>hier</a>"
 
 #: templates/album-share-failure.html:11
 msgid "ALBUM_SHARE_FAILURE_NOTE"
@@ -357,25 +361,21 @@ msgstr "Passwort eingeben..."
 msgid "View Album"
 msgstr "Album ansehen"
 
-#: templates/base-interactive.html:39
-msgid "Schließen"
-msgstr "Schließen"
-
-#: templates/base-interactive.html:42
+#: templates/base-interactive.html:48
 msgid "SELECT_PLACE_OR_ALBUM"
 msgstr ""
 "Wenn Sie einen Platz oder ein Album auswählen, wird die Beschreibung des "
 "ausgewählten Objekts hier angezeigt."
 
-#: templates/base-interactive.html:44 templates/base-interactive.html:52
+#: templates/base-interactive.html:51 templates/base-interactive.html:64
 msgid "NO_DESCRIPTION"
 msgstr "Keine Beschreibung "
 
-#: templates/base-interactive.html:44 templates/base-interactive.html:52
+#: templates/base-interactive.html:54 templates/base-interactive.html:67
 msgid "ADD_DESCRIPTION"
 msgstr " Beschreibung hinzufügen ..."
 
-#: templates/base-interactive.html:50 templates/photo-editor.html:4
+#: templates/base-interactive.html:61 templates/photo-editor.html:4
 msgid "SELECT_PHOTO"
 msgstr "Bitte wählen Sie ein Photo aus."
 
@@ -1619,15 +1619,15 @@ msgstr "Bearbeiten der Photo-Reihenfolge"
 msgid "UPDATE_PHOTOS_CONFIRMATION"
 msgstr "Wollen Sie die neue Reihenfolge bestätigen?"
 
-#: templates/index.html:14 templates/index.html:16
+#: templates/index.html:15 templates/index.html:17
 msgid "Willkommen"
 msgstr "Willkommen"
 
-#: templates/index.html:33
+#: templates/index.html:39
 msgid "Welcome to KEIKEN!"
 msgstr "Herzlich Willkommen bei KEIKEN!"
 
-#: templates/index.html:34
+#: templates/index.html:40
 msgid "KEIKEN_ABSTRACT"
 msgstr ""
 "KEIKEN<sup><a class='mp-reference' href='/help#introduction' title='Was ist "
@@ -1635,25 +1635,21 @@ msgstr ""
 "helfen soll deine Auslandserfahrungen mit jedem zu teilen. Melde dich an und "
 "erzähle deinen Freunden und Bekannten jetzt von deinen Abenteuern!"
 
-#: templates/index.html:39
+#: templates/index.html:48 templates/index.html:49
 msgid "TO_DASHBOARD"
 msgstr "Zum Dashboard"
 
-#: templates/index.html:43
+#: templates/index.html:56 templates/index.html:57
 msgid "VIEW_ALBUM"
 msgstr "Unser erstes Album betrachten"
 
-#: templates/index.html:46
+#: templates/index.html:63 templates/index.html:64
 msgid "TRY_KEIKEN"
 msgstr "KEIKEN selber ausprobieren"
 
-#: templates/index.html:55 templates/registration-form.html:33
+#: templates/index.html:74 templates/registration-form.html:58
 msgid "Sign Up"
 msgstr "Registrieren"
-
-#: templates/index.html:56 templates/login-form.html:6
-msgid "Login"
-msgstr "Anmeldung"
 
 #: templates/javascript-warning.html:5
 msgid "JS_DISABLED_WARNING"
@@ -1662,11 +1658,15 @@ msgstr ""
 "nutzen zu können, müssen Sie Javascript aktivieren, ansonsten können Sie nur "
 "die nicht-interaktiven Seiten (Impressum, Kontakt, Team, ...) besuchen."
 
-#: templates/login-form.html:48
+#: templates/login-form.html:6
+msgid "Login"
+msgstr "Anmeldung"
+
+#: templates/login-form.html:44
 msgid "Sign in"
 msgstr "Anmelden"
 
-#: templates/login-form.html:51
+#: templates/login-form.html:47
 msgid "Help, I forgot my password!"
 msgstr "Hilfe, ich habe mein Passwort vergessen!"
 
@@ -1698,19 +1698,19 @@ msgstr "Rotieren"
 msgid "REVERT"
 msgstr "Rückgängig machen"
 
-#: templates/registration-form.html:3
+#: templates/registration-form.html:6
 msgid "Registration"
 msgstr "Registration"
 
-#: templates/registration-form.html:20
+#: templates/registration-form.html:30
 msgid "Confirm Password"
 msgstr "Passwort bestätigen"
 
-#: templates/registration-form.html:25
+#: templates/registration-form.html:38
 msgid "First name"
 msgstr "Vorname"
 
-#: templates/registration-form.html:29
+#: templates/registration-form.html:45
 msgid "Last name"
 msgstr "Nachname"
 
@@ -1718,11 +1718,11 @@ msgstr "Nachname"
 msgid "RESET_PASSWORD_COMPLETE"
 msgstr "Passwort Reset erfolgreich"
 
-#: templates/registration/password_reset_complete.html:10
+#: templates/registration/password_reset_complete.html:12
 msgid "RESET_PASSWORD_COMPLETE_EXPLANATION"
 msgstr ""
-"Ihr {{ login_url }} Passwort wurde erfolgreich geändert. Sie können Sich nun <a "
-"href={{ login_url }}>einloggen</a>."
+"Ihr {{ login_url }} Passwort wurde erfolgreich geändert. Sie können Sich nun "
+"<a href={{ login_url }}>einloggen</a>."
 
 #: templates/registration/password_reset_confirm.html:7
 msgid "Define New Password"
@@ -1742,7 +1742,7 @@ msgstr ""
 "Bitte geben Sie ein neues Passwort ein und wiederholen Sie es um Tippfehler "
 "zu vermeiden. "
 
-#: templates/registration/password_reset_confirm.html:49
+#: templates/registration/password_reset_confirm.html:51
 msgid "RESET_PASSWORD_ERROR_EXPLANATION"
 msgstr ""
 "Dieser Link zum Zurücksetzen des Passworts ist leider ungültig. Bitte "
@@ -1751,12 +1751,6 @@ msgstr ""
 #: templates/registration/password_reset_done.html:6
 msgid "Reset Email Sent"
 msgstr "Passwort zurücksetzen - Email gesendet"
-
-#: templates/registration/password_reset_done.html:10
-msgid "RESET_PASSWORD_EMAIL_SENT"
-msgstr ""
-"Wir haben einen Link zum Zurücksetzen des Passworts an die von Ihnen "
-"angegebene Email-Adresse geschickt. Sie sollten sie in Kürze empfangen. "
 
 #: templates/registration/password_reset_form.html:5
 msgid "Reset Password"
@@ -1771,3 +1765,17 @@ msgstr ""
 #: templates/view-album.html:6
 msgid "Albumsansicht"
 msgstr "Albumsansicht"
+
+#~ msgid "LOGIN_INFO"
+#~ msgstr ""
+#~ "Bitte geben Sie rechts Ihre Login-Daten ein. Sollten Sie Probleme beim "
+#~ "Login haben, nehmen Sie bitte mit dem KEIKEN-Team Kontakt auf. Wenn Sie "
+#~ "noch keinen haben, dann registrieren Sie sich hier: {{ registration_url }}"
+
+#~ msgid "Schließen"
+#~ msgstr "Schließen"
+
+#~ msgid "RESET_PASSWORD_EMAIL_SENT"
+#~ msgstr ""
+#~ "Wir haben einen Link zum Zurücksetzen des Passworts an die von Ihnen "
+#~ "angegebene Email-Adresse geschickt. Sie sollten sie in Kürze empfangen. "

@@ -6,5 +6,7 @@
 {% block name %}{% trans "ACCOUNT_ACTIVATED" %}{% endblock %}
 
 {% block account_info %}
-	<p>{% trans "ACCOUNT_ACTIVATED_EXPLANATION" %}</p>
+{% url 'login' as login_url %}
+	<p>{% blocktrans %} Your account has been activated successfully. You can now <a href='{{ login_url }}'>log in</a> and use
+KEIKEN. Thanks for signing up!{% endblocktrans %}</p>
 {% endblock %}
