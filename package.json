@@ -1,0 +1,25 @@
+{
+  "name": "photomap",
+  "version": "1.0.0",
+  "description": "Installing psycopg2 requires 'libpq-dev'",
+  "main": "build.profile.js",
+  "engines": {
+    "node": "11.12.0"
+  },
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@bitbucket.org/fvclaus/keiken.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "homepage": "https://bitbucket.org/fvclaus/keiken#readme",
+  "devDependencies": {
+    "stylus": "^0.54.7"
+  }
+}
