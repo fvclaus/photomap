@@ -96,7 +96,7 @@ def delete(request):
                 user.delete()
                 try:
                     send_delete_mail(user_email, request)
-                    if request.POST.has_key("cause") or request.POST.has_key("cause_message"):
+                    if "cause" in request.POST or "cause_message" in request.POST:
                         message = "Cause: %s\nMessage: %s" % (request.POST.get("cause", default="No cause selected."),
                                                               request.POST.get("cause_message", default="No message entered."))
                         mail_managers("Account deleted", message)
@@ -112,7 +112,7 @@ def delete(request):
 
 
 def is_test_user(user):
-    return user.username == settings.EMAIL_TEST_USER
+    return user.username == settings.TEST_USER_EMAIL
 
 
 def send_mail_to_user(user_email, subject, message):

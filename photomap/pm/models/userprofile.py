@@ -1,9 +1,10 @@
-from django.db import models
-from django.contrib.auth.models import User
-from django.db.models.signals import post_save
-from pm import appsettings
 import logging
 
+from django.contrib.auth.models import User
+from django.db import models
+from django.db.models.signals import post_save
+
+from pm import appsettings
 
 BYTE_TO_MBYTE = pow(2, 20)
 

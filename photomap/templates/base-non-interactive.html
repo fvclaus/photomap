@@ -8,7 +8,9 @@
 {{ block.super }}
 {% load compress %}
 {% compress css %}
-<link rel="stylesheet" type="text/x-stylus" href="/static/styles/noninteractive-main.styl" />
+<link rel="stylesheet"
+      type="text/x-stylus"
+      href="/static/styles/noninteractive-main.styl" />
 {% endcompress %}
 {% endblock %}
 
@@ -17,16 +19,16 @@
 {{ block.super }}
 {% load compress %}
 {% compress js %}
-<script type="text/javascript" src="/static/js/keiken/main/non-interactive.js" ></script>
+<script type="text/javascript"
+        src="/static/js/keiken/main/non-interactive.js"></script>
 {% endcompress %}
-<!-- {% block extrajs %} -->
-<!-- {% endblock %} -->
 {% endblock %}
 
 {% block content %}
 
 {% block background_image %}{% endblock %}
-<section class="mp-non-interactive-content span-16" id="mp-non-interactive-content">
+<section class="mp-non-interactive-content span-16"
+         id="mp-non-interactive-content">
   <!-- If one warning is present, it will push the content wrapper below the footer, making parts of it inaccessible. -->
   {% include "warnings.html" %}
   {% block non_interactive_content %}

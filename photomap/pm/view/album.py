@@ -2,13 +2,15 @@ import datetime
 import logging
 import string
 
-from django.contrib.auth import hashers
+from django.conf import settings
+from django.contrib.auth import authenticate, hashers, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.shortcuts import redirect, render_to_response
 from django.utils import crypto
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
+from django.views.defaults import page_not_found
 
 from pm.form.album import (AlbumInsertForm, AlbumPasswordUpdateForm,
                            AlbumUpdateForm)
@@ -54,6 +56,17 @@ def demo(request):
     album = Album.objects.get(user=demo)
     request.session["album_%d" % album.pk] = True
     return redirect("/album/%d/view/%s/" % (album.pk, album.secret))
+
+
+@require_GET
+def login_test_user(request):
+    user = authenticate(request, username=settings.TEST_USER_EMAIL,
+                        password=settings.TEST_USER_PASSWORD)
+    if user is not None:
+        login(request, user)
+        return redirect('dashboard')
+    else:
+        return page_not_found(request, 'Test user not found')
 
 
 @require_http_methods(["GET", "POST"])

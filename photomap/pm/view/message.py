@@ -13,7 +13,7 @@ class JSONEncoder(json.JSONEncoder):
 
 
 class EmptyResponse:
-    def toserializable():
+    def toserializable(self):
         return {}
 
 

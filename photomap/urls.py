@@ -58,7 +58,7 @@ account_patterns = [method_mapper(r'^$', "account", get=account.view, delete=acc
                     url(r'^delete/complete/$', direct_to_template("account/delete-complete.html"))]
 
 account_patterns += [url(r'^login/$', authentication.login, name="login"),
-                     url(r'^logout/$', authentication.logout, {"next_page": "/"})]
+                     url(r'^logout/$', authentication.logout)]
 
 account_patterns += [
     url(r'^register/$',
@@ -109,7 +109,7 @@ photo_patterns = [url(r'^$', photo.insert),  # accepts only POST
 # main
 # ========================================================
 urlpatterns = [url(r'^$', landingpage.view),
-               url(r'^dashboard/$', dashboard.view),
+               url(r'^dashboard/$', dashboard.view, name='dashboard'),
                url(r'^test$', direct_to_template("runner.html")),
                url(r'^jsi18n/$', JavaScriptCatalog.as_view(),
                    name='javascript-catalog'),
@@ -148,7 +148,9 @@ urlpatterns = [url(r'^$', landingpage.view),
                # user-account hooks
                # ================================================================
                url(r'^account/', include(account_patterns)),
-               path('admin/', admin.site.urls)
+               path('admin/', admin.site.urls),
+               url(r'^login-test-user$', album.login_test_user,
+                   name='login_test_user')
                # url(r'^accounts/', include(registration)),
                ]
 

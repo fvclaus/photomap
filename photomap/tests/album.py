@@ -61,7 +61,7 @@ class AlbumControllerTest(ApiTestCase):
                 "lat": Decimal("17.375803"),
                 "lon": Decimal("-34.628906")}
         (album, content) = self.assertCreates(data)
-        self.assertTrue(album.secret != None)
+        self.assertTrue(album.secret is not None)
         #self.assertEqual(album.country, "oc")
         # OSM geocoding has been disabled for the moment.
         self.assertTrue(content["id"])

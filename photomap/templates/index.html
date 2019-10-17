@@ -3,15 +3,6 @@
 <!-- for the translation with django -->
 {% load i18n %}
 
-{% block js %}
-{{ block.super }}
-{% load compress %}
-{% compress js %}
-<script type="text/javascript"
-        src="/static/js/keiken/main/landingpage.js"></script>
-{% endcompress %}
-{% endblock %}
-
 {% block title %}{% trans "Willkommen" %}{% endblock %}
 
 {% block name %}{% trans "Willkommen" %}{% endblock %}
@@ -22,11 +13,9 @@
 <!-- if passed along the "day"-parameter gives the current weekday from sunday = 0 to saturday = 6; each day there is a different background -->
 {% if day %}
 <img src="/static/images/backgrounds/bg{{ day }}.jpg"
-     alt="background couldn't be loaded"
      class="background-image" />
 {% else %}
 <img src="/static/images/backgrounds/bg0.jpg"
-     alt="background couldn't be loaded"
      class="background-image" />
 {% endif %}
 <div class="background-overlay-black"></div>
@@ -50,38 +39,17 @@
     </p>
     {% else %}
     <p>
-      <input type="button"
-             id="mp-demo-button"
-             class="mp-landingpage-button"
-             title='{% trans "VIEW_ALBUM" %}'
-             value='{% trans "VIEW_ALBUM" %}' />
+      <!-- TODO This does not work -->
+      <a href='{% url "registration_register" %}'
+         class="mp-landingpage-button">{% trans "VIEW_ALBUM" %}</a>
     </p>
     <p>
-      <input type="button"
-             id="mp-test-button"
-             class="mp-landingpage-button"
-             title='{% trans "TRY_KEIKEN" %}'
-             value='{% trans "TRY_KEIKEN" %}' />
+      <a href='{% url "login_test_user" %}'
+         class="mp-landingpage-button">{% trans "TRY_KEIKEN" %}</a>
     </p>
     {% endif %}
   </div>
   {% endblock %}
-</section>
-
-<section id="keiken-login">
-  <div id="mp-login-switch">
-    <span id="mp-switch-to-register"><a href="{% url 'registration_register' %}">
-        {% trans "Sign Up" %}?</a></span>
-  </div>
-  <div class="mp-login-tab"
-       id="mp-login">
-    {% include "login-form.html" %}
-  </div>
-
-  <div class="mp-login-tab mp-nodisplay"
-       id="mp-register">
-    {% include "registration-form.html" %}
-  </div>
 </section>
 
 {% endblock %}

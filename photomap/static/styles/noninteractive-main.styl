@@ -34,7 +34,7 @@
   text-align right
 #account #mp-user-password-forgot a
   color #000
-#account #mp-user-password-forgot a:hover 
+#account #mp-user-password-forgot a:hover
   background none
   color #118811 // same green as links on black background just darker
   text-decoration none
@@ -65,7 +65,7 @@
     text-decoration underline
   li
     margin 5px
-    
+
 article
   p
     width 100% //90% Why this?
@@ -92,10 +92,10 @@ address
     width 72% // 100% - 3% label margin right (= space between laveb and input) - 25% label width
   input[type="radio"]
     width 25%
-  
+
 .mp-form label.error
   display none !important // prevents errors from being shown
-  
+
 .mp-request-success
   color blue
   font-weight bold
@@ -119,7 +119,7 @@ address
   span
     font-weight bolder
 
-/* --------- end payment -------- */  
+/* --------- end payment -------- */
 
 /* --------------------------- */
 /* -- styling for help page -- */
@@ -134,12 +134,12 @@ address
   .mp-active-link
    background-color #fff
    text-decoration underline
-    
+
 
 #mp-project-introduction h2,
 #mp-project-introduction h3
   text-align center
-  
+
 .mp-keiken-before,
 .mp-keiken-reasons
   clear both
@@ -159,7 +159,7 @@ address
   p
     margin 0
     padding 5px 0
-    
+
 .mp-keiken-presentation-text .mp-keiken-presentation-text-firsty
   padding-top 10px
 .mp-keiken-presentation-text .mp-keiken-presentation-text-lasty
@@ -261,8 +261,8 @@ address
 
 #landingpage .background-image
   opacity 0.5
-  
-  
+
+
 #landingpage .background-overlay-black
   z-index 1
   background url(/static/images/ie-rgba-black-alpha-10.png) repeat
@@ -306,25 +306,24 @@ section.keiken-intro
 /* ....... main styles ....... */
 .mp-landing-page-links
   width 100%
-  
-#landingpage #keiken-login #login_submit,
-#landingpage #keiken-login .mp-form-submit,
+
 .mp-landingpage-button
-  margin-top 5px
-  font-size .8em
+  background rgba(0,0,0,0.5)
+  color white
   padding 3px
-
-.mp-landingpage-button
+  font-size .8em
   width 100%
-  min-width 80%
+  text-decoration none !important
+  color white !important
+  display block
+  text-align center
 
-#landingpage #keiken-login #login_submit:hover,
-#landingpage #keiken-login .mp-form-submit:hover,
+
 .mp-landingpage-button:hover
   cursor pointer
   color #88ff88
   background-color black
-  
+
 /* ....... guest styles ..... */
 section.keiken-intro
   form input
@@ -335,13 +334,13 @@ section.keiken-intro
     margin-left 6%
     cursor pointer
     box-shadow(0px 0px 5px rgba(255,255,255,0.8))
-    
+
 .mp-guest-login-explain
   margin-top 30px
   font-size .8em
   font-style italic
 
-/* ......... login styles ...... */ 
+/* ......... login styles ...... */
 
 section#keiken-login
   overflow auto
@@ -384,24 +383,17 @@ section#keiken-login
     margin-top 10px
 //  label
 //    padding 3px
-    
-#landingpage .mp-login-tab input,
-.mp-landingpage-button
-  background url(/static/images/ie-rgba-black-alpha-50.png) repeat
-  background rgba(0,0,0,0.5)
-  color white
-  border-radius 5px
-  box-shadow(inset 0px 0px 5px rgba(255,255,255,0.8))
-  padding 3px
-  
+
+
+
 #landingpage #keiken-login #login_submit,
 #landingpage #keiken-login .mp-form-submit,
   margin-left 28% //instead of using mp-form-submit
-    
+
 #mp-login-register
   width 50%
   margin-left 25%
-  
+
 #mp-login-error
   width 80%
   margin 0 10%
@@ -425,11 +417,11 @@ section#keiken-login
 #account hr
   background-color black
   height 3px
-  
+
 #mp-account-settings-options
   margin-bottom 30px
 
-.mp-account-settings-form 
+.mp-account-settings-form
   display none
 
 /* ------ end account ------ */
