@@ -15,6 +15,6 @@ logging.basicConfig(stream=sys.stderr, level=logging.INFO)
 
 logger = logging.getLogger(__name__)
 logger.debug("Current path: %s, Project path %s" % (os.getcwd(), project_path))
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'settings.heroku')
 
 application = get_wsgi_application()

@@ -1,3 +1,5 @@
+Installing psycopg2 requires 'libpq-dev'
+
 # Install virtualenv
 pip3 install --user virtualenv
 # Add to path
