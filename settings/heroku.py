@@ -7,4 +7,4 @@ COMPRESS_OFFLINE = True
 
 BASE_DIR = PROJECT_PATH
 
-django_heroku.settings(locals())
+django_heroku.settings(locals(), staticfiles=False)

@@ -3,6 +3,7 @@ import os
 PROJECT_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 STATIC_PATH = os.path.join(PROJECT_PATH, "static")
 
+
 UPLOAD_PATH = os.path.join("upload", "%Y", "%m", "%d")
 PHOTO_PATH = os.path.join(STATIC_PATH, "photo")
 PROFILE_PICTURE_PATH = os.path.join(STATIC_PATH, "profile-picture")
@@ -105,10 +106,6 @@ FILE_UPLOAD_HANDLERS = (
 # 10 MB, default is 2.5 MB
 FILE_UPLOAD_MAX_MEMORY_SIZE = 10000000
 
-# Additional locations of static files
-STATICFILES_DIRS = (
-    STATIC_PATH,
-)
 
 # List of finder classes that know how to find static files in
 # various locations.
