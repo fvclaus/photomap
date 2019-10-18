@@ -19,7 +19,7 @@
   "author": "",
   "license": "ISC",
   "homepage": "https://bitbucket.org/fvclaus/keiken#readme",
-  "devDependencies": {
+  "dependencies": {
     "stylus": "^0.54.7"
   }
 }
