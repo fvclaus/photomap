@@ -115,6 +115,8 @@ STATICFILES_FINDERS = (
     "compressor.finders.CompressorFinder",
 )
 
+STATICFILES_DIR = (STATIC_PATH, )
+
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '_aoynhp*s8vn0=fgom9%(p^dl^r!gs7ltw7qs%^zu#^*=kcr6)'
 
