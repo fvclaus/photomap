@@ -8,19 +8,16 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.sites.shortcuts import get_current_site
 from django.core.mail import mail_managers, send_mail
 from django.http import HttpResponseRedirect
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.template import loader
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-from django.views.decorators.http import require_GET, require_POST
-
-from pm.form.account import DeleteAccountForm, UpdateEmailForm
+from django.views.decorators.http import require_GET
+from pm.form.account import DeleteAccountForm
 from pm.models.album import Album
 from pm.models.photo import Photo
 from pm.models.place import Place
-
-from .message import error, request_not_allowed_error, success
 
 logger = logging.getLogger(__name__)
 
@@ -42,36 +39,7 @@ def view(request):
             "n_places": n_places,
             "n_photos": n_photos,
             "is_test_user": is_test_user(request.user)}
-    return render_to_response("account/active.html", data)
-
-
-@csrf_protect
-@login_required
-@require_POST
-@sensitive_post_parameters("confirm_password")
-def update_email(request):
-    # There is currently no system to confirm that the new email is actually valid.
-    # This is a problem because user might change their email to something invalid and thereby disguise their identity.
-    return request_not_allowed_error()
-
-    user = request.user
-    if is_test_user(user):
-        return request_not_allowed_error()
-    form = UpdateEmailForm(request.POST)
-    if form.is_valid():
-        new_email = form.cleaned_data["new_email"]
-        confirm_password = form.cleaned_data["confirm_password"]
-
-        logger.info("Trying to update email of User %d." % user.id)
-        if user.check_password(confirm_password):
-            user.username = new_email
-            user.save()
-            logger.info("User %d email updated." % user.id)
-            return success(email=new_email)
-        else:
-            return error(_("CREDENTIALS_ERROR"))
-    else:
-        return error(str(form.errors))
+    return render(request, "account/active.html", data)
 
 
 @csrf_protect
@@ -108,7 +76,7 @@ def delete(request):
                 form.errors["__all__"] = form.error_class(
                     [_("CREDENTIALS_ERROR")])
 
-    return render_to_response("account/delete.html", {"form": form})
+    return render(request, "account/delete.html", {"form": form})
 
 
 def is_test_user(user):

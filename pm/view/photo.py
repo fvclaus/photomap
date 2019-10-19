@@ -5,11 +5,10 @@ from io import BytesIO
 
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
-from django.shortcuts import render_to_response
+from django.shortcuts import render
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from PIL import Image, ImageFile
-
 from pm.form.photo import (MultiplePhotosUpdateForm, PhotoCheckForm,
                            PhotoInsertForm, PhotoUpdateForm)
 from pm.models.photo import Photo
@@ -141,7 +140,7 @@ def get_insert_dialog(request):
         place = request.GET["place"]
     except:
         pass
-    return render_to_response("form/insert/photo.html", {"form": form, "place": place})
+    return render(request, "form/insert/photo.html", {"form": form, "place": place})
 
 
 @login_required

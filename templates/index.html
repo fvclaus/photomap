@@ -31,11 +31,11 @@
   <div class="mp-landing-page-links">
     {% if user.is_authenticated %}
     <p>
-      <input type="button"
-             id="mp-dashboard-button"
-             class="mp-landingpage-button"
-             title='{% trans "TO_DASHBOARD" %}'
-             value='{% trans "TO_DASHBOARD" %}' />
+      <a href="{% url 'dashboard' %}"
+         class="mp-landingpage-button"
+         value='{% trans "TO_DASHBOARD" %}'>
+        {% trans "TO_DASHBOARD" %}
+      </a>
     </p>
     {% else %}
     <p>

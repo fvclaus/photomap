@@ -1,5 +1,4 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext as _
 
@@ -15,17 +14,6 @@ class UpdatePasswordForm(forms.Form):
         if new_password != new_password_repeat:
             raise ValidationError(
                 _("PASSWORD_REPETITION_ERROR"), code="invalid")
-        return self.cleaned_data
-
-
-class UpdateEmailForm(forms.Form):
-    new_email = forms.EmailField()
-    confirm_password = forms.CharField(widget=forms.PasswordInput)
-
-    def clean(self):
-        new_email = self.cleaned_data.get("new_email")
-        if len(User.objects.filter(username=new_email)) == 1:
-            raise ValidationError(_("EMAIL_ALREADY_EXISTS_ERROR"))
         return self.cleaned_data
 
 

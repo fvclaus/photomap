@@ -1,7 +1,6 @@
 from django.core.mail import mail_managers
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from django.utils.translation import ugettext as _
-
 from pm.form.footer import ContactForm
 from pm.views import ENCODED_MAIL_ADDRESS
 
@@ -23,7 +22,7 @@ def contact(request):
             except Exception as e:
                 form.errors["__all__"] = form.error_class([_("MAIL_ERROR")])
 
-    return render_to_response("footer/contact.html", {"form": form, "email_address": ENCODED_MAIL_ADDRESS})
+    return render(request, "footer/contact.html", {"form": form, "email_address": ENCODED_MAIL_ADDRESS})
 
 
 def format_message(name, from_email, message):

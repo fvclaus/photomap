@@ -1639,12 +1639,6 @@ msgstr "Last name"
 msgid "RESET_PASSWORD_COMPLETE"
 msgstr "Password reset"
 
-#: templates/registration/password_reset_complete.html:12
-msgid "RESET_PASSWORD_COMPLETE_EXPLANATION"
-msgstr ""
-"Your new password has been set. You may go ahead and <a "
-"href='{{login_url}}'>log</a> in."
-
 #: templates/registration/password_reset_confirm.html:7
 msgid "Define New Password"
 msgstr "Define New Password"

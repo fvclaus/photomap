@@ -25,13 +25,13 @@ function modulo (x, y) {
  */
 function decodeEmail ($email) {
    if ($email.size() !== 0) {
-      
+
       var email = $email.text(),
           i = 0,
           emailDecoded = "";
 
       for (i = 0; i <= email.length; i++) {
-         
+
          if (modulo(i, 5) === 0) {
             emailDecoded += email.charAt(i - 1);
          }
@@ -60,16 +60,16 @@ $(document).ready(function () {
 
    var hash = window.location.hash.substring(1,window.location.hash.length),
       spaceUsage = [];
-   
+
    startFormValidator();
    // single point of control. we don't want to spread selectors throught the code
    decodeEmail($("#mp-email-jsenabled"));
-   
+
    if ($("body").attr("id") === "help") {
       $("#help-navigation a").on("click", function (event) {
          event.preventDefault();
          var $link = $(this);
-         
+
          if (!$link.hasClass("mp-active-link")) {
             $(".mp-active-link").removeClass("mp-active-link");
             $link.addClass("mp-active-link");
@@ -79,17 +79,14 @@ $(document).ready(function () {
             });
          }
       });
-      
+
       $(".mp-tutorial-tabs-wrapper").tabs({
          heightStyle: "filled"
       });
-      
+
       $("#mp-tutorial").hide();
       if (hash) {
          $("#help-navigation").find("a[name='" + hash + "']").click();
       }
    }
-   // display all tags that are marked as buttons as ui-buttons
-   $(".mp-button").button();
 });
-

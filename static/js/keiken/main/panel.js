@@ -24,7 +24,7 @@ function bindUserMenuListener () {
        menuHeight = $menu.outerHeight(),
        $user = $("#mp-user"),
        offset = $user.offset();
-       
+
    // user is logged in
    if ($user.size() === 1) {
       setFontSizeInVH($user, 2);
@@ -40,7 +40,7 @@ function bindUserMenuListener () {
          });
 
       $user
-         .button({ icons : { primary : "ui-icon-triangle-1-n" } })
+         // .button({ icons : { primary : "ui-icon-triangle-1-n" } })
          .on("click", function () {
             $menu.stop(true).slideToggle(100);
          });
@@ -65,7 +65,7 @@ $(window).on("resize", function () {
 });
 
 $(document).ready(function () {
-   
+
    resizeFont();
 
    // this will probably not work in ie or similiar
@@ -75,4 +75,3 @@ $(document).ready(function () {
    // vh is supported in ff 19 and chrome 20
    bindUserMenuListener();
 });
-

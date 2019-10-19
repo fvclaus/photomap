@@ -6,12 +6,11 @@ from django.conf import settings
 from django.contrib.auth import authenticate, hashers, login
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from django.shortcuts import redirect, render_to_response
+from django.shortcuts import redirect, render
 from django.utils import crypto
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from django.views.defaults import page_not_found
-
 from pm.form.album import (AlbumInsertForm, AlbumPasswordUpdateForm,
                            AlbumUpdateForm)
 from pm.models.album import Album
@@ -80,15 +79,15 @@ def view(request, album_id, secret):
 
         if album.secret != secret:
             logger.debug("Secret does not match.")
-            return render_to_response("album-share-failure.html")
+            return render(request, "album-share-failure.html")
 
         if request.method == "GET":
             # user owns the album
             if request.user == album.user or request.session.get("album_%d" % album_id):
-                return render_to_response("view-album.html")
+                return render(request, "view-album.html")
             if not hashers.is_password_usable(album.password):
                 logger.debug("Album does not has a password yet.")
-                return render_to_response("album-share-failure.html")
+                return render(request, "album-share-failure.html")
 
             return landingpage.view_album_login(request)
         else:
@@ -100,12 +99,12 @@ def view(request, album_id, secret):
             else:
                 logger.debug("Password %s is incorrect." % password)
                 today = datetime.date.today().strftime("%w")
-                return render_to_response("album-share-login.html",
-                                          {"password_incorrect_error": "Passwort is not correct.",
-                                           "day": today.strftime("%w")})
+                return render(request, "album-share-login.html",
+                              {"password_incorrect_error": "Passwort is not correct.",
+                               "day": today.strftime("%w")})
     except Exception as e:
         logger.info(str(e))
-        return render_to_response("album-share-failure.html")
+        return render(request, "album-share-failure.html")
 
 
 @require_GET

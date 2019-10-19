@@ -22,13 +22,14 @@ define(["dojo/_base/declare",
              getModel : function () {
                 return this.model;
              },
+             // TODO Remove this functionality
              setDisabled : function (disable) {
                 assertTrue(disable !== undefined, "disable must be defined");
-                
+
                 console.log(this.view.getName() + " setDisabled: " + disable);
-                
+
                 this.view.setDisabled(disable);
-                
+
                 if (!disable && this.view.enable) {
                    this.view.enable();
                 } else if (disable && this.view.disable) {
@@ -40,7 +41,7 @@ define(["dojo/_base/declare",
              },
              setActive : function (active) {
                 assertTrue(active !== undefined, "active mustn't be undefined");
-                
+
                 this.view.setActive(active);
              },
              isActive : function () {

@@ -15,16 +15,16 @@ $(document).ready(function () {
    $("#mp-user-quota").text(spaceUsage[0]);
    $("#mp-user-used-space").text(spaceUsage[1]);
    $("#mp-user-free-space").text(spaceUsage[2]);
-   
+
    // show correct update-form on demand
    $("#mp-account-settings-options a").not("#delete-account-link").on("click", function (event) {
       event.preventDefault();
-      
+
       var $formWrapper = $($(this).attr("href")),
          focus = function () {
             $formWrapper.find(".mp-form-submit").focus();
          };
-      
+
       if ($(".mp-current-form").length > 0) {
          if ($(".mp-current-form").attr("id") !== $(this).attr("href").substring(1, $(this).attr("href").length)) {
             $(".mp-current-form").fadeOut(300, function () {
@@ -43,7 +43,7 @@ $(document).ready(function () {
    $(".mp-form").each(function () {
       // Reset validator settings attached by startFormValidator.
       // This is dangerous, because existing listeners are not removed.
-      $.data(this, "validator", null); 
+      $.data(this, "validator", null);
       var $form = $(this);
       $form.validate({
          // debug : true,
@@ -53,8 +53,8 @@ $(document).ready(function () {
             var $requestFail = $form.find(".mp-request-fail"),
                 $submitFail = $form.find(".mp-submit-fail"),
                 $success = $form.find(".mp-request-success");
-   
-            
+
+
             $.ajax({
                url: $form.attr("action"),
                type: $form.attr("method"),
@@ -70,9 +70,6 @@ $(document).ready(function () {
 
                   if (data.success) {
                      $success.show();
-                     if (data.email) {
-                        $(".mp-user-email").text(data.email);                              
-                     }
                   } else {
                      $requestFail.html(data.error);
                   }

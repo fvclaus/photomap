@@ -3,7 +3,6 @@ from django.contrib import admin
 from django.http import Http404, HttpResponseNotAllowed
 from django.urls import include, path
 from django.views.i18n import JavaScriptCatalog
-
 from pm.view import (account, album, authentication, dashboard, footer,
                      landingpage, photo, place, registration)
 from pm.views import direct_to_template
@@ -54,7 +53,6 @@ account_patterns = [method_mapper(r'^$', "account", get=account.view, delete=acc
                     url(r'^inactive$', direct_to_template(
                         "account/inactive.html")),
                     # url(r'^password/', include(account_password_patterns)),
-                    url(r'^email/$', account.update_email),  # accepts only POST
                     url(r'^delete/complete/$', direct_to_template("account/delete-complete.html"))]
 
 account_patterns += [url(r'^login/$', authentication.login, name="login"),

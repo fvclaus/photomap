@@ -18,7 +18,7 @@ define([
             this.selectedMarker = null;
             this.openedMarker = null;
          },
-         
+
          startup : function (mapData, albumview, admin) {
             if (albumview) {
                //in this case mapData is actually just a single album with a place-collection
@@ -55,7 +55,7 @@ define([
             // show message if no markers are displayed
             this.view.toggleMessage((this.markerModelCollection.size() === 0));
             this._bindCollectionListener();
-            
+
          },
          getOpenedMarker : function () {
             return this.openedMarker;
@@ -65,7 +65,7 @@ define([
          },
          /* ------------------------------------- */
          /* ---------- Map Management  ---------- */
-         
+
          getPositionInPixel : function (element) {
             return this.view.getPositionInPixel(element);
          },
@@ -73,10 +73,10 @@ define([
          /* --------- Marker Management --------- */
          updateMarkerStatus : function (presenterOrModel, status) {
             assertTrue((status === "select" || status === "open"), "Marker status can just be 'select' or 'open'.");
-            
+
             // if the given place or album is not a presenter of a marker you have to get its presenter first..
             var presenter = (presenterOrModel instanceof Presenter) ? presenterOrModel : this.getMarkerPresenter(presenterOrModel);
-            
+
             if (status === "select") {
                // change icon of selected (soon to be old) marker; (!) when a marker is deselected it might still be opened in which case its icon has to change to selected
                if (this.selectedMarker) {
@@ -114,7 +114,7 @@ define([
          },
          updateMarkerIcons : function (presenter) {
             var opened, selected;
-            
+
             this.markerPresenter.forEach(function (markerPresenter) {
                opened = (markerPresenter === this.openedMarker);
                selected = (markerPresenter === this.selectedMarker);
@@ -155,14 +155,14 @@ define([
             var markerImplementation = this.view.createMarker(model),
                markerView = new MarkerView(this.view, markerImplementation, model),
                marker = markerView.getPresenter();
-            
+
             marker.show();
             marker.updateIcon(false, false);
             if (!init) {
                this.view.toggleMessage(false);
                this.triggerDblClickOnMarker(marker);
             }
-            
+
             return marker;
          },
          initMarkers : function (models) {
@@ -198,7 +198,7 @@ define([
          },
          _fitMapToMarkers : function (models) {
             var latLngData = [];
-            
+
             models.forEach(function (model) {
                latLngData.push({
                   lat : model.getLat(),

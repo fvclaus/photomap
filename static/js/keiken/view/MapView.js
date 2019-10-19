@@ -20,7 +20,7 @@ define([
    function (declare, View, MapPresenter, communicator, MarkerView, InfoText) {
       var MapView = declare(View, {
          constructor : function () {
-            
+
             this.$container = $("#mp-map");
             this.viewName = "Map";
             this._bindActivationListener(this.$container, this.viewName);
@@ -64,27 +64,27 @@ define([
                },
                disableDoubleClickZoom : true
             };
-            
+
             this.infotext = new InfoText(this.$container, "");
             // mode : fullscreen || normal
             this.mode = 'normal';
             this.presenter = new MapPresenter(this);
             this._create();
          },
-         
+
          /* ------------------------------------ */
          /* ------ Map specific methods -------- */
-         
+
          /**
           * @public
           * @summary Returns a object containing the absolute bottom and left position of the marker.
-          * @param {InfoMarker} element 
-          * @returns {Object} Containing the bottom and left coordinate as (!!)top(!!) and left attribute 
+          * @param {InfoMarker} element
+          * @returns {Object} Containing the bottom and left coordinate as (!!)top(!!) and left attribute
           */
          getPositionInPixel : function (element) {
-            
+
             var projection, pixel, offset;
-            
+
             projection = this.getOverlay().getProjection();
             pixel = projection.fromLatLngToContainerPixel(element.getLatLng());
             offset = this.$mapEl.offset();
@@ -93,64 +93,59 @@ define([
             return {top : pixel.y, left : pixel.x};
          },
          /**
-          * @public 
+          * @public
           * @description moves map-center;
-          * @param percentage {Float} percentage of the map viewport by which the map center should be moved. Positive value => left 
+          * @param percentage {Float} percentage of the map viewport by which the map center should be moved. Positive value => left
           * @param direction {String} Optional! You may choose to specify a direction. input param "percentage" should be positive then
           */
          moveHorizontal : function (percentage, direction) {
-            
+
             if (direction && direction === "right") {
                percentage *= -1;
             }
-            
-            
+
+
             this.move(this.$mapEl.width() * percentage, 0);
          },
          /**
-          * @public 
+          * @public
           * @description moves map-center;
-          * @param percentage {Float} percentage of the map viewport by which the map center should be moved. Positive value => up 
+          * @param percentage {Float} percentage of the map viewport by which the map center should be moved. Positive value => up
           * @param direction {String} Optional! You may choose to specify a direction. input param "percentage" should be positive then
           */
          moveVertical : function (percentage, direction) {
-            
+
             if (direction && direction === "down") {
                percentage *= -1;
             }
-            
+
             this.move(0, this.$mapEl.height() * percentage);
          },
          /**
-          * @public 
+          * @public
           * @description wrapper for gmaps panBy to make it available to the public without being bound to gmaps API
           */
          move : function (x, y) {
             this.map.panBy(x, y);
          },
          setZoom : function (level) {
-            
+
             var instance, zoomListener;
-            
+
             instance = this;
             zoomListener = google.maps.event.addListener(this.map, "tilesloaded", function () {
                instance.map.setZoom(level);
                google.maps.event.removeListener(zoomListener);
             });
          },
-         zoomOut : function (lat, lng) {
-            var center = new google.maps.LatLng(lat, lng);
-            this.map.setCenter(center);
-            this.setZoom(this.ZOOM_OUT_LEVEL);
-         },
          expandBounds : function (instance) {
-            
+
             var lat = instance.getLat(),
                 lng = instance.getLng(),
                 lowerLatLng = new google.maps.LatLng(lat - 0.2, lng - 0.2),
                 upperLatLng = new google.maps.LatLng(lat + 0.2, lng + 0.2),
                 newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
-            
+
             this.map.fitBounds(newBounds);
          },
          getPanorama : function () {
@@ -163,15 +158,15 @@ define([
             var LatLngList = [], i, len, bounds, LtLgLen, minfo;
             markersinfo = markersinfo || this.markersinfo;
             this.markersinfo = markersinfo;
-            
-            
+
+
             for (i = 0, len = markersinfo.length; i < len; ++i) {
                minfo = markersinfo[i];
                LatLngList.push(new google.maps.LatLng(minfo.lat, minfo.lng));
             }
             // create a new viewpoint bound
             bounds = new google.maps.LatLngBounds();
-            
+
             // go through each...
             for (i = 0,  LtLgLen = LatLngList.length; i < LtLgLen; ++i) {
                // And increase the bounds to take this point
@@ -179,7 +174,7 @@ define([
             }
             // fit these bounds to the map
             this.map.fitBounds(bounds);
-            
+
             if (markersinfo.length < 2) {
                this.map.setZoom(10);
             }
@@ -197,45 +192,13 @@ define([
             return this.map.getBounds();
          },
          /**
-          @public
-          */
-         enable : function () {
-            
-            this.setMapCursor();
-            this.map.setOptions({
-               draggable : true,
-               scrollwheel : true,
-               keyboardShortcuts : true
-               //         mapTypeControl : true,
-               //         panControl : true,
-               //         zoomControl : true,
-               //         streetViewControl : true
-            });
-         },
-         /**
-          * @public
-          */
-         disable : function () {
-            
-            this.setMapCursor("not-allowed");
-            this.map.setOptions({
-               draggable : false,
-               scrollwheel : false,
-               keyboardShortcuts : false
-               //        mapTypeControl : false,
-               //        panControl : false,
-               //        zoomControl : false,
-               //        streetViewControl : false
-            });
-         },
-         /**
           * @description Wraps the google.maps.LatLng constructor
           */
          createLatLng : function (lat, lng) {
             return new google.maps.LatLng(lat, lng);
          },
          setMapCursor : function (style) {
-            
+
             if (!style) {
                style = "crosshair";
             }
@@ -248,13 +211,19 @@ define([
           * @description Set google map bounds to show a big part of the world.
           */
          showWorld : function () {
-            
-            var lowerLatLng, upperLatLng, newBounds;
-            
-            lowerLatLng = new google.maps.LatLng(-50, -90);
-            upperLatLng = new google.maps.LatLng(50, 90);
-            newBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
-            this.map.fitBounds(newBounds);
+
+           var self = this;
+           // TODO Wrap all methods in initialization fn.
+           function initialize() {
+             var lowerLatLng, upperLatLng, allowedBounds;
+
+             lowerLatLng = new google.maps.LatLng(-37, -92);
+             upperLatLng = new google.maps.LatLng(61, 60);
+             allowedBounds = new google.maps.LatLngBounds(lowerLatLng, upperLatLng);
+             self.map.fitBounds(allowedBounds);
+           }
+
+            google.maps.event.addDomListener(window, 'load', initialize);
          },
          setMessage : function (message, options) {
             if (options) {
@@ -271,16 +240,16 @@ define([
                this.infotext.close();
             }
          },
-         
+
          /* ---------------------------------------- */
          /* ------- Marker specific methods -------- */
-         
+
          /**
           @public
           @param {Marker} marker
           */
          centerMarker : function (markerView) {
-            
+
             this.map.setZoom(ZOOM_LEVEL_CENTERED);
             this.map.panTo(markerView.getMarker().getPosition());
             communicator.publish("centered:marker", markerView.getPresenter());
@@ -293,7 +262,7 @@ define([
          createMarker : function (data) {
             assertTrue((data.lat && (data.lng || data.lon) && data.title), "input parameter data has to contain: lat, lng/lon, and title");
             assertTrue(data.getType() === "Place" || data.getType() === "Album", "model has to be either place or album");
-            
+
             var lat = parseFloat(data.lat),
                 lng = (isNaN(parseFloat(data.lon))) ? parseFloat(data.lng) : parseFloat(data.lon),
                 markerIsPlace = (data.getType() === "Place"),
@@ -302,11 +271,11 @@ define([
                 iconHeight = markerIsPlace ? PLACE_ICON_HEIGHT : ALBUM_ICON_HEIGHT,
                 shadowWidth = markerIsPlace ? PLACE_ICON_SHADOW_WIDTH : ALBUM_ICON_SHADOW_WIDTH,
                 shadowIcon = markerIsPlace ? PLACE_SHADOW_ICON : ALBUM_SHADOW_ICON;
-            
+
             assertTrue(isFinite(lat) && isFinite(lng), "lat and lng must not be infinite");
-            
+
             // lng = parseFloat(lng);
-            
+
             return new google.maps.Marker({
                position : new google.maps.LatLng(lat, lng),
                map : this.map,
@@ -331,18 +300,18 @@ define([
           */
          addListenerToMarker : function (marker, event, callback) {
             assertTrue(event && callback, "input parameters event and callback must not be undefined");
-            
+
             google.maps.event.addListener(marker.getImplementation(), event, callback);
          },
          triggerEventOnMarker : function (marker, event) {
             google.maps.event.trigger(marker.getImplementation(), event);
          },
-         
+
          /* -------------------------------------------------- */
          /* ---------- listener and private methods ---------- */
          bindClickListener : function (callback) {
             var instance = this;
-            
+
             google.maps.event.addListener(this.map, "click", function (event) {
                communicator.publish("clicked:Map", {
                   lat : parseFloat(event.latLng.lat()),
@@ -355,7 +324,7 @@ define([
           * @private
           */
          _create : function () {
-            
+
             this.map = new google.maps.Map(this.$mapEl[0], this.mapOptions);
             this.maptype = google.maps.MapTypeId.ROADMAP;
             this.SATELLITE =  google.maps.MapTypeId.SATELLITE;
@@ -368,9 +337,9 @@ define([
             this.overlay.setMap(this.map);
          },
          _bindKeyboardListener : function () {
-            
+
             var instance = this;
-            
+
             $("body")
                .on("keyup.Map", null, "return", function () {
                   if (instance.active) {
@@ -379,7 +348,7 @@ define([
                });
          }
       });
-      
+
       // _instance = new MapView();
       // singleton
       return MapView;

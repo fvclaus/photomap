@@ -140,7 +140,6 @@ COMPRESS_PRECOMPILERS = (
 )
 
 MIDDLEWARE = [
-    'pm.middleware.BrowserCompatibilityMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

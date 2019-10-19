@@ -168,15 +168,20 @@
     <footer class="mp-page-footer column span-24 last"
             id="mp-page-footer">
       {% if user.is_authenticated %}
-      <span id="mp-user"><span class="mp-user-email">{{user.username}}</span></span>
+      <button id="mp-user"
+              class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+        <span class="ui-button-icon-primary ui-icon ui-icon-triangle-1-n"></span>
+        <span class="ui-button-text">{{user.username}}</span>
+      </button>
       <span>|</span>
       <span id="mp-user-limit">{{user.userprofile.get_limit}}</span>
       {% else %}
-      <span id="mp-login-link"
-            class="mp-login-link mp-button">
-        <a href="/account/login/"
-           title='{% trans "Login or Register" %}'>|{% trans "Anmelden/Registrierung" %}</a>
-      </span>
+      <a href="{% url 'login' %}">
+        <button id="mp-login-link"
+                class="mp-login-link mp-button ui-button ui-widget ui-state-default ui-corner-all ui-button-text-icon-primary">
+          <span class="ui-button-text">|{% trans "Anmelden/Registrierung" %}</span>
+        </button>
+      </a>
       {% endif %}
       <section class="mp-internal-links">
         <!-- Currently disabled, bank account is closed. If hosting is free remove. -->
