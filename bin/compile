@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+# Buildpack Steps.
+puts-step() {
+  echo "-----> $*"
+}
+
+puts-step "$ python manage.py compress"
+python manage.py compress --traceback 2>&1
