@@ -4,4 +4,4 @@
 # If the exit code is 0, the script must print a human-readable framework name to stdout.
 
 echo "Custom"
-exit 1
+exit 0
