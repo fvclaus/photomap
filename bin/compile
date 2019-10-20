@@ -10,7 +10,7 @@ puts-step() {
 BUILD_DIR=$1
 ENV_DIR=${3:-}
 
-ls $ENV_DIR
+cat $ENV_DIR/DJANGO_SETTINGS_MODULE
 puts-step "$ python manage.py compress"
 echo $DJANGO_SETTINGS_MODULE
 python $BUILD_DIR/manage.py compress --traceback 2>&1
