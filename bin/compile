@@ -31,3 +31,5 @@ ENV_DIR=${3:-}
 export_env_dir $ENV_DIR
 puts-step "$ python manage.py compress"
 python $BUILD_DIR/manage.py compress --traceback 2>&1
+puts-step "$ python manage.py compilemessages"
+python $BUILD_DIR/manage.py compilemessages --traceback 2>&1
