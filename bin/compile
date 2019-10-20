@@ -7,10 +7,27 @@ puts-step() {
   echo "-----> $*"
 }
 
-BUILD_DIR=$1
+export_env_dir() {
+  local env_dir=$1
+  if [ -d "$env_dir" ]; then
+    local whitelist_regex=${2:-''}
+    local blacklist_regex=${3:-'^(PATH|GIT_DIR|CPATH|CPPATH|LD_PRELOAD|LIBRARY_PATH|LANG|BUILD_DIR)$'}
+    # shellcheck disable=SC2164
+    pushd "$env_dir" >/dev/null
+    for e in *; do
+      [ -e "$e" ] || continue
+      echo "$e" | grep -E "$whitelist_regex" | grep -qvE "$blacklist_regex" &&
+      export "$e=$(cat "$e")"
+      :
+    done
+    # shellcheck disable=SC2164
+    popd >/dev/null
+  fi
+}
+
+BUILD_DIR=${1:-}
 ENV_DIR=${3:-}
 
-export DJANGO_SETTINGS_MODULE=$(cat $ENV_DIR/DJANGO_SETTINGS_MODULE)
-echo $DJANGO_SETTINGS_MODULE
+export_env_dir $ENV_DIR
 puts-step "$ python manage.py compress"
 python $BUILD_DIR/manage.py compress --traceback 2>&1
