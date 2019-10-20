@@ -7,5 +7,7 @@ puts-step() {
   echo "-----> $*"
 }
 
+BUILD_DIR=$1
+
 puts-step "$ python manage.py compress"
-python manage.py compress --traceback 2>&1
+python $BUILD_DIR/manage.py compress --traceback 2>&1
