@@ -29,8 +29,7 @@ class Album(Description):
                     "id": self.pk}
         else:
             data = {"lat": self.lat,
-                    "lon": self.lon,
-                    "country": self.country}
+                    "lon": self.lon}
 
         data["isOwner"] = isowner
 

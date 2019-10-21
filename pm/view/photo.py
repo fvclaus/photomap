@@ -1,6 +1,5 @@
 import json
 import logging
-import uuid
 from io import BytesIO
 
 from django.contrib.auth.decorators import login_required
@@ -59,6 +58,7 @@ def create_thumb(buf):
         image = image.resize(original_size)
 
     original = BytesIO()
+    # TODO This likely breaks the size calculation.
     image.save(original, "JPEG", quality=80,
                optimize=True, progressive=True)
     original.seek(0)
@@ -121,7 +121,8 @@ def insert(request):
 
 @require_GET
 def get_photo_or_thumb(request, photo_id):
-    photo = Photo.objects.get(pk=uuid.UUID(photo_id))
+    print("Trying to find %s" % (photo_id, ))
+    photo = Photo.objects.get(uuid=photo_id)
     if 'thumb' in request.path:
         image = photo.thumb
     elif 'photo' in request.path:

@@ -51,7 +51,7 @@ def update_password(request, album_id):
 
 @require_GET
 def demo(request):
-    demo = User.objects.get(username="demo@keiken.de")
+    demo = User.objects.get(username=settings.DEMO_USER_EMAIL)
     album = Album.objects.get(user=demo)
     request.session["album_%d" % album.pk] = True
     return redirect("/album/%d/view/%s/" % (album.pk, album.secret))

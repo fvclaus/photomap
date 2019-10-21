@@ -88,7 +88,7 @@ album_patterns = [url(r'^$', album.insert),  # accepts only POST
                   url(r'^(?P<album_id>\d+)/view/(?P<secret>.+)/$', album.view),
                   url(r'^(?P<album_id>\d+)/password$',
                       album.update_password),  # accepts only POST
-                  url(r'^demo$', album.demo)]
+                  url(r'^demo$', album.demo, name="demo")]
 # ================================================================
 # place hooks
 # ================================================================
