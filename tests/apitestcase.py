@@ -20,6 +20,8 @@ ADMIN_PASSWORD = "admin"
 USER1_EMAIL = "user1@keiken.de"
 USER1_PASSWORD = "test"
 
+INACTIVE_USER_EMAIL = "inactive-user@keiken.de"
+
 
 TEST_PHOTO = os.path.join(settings.TEST_PATH, "test.jpeg")
 TEST_PHOTO_WATER = os.path.join(settings.TEST_PATH, "water.jpeg")
@@ -29,8 +31,6 @@ QUANTIZE_EXPONENT = Decimal("0.0000001")
 
 GPS_MANNHEIM_SCHLOSS = {"lat": Decimal(48.01230012).quantize(QUANTIZE_EXPONENT),
                         "lon": Decimal(8.0123123).quantize(QUANTIZE_EXPONENT)}
-
-ACTIVATION_KEY = "f7737a8b5f8ec344b938a2ce8a3a5a0efd54c4cf"
 
 # @override_settings(EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend')
 

@@ -11,5 +11,28 @@
 {% endblock %}
 
 {% block account_settings %}
-  {% include "registration-form.html" %}
+<form class="mp-form"
+      action="{% url 'registration_register' %}"
+      method="post">
+  {% csrf_token %}
+  <h2>{% trans "Registration" %}</h2>
+
+  <p class="mp-form-errors">
+    {{ form.non_field_errors}}
+  </p>
+  {% for field in form %}
+  <p>
+    {{ field.label_tag }}
+    {{ field }}
+    {{ field.errors}}
+  </p>
+  {% endfor %}
+  <p>
+    <input class="mp-form-submit"
+           type="submit"
+           name="register"
+           value='{% trans "Sign Up" %}' />
+  </p>
+</form>
+
 {% endblock %}

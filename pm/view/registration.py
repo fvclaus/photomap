@@ -1,5 +1,4 @@
 import django_registration.backends.activation.views as views
-
 from pm.form.registration import RegistrationForm
 
 
