@@ -1,7 +1,7 @@
 import json
 import logging
 import os
-from copy import deepcopy
+from copy import copy
 from datetime import datetime
 from decimal import Decimal
 from time import mktime
@@ -31,8 +31,6 @@ QUANTIZE_EXPONENT = Decimal("0.0000001")
 
 GPS_MANNHEIM_SCHLOSS = {"lat": Decimal(48.01230012).quantize(QUANTIZE_EXPONENT),
                         "lon": Decimal(8.0123123).quantize(QUANTIZE_EXPONENT)}
-
-# @override_settings(EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend')
 
 
 class ApiTestCase(TestCase):
@@ -162,7 +160,7 @@ class ApiTestCase(TestCase):
         now = self.getunixtime()
         model_id = data["id"]
         # Do not alter input data.
-        data_copy = deepcopy(data)
+        data_copy = copy(data)
         del data_copy["id"]
         content = self.assertSuccess(self.url + str(model_id) + "/", data_copy)
         self.assertEqual(len(model.objects.all()), length)
@@ -184,7 +182,7 @@ class ApiTestCase(TestCase):
         length = len(model.objects.all())
         model_id = data["id"]
         # Do not alter input data.
-        data_copy = deepcopy(data)
+        data_copy = copy(data)
         del data_copy["id"]
         content = self.assertSuccess(
             self.url + str(model_id) + "/", data_copy, method="DELETE")

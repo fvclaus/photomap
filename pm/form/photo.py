@@ -1,5 +1,4 @@
 from django import forms
-
 from pm.models.photo import Photo
 
 
@@ -12,10 +11,6 @@ class PhotoCheckForm(forms.ModelForm):
 
 
 class PhotoInsertForm(forms.ModelForm):
-    """
-    @author: Frederik Claus
-    @summary: Form to insert data into db after processing
-    """
     class Meta:
         model = Photo
         exclude = ("order", "date", "size")

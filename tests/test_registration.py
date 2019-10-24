@@ -33,8 +33,7 @@ class RegistrationViewTest(ApiTestCase):
         messages = self.read_and_delete_mails()
         activation_key = create_activation_key(user)
         # Only use the part of the activation_key that encodes the username
-        self.assertTrue(create_activation_key(
-            user).split(':')[0] in messages[0].body)
+        self.assertTrue(activation_key.split(':')[0] in messages[0].body)
         self.assertEqual(len(messages), 1)
 
     def test_complete_activation(self):

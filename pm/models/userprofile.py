@@ -1,9 +1,9 @@
 import logging
 
+from django.conf import settings
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
-from pm import appsettings
 
 BYTE_TO_MBYTE = pow(2, 20)
 
@@ -11,11 +11,8 @@ BYTE_TO_MBYTE = pow(2, 20)
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     picture = models.BinaryField(blank=True, null=True)
-    quota = models.IntegerField(default=367001600)  # 350 mbyte
+    quota = models.IntegerField(default=settings.USER_QUOTA)
     used_space = models.IntegerField(default=0)
-
-    class Meta:
-        app_label = appsettings.APP_NAME
 
     def getpictureurl(self):
         return None

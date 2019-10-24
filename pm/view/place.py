@@ -2,7 +2,6 @@ import logging
 
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_http_methods, require_POST
-
 from pm.form.place import InsertPlaceForm, UpdatePlaceForm
 from pm.models.photo import Photo
 from pm.models.place import Place
@@ -85,5 +84,5 @@ def delete(request, place_id):
         response = success()
         set_cookie(response, "used_space", used_space)
         return response
-    except (OSError, Place.DoesNotExist) as e:
+    except Place.DoesNotExist as e:
         return error(str(e))

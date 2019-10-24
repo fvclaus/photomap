@@ -1,5 +1,4 @@
 from django.db import models
-from pm import appsettings
 
 
 class Description(models.Model):
@@ -8,5 +7,4 @@ class Description(models.Model):
     date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        app_label = appsettings.APP_NAME
         abstract = True
