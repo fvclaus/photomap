@@ -30,7 +30,7 @@ class AuthenticationViewTest(ApiTestCase):
 
     def test_login_inactive(self):
         self.client.logout()
-        data = {"email":  "test2@keiken.de",
+        data = {"email":  "user2@keiken.de",
                 "password": "test"}
         response = self.request("/account/login/", data)
         self.assertEqual(response.status_code, 302)

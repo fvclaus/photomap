@@ -48,12 +48,12 @@ def method_mapper(regex, controller_name, get=None, post=None, put=None, delete=
 # TODO Convert to new path API: https://docs.djangoproject.com/en/2.1/releases/2.0/#simplified-url-routing-syntax
 
 account_patterns = [method_mapper(r'^$', "account", get=account.view, delete=account.delete),
-                    url(r'^delete$', account.delete),
+                    url(r'^delete$', account.delete, name='account_delete'),
                     # url(r'^auth/', include(auth_patterns)),
                     url(r'^inactive$', direct_to_template(
                         "account/inactive.html")),
                     # url(r'^password/', include(account_password_patterns)),
-                    url(r'^delete/complete/$', direct_to_template("account/delete-complete.html"))]
+                    url(r'^delete/complete/$', direct_to_template("account/delete-complete.html"), name="account-delete-complete")]
 
 account_patterns += [url(r'^login/$', authentication.login, name="login"),
                      url(r'^logout/$', authentication.logout)]
@@ -64,6 +64,8 @@ account_patterns += [
         name='registration_register'),
     path('password_change/', account.PasswordChangeView.as_view(),
          name='password_change'),
+    path('password_reset/', account.PasswordResetView.as_view(),
+         name='password_reset'),
     url(r'^', include('django_registration.backends.activation.urls')),
     # Make sure the password of the test user cannot be reset.
     url(r'^', include('django.contrib.auth.urls'))]

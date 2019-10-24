@@ -1,7 +1,8 @@
 import logging
-import os
 
+import django.contrib.auth.forms as authforms
 import django.contrib.auth.views as authviews
+from django import forms
 from django.conf import settings
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
@@ -35,9 +36,13 @@ def view(request):
         n_places += len(places)
         for place in places:
             n_photos += Photo.objects.filter(place=place).count()
+
     data = {"n_albums": n_albums,
             "n_places": n_places,
             "n_photos": n_photos,
+            "quota": request.user.userprofile.quota_in_mb,
+            "used_space": request.user.userprofile.used_space_in_mb,
+            "free_space": request.user.userprofile.free_space_in_mb,
             "is_test_user": is_test_user(request.user)}
     return render(request, "account/active.html", data)
 
@@ -69,7 +74,8 @@ def delete(request):
                                                               request.POST.get("cause_message", default="No message entered."))
                         mail_managers("Account deleted", message)
                 except Exception as e:
-                    logger.error(str(e))
+                    logger.error(
+                        'Error while sending delete user account confirmation: %s' % (str(e), ))
                 finally:
                     return HttpResponseRedirect("/account/delete/complete/")
             else:
@@ -87,7 +93,7 @@ def send_mail_to_user(user_email, subject, message):
     # TODO sender is not passed through send_mail correctly.
     send_mail(subject,
               message,
-              os.environ["EMAIL_FROM"],
+              settings.EMAIL_ADDRESS,
               [user_email])
 
 
@@ -109,5 +115,34 @@ def send_thankyou_mail(user_email, request):
     send_mail_to_user(user_email, subject, message)
 
 
+class PasswordChangeForm(authforms.PasswordChangeForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['old_password'].widget.attrs.update(
+            {'placeholder': _('OLD_PASSWORD_PLACEHOLDER')})
+        self.fields['new_password1'].widget.attrs.update(
+            {'placeholder': _('NEW_PASSWORD_PLACEHOLDER')})
+        self.fields['new_password2'].widget.attrs.update(
+            {'placeholder': _('NEW_PASSWORD_REPEAT_PLACEHOLDER')})
+
+    def clean(self):
+        super().clean()
+        if is_test_user(self.user):
+            raise forms.ValidationError(
+                _('You cannot change the password of the test user'))
+
+
 class PasswordChangeView(authviews.PasswordChangeView):
-    pass
+    form_class = PasswordChangeForm
+
+
+class PasswordResetForm(authforms.PasswordResetForm):
+    def clean(self):
+        cleaned_data = super().clean()
+        if cleaned_data['email'] == settings.TEST_USER_EMAIL:
+            raise forms.ValidationError(
+                _('You cannot change the password of the test user'))
+
+
+class PasswordResetView(authviews.PasswordResetView):
+    form_class = PasswordResetForm

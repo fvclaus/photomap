@@ -40,7 +40,7 @@ class RegistrationViewTest(ApiTestCase):
     def test_complete_activation(self):
         self.client.logout()
         self.request("/account/activate/%s/" % ACTIVATION_KEY)
-        user = User.objects.get(username="test2@keiken.de")
+        user = User.objects.get(username="user2@keiken.de")
         self.assertTrue(user.is_active)
 
     def test_templates(self):
@@ -59,5 +59,5 @@ class RegistrationViewTest(ApiTestCase):
         # Try to activate expired key.
         # =======================================================================
         response = self.request("/account/activate/%s/" % ACTIVATION_KEY)
-        user = User.objects.get(username="test2@keiken.de")
+        user = User.objects.get(username="user2@keiken.de")
         self.assertFalse(user.is_active)

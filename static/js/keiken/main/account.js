@@ -4,18 +4,6 @@
 "use strict";
 
 $(document).ready(function () {
-   var spaceUsage = [];
-   // show correct space usage in MB
-   spaceUsage.push(parseFloat($("#mp-user-quota").text()));
-   spaceUsage.push(parseFloat($("#mp-user-used-space").text()));
-   spaceUsage.push(spaceUsage[0] - spaceUsage[1]);
-   $.each(spaceUsage, function (index, spaceInBytes) {
-      spaceUsage[index] = (spaceInBytes / Math.pow(2, 20)).toFixed(2).toString();
-   });
-   $("#mp-user-quota").text(spaceUsage[0]);
-   $("#mp-user-used-space").text(spaceUsage[1]);
-   $("#mp-user-free-space").text(spaceUsage[2]);
-
    // show correct update-form on demand
    $("#mp-account-settings-options a").not("#delete-account-link").on("click", function (event) {
       event.preventDefault();

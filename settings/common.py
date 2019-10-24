@@ -210,8 +210,6 @@ TEST_USER_PASSWORD = "test"
 DEMO_USER_EMAIL = "demo@keiken.de"
 DEMO_USER_PASSWORD = "2*Ze8%U35$oW"
 
-EMAIL_FILE_PATH = os.path.join(TEST_PATH, "mail")
-
 EMAIL_ADDRESS = "info@keiken.de"
 
 

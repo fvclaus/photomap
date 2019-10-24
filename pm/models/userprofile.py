@@ -3,7 +3,6 @@ import logging
 from django.contrib.auth.models import User
 from django.db import models
 from django.db.models.signals import post_save
-
 from pm import appsettings
 
 BYTE_TO_MBYTE = pow(2, 20)
@@ -23,6 +22,21 @@ class UserProfile(models.Model):
 
     def get_limit(self):
         return "%.1f/%.1f MB" % tuple(map(lambda x: float(x) / BYTE_TO_MBYTE, (self.used_space, self.quota)))
+
+    def _to_mb(self, number):
+        return float(number) / BYTE_TO_MBYTE
+
+    @property
+    def quota_in_mb(self):
+        return self._to_mb(self.quota)
+
+    @property
+    def used_space_in_mb(self):
+        return self._to_mb(self.used_space)
+
+    @property
+    def free_space_in_mb(self):
+        return self._to_mb(self.quota - self.used_space)
 
     def __unicode__(self):
         return "%s" % (self.user)

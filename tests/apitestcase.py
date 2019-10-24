@@ -3,22 +3,38 @@ import logging
 import os
 from copy import deepcopy
 from datetime import datetime
+from decimal import Decimal
 from time import mktime
 from urllib.request import urlopen
 
 from django.conf import settings
 from django.contrib.auth.models import User
+from django.core import mail
 from django.test import TestCase
 from django.test.client import Client
-from django.test.utils import override_settings
-
 from pm.models import Photo, UserProfile
 
-from .data import (ADMIN_EMAIL, ADMIN_PASSWORD, ADMIN_USER, TEST_PASSWORD,
-                   TEST_USER)
+ADMIN_EMAIL = "admin@keiken.de"
+ADMIN_PASSWORD = "admin"
+
+USER1_EMAIL = "user1@keiken.de"
+USER1_PASSWORD = "test"
 
 
-@override_settings(EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend')
+TEST_PHOTO = os.path.join(settings.TEST_PATH, "test.jpeg")
+TEST_PHOTO_WATER = os.path.join(settings.TEST_PATH, "water.jpeg")
+TEST_PHOTO_MOUNTAIN = os.path.join(settings.TEST_PATH, "mountain.jpeg")
+
+QUANTIZE_EXPONENT = Decimal("0.0000001")
+
+GPS_MANNHEIM_SCHLOSS = {"lat": Decimal(48.01230012).quantize(QUANTIZE_EXPONENT),
+                        "lon": Decimal(8.0123123).quantize(QUANTIZE_EXPONENT)}
+
+ACTIVATION_KEY = "f7737a8b5f8ec344b938a2ce8a3a5a0efd54c4cf"
+
+# @override_settings(EMAIL_BACKEND='django.core.mail.backends.filebased.EmailBackend')
+
+
 class ApiTestCase(TestCase):
     """ loads the simple-test fixtures, appends a logger and logs the client in """
 
@@ -28,14 +44,12 @@ class ApiTestCase(TestCase):
     TIME_DELTA = 1000
 
     def createClient(self):
-        return Client(HTTP_USER_AGENT="Firefox/19")
+        return Client()
 
     def setUp(self):
         self.client = self.createClient()
-        self.ADMIN_EMAIL = ADMIN_EMAIL
-        self.ADMIN_PASSWORD = ADMIN_PASSWORD
         self.assertTrue(self.client.login(
-            username=ADMIN_USER, password=ADMIN_PASSWORD))
+            username=USER1_EMAIL, password=USER1_PASSWORD))
         self.logger = ApiTestCase.logger
         # Delete all leftover mails
         self.read_and_delete_mails()
@@ -78,6 +92,12 @@ class ApiTestCase(TestCase):
         self.assertTrue(response.has_header("location"))
         self.assertTrue(response.get("location").find("login") != -1)
 
+    def assertUserExists(self, email):
+        self.assertEqual(len(User.objects.filter(username=email)), 1)
+
+    def assertUserDoesNotExist(self, email):
+        self.assertEqual(len(User.objects.filter(username=email)), 0)
+
     def assertCreates(self, data, model=None, check=None):
         if not model:
             model = self.getmodel()
@@ -118,7 +138,13 @@ class ApiTestCase(TestCase):
         content = json.loads(response.content)
         self.assertFalse(content["success"])
 
-    def assertRedirect(self, response):
+    def assertNoRedirect(self, response):
+        self.assertFalse(str(response.status_code).startswith('3'))
+
+    # TODO Remove the url check
+    def assertRedirect(self, response, url=None):
+        if url is not None:
+            self.assertEqual(response.url, url)
         self.assertIn(response.status_code, (301, 302))
         redirect_response = self.request(
             response.get("Location"), method="GET")
@@ -196,7 +222,8 @@ class ApiTestCase(TestCase):
         self.assertTrue(instance["date"])
 
     def login_test_user(self):
-        self.client.login(username=TEST_USER, password=TEST_PASSWORD)
+        self.assertTrue(self.client.login(username=settings.TEST_USER_EMAIL,
+                                          password=settings.TEST_USER_PASSWORD))
 
     def getmodel(self):
         if not self.model:
@@ -207,8 +234,7 @@ class ApiTestCase(TestCase):
 
     @property
     def user(self):
-        # User could be modified during test cases
-        return User.objects.all().get(username=ADMIN_EMAIL)
+        return User.objects.get(username=USER1_EMAIL)
 
     @property
     def userprofile(self):
@@ -222,18 +248,27 @@ class ApiTestCase(TestCase):
         return json.loads(response.content)
 
     def read_and_delete_mails(self):
-        mails = []
-
-        if not os.path.exists(settings.EMAIL_FILE_PATH):
-            os.mkdir(settings.EMAIL_FILE_PATH)
-
-        for filename in os.listdir(settings.EMAIL_FILE_PATH):
-            path = os.path.join(settings.EMAIL_FILE_PATH, filename)
-            mail = open(path, "r")
-            mails.append(mail.readlines())
-            mail.close()
-            os.remove(path)
+        mails = mail.outbox
+        for mail_mail in mails:
+            print(mail_mail.to)
+            print(mail_mail.subject)
+        mail.outbox = []
         return mails
+        # mails = []
+        #
+        # if not os.path.exists(settings.EMAIL_FILE_PATH):
+        #     os.mkdir(settings.EMAIL_FILE_PATH)
+        #
+        # for filename in os.listdir(settings.EMAIL_FILE_PATH):
+        #     path = os.path.join(settings.EMAIL_FILE_PATH, filename)
+        #     mail = open(path, "r")
+        #     mails.append(mail.readlines())
+        #     mail.close()
+        #     os.remove(path)
+        # return mails
+
+    def sendGET(self, url, data={}):
+        return self.client.get(url, data)
 
     def request(self, url, data={}, method="POST", loggedin=True):
         if loggedin:

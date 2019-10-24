@@ -70,3 +70,4 @@ class Command(BaseCommand):
                     photo = Photo(order=json_photo['fields']['order'], date=json_photo['fields']['date'],
                                   photo=photo_data, thumb=thumb_data, size=size, title=json_photo['fields']['title'], description=json_photo['fields']['description'], place=place)
                     photo.save()
+                    self.stdout.write('Imported photo %s' % (photo.title, ))

@@ -16,6 +16,8 @@ if 'test' in sys.argv:
             'HOST': '',
         }
     }
+    # This is required by mail_managers().
+    SERVER_EMAIL = "test@test"
 else:
     DATABASES = {
         'default': {
