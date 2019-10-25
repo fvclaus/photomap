@@ -64,7 +64,7 @@ def delete(request):
             user_email = form.cleaned_data["user_email"]
             user_password = form.cleaned_data["user_password"]
             logger.info("Trying to delete User %d." % user_id)
-            if (user.username == user_email and user.check_password(user_password)):
+            if (user.email == user_email and user.check_password(user_password)):
                 logout(request)
                 user.delete()
                 try:
@@ -86,7 +86,7 @@ def delete(request):
 
 
 def is_test_user(user):
-    return user.username == settings.TEST_USER_EMAIL
+    return user.email == settings.TEST_USER_EMAIL
 
 
 def send_mail_to_user(user_email, subject, message):

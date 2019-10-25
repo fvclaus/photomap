@@ -3,18 +3,15 @@ import logging
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as django_logout
-from django.contrib.auth.backends import ModelBackend
-from django.core.exceptions import ValidationError
-from django.core.validators import validate_email
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from django.urls import reverse
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
 from pm.form.authentication import LoginForm
 from pm.models.photo import Photo
 from pm.models.place import Place
-from pm.models.user import User
 from pm.view import set_cookie
 
 logger = logging.getLogger(__name__)
@@ -23,7 +20,7 @@ logger = logging.getLogger(__name__)
 @csrf_protect
 def logout(request):
     django_logout(request)
-    return render(request, "account/login.html")
+    return HttpResponseRedirect(reverse('login'))
 
 
 @sensitive_post_parameters("password")
@@ -35,26 +32,24 @@ def login(request):
         redirect_path = request.GET.get("next", default="/dashboard/")
     else:
         form = LoginForm(request.POST)
-        redirect_path = request.POST.get("next", default="/dashboard/")
+        redirect_path = request.POST.get("next", default="")
+        if not redirect_path:
+            redirect_path = "/dashboard"
         if form.is_valid():
             mail = form.cleaned_data["email"]
             logger.info("Trying to authenticate user %s", mail)
             user = authenticate(
                 username=mail, password=form.cleaned_data["password"])
+            # Since 1.10, inactive user are not allowed to login anymore.
             if user is not None:
-                if user.is_active:
-                    logger.info(
-                        "User credentials are valid. Redirecting to %s", redirect_path)
-                    auth_login(request, user)
-                    response = HttpResponseRedirect(redirect_path)
-                    set_cookie(response, "quota", user.userprofile.quota)
-                    set_cookie(response, "used_space",
-                               user.userprofile.used_space)
-                    return response
-                else:
-                    logger.info(
-                        "User is inactive. Redirecting to inactive page.")
-                    return HttpResponseRedirect("/account/inactive")
+                logger.info(
+                    "User credentials are valid. Redirecting to %s", redirect_path)
+                auth_login(request, user)
+                response = HttpResponseRedirect(redirect_path)
+                set_cookie(response, "quota", user.userprofile.quota)
+                set_cookie(response, "used_space",
+                           user.userprofile.used_space)
+                return response
             else:
                 logger.info(
                     "Could not authenticate user with given credentials.")
@@ -62,26 +57,6 @@ def login(request):
                     [_("CREDENTIALS_ERROR")])
 
     return render(request, "account/login.html", {"form": form, "next": redirect_path})
-
-
-def is_valid_email(email):
-    try:
-        validate_email(email)
-        return True
-    except ValidationError:
-        return False
-
-
-class EmailBackend(ModelBackend):
-    def authenticate(self, username=None, password=None):
-        if is_valid_email(username):
-            try:
-                user = User.objects.get(email=username)
-                if user.check_password(password):
-                    return user
-            except User.DoesNotExist:
-                return None
-        return None
 
 
 def is_authorized(instance, user):

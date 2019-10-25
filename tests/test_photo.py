@@ -7,7 +7,7 @@ from pm.models import Photo
 from .apitestcase import TEST_PHOTO, ApiTestCase
 
 
-class PhotoControllerTest(ApiTestCase):
+class PhotoViewTest(ApiTestCase):
     model = Photo
 
     def setUp(self):

@@ -1,11 +1,10 @@
 [{
     "pk": 99,
-    "model": "auth.user",
+    "model": "pm.user",
     "fields": {
       "password": "pbkdf2_sha256$10000$el4zJoknyrub$S/HXUQTs9PiV4OO9hPxFIVrGqSkhjVm3znsZozNJBgU=",
       "last_login": "2019-06-23T13:58:49.316",
       "is_superuser": false,
-      "username": "inactive-user@keiken.de",
       "first_name": "",
       "last_name": "",
       "email": "inactive-user@keiken.de",
@@ -28,12 +27,11 @@
   },
   {
     "pk": 100,
-    "model": "auth.user",
+    "model": "pm.user",
     "fields": {
       "password": "pbkdf2_sha256$10000$el4zJoknyrub$S/HXUQTs9PiV4OO9hPxFIVrGqSkhjVm3znsZozNJBgU=",
       "last_login": "2019-06-23T13:58:49.316",
       "is_superuser": false,
-      "username": "user1@keiken.de",
       "first_name": "",
       "last_name": "",
       "email": "user1@keiken.de",
@@ -56,12 +54,11 @@
   },
   {
     "pk": 98,
-    "model": "auth.user",
+    "model": "pm.user",
     "fields": {
       "password": "pbkdf2_sha256$10000$QEgqt6GV9Ep5$WDegUwdL7UbvY5+OeD4X9ToqWr077Ge/emvYNp1V4hU=",
       "last_login": "2019-06-23T13:58:49.316",
       "is_superuser": true,
-      "username": "admin@keiken.de",
       "first_name": "",
       "last_name": "",
       "email": "admin@keiken.de",
@@ -107,7 +104,7 @@
       "user": 100,
       "date": "2012-07-27T18:02:47.147",
       "secret": "JjUrkJBMr38mHoj99jCsOHyD3IMctihsZ7Wkl6ZjxUKqg1PUry",
-      "password": "!"
+      "password": "pbkdf2_sha256$120000$rD3g52w4VSXH$Swn+jyawxcnOEhHsBXrX/V73/ABCVxXCf9VceYW4GMY="
     }
   },
   {

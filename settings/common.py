@@ -150,7 +150,6 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    # "pm.view.authentication.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 

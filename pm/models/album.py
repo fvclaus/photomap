@@ -47,7 +47,7 @@ class Album(Description):
         return data
 
     def __unicode__(self):
-        return "%s by %s" % (self.title, self.user.username)
+        return "%s by %s" % (self.title, self.user.email)
 
     class Meta(Description.Meta):
         pass

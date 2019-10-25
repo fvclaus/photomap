@@ -51,7 +51,7 @@ def update_password(request, album_id):
 
 @require_GET
 def demo(request):
-    demo = User.objects.get(username=settings.DEMO_USER_EMAIL)
+    demo = User.objects.get(email=settings.DEMO_USER_EMAIL)
     album = Album.objects.get(user=demo)
     request.session["album_%d" % album.pk] = True
     return redirect("/album/%d/view/%s/" % (album.pk, album.secret))
@@ -59,7 +59,7 @@ def demo(request):
 
 @require_GET
 def login_test_user(request):
-    user = authenticate(request, username=settings.TEST_USER_EMAIL,
+    user = authenticate(request, email=settings.TEST_USER_EMAIL,
                         password=settings.TEST_USER_PASSWORD)
     if user is not None:
         login(request, user)

@@ -4,7 +4,7 @@ from pm.models import Photo, Place
 from .apitestcase import GPS_MANNHEIM_SCHLOSS, ApiTestCase
 
 
-class PlaceControllerTest(ApiTestCase):
+class PlaceViewTest(ApiTestCase):
     model = Place
 
     def setUp(self):

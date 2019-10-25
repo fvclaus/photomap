@@ -3,5 +3,4 @@ from pm.form.registration import RegistrationForm
 
 
 class RegistrationView(views.RegistrationView):
-    def get_form_class(self):
-        return RegistrationForm
+    form_class = RegistrationForm

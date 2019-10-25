@@ -1,6 +1,5 @@
 from django.conf import settings
 from django.db import migrations
-
 from pm.migrations import create_user
 
 

@@ -1,15 +1,8 @@
-'''
-Created on May 27, 2013
-
-@author: marc
-'''
-
 import datetime
 
 from django.http import HttpResponseBadRequest
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie
-
 from pm.form.registration import RegistrationForm
 
 

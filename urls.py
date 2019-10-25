@@ -49,10 +49,6 @@ def method_mapper(regex, controller_name, get=None, post=None, put=None, delete=
 
 account_patterns = [method_mapper(r'^$', "account", get=account.view, delete=account.delete),
                     url(r'^delete$', account.delete, name='account_delete'),
-                    # url(r'^auth/', include(auth_patterns)),
-                    url(r'^inactive$', direct_to_template(
-                        "account/inactive.html")),
-                    # url(r'^password/', include(account_password_patterns)),
                     url(r'^delete/complete/$', direct_to_template("account/delete-complete.html"), name="account-delete-complete")]
 
 account_patterns += [url(r'^login/$', authentication.login, name="login"),
@@ -87,7 +83,8 @@ form_patterns = [url(r'^insert/album$', direct_to_template("form/insert/album.ht
 album_patterns = [url(r'^$', album.insert),  # accepts only POST
                   method_mapper(r'^(?P<album_id>\d+)/$', "album.album",
                                 get=album.get, post=album.update, delete=album.delete),
-                  url(r'^(?P<album_id>\d+)/view/(?P<secret>.+)/$', album.view),
+                  url(r'^(?P<album_id>\d+)/view/(?P<secret>.+)/$',
+                      album.view, name="album_view"),
                   url(r'^(?P<album_id>\d+)/password$',
                       album.update_password),  # accepts only POST
                   url(r'^demo$', album.demo, name="demo")]

@@ -2,12 +2,12 @@ import json
 import os
 
 from django.conf import settings
-from pm.models.user import User
 from django.core.management.base import BaseCommand, CommandError
 from django.db import transaction
 from pm.models.album import Album
 from pm.models.photo import Photo
 from pm.models.place import Place
+from pm.models.user import User
 from pm.view.photo import create_thumb, get_size
 
 
@@ -37,7 +37,7 @@ class Command(BaseCommand):
         if len(albums) > 1:
             raise CommandError('Data contains more than one album')
 
-        demo_user = User.objects.get(username=settings.DEMO_USER_EMAIL)
+        demo_user = User.objects.get(email=settings.DEMO_USER_EMAIL)
 
         if demo_user is None:
             raise CommandError('No demo user in db')

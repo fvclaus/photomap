@@ -92,10 +92,10 @@ class ApiTestCase(TestCase):
         self.assertTrue(response.get("location").find("login") != -1)
 
     def assertUserExists(self, email):
-        self.assertEqual(len(User.objects.filter(username=email)), 1)
+        self.assertEqual(len(User.objects.filter(email=email)), 1)
 
     def assertUserDoesNotExist(self, email):
-        self.assertEqual(len(User.objects.filter(username=email)), 0)
+        self.assertEqual(len(User.objects.filter(email=email)), 0)
 
     def assertCreates(self, data, model=None, check=None):
         if not model:
@@ -232,7 +232,7 @@ class ApiTestCase(TestCase):
 
     @property
     def user(self):
-        return User.objects.get(username=USER1_EMAIL)
+        return User.objects.get(email=USER1_EMAIL)
 
     @property
     def userprofile(self):

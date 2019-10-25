@@ -16,16 +16,16 @@ class RegistrationViewTest(ApiTestCase):
 
     def test_send_registration_mail(self):
         self.client.logout()
-        username = "bigblurb@gmail.com"
+        email = "bigblurb@gmail.com"
         response = self.request(reverse('registration_register'),
-                                {"username": username,
+                                {"email": email,
                                  "first_name": "I.Am.",
                                  "last_name": "Alive",
                                  "password1": "123456",
                                  "password2": "123456"})
         self.assertRedirect(response, reverse('django_registration_complete'))
-        user = User.objects.get(username=username)
-        self.assertEqual(user.email, username)
+        user = User.objects.get(email=email)
+        self.assertEqual(user.email, email)
         self.assertEqual(user.first_name, 'I.Am.')
         self.assertEqual(user.last_name, 'Alive')
         self.assertTrue(user.check_password("123456"))
@@ -38,7 +38,7 @@ class RegistrationViewTest(ApiTestCase):
 
     def test_complete_activation(self):
         self.client.logout()
-        user = User.objects.get(username=INACTIVE_USER_EMAIL)
+        user = User.objects.get(email=INACTIVE_USER_EMAIL)
         user.date_joined = datetime.now()
         user.save()
         response = self.sendGET(reverse('django_registration_activate',
@@ -46,4 +46,4 @@ class RegistrationViewTest(ApiTestCase):
         self.assertRedirect(response, reverse(
             'django_registration_activation_complete'))
         self.assertTrue(User.objects.get(
-            username=INACTIVE_USER_EMAIL).is_active)
+            email=INACTIVE_USER_EMAIL).is_active)
