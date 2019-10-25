@@ -9,7 +9,7 @@ from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
 from pm.util import s3
-from django.contrib.auth.models import User
+from pm.models.user import User
 from django.conf import settings
 from django.test.client import Client 
 from django.core.files import File

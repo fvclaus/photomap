@@ -4,7 +4,6 @@ from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as django_logout
 from django.contrib.auth.backends import ModelBackend
-from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.http import HttpResponseRedirect
@@ -12,10 +11,10 @@ from django.shortcuts import render
 from django.utils.translation import ugettext as _
 from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.debug import sensitive_post_parameters
-
 from pm.form.authentication import LoginForm
 from pm.models.photo import Photo
 from pm.models.place import Place
+from pm.models.user import User
 from pm.view import set_cookie
 
 logger = logging.getLogger(__name__)

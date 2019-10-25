@@ -118,12 +118,12 @@ def sync_db():
 
 def delete_user():
     print "Dropping all entries..."
-    from django.contrib.auth.models import User
+    from pm.models.user import User
     User.objects.all().delete()
     print "Done."
 #    p = sub.Popen(SHELL, stdin = sub.PIPE, stdout = sub.PIPE)
 #    print "Deleting all Users..."
-#    p.stdin.write("from django.contrib.auth.models import User\n")
+#    p.stdin.write("from pm.models.user import User\n")
 #    p.communicate("User.objects.all().delete()\n")
 #    print "Done. Closing shell."
 

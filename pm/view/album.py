@@ -5,7 +5,6 @@ import string
 from django.conf import settings
 from django.contrib.auth import authenticate, hashers, login
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.shortcuts import redirect, render
 from django.utils import crypto
 from django.views.decorators.http import (require_GET, require_http_methods,
@@ -16,6 +15,7 @@ from pm.form.album import (AlbumInsertForm, AlbumPasswordUpdateForm,
 from pm.models.album import Album
 from pm.models.photo import Photo
 from pm.models.place import Place
+from pm.models.user import User
 from pm.view import landingpage, set_cookie, update_used_space
 
 from .message import error, success

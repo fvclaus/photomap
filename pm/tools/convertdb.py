@@ -9,7 +9,7 @@ import sqlite3
 from pm.model.album import Album
 from pm.model.place import Place
 from pm.model.photo import Photo
-from django.contrib.auth.models import User
+from pm.models.user import User
 from django.test.client import Client
 from django.core.files import File
 from django.db.utils import DatabaseError

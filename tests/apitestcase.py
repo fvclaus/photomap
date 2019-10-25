@@ -8,11 +8,11 @@ from time import mktime
 from urllib.request import urlopen
 
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.core import mail
 from django.test import TestCase
 from django.test.client import Client
 from pm.models import Photo, UserProfile
+from pm.models.user import User
 
 ADMIN_EMAIL = "admin@keiken.de"
 ADMIN_PASSWORD = "admin"
@@ -21,6 +21,7 @@ USER1_EMAIL = "user1@keiken.de"
 USER1_PASSWORD = "test"
 
 INACTIVE_USER_EMAIL = "inactive-user@keiken.de"
+INACTIVE_USER_PASSWORD = "test"
 
 
 TEST_PHOTO = os.path.join(settings.TEST_PATH, "test.jpeg")
@@ -200,7 +201,6 @@ class ApiTestCase(TestCase):
         self.assertNotEqual(album["isOwner"], None)
         self.assertTrue(album["lat"])
         self.assertTrue(album["lon"])
-        self.assertTrue(album["country"])
         self.assertTrue(album["secret"])
 
     def assertPlaceComplete(self, place):

@@ -150,12 +150,13 @@ MIDDLEWARE = [
 ]
 
 AUTHENTICATION_BACKENDS = (
-    "pm.view.authentication.EmailBackend",
+    # "pm.view.authentication.EmailBackend",
     "django.contrib.auth.backends.ModelBackend",
 )
 
 # TODO: this does not work
 AUTH_PROFILE_MODULE = 'pm.Userprofile'
+
 
 ROOT_URLCONF = 'urls'
 
@@ -173,6 +174,8 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
 )
+
+AUTH_USER_MODEL = 'pm.User'
 
 WSGI_APPLICATION = 'wsgi.application'
 

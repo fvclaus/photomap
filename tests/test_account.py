@@ -1,8 +1,8 @@
 from django.conf import settings
-from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.urls import reverse
 from django.utils.http import urlsafe_base64_encode
+from pm.models.user import User
 
 from .apitestcase import USER1_EMAIL, USER1_PASSWORD, ApiTestCase
 

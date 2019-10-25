@@ -15,7 +15,7 @@ Created on Jun 22, 2012
 # #    admin.site.register(model.userprofile.UserProfile)
 #
 #     from pm.models.userprofile import UserProfile
-#     from django.contrib.auth.models import User
+#     from pm.models.user import User
 #     from django.contrib.auth.admin import UserAdmin
 #
 #     class UserProfileInline(admin.StackedInline):

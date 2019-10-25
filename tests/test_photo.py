@@ -29,26 +29,16 @@ class PhotoControllerTest(ApiTestCase):
                                       "order": 0}]
 
     def test_delete(self):
-        # =======================================================================
-        # define url for requests
-        # =======================================================================
-        self.url = "/photo/"
-        # =======================================================================
-        # delete something that exists
-        # =======================================================================
         self.assertDeletes({"id": 1})
         self.assertEqual(self.userprofile.used_space, 164375)
-        # =======================================================================
-        # delete something that does not exist
-        # =======================================================================
+
+    def test_delete_unknown_photo(self):
         self.assertError({"id": 9999})
-        # =======================================================================
-        # something that does not belong to you
-        # =======================================================================
+
+    def test_delete_foreign_photo(self):
         self.assertError({"id": 100})
-        # =======================================================================
-        # use wrong paramater
-        # =======================================================================
+
+    def test_delete_foreign_photo2(self):
         self.assert404("/photo/abc/", method="DELETE")
 
     def test_insert(self):
@@ -99,9 +89,6 @@ class PhotoControllerTest(ApiTestCase):
 
     def test_update_multiple(self):
         self.url = "/photos"
-        # =======================================================================
-        # something valid
-        # =======================================================================
         self.assertSuccess(
             self.url, {"photos": json.dumps(self.update_multiple_data)})
         photos = Photo.objects.filter(

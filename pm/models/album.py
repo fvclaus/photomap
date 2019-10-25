@@ -1,9 +1,9 @@
 import logging
 
 from django.db import models
+from pm.models.user import User
 
 from .description import Description
-from .userprofile import User
 
 logger = logging.getLogger(__name__)
 

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from django.contrib.auth.models import User
 from django.urls import reverse
+from pm.models.user import User
 from pm.view.registration import RegistrationView
 
 from .apitestcase import INACTIVE_USER_EMAIL, ApiTestCase
