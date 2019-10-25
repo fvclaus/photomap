@@ -16,6 +16,9 @@ dojox/
 dijit/
 build/
 
+# Eclipse
+.project
+
 # Static assets
 static/CACHE
 static/profile-picture
