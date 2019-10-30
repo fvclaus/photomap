@@ -1,6 +1,6 @@
 /**
  * General Informations about this Class:
- *  - Hirarchy of this.events: {type: {name: [eventObject, eventObject}, name: [eventObject]}, type: {name: [eventObject]}}
+ *  - Hierarchy of this.events: {type: {name: [eventObject, eventObject}, name: [eventObject]}, type: {name: [eventObject]}}
  *  - Event-Type:
  *  --- Describes a certain type of Event (eg. "change", "click"). Mandatory!
  *  --- An Event-Type can Event-Names associated to it. If Handlers are added to an Event-Type without a Event-Name specified are put into the "unnamed"-Handler-Collection
@@ -12,7 +12,7 @@
  *  --- read as "attribute: typeof attribute" => {type: "string", name: "string", handler: "function", context: "object", counter: "number"}
  * ------------------------------
  *  Input-Parameter for the public methods:
- *  > (events, handler, name, context, counter) 
+ *  > (events, handler, name, context, counter)
  *  > All input parameters besides "events" are optional.
  *  > Keep in mind that every event needs at least an event-type and an event-handler!
  *  - "events":
@@ -58,7 +58,7 @@ define(["dojo/_base/declare"],
           * @description Subscribe to one or multiple events.
           * @param {String/Object} events May be a String of one or more space-separated event/event-types. May also be an object with one of the following structures:
           * (1) {event: handler, event: handler} || (2) {event: {handler: "function", context: "object", counter: "number"}, event: {...}}.
-          * (!) about (2): all the options given in the event-object will overwrite the "default"-options given as additional parameter to subscribe 
+          * (!) about (2): all the options given in the event-object will overwrite the "default"-options given as additional parameter to subscribe
           * (eg. subscribe(..., context, counter)) -> it is possible to use the default for some events and specify different options for another in the same .subscribe() call
           * (!) At least 1 event/event-type and 1 handler have to be passed to subscribe. Counter and context are optional and default to null.
           */
@@ -66,11 +66,11 @@ define(["dojo/_base/declare"],
             this._assertEventsInput(events);
             var instance = this,
                eventObjectList = this._parse(events, handler, name, context, counter);
-            
+
             eventObjectList.forEach(function (eventObject) {
                instance._insert(eventObject);
             });
-            
+
          },
          /**
           * @public
@@ -89,12 +89,12 @@ define(["dojo/_base/declare"],
             this._assertEventsInput(events);
             var instance = this,
                eventList = this._parseEventString(events);
-            
+
             if (handler) {
                this._removeHandler(eventList[0], handler);
                return;
             }
-            
+
             eventList.forEach(function (event) {
                instance._remove(event);
             });
@@ -109,22 +109,22 @@ define(["dojo/_base/declare"],
             this._assertEventsInput(events);
             var instance = this,
                eventList = this._parseEventString(events);
-            
+
             eventList.forEach(function (event) {
                instance._trigger(event, data);
             });
          },
-         
+
          /* ------------------------------------------------------------------------------------------------ */
          /* --------------------------------- Insertion of Events-Handlers --------------------------------- */
          /* ------------------------------------------------------------------------------------------------ */
          _insert: function (eventObject) {
             var namedCollection = this._getName(eventObject.type, eventObject.name);
-            
+
             if (!namedCollection) {
                namedCollection = this._insertName(eventObject.type, eventObject.name);
             }
-            
+
             namedCollection.push(eventObject);
             console.log("Communicator - Event: " + eventObject.type + ":" + eventObject.name + " has a new handler.");
          },
@@ -137,7 +137,7 @@ define(["dojo/_base/declare"],
                this.events[type][name] = [];
                console.log("Communicator - Event-Type: " + type + " has a new named handler collection: " + name);
             }
-            
+
             return this.events[type][name];
          },
 
@@ -194,7 +194,7 @@ define(["dojo/_base/declare"],
                console.log("Communicator - Deleted named handler collection '" + typeAndName[1] + "' of the Event-Type: " + typeAndName[0]);
             }
             delete this.events[typeAndName[0]][typeAndName[1]];
-            
+
             if (Object.keys(this.events[typeAndName[0]]).length === 0) {
                this._removeType(typeAndName[0]);
             }
@@ -284,7 +284,7 @@ define(["dojo/_base/declare"],
             var typeAndName = this._separateTypeAndName(event),
                namedCollection = this._getName(typeAndName[0], typeAndName[1]),
                instance = this;
-            
+
             if (!namedCollection) {
                console.log("Communicator - Event: " + event + " doesn't exist.");
                return;
@@ -333,7 +333,7 @@ define(["dojo/_base/declare"],
                 instance = this,
                 eventOptions = this._extractEventOptions(handler, name, context, counter),
                 eventTypes;
-            
+
             // create eventObject if input is event-string with a single handler: (events, handler[, context][, counter])
             if (typeof events === "string") {
                this._assertEventAndHandler(events, handler); // assert that the event(s) also have a handler
@@ -342,7 +342,7 @@ define(["dojo/_base/declare"],
                   eventList.push(instance._createEventFromString(event, eventOptions));
                });
             } else if (typeof events === "object") {
-               
+
                $.each(events, function (event, options) {
                   var eventObject = instance._createEventFromString(event, eventOptions);
                   instance._assertEventAndHandler(options); // asserts that every event has a handler
@@ -357,7 +357,7 @@ define(["dojo/_base/declare"],
                   eventList.push(eventObject);
                });
             }
-            
+
             return eventList;
          },
          _separateTypeAndName : function (event) {
@@ -369,7 +369,7 @@ define(["dojo/_base/declare"],
           */
          _parseEventString : function (events) {
             var eventList, instance = this;
-            
+
             if (this._testIfMultiple(events)) {
                eventList = events.split(" ");
             } else {
@@ -379,7 +379,7 @@ define(["dojo/_base/declare"],
             eventList.forEach(function (event) {
                instance._assertEventSyntax(event);
             });
-            
+
             return eventList;
          },
          /**
@@ -389,22 +389,22 @@ define(["dojo/_base/declare"],
          _extractEventOptions : function (arg1, arg2, arg3, arg4) {
             // every single of the arguments a different type than all the others
             // therefor we can just check which type each of the arguments has and then assign it the correct usage (handler, name, ...)
-            
+
             var args = [arg1, arg2, arg3, arg4],
                 argsTypes = args.map(function (arg) {
                    return typeof arg;
                 }),
                 eventObject = {};
             this._assertUniqueness(argsTypes);
-            
+
             eventObject.handler = args[argsTypes.indexOf("function")] || null;
             // all handlers that have no named collection specified (eg. subscribe("change", handler)) are put into the the unnamed collection of an eventtype
             eventObject.name = args[argsTypes.indexOf("string")] || "unnamed";
             eventObject.context = args[argsTypes.indexOf("object")] || null;
             eventObject.counter = args[argsTypes.indexOf("number")] || null;
-            
+
             this._assertName(eventObject.name);
-            
+
             console.log(eventObject);
             return eventObject;
          },
@@ -417,14 +417,14 @@ define(["dojo/_base/declare"],
             this._assertIncludesType(event);
             var typeAndName = this._separateTypeAndName(event),
                 eventObject = $.extend({}, eventOptions);
-            
+
             eventObject.type = typeAndName[0];
             // overwrite event name in options if event has its own name specified in string (type:name -> "change:photo")
             // if just a type is given "change" the name defined in the event-options is used (if one is specified on subscribe)
             if (typeAndName[1]) {
                eventObject.name = typeAndName[1];
             }
-            
+
             return eventObject;
          },
          /* ------------------------------------------------------------------------------------------------ */
@@ -469,7 +469,7 @@ define(["dojo/_base/declare"],
                      valid = false;
                      wrongAttribute = "Handler";
                      wrongValue = options.handler;
-                     
+
                   }
                   if (options.context && typeof options.context !== "object") {
                      valid = false;
@@ -493,7 +493,7 @@ define(["dojo/_base/declare"],
          },
          _assertUniqueness : function (eventArgTypes) {
             var typesSoFar = {};
-            
+
             eventArgTypes.forEach(function (arg) {
                // ignore undefined cause multiple arguments may be undefined
                if (arg === "undefined") {
@@ -527,7 +527,7 @@ define(["dojo/_base/declare"],
             this.events = {};
          }
       }),
-          
+
           _instance = new Communicator();
       return _instance;
-   }); 
+   });

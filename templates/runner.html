@@ -1,48 +1,73 @@
 <!DOCTYPE html>
 {% load i18n %}
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Keiken Frontend Tests</title>
-    <link rel="stylesheet" href="/static/css/lib/qunit-1.12.0.css">
-    <link href="/static/css/lib/droid.sans.css" rel="stylesheet" type="text/css"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/lib/smoothness-custom-font/jquery-ui-1.10.1.custom.css" />
-    <link rel="stylesheet" type="text/css" href="/static/css/grid.css" />
 
-    {% load compress %}
-    {% compress css %}
-    <link rel="stylesheet" type="text/x-stylus" href="/static/styles/viewalbum-main.styl" />
-    {% endcompress %}
-    <!-- <script type="text/javascript"> -->
-    <!--   var dojoConfig = { -->
-    <!--     baseUrl : "/static/js/", -->
-    <!--     tlmSiblingOfDojo: true, -->
-        <!-- packages : [ -->
-        <!--   { name : "keiken", location : "../keiken" }, -->
-    <!--       { name : "dojo", location : "dojo" }, -->
-    <!--       { name : "dijit", location : "dijit" }, -->
-    <!--       { name : "dojox", location : "dojox" } -->
-      <!--   ] -->
-      <!-- }; -->
-    <!-- </script> -->
-    <script type="text/javascript" src="{% url django.views.i18n.javascript_catalog %}"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery-1.7.2.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery-ui-1.10.0.custom.min.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.simulate.js"></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.cookie.js" ></script>
-    <script type="text/javascript" src="/static/js/lib/jquery.validate.js"></script>
+<head>
+  <meta charset="utf-8">
+  <title>Keiken Frontend Tests</title>
+  <link rel="stylesheet"
+        href="/static/css/lib/qunit-1.12.0.css">
+  <link href="/static/css/lib/droid.sans.css"
+        rel="stylesheet"
+        type="text/css" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="/static/css/lib/smoothness-custom-font/jquery-ui-1.10.1.custom.css" />
+  <link rel="stylesheet"
+        type="text/css"
+        href="/static/css/grid.css" />
 
-    <script type="text/javascript" src="/static/js/lib/jquery.jqote2.min.js" ></script>
-    <script src="/static/js/lib/qunit-1.12.0.js"></script>
-    <script type="text/javascript" src="/static/js/lib/assert.js"></script>
-    <script type="text/javascript" src="/static/js/keiken/util/constants.js"></script>
-    <script type="text/javascript" src="/static/js/dojo/dojo.js"></script>
-    <script type="text/javascript" src="/static/js/keiken/test/runner.js"></script>
-  </head>
-  <body>
-    <div id="qunit" style="float : left; width : 45%; height : 1000px"></div>
-    <div id="qunit-fixture" style="float : left;"></div>
-    <div id="testBody" style="float : left; width : 500px; height : 500px;"></div>
-  </body>
+  {% load compress %}
+  {% compress css %}
+  <link rel="stylesheet"
+        type="text/x-stylus"
+        href="/static/styles/viewalbum-main.styl" />
+  {% endcompress %}
+  <!-- <script type="text/javascript"> -->
+  <!--   var dojoConfig = { -->
+  <!--     baseUrl : "/static/js/", -->
+  <!--     tlmSiblingOfDojo: true, -->
+  <!-- packages : [ -->
+  <!--   { name : "keiken", location : "../keiken" }, -->
+  <!--       { name : "dojo", location : "dojo" }, -->
+  <!--       { name : "dijit", location : "dijit" }, -->
+  <!--       { name : "dojox", location : "dojox" } -->
+  <!--   ] -->
+  <!-- }; -->
+  <!-- </script> -->
+  <script type="text/javascript"
+          src="{% url 'javascript-catalog' %}"></script>
+  <script type="text/javascript"
+          src="/static/js/lib/jquery-1.7.2.js"></script>
+  <script type="text/javascript"
+          src="/static/js/lib/jquery-ui-1.10.0.custom.min.js"></script>
+  <script type="text/javascript"
+          src="/static/js/lib/jquery.simulate.js"></script>
+  <script type="text/javascript"
+          src="/static/js/lib/jquery.cookie.js"></script>
+  <script type="text/javascript"
+          src="/static/js/lib/jquery.validate.js"></script>
+
+  <script type="text/javascript"
+          src="/static/js/lib/jquery.jqote2.min.js"></script>
+  <script src="/static/js/lib/qunit-1.12.0.js"></script>
+  <script type="text/javascript"
+          src="/static/js/lib/assert.js"></script>
+  <script type="text/javascript"
+          src="/static/js/keiken/util/constants.js"></script>
+  <script type="text/javascript"
+          src="/static/js/dojo/dojo.js"></script>
+  <script type="text/javascript"
+          src="/static/js/keiken/test/runner.js"></script>
+</head>
+
+<body>
+  <div id="qunit"
+       style="float : left; width : 45%; height : 1000px"></div>
+  <div id="qunit-fixture"
+       style="float : left;"></div>
+  <div id="testBody"
+       style="float : left; width : 500px; height : 500px;"></div>
+</body>
+
 </html>
-
