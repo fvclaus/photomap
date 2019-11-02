@@ -1,0 +1,17 @@
+name: tests
+on: [push]
+
+jobs:
+  build:
+    name: tests
+    # Run on windows because it provides a graphics server
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v1
+        with:
+          fetch-depth: 1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '12.10'
+      - run: npm install
+      - run: npm run test

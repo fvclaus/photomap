@@ -52,8 +52,7 @@ module.exports = function (config) {
     singleRun: false,
 
     plugins: [
-      // eslint-disable-next-line
-      require("/home/fredo/workspace/karma-dojo"),
+      "karma-dojo",
       "karma-jasmine",
       "karma-chrome-launcher"
     ]
