@@ -12,17 +12,15 @@ define(["dojo/_base/declare"],
   function (declare) {
     return declare(null, {
 
-      constructor: function (modelList, options) {
+      constructor: function (models, options) {
         this.defaults = {
           orderBy: null, // optional
-          modelConstructor: null, // mandatory, constructor function of the model-type, used in insertRaw
           modelType: "Model" // mandatory, should resemble model-type which can be retrieved with model.getType()
         }
         this.options = $.extend({}, this.defaults, options)
 
-        this.modelConstructor = options.modelConstructor
         this.modelType = options.modelType
-        this.models = modelList
+        this.models = models
 
         if (options.orderBy) {
           this.sort()
@@ -157,126 +155,24 @@ define(["dojo/_base/declare"],
         })
       },
       onInsert: function (handler, thisReference, eventName) {
-        var context = thisReference || this
-
-        if (!eventName) {
-          eventName = "Model"
-        }
-
-        $(this).on("inserted." + eventName, function (event, model) {
-          handler.call(context, model)
-        })
-
-        return this
+        return this._on("inserted", handler, thisReference, eventName)
       },
       onUpdate: function (handler, thisReference, eventName) {
-        var context = thisReference || this
-
-        if (!eventName) {
-          eventName = "Model"
-        }
-
-        $(this).on("updated." + eventName, function (event, model) {
-          handler.call(context, model)
-        })
-
-        return this
+        return this._on("updated", handler, thisReference, eventName)
       },
       onDelete: function (handler, thisReference, eventName) {
+        return this._on("deleted", handler, thisReference, eventName)
+      },
+      _on: function (eventName, handler, thisReference, eventNs) {
         var context = thisReference || this
 
-        if (!eventName) {
-          eventName = "Model"
+        if (!eventNs) {
+          eventNs = "Model"
         }
 
-        $(this).on("deleted." + eventName, function (event, model) {
+        $(this).on(eventName + "." + eventNs, function (event, model) {
           handler.call(context, model)
         })
-
-        return this
-      },
-      /**
-          * @description Adds handler to the "success"-event triggered after model-data is succesfully saved to the server
-          */
-      onSuccess: function (handler, thisReference) {
-        var context = thisReference || this
-        var instance = this
-
-        $(this).one("success.requestEvent", function (event, data, status, xhr) {
-          // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
-          // handler can use same arguments as with the original jQuery.ajax.success
-          handler.call(context, data, status, xhr)
-          // remove other request-events (like failure, error)
-          $(instance).off(".RequestEvent")
-        })
-
-        return this
-      },
-      /**
-          * @description Adds handler to the "success"-event triggered when a request couldn't be processed by the server
-          */
-      onFailure: function (handler, thisReference) {
-        var context = thisReference || this
-        var instance = this
-
-        $(this).one("failure.requestEvent", function (event, data, status, xhr) {
-          // Simulate jQuery ajax response: data = [JSONResponseData, textStatus, jqXHR]
-          // handler can use same arguments as with the original jQuery.ajax.success
-          handler.call(context, data, status, xhr)
-          $(instance).off(".RequestEvent")
-        })
-
-        return this
-      },
-      /**
-          * @description Adds handler to the "error"-event triggered when there was a network error and the request couldn't be submitted
-          */
-      onError: function (handler, thisReference) {
-        var context = thisReference || this
-        var instance = this
-
-        $(this).one("error.requestEvent", function (event, xhr, status, error) {
-          // Simulate jQuery ajax response: data = [jqXHR, textStatus, errorThrown]
-          // handler can use same arguments as with the original jQuery.ajax.error
-          handler.call(context, xhr, status, error)
-          $(instance).off(".RequestEvent")
-        })
-
-        return this
-      },
-      /**
-          * @description Convenience method to insert a model into the collection using raw form-data,
-          * also saves it to the server and informs the subscribed classes about the insertion.
-          * @param {Object} rawModelData The data needed to create a model. It'll be sent to the server.
-          */
-      insertRaw: function (rawModelData) {
-        assertString(rawModelData.title, "Each model needs a title")
-        console.log(rawModelData)
-
-        var instance = this
-        var model = new this.modelConstructor(rawModelData)
-
-        model
-          .onSuccess(function (data, status, xhr) {
-            instance._trigger("success", [data, status, xhr])
-
-            // assert that model has id and title now (not done in constructor anymore!); in production environment this shouldn't be a problem anymore and always return true                     // for development it is needed though to assure that the new IDU-Design works
-            // if (model.assertValidity()) {
-            //    instance.insert(model);
-            // }
-          })
-          .onInsert(function (model) {
-            if (model.assertValidity()) {
-              instance.insert(model)
-            }
-          })
-          .onFailure(function (data, status, xhr) {
-            instance._trigger("failure", [data, status, xhr])
-          })
-          .onError(function (xhr, status, error) {
-            instance._trigger("error", [xhr, status, error])
-          })
-          .save(rawModelData)
 
         return this
       },
@@ -289,15 +185,6 @@ define(["dojo/_base/declare"],
           return index
         }
 
-        // do {
-        //    i--;
-        //    currentOrder = this.getByIndex(i)[this.options.orderBy];
-        //    // if (currentOrder === newOrder) {
-        //    //    throw new Error("OrderDuplicationError");
-        //    // }
-        // } while (newOrder <= currentOrder);
-
-        // return i + 1;
         for (index = this.size() - 1; index >= 0; index--) {
           currentOrder = this.getByIndex(index)[this.options.orderBy]
           if (newOrder <= currentOrder) {

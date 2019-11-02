@@ -4,10 +4,64 @@ define(["dojo/_base/declare"],
   function (declare) {
     return declare(null, {
       constructor: function () {
-        this._expectedUrl = null
-        this._expectedData = null
-        this._isActive = false
-        this._isRegisterd = false
+      },
+      simulateInsert: function (model, newData, expectedUrl) {
+        this._simulate(expectedUrl, newData, function (options, jqXHR) {
+          var data = $.extend({}, newData)
+          data.success = true
+          data.id = 1
+          options.success.call(null, data, "200", jqXHR)
+        })
+        model.save(newData)
+      },
+      simulateFailure: function (model, newData, expectedUrl) {
+        this._simulate(expectedUrl, newData, function (options, jqXHR) {
+          var data = $.extend({}, newData)
+          data.success = false
+          options.success.call(null, data, "200", jqXHR)
+        })
+        model.save(newData)
+      },
+      simulateError: function (model, newData, expectedUrl) {
+        this._simulate(expectedUrl, newData, function (options, jqXHR) {
+          options.error.call(null, jqXHR, "500", "Something went wrong.")
+        })
+        model.save(newData)
+      },
+      _simulate: function (expectedUrl, expectedData, eventHandlerCb) {
+        var isActive = true
+        var instance = this
+
+        $.ajaxPrefilter(function (options, originalOptions, jqXHR) {
+          // It is not possible to unregister ajax prefilters.
+          // When running more than one test, it will be executed every time.
+          if (!isActive) {
+            return
+          }
+          isActive = false
+
+          jqXHR.abort()
+
+          instance._expectCorrectAjaxConfiguration(expectedUrl, expectedData, originalOptions, jqXHR)
+          eventHandlerCb(options, jqXHR)
+        })
+      },
+      _expectCorrectAjaxConfiguration: function (expectedUrl, expectedData, options, jqXHR) {
+        expect(options.url).toBe(expectedUrl)
+
+        if (expectedData.isPhotoUpload) {
+          expect(!options.processData).toBeFalsy()
+          expect(!options.cache).toBeFalsy()
+          expect(options.data).toBeInstanceOf(FormData)
+          // This is a controlling directive and not model data.
+          delete expectedData.isPhotoUpload
+        } else {
+          for (var attribute in expectedData) {
+            if (expectedData.hasOwnProperty(attribute)) {
+              expect(options.data[attribute]).toBeDefined()
+            }
+          }
+        }
       },
       register: function (model) {
         assertFalse(this._isRegistered, "You cannot re-register the same object twice.")
@@ -82,13 +136,6 @@ define(["dojo/_base/declare"],
           })
           originalOptions.error.call(null, jqXHR, "500", "Something went wrong.")
         })
-      },
-      expect: function (expectedUrl, expectedData) {
-        this._expectedData = $.extend({}, expectedData, true)
-        this._expectedUrl = expectedUrl
-      },
-      unregister: function () {
-        this._isActive = false
       }
     })
   })

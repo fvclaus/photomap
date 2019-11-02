@@ -12,10 +12,14 @@ module.exports = {
   globals: {
     "define": "readonly",
     "describe": "readonly",
+    "beforeEach": "readonly",
     "expect": "readonly",
     "it": "readonly",
+    "xit": "readonly",
     "assertTrue": "readonly",
     "assertFalse": "readonly",
+    "assertNumber": "readonly",
+    "assertString": "readonly",
     "$": "readonly"
   },
   rules: {

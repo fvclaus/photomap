@@ -26,7 +26,6 @@ function (declare, MarkerModel, Photo, Collection) {
       })
       this.photos = new Collection(photos, {
         modelType: "Photo",
-        modelConstructor: Photo,
         orderBy: "order"
       })
     },

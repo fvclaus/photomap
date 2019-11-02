@@ -1,6 +1,3 @@
-/* jslint */
-/* global $, define, main, assertNumber, assertString, assertFalse, assertTrue */
-
 "use strict"
 
 /**
@@ -216,6 +213,64 @@ define(["dojo/_base/declare"],
             instance[key] = value
           }
         })
+      },
+      save: function (newData) {
+        assertTrue(typeof newData === "object" && newData !== null, "Must provide data to update.")
+        var instance = this
+        var settings = {
+          url: this._buildPostUrl(),
+          type: "post",
+          data: {},
+          dataType: "json",
+          success: function (data, status, xhr) {
+            if (data.success) {
+              instance._trigger("success", [data, status, xhr])
+              if (instance.id > -1) {
+              // TODO Maybe title and description go out of scope.
+                instance._setProperties(newData)
+                instance._trigger("updated", instance)
+              } else {
+              // set id of the new model
+                instance._setProperties(data)
+                instance._trigger("inserted", instance)
+              }
+            } else {
+              instance._trigger("failure", [data, status, xhr])
+            }
+          },
+          error: function (xhr, status, error) {
+            instance._trigger("error", [xhr, status, error])
+          }
+        }
+
+        this._configurePostData(settings, newData)
+
+        $.ajax(settings)
+
+        return this
+      },
+      _buildPostUrl: function () {
+        return "/" + this.type.toLowerCase() + "/" + (this.id > -1 ? this.id + "/" : "")
+      },
+      _configurePostData: function (settings, newData) {
+        if (newData.isPhotoUpload) {
+          settings.processData = false
+          settings.contentType = false
+          settings.cache = false
+          settings.data = this._parseFormData(newData)
+        } else {
+          settings.data = newData
+        }
+      },
+      _parseFormData: function (data) {
+        var formData = new FormData()
+
+        formData.append("place", data.place)
+        formData.append("title", data.title)
+        formData.append("description", data.description)
+        formData.append("photo", data.photo)
+
+        return formData
       }
     })
   })

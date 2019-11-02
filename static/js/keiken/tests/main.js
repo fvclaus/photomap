@@ -3,7 +3,7 @@ var TEST_REGEXP = /.*\.spec.js$/
 
 Object.keys(window.__karma__.files).forEach(function (file) {
   if (TEST_REGEXP.test(file)) {
-    allTestFiles.push(file)
+    allTestFiles.push(file.replace("/base/", "").replace(".js", ""))
   }
 })
 

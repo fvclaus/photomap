@@ -1,13 +1,22 @@
 
 "use strict"
 
-define(["../model/Model"],
-  function (Model) {
+define(["../model/Model", "./ModelServerTest"],
+  function (Model, ModelServerTest) {
     var model = null
+    var modelData = null
+    var server = null
 
-    console.log("Inside ModelTest")
     describe("ModelTest", function () {
-      model = new Model({ title: "fancy title", id: -1, type: "Person" })
+      beforeEach(function () {
+        modelData = {
+          title: "Title",
+          description: "Description",
+          type: "Album"
+        }
+        model = new Model(modelData)
+        server = new ModelServerTest()
+      })
 
       it("should throw error in setter", function () {
         expect(function () { model.set("id", 2) }).toThrow()
@@ -31,7 +40,7 @@ define(["../model/Model"],
 
       it("should return initial values", function () {
         // Type
-        expect(model.getType()).toBe("Person")
+        expect(model.getType()).toBe("Album")
         // Id
         console.log(model.getId())
         console.log(expect.toString())
@@ -40,6 +49,59 @@ define(["../model/Model"],
         } catch (e) {
           console.error(e)
         }
+      })
+
+      it("should trigger onInsert", function (done) {
+        model.onSuccess(function (data, status, xhr) {
+          expect(status).toBe("200")
+        })
+        model.onInsert(function (data) {
+          console.log("data", data)
+          expect(data.title).toBe("Title")
+          expect(data.description).toBe("Description")
+          expect(data.id).toBe(1)
+          done()
+        })
+
+        server.simulateInsert(model, modelData, "/album/")
+      })
+
+      it("should trigger onFailure", function (done) {
+        model.onFailure(function (data, status, xhr) {
+          expect(status).toBe("200")
+          expect(typeof data.success === "boolean" && !data.success).toBeTruthy()
+          done()
+        })
+
+        server.simulateFailure(model, modelData, "/album/")
+      })
+
+      it("should trigger onError", function (done) {
+        model.onError(function (xhr, status, error) {
+          expect(status).toBe("500")
+          expect(error).toBe("Something went wrong.")
+          done()
+        })
+
+        server.simulateError(model, modelData, "/album/")
+      })
+
+      it("should trigger onUpdate", function (done) {
+        model.id = 5
+        model.onSuccess(function (data, status, xhr) {
+          expect(status).toBe("200")
+        })
+        model.onUpdate(function (data) {
+          console.log("data", data)
+          expect(data.title).toBe("New Title")
+          expect(data.description).toBe("Description")
+          expect(data.id).toBe(5)
+          done()
+        })
+
+        server.simulateInsert(model, {
+          title: "New Title"
+        }, "/album/5/")
       })
     })
   })

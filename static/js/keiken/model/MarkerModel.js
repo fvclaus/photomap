@@ -1,6 +1,3 @@
-/* jslint */
-/* global $, define, main, google, ZOOM_LEVEL_CENTERED, PLACE_VISITED_ICON, PLACE_SELECTED_ICON, PLACE_UNSELECTED_ICON, PLACE_DISABLED_ICON  */
-
 "use strict"
 
 /**
@@ -29,41 +26,6 @@ function (declare, Model) {
               */
     getLng: function () {
       return this.lng
-    },
-    save: function (newData) {
-      var instance = this
-      var settings = {
-        url: "/" + this.type.toLowerCase() + "/",
-        type: "post",
-        data: newData,
-        dataType: "json",
-        success: function (data, status, xhr) {
-          if (data.success) {
-            instance._trigger("success", [data, status, xhr])
-            if (instance.id > -1) {
-              instance._setProperties(newData)
-              instance._trigger("updated", instance)
-            } else {
-              // set id of the new model
-              instance._setProperties(data)
-              instance._trigger("inserted", instance)
-            }
-          } else {
-            instance._trigger("failure", [data, status, xhr])
-          }
-        },
-        error: function (xhr, status, error) {
-          instance._trigger("error", [xhr, status, error])
-        }
-      }
-      // add id if model exists -> for Update (id does not exist before Insert -> not needed)
-      if (this.id > -1) {
-        settings.url += this.id + "/"
-      }
-
-      $.ajax(settings)
-
-      return this
     }
   })
 })

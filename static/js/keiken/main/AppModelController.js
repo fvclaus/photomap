@@ -13,9 +13,12 @@ define([
   "./Main",
   "./UIState",
   "../util/Communicator",
-  "../util/ClientState"
+  "../util/ClientState",
+  "../model/Photo",
+  "../model/Place",
+  "../model/Album"
 ],
-function (declare, main, state, communicator, clientstate) {
+function (declare, main, state, communicator, clientstate, Photo, Place, Album) {
   var map = main.getMap()
   var gallery = main.getGallery()
   var slideshow = main.getSlideshow()
@@ -54,11 +57,13 @@ function (declare, main, state, communicator, clientstate) {
           dialog.startPhotoEditor()
         },
         submit: function (data) {
-          photoCollection
+          var photo = new Photo(data)
+          photo
             .onSuccess(function (data) {
               dialog.showResponseMessage(data)
             })
             .onInsert(function () {
+              photoCollection.insert(photo)
               communicator.publish("inserted:Model")
             })
             .onFailure(function (data) {
@@ -68,7 +73,7 @@ function (declare, main, state, communicator, clientstate) {
               // this keyword needs to be dialog
               dialog.showNetworkError()
             })
-            .insertRaw(data)
+            .save(data)
         },
         url: "/form/insert/photo",
         isPhotoUpload: true,
@@ -98,11 +103,13 @@ function (declare, main, state, communicator, clientstate) {
           dialog.setInputValue("lon", eventData.lng.toFixed(7))
         },
         submit: function (data) {
-          markerCollection
+          var marker = modelType === "place" ? new Place(data) : new Album(data)
+          marker
             .onSuccess(function (data) {
               dialog.showResponseMessage(data)
             })
             .onInsert(function () {
+              markerCollection.insert(marker)
               communicator.publish("inserted:Model")
             })
             .onFailure(function (data) {
@@ -112,7 +119,7 @@ function (declare, main, state, communicator, clientstate) {
               // this needs to be dialog
               dialog.showNetworkError()
             })
-            .insertRaw(data)
+            .save(data)
         },
         url: "/form/insert/" + modelType.toLowerCase()
       })
