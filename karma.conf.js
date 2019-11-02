@@ -3,27 +3,27 @@ var path = require("path")
 module.exports = function (config) {
   config.set({
     // base path, that will be used to resolve files and exclude
-    basePath: "static/js",
+    basePath: ".",
 
     frameworks: ["jasmine", "dojo"],
 
     // list of files / patterns to load in the browser
     files: [
-      "keiken/tests/main.js",
+      "static/js/keiken/tests/main.js",
       {
-        pattern: "lib/**",
+        pattern: "static/js/lib/**",
         served: true,
         watched: false,
         included: true
       },
       {
-        pattern: "keiken/**",
+        pattern: "static/js/keiken/**",
         served: true,
         included: false,
         watched: true
       },
       {
-        pattern: "dojo/**/!(dojo).js",
+        pattern: "node_modules/dojo/**/!(dojo).js",
         served: true,
         included: false,
         watched: false
@@ -31,7 +31,7 @@ module.exports = function (config) {
     ],
 
     dojo: {
-      loader: path.join(__dirname, "static/js/dojo/dojo.js")
+      loader: path.join(__dirname, "node_modules/dojo/dojo.js")
     },
 
     // level of logging

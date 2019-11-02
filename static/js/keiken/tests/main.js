@@ -3,7 +3,7 @@ var TEST_REGEXP = /.*\.spec.js$/
 
 Object.keys(window.__karma__.files).forEach(function (file) {
   if (TEST_REGEXP.test(file)) {
-    allTestFiles.push(file.replace("/base/", "").replace(".js", ""))
+    allTestFiles.push(file.replace("/base/static/js/", "").replace(".js", ""))
   }
 })
 
@@ -15,11 +15,11 @@ var dojoConfig = {
   packages: [
     {
       name: "keiken",
-      location: "/base/keiken"
+      location: "/base/static/js/keiken"
     },
     {
       name: "dojo",
-      location: "/base/dojo"
+      location: "/base/node_modules/dojo"
     }
   ]
 }
