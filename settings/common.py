@@ -117,6 +117,7 @@ STATICFILES_FINDERS = (
 
 STATICFILES_DIR = (STATIC_PATH, )
 
+# TODO Place this in environment
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '_aoynhp*s8vn0=fgom9%(p^dl^r!gs7ltw7qs%^zu#^*=kcr6)'
 
@@ -210,6 +211,7 @@ TEST_USER_EMAIL = "test@keiken.de"
 TEST_USER_PASSWORD = "test"
 
 DEMO_USER_EMAIL = "demo@keiken.de"
+# TODO Read this from environment
 DEMO_USER_PASSWORD = "2*Ze8%U35$oW"
 
 EMAIL_ADDRESS = "info@keiken.de"
