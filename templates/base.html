@@ -83,11 +83,7 @@
 
   <script type="text/javascript"
           src="/static/js/lib/assert.js"></script>
-  <!-- IE currently not supported. -->
-  <!-- <script type="text/javascript" src="/static/js/lib/ie.js" ></script> -->
-  <!-- FF 4+ and Chrome 7+  support FormData -->
-  <!-- <script type="text/javascript" src="/static/js/lib/formdata.js"></script> -->
-  <!-- <script type="text/javascript" src="/static/js/lib/flexie.min.js"></script> -->
+
   <!-- This is necessary for all side pages. -->
   <script type="text/javascript"
           src="/static/js/lib/html5shiv.js"></script>
@@ -104,15 +100,6 @@
 
   {% block mapjs %}
   {% endblock %}
-  <!-- Oh you very annoying IE7 ;) -->
-  <!--[if !IE]><!-->
-  <link rel="stylesheet"
-        type="text/css"
-        href="/static/css/non-ie.css" />
-  <!--<![endif]-->
-  <!--[if IE 7]>
-        <link rel="stylesheet" type="text/css" href="/static/css/ie7.css" />
-    <![endif]-->
 </head>
 
 <body id="{% block pageID %} {% endblock %}">

@@ -20,6 +20,7 @@
   "license": "ISC",
   "homepage": "https://bitbucket.org/fvclaus/keiken#readme",
   "dependencies": {
+    "dijit": "^1.15.0",
     "dojo": "^1.15.0",
     "stylus": "^0.54.7"
   },
@@ -31,9 +32,10 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "jasmine": "^3.5.0",
-    "karma": "^4.4.1",
+    "karma": "4.1.0",
     "karma-chrome-launcher": "^3.1.0",
     "karma-dojo": "0.0.1",
-    "karma-jasmine": "^2.0.1"
+    "karma-jasmine": "^2.0.1",
+    "karma-stylus-preprocessor": "0.0.2"
   }
 }

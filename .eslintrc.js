@@ -10,9 +10,12 @@ module.exports = {
     sourceType: 'script'
   },
   globals: {
+    "jasmine": "readonly",
     "define": "readonly",
     "describe": "readonly",
     "beforeEach": "readonly",
+    "afterEach": "readonly",
+    "afterAll": "readonly",
     "expect": "readonly",
     "it": "readonly",
     "xit": "readonly",

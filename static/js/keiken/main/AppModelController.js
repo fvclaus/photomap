@@ -103,7 +103,7 @@ function (declare, main, state, communicator, clientstate, Photo, Place, Album) 
           dialog.setInputValue("lon", eventData.lng.toFixed(7))
         },
         submit: function (data) {
-          var marker = modelType === "place" ? new Place(data) : new Album(data)
+          var marker = modelType === "Place" ? new Place(data) : new Album(data)
           marker
             .onSuccess(function (data) {
               dialog.showResponseMessage(data)

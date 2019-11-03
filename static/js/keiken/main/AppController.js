@@ -55,14 +55,14 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
             instance.ignoreNextAppStateChange = false
           }
         })
-        .on("load", function () {
-          var $load = $("#mp-loading-screen")
-          var hide = function () { $load.hide() }
-          $load.find("div:nth-of-type(2)").text("Yay. The app is ready.")
-          $load.find("div:nth-of-type(3)").hide()
-          $load.find("div:last").show()
-          window.setTimeout(hide, 1500)
-        })
+      communicator.subscribeOnce("init", function () {
+        var $load = $("#mp-loading-screen")
+        var hide = function () { $load.hide() }
+        $load.find("div:nth-of-type(2)").text("Yay. The app is ready.")
+        $load.find("div:nth-of-type(3)").hide()
+        $load.find("div:last").show()
+        window.setTimeout(hide, 1500)
+      })
 
       /* ----------------------- Model -------------------------- */
       // @see AppModelController
@@ -101,7 +101,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           }
         },
         mouseout: function () {
-          controls.hide(true)
+          controls.hideAfterDelay()
         },
         clicked: function (markerPresenter) {
           this._showDetail(markerPresenter.getModel())
@@ -145,7 +145,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         /* ---------------------- Gallery --------------------------- */
         communicator.subscribe({
           mouseleave: function () {
-            controls.hide(true)
+            controls.hideAfterDelay()
           },
           clicked: function (photo) {
             map.resetSelectedMarker()
@@ -343,7 +343,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           * @param {Photo} photo
           */
     _navigateSlideshow: function (photo) {
-      controls.hide(false)
+      controls.hide()
       slideshow.run()
       slideshow.navigateTo(photo)
     },

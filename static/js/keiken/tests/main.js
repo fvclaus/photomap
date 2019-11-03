@@ -8,7 +8,7 @@ Object.keys(window.__karma__.files).forEach(function (file) {
 })
 
 var dojoConfig = {
-  async: false,
+  async: true,
   isDebug: true,
   debugAtAllCosts: true,
   baseUrl: "/base",
@@ -20,6 +20,10 @@ var dojoConfig = {
     {
       name: "dojo",
       location: "/base/node_modules/dojo"
+    },
+    {
+      name: "dijit",
+      location: "/base/node_modules/dijit"
     }
   ]
 }
