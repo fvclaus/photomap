@@ -9,37 +9,70 @@ define([],
     }
 
     function jQueryElementToString (element) {
-      return element[0].outerHTML
+      assertObject(element)
+      return element[0] ? element[0].outerHTML : "[empty]"
     }
 
-    return {
-      toBeVisible: function (util, customEqualityTesters) {
-        return {
-          compare: function (actual, expected) {
-            assertJqueryElement(actual)
+    var VARIABLE_REGEX = /(\{\{.*\}\})/
 
-            var result = {
-              pass: util.equals(actual.is(":visible"), true, customEqualityTesters)
-            }
+    function interpolateMessage (message, variables) {
+      var fragments = message.split(VARIABLE_REGEX)
+      var interpolatedMessage = ""
 
-            result.message = "Expected " + jQueryElementToString(actual) + " to " + (result.pass ? " not " : "") + " be visible"
-            return result
-          }
+      fragments.forEach(function (fragment) {
+        if (VARIABLE_REGEX.test(fragment)) {
+          interpolatedMessage += variables[fragment.replace(/\{\}\s/g, "")]
+        } else {
+          interpolatedMessage += fragment
         }
-      },
-      toBeHidden: function (util, customEqualityTesters) {
+      })
+
+      return interpolatedMessage
+    }
+
+    function makeValidator (testFn, messageTemplate) {
+      return function (util, customEqualityTesters) {
         return {
           compare: function (actual, expected) {
             assertJqueryElement(actual)
 
             var result = {
-              pass: util.equals(actual.is(":hidden"), true, customEqualityTesters)
+              pass: testFn(util, customEqualityTesters, actual, expected)
             }
 
-            result.message = "Expected " + jQueryElementToString(actual) + " to " + (result.pass ? "" : " not ") + " be visible"
+            result.message = interpolateMessage(messageTemplate, {
+              actual: jQueryElementToString(actual)
+            })
             return result
           }
         }
       }
+    }
+
+    return {
+      toBeVisible: makeValidator(
+        function (util, customEqualityTesters, actual, expected) {
+          return util.equals(actual.is(":visible"), true, customEqualityTesters)
+        },
+        "Expected {{ actual }} to be visible"
+      ),
+      toBeHidden: makeValidator(
+        function (util, customEqualityTesters, actual, expected) {
+          return util.equals(actual.is(":hidden"), true, customEqualityTesters)
+        },
+        "Expected {{ actual }} to be hidden"
+      ),
+      toExist: makeValidator(
+        function (util, customEqualityTesters, actual, expected) {
+          return util.equals(actual.length > 0, true, customEqualityTesters)
+        },
+        "Expected {{ actual }} to exist"
+      ),
+      toNotExist: makeValidator(
+        function (util, customEqualityTesters, actual, expected) {
+          return util.equals(actual.length === 0, true, customEqualityTesters)
+        },
+        "Expected {{ actual }} to not exist"
+      )
     }
   })

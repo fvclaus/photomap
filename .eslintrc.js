@@ -16,6 +16,7 @@ module.exports = {
     "beforeEach": "readonly",
     "afterEach": "readonly",
     "afterAll": "readonly",
+    "$testBody": "readonly",
     "expect": "readonly",
     "it": "readonly",
     "xit": "readonly",
@@ -23,7 +24,9 @@ module.exports = {
     "assertFalse": "readonly",
     "assertNumber": "readonly",
     "assertString": "readonly",
-    "$": "readonly"
+    "assertObject": "readonly",
+    "$": "readonly",
+    "gettext": "readonly"
   },
   rules: {
     "quotes": ["error", "double"]

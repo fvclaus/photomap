@@ -42,6 +42,8 @@ module.exports = function (config) {
         watched: true
       },
       {
+        // Must exclude dojo.js, because it is served by dojo-karma.
+        // If included here, it will be ignored and never loaded.
         pattern: "node_modules/dojo/**/!(dojo).js",
         served: true,
         included: false,

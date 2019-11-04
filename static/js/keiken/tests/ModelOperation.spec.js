@@ -4,27 +4,17 @@ define(["keiken/widget/ModelOperationWidget",
   "../model/Album",
   "./JQueryMatchers",
   "./TestFixture",
-  "dojo/domReady!"],
-function (ModelOperationWidget, Album, JQueryMatchers, TestFixture) {
-  var slideshow = null
-  var $testBody = new TestFixture().getTestBody()
-  var $container
-  var photos = null
-  var photoCollection = null
-  // var assertTooltipPresence = function (present) {
-  //   if (present) {
-  //     QUnit.ok$visible($(".mp-infotext"))
-  //   } else {
-  //     QUnit.ok$hidden($(".mp-infotext"))
-  //   }
-  // }
-  var modelOperation = null
-
+  "./loadTestEnv!"],
+function (ModelOperationWidget, Album, JQueryMatchers, TestFixture, $testBody) {
   describe("ModelOperation", function () {
+    var $container
+    var modelOperation = null
+
     beforeEach(function () {
       $container = $("<span class='mp-controls-wrapper ui-corner-all mp-nodisplay' id='mp-controls'>")
       jasmine.addMatchers(JQueryMatchers)
       $testBody
+        .empty()
         .append($container)
 
       modelOperation = new ModelOperationWidget(null, $container.get(0))
