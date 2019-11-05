@@ -57,6 +57,7 @@ function (declare, main, state, communicator, clientstate, Photo, Place, Album) 
           dialog.startPhotoEditor()
         },
         submit: function (data) {
+          data.isPhotoUpload = true
           var photo = new Photo(data)
           photo
             .onSuccess(function (data) {

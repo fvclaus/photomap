@@ -1,5 +1,3 @@
-/* global define, $, QUnit, FormData */
-
 "use strict"
 
 define(["dojo/_base/declare",

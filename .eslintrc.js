@@ -26,7 +26,8 @@ module.exports = {
     "assertString": "readonly",
     "assertObject": "readonly",
     "$": "readonly",
-    "gettext": "readonly"
+    "gettext": "readonly",
+    "interpolate": "readonly"
   },
   rules: {
     "quotes": ["error", "double"]

@@ -24,6 +24,10 @@ var dojoConfig = {
     {
       name: "dijit",
       location: "/base/node_modules/dijit"
+    },
+    {
+      name: "dojox",
+      location: "/base/node_modules/dojox"
     }
   ]
 }
@@ -34,4 +38,23 @@ var dojoConfig = {
  */
 window.__karma__.dojoStart = function () {
   return allTestFiles
+}
+
+// Mock gettext() function
+// This does not work in AMD module if modules are loaded synchronously.
+// Maybe move to test_lib/ folder?
+window.gettext = function (text) {
+  return text
+}
+
+window.interpolate = function (fmt, obj, named) {
+  if (named) {
+    return fmt.replace(/%\(\w+\)s/g, function (match) {
+      return String(obj[match.slice(2, -2)])
+    })
+  } else {
+    return fmt.replace(/%s/g, function (match) {
+      return String(obj.shift())
+    })
+  }
 }

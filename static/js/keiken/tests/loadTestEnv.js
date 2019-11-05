@@ -1,9 +1,3 @@
-// Mock gettext() function
-// eslint-disable-next-line
-function gettext (text) {
-  return text
-}
-
 define(["./JQueryMatchers", "dojo/domReady!"], function (jQueryMatchers) {
   // Make matcher available to all specs
   beforeEach(function () {

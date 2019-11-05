@@ -1,5 +1,5 @@
 define({
-   update : "Bearbeiten",
-   "delete" : "Löschen",
-   share : "Teilen"
-});
+  update: "Bearbeiten",
+  delete: "Löschen",
+  share: "Teilen"
+})

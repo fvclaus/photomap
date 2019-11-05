@@ -1,6 +1,6 @@
 define({
-   root : {
-      close : "Close"
-   },
-   de : true
-});
+  root: {
+    close: "Close"
+  },
+  de: true
+})
