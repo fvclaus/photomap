@@ -1,19 +1,8 @@
 /* eslint no-unused-vars:0 */
 "use strict"
 
-function AssertionError (message) {
-  this.message = message
-}
-
-AssertionError.prototype.toString = function () {
-  return this.message
-}
-
 function croak (actual, expected, message) {
-  if (message === undefined || typeof message !== "string") {
-    throw new Error("AssertMustProvideMessage")
-  }
-  throw new AssertionError(actual + " is not " + expected + " -- " + message)
+  throw new Error(actual + " is not " + expected + " -- " + message)
 }
 
 function assert (actual, expected, message) {
@@ -43,6 +32,12 @@ function assertFalse (actual, message) {
 function assertNumber (actual, message) {
   if (!(typeof actual === "number")) {
     croak(typeof actual, "number", message)
+  }
+}
+
+function assertSchema (schema, actual) {
+  for (var propertyName in schema) {
+    schema[propertyName](actual[propertyName], "Property " + propertyName + " did not match schema.")
   }
 }
 

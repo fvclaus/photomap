@@ -7,11 +7,12 @@
 
 define([
   "dojo/_base/declare",
-  "../view/DialogMessageView",
+  "./DialogMessageWidget",
   "../util/PhotoFileValidator",
+  "../util/ClientState",
   "dojo/domReady!"
 ],
-function (declare, DialogMessageView, PhotoFileValidator) {
+function (declare, DialogMessageView, PhotoFileValidator, clientState) {
   $.extend($.ui.dialog.prototype.options, {
     autoOpen: false,
     modal: true,
@@ -19,50 +20,41 @@ function (declare, DialogMessageView, PhotoFileValidator) {
     draggable: false,
     closeOnEscape: false
   })
+  var photoValidator = new PhotoFileValidator()
 
   return declare(null, {
     constructor: function () {
-      // indicates if the user submitted the form
-      this.abort = true
       // this.editor = new PhotoEditorView();
-      this.photoValidator = new PhotoFileValidator()
-
-      this._bindListener()
-
       this.INPUT_DIALOG = 0
       this.CONFIRM_DIALOG = 1
       this.ALERT_DIALOG = 2
+
+      this.WRAPPER_ID = "mp-dialog"
     },
     /**
       * @author Frederik Claus, Marc Römer
       * @description load Input form, then overlay with jquery ui dialog widget
-      * @param String url Url of the input-form
       */
     show: function (options) {
       var instance = this
-      var $wrapper = $("#mp-dialog")
+      // Wrapper is used to determine width and height relative to parent.
+      var $wrapper = $("#" + this.WRAPPER_ID)
       assertTrue($wrapper.length === 1, "Must provide wrapper for dialog")
       this.$dialog = $("<div/>").appendTo($wrapper)
 
       this.options = $.extend({}, { type: this.INPUT_DIALOG, context: this }, options)
-      // load html, add the title and the resize the box
       this._prepareDialog(this.options)
-
-      this.active = true
 
       this.$dialog.dialog("option", {
         close: function () {
+          instance._unbindListener()
           instance.$dialog.empty()
           instance.$dialog.dialog("destroy")
-          instance.active = false
           console.log("DialogView: closed")
-          // in case the user did not submit or a network/server error occurred and the dialog is closed
-          if (instance.abort) {
-            instance._trigger(instance.options, "abort")
-          }
           instance.$dialog.remove()
         },
         open: function () {
+          instance._bindListener()
           instance.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide()
           instance._submitHandler()
           // focus for activation
@@ -127,39 +119,29 @@ function (declare, DialogMessageView, PhotoFileValidator) {
       // if we open the dialog earlier the open callback from above will never be called
       this.$dialog.dialog("open")
     },
-    // TODO dialog("close") seems to trigger another dialog("open") which will set the visiblity to true again. See the DialogViewTest autoClose. Wtf?!
-    isVisible: function () {
-      return this.visible
-    },
     close: function () {
       this.$dialog.dialog("close")
       this.message = null
       this.$close = null
       this.$form = null
     },
-    showResponseMessage: function (response) {
-      var height = this.$dialog.children().eq(0).height()
-      if (!response.success) {
-        this.$loader.hide()
-        this.message.showFailure(response.error)
-        this._scrollToMessage(height)
-        this.$close.button("enable")
-        return
-      }
-      // set only when the request did not produce an error
-      this.abort = false
-      this._trigger(this.options, "success", response)
-
-      if (this.message.isAutoClose()) {
+    showFailureMessage: function (response) {
+      this.$loader.hide()
+      this.message.showFailure(response.error)
+      this._scrollToMessage()
+      this.$close.button("enable")
+    },
+    showSuccessMessage: function () {
+      if (clientState.getDialogAutoClose()) {
         this.close()
       } else {
         this.$loader.hide()
         this.message.showSuccess()
-        this._scrollToMessage(height)
+        this._scrollToMessage()
         this.$close.button("enable")
       }
     },
-    showNetworkError: function () {
+    showNetworkErrorMessage: function () {
       this.$loader.hide()
       this._scrollToMessage(this.message)
       this.message.showFailure(gettext("NETWORK_ERROR"))
@@ -171,46 +153,21 @@ function (declare, DialogMessageView, PhotoFileValidator) {
       assertTrue($input.size() === 1, "The selected input field does not exist.")
       $input.val(value)
     },
-    // TODO This feature has been put on hold temporarily.
-    startPhotoEditor: function () {
-      assertTrue(this.$form, "Form has to be loaded before settings its input values")
-      assertTrue(this.options.isPhotoUpload, "Editor is not available unless it is a photo upload")
-      var instance = this
-      this.$form.find("input[name='" + this.options.photoInputName + "']").bind("change", function (event) {
-        instance.photoValidator.validate($(this), event)
-        // input.editor.edit.call(input.editor, event);
-      })
-    },
     _prepareDialog: function (options) {
-      var $wrapper = this._wrapContentNode(options.contentNode)
-      var dimension = this._calculateDimensions()
-
-      // add the html without the title
       this.$dialog
         .empty()
-        .append($wrapper)
-      // turn buttons into jquery ui buttons if present
-      this._findButton().button()
-      // resize the dialog to fit the content without scrolling
-      // we must add a new dialog here
+        .append(options.contentNode)
+      this._findButtons().button()
       this.$dialog.dialog({
         title: options.title,
-        // TODO height is a messy business. height includes the title bar (wtf?!)
-        // the dialog content is styled in percent of the parent.
-        // this makes it impossible to calculate dimension of a dialog, because they depend on the dimension of the parent.
-        // limit maximum height
-        // maxHeight: dimension.height,
-        width: dimension.width
+        width: this._calculateWidth()
       })
     },
     _findForm: function () {
       return this.$dialog.dialog("widget").find("form")
     },
-    _findButton: function () {
+    _findButtons: function () {
       return this.$dialog.find("button, input[type='submit']")
-    },
-    _wrapContentNode: function (contentNode) {
-      return $("<div/>").css("display", "inline-block").append(contentNode)
     },
     /**
       * @private
@@ -228,12 +185,11 @@ function (declare, DialogMessageView, PhotoFileValidator) {
         success: "valid",
         errorPlacement: function () {}, // don't show any errors
         submitHandler: function () {
-          instance._findButton().button("disable")
+          instance._findButtons().button("disable")
           instance.$loader.show()
           instance._trigger(instance.options, "submit", instance._getFormData($form))
         }
       })
-      this._trigger(this.options, "load")
     },
     _getFormData: function ($form) {
       var formData = {}
@@ -243,15 +199,15 @@ function (declare, DialogMessageView, PhotoFileValidator) {
         if (name !== this.options.photoInputName) {
           formData[name] = $(input).val()
         } else {
-          formData[this.options.photoInputName] = this.photoValidator.getFile()
+          formData[this.options.photoInputName] = photoValidator.getFile()
         }
       })
 
       return formData
     },
-    _scrollToMessage: function (message) {
+    _scrollToMessage: function () {
       this.$dialog.stop().animate({
-        scrollTop: message
+        scrollTop: this.message.$container.offset().top
       }, 300)
     },
     _trigger: function (options, name, args) {
@@ -265,17 +221,15 @@ function (declare, DialogMessageView, PhotoFileValidator) {
     _bindListener: function () {
       var instance = this
       $("body").on("keyup.Dialog", null, "esc", function () {
-        if (instance.active) {
-          instance.close()
-        }
+        instance.close()
       })
     },
-    _calculateDimensions: function () {
+    _unbindListener: function () {
+      $("body").off("keyup.Dialog")
+    },
+    _calculateWidth: function () {
       var $parent = this.$dialog.parent().parent()
-      return {
-        width: 0.6 * $parent.width(),
-        height: 0.75 * $parent.height()
-      }
+      return 0.6 * $parent.width()
     }
   })
 })

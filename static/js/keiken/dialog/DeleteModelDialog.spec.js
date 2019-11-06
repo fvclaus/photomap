@@ -2,26 +2,17 @@
 
 define(["../dialog/DeleteModelDialog",
   "../model/Album",
-  "../tests/ModelServerTest",
   "../util/Communicator",
   "../tests/loadTestEnv!"],
-function (DeleteModelDialog, Album, ModelServerTest, communicator, $testBody) {
+function (DeleteModelDialog, Album, communicator, $testBody) {
   describe("DeleteModelDialog", function () {
-    var $container
     var dialog
-    var server
+
     beforeEach(function () {
-      $container = $("<div id='mp-dialog'/>")
+      dialog = new DeleteModelDialog()
       $testBody
         .empty()
-        .append($container)
-      try {
-        dialog = new DeleteModelDialog()
-      } catch (e) {
-        console.error(e)
-        throw e
-      }
-      server = new ModelServerTest()
+        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
     })
 
     afterEach(function () {
@@ -29,26 +20,23 @@ function (DeleteModelDialog, Album, ModelServerTest, communicator, $testBody) {
     })
 
     it("should delete model", function (done) {
-      dialog.show(new Album({
+      var model = new Album({
         id: 1,
         title: "Foo"
-      }))
-      server.mockSuccessfulDeleteResponse("/album/1/")
+      })
+      spyOn(model, "delete").and.callFake(function () {
+        model._trigger("deleted")
+      })
+
+      dialog.show(model)
+
+      // Check that templated has been loaded
+      expect($("form[name='delete-model']")).toExist()
+
       communicator.subscribeOnce("deleted:Model", function () {
         done()
       })
-      $("#mp-dialog-button-yes").trigger("click")
-    })
-    it("should show failure message", function () {
-      dialog.show(new Album({
-        id: 1,
-        title: "Foo"
-      }))
-      server.mockFailureResponse({}, "/album/1/")
-      var $failureMessage = $("#mp-dialog-message-failure")
-      expect($failureMessage).toBeHidden()
-      $("#mp-dialog-button-yes").trigger("click")
-      expect($failureMessage).toBeVisible()
+      dialog._submitForm()
     })
   })
 })
