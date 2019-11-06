@@ -22,7 +22,6 @@ function (declare, DialogMessageView, PhotoFileValidator) {
 
   return declare(null, {
     constructor: function () {
-      this.visible = false
       // indicates if the user submitted the form
       this.abort = true
       // this.editor = new PhotoEditorView();
@@ -55,7 +54,6 @@ function (declare, DialogMessageView, PhotoFileValidator) {
         close: function () {
           instance.$dialog.empty()
           instance.$dialog.dialog("destroy")
-          instance.setVisibility(false)
           instance.active = false
           console.log("DialogView: closed")
           // in case the user did not submit or a network/server error occurred and the dialog is closed
@@ -67,7 +65,6 @@ function (declare, DialogMessageView, PhotoFileValidator) {
         open: function () {
           instance.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide()
           instance._submitHandler()
-          instance.setVisibility(true)
           // focus for activation
           instance.$dialog.focus()
         }
@@ -129,9 +126,6 @@ function (declare, DialogMessageView, PhotoFileValidator) {
       }
       // if we open the dialog earlier the open callback from above will never be called
       this.$dialog.dialog("open")
-    },
-    setVisibility: function (bool) {
-      this.visible = bool
     },
     // TODO dialog("close") seems to trigger another dialog("open") which will set the visiblity to true again. See the DialogViewTest autoClose. Wtf?!
     isVisible: function () {

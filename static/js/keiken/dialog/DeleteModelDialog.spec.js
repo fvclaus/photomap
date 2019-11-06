@@ -39,23 +39,16 @@ function (DeleteModelDialog, Album, ModelServerTest, communicator, $testBody) {
       })
       $("#mp-dialog-button-yes").trigger("click")
     })
-    it("should show failure message", function (done) {
+    it("should show failure message", function () {
       dialog.show(new Album({
         id: 1,
         title: "Foo"
       }))
       server.mockFailureResponse({}, "/album/1/")
+      var $failureMessage = $("#mp-dialog-message-failure")
+      expect($failureMessage).toBeHidden()
       $("#mp-dialog-button-yes").trigger("click")
-      var intervalFn = setInterval(function () {
-        if ($("#mp-dialog-message-failure").is(":visible")) {
-          done()
-          clearInterval(intervalFn)
-        }
-      }, 100)
-      // Remove in case this spec fails
-      setTimeout(function () {
-        clearInterval(intervalFn)
-      }, jasmine.DEFAULT_TIMEOUT_INTERVAL)
+      expect($failureMessage).toBeVisible()
     })
   })
 })
