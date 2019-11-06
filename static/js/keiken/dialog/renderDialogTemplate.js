@@ -1,9 +1,9 @@
-define(["../widget/TemplateDirectives",
-  "dijit/_TemplatedMixin",
+define(["dijit/_TemplatedMixin",
   "dojox/dtl/Context",
   "dojox/dtl/_base",
-  "dojox/dtl/render/dom"],
-function (TemplateDirectives, _TemplatedMixin, Context, dd, ddrd) {
+  "dojox/dtl/render/dom",
+  "../util/loadTemplateDirectives!"],
+function (_TemplatedMixin, Context, dd, ddrd) {
   return function (templateString, context) {
     var domNode = document.createElement("div")
     var template = new dd.DomTemplate(_TemplatedMixin.getCachedTemplate(templateString, true))

@@ -1,11 +1,8 @@
 define(["dojo/_base/declare",
   "dojo/_base/lang",
   "dojox/dtl/_base",
-  "dijit/_WidgetBase",
-  "dojox/dtl/_DomTemplated",
-  "dojox/dtl/Context",
   "dojox/dtl/tag/loader"],
-function (declare, lang, dd, _WidgetBase, _DomTemplated, Context, ddtl) {
+function (declare, lang, dd, ddtl) {
   var TransNode = declare(null, {
     constructor: function (translationKey, node) {
       this.translation = gettext(translationKey)
@@ -35,7 +32,9 @@ function (declare, lang, dd, _WidgetBase, _DomTemplated, Context, ddtl) {
     loader: ["trans"]
   })
 
-  return declare([], function () {
-    return {}
-  })
+  return {
+    load: function (id, require, callback) {
+      callback()
+    }
+  }
 })

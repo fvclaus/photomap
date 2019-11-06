@@ -30,6 +30,10 @@ module.exports = {
     "interpolate": "readonly"
   },
   rules: {
-    "quotes": ["error", "double"]
+    "quotes": ["error", "double"],
+    "no-unused-vars": ["error", {
+      "vars": "all",
+      "args": "all"
+    }]
   }
 }

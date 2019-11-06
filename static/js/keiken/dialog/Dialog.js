@@ -8,12 +8,10 @@
 define([
   "dojo/_base/declare",
   "../view/DialogMessageView",
-  "../view/PhotoEditorView",
   "../util/PhotoFileValidator",
-  "../util/Communicator",
   "dojo/domReady!"
 ],
-function (declare, DialogMessageView, PhotoEditorView, PhotoFileValidator, communicator) {
+function (declare, DialogMessageView, PhotoFileValidator) {
   $.extend($.ui.dialog.prototype.options, {
     autoOpen: false,
     modal: true,
@@ -51,12 +49,14 @@ function (declare, DialogMessageView, PhotoEditorView, PhotoFileValidator, commu
       // load html, add the title and the resize the box
       this._prepareDialog(this.options)
 
+      this.active = true
+
       this.$dialog.dialog("option", {
         close: function () {
           instance.$dialog.empty()
           instance.$dialog.dialog("destroy")
           instance.setVisibility(false)
-          instance.setActive(false)
+          instance.active = false
           console.log("DialogView: closed")
           // in case the user did not submit or a network/server error occurred and the dialog is closed
           if (instance.abort) {
@@ -89,7 +89,7 @@ function (declare, DialogMessageView, PhotoEditorView, PhotoFileValidator, commu
               {
                 id: "mp-dialog-button-no",
                 text: gettext("NO"),
-                click: function (event) {
+                click: function () {
                   $(this).dialog("close")
                   return false
                 }
@@ -236,7 +236,7 @@ function (declare, DialogMessageView, PhotoEditorView, PhotoFileValidator, commu
         submitHandler: function () {
           instance._findButton().button("disable")
           instance.$loader.show()
-          instance._trigger(instance.options, "submit", instance._getFormData(instance.$form))
+          instance._trigger(instance.options, "submit", instance._getFormData($form))
         }
       })
       this._trigger(this.options, "load")
@@ -244,7 +244,7 @@ function (declare, DialogMessageView, PhotoEditorView, PhotoFileValidator, commu
     _getFormData: function ($form) {
       var formData = {}
 
-      $form.find("input, textarea").each(function (index, input) {
+      $form.find("input, textarea").each(function (input) {
         var name = $(input).attr("name")
         if (name !== this.options.photoInputName) {
           formData[name] = $(input).val()
@@ -271,7 +271,7 @@ function (declare, DialogMessageView, PhotoEditorView, PhotoFileValidator, commu
     _bindListener: function () {
       var instance = this
       $("body").on("keyup.Dialog", null, "esc", function () {
-        if (!instance.disabled && instance.active) {
+        if (instance.active) {
           instance.close()
         }
       })

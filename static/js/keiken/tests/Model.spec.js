@@ -63,7 +63,8 @@ define(["../model/Model", "./ModelServerTest"],
           done()
         })
 
-        server.simulateInsert(model, modelData, "/album/")
+        server.mockSuccessfulInsertResponse(modelData, "/album/")
+        model.save(modelData)
       })
 
       it("should trigger onFailure", function (done) {
@@ -73,7 +74,8 @@ define(["../model/Model", "./ModelServerTest"],
           done()
         })
 
-        server.simulateFailure(model, modelData, "/album/")
+        server.mockFailureResponse(modelData, "/album/")
+        model.save(modelData)
       })
 
       it("should trigger onError", function (done) {
@@ -83,7 +85,8 @@ define(["../model/Model", "./ModelServerTest"],
           done()
         })
 
-        server.simulateError(model, modelData, "/album/")
+        server.mockErrorResponse(modelData, "/album/")
+        model.save(modelData)
       })
 
       it("should trigger onUpdate", function (done) {
@@ -99,9 +102,11 @@ define(["../model/Model", "./ModelServerTest"],
           done()
         })
 
-        server.simulateInsert(model, {
+        var newData = {
           title: "New Title"
-        }, "/album/5/")
+        }
+        server.mockSuccessfulUpdateResponse(newData, "/album/5/")
+        model.save(newData)
       })
     })
   })

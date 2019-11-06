@@ -24,7 +24,7 @@ define(["dojo/_base/declare"],
           */
       set: function (name, value) {
         assertFalse(name === "id" || name === "type", "Id or type must be set upon construction.")
-        assertTrue(this.hasOwnProperty(name), "Cannot set _builtin properties.")
+        assertTrue(Object.prototype.hasOwnProperty.call(this, name), "Cannot set _builtin properties.")
         this[name] = value
       },
       getTitle: function () {
@@ -209,7 +209,7 @@ define(["dojo/_base/declare"],
       _setProperties: function (data) {
         var instance = this
         $.each(data, function (key, value) {
-          if (instance.hasOwnProperty(key)) {
+          if (Object.prototype.hasOwnProperty.call(instance, key)) {
             instance[key] = value
           }
         })
