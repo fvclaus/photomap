@@ -154,9 +154,12 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
       $input.val(value)
     },
     _prepareDialog: function (options) {
+      var $dialogMessage = $("<div/>")
       this.$dialog
         .empty()
         .append(options.contentNode)
+        .append($dialogMessage)
+      this.message = new DialogMessageView(null, $dialogMessage.get(0))
       this._findButtons().button()
       this.$dialog.dialog({
         title: options.title,
@@ -178,7 +181,7 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
 
       // set temporary properties
       var $form = $widget.find("form")
-      this.message = new DialogMessageView($widget)
+
       this.$close = $widget.find("ui-dialog-titlebar-close")
       // called when data is valid
       $form.validate({

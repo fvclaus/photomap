@@ -1,21 +1,24 @@
 <div id="mp-dialog-message">
   <div class="ui-state-error ui-corner-all"
-       id="mp-dialog-message-failure">
+       id="mp-dialog-message-failure"
+       data-dojo-attach-point="failureNode">
     <p>
       <span class="ui-icon ui-icon-alert mp-inline-block"></span>
       <strong>{% trans "FAILURE" %}</strong>
-      <em></em>
+      <em data-dojo-attach-point="errorNode"></em>
     </p>
   </div>
 
   <div class="ui-state-highlight ui-corner-all mp-nodisplay"
-       id="mp-dialog-message-success">
+       id="mp-dialog-message-success"
+       data-dojo-attach-point="successNode">
     <p>
       <span class="ui-icon ui-icon-check mp-inline-block"></span>
       <strong>{% trans "SUCCESS" %}</strong>
       <br />
       <input type="checkbox"
-             name="auto-close">
+             name="auto-close"
+             data-dojo-attach-point="autoCloseInputNode">
       <label for="auto-close">{% trans "CLOSE_ON_SUCCESS" %}</label>
     </p>
   </div>

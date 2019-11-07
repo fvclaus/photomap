@@ -7,20 +7,28 @@
 
 define([
   "dojo/_base/declare",
-  "../view/View",
+  "../widget/_DomTemplatedWidget",
   "../util/ClientState",
+  "dojo/text!./templates/DialogMessage.html",
   "dojo/domReady!"
 ],
-function (declare, View, clientstate) {
+function (declare, View, clientstate, templateString) {
   return declare(View, {
-    constructor: function ($el) {
-      this.$el = $el
-      this.$container = this.$el.find("#mp-dialog-message")
-      this.$success = this.$container.find("#mp-dialog-message-success").hide()
-      this.$failure = this.$container.find("#mp-dialog-message-failure").hide()
-      this.$error = this.$failure.find("em")
-      this.$autoClose = this.$el.find("input[name='auto-close']")
+    viewName: "DialogMessageWidget",
+    templateString: templateString,
+    // eslint-disable-next-line no-unused-vars
+    constructor: function (params, srcNodeRef) {
+
+    },
+    startup: function () {
+      this.inherited(this.startup, arguments)
+      this.$success.hide()
+      this.$failure.hide()
+      this.$autoCloseInput
         .prop("checked", clientstate.getDialogAutoClose())
+    },
+    _bindListener: function () {
+      this.$autoCloseInput
         .bind("change", function () {
           clientstate.setDialogAutoClose($(this).is(":checked"))
         })

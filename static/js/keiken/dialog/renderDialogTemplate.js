@@ -9,11 +9,7 @@ function (_TemplatedMixin, Context, dd, ddrd) {
     var template = new dd.DomTemplate(_TemplatedMixin.getCachedTemplate(templateString, true))
     var renderer = new ddrd.Render(domNode, template)
     renderer.domNode = domNode
-    renderer.render(new Context($.extend({}, context, {
-      parent: {
-        url: require.toUrl("keiken/dialog/templates/Dialog.html")
-      }
-    })))
+    renderer.render(new Context($.extend({}, context, {})))
     return renderer.domNode
   }
 })

@@ -7,7 +7,7 @@ define(["../dialog/_ModelDialogBase",
 function (_ModelDialogBase, Album, communicator, $testBody) {
   describe("_ModelDialogBase", function () {
     var dialog
-    var templateString = "{% extends parent %}{% block content %}<form></form><p>Testing _ModelDialogBase</p>{% endblock %}"
+    var templateString = "<div><form></form><p>Testing _ModelDialogBase</p></div>"
     var album
 
     beforeEach(function () {
