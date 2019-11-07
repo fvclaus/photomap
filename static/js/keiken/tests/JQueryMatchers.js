@@ -51,28 +51,34 @@ define([],
 
     return {
       toBeVisible: makeValidator(
-        function (util, customEqualityTesters, actual, expected) {
+        function (util, customEqualityTesters, actual) {
           return util.equals(actual.is(":visible"), true, customEqualityTesters)
         },
         "Expected {{ actual }} to be visible"
       ),
       toBeHidden: makeValidator(
-        function (util, customEqualityTesters, actual, expected) {
+        function (util, customEqualityTesters, actual) {
           return util.equals(actual.is(":hidden"), true, customEqualityTesters)
         },
         "Expected {{ actual }} to be hidden"
       ),
       toExist: makeValidator(
-        function (util, customEqualityTesters, actual, expected) {
+        function (util, customEqualityTesters, actual) {
           return util.equals(actual.length > 0, true, customEqualityTesters)
         },
         "Expected {{ actual }} to exist"
       ),
       toNotExist: makeValidator(
-        function (util, customEqualityTesters, actual, expected) {
+        function (util, customEqualityTesters, actual) {
           return util.equals(actual.length === 0, true, customEqualityTesters)
         },
         "Expected {{ actual }} to not exist"
+      ),
+      toBeEmpty: makeValidator(
+        function (util, customEqualityTesters, actual) {
+          return util.equals(actual.is(":empty"), true, customEqualityTesters)
+        },
+        "Expected {{ actual }} to be empty"
       )
     }
   })

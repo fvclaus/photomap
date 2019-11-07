@@ -7,6 +7,15 @@ Object.keys(window.__karma__.files).forEach(function (file) {
   }
 })
 
+var IS_DEBUG = /debug\.html/.test(window.location)
+
+// karma-dojo does not properly support debug mode atm.
+if (IS_DEBUG) {
+  Object.keys(window.__karma__.files).forEach(function (file) {
+    window.__karma__.files[file] = ""
+  })
+}
+
 var dojoConfig = {
   async: true,
   isDebug: true,

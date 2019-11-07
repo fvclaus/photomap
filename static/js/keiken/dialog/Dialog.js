@@ -36,100 +36,97 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
       * @description load Input form, then overlay with jquery ui dialog widget
       */
     show: function (options) {
-      var instance = this
+      assertSchema({
+        title: assertString,
+        contentNode: assertObject,
+        submit: assertFunction
+      }, options)
       // Wrapper is used to determine width and height relative to parent.
       var $wrapper = $("#" + this.WRAPPER_ID)
       assertTrue($wrapper.length === 1, "Must provide wrapper for dialog")
       this.$dialog = $("<div/>").appendTo($wrapper)
 
-      this.options = $.extend({}, { type: this.INPUT_DIALOG, context: this }, options)
+      this.options = $.extend({}, {
+        type: this.INPUT_DIALOG,
+        context: this,
+        load: function () {}
+      }, options)
       this._prepareDialog(this.options)
 
-      this.$dialog.dialog("option", {
+      this.$dialog.dialog({
+        title: this.options.title,
+        width: this._calculateWidth(),
         close: function () {
-          instance._unbindListener()
-          instance.$dialog.empty()
-          instance.$dialog.dialog("destroy")
+          this._unbindListener()
+          this.message.destroy()
+          this.$dialog
+            .dialog("destroy")
+            .remove()
           console.log("DialogView: closed")
-          instance.$dialog.remove()
-        },
+        }.bind(this),
         open: function () {
-          instance._bindListener()
-          instance.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide()
-          instance._submitHandler()
+          this._bindListener()
+          this.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide()
+          this._bindSubmitHandler()
           // focus for activation
-          instance.$dialog.focus()
-        }
-
+          this.$dialog.focus()
+        }.bind(this),
+        buttons: this._createButtons(this.options.type)
       })
 
-      switch (this.options.type) {
-        case this.CONFIRM_DIALOG:
-          this.$dialog.dialog("option", {
-            buttons: [
-              {
-                id: "mp-dialog-button-yes",
-                text: gettext("YES"),
-                click: function () {
-                  instance._submitForm()
-                  return true
-                }
-              },
-              {
-                id: "mp-dialog-button-no",
-                text: gettext("NO"),
-                click: function () {
-                  $(this).dialog("close")
-                  return false
-                }
-              }
-            ]
-          })
-          break
-
-        case this.INPUT_DIALOG :
-          this.$dialog.dialog("option", {
-            buttons: [
-              {
-                id: "mp-dialog-button-save",
-                text: gettext("SAVE"),
-                click: function () {
-                  instance._submitForm()
-                }
-              }
-            ]
-          })
-          break
-
-        case this.ALERT_DIALOG :
-          this.$dialog.dialog("option", {
-            buttons: [
-              {
-                id: "mp-dialog-button-ok",
-                text: gettext("OK"),
-                click: function () {
-                  $(this).dialog("close")
-                  return false
-                }
-              }
-            ]
-          })
-          break
-      }
       // if we open the dialog earlier the open callback from above will never be called
       this.$dialog.dialog("open")
     },
+    _createButtons: function (type) {
+      switch (type) {
+        case this.CONFIRM_DIALOG:
+          return [
+            this._createSubmitButton("mp-dialog-button-yes",
+              gettext("YES")),
+            this._createCloseButton("mp-dialog-button-no",
+              gettext("NO"))]
+
+        case this.INPUT_DIALOG :
+          return [
+            this._createSubmitButton("mp-dialog-button-save",
+              gettext("SAVE"))
+          ]
+
+        case this.ALERT_DIALOG :
+          return [
+            this._createCloseButton("mp-dialog-button-ok",
+              gettext("OK"))
+          ]
+      }
+    },
+    _createCloseButton: function (id, text) {
+      return {
+        id: id,
+        text: text,
+        click: function () {
+          $(this).dialog("close")
+          return false
+        }
+      }
+    },
+    _createSubmitButton: function (id, text) {
+      return {
+        id: id,
+        text: text,
+        click: function () {
+          this._submitForm()
+          return true
+        }.bind(this)
+      }
+    },
     close: function () {
       this.$dialog.dialog("close")
-      this.message = null
-      this.$close = null
-      this.$form = null
     },
     showFailureMessage: function (response) {
       this.$loader.hide()
       this.message.showFailure(response.error)
       this._scrollToMessage()
-      this.$close.button("enable")
+      this._enableCloseButton()
     },
     showSuccessMessage: function () {
       if (clientState.getDialogAutoClose()) {
@@ -138,16 +135,20 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
         this.$loader.hide()
         this.message.showSuccess()
         this._scrollToMessage()
-        this.$close.button("enable")
+        this._enableCloseButton()
       }
     },
     showNetworkErrorMessage: function () {
       this.$loader.hide()
       this._scrollToMessage(this.message)
       this.message.showFailure(gettext("NETWORK_ERROR"))
-      this.$close.button("enable")
+      this._enableCloseButton()
+    },
+    _enableCloseButton: function () {
+      this.$dialog.find("ui-dialog-titlebar-close").button("enable")
     },
     setInputValue: function (name, value) {
+      assertTrue(false, "This function has been disabled")
       assertTrue(this.$form, "Form has to be loaded before settings its input values")
       var $input = this.$form.find("[name='" + name + "']")
       assertTrue($input.size() === 1, "The selected input field does not exist.")
@@ -160,11 +161,8 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
         .append(options.contentNode)
         .append($dialogMessage)
       this.message = new DialogMessageView(null, $dialogMessage.get(0))
+      this.message.startup()
       this._findButtons().button()
-      this.$dialog.dialog({
-        title: options.title,
-        width: this._calculateWidth()
-      })
     },
     _findForm: function () {
       return this.$dialog.dialog("widget").find("form")
@@ -172,39 +170,30 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
     _findButtons: function () {
       return this.$dialog.find("button, input[type='submit']")
     },
-    /**
-      * @private
-      */
-    _submitHandler: function () {
-      var instance = this
-      var $widget = this.$dialog.dialog("widget")
-
-      // set temporary properties
-      var $form = $widget.find("form")
-
-      this.$close = $widget.find("ui-dialog-titlebar-close")
-      // called when data is valid
-      $form.validate({
+    _bindSubmitHandler: function () {
+      this._findForm().validate({
         success: "valid",
         errorPlacement: function () {}, // don't show any errors
         submitHandler: function () {
-          instance._findButtons().button("disable")
-          instance.$loader.show()
-          instance._trigger(instance.options, "submit", instance._getFormData($form))
-        }
+          this._findButtons().button("disable")
+          this.$loader.show()
+          this._trigger(this.options, "submit", this._getFormData(this._findForm()))
+        }.bind(this)
       })
+
+      this._trigger(this.options, "load")
     },
     _getFormData: function ($form) {
       var formData = {}
-
-      $form.find("input, textarea").each(function (input) {
+      // eslint-disable-next-line no-unused-vars
+      $form.find("input, textarea").each(function (index, input) {
         var name = $(input).attr("name")
         if (name !== this.options.photoInputName) {
           formData[name] = $(input).val()
         } else {
           formData[this.options.photoInputName] = photoValidator.getFile()
         }
-      })
+      }.bind(this))
 
       return formData
     },
@@ -219,13 +208,12 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
       }
     },
     _submitForm: function () {
-      this.$dialog.dialog("widget").find("form").trigger("submit")
+      this._findForm().trigger("submit")
     },
     _bindListener: function () {
-      var instance = this
       $("body").on("keyup.Dialog", null, "esc", function () {
-        instance.close()
-      })
+        this.close()
+      }.bind(this))
     },
     _unbindListener: function () {
       $("body").off("keyup.Dialog")

@@ -9,6 +9,8 @@ module.exports = function (config) {
 
     frameworks: ["jasmine", "dojo"],
 
+    reporters: ["kjhtml"],
+
     preprocessors: {
       "static/styles/**/*.styl": ["stylus"]
     },
@@ -98,7 +100,8 @@ module.exports = function (config) {
       "karma-dojo",
       "karma-jasmine",
       "karma-chrome-launcher",
-      "karma-stylus-preprocessor"
+      "karma-stylus-preprocessor",
+      "karma-jasmine-html-reporter"
     ]
   })
 }

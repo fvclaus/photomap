@@ -22,6 +22,7 @@ function (declare, View, clientstate, templateString) {
     },
     startup: function () {
       this.inherited(this.startup, arguments)
+      this.$container.hide()
       this.$success.hide()
       this.$failure.hide()
       this.$autoCloseInput
