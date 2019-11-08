@@ -9,15 +9,18 @@ define(["dojo/_base/declare"],
   function (declare) {
     return declare(null, {
       constructor: function (data) {
-        this.type = data.type
-        this.title = data.title
-        if (typeof data.id === "number") {
-          this.id = data.id
-        } else {
-          this.id = -1
+        if (data) {
+          // type will be overwritten by subclass
+          this.type = data.type
+          this.title = data.title
+          if (typeof data.id === "number") {
+            this.id = data.id
+          } else {
+            this.id = -1
+          }
+          // reading from input elements will return '' if nothing has been entered
+          this.description = (data.description === "") ? null : data.description
         }
-        // reading from input elements will return '' if nothing has been entered
-        this.description = (data.description === "") ? null : data.description
       },
       /**
           * @description sets any attribute of the model to the
@@ -60,15 +63,6 @@ define(["dojo/_base/declare"],
         } else {
           return false
         }
-      },
-      /**
-          * @description Check if the model has a title and an id, which every model has to have!
-          */
-      assertValidity: function () {
-        assertNumber(this.id, "Every model has to have an id")
-        assertString(this.title, "Every model has to have a title")
-
-        return true
       },
       delete: function () {
         var instance = this

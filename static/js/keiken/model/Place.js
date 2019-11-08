@@ -1,6 +1,3 @@
-/* jslint */
-/* global $, define, main, ZOOM_LEVEL_CENTERED, google  */
-
 "use strict"
 
 /**
@@ -20,7 +17,7 @@ function (declare, MarkerModel, Photo, Collection) {
       this.type = "Place"
       this.photos = null
       var photos = []
-      var rawPhotoData = data.photos || []
+      var rawPhotoData = (data && data.photos) || []
       $.each(rawPhotoData, function (index, photoData) {
         photos.push(new Photo(photoData))
       })

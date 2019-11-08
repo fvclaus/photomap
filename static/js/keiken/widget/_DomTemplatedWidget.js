@@ -13,8 +13,7 @@ define(["dojo/_base/declare",
   "dijit/_AttachMixin",
   "dojox/dtl/_DomTemplated",
   "../view/View",
-  // Need to pre-load dtl tags, because dtl only supports synchronous loading.
-  "dojox/dtl/tag/loader",
+  "./loadDtlDirectives!",
   "dojo/domReady!"],
 function (declare, _WidgetBase, _AttachMixin, _DomTemplated, View) {
   return declare([View, _WidgetBase, _DomTemplated, _AttachMixin], {

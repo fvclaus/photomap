@@ -1,10 +1,14 @@
 "use strict"
 
-define(["dojo/_base/declare",
-  "../model/Place",
+define(["../model/Place",
   "../model/Collection"],
-function (declare, Place, Collection) {
+function (Place, Collection) {
   describe("Place", function () {
+    it("should create empty place", function () {
+      var place = new Place()
+      expect(place.type).toBe("Place")
+      expect(place.getTitle()).toBeUndefined()
+    })
     it("should store photos", function () {
       var place = new Place({
         title: "new",

@@ -2,9 +2,8 @@
 
 define(["../dialog/DeleteModelDialog",
   "../model/Album",
-  "../util/Communicator",
   "../tests/loadTestEnv!"],
-function (DeleteModelDialog, Album, communicator, $testBody) {
+function (DeleteModelDialog, Album, $testBody) {
   describe("DeleteModelDialog", function () {
     var dialog
 
@@ -19,24 +18,17 @@ function (DeleteModelDialog, Album, communicator, $testBody) {
       dialog.close()
     })
 
-    it("should delete model", function (done) {
+    it("should delete model", function () {
       var model = new Album({
         id: 1,
         title: "Foo"
       })
-      spyOn(model, "delete").and.callFake(function () {
-        model._trigger("deleted")
-      })
+      spyOn(model, "delete")
 
       dialog.show(model)
-
-      // Check that templated has been loaded
-      expect($("form[name='delete-model']")).toExist()
-
-      communicator.subscribeOnce("deleted:Model", function () {
-        done()
-      })
       dialog._submitForm()
+
+      expect(model.delete).toHaveBeenCalled()
     })
   })
 })

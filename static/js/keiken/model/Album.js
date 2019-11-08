@@ -15,11 +15,15 @@ function (declare, MarkerModel, Place, Collection) {
   return declare(MarkerModel, {
     constructor: function (data) {
       this.type = "Album"
-      this.owner = (typeof data.isOwner === "boolean") ? data.isOwner : false
-      this.secret = data.secret || ""
+
+      if (data) {
+        this.owner = (typeof data.isOwner === "boolean") ? data.isOwner : false
+        this.secret = data.secret || ""
+      }
 
       var places = []
-      var rawPlacesData = data.places || []
+      var rawPlacesData = (data && data.places) || []
+      assertArray(rawPlacesData)
       $.each(rawPlacesData, function (index, placeData) {
         places.push(new Place(placeData))
       })

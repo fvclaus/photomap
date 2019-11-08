@@ -1,13 +1,17 @@
 "use strict"
 
-define(["dojo/_base/declare",
-  "../model/Album",
+define(["../model/Album",
   "../model/Collection"],
-function (declare, Album, Collection) {
+function (Album, Collection) {
   var album = null
   var places = null
 
   describe("Album", function () {
+    it("should create empty album", function () {
+      var album = new Album()
+      expect(album.getTitle()).toBeUndefined()
+    })
+
     it("should initialize album", function () {
       album = new Album({
         title: "new",

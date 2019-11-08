@@ -70,3 +70,9 @@ function assertNotNull (actual, message) {
     croak(actual, null, message)
   }
 }
+
+function assertArray (array) {
+  if (array && array.constructor !== Array) {
+    throw new Error("Expected array, but was not.")
+  }
+}

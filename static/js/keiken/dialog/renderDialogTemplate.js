@@ -2,7 +2,7 @@ define(["dijit/_TemplatedMixin",
   "dojox/dtl/Context",
   "dojox/dtl/_base",
   "dojox/dtl/render/dom",
-  "../util/loadTemplateDirectives!"],
+  "../widget/loadDtlDirectives!"],
 function (_TemplatedMixin, Context, dd, ddrd) {
   return function (templateString, context) {
     var domNode = document.createElement("div")

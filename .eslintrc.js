@@ -28,6 +28,7 @@ module.exports = {
     "assertObject": "readonly",
     "assertFunction": "readonly",
     "assertSchema": "readonly",
+    "assertArray": "readonly",
     "$": "readonly",
     "gettext": "readonly",
     "interpolate": "readonly"

@@ -10,20 +10,22 @@ define(["dojo/_base/declare",
 function (declare, Model) {
   return declare(Model, {
     constructor: function (data) {
-      this.lat = data.lat
-      this.lng = data.lng || data.lon
+      if (data) {
+        this.lat = data.lat
+        this.lng = data.lng || data.lon
+      }
     },
     /**
-              * @public
-              * @returns {float} Latitude
-              */
+      * @public
+      * @returns {float} Latitude
+      */
     getLat: function () {
       return this.lat
     },
     /**
-              * @public
-              * @returns {float} Longitude
-              */
+      * @public
+      * @returns {float} Longitude
+      */
     getLng: function () {
       return this.lng
     }

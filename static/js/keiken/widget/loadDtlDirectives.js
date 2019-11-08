@@ -1,8 +1,13 @@
-define(["dojo/_base/declare",
+define([
+  "dojo/_base/declare",
   "dojo/_base/lang",
   "dojox/dtl/_base",
-  "dojox/dtl/tag/loader"],
-function (declare, lang, dd, ddtl) {
+  "dojox/dtl/tag/loader",
+  // Need to pre-load dtl tags, because dtl only supports synchronous loading.
+  "dojox/dtl/tag/date",
+  "dojox/dtl/tag/logic",
+  "dojox/dtl/tag/loop",
+  "dojox/dtl/tag/misc"], function (declare, lang, dd, ddtl) {
   var TransNode = declare(null, {
     constructor: function (translationKey, node) {
       this.translation = gettext(translationKey)

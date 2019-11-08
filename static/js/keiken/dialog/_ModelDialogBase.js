@@ -15,7 +15,7 @@ function (declare, Dialog, communicator, renderDialogTemplate) {
       }, options)
       var collection = options.collection
       this.inherited("show", arguments, [{
-        submit: function () {
+        submit: function (data) {
           model
             .onSuccess(function (data) {
               this.showSuccessMessage(data)
@@ -41,7 +41,7 @@ function (declare, Dialog, communicator, renderDialogTemplate) {
             }, this)
 
           assertFunction(options.submit, "Must specify submit function")
-          options.submit()
+          options.submit(data)
         },
         context: this,
         type: options.type || this.CONFIRM_DIALOG,
