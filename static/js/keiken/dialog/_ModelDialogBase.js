@@ -41,12 +41,12 @@ function (declare, Dialog, communicator, renderDialogTemplate) {
             }, this)
 
           assertFunction(options.submit, "Must specify submit function")
-          options.submit(data)
+          options.submit.call(this, data)
         },
-        context: this,
+        thisContext: this,
         type: options.type || this.CONFIRM_DIALOG,
         title: options.title,
-        contentNode: renderDialogTemplate(options.templateString, options.context || {})
+        contentNode: renderDialogTemplate(options.templateString, options.templateContext || {})
       }])
     }
   })

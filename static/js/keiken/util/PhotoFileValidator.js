@@ -3,7 +3,47 @@
 define([
   "dojo/_base/declare",
   "dojo/domReady!"],
-function (declare, View, DialogMessageView, PhotoEditorView, communicator) {
+function (declare) {
+  function addFileValidationMethod (name, validateFn, message) {
+    $.validator.addMethod(name, function (value, element, param) {
+      if ($(element).attr("type") === "file") {
+        return validateFn(element.files)
+      } else {
+        return true
+      }
+    }, message)
+  }
+
+  addFileValidationMethod("$photoValidationSingleFile", function (files) {
+    return files.length === 1
+  }, gettext("TOO_MANY_PHOTOS"))
+
+  addFileValidationMethod("$photoValidationSupportedFileType", function (files) {
+    var file = files[0]
+    if (file) {
+      return file.type && $.inArray(file.type.toLowerCase(), ["image/jpeg", "image/png"]) > -1
+    } else {
+      return true
+    }
+  }, gettext("EXTENSION_NOT_SUPPORTED"))
+
+  addFileValidationMethod("$photoValidationSupportedFileSize", function (files) {
+    var file = files[0]
+    if (file) {
+      return file.size < 3e+6
+    } else {
+      return true
+    }
+  }, gettext("LARGE_PHOTO_ERROR"))
+
+  $.validator.addClassRules({
+    $photoValidation: {
+      $photoValidationSingleFile: true,
+      $photoValidationSupportedFileSize: true,
+      $photoValidationSupportedFileType: true
+    }
+  })
+
   return declare(null, {
     constructor: function () {
       this.$warningTemplate = $("<div class='ui-state-highlight ui-corner-all' id='mp-photo-file-validator-warning'><p><span class='ui-icon ui-icon-alert mp-inline-block'></span><strong></strong></p></div>")

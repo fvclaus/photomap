@@ -12,7 +12,7 @@ function (declare, _ModelDialogBase, Place, Album, templateString) {
         model: place,
         title: gettext("Insert Place"),
         collection: album.getPlaces(),
-        context: {
+        templateContext: {
           lat: lat,
           lon: lng,
           albumId: album.getId()
@@ -26,7 +26,7 @@ function (declare, _ModelDialogBase, Place, Album, templateString) {
         model: album,
         title: gettext("Insert Album"),
         collection: albumCollection,
-        context: {
+        templateContext: {
           lat: lat,
           lon: lng
         }

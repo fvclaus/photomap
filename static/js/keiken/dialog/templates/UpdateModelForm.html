@@ -1,0 +1,26 @@
+<form class="mp-dialog-content"
+      action=""
+      method="post">
+  <div>
+    <label for="update-title">{% trans "NAME" %} <sup title="{% trans 'MANDATORY_FIELD' %}">*</sup></label>
+    <input class="mp-input-name"
+           type="text"
+           name="title"
+           value="{{ title }}"
+           id="update-title"
+           required="required"
+           size="40"
+           autofocus="autofocus"
+           placeholder="{% trans 'INPUT_PLACEHOLDER_TITLE' %}" />
+  </div>
+  <div>
+    <label for="update-description">{% trans "DESCRIPTION" %}</label>
+    <textarea type="text"
+              name="description"
+              value="{{ description }}"
+              id="update-description"
+              cols="50"
+              rows="5"
+              placeholder="{% trans 'INPUT_PLACEHOLDER_DESCRIPTION' %}"></textarea>
+  </div>
+</form>

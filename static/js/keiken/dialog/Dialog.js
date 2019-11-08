@@ -8,11 +8,10 @@
 define([
   "dojo/_base/declare",
   "./DialogMessageWidget",
-  "../util/PhotoFileValidator",
   "../util/ClientState",
   "dojo/domReady!"
 ],
-function (declare, DialogMessageView, PhotoFileValidator, clientState) {
+function (declare, DialogMessageView, clientState) {
   $.extend($.ui.dialog.prototype.options, {
     autoOpen: false,
     modal: true,
@@ -20,7 +19,6 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
     draggable: false,
     closeOnEscape: false
   })
-  var photoValidator = new PhotoFileValidator()
 
   return declare(null, {
     constructor: function () {
@@ -48,7 +46,7 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
 
       this.options = $.extend({}, {
         type: this.INPUT_DIALOG,
-        context: this,
+        thisContext: this,
         load: function () {}
       }, options)
       this._prepareDialog(this.options)
@@ -147,13 +145,6 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
     _enableCloseButton: function () {
       this.$dialog.find("ui-dialog-titlebar-close").button("enable")
     },
-    setInputValue: function (name, value) {
-      assertTrue(false, "This function has been disabled")
-      assertTrue(this.$form, "Form has to be loaded before settings its input values")
-      var $input = this.$form.find("[name='" + name + "']")
-      assertTrue($input.size() === 1, "The selected input field does not exist.")
-      $input.val(value)
-    },
     _prepareDialog: function (options) {
       var $dialogMessage = $("<div/>")
       this.$dialog
@@ -172,12 +163,12 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
     },
     _bindSubmitHandler: function () {
       this._findForm().validate({
+        debug: true,
         success: "valid",
-        errorPlacement: function () {}, // don't show any errors
-        submitHandler: function () {
+        submitHandler: function (form) {
           this._findButtons().button("disable")
           this.$loader.show()
-          this._trigger(this.options, "submit", this._getFormData(this._findForm()))
+          this._trigger(this.options, "submit", this._getFormData($(form)))
         }.bind(this)
       })
 
@@ -188,12 +179,8 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
       // eslint-disable-next-line no-unused-vars
       $form.find("input, textarea").each(function (index, input) {
         var name = $(input).attr("name")
-        if (name !== this.options.photoInputName) {
-          formData[name] = $(input).val()
-        } else {
-          formData[this.options.photoInputName] = photoValidator.getFile()
-        }
-      }.bind(this))
+        formData[name] = $(input).val()
+      })
 
       return formData
     },
@@ -204,7 +191,7 @@ function (declare, DialogMessageView, PhotoFileValidator, clientState) {
     },
     _trigger: function (options, name, args) {
       if (typeof options[name] === "function") {
-        options[name].call(options.context, args)
+        options[name].call(options.thisContext, args)
       }
     },
     _submitForm: function () {

@@ -11,10 +11,12 @@ function (declare, Model) {
   return declare(Model, {
     constructor: function (data) {
       this.type = "Photo"
-      this.photo = data.photo
-      this.thumb = data.thumb
-      this.order = data.order
-      this.visited = !!(data.visited)
+      if (data) {
+        this.photo = data.photo
+        this.thumb = data.thumb
+        this.order = data.order
+        this.visited = !!(data.visited)
+      }
     },
     getOrder: function () {
       return this.order
