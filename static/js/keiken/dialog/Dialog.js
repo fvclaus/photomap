@@ -163,7 +163,6 @@ function (declare, DialogMessageView, clientState) {
     },
     _bindSubmitHandler: function () {
       this._findForm().validate({
-        debug: true,
         success: "valid",
         submitHandler: function (form) {
           this._findButtons().button("disable")

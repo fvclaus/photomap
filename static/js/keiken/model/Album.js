@@ -42,6 +42,28 @@ function (declare, MarkerModel, Place, Collection) {
     },
     getUrl: function (protocolAndHost) {
       return protocolAndHost + "/album/" + this.getId() + "/view/" + this.getSecret() + "/"
+    },
+    updatePassword: function (password) {
+      $.ajax({
+        url: "/album" + this.id + "/password",
+        type: "post",
+        data: {
+          password: password
+        },
+        dataType: "json",
+        success: function (data, status, xhr) {
+          if (data.success) {
+            this._trigger("success", [data, status, xhr])
+            this._trigger("updated", this)
+          } else {
+            this._trigger("failure", [data, status, xhr])
+          }
+        }.bind(this),
+        error: function (xhr, status, error) {
+          this._trigger("error", [xhr, status, error])
+        }.bind(this)
+      })
+      return this
     }
   })
 })

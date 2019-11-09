@@ -97,7 +97,7 @@ function (Collection, Photo) {
     })
 
     it("should remove event listeners", function () {
-      photoCollection.onDelete(function (model) {
+      photoCollection.onDelete(function () {
         throw new Error("Not supposed to trigger onDelete")
       }, this, "Test")
       photoCollection.removeEvents("Test", "deleted")

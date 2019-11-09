@@ -22,12 +22,12 @@ define([
   lang.mixin(ddtl, {
     trans: function (parser, token) {
       var parts = token.contents.split()
-      if (parts.length !== 2) {
-        throw new Error("'trans' statement takes one argument")
-      }
-      var key = parts[1]
-      if (parts[1].charAt(0) === "\"" || parts[1].charAt(0) === "'") {
-        key = parts[1].substring(1, parts[1].length - 1)
+      // Remove trans token
+      parts.shift()
+      // A string with spaces will be split on space
+      var key = parts.join(" ")
+      if (key.charAt(0) === "\"" || key.charAt(0) === "'") {
+        key = key.substring(1, key.length - 1)
       }
       return new TransNode(key, parser.create_text_node())
     }
