@@ -10,12 +10,6 @@ class PhotoCheckForm(forms.ModelForm):
         exclude = ("order", "date", "photo", "size", "thumb")
 
 
-class PhotoInsertForm(forms.ModelForm):
-    class Meta:
-        model = Photo
-        exclude = ("order", "date", "size")
-
-
 class PhotoUpdateForm(forms.ModelForm):
     class Meta:
         model = Photo

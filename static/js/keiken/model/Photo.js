@@ -41,6 +41,24 @@ function (declare, Model) {
     },
     toString: function () {
       return Number(this.id).toString()
+    },
+    _overrideAjaxSettings: function (newData) {
+      return {
+        processData: false,
+        contentType: false,
+        cache: false,
+        data: this._parseFormData(newData)
+      }
+    },
+    _parseFormData: function (data) {
+      var formData = new FormData()
+
+      formData.append("place", data.place)
+      formData.append("title", data.title)
+      formData.append("description", data.description)
+      formData.append("photo", data.photo)
+
+      return formData
     }
   })
 })

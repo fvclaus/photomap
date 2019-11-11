@@ -1,14 +1,14 @@
 "use strict"
 
-define(["../dialog/DeleteModelDialog",
+define(["../dialog/ModelDeleteDialog",
   "../model/Album",
   "../tests/loadTestEnv!"],
-function (DeleteModelDialog, Album, $testBody) {
+function (ModelDeleteDialog, Album, $testBody) {
   describe("DeleteModelDialog", function () {
     var dialog
 
     beforeEach(function () {
-      dialog = new DeleteModelDialog()
+      dialog = new ModelDeleteDialog()
       $testBody
         .empty()
         .append($("<div/>").attr("id", dialog.WRAPPER_ID))

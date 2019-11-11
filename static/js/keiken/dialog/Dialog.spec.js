@@ -105,6 +105,7 @@ function (Dialog, clientState, $testBody) {
       spyOn(dialog.message, "showSuccess")
       triggerSubmit()
       expect(dialog.message.showSuccess).toHaveBeenCalled()
+      expect(dialog._findCloseButton()).toBeEnabled()
     })
 
     it("should show network error message", function () {
@@ -116,6 +117,7 @@ function (Dialog, clientState, $testBody) {
       spyOn(dialog.message, "showFailure")
       triggerSubmit()
       expect(dialog.message.showFailure).toHaveBeenCalled()
+      expect(dialog._findCloseButton()).toBeEnabled()
     })
 
     it("should show failure message", function () {
@@ -129,6 +131,7 @@ function (Dialog, clientState, $testBody) {
       spyOn(dialog.message, "showFailure")
       triggerSubmit()
       expect(dialog.message.showFailure).toHaveBeenCalledWith("Something went wrong")
+      expect(dialog._findCloseButton()).toBeEnabled()
     })
   })
 })

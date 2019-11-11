@@ -1,14 +1,14 @@
 "use strict"
 
-define(["../dialog/ShareAlbumDialog",
+define(["../dialog/AlbumShareDialog",
   "../model/Album",
   "../tests/loadTestEnv!"],
-function (ShareAlbumDialog, Album, $testBody) {
-  describe("ShareAlbumDialog", function () {
+function (AlbumShareDialog, Album, $testBody) {
+  describe("AlbumShareDialog", function () {
     var dialog
 
     beforeEach(function () {
-      dialog = new ShareAlbumDialog()
+      dialog = new AlbumShareDialog()
       $testBody
         .empty()
         .append($("<div/>").attr("id", dialog.WRAPPER_ID))

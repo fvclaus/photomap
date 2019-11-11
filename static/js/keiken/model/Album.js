@@ -31,6 +31,11 @@ function (declare, MarkerModel, Place, Collection) {
         modelType: "Place"
       })
     },
+    _updateProperties: function (data) {
+      // Ignore places property. It can only be changed in the frontend.
+      delete data.places
+      this.inherited(this._updateProperties, arguments, [data])
+    },
     isOwner: function () {
       return this.owner
     },

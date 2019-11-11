@@ -4,12 +4,11 @@ from io import BytesIO
 
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
-from django.shortcuts import render
 from django.views.decorators.http import (require_GET, require_http_methods,
                                           require_POST)
 from PIL import Image, ImageFile
 from pm.form.photo import (MultiplePhotosUpdateForm, PhotoCheckForm,
-                           PhotoInsertForm, PhotoUpdateForm)
+                           PhotoUpdateForm)
 from pm.models.photo import Photo
 from pm.view import set_cookie, update_used_space
 from pm.view.authentication import is_authorized
@@ -130,18 +129,6 @@ def get_photo_or_thumb(request, photo_id):
     else:
         raise ValueError("Unrecognized path %s" % (request.path, ))
     return HttpResponse(bytes(image), content_type="image/jpeg")
-
-
-@login_required
-@require_GET
-def get_insert_dialog(request):
-    form = PhotoInsertForm(auto_id=False)
-    place = None
-    try:
-        place = request.GET["place"]
-    except:
-        pass
-    return render(request, "form/insert/photo.html", {"form": form, "place": place})
 
 
 @login_required

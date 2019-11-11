@@ -1,7 +1,7 @@
 
 "use strict"
 
-define(["../model/Model", "./ModelServerTest"],
+define(["../model/Model", "../tests/ModelServerTest"],
   function (Model, ModelServerTest) {
     var model = null
     var modelData = null

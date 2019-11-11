@@ -79,6 +79,12 @@ define([],
           return util.equals(actual.is(":empty"), true, customEqualityTesters)
         },
         "Expected {{ actual }} to be empty"
+      ),
+      toBeEnabled: makeValidator(
+        function (util, customEqualityTesters, actual) {
+          return util.equals(actual.is(":enabled"), true, customEqualityTesters)
+        },
+        "Expected {{ actual }} to be enabled"
       )
     }
   })

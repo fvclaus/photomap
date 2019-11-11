@@ -3,21 +3,16 @@
 define(["../model/Album",
   "../model/Collection"],
 function (Album, Collection) {
-  var album = null
-  var places = null
-
   describe("Album", function () {
-    it("should create empty album", function () {
-      var album = new Album()
-      expect(album.getTitle()).toBeUndefined()
-    })
+    var album = null
+    var places = null
 
-    it("should initialize album", function () {
+    beforeEach(function () {
       album = new Album({
-        title: "new",
+        title: "Title",
         id: 10,
         places: [{
-          title: "new",
+          title: "Title",
           id: 10,
           photos: [{
             title: "1",
@@ -28,16 +23,33 @@ function (Album, Collection) {
           }]
         }]
       })
+    })
+
+    it("should create empty album", function () {
+      var album = new Album()
+      expect(album.getTitle()).toBeUndefined()
+    })
+
+    it("should initialize album", function () {
       places = album.getPlaces()
       expect(places).toBeInstanceOf(Collection)
       expect(places.size()).toEqual(1)
-      expect(album.getTitle()).toEqual("new")
+      expect(album.getTitle()).toEqual("Title")
       expect(album.isOwner()).toBeFalsy()
+    })
+
+    it("should ignore places on _updateProperties", function () {
+      album._updateProperties({
+        title: "New title",
+        places: []
+      })
+      expect(album.getPlaces()).toBeInstanceOf(Collection)
+      expect(album.getTitle()).toBe("New title")
     })
 
     it("should return true for owner check", function () {
       album = new Album({
-        title: "new",
+        title: "Title",
         isOwner: true,
         places: []
       })

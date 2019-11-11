@@ -1,15 +1,15 @@
 "use strict"
 
-define(["../dialog/InsertPhotoDialog",
+define(["../dialog/PhotoInsertDialog",
   "../model/Place",
   "../tests/loadTestEnv!"],
-function (InsertPhotoDialog, Place, $testBody) {
-  describe("InsertPhotoDialog", function () {
+function (PhotoInsertDialog, Place, $testBody) {
+  describe("PhotoInsertDialog", function () {
     var dialog
     var jQuery = $
 
     beforeEach(function () {
-      dialog = new InsertPhotoDialog()
+      dialog = new PhotoInsertDialog()
       $testBody
         .empty()
         .append($("<div/>").attr("id", dialog.WRAPPER_ID))

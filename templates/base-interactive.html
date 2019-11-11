@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load i18n %}
+{% load static %}
 
 {% block js %}
 <!-- pull in the compressed javascript from base.html -->
@@ -90,10 +91,36 @@
   };
 
 </script>
+<script type="text/javascript">
+  var dojoConfig = {
+    async: true,
+    isDebug: true,
+    packages: [{
+        name: "keiken",
+        location: "/static/js/keiken"
+      },
+      {
+        name: "dojo",
+        location: "/static/dojo"
+      },
+      {
+        name: "dijit",
+        location: "/static/dijit"
+      },
+      {
+        name: "dojox",
+        location: "/static/dojox"
+      }
+    ]
+  }
+
+</script>
 <script type="text/javascript"
-        src="/static/js/dojo/dojo.js"></script>
+        src="{% static 'dojo/dojo.js' %}"></script>
+
 <script type="text/javascript"
-        src="/static/js/keiken/main/init.js"></script>
+        src="{% static 'js/keiken/main/init.js' %}"></script>
+
 {% else %}
 <script type="text/javascript">
   var dojoConfig = {

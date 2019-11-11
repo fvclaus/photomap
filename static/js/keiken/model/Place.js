@@ -15,10 +15,9 @@ function (declare, MarkerModel, Photo, Collection) {
   return declare(MarkerModel, {
     constructor: function (data) {
       this.type = "Place"
-      this.photos = null
       var photos = []
       var rawPhotoData = (data && data.photos) || []
-      $.each(rawPhotoData, function (index, photoData) {
+      rawPhotoData.forEach(function (photoData) {
         photos.push(new Photo(photoData))
       })
       this.photos = new Collection(photos, {
@@ -26,10 +25,16 @@ function (declare, MarkerModel, Photo, Collection) {
         orderBy: "order"
       })
     },
+    _updateProperties: function (data) {
+      // Ignore photo property. It can only be changed in the frontend.
+      delete data.photos
+      this.inherited(this._updateProperties, arguments, [data])
+    },
+
     /**
-          * @description Get a photo by src
-          * @returns {Photo}  Photo with src present, else null
-          */
+      * @description Get a photo by src
+      * @returns {Photo}  Photo with src present, else null
+      */
     getPhoto: function (src) {
       return this.photoCollection.getByAttribute("photo", src)
     },

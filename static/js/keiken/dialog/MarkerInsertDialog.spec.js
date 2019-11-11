@@ -1,15 +1,15 @@
 "use strict"
 
-define(["../dialog/InsertMarkerDialog",
+define(["../dialog/MarkerInsertDialog",
   "../model/Album",
   "../model/Collection",
   "../tests/loadTestEnv!"],
-function (InsertMarkerDialog, Album, Collection, $testBody) {
-  describe("InsertMarkerDialog", function () {
+function (MarkerInsertDialog, Album, Collection, $testBody) {
+  describe("MarkerInsertDialog", function () {
     var dialog
 
     beforeEach(function () {
-      dialog = new InsertMarkerDialog()
+      dialog = new MarkerInsertDialog()
       $testBody
         .empty()
         .append($("<div/>").attr("id", dialog.WRAPPER_ID))

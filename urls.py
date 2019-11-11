@@ -66,18 +66,6 @@ account_patterns += [
     # Make sure the password of the test user cannot be reset.
     url(r'^', include('django.contrib.auth.urls'))]
 # ================================================================
-# dialog hooks
-# ================================================================
-form_patterns = [url(r'^insert/album$', direct_to_template("form/insert/album.html")),
-                 url(r'^insert/place$', direct_to_template("form/insert/place.html")),
-                 url(r'^insert/photo$', photo.get_insert_dialog),
-                 url(r'^update/model$', direct_to_template("form/update/model.html")),
-                 url(r'^update/album/password$',
-                     direct_to_template("form/update/album-password.html")),
-                 url(r'^update/photos$',
-                     direct_to_template("form/update/photos.html")),
-                 url(r'^delete/model$', direct_to_template("form/delete/model.html"))]
-# ================================================================
 # album hooks
 # ================================================================
 album_patterns = [url(r'^$', album.insert),  # accepts only POST
@@ -123,10 +111,6 @@ urlpatterns = [url(r'^$', landingpage.view),
                url(r'^team$', direct_to_template("footer/team.html")),
                # Currently disabled, bank account is closed. If hosting is free remove.
                # url(r'^payment$', direct_to_template("footer/payment.html")),
-               # ================================================================
-               # dialog hooks
-               # ================================================================
-               url(r'^form/', include(form_patterns)),
                # ================================================================
                # album hooks
                # ================================================================

@@ -64,6 +64,7 @@ function (declare, DialogMessageView, clientState) {
         }.bind(this),
         open: function () {
           this._bindListener()
+          this._findButtons().button()
           this.$loader = $("<img src='/static/images/light-loader.gif'/>").appendTo("div.ui-dialog-buttonpane").hide()
           this._bindSubmitHandler()
           // focus for activation
@@ -143,7 +144,10 @@ function (declare, DialogMessageView, clientState) {
       this._enableCloseButton()
     },
     _enableCloseButton: function () {
-      this.$dialog.find("ui-dialog-titlebar-close").button("enable")
+      this._findCloseButton().button("enable")
+    },
+    _findCloseButton: function () {
+      return this.$dialog.dialog("widget").find("button.ui-dialog-titlebar-close")
     },
     _prepareDialog: function (options) {
       var $dialogMessage = $("<div/>")
@@ -153,13 +157,12 @@ function (declare, DialogMessageView, clientState) {
         .append($dialogMessage)
       this.message = new DialogMessageView(null, $dialogMessage.get(0))
       this.message.startup()
-      this._findButtons().button()
     },
     _findForm: function () {
       return this.$dialog.dialog("widget").find("form")
     },
     _findButtons: function () {
-      return this.$dialog.find("button, input[type='submit']")
+      return this.$dialog.dialog("widget").find("button")
     },
     _bindSubmitHandler: function () {
       this._findForm().validate({

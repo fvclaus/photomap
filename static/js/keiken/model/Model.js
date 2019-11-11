@@ -200,71 +200,45 @@ define(["dojo/_base/declare"],
       _trigger: function (eventName, data) {
         $(this).trigger(eventName, data)
       },
-      _setProperties: function (data) {
-        var instance = this
+      _updateProperties: function (data) {
         $.each(data, function (key, value) {
-          if (Object.prototype.hasOwnProperty.call(instance, key)) {
-            instance[key] = value
-          }
-        })
+          this[key] = value
+        }.bind(this))
       },
       save: function (newData) {
         assertTrue(typeof newData === "object" && newData !== null, "Must provide data to update.")
-        var instance = this
-        var settings = {
+        $.ajax($.extend({
           url: this._buildPostUrl(),
           type: "post",
-          data: {},
+          data: newData,
           dataType: "json",
           success: function (data, status, xhr) {
             if (data.success) {
-              instance._trigger("success", [data, status, xhr])
-              if (instance.id > -1) {
-              // TODO Maybe title and description go out of scope.
-                instance._setProperties(newData)
-                instance._trigger("updated", instance)
+              this._trigger("success", [data, status, xhr])
+              if (this.id > -1) {
+                this._updateProperties(newData)
+                this._trigger("updated", this)
               } else {
               // set id of the new model
-                instance._setProperties(data)
-                instance._trigger("inserted", instance)
+                this._updateProperties(data)
+                this._trigger("inserted", this)
               }
             } else {
-              instance._trigger("failure", [data, status, xhr])
+              this._trigger("failure", [data, status, xhr])
             }
-          },
+          }.bind(this),
           error: function (xhr, status, error) {
-            instance._trigger("error", [xhr, status, error])
-          }
-        }
-
-        this._configurePostData(settings, newData)
-
-        $.ajax(settings)
+            this._trigger("error", [xhr, status, error])
+          }.bind(this)
+        }, this._overrideAjaxSettings(newData)))
 
         return this
       },
       _buildPostUrl: function () {
         return "/" + this.type.toLowerCase() + "/" + (this.id > -1 ? this.id + "/" : "")
       },
-      _configurePostData: function (settings, newData) {
-        if (newData.isPhotoUpload) {
-          settings.processData = false
-          settings.contentType = false
-          settings.cache = false
-          settings.data = this._parseFormData(newData)
-        } else {
-          settings.data = newData
-        }
-      },
-      _parseFormData: function (data) {
-        var formData = new FormData()
-
-        formData.append("place", data.place)
-        formData.append("title", data.title)
-        formData.append("description", data.description)
-        formData.append("photo", data.photo)
-
-        return formData
+      _overrideAjaxSettings: function () {
+        return {}
       }
     })
   })

@@ -44,7 +44,7 @@ function (declare, Dialog, communicator, renderDialogTemplate) {
           options.submit.call(this, data)
         },
         thisContext: this,
-        type: options.type || this.CONFIRM_DIALOG,
+        type: options.type !== undefined ? options.type : this.CONFIRM_DIALOG,
         title: options.title,
         contentNode: renderDialogTemplate(options.templateString, options.templateContext || {})
       }])

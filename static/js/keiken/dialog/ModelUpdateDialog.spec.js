@@ -1,14 +1,14 @@
 "use strict"
 
-define(["../dialog/UpdateModelDialog",
+define(["../dialog/ModelUpdateDialog",
   "../model/Album",
   "../tests/loadTestEnv!"],
-function (UpdateModelDialog, Album, $testBody) {
-  describe("UpdateModelDialog", function () {
+function (ModelUpdateDialog, Album, $testBody) {
+  describe("ModelUpdateDialog", function () {
     var dialog
 
     beforeEach(function () {
-      dialog = new UpdateModelDialog()
+      dialog = new ModelUpdateDialog()
       $testBody
         .empty()
         .append($("<div/>").attr("id", dialog.WRAPPER_ID))

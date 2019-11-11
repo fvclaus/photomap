@@ -1,20 +1,20 @@
 define(["dojo/_base/declare",
   "./_ModelDialogBase",
-  "dojo/text!./templates/UpdateModelForm.html"],
+  "dojo/text!./templates/AlbumShareForm.html"],
 function (declare, _ModelDialogBase, templateString) {
   return declare(_ModelDialogBase, {
 
-    show: function (model) {
+    show: function (album) {
       this.inherited("show", arguments, [{
-        model: model,
+        model: album,
         submit: function (data) {
-          model.save(data)
+          album.updatePassword(data.password)
         },
-        title: gettext("Update form"),
+        title: gettext("Share-link & album password"),
         templateContext: {
-          title: model.getTitle(),
-          description: model.getDescription()
+          url: album.getUrl("http://" + window.location.host)
         },
+        type: this.INPUT_DIALOG,
         templateString: templateString
       }])
     }

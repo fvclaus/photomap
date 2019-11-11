@@ -28,3 +28,6 @@ else:
             'PASSWORD': 'photomap',
         }
     }
+
+STATICFILES_DIRS = list(STATICFILES_DIRS) + \
+    [os.path.join(PROJECT_PATH, "node_modules")]

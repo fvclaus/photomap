@@ -2,7 +2,7 @@ define(["dojo/_base/declare",
   "./_ModelDialogBase",
   "../model/Place",
   "../model/Album",
-  "dojo/text!./templates/InsertMarkerForm.html"],
+  "dojo/text!./templates/MarkerInsertForm.html"],
 function (declare, _ModelDialogBase, Place, Album, templateString) {
   return declare(_ModelDialogBase, {
 
@@ -38,6 +38,7 @@ function (declare, _ModelDialogBase, Place, Album, templateString) {
         submit: function (data) {
           options.model.save(data)
         },
+        type: this.INPUT_DIALOG,
         templateString: templateString
       })])
     }

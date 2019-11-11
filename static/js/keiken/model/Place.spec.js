@@ -4,14 +4,11 @@ define(["../model/Place",
   "../model/Collection"],
 function (Place, Collection) {
   describe("Place", function () {
-    it("should create empty place", function () {
-      var place = new Place()
-      expect(place.type).toBe("Place")
-      expect(place.getTitle()).toBeUndefined()
-    })
-    it("should store photos", function () {
-      var place = new Place({
-        title: "new",
+    var place
+
+    beforeEach(function () {
+      place = new Place({
+        title: "Title",
         id: 10,
         photos: [{
           title: "1",
@@ -21,11 +18,26 @@ function (Place, Collection) {
           id: -1
         }]
       })
+    })
+    it("should create empty place", function () {
+      var place = new Place()
+      expect(place.type).toBe("Place")
+      expect(place.getTitle()).toBeUndefined()
+    })
+    it("should store photos", function () {
       var photos = place.getPhotos()
       expect(photos).toBeInstanceOf(Collection)
       expect(photos.size()).toBe(2)
-      expect(place.getTitle()).toBe("new")
+      expect(place.getTitle()).toBe("Title")
       expect(place.getId()).toBe(10)
+    })
+    it("should ignore photos on _updateProperties", function () {
+      place._updateProperties({
+        title: "New title",
+        photos: []
+      })
+      expect(place.getPhotos()).toBeInstanceOf(Collection)
+      expect(place.getTitle()).toBe("New title")
     })
   })
 })
