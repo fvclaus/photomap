@@ -2,7 +2,7 @@ define(["dojo/_base/declare",
   "./_ModelDialogBase",
   "../model/Photo",
   "dojo/text!./templates/PhotoInsertForm.html",
-  "../util/PhotoFileValidator"],
+  "../util/loadPhotoFileValidation!"],
 function (declare, _ModelDialogBase, Photo, templateString) {
   return declare(_ModelDialogBase, {
 

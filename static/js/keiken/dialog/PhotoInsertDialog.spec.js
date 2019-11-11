@@ -2,8 +2,9 @@
 
 define(["../dialog/PhotoInsertDialog",
   "../model/Place",
+  "../tests/mockInputFiles",
   "../tests/loadTestEnv!"],
-function (PhotoInsertDialog, Place, $testBody) {
+function (PhotoInsertDialog, Place, mockInputFiles, $testBody) {
   describe("PhotoInsertDialog", function () {
     var dialog
     var jQuery = $
@@ -31,48 +32,14 @@ function (PhotoInsertDialog, Place, $testBody) {
       $("input[name='title']").val("Title")
       $("textarea[name='description']").val("Description")
 
-      function isPhotoFileInput (el) {
-        return el instanceof HTMLInputElement && el.name === "photo"
-      }
       var validator = $.data(dialog._findForm().get(0), "validator")
+      function isPhotoFileInput (el) {
+        return el.name === "photo"
+      }
+      mockInputFiles(validator, isPhotoFileInput, [new File(["foo"], "foo.jpeg", {
+        type: "image/jpeg"
+      })])
 
-      var origElementsFn = validator.elements
-      spyOn(validator, "elements").and.callFake(function () {
-        var elements = origElementsFn.call(this)
-        for (var i = 0; i < elements.length; i++) {
-          var el = elements[i]
-          if (isPhotoFileInput(el)) {
-            elements[i] = new Proxy(el, {
-              get: function (obj, prop) {
-                var value = obj[prop]
-                if (typeof value === "function") {
-                  return function () {
-                    return value.apply(obj, arguments)
-                  }
-                } else if (prop === "files") {
-                  return [new File(["foo"], "foo.jpeg", {
-                    type: "image/jpeg"
-                  })]
-                } else {
-                  return obj[prop]
-                }
-              },
-              set: function (obj, prop, newVal) {
-                obj[prop] = newVal
-              }
-            })
-          }
-        }
-        return elements
-      })
-      var origElementValueFn = validator.elementValue
-      spyOn(validator, "elementValue").and.callFake(function (el) {
-        if (isPhotoFileInput(el)) {
-          return "fileName"
-        } else {
-          return origElementValueFn.call(this, el)
-        }
-      })
       dialog._submitForm()
 
       expect(photo.save).toHaveBeenCalledWith({

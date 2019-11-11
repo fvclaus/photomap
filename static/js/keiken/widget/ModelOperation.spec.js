@@ -2,17 +2,14 @@
 
 define(["keiken/widget/ModelOperationWidget",
   "../model/Album",
-  "./JQueryMatchers",
-  "./TestFixture",
-  "./loadTestEnv!"],
-function (ModelOperationWidget, Album, JQueryMatchers, TestFixture, $testBody) {
+  "../tests/loadTestEnv!"],
+function (ModelOperationWidget, Album, $testBody) {
   describe("ModelOperation", function () {
     var $container
     var modelOperation = null
 
     beforeEach(function () {
       $container = $("<span class='mp-controls-wrapper ui-corner-all mp-nodisplay' id='mp-controls'>")
-      jasmine.addMatchers(JQueryMatchers)
       $testBody
         .empty()
         .append($container)
