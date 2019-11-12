@@ -19,6 +19,7 @@ function (_ModelDialogBase, Album, communicator, $testBody) {
       $testBody
         .empty()
         .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+      communicator.clear()
     })
 
     afterEach(function () {
@@ -42,7 +43,7 @@ function (_ModelDialogBase, Album, communicator, $testBody) {
           // This should publish event
           album._trigger(eventType)
         })
-        communicator.subscribeOnce(eventType + ":Model", function () {
+        communicator.subscribe(eventType + ":Model", function () {
           done()
         })
 
