@@ -34,15 +34,15 @@ function (_ModelDialogBase, Album, communicator, $testBody) {
       })
     }
 
-    ["inserted", "updated", "deleted"].forEach(function (eventName) {
-      it("should publish " + eventName + " event", function (done) {
+    ["inserted", "updated", "deleted"].forEach(function (eventType) {
+      it("should publish " + eventType + " event", function (done) {
         showDialog(function () {
           // This should show success message
           album._trigger("success")
           // This should publish event
-          album._trigger(eventName)
+          album._trigger(eventType)
         })
-        communicator.subscribeOnce(eventName + ":Model", function () {
+        communicator.subscribeOnce(eventType + ":Model", function () {
           done()
         })
 

@@ -47,6 +47,12 @@ function assertFunction (actual, message) {
   }
 }
 
+function assertOptionalFunction (actual, message) {
+  if (actual !== null || actual !== undefined) {
+    assertFunction(actual)
+  }
+}
+
 function assertString (actual, message) {
   if (!(typeof actual === "string")) {
     croak(typeof actual, "string", message)

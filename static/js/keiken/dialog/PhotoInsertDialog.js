@@ -20,6 +20,7 @@ function (declare, _ModelDialogBase, Photo, templateString) {
         templateContext: {
           placeId: place.getId()
         },
+        type: this.INPUT_DIALOG,
         templateString: templateString
       }])
       return photo

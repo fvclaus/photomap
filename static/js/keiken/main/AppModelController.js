@@ -22,12 +22,12 @@ function (declare, main, state, communicator, ModelDeleteDialog, MarkerInsertDia
   return declare(null, {
 
     constructor: function () {
-      communicator.subscribe("clicked:GalleryInsert", this._openPhotoInsertDialog)
-      communicator.subscribe("clicked:Map", this._openMarkerInsertDialog)
-      communicator.subscribe("clicked:UpdateOperation", this._openModelUpdateDialog)
-      communicator.subscribe("clicked:DescriptionInsert", this._openModelUpdateDialog)
-      communicator.subscribe("clicked:DeleteOperation", this._openModelDeleteDialog)
-      communicator.subscribe("clicked:ShareOperation", this._openAlbumShareDialog)
+      communicator.subscribe("clicked:GalleryInsert", this._openPhotoInsertDialog.bind(this))
+      communicator.subscribe("clicked:Map", this._openMarkerInsertDialog.bind(this))
+      communicator.subscribe("clicked:UpdateOperation", this._openModelUpdateDialog.bind(this))
+      communicator.subscribe("clicked:DescriptionInsert", this._openModelUpdateDialog.bind(this))
+      communicator.subscribe("clicked:DeleteOperation", this._openModelDeleteDialog.bind(this))
+      communicator.subscribe("clicked:ShareOperation", this._openAlbumShareDialog.bind(this))
     },
     _openPhotoInsertDialog: function () {
       var place = map.getOpenedMarker().getModel()
