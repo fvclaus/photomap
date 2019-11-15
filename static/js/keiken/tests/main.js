@@ -21,6 +21,9 @@ var dojoConfig = {
   isDebug: true,
   debugAtAllCosts: true,
   baseUrl: "/base",
+  aliases: [
+    ["jquery", "keiken/util/jquery"]
+  ],
   packages: [
     {
       name: "keiken",
@@ -37,6 +40,10 @@ var dojoConfig = {
     {
       name: "dojox",
       location: "/base/node_modules/dojox"
+    },
+    {
+      name: "node_modules",
+      location: "/base/node_modules"
     }
   ]
 }

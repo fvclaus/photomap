@@ -105,5 +105,12 @@ function (PhotoPages, Collection, Photo) {
       pages.correctCurrentPageIndexIfNecessary()
       expect(pages.getCurrentPageIndex()).toBe(1)
     })
+
+    it("should return empty page", function () {
+      var pages = new PhotoPages(new Collection([], {
+        modelType: "Photo"
+      }), 5)
+      expect(pages.getCurrentPage()).toEqual([null, null, null, null, null])
+    })
   })
 })

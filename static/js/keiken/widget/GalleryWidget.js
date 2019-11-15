@@ -52,7 +52,6 @@ function (declare, PhotoWidget, Photo, communicator, tools, InfoText, template, 
       }
 
       this._carouselOptions = {
-        lazy: !this._adminMode,
         effect: "flip",
         duration: 500,
         loader: this.$loader,

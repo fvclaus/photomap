@@ -1,7 +1,10 @@
-define(["./JQueryMatchers", "dojo/domReady!"], function (jQueryMatchers) {
+define(["./JQueryMatchers",
+  "node_modules/jasmine-jquery-matchers/dist/jasmine-jquery-matchers",
+  "dojo/domReady!"], function (jQueryMatchers, jasmineJqueryMatchers) {
   // Make matcher available to all specs
   beforeEach(function () {
     jasmine.addMatchers(jQueryMatchers)
+    jasmine.addMatchers(jasmineJqueryMatchers)
   })
 
   return {

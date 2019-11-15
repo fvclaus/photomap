@@ -67,7 +67,7 @@ function (declare, Widget, PhotoCarouselView, Collection, Photo, communicator, t
 
       photos.onInsert(this.insertPhoto, this, this.viewName)
       photos.onDelete(this.deletePhoto, this, this.viewName)
-      this.carousel = new PhotoCarouselView(this.$photos, photos.getAll(), this._srcPropertyName, this._carouselOptions)
+      this.carousel = new PhotoCarouselView(this.$photos, photos, this._srcPropertyName, this._carouselOptions)
     },
     /*
               * @public

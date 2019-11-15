@@ -9,13 +9,13 @@ function (DialogMessageWidget, clientState, $testBody) {
     var widget = null
 
     beforeEach(function () {
-      $container = $("<div/>")
       $testBody
         .empty()
-        .append($container)
+        .append($("<div id='container'/>"))
 
-      widget = new DialogMessageWidget(null, $container.get(0))
+      widget = new DialogMessageWidget(null, document.getElementById("container"))
       widget.startup()
+      $container = $("#container")
     })
 
     afterEach(function () {

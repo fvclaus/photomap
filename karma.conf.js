@@ -1,6 +1,6 @@
 var path = require("path")
 
-var port = 9876
+var port = 9877
 
 module.exports = function (config) {
   config.set({
@@ -12,19 +12,19 @@ module.exports = function (config) {
     reporters: ["kjhtml"],
 
     preprocessors: {
-      "static/styles/**/*.styl": ["stylus"]
+      "static/test/*.styl": ["stylus"]
     },
 
     stylusPreprocessor: {
       options: {
-        paths: ["static/styles"]
+        paths: ["static/test"]
       }
     },
 
     // list of files / patterns to load in the browser
     files: [
       "static/js/keiken/tests/main.js",
-      "static/styles/viewalbum-main.styl",
+      "static/test/tests.styl",
       {
         pattern: "static/js/lib/**",
         served: true,
@@ -59,19 +59,20 @@ module.exports = function (config) {
         watched: false
       },
       {
-        pattern: "node_modules/dijit/**",
-        served: true,
-        included: false,
-        watched: false
-      },
-      {
-        pattern: "node_modules/dojox/**",
+        pattern: "node_modules/+(" + ["dijit", "dojox", "jasmine-jquery-matchers"].join("|") + ")/**",
         served: true,
         included: false,
         watched: false
       },
       {
         pattern: "static/images/**",
+        served: true,
+        included: false,
+        watched: false,
+        nocache: false
+      },
+      {
+        pattern: "static/test/**",
         served: true,
         included: false,
         watched: false,

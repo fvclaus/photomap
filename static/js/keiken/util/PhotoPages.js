@@ -56,8 +56,6 @@ function (declare, Collection, Photo) {
         case "previous":
           this.currentPageIndex = (this.currentPageIndex + lastPageIndex) % (lastPageIndex + 1)
           break
-        case "current":
-          break
         case "number":
           this.currentPageIndex = index
           break
@@ -68,7 +66,7 @@ function (declare, Collection, Photo) {
           throw new Error("Unknown param: " + which)
       }
 
-      return this._getCurrentPage()
+      return this.getCurrentPage()
     },
     /**
       * @public
@@ -98,15 +96,18 @@ function (declare, Collection, Photo) {
     isFirstPage: function () {
       return this.currentPageIndex === 0
     },
-    _getCurrentPage: function () {
-      var from = this.photosPerPage * this.currentPageIndex
-      var photos = this.photos.slice(from, from + this.photosPerPage)
+    getCurrentPage: function () {
+      var photos = this.getCurrentPageWithoutPadding()
       for (var i = 0; i < this.photosPerPage; i++) {
         if (!photos[i]) {
           photos.push(null)
         }
       }
       return photos
+    },
+    getCurrentPageWithoutPadding: function () {
+      var from = this.photosPerPage * this.currentPageIndex
+      return this.photos.slice(from, from + this.photosPerPage)
     },
     _calculateLastPageIndex: function () {
       var lastPageIndex = this.photos.size() / parseFloat(this.photosPerPage)
