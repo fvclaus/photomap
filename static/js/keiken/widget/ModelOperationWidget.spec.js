@@ -4,7 +4,7 @@ define(["keiken/widget/ModelOperationWidget",
   "../model/Album",
   "../tests/loadTestEnv!"],
 function (ModelOperationWidget, Album, $testBody) {
-  describe("ModelOperation", function () {
+  describe("ModelOperationWidget", function () {
     var $container
     var modelOperation = null
 

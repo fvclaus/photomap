@@ -123,6 +123,18 @@ define(["dojo/_base/declare"],
         })
         return true
       },
+      slice: function (from, to) {
+        return this.models.slice(from, to)
+      },
+      forEach: function (fn) {
+        return this.models.forEach(fn)
+      },
+      isEmpty: function () {
+        return this.models.length !== 0
+      },
+      indexOf: function (model) {
+        return this.models.indexOf(model)
+      },
       /**
           * ---------------------------------------
           * Convenience methods for all the events
@@ -149,7 +161,7 @@ define(["dojo/_base/declare"],
           events = ["inserted", "updated", "deleted"]
         }
 
-        $.each(events, function (i, event) {
+        events.forEach(function (event) {
           assertTrue(event === "inserted" || event === "updated" || event === "deleted", "Only following events are allowed: inserted, updated, deleted")
           $(instance).off(event + "." + name)
         })
@@ -195,7 +207,7 @@ define(["dojo/_base/declare"],
       },
       _bindModelListener: function (models) {
         var instance = this
-        $.each(models, function (i, model) {
+        models.forEach(function (model) {
           model
             .onUpdate(function (model) {
               instance._trigger("updated", model)
