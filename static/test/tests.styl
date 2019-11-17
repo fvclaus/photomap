@@ -1,5 +1,17 @@
+centerWithTranslate()
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  display: inline
+
+
+
 #testBody
-  margin-top: 200px
+  margin: 10px
+  padding: 5px
+  border: 1px solid black
+
 
 #photoCarouselWidget
   height: 200px
@@ -15,10 +27,6 @@
     & > .mp-carousel-photo
       max-height: 95%
       max-width: 95%
-      position: absolute
-      top: 50%
-      left: 50%
-      transform: translate(-50%, -50%)
-      display: inline
+      centerWithTranslate()
     & > .mp-carousel-photo-loader
-      height: 100%
+      centerWithTranslate()

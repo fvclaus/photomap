@@ -17,12 +17,10 @@
 define(["dojo/_base/declare",
   "dojo/_base/lang",
   "../widget/_DomTemplatedWidget",
-  "../model/Photo",
   "../util/PhotoPages",
-  "../util/Tools",
   "../util/CarouselAnimation",
   "dojo/text!./templates/PhotoCarousel.html"],
-function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, CarouselAnimation, templateString) {
+function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, templateString) {
   return declare(_DomTemplatedWidget, {
     ID_DATA_ATTRIBUTE: "data-keiken-id",
     viewName: "PhotoCarouselWidget",
@@ -31,7 +29,7 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
     constructor: function (params, srcNodeRef) {
       assertTrue(params.photosPerPage > 0)
 
-      var defaults = {
+      this.options = $.extend({}, {
         effect: "fade",
         duration: 500,
         // No need to check for the existence of these functions.
@@ -41,13 +39,10 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
         navigateToInsertedPhoto: false,
         context: this,
         loaderType: "light"
-      }
-
-      this.options = $.extend({}, defaults, params)
+      }, params)
 
       this.srcPropertyName = params.srcPropertyName
-      this.nWaitForPhotosThreads = 0
-      this._photos = params.photos
+      this._numberOfLoadHandlersActive = 0
 
       this.dataPage = new PhotoPages(params.photos, params.photosPerPage, this.srcPropertyName)
       this._templateContextPhotosPerPageArray = new Array(params.photosPerPage)
@@ -57,18 +52,11 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
       this.$photos = this.$container.find(".mp-carousel-photo")
       this.$loader = this.$container.find(".mp-carousel-photo-loader")
     },
-    _bindListener: function () {
-      $(window).resize(function () {
-        this.$photos.each(function () {
-          // TODO Is this needed?
-          tools.centerElement($(this), "vertical")
-        })
-      }.bind(this))
-    },
+    _bindListener: function () { },
     update: function (photos) {
       this.dataPage = new PhotoPages(photos, this.dataPage.photosPerPage)
-      if (this.isStarted) {
-        this._load()
+      if (this._started) {
+        this.loadCurrentPage()
       }
     },
     /**
@@ -83,48 +71,7 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
       if (photo) {
         this.dataPage.navigateTo(photo)
       }
-      this._load()
-    },
-    insertPhoto: function (photo) {
-      console.log("PhotoCarouselWidget: Inserting new photo %s to Carousel.", photo)
-
-      if (this._started) {
-        if (this.options.navigateToInsertedPhoto) {
-          this.dataPage.navigateTo("last")
-        }
-        this.options.onUpdate.call(this.options.context, $(), $())
-        this._load()
-      }
-    },
-    deletePhoto: function (photo) {
-      assertTrue(photo instanceof Photo, "input parameter photo has to be model of the type Photo")
-
-      var onFadeOut = function () {
-        // Update everything from and including the deleted photo element.
-        this._load()
-      }.bind(this)
-
-      this.dataPage.deletePhoto(photo)
-
-      // Did we delete on the current page?
-
-      if (this._started) {
-        var $currentItem = this.$photos.find("[data-keiken-id='" + photo.id + "']")
-
-        if ($currentItem.length > 0) {
-          this._numberOfDeleteAnimationsPlaying++
-          $currentItem.fadeOut(500, function () {
-            this._numberOfDeleteAnimationsPlaying--
-            $(this)
-              .removeAttr("src")
-              .removeAttr(this.ID_DATA_ATTRIBUTE)
-            if (this._numberOfDeleteAnimationsPlaying === 0) {
-              onFadeOut.apply(this)
-            }
-          }.bind(this))
-        }
-        this.options.onUpdate.call(this.options.context, $(), $())
-      }
+      this.loadCurrentPage()
     },
     /*
      * @public
@@ -132,7 +79,6 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
      * @param {Number | Photo} to
      */
     navigateTo: function (to) {
-      var currentPageIndex = this.dataPage.getCurrentPageIndex()
       switch (typeof to) {
         case "object" :
           to = this.dataPage.getPageIndex(to)
@@ -144,21 +90,17 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
         default:
           throw new Error("Unknown type " + typeof to)
       }
-      // TODO Do I need this guard?!
-      // The photo is not on the current page or there is no current page yet (just started)
-      if (to !== currentPageIndex) {
-        this.dataPage.navigateTo(to)
-        this._load()
-      }
+      this.dataPage.navigateTo(to)
+      this.loadCurrentPage()
     },
 
     navigateLeft: function () {
       this.dataPage.navigateTo("previous")
-      this._load()
+      this.loadCurrentPage()
     },
     navigateRight: function () {
       this.dataPage.navigateTo("next")
-      this._load(this.dataPage.getCurrentPageWithoutPadding())
+      this.loadCurrentPage()
     },
     getNPages: function () {
       return this.dataPage.getNPages()
@@ -166,52 +108,32 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
     getCurrentPageIndex: function () {
       return this.dataPage.getCurrentPageIndex()
     },
-    _getIndexForPhoto: function (photo) {
-      return this._photos.indexOf(photo)
-    },
-    /**
-      * @private
-      * @description Loads current page
-      * When everything is loaded, this.options.onLoad (optional) is executed and the carousel is updated to show the current page.
-      * @param {int} from: Index of the first photo element to update. Default is 0.
-      * @param {int} to: Index of the last photo element to update. Defaults to the length of the current Page
-      * This can be used when items get deleted in the middle of the page. The last elements would be ignored without the to parameter.
-      */
-    _load: function () {
+    loadCurrentPage: function () {
       var photos = this.dataPage.getCurrentPageWithoutPadding()
 
-      if (photos.length === 0 && this.nWaitForPhotosThreads === 0) {
+      if (photos.length === 0 && this._numberOfLoadHandlersActive === 0) {
         this.options.beforeLoad.call(this.options.context, this.$photos)
         this.options.afterLoad.call(this.options.context, this.$photos)
         this._update()
       } else {
         console.log("PhotoCarouselWidget: Preparing to update")
 
-        // Counts the photo already loaded.
         var loaded = 0
-        /*
-        * This thread will be executed every time a photo is loaded or an network error occured.
-        * Once all photos are loaded, it will trigger the _update function.
-        * If more than one thread is running at the same time, the last thread will update all photo elements.
-        * This thread could be executed after the carousel has been garbage collected.
-        * Protect everything with a try-catch clause.
-        */
+
         var photoLoaded = function () {
           try {
             ++loaded
 
-            // The photo
             if (loaded >= photos.length) {
-              this.nWaitForPhotosThreads--
-              // This threat is the last active threat -> If there were multiple threats during the creation time, then it must update the whole page.
-              if (this.nWaitForPhotosThreads === 0) {
+              this._numberOfLoadHandlersActive--
+              // There may be more than one handler active at any given time (if navigateToXX/insert/delete was triggered in quick succession)
+              if (this._numberOfLoadHandlersActive === 0) {
                 console.log("PhotoCarousel: Last update threat. Calling _update.")
-                // Trigger the afterLoad event.
                 this.options.afterLoad.call(this.options.context, this.$photos)
                 console.log("PhotoCarouselWidget: Starting to update")
                 this._update()
               } else {
-                console.log("PhotoCarouselWidget: Not the last update threat. Waiting for other update threats.")
+                console.log("PhotoCarouselWidget: Not the last update handler.")
               }
             }
           } catch (e) {
@@ -220,44 +142,31 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
           }
         }.bind(this)
 
-        // There might or might no be another thread that is waiting for photo.load events.
-        // Incrementing this counter will force the thread to wait with _update.
-        // In theory there could be an unlimited number of paralell threads loading photos, if the connection is slow.
-        this.nWaitForPhotosThreads++
+        this._numberOfLoadHandlersActive++
 
-        /*
-        * This thread will load the photos into anonymous image elements.
-        * It will call the photoLoaded every time a photo is loaded or an error occurs.
-        * This thread could be executed after the carousel has been garbage collected.
-        * This must(!) not be interrupted, because if photos are inserted in quick succession new photo src will not be loaded properly. The loader for these photos will never be executed.
-        * TODO interrupt loadPhotos and add the photos to the new photo loader. @see test/MultiplePagesPhotoWidget.insertPhoto.
-        * Protect everything with a try-catch clause.
-        */
-        var loadPhotos = function () {
-          try {
-            // The browser might or might not trigger a load event on photos that have the src null.
-            // Length could change in the meantime, do not store this in an intermediate variable.
-            photos.forEach(function (photo) {
-              $("<img/>")
-                .load(lang.hitch(this, photoLoaded))
-                .error(lang.hitch(this, photoLoaded))
-                .attr("src", photo.getSource(this.srcPropertyName))
-
-              console.log("PhotoCarouselWidget: Setting src %s on anonymous img element.", photo.getSource(this.srcPropertyName))
-            }.bind(this))
-          } catch (e) {
-            console.log("Could not prepare photos for loading. Maybe the carousel was reset?")
-            console.dir(e)
-          }
-        }.bind(this)
-
-        // Starts the fadeout animation and the load thread afterwards. This will start the load thread, even if the animation is interrupted.
+        // Fadeout photos and load next photos afterwards.
         new CarouselAnimation().start({
           items: this.$photos,
           loader: this.$loader,
           animation: this.options.effect,
           animationTime: this.options.duration,
-          complete: loadPhotos
+          complete: function () {
+            try {
+              photos.forEach(function (photo) {
+                // Load photos into anonymous image to bring them into the browser cache.
+                // Call photoLoaded for every photo on success or failure
+                $("<img/>")
+                  .load(lang.hitch(this, photoLoaded))
+                  .error(lang.hitch(this, photoLoaded))
+                  .attr("src", photo.getSource(this.srcPropertyName))
+
+                console.log("PhotoCarouselWidget: Setting src %s on anonymous img element.", photo.getSource(this.srcPropertyName))
+              }.bind(this))
+            } catch (e) {
+              console.log("Could not prepare photos for loading. Maybe the carousel was reset?")
+              console.dir(e)
+            }
+          }.bind(this)
         })
 
         // Trigger the beforeLoad event.
@@ -270,27 +179,6 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
     _update: function () {
       var photos = this.dataPage.getCurrentPage()
 
-      // This threat could be executed after the carousel has been garbage collected.
-      // Protect everything with a try-catch clause.
-      var finishHandler = function () {
-        try {
-          // It is important that this loop iterates all $photos. Even those which could not be loaded.
-          this.$photos.each(function (photoIndex, photoNode) {
-            // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
-            var photo = photos[photoIndex]
-            // Not every page is full
-            if (photo) {
-              $(photoNode).attr(this.ID_DATA_ATTRIBUTE, photo.getId())
-            } else {
-              $(photoNode).removeAttr(this.ID_DATA_ATTRIBUTE)
-            }
-          })
-          this.options.onUpdate.call(this.options.context, this.$photos)
-        } catch (e) {
-          console.log("Could not finish the animation. Maybe the carousel has been reset")
-        }
-      }
-      // Only show those $photos which srcs could be successfully loaded.
       new CarouselAnimation().end({
         items: this.$photos,
         photos: photos,
@@ -298,7 +186,23 @@ function (declare, lang, _DomTemplatedWidget, Photo, PhotoPages, tools, Carousel
         loader: this.$loader,
         animation: this.options.effect,
         animationTime: this.options.duration,
-        complete: finishHandler,
+        complete: function () {
+          try {
+            this.$photos.each(function (photoIndex, photoNode) {
+              // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
+              var photo = photos[photoIndex]
+              // Not every page is full
+              if (photo) {
+                $(photoNode).attr(this.ID_DATA_ATTRIBUTE, photo.getId())
+              } else {
+                $(photoNode).removeAttr(this.ID_DATA_ATTRIBUTE)
+              }
+            }.bind(this))
+            this.options.onUpdate.call(this.options.context, this.$photos)
+          } catch (e) {
+            console.log("Could not finish the animation. Maybe the carousel has been reset")
+          }
+        },
         context: this.options.context
       })
     }

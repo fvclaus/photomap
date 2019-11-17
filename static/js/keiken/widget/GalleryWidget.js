@@ -20,6 +20,7 @@ define(["dojo/_base/declare",
   "dojo/i18n",
   "dojo/i18n!./nls/Gallery"],
 function (declare, PhotoWidget, Photo, communicator, tools, InfoText, template, i18n) {
+  // TODO Navigate to new photo on insert
   return declare([PhotoWidget], {
 
     templateString: template,

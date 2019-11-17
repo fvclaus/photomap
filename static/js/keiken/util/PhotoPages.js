@@ -18,10 +18,10 @@ function (declare, Collection, Photo) {
 
       this.photos = photos
       this.photosPerPage = photosPerPage
-      this.currentPageIndex = 0
+      this._currentPageIndex = 0
     },
     reset: function () {
-      this.currentPageIndex = 0
+      this._currentPageIndex = 0
     },
     /**
       * @public
@@ -45,22 +45,22 @@ function (declare, Collection, Photo) {
 
       switch (which) {
         case "first":
-          this.currentPageIndex = 0
+          this._currentPageIndex = 0
           break
         case "last":
-          this.currentPageIndex = lastPageIndex
+          this._currentPageIndex = lastPageIndex
           break
         case "next":
-          this.currentPageIndex = (this.currentPageIndex + 1) % (lastPageIndex + 1)
+          this._currentPageIndex = (this.getCurrentPageIndex() + 1) % (lastPageIndex + 1)
           break
         case "previous":
-          this.currentPageIndex = (this.currentPageIndex + lastPageIndex) % (lastPageIndex + 1)
+          this._currentPageIndex = (this.getCurrentPageIndex() + lastPageIndex) % (lastPageIndex + 1)
           break
         case "number":
-          this.currentPageIndex = index
+          this._currentPageIndex = index
           break
         case "photo":
-          this.currentPageIndex = this.getPageIndex(photo)
+          this._currentPageIndex = this.getPageIndex(photo)
           break
         default:
           throw new Error("Unknown param: " + which)
@@ -76,25 +76,23 @@ function (declare, Collection, Photo) {
       assertTrue(photo instanceof Photo, "getPageIndex just accepts a Photo as input param")
 
       var index = this.photos.indexOf(photo)
-      return index / this.photosPerPage
+      return Math.floor(index / this.photosPerPage)
     },
     getCurrentPageIndex: function () {
-      return this.currentPageIndex
-    },
-    correctCurrentPageIndexIfNecessary: function () {
-      if (this.currentPageIndex > this._calculateLastPageIndex()) {
-        console.log("PhotoPages: Deleted page %d from pages. Going back one.", this.currentPageIndex)
-        this.currentPageIndex--
+      if (this._currentPageIndex > this._calculateLastPageIndex()) {
+        console.log("PhotoPages: Deleted page %d from pages. Going back one.", this._currentPageIndex)
+        this._currentPageIndex--
       }
+      return this._currentPageIndex
     },
     getNPages: function () {
       return this._calculateLastPageIndex() + 1
     },
     isLastPage: function () {
-      return this.currentPageIndex === this._calculateLastPageIndex()
+      return this.getCurrentPageIndex() === this._calculateLastPageIndex()
     },
     isFirstPage: function () {
-      return this.currentPageIndex === 0
+      return this.getCurrentPageIndex() === 0
     },
     getCurrentPage: function () {
       var photos = this.getCurrentPageWithoutPadding()
@@ -106,7 +104,7 @@ function (declare, Collection, Photo) {
       return photos
     },
     getCurrentPageWithoutPadding: function () {
-      var from = this.photosPerPage * this.currentPageIndex
+      var from = this.photosPerPage * this.getCurrentPageIndex()
       return this.photos.slice(from, from + this.photosPerPage)
     },
     _calculateLastPageIndex: function () {

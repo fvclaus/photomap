@@ -102,7 +102,6 @@ function (PhotoPages, Collection, Photo) {
       var pages = new PhotoPages(photos, 1)
       pages.navigateTo("last")
       photos.delete(photo300)
-      pages.correctCurrentPageIndexIfNecessary()
       expect(pages.getCurrentPageIndex()).toBe(1)
     })
 
@@ -111,6 +110,11 @@ function (PhotoPages, Collection, Photo) {
         modelType: "Photo"
       }), 5)
       expect(pages.getCurrentPage()).toEqual([null, null, null, null, null])
+    })
+
+    it("should return page index 0", function () {
+      var pages = new PhotoPages(photos, 5)
+      expect(pages.getPageIndex(photo300)).toEqual(0)
     })
   })
 })

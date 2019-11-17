@@ -22,34 +22,52 @@ function (PhotoCarouselWidget, Photo, Collection, jasmineJqueryMatchers, $testBo
       id: 300,
       photo: "/static/test/photo3.jpg"
     })
+    var photos
+    var $images
 
-    beforeEach(function () {
+    beforeEach(function (done) {
       jasmine.addMatchers(jasmineJqueryMatchers)
       $testBody
         .empty()
         .append($("<div id='photoCarouselWidget' />"))
 
-      var photos = new Collection([photo100, photo200, photo300], {
+      photos = new Collection([photo100, photo200, photo300], {
         modelType: "Photo"
       })
 
-      try {
-        widget = new PhotoCarouselWidget({
-          photosPerPage: 5,
-          photos: photos,
-          srcPropertyName: "photo"
-        }, document.getElementById("photoCarouselWidget"))
-      } catch (e) {
-        console.error(e)
-      }
+      widget = new PhotoCarouselWidget({
+        photosPerPage: 5,
+        photos: photos,
+        srcPropertyName: "photo",
+        // This speeds up tests
+        duration: 0
+      }, document.getElementById("photoCarouselWidget"))
+
       $container = $("#photoCarouselWidget")
+
+      widget.options.onUpdate = function () {
+        done()
+      }
+      widget.startup()
+      $images = $container.find("img.mp-carousel-photo")
     })
+
+    function getImageIds () {
+      return $images
+        .map(function () {
+          return $(this).attr("data-keiken-id")
+        })
+        .get()
+        .map(function (id) {
+          return parseInt(id)
+        })
+    }
 
     afterEach(function () {
       widget.destroy()
     })
 
-    it("should display 5 photos", function (done) {
+    it("should trigger events in correct order", function (done) {
       var triggeredBeforeLoad = false
       widget.options.beforeLoad = function () {
         triggeredBeforeLoad = true
@@ -63,8 +81,69 @@ function (PhotoCarouselWidget, Photo, Collection, jasmineJqueryMatchers, $testBo
         expect(triggeredAfterLoad).toBeTruthy()
         done()
       }
-      widget.startup()
-      expect($container.find("img.mp-carousel-photo")).toHaveLength(5)
+      widget.loadCurrentPage()
+    })
+
+    it("should display all photos", function () {
+      expect($images).toHaveLength(5)
+      photos.forEach(function (photo, index) {
+        var $image = $images.eq(index)
+        expect($image).toHaveAttr("src", photo.photo)
+        expect($image).toHaveAttr("data-keiken-id", photo.id.toString())
+      });
+      [3, 4].forEach(function (index) {
+        var $image = $images.eq(index)
+        expect($image).not.toHaveAttr("src")
+        expect($image).not.toHaveAttr("data-keiken-id")
+      })
+    });
+
+    ["left", "right"].forEach(function (direction) {
+      it("should wrap around to the " + direction, function (done) {
+        widget.options.onUpdate = function () {
+          expect(getImageIds()).toEqual([100, 200, 300])
+          done()
+        }
+        widget["navigate" + direction[0].toUpperCase() + direction.slice(1)].apply(widget)
+      })
+    })
+
+    it("should not fail when images cannot be loaded", function (done) {
+      var photo400 = new Photo({
+        id: 400,
+        photo: "/static/test/not-found"
+      })
+      photos.insert(photo400)
+      widget.options.onUpdate = function () {
+        expect(getImageIds()).toEqual([100, 200, 300, 400])
+        done()
+      }
+      widget.navigateTo(photo400)
+    })
+
+    it("should load different photo collection on update", function (done) {
+      var photos = new Collection([photo300, photo200], {
+        modelType: "Photo"
+      })
+      widget.options.onUpdate = function () {
+        expect(getImageIds()).toEqual([300, 200])
+        done()
+      }
+      widget.update(photos)
+    })
+
+    it("should navigate to next page", function (done) {
+      for (var i = 0; i < 5; i++) {
+        photos.insert(new Photo({
+          id: 101 + i,
+          photo: photo100.photo
+        }))
+      }
+      widget.options.onUpdate = function () {
+        expect(getImageIds()).toEqual([103, 104, 105])
+        done()
+      }
+      widget.navigateRight()
     })
   })
 })
