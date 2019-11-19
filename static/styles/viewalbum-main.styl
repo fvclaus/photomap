@@ -44,6 +44,24 @@
   background-position top left
   background-size 100% 100%
 
+  & > .mp-carousel-photo
+    max-width 95%
+    max-height 95%
+    margin 0 auto
+    // Why visibility hidden?
+    // visibility hidden
+    display none
+
+  & > .mp-carousel-photo-empty:hover
+    width: 95%
+    height: 95%
+    margin: 0 auto
+    cursor copy
+    background-image url(/static/images/add-back.png)
+    background-position center center
+    background-size 15px 15px
+    background-repeat no-repeat
+
 .mp-gallery-nav
   width 7%
   height 100%
@@ -59,7 +77,7 @@
     width 75%
     max-height 75% // when the window is very flat, this will prevent icons from disappearing
     height auto
-    
+
 
 .mp-gallery-inner
   width 86% // 100% - 2 * 7% (navi)
@@ -75,7 +93,7 @@
   height 80%
   text-align center
   overflow auto
-  p 
+  p
     display table-cell
     vertical-align middle
 
@@ -96,25 +114,12 @@
   float left
   position relative
   text-align center
-  
+
 .mp-gallery-tile:hover
   box-shadow(inset 0px 0px 50px 10px #dadada)
 
-.mp-empty-tile:hover
-  cursor copy
-  background-image url(/static/images/add-back.png)
-  background-position center center
-  background-size 15px 15px
-  background-repeat no-repeat
 
-.mp-thumb
-  max-width 95%
-  max-height 95%
-  margin 0 auto
-  // Why visibility hidden?
-  // visibility hidden
-  display none
-  
+
 .mp-thumb-visited
   width 15px
   height auto
@@ -122,7 +127,7 @@
   right 5px
   bottom 4px
   display none
-  
+
 
 #mp-full-left-column .mp-full-gallery
   // width 95% // I think that was when we used a custom scrollbar.
@@ -188,7 +193,7 @@
 .mp-slideshow-no-image-msg
   text-align center
   margin-top 20%
-   
+
 .mp-slideshow-info
   height 10%
   width 100%

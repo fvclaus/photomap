@@ -12,18 +12,19 @@ module.exports = function (config) {
     reporters: ["kjhtml"],
 
     preprocessors: {
-      "static/test/*.styl": ["stylus"]
+      "static/**/*.styl": ["stylus"]
     },
 
     stylusPreprocessor: {
       options: {
-        paths: ["static/test"]
+        paths: ["static/styles"]
       }
     },
 
     // list of files / patterns to load in the browser
     files: [
       "static/js/keiken/tests/main.js",
+      "static/styles/viewalbum-main.styl",
       "static/test/tests.styl",
       {
         pattern: "static/js/lib/**",

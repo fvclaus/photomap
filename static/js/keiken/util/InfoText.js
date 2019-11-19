@@ -71,6 +71,7 @@ define(["dojo/_base/declare"],
             this.closed = true
           }
         }
+        return this
       },
       /**
           * @description shows the InfoText and starts it prior that if necessary
@@ -85,6 +86,7 @@ define(["dojo/_base/declare"],
         } else if (!this.started) {
           this.start().open()
         }
+        return this
       },
       // @description imitates an alert displaying the given message - doesn't require InfoText to be started or $container & options to be set
       alert: function (message) {
@@ -107,6 +109,7 @@ define(["dojo/_base/declare"],
         window.setTimeout(function (instance) {
           instance.alertAttributes.isRead = true
         }, 2000, this)
+        return this
       },
       /**
           * @description set a new Message for this InfoText - will update the html if started

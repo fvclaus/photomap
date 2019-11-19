@@ -3,7 +3,7 @@
 define(["../tests/loadTestEnv!",
   "../tests/mockInputFiles",
   "./loadPhotoFileValidation!"],
-function ($testBody, mockInputFiles) {
+function (TestEnv, mockInputFiles) {
   var $container
   var validator
 
@@ -17,10 +17,7 @@ function ($testBody, mockInputFiles) {
     }
 
     beforeEach(function () {
-      $container = $("<form target=''><input type='file' class='$photoValidation' name='fileInput'/><input type='submit'/></form>")
-      $testBody
-        .empty()
-        .append($container)
+      $container = new TestEnv().append($("<form target=''><input type='file' class='$photoValidation' name='fileInput'/><input type='submit'/></form>"))
     });
 
     [

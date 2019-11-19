@@ -23,55 +23,72 @@ define(["dojo/_base/declare",
 function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, templateString) {
   return declare(_DomTemplatedWidget, {
     ID_DATA_ATTRIBUTE: "data-keiken-id",
+    ABSENT_PHOTO_CLASSNAME: "mp-carousel-photo-empty",
+    PRESENT_PHOTO_CLASSNAME: "mp-carousel-photo",
     viewName: "PhotoCarouselWidget",
     templateString: templateString,
     // eslint-disable-next-line no-unused-vars
     constructor: function (params, srcNodeRef) {
       assertTrue(params.photosPerPage > 0)
 
+      var noop = function () {}
+
       this.options = $.extend({}, {
         effect: "fade",
         duration: 500,
-        // No need to check for the existence of these functions.
-        beforeLoad: function () {},
-        afterLoad: function () {},
-        onUpdate: function () {},
+        beforeLoad: noop,
+        afterLoad: noop,
+        onUpdate: noop,
+        onPhotoClick: noop,
+        onPhotoMouseenter: noop,
+        onPhotoMouseleave: noop,
         navigateToInsertedPhoto: false,
         context: this,
         loaderType: "light"
       }, params)
 
       this.srcPropertyName = params.srcPropertyName
+      this._photosPerPage = params.photosPerPage
       this._numberOfLoadHandlersActive = 0
 
-      this.dataPage = new PhotoPages(params.photos, params.photosPerPage, this.srcPropertyName)
       this._templateContextPhotosPerPageArray = new Array(params.photosPerPage)
     },
-    buildRendering: function () {
-      this.inherited(this.buildRendering, arguments)
-      this.$photos = this.$container.find(".mp-carousel-photo")
+    postCreate: function () {
+      this.inherited(this.postCreate, arguments)
       this.$loader = this.$container.find(".mp-carousel-photo-loader")
+      this.$photos = this.$container.find("." + this.PRESENT_PHOTO_CLASSNAME)
     },
-    _bindListener: function () { },
+    PHOTO_EVENT_TYPES: ["click", "mouseenter", "mouseleave"],
+    _bindListener: function () {
+      var instance = this
+
+      var triggerPhotoHandler = function (event) {
+        var id = $(this).attr(instance.ID_DATA_ATTRIBUTE)
+        var photo = null
+        if (id) {
+          photo = instance.dataPage.photos.get(id)
+        }
+        var handlerName = "onPhoto" + event.type[0].toUpperCase() + event.type.slice(1)
+        instance.options[handlerName].call(instance.options.context, $(this), photo)
+      }
+
+      this.PHOTO_EVENT_TYPES.forEach(function (eventType) {
+        this.$photos.on(eventType + ".PhotoCarousel", triggerPhotoHandler)
+      }.bind(this))
+    },
+    _unbindListener: function () {
+      this.PHOTO_EVENT_TYPES.forEach(function (eventType) {
+        this.$photos.off(eventType + ".PhotoCarousel")
+      }.bind(this))
+    },
     update: function (photos) {
       this.dataPage = new PhotoPages(photos, this.dataPage.photosPerPage)
       if (this._started) {
         this.loadCurrentPage()
       }
     },
-    /**
-      * @description Starts the carousel by loading the first or the requested page
-      * @idempotent
-      */
-    startup: function (photo) {
-      if (this._started) {
-        return
-      }
-      this.inherited(this.startup, arguments)
-      if (photo) {
-        this.dataPage.navigateTo(photo)
-      }
-      this.loadCurrentPage()
+    load: function (photos) {
+      this.dataPage = new PhotoPages(photos, this._photosPerPage, this.srcPropertyName)
     },
     /*
      * @public
@@ -193,16 +210,22 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
               var photo = photos[photoIndex]
               // Not every page is full
               if (photo) {
-                $(photoNode).attr(this.ID_DATA_ATTRIBUTE, photo.getId())
+                $(photoNode)
+                  .attr(this.ID_DATA_ATTRIBUTE, photo.getId())
+                  .removeClass(this.ABSENT_PHOTO_CLASSNAME)
+                  .addClass(this.PRESENT_PHOTO_CLASSNAME)
               } else {
-                $(photoNode).removeAttr(this.ID_DATA_ATTRIBUTE)
+                $(photoNode)
+                  .removeAttr(this.ID_DATA_ATTRIBUTE)
+                  .removeClass(this.PRESENT_PHOTO_CLASSNAME)
+                  .addClass(this.ABSENT_PHOTO_CLASSNAME)
               }
             }.bind(this))
-            this.options.onUpdate.call(this.options.context, this.$photos)
+            this.options.onUpdate.call(this.options.context, this.$photos, photos)
           } catch (e) {
             console.log("Could not finish the animation. Maybe the carousel has been reset")
           }
-        },
+        }.bind(this),
         context: this.options.context
       })
     }

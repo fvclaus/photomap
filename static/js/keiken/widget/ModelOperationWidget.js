@@ -1,5 +1,4 @@
-// No use strict with this.inherited(arguments);
-// "use strict";
+"use strict"
 
 define([
   "dojo/_base/declare",
@@ -32,12 +31,12 @@ function (declare, Widget, communicator, Model, Photo, Place, Album, tools, temp
       this.$container.isEntered = false
       this._modelInstance = null
 
-      this.inherited(arguments)
+      this.inherited(this.startup, arguments)
 
       assertTrue(this.$delete.size() > 0 && this.$update.size() > 0, "Operation controls need to be present.")
     },
     postMixInProperties: function () {
-      this.inherited(arguments)
+      this.inherited(this.postMixInProperties, arguments)
       this.messages = i18n.getLocalization("keiken/widget", "ModelOperation", this.lang)
     },
     /**

@@ -41,7 +41,6 @@ function (declare, Widget, PhotoCarouselWidget, Collection, Photo) {
       // Widget will call _bindListener.
       this.inherited(this.startup, arguments)
       // Use this widget with the keyboard.
-      this._bindActivationListener(this.$container, this.viewName)
       this.carousel = new PhotoCarouselWidget({
         srcPropertyName: this._srcPropertyName,
         photosPerPage: this._photosPerPage,

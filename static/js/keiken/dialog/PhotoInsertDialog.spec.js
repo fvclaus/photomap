@@ -4,16 +4,14 @@ define(["../dialog/PhotoInsertDialog",
   "../model/Place",
   "../tests/mockInputFiles",
   "../tests/loadTestEnv!"],
-function (PhotoInsertDialog, Place, mockInputFiles, $testBody) {
+function (PhotoInsertDialog, Place, mockInputFiles, TestEnv) {
   describe("PhotoInsertDialog", function () {
     var dialog
     var jQuery = $
 
     beforeEach(function () {
       dialog = new PhotoInsertDialog()
-      $testBody
-        .empty()
-        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+      new TestEnv().createContainer(dialog.WRAPPER_ID)
     })
 
     afterEach(function () {

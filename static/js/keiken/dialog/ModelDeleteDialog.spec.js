@@ -3,15 +3,13 @@
 define(["../dialog/ModelDeleteDialog",
   "../model/Album",
   "../tests/loadTestEnv!"],
-function (ModelDeleteDialog, Album, $testBody) {
+function (ModelDeleteDialog, Album, TestEnv) {
   describe("DeleteModelDialog", function () {
     var dialog
 
     beforeEach(function () {
       dialog = new ModelDeleteDialog()
-      $testBody
-        .empty()
-        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+      new TestEnv().createContainer(dialog.WRAPPER_ID)
     })
 
     afterEach(function () {

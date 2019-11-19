@@ -53,6 +53,24 @@ function (declare, OnePhotoPerPageWidget, Photo, communicator, tools, InfoText, 
       })
       this.updateMessage()
     },
+    /*
+              * @public
+              * @description Navigates the slideshow left or right.
+              * @param {String} direction: left || right
+              */
+    navigateWithDirection: function (direction) {
+      assertTrue(direction === "left" || direction === "right", "slideshow can just navigate left or right")
+
+      if (!this._run) {
+        this.run()
+      } else {
+        if (direction === "left") {
+          this.carousel.navigateLeft()
+        } else {
+          this.carousel.navigateRight()
+        }
+      }
+    },
     postMixInProperties: function () {
       this.inherited(arguments)
       this.messages = i18n.getLocalization("keiken/widget", "Slideshow", this.lang)

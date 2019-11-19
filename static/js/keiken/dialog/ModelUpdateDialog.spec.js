@@ -3,15 +3,13 @@
 define(["../dialog/ModelUpdateDialog",
   "../model/Album",
   "../tests/loadTestEnv!"],
-function (ModelUpdateDialog, Album, $testBody) {
+function (ModelUpdateDialog, Album, TestEnv) {
   describe("ModelUpdateDialog", function () {
     var dialog
 
     beforeEach(function () {
       dialog = new ModelUpdateDialog()
-      $testBody
-        .empty()
-        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+      new TestEnv().createContainer(dialog.WRAPPER_ID)
     })
 
     afterEach(function () {

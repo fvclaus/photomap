@@ -153,7 +153,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
             this._navigateSlideshow(photo)
             appState.updatePhoto(photo.getId())
           },
-          hovered: function (data) {
+          mouseenter: function (data) {
             if (this._isAdmin === true) {
               controls.show({
                 modelInstance: data.photo,
@@ -182,8 +182,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           updated: function (photo) {
             if (!this.ignoreNextSlideshowUpdate) {
               description.update(photo)
-              gallery.navigateIfNecessary(photo)
-              gallery.setPhotoVisited(photo)
+              gallery.navigateTo(photo)
               clientstate.insertVisitedPhoto(photo)
               photo.setVisited(true)
               fullscreen.navigateTo(photo)
@@ -289,7 +288,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           this.infoText.alert(gettext("INVALID_LOADED_PHOTO"))
         }
         // navigate gallery if necessary
-        if (newState.page && newState.page <= gallery.getNPages()) {
+        if (gallery.isValidPage(newState.page)) {
           gallery.navigateTo(newState.page)
         }
         // start fullscreen if necessary

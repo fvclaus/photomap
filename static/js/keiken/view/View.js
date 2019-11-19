@@ -1,7 +1,7 @@
-/*jslint */
-/*global define*/
+/* jslint */
+/* global define */
 
-"use strict";
+"use strict"
 
 /**
  * @author Marc-Leon Römer
@@ -11,70 +11,69 @@
  */
 
 define(["dojo/_base/declare",
-        "../util/Communicator"],
-       function (declare, communicator) {
-          return declare(null, {
-             constructor : function () {
-                this.presenter = null;
-                this.$container = null; // every View that represents a DOM element has to specify the container-element 
-                
-                this.disabled = false;
-                this.active = false;
-                
-                /* every View that represents a DOM element has to call the following method with the given params
+  "../util/Communicator"],
+function (declare, communicator) {
+  return declare(null, {
+    constructor: function () {
+      this.presenter = null
+      this.$container = null // every View that represents a DOM element has to specify the container-element
+
+      this.disabled = false
+      this.active = false
+
+      /* every View that represents a DOM element has to call the following method with the given params
                  * this._bindActivationListener(this.$container, this.viewName);
                  * this will make sure that the view representing the currently focused element is 'active'
                  * especially needed for keyboard events
                  */
-             },
-             getName : function () {
-                return this.viewName;
-             },
-             /*
+    },
+    getName: function () {
+      return this.viewName
+    },
+    /*
               * @presenter
               * @description Views can query their status using the this.disabled variable.
               */
-             setDisabled : function (disabled) {
-                this.disabled = disabled;
-             },
-             /*
+    setDisabled: function (disabled) {
+      this.disabled = disabled
+    },
+    /*
               * @presenter
               * @description Presenter should use this to query the status of their views.
               */
-             isDisabled : function () {
-                return this.disabled;
-             },
-             /*
+    isDisabled: function () {
+      return this.disabled
+    },
+    /*
               * @presenter
               * @description Will be used upon setDisabled(true). Overwrite if needed.
               */
-             disable : function () {
-                return false;
-             },
-             /*
+    disable: function () {
+      return false
+    },
+    /*
               * @presenter
               * @description Will be used upon setDisabled(false). Overwrite if needed.
               */
-             enable : function () {
-                return false;
-             },
-             setActive : function (active) {
-                this.active = active;
-             },
-             isActive : function () {
-                return this.active;
-             },
-             getPresenter : function () {
-                return this.presenter;
-             },
-             _bindActivationListener: function ($container, view) {
-                var instance = this;
-                $container.on({
-                   "click.ActivateView, focus.ActivateView": function () {
-                     communicator.publish("activated:View", view);
-                     console.log(view + " is now active.");
-                   }
-               });
-             }
-          });
-       });
+    enable: function () {
+      return false
+    },
+    setActive: function (active) {
+      this.active = active
+    },
+    isActive: function () {
+      return this.active
+    },
+    getPresenter: function () {
+      return this.presenter
+    },
+    _bindActivationListener: function ($container, view) {
+      $container.on({
+        "click.ActivateView, focus.ActivateView": function () {
+          communicator.publish("activated:View", view)
+          console.log(view + " is now active.")
+        }
+      })
+    }
+  })
+})

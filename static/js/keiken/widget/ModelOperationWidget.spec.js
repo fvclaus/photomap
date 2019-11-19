@@ -3,65 +3,61 @@
 define(["keiken/widget/ModelOperationWidget",
   "../model/Album",
   "../tests/loadTestEnv!"],
-function (ModelOperationWidget, Album, $testBody) {
+function (ModelOperationWidget, Album, TestEnv) {
   describe("ModelOperationWidget", function () {
     var $container
-    var modelOperation = null
+    var widget = null
 
     beforeEach(function () {
-      $container = $("<span class='mp-controls-wrapper ui-corner-all mp-nodisplay' id='mp-controls'>")
-      $testBody
-        .empty()
-        .append($container)
+      // TODO Fix this
+      // $container = $("<span class='mp-controls-wrapper ui-corner-all mp-nodisplay' id='mp-controls'>")
 
-      modelOperation = new ModelOperationWidget(null, $container.get(0))
-      modelOperation.startup()
-    })
+      var t = new TestEnv().createWidget(null, ModelOperationWidget)
 
-    afterAll(function () {
-      $testBody.empty()
+      widget = t.widget; $container = t.$container
+      widget.startup()
     })
 
     afterEach(function () {
-      modelOperation.destroy()
+      widget.destroy()
     })
 
     it("should hide on startup", function () {
-      expect(modelOperation.$container).toBeHidden()
+      expect($container).toBeHidden()
     })
 
     it("should be visible after show", function () {
-      modelOperation.show({
+      widget.show({
         modelInstance: new Album({
           title: "Album"
         }),
         offset: $("body").offset()
       })
-      expect(modelOperation.$container).toBeVisible()
+      expect($container).toBeVisible()
     })
 
     it("should hide after mouseleave", function () {
-      modelOperation.show({
+      widget.show({
         modelInstance: new Album({
           title: "Album"
         }),
         offset: $("body").offset()
       })
-      modelOperation.$container.trigger("mouseleave")
-      expect(modelOperation.$container).toBeHidden()
+      $container.trigger("mouseleave")
+      expect($container).toBeHidden()
     })
 
     it("should hide after some time", function (done) {
-      modelOperation.show({
+      widget.show({
         modelInstance: new Album({
           title: "Album"
         }),
         offset: $("body").offset()
       })
-      modelOperation.hideAfterDelay(100)
-      expect(modelOperation.$container).toBeVisible()
+      widget.hideAfterDelay(100)
+      expect($container).toBeVisible()
       setTimeout(function () {
-        expect(modelOperation.$container).toBeHidden()
+        expect($container).toBeHidden()
         done()
       }, 110)
     })

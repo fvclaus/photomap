@@ -3,16 +3,15 @@
 define(["./Dialog",
   "../util/ClientState",
   "../tests/loadTestEnv!"],
-function (Dialog, clientState, $testBody) {
+function (Dialog, clientState, TestEnv) {
   describe("Dialog", function () {
     var dialog
     var $contentNode
 
     beforeEach(function () {
       dialog = new Dialog()
-      $testBody
-        .empty()
-        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+
+      new TestEnv().createContainer(dialog.WRAPPER_ID)
       // Form is required to make submit work.
       $contentNode = $("<div><form name='test-form'><input name='foo'/><input name='bar'/></form><p>Test form content</p></div>")
     })

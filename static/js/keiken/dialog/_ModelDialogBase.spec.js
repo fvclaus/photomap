@@ -4,7 +4,7 @@ define(["../dialog/_ModelDialogBase",
   "../model/Album",
   "../util/Communicator",
   "../tests/loadTestEnv!"],
-function (_ModelDialogBase, Album, communicator, $testBody) {
+function (_ModelDialogBase, Album, communicator, TestEnv) {
   describe("_ModelDialogBase", function () {
     var dialog
     var templateString = "<div><form></form><p>Testing _ModelDialogBase</p></div>"
@@ -16,9 +16,7 @@ function (_ModelDialogBase, Album, communicator, $testBody) {
         title: "Foo"
       })
       dialog = new _ModelDialogBase()
-      $testBody
-        .empty()
-        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+      new TestEnv().createContainer(dialog.WRAPPER_ID)
       communicator.clear()
     })
 

@@ -3,9 +3,8 @@
 define(["./PhotoCarouselWidget",
   "../model/Photo",
   "../model/Collection",
-  "node_modules/jasmine-jquery-matchers/dist/jasmine-jquery-matchers",
   "../tests/loadTestEnv!"],
-function (PhotoCarouselWidget, Photo, Collection, jasmineJqueryMatchers, $testBody) {
+function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
   describe("PhotoCarouselWidget", function () {
     var $container
     var widget
@@ -26,29 +25,25 @@ function (PhotoCarouselWidget, Photo, Collection, jasmineJqueryMatchers, $testBo
     var $images
 
     beforeEach(function (done) {
-      jasmine.addMatchers(jasmineJqueryMatchers)
-      $testBody
-        .empty()
-        .append($("<div id='photoCarouselWidget' />"))
-
       photos = new Collection([photo100, photo200, photo300], {
         modelType: "Photo"
       })
 
-      widget = new PhotoCarouselWidget({
+      var t = new TestEnv().createWidget({
         photosPerPage: 5,
-        photos: photos,
         srcPropertyName: "photo",
         // This speeds up tests
         duration: 0
-      }, document.getElementById("photoCarouselWidget"))
+      }, PhotoCarouselWidget)
 
-      $container = $("#photoCarouselWidget")
+      widget = t.widget; $container = t.$container
 
       widget.options.onUpdate = function () {
         done()
       }
       widget.startup()
+      widget.load(photos)
+      widget.loadCurrentPage()
       $images = $container.find("img.mp-carousel-photo")
     })
 
@@ -90,11 +85,13 @@ function (PhotoCarouselWidget, Photo, Collection, jasmineJqueryMatchers, $testBo
         var $image = $images.eq(index)
         expect($image).toHaveAttr("src", photo.photo)
         expect($image).toHaveAttr("data-keiken-id", photo.id.toString())
+        expect($image).not.toHaveClass("mp-carousel-photo-empty")
       });
       [3, 4].forEach(function (index) {
         var $image = $images.eq(index)
         expect($image).not.toHaveAttr("src")
         expect($image).not.toHaveAttr("data-keiken-id")
+        expect($image).toHaveClass("mp-carousel-photo-empty")
       })
     });
 

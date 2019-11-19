@@ -4,15 +4,13 @@ define(["../dialog/MarkerInsertDialog",
   "../model/Album",
   "../model/Collection",
   "../tests/loadTestEnv!"],
-function (MarkerInsertDialog, Album, Collection, $testBody) {
+function (MarkerInsertDialog, Album, Collection, TestEnv) {
   describe("MarkerInsertDialog", function () {
     var dialog
 
     beforeEach(function () {
       dialog = new MarkerInsertDialog()
-      $testBody
-        .empty()
-        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+      new TestEnv().createContainer(dialog.WRAPPER_ID)
     })
 
     afterEach(function () {

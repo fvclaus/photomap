@@ -1,8 +1,4 @@
-/* jslint sloppy : true */
-/* global define,$, main, fileUpload, assert, assertTrue, assertString, assertFalse, assertNumber, assertNotNull, gettext, UIInput */
-
-// No use strict with this.inherited(arguments);
-// "use strict";
+"use strict"
 
 /**
  * @author Marc Roemer
@@ -11,313 +7,176 @@
  */
 
 define(["dojo/_base/declare",
-  "./MultiplePagesPhotoWidget",
-  "../model/Photo",
+  "./_DomTemplatedWidget",
+  "./PhotoCarouselWidget",
   "../util/Communicator",
-  "../util/Tools",
   "../util/InfoText",
-  "dojo/text!./templates/Gallery.html",
-  "dojo/i18n",
-  "dojo/i18n!./nls/Gallery"],
-function (declare, PhotoWidget, Photo, communicator, tools, InfoText, template, i18n) {
+  "../model/Collection",
+  "dojo/text!./templates/Gallery.html"],
+function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoText, Collection, templateString) {
   // TODO Navigate to new photo on insert
-  return declare([PhotoWidget], {
-
-    templateString: template,
+  return declare(_DomTemplatedWidget, {
+    VISITED_PHOTO_CLASSNAME: "mp-gallery-photo-visited",
+    templateString: templateString,
     viewName: "Gallery",
-    postCreate: function () {
-      var index = 0
-      // Imitate template looping.
-      for (index = 0; index < 4; index++) {
-        this.$tile
-          .clone()
-          .appendTo(this.$tile.parent())
-      }
+    // eslint-disable-next-line no-unused-vars
+    constructor: function (params, srcNodeRef) {
+      this._isAdmin = !!params.adminMode
     },
-    startup: function (options) {
+
+    startup: function () {
       if (this._started) {
         return
       }
-      this.$loader = this.$container.find(".mp-gallery-loader")
-      this.$controls = $()
-        .add(this.$insert)
-        .add(this.$open)
+      this.inherited(this.startup, arguments)
 
-      if (options && typeof options.adminMode === "boolean" && options.adminMode) {
-        this._adminMode = true
-      } else {
-        this._adminMode = false
-        this.$controls.hide()
-        // Disable the use of the controls.
-        this.$controls = $()
-      }
-
-      this._carouselOptions = {
+      this.carousel = new PhotoCarouselWidget({
         effect: "flip",
-        duration: 500,
-        loader: this.$loader,
-        beforeLoad: this._beforeLoad,
-        onUpdate: this._update,
-        context: this,
-        navigateToInsertedPhoto: true
+        srcPropertyName: "thumb",
+        photosPerPage: 5,
+        onUpdate: this._onCarouselUpdate,
+        beforeLoad: this._beforeCarouselLoad,
+        onPhotoClick: function ($photo, photo) {
+          if (photo) {
+            $photo.addClass(this.VISITED_PHOTO_CLASSNAME)
+            communicator.publish("clicked:GalleryPhoto", photo)
+          } else if (this._isAdmin) {
+            this._insert()
+          }
+        },
+        onPhotoMouseenter: function ($photo, photo) {
+          communicator.publish("mouseleave:GalleryPhoto", { context: this, element: $photo, photo: photo })
+        },
+        onPhotoMouseleave: function ($photo, photo) {
+          communicator.publish("mouseenter:GalleryPhoto", { contex: this, element: $photo, photo: photo })
+        },
+        context: this
+      }, this.carouselNode)
+
+      this._infoText = new InfoText(this.$container, "")
+      this._showInfoText()
+
+      this.carousel.startup()
+    },
+    run: function (photos, photo) {
+      assertInstance(photos, Collection, "Photos must be of type Collection.")
+      assertTrue(this._started, true, "Must call startup() before.")
+
+      this._unbindPhotoCollectionListener()
+      this._run = true
+
+      this.$insert.show()
+      this._showInfoText(photos)
+      this.carousel.load(photos)
+      if (photo) {
+        this.carousel.navigateTo(photo)
+      } else {
+        this.carousel.loadCurrentPage()
       }
 
-      this._srcPropertyName = "thumb"
-      this.$thumbs = this.$container.find(".mp-gallery-tile")
-      this.$photos = this.$thumbs.find(".mp-thumb")
-      this.inherited(arguments)
-
-      this.photos = null
-      // set on insert photo to show the teaser of the photo after it is updated
-      // this.showTeaser = false;
-      this.currentPhoto = null
-
-      this._infotext = new InfoText(this.$container, "")
-
-      this._showHelpText()
-
-      this._infotext
-        .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
-        .setOption("hideOnMouseover", false)
-        .start()
-        .open()
-      this._bindNavigationListener()
-
-      this._bindStartSlideshowListener()
+      this._photos = photos
+      photos.onInsert(this.insertPhoto, this, this.viewName)
+      photos.onDelete(this.deletePhoto, this, this.viewName)
     },
-    postMixInProperties: function () {
-      this.inherited(arguments)
-      this.messages = i18n.getLocalization("keiken/widget", "Gallery", this.lang)
+    insertPhoto: function (photo) {
+      this.carousel.navigateTo(photo)
+    },
+    deletePhoto: function () {
+      this.carousel.loadCurrentPage()
     },
     /**
-              * @description Loads all the photos in the gallery and displays them as thumbnails.
-              * @idempotent
-              */
-    run: function () {
-      if (this._run) {
-        return
-      }
-      this.inherited(arguments)
-      this._infotext.destroy()
-      // show controls
-      this.$controls.removeClass("mp-nodisplay")
-    },
-    /**
-              * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
-              */
+     * @description Resets the Gallery to the state before start() was called. This will delete exisiting Photos.
+     */
     reset: function () {
       this._run = false
-      this._load = false
-      this.$loader.addClass("mp-nodisplay")
-      this.$controls.addClass("mp-nodisplay")
-      if (this.carousel !== null) {
-        this.carousel.destroy()
-        this.carousel = null
-        this._showHelpText()
+      this.$insert.hide()
+      this._unbindPhotoCollectionListener()
+      this._showInfoText()
+    },
+    _unbindPhotoCollectionListener: function () {
+      if (this._photos) {
+        this._photos.removeEvents(this.viewName, "inserted")
+        this._photos.removeEvents(this.viewName, "deleted")
+        this._photos = null
       }
     },
-    /**
-              * @deprecated Use navigateTo instead.
-              */
-    navigateIfNecessary: function (photo) {
-      this.navigateTo(photo)
+    destroy: function () {
+      this.carousel.destroy()
     },
-    setPhotoVisited: function (photo) {
-      this.$container.find("img[data-keiken-id='" + photo.id + "']").siblings(".mp-thumb-visited").show()
+    navigateTo: function (photo) {
+      // Navigate to photo, displaying it when the slideshow is started
+      assertTrue(photo !== undefined, "Parameter photo must not be undefined.")
+      this.carousel.navigateTo(photo)
     },
-    /**
-              * @private
-              * @description handler is called after gallery-thumbs are loaded
-              */
-    _beforeLoad: function ($photos) {
-      // hide all visited icons
-      $(".mp-thumb-visited").hide()
+    isValidPage: function (page) {
+      return page >= 0 && page < this.carousel.data.getNPages()
     },
-    /**
-              * @private
-              * @description set new infotext message, empty-tiles, visited-icon and show teaser (optional)
-              */
-    _update: function ($photos) {
-      var instance = this
+    _beforeCarouselLoad: function ($photos) {
+      $photos.removeClass(this.VISITED_PHOTO_CLASSNAME)
+    },
+    _onCarouselUpdate: function ($photos, photos) {
       console.log("GalleryWidget: _update")
-      this._showHelpText()
-      this._showEmptyTiles()
+      this._showInfoText(photos)
       // check each thumb if the photo it represents is already visited; if yes -> show 'visited' icon
-      this._showVisitedNotification()
-      // Check if the updated photo is a newly inserted, if yes open teaser
-      // TODO this is AppController business
-      // console.log(this.showTeaser);
-      // if (this.showTeaser) {
-      //    if (this.currentPhoto === null) {
-      //       throw new Error("Set showTeaser but no currentPhoto");
-      //    }
-      //    // warning: this will enable the UIGallery without the UISlideshow even started 'loading'. Quite shacky :)
-      //    //TODO maybe we should disable UIGallery/Slideshow/Fullscreen all at once. This make testing alot easier and the user won't even notice it
-      //    this.triggerClickOnPhoto(this.currentPhoto);
-      //    this.currentPhoto = null;
-      //    this.showTeaser = false;
-
-      // }
+      this._showVisitedNotification($photos, photos)
+      communicator.publish("updated:Gallery")
     },
-    /*
-              * @private
-              */
-    _showHelpText: function () {
+    _showInfoText: function (photos) {
       if (!this._run) {
-        this._infotext
+        this._infoText
           .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
           .setOption("hideOnMouseover", false)
           .start()
           .open()
       } else {
-        if (!this._photos.isEmpty()) {
-          this._infotext.close()
+        if (photos.length > 0) {
+          this._infoText.close()
         } else {
-          // No photos yet.
-          if (this._adminMode) {
-            this._infotext
-              .setOption("hideOnMouseover", true)
-              .setMessage(gettext("GALLERY_NO_PHOTOS_ADMIN"))
-              .open()
-          } else {
-            this._infotext
-              .setOption("hideOnMouseover", true)
-              .setMessage(gettext("GALLERY_NO_PHOTOS_GUEST"))
-              .open()
-          }
+          this._infoText
+            .setOption("hideOnMouseover", true)
+            .setMessage(gettext(this._isAdmin ? "GALLERY_NO_PHOTOS_ADMIN" : "GALLERY_NO_PHOTOS_GUEST"))
+            .open()
         }
       }
     },
-    _showEmptyTiles: function () {
-      if (this._adminMode) {
-        // TODO this is too inefficient.
-        $.each(this.$thumbs, function (index, tile) {
-          if ($(tile).children("img.mp-thumb").attr("src") && $(tile).children("img.mp-thumb").attr("src").length > 0) {
-            $(tile).removeClass("mp-empty-tile")
-          } else {
-            $(tile).addClass("mp-empty-tile")
-          }
-        })
-      }
-    },
-    _showVisitedNotification: function () {
-      // TODO This is too inefficient.
-      var instance = this
-      $.each(this.$thumbs, function (index, tile) {
-        var photo
-        var $thumb = $(tile).find("img.mp-thumb")
-        var $visited = $(tile).find("img.mp-thumb-visited")
-        // The collection might have been modified in the mean time.
-        try {
-          if ($thumb.attr("src")) {
-            photo = instance._getPhotoOfImage($thumb)
-
-            if (photo.isVisited()) {
-              $visited.show()
-            } else {
-              $visited.hide()
-            }
-          } else {
-            // should already be hidden, just in case though.. ;)
-            $visited.hide()
-          }
-        } catch (e) {
-          console.log("GalleryWidget: Could not toggle visited icon for $img element with photo id %d. Maybe the photo has been deleted?", $thumb.attr("data-keiken-id"))
+    _showVisitedNotification: function ($photos, photos) {
+      $.each($photos, function (index, photoEl) {
+        var photo = photos[index]
+        if (photo && photo.isVisited()) {
+          $(photoEl).addClass(this.VISITED_PHOTO_CLASSNAME)
+        } else {
+          $(photoEl).removeClass(this.VISITED_PHOTO_CLASSNAME)
         }
-      })
-    },
-
-    /**
-              * @private
-              * @returns {Photo} Photo for the $image element
-              */
-    _getPhotoOfImage: function ($image) {
-      assertTrue($image.attr("data-keiken-id"), "Id attribute of input parameter $image must not be undefined")
-      var id = parseInt($image.attr("data-keiken-id"), 10)
-      var photo = this._photos.get(id)
-      assertNotNull(photo, "There must be a photo for every img element.")
-      return photo
-    },
-    /* ---- Listeners ---- */
-
-    _bindNavigationListener: function () {
-      var instance = this
-
-      this.$navLeft.on("click", function () {
-        instance.carousel.navigateLeft()
-        communicator.publish("opened:GalleryPage", instance.carousel.getCurrentPageIndex())
-      })
-      this.$navRight.on("click", function () {
-        instance.carousel.navigateRight()
-        communicator.publish("opened:GalleryPage", instance.carousel.getCurrentPageIndex())
-      })
-
-      $("body")
-        .on("keyup.Gallery", null, "left", function () {
-          if (instance._run && instance.active) {
-            instance.$navLeft.trigger("click")
-          }
-        })
-        .on("keyup.Gallery", null, "right", function () {
-          if (instance._run && instance.active) {
-            instance.$navRight.trigger("click")
-          }
-        })
+      }.bind(this))
     },
     _bindListener: function () {
+      var navigateGallery = function (navigationFnName) {
+        return function () {
+          if (this._run && this.active) {
+            this.carousel[navigationFnName]()
+            communicator.publish("opened:GalleryPage", this.carousel.getCurrentPageIndex())
+          }
+        }.bind(this)
+      }.bind(this)
+
+      // carousel is undefined when listeners are registered.
+      var navigateLeft = navigateGallery("navigateLeft")
+      var navigateRight = navigateGallery("navigateRight")
+
+      this.$navLeft.on("click", navigateLeft)
+      this.$navRight.on("click", navigateRight)
+
+      $("body")
+        .on("keyup.Gallery", null, "left", navigateLeft)
+        .on("keyup.Gallery", null, "right", navigateRight)
+
       // the following events are not relevant for guests
-      if (!this._adminMode) {
-        return
+      if (this._isAdmin) {
+        this.$insert.on("click", this._insert.bind(this))
       }
-
-      // Guests won't have any controls to edit the gallery
-      var photo = null
-      var instance = this
-
-      // bind events on anchors
-      // TODO this does not work for the AdminGallery anymore.
-      this.$container
-        .on("mouseenter.Gallery", "img.mp-thumb", function (event) {
-          var $el = $(this)
-          photo = instance._photos.getByAttribute("thumb", $el.attr("src"))
-          communicator.publish("hovered:GalleryPhoto", { contex: this, element: $el, photo: photo })
-        })
-        .on("mouseleave.Gallery", "img.mp-thumb", function (event) {
-          communicator.publish("mouseleave:GalleryPhoto")
-        })
-
-      this.$open.on("click", function (event) {
-        communicator.publish("clicked:GalleryOpenButton")
-      })
-
-      this.$container.on("click.PhotoMap", ".mp-empty-tile", function () {
-        instance._insert()
-      })
-
-      this.$insert.on("click", function () {
-        instance._insert()
-      })
     },
     _insert: function () {
       communicator.publish("clicked:GalleryInsert")
-    },
-    /**
-              * @private
-              */
-    _bindStartSlideshowListener: function () {
-      var instance = this
-
-      this.$container
-        .on("click.Gallery", ".mp-gallery-tile, .mp-sortable-tile", function (event) {
-          var $el = $(this).children(".mp-thumb")
-
-          if (!$(this).hasClass(".mp-empty-tile")) {
-            // TODO navigating to a photo provides a better abstraction then navigation to a specific index
-            // navigating to an index means that we know implementation details of the slideshow, namely
-            // how many photos are displayed per page(!)
-            communicator.publish("clicked:GalleryPhoto", instance._getPhotoOfImage($el))
-          }
-        })
     }
   })
 })

@@ -3,19 +3,15 @@
 define(["./DialogMessageWidget",
   "../util/ClientState",
   "../tests/loadTestEnv!"],
-function (DialogMessageWidget, clientState, $testBody) {
+function (DialogMessageWidget, clientState, TestEnv) {
   describe("DialogMessageWidget", function () {
     var $container
-    var widget = null
+    var widget
 
     beforeEach(function () {
-      $testBody
-        .empty()
-        .append($("<div id='container'/>"))
-
-      widget = new DialogMessageWidget(null, document.getElementById("container"))
+      var t = new TestEnv().createWidget(null, DialogMessageWidget)
+      widget = t.widget; $container = t.$container
       widget.startup()
-      $container = $("#container")
     })
 
     afterEach(function () {
@@ -24,7 +20,7 @@ function (DialogMessageWidget, clientState, $testBody) {
     })
 
     it("should hide on startup", function () {
-      expect(widget.$container).toBeHidden()
+      expect($container).toBeHidden()
     })
 
     it("should show success", function () {

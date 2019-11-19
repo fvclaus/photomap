@@ -1,8 +1,4 @@
-/* jslint sloppy : true */
-/* global $, define, assertFunction, assertString */
-
-// No use strict with this.inherited(arguments);
-// "use strict";
+// "use strict" does not work with multiple inherited() calls
 
 /**
  * @author Frederik Claus
@@ -32,7 +28,7 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, View) {
      * The dijit domNode member will be converted to $container. $container will be the root element of your widget.
      */
     buildRendering: function () {
-      this.inherited(arguments)
+      this.inherited(this.buildRendering, arguments)
       var instance = this
       this._attachPoints.forEach(function (attachPoint) {
         var jQSelectorName = "$" + attachPoint.replace("Node", "")

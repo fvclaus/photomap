@@ -3,15 +3,13 @@
 define(["../dialog/AlbumShareDialog",
   "../model/Album",
   "../tests/loadTestEnv!"],
-function (AlbumShareDialog, Album, $testBody) {
+function (AlbumShareDialog, Album, TestEnv) {
   describe("AlbumShareDialog", function () {
     var dialog
 
     beforeEach(function () {
       dialog = new AlbumShareDialog()
-      $testBody
-        .empty()
-        .append($("<div/>").attr("id", dialog.WRAPPER_ID))
+      new TestEnv().createContainer(dialog.WRAPPER_ID)
     })
 
     afterEach(function () {
