@@ -57,6 +57,12 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
       this.inherited(this.postCreate, arguments)
       this.$loader = this.$container.find(".mp-carousel-photo-loader")
       this.$photos = this.$container.find("." + this.PRESENT_PHOTO_CLASSNAME)
+      this.animation = new CarouselAnimation({
+        items: this.$photos,
+        loader: this.$loader,
+        animationTime: this.options.duration,
+        context: this
+      })
     },
     PHOTO_EVENT_TYPES: ["click", "mouseenter", "mouseleave"],
     _bindListener: function () {
@@ -154,36 +160,30 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
               }
             }
           } catch (e) {
-            console.log("PhotoCarouselWidget: Could not count loaded photos. Maybe the carousel was reset?")
-            console.dir(e)
+            console.error("PhotoCarouselWidget: Could not count loaded photos. Maybe the carousel was reset?")
+            console.error(e)
           }
         }.bind(this)
 
         this._numberOfLoadHandlersActive++
 
         // Fadeout photos and load next photos afterwards.
-        new CarouselAnimation().start({
-          items: this.$photos,
-          loader: this.$loader,
-          animation: this.options.effect,
-          animationTime: this.options.duration,
-          complete: function () {
-            try {
-              photos.forEach(function (photo) {
-                // Load photos into anonymous image to bring them into the browser cache.
-                // Call photoLoaded for every photo on success or failure
-                $("<img/>")
-                  .load(lang.hitch(this, photoLoaded))
-                  .error(lang.hitch(this, photoLoaded))
-                  .attr("src", photo.getSource(this.srcPropertyName))
+        this.animation[this.options.effect + "Out"](function () {
+          try {
+            photos.forEach(function (photo) {
+              // Load photos into anonymous image to bring them into the browser cache.
+              // Call photoLoaded for every photo on success or failure
+              $("<img/>")
+                .load(lang.hitch(this, photoLoaded))
+                .error(lang.hitch(this, photoLoaded))
+                .attr("src", photo.getSource(this.srcPropertyName))
 
-                console.log("PhotoCarouselWidget: Setting src %s on anonymous img element.", photo.getSource(this.srcPropertyName))
-              }.bind(this))
-            } catch (e) {
-              console.log("Could not prepare photos for loading. Maybe the carousel was reset?")
-              console.dir(e)
-            }
-          }.bind(this)
+              console.log("PhotoCarouselWidget: Setting src %s on anonymous img element.", photo.getSource(this.srcPropertyName))
+            }.bind(this))
+          } catch (e) {
+            console.error("Could not prepare photos for loading. Maybe the carousel was reset?")
+            console.error(e)
+          }
         })
 
         // Trigger the beforeLoad event.
@@ -196,37 +196,37 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
     _update: function () {
       var photos = this.dataPage.getCurrentPage()
 
-      new CarouselAnimation().end({
-        items: this.$photos,
-        photos: photos,
-        srcPropertyName: this.srcPropertyName,
-        loader: this.$loader,
-        animation: this.options.effect,
-        animationTime: this.options.duration,
-        complete: function () {
-          try {
-            this.$photos.each(function (photoIndex, photoNode) {
-              // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
-              var photo = photos[photoIndex]
-              // Not every page is full
-              if (photo) {
-                $(photoNode)
-                  .attr(this.ID_DATA_ATTRIBUTE, photo.getId())
-                  .removeClass(this.ABSENT_PHOTO_CLASSNAME)
-                  .addClass(this.PRESENT_PHOTO_CLASSNAME)
-              } else {
-                $(photoNode)
-                  .removeAttr(this.ID_DATA_ATTRIBUTE)
-                  .removeClass(this.PRESENT_PHOTO_CLASSNAME)
-                  .addClass(this.ABSENT_PHOTO_CLASSNAME)
-              }
-            }.bind(this))
-            this.options.onUpdate.call(this.options.context, this.$photos, photos)
-          } catch (e) {
-            console.log("Could not finish the animation. Maybe the carousel has been reset")
-          }
-        }.bind(this),
-        context: this.options.context
+      photos.forEach(function (photo, index) {
+        var $photo = this.$photos.eq(index)
+        if (photo) {
+          $photo.attr("src", photo[this.srcPropertyName])
+        } else {
+          $photo.removeAttr("src")
+        }
+      }.bind(this))
+
+      this.animation[this.options.effect + "In"](function () {
+        try {
+          this.$photos.each(function (photoIndex, photoNode) {
+            // This makes it possible to identify the photo by only looking at the img tag. The src of a photo must not be unique.
+            var photo = photos[photoIndex]
+            // Not every page is full
+            if (photo) {
+              $(photoNode)
+                .attr(this.ID_DATA_ATTRIBUTE, photo.getId())
+                .removeClass(this.ABSENT_PHOTO_CLASSNAME)
+                .addClass(this.PRESENT_PHOTO_CLASSNAME)
+            } else {
+              $(photoNode)
+                .removeAttr(this.ID_DATA_ATTRIBUTE)
+                .removeClass(this.PRESENT_PHOTO_CLASSNAME)
+                .addClass(this.ABSENT_PHOTO_CLASSNAME)
+            }
+          }.bind(this))
+          this.options.onUpdate.call(this.options.context, this.$photos, photos)
+        } catch (e) {
+          console.log("Could not finish the animation. Maybe the carousel has been reset")
+        }
       })
     }
   })

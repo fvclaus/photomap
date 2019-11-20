@@ -13,20 +13,20 @@ $background-color-darker = #333
 $background-color-lighter = #fff
 $background-color-light = #f4f4f4
 /*
- * for all objects which shall have an alpha value <1 (opacity < 1), but also have child-elements 
+ * for all objects which shall have an alpha value <1 (opacity < 1), but also have child-elements
  * that should have a normal alpha-value (usually the opacity value is inherited to all child-elements)
  * therefor rgba is used in these cases.. this won't work for IE though.. -> workaround needed!
  *
  */
 $background-rgba-alpha08-light = rgba(244,244,244,.8) // same as #f4f4f4
 $background-rgba-alpha09-light = rgba(244,244,244,.9) // same as #f4f4f4
-$background-rgba-alpha08-dark = rgba(000, 000, 000, .8) 
-$background-rgba-alpha09-dark = rgba(000, 000, 000, .9) 
+$background-rgba-alpha08-dark = rgba(000, 000, 000, .8)
+$background-rgba-alpha09-dark = rgba(000, 000, 000, .9)
 $background-color = #fafafa
 
 $padding = 5px
 
-$border = 1px 
+$border = 1px
 $border-light = $border solid #fff
 $border-dark = $border solid #000
 $border-color = #dadada
@@ -91,42 +91,18 @@ center-element(width,height)
   margin-left -(width/2)
   margin-top -(height/2)
 
-box-shadow(color) 
+center-with-translate()
+  position: absolute
+  top: 50%
+  left: 50%
+  transform: translate(-50%, -50%)
+  display: inline
+
+box-shadow(color)
   -moz-box-shadow color
   -webkit-box-shadow color
   box-shadow color
-  
-transition(time)
-  -webkit-transition-property all
-  -moz-transition-property all
-  -o-transition-property all
-  -ms-transition-property all
-  transition-property all
-  -webkit-transition-duration time
-  -moz-transition-duration time
-  -o-transition-duration time
-  -ms-transition-duration time
-  transition-duration time
-  -webkit-transition-timing-function ease-in-out
-  -moz-transition-timing-function ease-in-out
-  -o-transition-timing-function ease-in-out
-  -ms-transition-timing-function ease-in-out
-  transition-timing-function ease-in-out
-  
-delayTransition(delay)
-  -webkit-transition-delay delay
-  -moz-transition-delay delay
-  -o-transition-delay delay
-  -ms-transition-delay delay
-  transition-delay delay
 
-transform(transformation)
-  -webkit-transform transformation
-  -moz-transform transformation
-  -o-transform transformation
-  -ms-transform transformation
-  transform transformation
-  
 gradientNS()
   background linear-gradient(90deg, #F4F4F4, #333333)
   background -moz-linear-gradient(to bottom, #F4F4F4 5%, #333333 95%)

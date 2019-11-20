@@ -11,6 +11,7 @@ centerWithTranslate()
   margin: 10px
   padding: 5px
   border: 1px solid black
+  height: 500px
 
 
 #PhotoCarouselWidget
@@ -30,3 +31,47 @@ centerWithTranslate()
       centerWithTranslate()
     & > .mp-carousel-photo-loader
       centerWithTranslate()
+
+#CarouselAnimation
+  position: relative
+  height: 100%
+  width: 100%
+  > .mp-carousel-animation-item
+    width: 200px
+    height: 200px
+    display: block
+    background-color: red
+    centerWithTranslate()
+    // transition-timing-function: linear
+    // transition: transform .5s ease
+    // transition-property: all
+    // animation: slidein 2s infinite
+  > .mp-carousel-animation-loader
+    width: 20px
+    height: 20px
+    animation: rotate 2s infinite
+    border: 1px solid black
+    centerWithTranslate()
+    display: none
+
+
+@keyframes rotate {
+  from {
+    transform: rotate(0deg)
+  }
+  50% {
+    transform: rotate(180deg)
+  }
+  to {
+    transform: rotate(360deg)
+  }
+}
+
+@keyframes slidein {
+  from {
+    transform: matrix(1, 0, 0, 1, -100, -100);
+  }
+  to {
+    transform: matrix(0.01, 0, 0, 1, -100, -100);
+  }
+}

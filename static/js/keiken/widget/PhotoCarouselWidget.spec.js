@@ -33,7 +33,7 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
         photosPerPage: 5,
         srcPropertyName: "photo",
         // This speeds up tests
-        duration: 0
+        duration: 20
       }, PhotoCarouselWidget)
 
       widget = t.widget; $container = t.$container

@@ -52,10 +52,31 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
         [0, 1].forEach(function (index) {
           expect($photos.eq(index)).toHaveClass("mp-gallery-photo-visited")
         });
-        [2, 3, 4].forEach(function (index) {
+        [2].forEach(function (index) {
           expect($photos.eq(index)).not.toHaveClass("mp-gallery-photo-visted")
         })
         done()
+      })
+    })
+
+    it("should load new photos", function (done) {
+      widget.run(photos)
+      var numberOfUpdates = 0
+      communicator.subscribe("updated:Gallery", function () {
+        try {
+          numberOfUpdates++
+          if (numberOfUpdates === 1) {
+            widget.run(new Collection([photo300], {
+              modelType: "Photo"
+            }))
+          }
+          if (numberOfUpdates === 2) {
+            expect($photos.eq(0)).toHaveAttr("src", photo300.thumb)
+            done()
+          }
+        } catch (e) {
+          console.error(e)
+        }
       })
     })
   })
