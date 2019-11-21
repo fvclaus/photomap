@@ -67,6 +67,17 @@ function (declare, EventConfigurationParser) {
         registeredEventHandler.push(eventObject)
       }.bind(this))
     },
+    subscribeOnce: function (event, handler, context) {
+      assertString(event)
+      assertFunction(handler)
+      var subscribeOnceHandler = function () {
+        handler.call(context, arguments)
+        this.events[event] = this.events[event].filter(function (eventObject) {
+          return eventObject.handler !== subscribeOnceHandler
+        })
+      }.bind(this)
+      this.subscribe(event, subscribeOnceHandler, context)
+    },
     /**
       * @public
       * @description Trigger/publish an event

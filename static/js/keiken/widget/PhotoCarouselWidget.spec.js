@@ -24,7 +24,7 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
     var photos
     var $images
 
-    beforeEach(function (done) {
+    beforeEach(function () {
       photos = new Collection([photo100, photo200, photo300], {
         modelType: "Photo"
       })
@@ -38,12 +38,7 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
 
       widget = t.widget; $container = t.$container
 
-      widget.options.onUpdate = function () {
-        done()
-      }
       widget.startup()
-      widget.load(photos)
-      widget.loadCurrentPage()
       $images = $container.find("img.mp-carousel-photo")
     })
 
@@ -62,24 +57,79 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
       widget.destroy()
     })
 
-    it("should trigger events in correct order", function (done) {
-      var triggeredBeforeLoad = false
-      widget.options.beforeLoad = function () {
-        triggeredBeforeLoad = true
+    var itWithPhotos = function (name, testFn) {
+      it(name, function (done) {
+        widget.options.onUpdate = function () {
+          switch (testFn.length) {
+            case 0:
+              try {
+                testFn()
+              } catch (e) {
+                console.error(e)
+              } finally {
+                done()
+              }
+              break
+            case 1:
+              testFn(done)
+              break
+            default:
+              console.error(name, "testFn has too many arguments")
+          }
+        }
+        widget.load(photos)
+        widget.loadCurrentPage()
+      })
+    };
+
+    [{
+      name: "should trigger events in correct order on page with photos",
+      photos: new Collection([photo100], {
+        modelType: "Photo"
+      }),
+      expectedAfterLoadPhotos: [0]
+    },
+    {
+      name: "should trigger events in correct order on empty page",
+      photos: new Collection([], {
+        modelType: "Photo"
+      }),
+      expectedAfterLoadPhotos: []
+    }].forEach(function (testDefinition) {
+      var checkPhotos = function (photos, expectPhotoIndexes) {
+        expect(photos).toEqual(expectPhotoIndexes
+          .map(function (index) {
+            return testDefinition.photos.getByIndex(index)
+          })
+          .map(function (photo) {
+            return photo === undefined ? null : photo
+          }))
       }
-      var triggeredAfterLoad = false
-      widget.options.afterLoad = function () {
-        expect(triggeredBeforeLoad).toBeTruthy()
-        triggeredAfterLoad = true
-      }
-      widget.options.onUpdate = function () {
-        expect(triggeredAfterLoad).toBeTruthy()
-        done()
-      }
-      widget.loadCurrentPage()
+      it(testDefinition.name, function (done) {
+        var triggeredBeforeLoad = false
+        widget.options.beforeLoad = function ($photos) {
+          expect($photos).toBeInstanceOf($)
+          triggeredBeforeLoad = true
+        }
+        var triggeredAfterLoad = false
+        widget.options.afterLoad = function ($photos, photos) {
+          expect($photos).toBeInstanceOf($)
+          checkPhotos(photos, testDefinition.expectedAfterLoadPhotos)
+          expect(triggeredBeforeLoad).toBeTruthy()
+          triggeredAfterLoad = true
+        }
+        widget.options.onUpdate = function ($photos, photos) {
+          expect($photos).toBeInstanceOf($)
+          checkPhotos(photos, [0, 1, 2, 3, 4])
+          expect(triggeredAfterLoad).toBeTruthy()
+          done()
+        }
+        widget.load(testDefinition.photos)
+        widget.loadCurrentPage()
+      })
     })
 
-    it("should display all photos", function () {
+    itWithPhotos("should display all photos", function () {
       expect($images).toHaveLength(5)
       photos.forEach(function (photo, index) {
         var $image = $images.eq(index)
@@ -96,7 +146,7 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
     });
 
     ["left", "right"].forEach(function (direction) {
-      it("should wrap around to the " + direction, function (done) {
+      itWithPhotos("should wrap around to the " + direction, function (done) {
         widget.options.onUpdate = function () {
           expect(getImageIds()).toEqual([100, 200, 300])
           done()
@@ -110,15 +160,17 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
         id: 400,
         photo: "/static/test/not-found"
       })
-      photos.insert(photo400)
       widget.options.onUpdate = function () {
-        expect(getImageIds()).toEqual([100, 200, 300, 400])
+        expect(getImageIds()).toEqual([400])
         done()
       }
-      widget.navigateTo(photo400)
+      widget.load(new Collection([photo400], {
+        modelType: "Photo"
+      }))
+      widget.loadCurrentPage()
     })
 
-    it("should load different photo collection on update", function (done) {
+    itWithPhotos("should load different photo collection on update", function (done) {
       var photos = new Collection([photo300, photo200], {
         modelType: "Photo"
       })
@@ -129,7 +181,7 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
       widget.update(photos)
     })
 
-    it("should navigate to next page", function (done) {
+    itWithPhotos("should navigate to next page", function (done) {
       for (var i = 0; i < 5; i++) {
         photos.insert(new Photo({
           id: 101 + i,

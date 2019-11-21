@@ -25,5 +25,15 @@ function (communicator) {
 
       communicator.publish("load:Gallery")
     })
+
+    it("should subscribe only once", function () {
+      var triggeredHandler = 0
+      communicator.subscribeOnce("load:Gallery", function () {
+        triggeredHandler++
+      })
+      communicator.publish("load:Gallery")
+      communicator.publish("load:Gallery")
+      expect(triggeredHandler).toBe(1)
+    })
   })
 })

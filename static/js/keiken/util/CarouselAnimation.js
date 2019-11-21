@@ -104,12 +104,15 @@ define(["dojo/_base/declare"],
       },
       _scaleX: function ($element, value) {
         var transformValue = $element.css("transform")
+        if (transformValue === "none") {
+          transformValue = "matrix(1,0,0,1,0,0)"
+        }
         if (value === 0) {
           $element.attr("data-animation-transform", transformValue)
           var matrixValues = transformValue
             .slice(7, transformValue.length - 1)
             .split(",")
-            .map(function (value) { return parseInt(value) })
+            .map(function (value) { return parseFloat(value) })
           // Apply scaleX(0) to the current transformation matrix
           // While 0 mathematically works, it does not display an animation
           matrixValues[0] = 0.000001

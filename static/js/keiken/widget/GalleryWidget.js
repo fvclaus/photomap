@@ -36,6 +36,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
         photosPerPage: 5,
         onUpdate: this._onCarouselUpdate,
         beforeLoad: this._beforeCarouselLoad,
+        afterLoad: this._afterCarouselLoad,
         onPhotoClick: function ($photo, photo) {
           if (photo) {
             $photo.addClass(this.VISITED_PHOTO_CLASSNAME)
@@ -54,7 +55,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
       }, this.carouselNode)
 
       this._infoText = new InfoText(this.$container, "")
-      this._showInfoText()
+      this._showNoPlaceSelectedInfoText()
 
       this.carousel.startup()
     },
@@ -66,7 +67,6 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
       this._run = true
 
       this.$insert.show()
-      this._showInfoText(photos)
       this.carousel.load(photos)
       if (photo) {
         this.carousel.navigateTo(photo)
@@ -90,8 +90,9 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
     reset: function () {
       this._run = false
       this.$insert.hide()
+      this.carousel.reset()
       this._unbindPhotoCollectionListener()
-      this._showInfoText()
+      this._showNoPlaceSelectedInfoText()
     },
     _unbindPhotoCollectionListener: function () {
       if (this._photos) {
@@ -114,30 +115,28 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
     _beforeCarouselLoad: function ($photos) {
       $photos.removeClass(this.VISITED_PHOTO_CLASSNAME)
     },
+    _afterCarouselLoad: function ($photos, photos) {
+      if (photos.length > 0) {
+        this._infoText.close()
+      } else {
+        this._infoText
+          .setOption("hideOnMouseover", true)
+          .setMessage(gettext(this._isAdmin ? "GALLERY_NO_PHOTOS_ADMIN" : "GALLERY_NO_PHOTOS_GUEST"))
+          .open()
+      }
+    },
     _onCarouselUpdate: function ($photos, photos) {
       console.log("GalleryWidget: _update")
-      this._showInfoText(photos)
       // check each thumb if the photo it represents is already visited; if yes -> show 'visited' icon
       this._showVisitedNotification($photos, photos)
       communicator.publish("updated:Gallery")
     },
-    _showInfoText: function (photos) {
-      if (!this._run) {
-        this._infoText
-          .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
-          .setOption("hideOnMouseover", false)
-          .start()
-          .open()
-      } else {
-        if (photos.length > 0) {
-          this._infoText.close()
-        } else {
-          this._infoText
-            .setOption("hideOnMouseover", true)
-            .setMessage(gettext(this._isAdmin ? "GALLERY_NO_PHOTOS_ADMIN" : "GALLERY_NO_PHOTOS_GUEST"))
-            .open()
-        }
-      }
+    _showNoPlaceSelectedInfoText: function () {
+      this._infoText
+        .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
+        .setOption("hideOnMouseover", false)
+        .start()
+        .open()
     },
     _showVisitedNotification: function ($photos, photos) {
       $.each($photos, function (index, photoEl) {

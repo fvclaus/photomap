@@ -32,7 +32,7 @@ centerWithTranslate()
     & > .mp-carousel-photo-loader
       centerWithTranslate()
 
-#CarouselAnimation
+#CarouselAnimation-transform
   position: relative
   height: 100%
   width: 100%
@@ -53,6 +53,25 @@ centerWithTranslate()
     border: 1px solid black
     centerWithTranslate()
     display: none
+
+#CarouselAnimation-flex
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 100%
+  width: 100%
+  > .mp-carousel-animation-item
+    width: 200px
+    height: 200px
+    display: block
+    background-color: red
+  > .mp-carousel-animation-loader
+    width: 20px
+    height: 20px
+    animation: rotate 2s infinite
+    border: 1px solid black
+    display: none
+
 
 
 @keyframes rotate {

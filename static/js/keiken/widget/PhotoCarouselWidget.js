@@ -93,6 +93,15 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
         this.loadCurrentPage()
       }
     },
+    reset: function () {
+      this.dataPage = null
+      this.$photos
+        .removeAttr(this.ID_DATA_ATTRIBUTE)
+        .removeAttr("src")
+        .hide()
+      this.$loader.hide()
+    },
+    // TODO Why do we need load and update?
     load: function (photos) {
       this.dataPage = new PhotoPages(photos, this._photosPerPage, this.srcPropertyName)
     },
@@ -136,7 +145,7 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
 
       if (photos.length === 0 && this._numberOfLoadHandlersActive === 0) {
         this.options.beforeLoad.call(this.options.context, this.$photos)
-        this.options.afterLoad.call(this.options.context, this.$photos)
+        this.options.afterLoad.call(this.options.context, this.$photos, photos)
         this._update()
       } else {
         console.log("PhotoCarouselWidget: Preparing to update")
@@ -152,7 +161,7 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
               // There may be more than one handler active at any given time (if navigateToXX/insert/delete was triggered in quick succession)
               if (this._numberOfLoadHandlersActive === 0) {
                 console.log("PhotoCarousel: Last update threat. Calling _update.")
-                this.options.afterLoad.call(this.options.context, this.$photos)
+                this.options.afterLoad.call(this.options.context, this.$photos, photos)
                 console.log("PhotoCarouselWidget: Starting to update")
                 this._update()
               } else {

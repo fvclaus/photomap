@@ -90,6 +90,9 @@ define(["dojo/_base/declare"],
       getAll: function () {
         return this.models
       },
+      asArray: function () {
+        return this.models
+      },
       getByIndex: function (index) {
         return this.models[index]
       },

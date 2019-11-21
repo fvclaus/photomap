@@ -61,16 +61,18 @@
     flex-basis: 18.46%
     height: 100%
     position: relative
-    display: inline-block
-    text-align: center
+    display: flex
+    align-items: center
+    justify-content: center
 
     & > .mp-carousel-photo
       max-width 95%
       max-height 95%
-      center-with-translate()
+      margin: auto
 
     & > .mp-carousel-photo-loader
-        centerWithTranslate()
+        max-width: 95%
+        max-height: 95%
 
     & > .mp-carousel-photo-empty:hover
       width: 95%
