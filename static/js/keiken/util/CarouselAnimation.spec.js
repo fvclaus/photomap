@@ -53,7 +53,7 @@ function (CarouselAnimation, TestEnv) {
     {
       animation: "flip",
       animationTime: 1000,
-      checkAnimationStep: 1,
+      checkAnimationStep: 10,
       checkAnimationValueFn: function ($item) {
         return $item.get(0).getBoundingClientRect().width
       }

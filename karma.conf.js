@@ -92,7 +92,7 @@ module.exports = function (config) {
     port: port,
 
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_WARN,
 
     browsers: ["Chrome"],
 
