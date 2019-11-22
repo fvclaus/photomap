@@ -51,7 +51,7 @@ function (CarouselAnimation, TestEnv) {
 
       [{
         animation: "fade",
-        animationTime: 300,
+        animationTime: 500,
         checkAnimationStep: 0.1,
         checkAnimationValueFn: function ($item) {
           return $item.css("opacity")
@@ -59,7 +59,7 @@ function (CarouselAnimation, TestEnv) {
       },
       {
         animation: "flip",
-        animationTime: 300,
+        animationTime: 500,
         checkAnimationStep: 10,
         checkAnimationValueFn: function ($item) {
           return $item.get(0).getBoundingClientRect().width
