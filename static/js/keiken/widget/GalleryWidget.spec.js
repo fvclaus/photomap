@@ -162,5 +162,37 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
         expect($infoText).toBeVisible()
       })
     })
+
+    itWithPhotos("should publish mouseover on photo", function (done) {
+      communicator.subscribe("mouseenter:GalleryPhoto", function (event) {
+        expect(event.photo).toEqual(photo100)
+        done()
+      })
+      $photos.eq(0).trigger("mouseenter")
+    })
+
+    itWithPhotos("should publish mouseleave on photo", function (done) {
+      communicator.subscribe("mouseleave:GalleryPhoto", function (event) {
+        expect(event.photo).toEqual(photo100)
+        done()
+      })
+      $photos.eq(0).trigger("mouseleave")
+    })
+
+    itWithPhotos("should publish gallery insert on empty tile click", function (done) {
+      communicator.subscribe("clicked:GalleryInsert", function () {
+        done()
+      })
+      $photos.eq(4).trigger("click")
+    })
+
+    itWithPhotos("should mark photo as visited", function (done) {
+      widget._isAdmin = false
+      communicator.subscribe("clicked:GalleryPhoto", function (photo) {
+        expect(photo).toEqual(photo100)
+        done()
+      })
+      $photos.eq(0).trigger("click")
+    })
   })
 })

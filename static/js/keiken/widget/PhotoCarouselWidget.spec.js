@@ -22,7 +22,7 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
       photo: "/static/test/photo3.jpg"
     })
     var photos
-    var $images
+    var $photos
 
     beforeEach(function () {
       photos = new Collection([photo100, photo200, photo300], {
@@ -39,11 +39,11 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
       widget = t.widget; $container = t.$container
 
       widget.startup()
-      $images = $container.find("img.mp-carousel-photo")
+      $photos = $container.find("img.mp-carousel-photo")
     })
 
     function getImageIds () {
-      return $images
+      return $photos
         .map(function () {
           return $(this).attr("data-keiken-id")
         })
@@ -130,18 +130,18 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
     })
 
     itWithPhotos("should display all photos", function () {
-      expect($images).toHaveLength(5)
+      expect($photos).toHaveLength(5)
       photos.forEach(function (photo, index) {
-        var $image = $images.eq(index)
-        expect($image).toHaveAttr("src", photo.photo)
-        expect($image).toHaveAttr("data-keiken-id", photo.id.toString())
-        expect($image).not.toHaveClass("mp-carousel-photo-empty")
+        var $photo = $photos.eq(index)
+        expect($photo).toHaveAttr("src", photo.photo)
+        expect($photo).toHaveAttr("data-keiken-id", photo.id.toString())
+        expect($photo).not.toHaveClass("mp-carousel-photo-empty")
       });
       [3, 4].forEach(function (index) {
-        var $image = $images.eq(index)
-        expect($image).not.toHaveAttr("src")
-        expect($image).not.toHaveAttr("data-keiken-id")
-        expect($image).toHaveClass("mp-carousel-photo-empty")
+        var $photo = $photos.eq(index)
+        expect($photo).not.toHaveAttr("src")
+        expect($photo).not.toHaveAttr("data-keiken-id")
+        expect($photo).toHaveClass("mp-carousel-photo-empty")
       })
     });
 
@@ -193,6 +193,18 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
         done()
       }
       widget.navigateRight()
+    });
+
+    ["click", "mouseenter", "mouseleave"].forEach(function (eventType) {
+      var cbName = "onPhoto" + eventType[0].toUpperCase() + eventType.slice(1)
+      itWithPhotos("should trigger " + cbName, function (done) {
+        widget.options[cbName] = function ($photo, photo) {
+          expect($photo).toBeInstanceOf($)
+          expect(photo).toEqual(photo100)
+          done()
+        }
+        $photos.eq(0).trigger(eventType)
+      })
     })
   })
 })

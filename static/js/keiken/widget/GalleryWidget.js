@@ -5,7 +5,6 @@
  * @class UIGallery shows a album-like thumbnail representation of all photos of a single place in the album
  * @requires UICarousel
  */
-
 define(["dojo/_base/declare",
   "./_DomTemplatedWidget",
   "./PhotoCarouselWidget",
@@ -14,7 +13,6 @@ define(["dojo/_base/declare",
   "../model/Collection",
   "dojo/text!./templates/Gallery.html"],
 function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoText, Collection, templateString) {
-  // TODO Navigate to new photo on insert
   return declare(_DomTemplatedWidget, {
     VISITED_PHOTO_CLASSNAME: "mp-gallery-photo-visited",
     templateString: templateString,
@@ -46,10 +44,10 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
           }
         },
         onPhotoMouseenter: function ($photo, photo) {
-          communicator.publish("mouseleave:GalleryPhoto", { context: this, element: $photo, photo: photo })
+          communicator.publish("mouseenter:GalleryPhoto", { contex: this, element: $photo, photo: photo })
         },
         onPhotoMouseleave: function ($photo, photo) {
-          communicator.publish("mouseenter:GalleryPhoto", { contex: this, element: $photo, photo: photo })
+          communicator.publish("mouseleave:GalleryPhoto", { context: this, element: $photo, photo: photo })
         },
         context: this
       }, this.carouselNode)
@@ -115,6 +113,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
     _beforeCarouselLoad: function ($photos) {
       $photos.removeClass(this.VISITED_PHOTO_CLASSNAME)
     },
+    // eslint-disable-next-line no-unused-vars
     _afterCarouselLoad: function ($photos, photos) {
       if (photos.length > 0) {
         this._infoText.close()

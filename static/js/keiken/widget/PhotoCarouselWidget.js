@@ -72,7 +72,7 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
         var id = $(this).attr(instance.ID_DATA_ATTRIBUTE)
         var photo = null
         if (id) {
-          photo = instance.dataPage.photos.get(id)
+          photo = instance.dataPage.photos.get(parseInt(id))
         }
         var handlerName = "onPhoto" + event.type[0].toUpperCase() + event.type.slice(1)
         instance.options[handlerName].call(instance.options.context, $(this), photo)
