@@ -63,20 +63,17 @@ function (declare, EventConfigurationParser) {
       var eventObjectList = this.parser.parse(events, handlerOrName, context)
 
       eventObjectList.forEach(function (eventObject) {
+        eventObject.removeAfterNextInvocation = false
         var registeredEventHandler = (this.events[eventObject.fullName] = this.events[eventObject.fullName] || [])
         registeredEventHandler.push(eventObject)
       }.bind(this))
+      return eventObjectList
     },
     subscribeOnce: function (event, handler, context) {
-      assertString(event)
-      assertFunction(handler)
-      var subscribeOnceHandler = function () {
-        handler.call(context, arguments)
-        this.events[event] = this.events[event].filter(function (eventObject) {
-          return eventObject.handler !== subscribeOnceHandler
-        })
-      }.bind(this)
-      this.subscribe(event, subscribeOnceHandler, context)
+      var eventObjectList = this.subscribe(event, handler, context)
+      eventObjectList.forEach(function (eventObject) {
+        eventObject.removeAfterNextInvocation = true
+      })
     },
     /**
       * @public
@@ -87,8 +84,9 @@ function (declare, EventConfigurationParser) {
     publish: function (event, data) {
       var registeredEventHandler = this.events[event] || []
 
-      registeredEventHandler.forEach(function (eventObject) {
+      this.events[event] = registeredEventHandler.filter(function (eventObject) {
         eventObject.handler.call(eventObject.context, data)
+        return !eventObject.removeAfterNextInvocation
       })
     },
     clear: function () {

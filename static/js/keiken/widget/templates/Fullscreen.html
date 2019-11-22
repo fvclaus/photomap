@@ -1,29 +1,32 @@
-<section class="mp-fullscreen" id="mp-fullscreen">
-  <img class="mp-fullscreen-loader mp-dark-loader" src="/static/images/dark-loader.gif" data-dojo-attach-point="loaderNode"/>
-  <img class="mp-image-zoom" src="/static/images/zoom.png" data-dojo-attach-point="zoomNode"/>
-  <header class="mp-fullscreen-header" id="mp-fullscreen-header">
+<section class="mp-fullscreen"
+         id="mp-fullscreen">
+  <img class="mp-image-zoom"
+       src="/static/images/zoom.png"
+       data-dojo-attach-point="zoomNode" />
+  <header class="mp-fullscreen-header"
+          id="mp-fullscreen-header">
     <div class="mp-fullscreen-nav">
-      <img class="mp-fullscreen-nav-prev mp-cursor-pointer mp-control" id="mp-fullscreen-nav-prev" src="/static/images/image-arrow-left.png" data-dojo-attach-point="navLeftNode"/>
+      <img class="mp-fullscreen-nav-prev mp-cursor-pointer mp-control"
+           id="mp-fullscreen-nav-prev"
+           src="/static/images/image-arrow-left.png"
+           data-dojo-attach-point="navLeftNode" />
     </div>
     <div class="mp-fullscreen-title-wrapper">
-      <h2 id="mp-fullscreen-title" data-dojo-attach-point="titleNode"></h2>
+      <h2 id="mp-fullscreen-title"
+          data-dojo-attach-point="titleNode"></h2>
     </div>
     <div class="mp-fullscreen-nav">
-      <img class="mp-fullscreen-nav-next mp-cursor-pointer mp-control" id="mp-fullscreen-nav-next" src="/static/images/image-arrow-right.png" data-dojo-attach-point="navRightNode"/>
+      <img class="mp-fullscreen-nav-next mp-cursor-pointer mp-control"
+           id="mp-fullscreen-nav-next"
+           src="/static/images/image-arrow-right.png"
+           data-dojo-attach-point="navRightNode" />
     </div>
-    <div class="mp-fullscreen-close mp-cursor-pointer" id="mp-fullscreen-close" data-dojo-attach-point="closeNode">
-      ${messages.close}
-      <!--
-      <img class="mp-cursor-pointer mp-control" id="mp-fullscreen-close" src="/static/images/close.png" />
-      -->
+    <div class="mp-fullscreen-close mp-cursor-pointer"
+         id="mp-fullscreen-close"
+         data-dojo-attach-point="closeNode">
+      {% trans "close" %}
     </div>
   </header>
-  <div class="mp-fullscreen-main" id="mp-fullscreen-main" data-dojo-attach-point="innerNode">
-    <div class="mp-fullscreen-image-wrapper" id="mp-fullscreen-image-wrapper" data-dojo-attach-point="imageWrapperNode">
-      <img id="mp-fullscreen-image"  data-dojo-attach-point="imageNode" />
-    </div>
-    <!-- Beschreibung erstmal entfernt. Ich denke es ist besser zuerst User zu befragen. -->
-    <!-- <div class="mp-fullscreen-image-description" id="mp-fullscreen-image-description"> -->
-    <!-- </div> -->
+  <div data-dojo-attach-point="carouselNode">
   </div>
 </section>

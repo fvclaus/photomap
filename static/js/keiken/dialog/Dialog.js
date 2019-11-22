@@ -55,12 +55,7 @@ function (declare, DialogMessageView, clientState) {
         title: this.options.title,
         width: this._calculateWidth(),
         close: function () {
-          this._unbindListener()
-          this.message.destroy()
-          this.$dialog
-            .dialog("destroy")
-            .remove()
-          console.log("DialogView: closed")
+          this.close()
         }.bind(this),
         open: function () {
           this._bindListener()
@@ -119,7 +114,12 @@ function (declare, DialogMessageView, clientState) {
       }
     },
     close: function () {
-      this.$dialog.dialog("close")
+      console.log("DialogView: closed")
+      this._unbindListener()
+      this.message.destroy()
+      this.$dialog
+        .dialog("destroy")
+        .remove()
     },
     showFailureMessage: function (response) {
       this.$loader.hide()

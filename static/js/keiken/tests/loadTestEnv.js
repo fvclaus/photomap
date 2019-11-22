@@ -1,7 +1,8 @@
 define(["dojo/_base/declare",
+  "../util/Communicator",
   "./JQueryMatchers",
   "node_modules/jasmine-jquery-matchers/dist/jasmine-jquery-matchers",
-  "dojo/domReady!"], function (declare, jQueryMatchers, jasmineJqueryMatchers) {
+  "dojo/domReady!"], function (declare, communicator, jQueryMatchers, jasmineJqueryMatchers) {
   // Make matcher available to all specs
   beforeEach(function () {
     jasmine.addMatchers(jQueryMatchers)
@@ -9,6 +10,7 @@ define(["dojo/_base/declare",
   })
 
   return {
+    // eslint-disable-next-line no-unused-vars
     load: function (id, require, callback) {
       var $testBody = $("#testBody")
       if (!$testBody.length) {
@@ -18,8 +20,7 @@ define(["dojo/_base/declare",
         $testBody = $("<div id='testBody'></div>")
           .appendTo(document.body)
       }
-      // eslint-disable-next-line standard/no-callback-literal
-      callback(declare(null, {
+      var TestEnv = declare(null, {
         createWidget: function (params, Widget) {
           var $container = this.createContainer()
           this.widget = new Widget(params, $container.get(0))
@@ -49,7 +50,38 @@ define(["dojo/_base/declare",
         destroyWidget: function () {
           this.widget.destroy()
         }
-      }))
+      })
+
+      TestEnv.wrapJasmineIt = function (eventName, triggerPublishFn) {
+        return function (name, testFn) {
+          it(name, function (done) {
+            communicator.subscribeOnce(eventName, function () {
+              // We must release the subscription function
+              // otherwise a new publish event could result in an infinte loop.
+              setTimeout(function () {
+                switch (testFn.length) {
+                  case 0:
+                    try {
+                      testFn()
+                    } catch (e) {
+                      console.error(e)
+                    } finally {
+                      done()
+                    }
+                    break
+                  case 1:
+                    testFn(done)
+                    break
+                  default:
+                    console.error(name, "testFn has too many arguments")
+                }
+              })
+            })
+            triggerPublishFn()
+          })
+        }
+      }
+      callback(TestEnv)
     }
   }
 })

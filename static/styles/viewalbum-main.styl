@@ -273,37 +273,26 @@
   z-index 1202
   color $font-color-inverse
 
-.mp-fullscreen-main
-  width 100%
-  height 90%
-  text-align center
+.mp-fullscreen
+  & .mp-carousel
+    width 100%
+    height 90%
+    text-align center
 
-.mp-fullscreen-image-wrapper
-  width 90%
-  height 91%
-  max-width 98%
-  max-height 91%
-  margin 2% 5% 1% 5%
-  position relative
-  float left
-  overflow hidden
+    & .mp-carousel-photo-wrapper
+      width 90%
+      height 91%
+      max-width 98%
+      max-height 91%
+      margin 2% 5% 1% 5%
+      position relative
+      float left
+      overflow hidden
 
-#mp-fullscreen-image
-  max-width 99%
-  max-height 99%
-  border $border-light
-
-
-// .mp-fullscreen-image-description
-//   width 19%
-//   height 91%
-//   padding 0 5%
-//   border $border-light
-//   border-left none
-//   margin 2% 5% 1% 0
-//   float left
-//   z-index 1202
-//   color $font-color-inverse
+      & .mp-carousel-photo
+        max-width 99%
+        max-height 99%
+        border $border-light
 
 .mp-image-overlay-wrapper
   border $border-light

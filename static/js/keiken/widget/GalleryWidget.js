@@ -100,6 +100,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
       }
     },
     destroy: function () {
+      this.inherited(this.destroy, arguments)
       this.carousel.destroy()
     },
     navigateTo: function (photo) {

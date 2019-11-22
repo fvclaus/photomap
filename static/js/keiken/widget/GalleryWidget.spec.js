@@ -46,32 +46,13 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
     })
 
     afterEach(function () {
+      widget.destroy()
       communicator.clear()
     })
 
-    var itWithPhotos = function (name, testFn) {
-      it(name, function (done) {
-        widget.run(photos)
-        communicator.subscribeOnce("updated:Gallery", function () {
-          switch (testFn.length) {
-            case 0:
-              try {
-                testFn()
-              } catch (e) {
-                console.error(e)
-              } finally {
-                done()
-              }
-              break
-            case 1:
-              testFn(done)
-              break
-            default:
-              console.error(name, "testFn has too many arguments")
-          }
-        })
-      })
-    }
+    var itWithOpenGallery = TestEnv.wrapJasmineIt("updated:Gallery", function () {
+      widget.run(photos)
+    })
 
     it("should display info text when place not loaded", function () {
       expect($infoText).toBeVisible()
@@ -135,7 +116,7 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
       })
     })
 
-    itWithPhotos("should display photos", function () {
+    itWithOpenGallery("should display photos", function () {
       [0, 1].forEach(function (index) {
         expect($photos.eq(index)).toHaveClass("mp-gallery-photo-visited")
       });
@@ -145,7 +126,7 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
       expect($infoText).toBeHidden()
     })
 
-    itWithPhotos("should load new photos", function (done) {
+    itWithOpenGallery("should load new photos", function (done) {
       widget.run(new Collection([photo300], {
         modelType: "Photo"
       }))
@@ -153,9 +134,10 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
         expect($photos.eq(0)).toHaveAttr("src", photo300.thumb)
         done()
       })
+      console.dir(communicator)
     })
 
-    itWithPhotos("should hide verything on reset", function () {
+    itWithOpenGallery("should hide verything on reset", function () {
       widget.reset();
       [0, 1, 2, 3, 4].forEach(function (index) {
         expect($photos.eq(index)).not.toHaveAttr("src")
@@ -163,7 +145,7 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
       })
     })
 
-    itWithPhotos("should publish mouseover on photo", function (done) {
+    itWithOpenGallery("should publish mouseover on photo", function (done) {
       communicator.subscribe("mouseenter:GalleryPhoto", function (event) {
         expect(event.photo).toEqual(photo100)
         done()
@@ -171,7 +153,7 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
       $photos.eq(0).trigger("mouseenter")
     })
 
-    itWithPhotos("should publish mouseleave on photo", function (done) {
+    itWithOpenGallery("should publish mouseleave on photo", function (done) {
       communicator.subscribe("mouseleave:GalleryPhoto", function (event) {
         expect(event.photo).toEqual(photo100)
         done()
@@ -179,14 +161,14 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
       $photos.eq(0).trigger("mouseleave")
     })
 
-    itWithPhotos("should publish gallery insert on empty tile click", function (done) {
+    itWithOpenGallery("should publish gallery insert on empty tile click", function (done) {
       communicator.subscribe("clicked:GalleryInsert", function () {
         done()
       })
       $photos.eq(4).trigger("click")
     })
 
-    itWithPhotos("should mark photo as visited", function (done) {
+    itWithOpenGallery("should mark photo as visited", function (done) {
       widget._isAdmin = false
       communicator.subscribe("clicked:GalleryPhoto", function (photo) {
         expect(photo).toEqual(photo100)
