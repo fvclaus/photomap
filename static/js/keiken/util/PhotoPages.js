@@ -79,7 +79,7 @@ function (declare, Collection, Photo) {
       return Math.floor(index / this.photosPerPage)
     },
     getCurrentPageIndex: function () {
-      if (this._currentPageIndex > this._calculateLastPageIndex()) {
+      while (this._currentPageIndex > this._calculateLastPageIndex()) {
         console.log("PhotoPages: Deleted page %d from pages. Going back one.", this._currentPageIndex)
         this._currentPageIndex--
       }

@@ -183,9 +183,9 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
             if (!this.ignoreNextSlideshowUpdate) {
               description.update(photo)
               gallery.navigateTo(photo)
+              // TODO Why is this not updated in a collection listener?
               clientstate.insertVisitedPhoto(photo)
               photo.setVisited(true)
-              fullscreen.navigateTo(photo)
               appState.updatePhoto(photo.getId())
             } else {
               this.ignoreNextSlideshowUpdate = false
@@ -193,7 +193,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           }
         }, "Slideshow", this)
 
-        communicator.subscribe("clicked:SlideshowPhoto", function () {
+        communicator.subscribe("clicked:SlideshowPhoto", function (photo) {
           fullscreen.show()
           appState.updateFullscreen(true)
         })

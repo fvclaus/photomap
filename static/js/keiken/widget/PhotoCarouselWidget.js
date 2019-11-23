@@ -140,6 +140,9 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
     getCurrentPageIndex: function () {
       return this.dataPage.getCurrentPageIndex()
     },
+    getCurrentPage: function () {
+      return this.dataPage.getCurrentPage()
+    },
     loadCurrentPage: function () {
       var photos = this.dataPage.getCurrentPageWithoutPadding()
 

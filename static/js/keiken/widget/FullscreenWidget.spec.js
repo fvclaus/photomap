@@ -25,14 +25,9 @@ function (FullscreenWidget, Photo, Collection, communicator, TestEnv) {
       photo: "/static/test/photo3.jpg",
       title: "Photo 300"
     })
-    var photos
     var $photo
 
     beforeEach(function () {
-      photos = new Collection([photo100, photo200, photo300], {
-        modelType: "Photo"
-      })
-
       var t = new TestEnv().createWidget(null, FullscreenWidget)
 
       widget = t.widget; $container = t.$container
@@ -48,13 +43,15 @@ function (FullscreenWidget, Photo, Collection, communicator, TestEnv) {
     })
 
     var itWithOpenFullscreen = TestEnv.wrapJasmineIt("updated:Fullscreen", function () {
-      widget.load(photos)
-      widget.show(photo100)
+      widget.load(new Collection([photo100, photo200, photo300], {
+        modelType: "Photo"
+      }))
+      widget.show(photo200)
     })
 
     itWithOpenFullscreen("should display photo", function () {
-      expect($photo).toHaveAttr("src", photo100.photo)
-      expect(widget.$title.text()).toBe(photo100.title)
+      expect($photo).toHaveAttr("src", photo200.photo)
+      expect(widget.$title.text()).toBe(photo200.title)
     })
 
     itWithOpenFullscreen("should close and hide fullscreen", function () {
@@ -71,19 +68,12 @@ function (FullscreenWidget, Photo, Collection, communicator, TestEnv) {
       name: "should navigate right",
       expectedPhoto: photo300
     }].forEach(function (testDefinition) {
-      it(testDefinition.name, function (done) {
-        var isNavigationTriggered = false
+      itWithOpenFullscreen(testDefinition.name, function (done) {
+        widget[testDefinition.navigateEl].trigger("click")
         communicator.subscribe("updated:Fullscreen", function () {
-          if (!isNavigationTriggered) {
-            isNavigationTriggered = true
-            widget[testDefinition.navigateEl].trigger("click")
-          } else {
-            expect($photo).toHaveAttr("src", testDefinition.expectedPhoto.photo)
-            done()
-          }
+          expect($photo).toHaveAttr("src", testDefinition.expectedPhoto.photo)
+          done()
         })
-        widget.load(photos)
-        widget.show(photo200)
       })
     })
   })

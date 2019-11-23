@@ -22,6 +22,26 @@
 
 /* ------ end general ------ */
 
+.mp-carousel
+  height 100%
+  overflow hidden
+  display: flex
+  flex-direction: row
+  justify-content: flex-start
+
+
+& .mp-carousel-photo-wrapper
+  height: 100%
+  display: flex
+  align-items: center
+  justify-content: center
+
+  & > .mp-carousel-photo
+    max-width 95%
+    max-height 95%
+    margin: auto
+
+
 /* ------------------------- */
 /* ---- gallery styling ---- */
 
@@ -173,13 +193,8 @@
 /* ------------------------------ */
 /* ------ slideshow styling ----- */
 
-.mp-slideshow
-  height 54%
-  padding 1% 0 0 0
-
 .mp-slideshow-nav
   width 10%
-  height 90%
   text-align center
   img.mp-control
     width 60%
@@ -188,29 +203,32 @@
     max-height 50px
     background none
 
-.mp-slideshow-inner
-  height 90%
-  width 80%
-  padding 0
-  position relative
 
-.mp-slideshow-tile
-  width 100%
-  height 100%
-  position absolute
-  left 0
-  top 0
-  text-align center
+.mp-slideshow
+  height 54%
+  padding 1% 0 0 0
 
-.mp-slideshow-image
-  max-width 95%
-  max-height 95%
-  border 5px solid #dadada
-  display none
+  & .mp-slideshow-carousel-wrapper
+    height: 100%
+    display: flex
+    align-items: center
 
-.mp-slideshow-loader
-  width 5%
-  /* margin-top is specified in the % of the width of the containing element, not the height. fuck you css! */
+  & .mp-carousel
+    width 80%
+
+    & .mp-carousel-photo-wrapper
+      width 100%
+      height 100%
+      text-align center
+
+      & .mp-carousel-photo
+        max-width 95%
+        max-height 95%
+        border 5px solid #dadada
+        display none
+
+      & .mp-slideshow-loader
+        width 5%
 
 .mp-slideshow-no-image-msg
   text-align center

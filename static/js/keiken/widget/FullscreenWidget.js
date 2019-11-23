@@ -44,9 +44,9 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, Collection, communi
     },
     show: function (photo) {
       this.carousel.navigateTo(photo)
-      this.$container.show()
-      // fullscreen is just active if mouse is moved or fullscreen is focused (needed for keyboard events)
-      this.$container.focus()
+      this.$container
+        .show()
+        .focus()
     },
     hide: function () {
       this.$container.hide()
@@ -70,45 +70,35 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, Collection, communi
       communicator.publish("updated:Fullscreen")
     },
     _bindListener: function () {
+      var navigateGallery = function (navigationFnName) {
+        return function () {
+          if (this.active) {
+            this.carousel[navigationFnName]()
+          }
+        }.bind(this)
+      }.bind(this)
+
+      // carousel is undefined when listeners are registered.
+      var navigateLeft = navigateGallery("navigateLeft")
+      var navigateRight = navigateGallery("navigateRight")
+
       var instance = this
-      this.$navLeft.on("click.Fullscreen", function () {
-        console.log("FullscreenWidget: navigating left")
-        instance.carousel.navigateLeft()
+      this.$navLeft.on("click.Fullscreen", navigateLeft)
+      this.$navRight.on("click.Fullscreen", navigateRight)
 
-        communicator.publish("navigated:Fullscreen", "left")
-      })
-      this.$navRight.on("click.Fullscreen", function () {
-        console.log("FullscreenWidget: navigating right")
-        instance.carousel.navigateRight()
-
-        communicator.publish("navigated:Fullscreen", "right")
-      })
       this.$close.on("click.Fullscreen", function () {
         console.log("FullscreenWidget: close")
         instance.hide()
-        communicator.publish("closed:Fullscreen")
       })
       $("body")
         .on("keyup.Fullscreen", null, "esc", function () {
           if (instance.active) {
-            instance.hide()
+            this.hide()
             communicator.publish("closed:Fullscreen")
           }
-        })
-        .on("keyup.Fullscreen", null, "left", function () {
-          if (instance.active) {
-            instance.carousel.navigateLeft()
-            console.log("FullscreenWidget: navigating left")
-            communicator.publish("navigated:Fullscreen", "left")
-          }
-        })
-        .on("keyup.Fullscreen", null, "right", function () {
-          if (instance.active) {
-            instance.carousel.navigateRight()
-            console.log("FullscreenWidget: navigating right")
-            communicator.publish("navigated:Fullscreen", "right")
-          }
-        })
+        }.bind(this))
+        .on("keyup.Fullscreen", null, "left", navigateLeft)
+        .on("keyup.Fullscreen", null, "right", navigateRight)
     }
   })
 })
