@@ -50,7 +50,7 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
       communicator.clear()
     })
 
-    var itWithOpenGallery = TestEnv.wrapJasmineIt("updated:Gallery", function () {
+    var itWithOpenGallery = TestEnv.waitForPublishEvent("updated:Gallery", function () {
       widget.run(photos)
     })
 
@@ -118,10 +118,10 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
 
     itWithOpenGallery("should display photos", function () {
       [0, 1].forEach(function (index) {
-        expect($photos.eq(index)).toHaveClass("mp-gallery-photo-visited")
+        expect($photos.eq(index).parent()).toHaveClass("mp-gallery-visited")
       });
       [2].forEach(function (index) {
-        expect($photos.eq(index)).not.toHaveClass("mp-gallery-photo-visted")
+        expect($photos.eq(index).parent()).not.toHaveClass("mp-gallery-visted")
       })
       expect($infoText).toBeHidden()
     })

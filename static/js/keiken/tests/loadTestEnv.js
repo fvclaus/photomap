@@ -52,10 +52,10 @@ define(["dojo/_base/declare",
         }
       })
 
-      TestEnv.wrapJasmineIt = function (eventName, triggerPublishFn) {
+      TestEnv.wrapJasmineIt = function (eventFn, triggerFn) {
         return function (name, testFn) {
           it(name, function (done) {
-            communicator.subscribeOnce(eventName, function () {
+            eventFn(function () {
               // We must release the subscription function
               // otherwise a new publish event could result in an infinte loop.
               setTimeout(function () {
@@ -77,10 +77,17 @@ define(["dojo/_base/declare",
                 }
               })
             })
-            triggerPublishFn()
+            triggerFn()
           })
         }
       }
+
+      TestEnv.waitForPublishEvent = function (eventName, triggerPublishFn) {
+        return TestEnv.wrapJasmineIt(function (testFnWrapper) {
+          return communicator.subscribeOnce(eventName, testFnWrapper)
+        }, triggerPublishFn)
+      }
+
       callback(TestEnv)
     }
   }

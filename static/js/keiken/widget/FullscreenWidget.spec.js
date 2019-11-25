@@ -42,7 +42,7 @@ function (FullscreenWidget, Photo, Collection, communicator, TestEnv) {
       widget.destroy()
     })
 
-    var itWithOpenFullscreen = TestEnv.wrapJasmineIt("updated:Fullscreen", function () {
+    var itWithOpenFullscreen = TestEnv.waitForPublishEvent("updated:Fullscreen", function () {
       widget.load(new Collection([photo100, photo200, photo300], {
         modelType: "Photo"
       }))

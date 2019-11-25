@@ -9,12 +9,11 @@ define(["dojo/_base/declare",
   "./_DomTemplatedWidget",
   "./PhotoCarouselWidget",
   "../util/Communicator",
-  "../util/InfoText",
   "../model/Collection",
   "dojo/text!./templates/Gallery.html"],
-function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoText, Collection, templateString) {
+function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Collection, templateString) {
   return declare(_DomTemplatedWidget, {
-    VISITED_PHOTO_CLASSNAME: "mp-gallery-photo-visited",
+    VISITED_PHOTO_CLASSNAME: "mp-gallery-visited",
     templateString: templateString,
     viewName: "Gallery",
     // eslint-disable-next-line no-unused-vars
@@ -52,7 +51,6 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
         context: this
       }, this.carouselNode)
 
-      this._infoText = new InfoText(this.$container, "")
       this._showNoPlaceSelectedInfoText()
 
       this.carousel.startup()
@@ -117,12 +115,13 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
     // eslint-disable-next-line no-unused-vars
     _afterCarouselLoad: function ($photos, photos) {
       if (photos.length > 0) {
-        this._infoText.close()
+        this._infoText.hide()
       } else {
         this._infoText
-          .setOption("hideOnMouseover", true)
-          .setMessage(gettext(this._isAdmin ? "GALLERY_NO_PHOTOS_ADMIN" : "GALLERY_NO_PHOTOS_GUEST"))
-          .open()
+          .show({
+            hideOnMouseover: true,
+            message: gettext(this._isAdmin ? "GALLERY_NO_PHOTOS_ADMIN" : "GALLERY_NO_PHOTOS_GUEST")
+          })
       }
     },
     _onCarouselUpdate: function ($photos, photos) {
@@ -133,18 +132,18 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, InfoT
     },
     _showNoPlaceSelectedInfoText: function () {
       this._infoText
-        .setMessage(gettext("GALLERY_NO_PLACE_SELECTED"))
-        .setOption("hideOnMouseover", false)
-        .start()
-        .open()
+        .show({
+          hideOnMouseover: false,
+          message: gettext("GALLERY_NO_PLACE_SELECTED")
+        })
     },
     _showVisitedNotification: function ($photos, photos) {
       $.each($photos, function (index, photoEl) {
         var photo = photos[index]
         if (photo && photo.isVisited()) {
-          $(photoEl).addClass(this.VISITED_PHOTO_CLASSNAME)
+          $(photoEl).parent().addClass(this.VISITED_PHOTO_CLASSNAME)
         } else {
-          $(photoEl).removeClass(this.VISITED_PHOTO_CLASSNAME)
+          $(photoEl).parent().removeClass(this.VISITED_PHOTO_CLASSNAME)
         }
       }.bind(this))
     },

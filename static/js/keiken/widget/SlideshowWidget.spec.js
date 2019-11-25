@@ -46,7 +46,7 @@ function (SlideshowWidget, Photo, Collection, communicator, TestEnv) {
       widget.destroy()
     })
 
-    var itWithGalleryRun = TestEnv.wrapJasmineIt("updated:Slideshow", function () {
+    var itWithGalleryRun = TestEnv.waitForPublishEvent("updated:Slideshow", function () {
       widget.load(photos)
       widget.run(photo200)
     })

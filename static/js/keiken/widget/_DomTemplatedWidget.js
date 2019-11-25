@@ -8,17 +8,18 @@ define(["dojo/_base/declare",
   "dijit/_WidgetBase",
   "dijit/_AttachMixin",
   "dojox/dtl/_DomTemplated",
+  "dojox/dtl/contrib/dijit",
   "../view/View",
   "./loadDtlDirectives!",
   "dojo/domReady!"],
-function (declare, _WidgetBase, _AttachMixin, _DomTemplated, View) {
+function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, View) {
   return declare([View, _WidgetBase, _DomTemplated, _AttachMixin], {
+    widgetsInTemplate: true,
     /*
      * @public
      * @description Widgets must expose a certain number of function. The constructor will check if they have been defined in the child class.
      */
     constructor: function (params, srcNodeRef) {
-      assertFunction(this._bindListener, "Every Widget must define a _bindListener function")
       assertString(this.viewName, "Every PhotoWidget must define a viewName")
       assertString(this.templateString, "Every PhotoWidget must define a templateString.")
     },
@@ -29,12 +30,26 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, View) {
      */
     buildRendering: function () {
       this.inherited(this.buildRendering, arguments)
-      var instance = this
+      this._wireJQueryElements()
+      this._wireWidgetInTemplateInstances()
+    },
+    _wireJQueryElements: function () {
       this._attachPoints.forEach(function (attachPoint) {
-        var jQSelectorName = "$" + attachPoint.replace("Node", "")
-        instance[jQSelectorName] = $(instance[attachPoint])
-      })
+        this["$" + attachPoint.replace("Node", "")] = $(this[attachPoint])
+      }.bind(this))
       this.$container = $(this.domNode)
+    },
+    _wireWidgetInTemplateInstances: function () {
+      this.template.nodelist.contents
+        .filter(function (node) {
+          return node.constructor === ddcd.DojoTypeNode
+        })
+        .forEach(function (node) {
+          var instanceName = node._node.getAttribute("data-widget-instance-name")
+          if (instanceName) {
+            this[instanceName] = node._dijit
+          }
+        }.bind(this))
     },
     /*
      * @public
@@ -47,12 +62,19 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, View) {
       }
       this.inherited(arguments)
       // Use this widget with the keyboard.
-      this._bindListener()
+      this._bindListener && this._bindListener()
     },
     /**
-      * @private
-      * @description Widgets must bind all their Listeners in this function. It will be called upon construction.
+      * @description Widgets must bind all their Listeners in this function. It will be called upon startup.
       */
-    _bindListener: null
+    _bindListener: null,
+    destroy: function () {
+      this.inherited(arguments)
+      this._unbindListener && this._unbindListener()
+    },
+    /**
+      * @desription Widgets must unbind all their listeners in this function. It will be called upon destruction.
+      */
+    _unbindListener: null
   })
 })

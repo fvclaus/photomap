@@ -11,11 +11,9 @@ define(["dojo/_base/declare",
   "./PhotoCarouselWidget",
   "../util/Communicator",
   "../model/Collection",
-  "../util/InfoText",
   "dojo/text!./templates/Slideshow.html",
-  "dojo/i18n",
-  "dojo/i18n!./nls/Slideshow"],
-function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Collection, InfoText, templateString) {
+  "./InfoTextWidget"],
+function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Collection, templateString) {
   return declare([_DomTemplatedWidget], {
     templateString: templateString,
 
@@ -40,7 +38,6 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
         context: this
       }, this.carouselNode)
 
-      this._infoText = new InfoText(this.$container, "", { hideOnMouseover: false })
       this._showNotStartedInfoText()
     },
     load: function (photos) {
@@ -112,10 +109,10 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
     },
     _showNotStartedInfoText: function () {
       this._infoText
-        .setOption("hideOnMouseover", false)
-        .setMessage(gettext("SLIDESHOW_GALLERY_NOT_STARTED"))
-        .start()
-        .open()
+        .show({
+          hideOnMouseover: false,
+          message: gettext("SLIDESHOW_GALLERY_NOT_STARTED")
+        })
     },
     /*
       * @presenter
@@ -123,13 +120,12 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
       */
     _updateInfoText: function (photo) {
       if (photo) {
-        this._infoText.close()
+        this._infoText.hide()
       } else {
-        this._infoText
-          .setOption("hideOnMouseover", true)
-          .setMessage(gettext("SLIDESHOW_NO_PHOTOS"))
-          .start()
-          .open()
+        this._infoText.show({
+          hideOnMouseover: true,
+          message: gettext("SLIDESHOW_NO_PHOTOS")
+        })
       }
     },
     // eslint-disable-next-line no-unused-vars
