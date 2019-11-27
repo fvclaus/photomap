@@ -2,6 +2,23 @@ var path = require("path")
 
 var port = 9877
 
+var isDevelopMachine = function () {
+  return process.env.CUSTOM_KARMA === "true"
+}
+
+// Karma does currently not supported nocache on pre-processed files: https://github.com/karma-runner/karma/issues/2264
+// I made a fix for it that may or may not be part of the official release at some point
+var makeNoCacheFilePatternIfSupported = function (fileName) {
+  if (isDevelopMachine()) {
+    return {
+      pattern: fileName,
+      nocache: true
+    }
+  } else {
+    return fileName
+  }
+}
+
 module.exports = function (config) {
   config.set({
     // base path, that will be used to resolve files and exclude
@@ -24,8 +41,8 @@ module.exports = function (config) {
     // list of files / patterns to load in the browser
     files: [
       "static/js/keiken/tests/main.js",
-      "static/styles/viewalbum-main.styl",
-      "static/test/tests.styl",
+      makeNoCacheFilePatternIfSupported("static/styles/viewalbum-main.styl"),
+      makeNoCacheFilePatternIfSupported("static/test/tests.styl"),
       {
         pattern: "static/js/lib/**",
         served: true,
@@ -92,7 +109,7 @@ module.exports = function (config) {
     port: port,
 
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_WARN,
+    logLevel: config.LOG_INFO,
 
     browsers: ["Chrome"],
 

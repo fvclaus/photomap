@@ -1,20 +1,13 @@
 "use strict"
 
 define(["./InfoTextWidget",
+  "./_DomTemplatedWidget",
+  "dojo/_base/declare",
   "../tests/loadTestEnv!"],
-function (InfoTextWidget, TestEnv) {
+function (InfoTextWidget, _DomTemplatedWidget, declare, TestEnv) {
   describe("InfoTextWidget", function () {
     var $container
     var widget
-
-    beforeEach(function () {
-      var t = new TestEnv().createWidget({
-      }, InfoTextWidget)
-
-      widget = t.widget; $container = t.$container
-
-      widget.startup()
-    })
 
     afterEach(function () {
       widget.destroy()
@@ -23,6 +16,11 @@ function (InfoTextWidget, TestEnv) {
     var itWithOpenInfoText = TestEnv.wrapJasmineIt(function (testFnWrapper) {
       return setTimeout(testFnWrapper, 300)
     }, function () {
+      var t = new TestEnv().createWidget(null, InfoTextWidget)
+
+      widget = t.widget; $container = t.$container
+
+      widget.startup()
       widget.show({
         message: "Hello, World!",
         hideOnMouseover: true
@@ -43,7 +41,7 @@ function (InfoTextWidget, TestEnv) {
     })
 
     itWithOpenInfoText("should hide on mouseover", function (done) {
-      widget.$message.trigger("mouseover")
+      widget.domNode.dispatchEvent(new Event("mouseover"))
       setTimeout(function () {
         expect($container).toBeHidden()
         done()

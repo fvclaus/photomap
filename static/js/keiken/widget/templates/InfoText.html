@@ -1,4 +1,7 @@
 <div style='display: none'
-     class='mp-infotext'>
-  <span data-dojo-attach-point="messageNode"></span>
+     class='mp-infotext'
+     data-dojo-attach-event="onmouseenter: hideOnMouseoverIfConfigured">
+  <span class="mp-infotext__message"
+        data-dojo-attach-point="messageNode"></span>
+  <div data-dojo-attach-point="containerNode" />
 </div>

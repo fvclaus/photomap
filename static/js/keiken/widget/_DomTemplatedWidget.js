@@ -9,10 +9,11 @@ define(["dojo/_base/declare",
   "dijit/_AttachMixin",
   "dojox/dtl/_DomTemplated",
   "dojox/dtl/contrib/dijit",
+  "dojox/dtl/_base",
   "../view/View",
   "./loadDtlDirectives!",
   "dojo/domReady!"],
-function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, View) {
+function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, View) {
   return declare([View, _WidgetBase, _DomTemplated, _AttachMixin], {
     widgetsInTemplate: true,
     /*
@@ -22,6 +23,14 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, View) {
     constructor: function (params, srcNodeRef) {
       assertString(this.viewName, "Every PhotoWidget must define a viewName")
       assertString(this.templateString, "Every PhotoWidget must define a templateString.")
+      var $children = $(srcNodeRef)
+        .children()
+        .detach()
+        .removeClass("mp-cloak")
+      if ($children.length > 0) {
+        this.children = $children.get(0)
+        this.children.safe = true
+      }
     },
     /*
      * @public
@@ -30,8 +39,72 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, View) {
      */
     buildRendering: function () {
       this.inherited(this.buildRendering, arguments)
+      if (this.children && this.containerNode) {
+        $(this.containerNode).append(this.children)
+      }
+      this._attachChildContainers()
       this._wireJQueryElements()
       this._wireWidgetInTemplateInstances()
+    },
+    /**
+      * See _attachChildContainers for detailed explanation
+      * Prevent _AttachMixin from attaching to elements of descendant widget.
+      */
+    // eslint-disable-next-line no-unused-vars
+    _processTemplateNode: function (baseNode, getAttrFunc, attachFunc) {
+      var widgetid = getAttrFunc(baseNode, "widgetid")
+      if (widgetid && widgetid !== this.id) {
+        return false
+      } else {
+        return this.inherited(this._processTemplateNode, arguments)
+      }
+    },
+    _removeContainerNodeAttachPoint: function (el) {
+      el.childNodes.forEach(function (child) {
+        if (child.getAttribute && child.getAttribute("data-dojo-attach-point") === "containerNode") {
+          child.removeAttribute("data-dojo-attach-point")
+        }
+        this._removeContainerNodeAttachPoint(child)
+      }.bind(this))
+    },
+    _isUnattachedContainerNode: function (attachNode, domNode) {
+      var isContainerNode = attachNode._keys.indexOf("containerNode") !== -1
+      var isUnattachedNode = !domNode.hasAttribute("data-container-node-attached")
+      return isContainerNode && isUnattachedNode
+    },
+    _attachChildContainer: function (childWidgetInstance) {
+      var currentDomNode
+      childWidgetInstance.template.nodelist.contents.forEach(function (renderNode) {
+        if (renderNode.constructor === dd._DomNode) {
+          currentDomNode = renderNode.contents
+        } else if (renderNode.constructor === ddcd.AttachNode &&
+          this._isUnattachedContainerNode(renderNode, currentDomNode)) {
+          currentDomNode.childNodes.forEach(function (childNode) {
+            this._attachTemplateNodes(childNode)
+          }.bind(this))
+          currentDomNode.setAttribute("data-container-node-attached", true)
+        }
+      }.bind(this))
+    },
+    /**
+      * Attach dojo-attach-event and dojo-attach-point of elements inside
+      * containerNodes of immediate descendants of this widget:
+      * <div>
+      *  <div data-dojo-type="otherWidget">
+      *    <span data-dojo-attach-point="myAttachPoint" />
+      *  </div>
+      * </div>
+      * In the above example the myAttachPoint should not be attached to the otherWidget instance,
+      * but to the enclosing widget instance.
+      * AFAIK This is not supported by dojo. dojo will attach myAttachPoint to all ancestors of otherWidget.
+      * This is not really relevant for attach-points, but breaks attach-events bind listeners to the dom.
+      * This method only works with the overwritten _processTemplateNode function.
+      */
+    _attachChildContainers: function () {
+      this._findTypeNodes(this.template)
+        .forEach(function (typeNode) {
+          this._attachChildContainer(typeNode._dijit)
+        }.bind(this))
     },
     _wireJQueryElements: function () {
       this._attachPoints.forEach(function (attachPoint) {
@@ -40,16 +113,19 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, View) {
       this.$container = $(this.domNode)
     },
     _wireWidgetInTemplateInstances: function () {
-      this.template.nodelist.contents
-        .filter(function (node) {
-          return node.constructor === ddcd.DojoTypeNode
-        })
+      this._findTypeNodes(this.template)
         .forEach(function (node) {
           var instanceName = node._node.getAttribute("data-widget-instance-name")
           if (instanceName) {
             this[instanceName] = node._dijit
           }
         }.bind(this))
+    },
+    _findTypeNodes: function (template) {
+      return template.nodelist.contents
+        .filter(function (node) {
+          return node.constructor === ddcd.DojoTypeNode
+        })
     },
     /*
      * @public

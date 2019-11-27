@@ -21,14 +21,10 @@ function (declare, DialogMessageView, clientState) {
   })
 
   return declare(null, {
-    constructor: function () {
-      // this.editor = new PhotoEditorView();
-      this.INPUT_DIALOG = 0
-      this.CONFIRM_DIALOG = 1
-      this.ALERT_DIALOG = 2
-
-      this.WRAPPER_ID = "mp-dialog"
-    },
+    INPUT_DIALOG: 0,
+    CONFIRM_DIALOG: 1,
+    ALERT_DIALOG: 2,
+    WRAPPER_ID: "mp-dialog",
     /**
       * @author Frederik Claus, Marc Römer
       * @description load Input form, then overlay with jquery ui dialog widget
@@ -41,7 +37,9 @@ function (declare, DialogMessageView, clientState) {
       }, options)
       // Wrapper is used to determine width and height relative to parent.
       var $wrapper = $("#" + this.WRAPPER_ID)
-      assertTrue($wrapper.length === 1, "Must provide wrapper for dialog")
+      if ($wrapper.length === 0) {
+        $wrapper = document.body
+      }
       this.$dialog = $("<div/>").appendTo($wrapper)
 
       this.options = $.extend({}, {

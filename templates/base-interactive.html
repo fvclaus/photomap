@@ -75,10 +75,15 @@
 <!-- changing the display to inline-block alone does not do the trick -->
 <span class="mp-controls-wrapper ui-corner-all mp-nodisplay"
       id="mp-controls"> </span>
-<!-- div for UIInput. The dimensions are defined in input.sty -->
-<div id="mp-dialog"></div>
 
 {% include "loading-screen.html" %}
+
+<!-- TODO Add close after delay (2s) feature -->
+<div data-dojo-type="keiken/widget/InfoText">
+  <p id='mp-infotext-closing-help'>
+    {% trans CLOSE_INFOTEXT_ALERT %}
+  </p>
+</div>
 
 <script type="text/javascript"
         src="//maps.googleapis.com/maps/api/js?key=AIzaSyDWnE-Kkl7ifiNjQVLv-N3UwY_KxuYqm_Q&sensor=false">

@@ -6,8 +6,6 @@
  * @class provides methods to show basic tooltips over given elements
  */
 
-// TODO Add listener for Esc and Return to enable closing of InfoText by pressing these keys, also implement Fullscreen overlay message (like alerts)
-
 define(["dojo/_base/declare",
   "./_DomTemplatedWidget",
   "dojo/text!./templates/InfoText.html"],
@@ -41,17 +39,10 @@ function (declare, _DomTemplatedWidget, templateString) {
           }.bind(this))
       }
     },
-    _unbindListener: function () {
-      this.$message.off(".InfoText")
-    },
-    _bindListener: function () {
-      // use fadeOut instead of this.close here, so that InfoText gets visible again after mouse leaves the $container.parent()
-      this.$message
-        .on("mouseenter.InfoText", function () {
-          if (this.options.hideOnMouseover) {
-            this.hide()
-          }
-        }.bind(this))
+    hideOnMouseoverIfConfigured: function () {
+      if (this.options.hideOnMouseover) {
+        this.hide()
+      }
     }
   })
 })

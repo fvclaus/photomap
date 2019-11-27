@@ -237,7 +237,8 @@ function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, tem
           }.bind(this))
           this.options.onUpdate.call(this.options.context, this.$photos, photos)
         } catch (e) {
-          console.log("Could not finish the animation. Maybe the carousel has been reset")
+          console.error("Could not finish the animation. Maybe the carousel has been reset")
+          console.error(e)
         }
       })
     }

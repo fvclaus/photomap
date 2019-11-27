@@ -21,8 +21,12 @@ define(["dojo/_base/declare",
           .appendTo(document.body)
       }
       var TestEnv = declare(null, {
-        createWidget: function (params, Widget) {
-          var $container = this.createContainer()
+        createWidget: function (params, Widget, $container) {
+          if ($container) {
+            $container = this.append($container)
+          } else {
+            $container = this.createContainer()
+          }
           this.widget = new Widget(params, $container.get(0))
           this.$container = this.findContainer().attr("id", this.widget.viewName)
           return this

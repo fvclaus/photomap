@@ -57,30 +57,12 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
       widget.destroy()
     })
 
-    var itWithPhotos = function (name, testFn) {
-      it(name, function (done) {
-        widget.options.onUpdate = function () {
-          switch (testFn.length) {
-            case 0:
-              try {
-                testFn()
-              } catch (e) {
-                console.error(e)
-              } finally {
-                done()
-              }
-              break
-            case 1:
-              testFn(done)
-              break
-            default:
-              console.error(name, "testFn has too many arguments")
-          }
-        }
-        widget.load(photos)
-        widget.loadCurrentPage()
-      })
-    };
+    var itWithPhotos = TestEnv.wrapJasmineIt(function (testFnWrapper) {
+      widget.options.onUpdate = testFnWrapper
+    }, function () {
+      widget.load(photos)
+      widget.loadCurrentPage()
+    });
 
     [{
       name: "should trigger events in correct order on page with photos",
@@ -196,9 +178,9 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
     });
 
     ["click", "mouseenter", "mouseleave"].forEach(function (eventType) {
-      var cbName = "onPhoto" + eventType[0].toUpperCase() + eventType.slice(1)
-      itWithPhotos("should trigger " + cbName, function (done) {
-        widget.options[cbName] = function ($photo, photo) {
+      var eventTriggerName = "onPhoto" + eventType[0].toUpperCase() + eventType.slice(1)
+      itWithPhotos("should trigger " + eventTriggerName, function (done) {
+        widget.options[eventTriggerName] = function ($photo, photo) {
           expect($photo).toBeInstanceOf($)
           expect(photo).toEqual(photo100)
           done()
