@@ -10,10 +10,11 @@ define(["dojo/_base/declare",
   "dojox/dtl/_DomTemplated",
   "dojox/dtl/contrib/dijit",
   "dojox/dtl/_base",
+  "dojo/on",
   "../view/View",
   "./loadDtlDirectives!",
   "dojo/domReady!"],
-function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, View) {
+function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, on, View) {
   return declare([View, _WidgetBase, _DomTemplated, _AttachMixin], {
     widgetsInTemplate: true,
     /*
@@ -39,6 +40,7 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, View) {
      */
     buildRendering: function () {
       this.inherited(this.buildRendering, arguments)
+      this.$domNode = $(this.domNode)
       if (this.children && this.containerNode) {
         $(this.containerNode).append(this.children)
       }
@@ -85,6 +87,14 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, View) {
           currentDomNode.setAttribute("data-container-node-attached", true)
         }
       }.bind(this))
+    },
+    /**
+      * Patch the _attach function of _AttachMixin.
+      * It uses dojo/mouse which maps mouseenter and mouseleave events to mouseover and mouseout.
+      * This was done to make all browsers compatible with IE.
+      */
+    _attach: function (node, type, func) {
+      return on(node, type.replace(/^on/, "").toLowerCase(), func)
     },
     /**
       * Attach dojo-attach-event and dojo-attach-point of elements inside

@@ -23,12 +23,13 @@ define(["dojo/_base/declare",
       var TestEnv = declare(null, {
         createWidget: function (params, Widget, $container) {
           if ($container) {
-            $container = this.append($container)
+            $container = TestEnv.append($container)
           } else {
             $container = this.createContainer()
           }
           this.widget = new Widget(params, $container.get(0))
-          this.$container = this.findContainer().attr("id", this.widget.viewName)
+          this.$container = TestEnv.findContainer().attr("id", this.widget.viewName)
+          this.domNode = this.$container.get(0)
           return this
         },
         createContainer: function (id) {
@@ -40,21 +41,30 @@ define(["dojo/_base/declare",
           $testBody
             .empty()
             .append($container)
-          return this.findContainer()
+          return TestEnv.findContainer()
         },
-        findContainer: function () {
-          return $testBody.find(":first-child")
-        },
-        append: function (elements) {
-          $testBody
-            .empty()
-            .append(elements)
-          return this.findContainer()
-        },
+
         destroyWidget: function () {
           this.widget.destroy()
         }
       })
+
+      TestEnv.findContainer = function () {
+        return $testBody.find(":first-child").first()
+      }
+      TestEnv.createCustomContainer = function (elements) {
+        $testBody
+          .empty()
+          .append(elements)
+        return TestEnv.findContainer()
+      }
+      // TODO Rename this
+      TestEnv.append = function (html) {
+        var $els = $(html)
+        $testBody
+          .append($els)
+        return $els
+      }
 
       TestEnv.wrapJasmineIt = function (eventFn, triggerFn) {
         return function (name, testFn) {
@@ -69,6 +79,7 @@ define(["dojo/_base/declare",
                       testFn()
                     } catch (e) {
                       console.error(e)
+                      throw e
                     } finally {
                       done()
                     }

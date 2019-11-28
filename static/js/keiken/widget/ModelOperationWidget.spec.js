@@ -2,19 +2,19 @@
 
 define(["keiken/widget/ModelOperationWidget",
   "../model/Album",
+  "../util/Communicator",
   "../tests/loadTestEnv!"],
-function (ModelOperationWidget, Album, TestEnv) {
+function (ModelOperationWidget, Album, communicator, TestEnv) {
   describe("ModelOperationWidget", function () {
-    var $container
-    var widget = null
+    var widget
+    var $domNode
 
     beforeEach(function () {
-      // TODO Fix this
-      // $container = $("<span class='mp-controls-wrapper ui-corner-all mp-nodisplay' id='mp-controls'>")
+      var t = new TestEnv().createWidget({
+        includeShareOperation: true
+      }, ModelOperationWidget)
 
-      var t = new TestEnv().createWidget(null, ModelOperationWidget)
-
-      widget = t.widget; $container = t.$container
+      widget = t.widget; $domNode = widget.$domNode
       widget.startup()
     })
 
@@ -22,44 +22,78 @@ function (ModelOperationWidget, Album, TestEnv) {
       widget.destroy()
     })
 
+    var itWithAlbum = TestEnv.wrapJasmineIt(function (testFnWrapper) {
+      testFnWrapper()
+    }, function () {
+      widget.show({
+        modelInstance: new Album({
+          title: "Album"
+        }),
+        offset: $("body").offset(),
+        dimension: {
+          width: 18
+        }
+      })
+    })
+
     it("should hide on startup", function () {
-      expect($container).toBeHidden()
+      expect($domNode).toBeHidden()
     })
 
-    it("should be visible after show", function () {
+    it("should center above item", function () {
+      var $text = TestEnv.append("<span style='position: absolute; top: 200px; left: 200px'>Center above me</span>", true)
       widget.show({
-        modelInstance: new Album({
-          title: "Album"
-        }),
-        offset: $("body").offset()
+        modelInstance: null,
+        offset: $text.offset(),
+        dimension: {
+          width: $text.outerWidth(true)
+        }
       })
-      expect($container).toBeVisible()
+      console.log()
     })
 
-    it("should hide after mouseleave", function () {
-      widget.show({
-        modelInstance: new Album({
-          title: "Album"
-        }),
-        offset: $("body").offset()
-      })
-      $container.trigger("mouseleave")
-      expect($container).toBeHidden()
+    itWithAlbum("should be visible after show", function () {
+      expect($domNode).toBeVisible()
     })
 
-    it("should hide after some time", function (done) {
-      widget.show({
-        modelInstance: new Album({
-          title: "Album"
-        }),
-        offset: $("body").offset()
-      })
+    itWithAlbum("should hide after mouseleave", function () {
+      widget.domNode.dispatchEvent(new Event("mouseenter"))
+      widget.domNode.dispatchEvent(new Event("mouseleave"))
+      expect($domNode).toBeHidden()
+    })
+
+    itWithAlbum("should not hide when mouse inside widget", function () {
+      widget.domNode.dispatchEvent(new Event("mouseenter"))
+      widget.hide()
+      expect($domNode).toBeVisible()
+    })
+
+    itWithAlbum("should hide after some time", function (done) {
       widget.hideAfterDelay(100)
-      expect($container).toBeVisible()
+      expect($domNode).toBeVisible()
       setTimeout(function () {
-        expect($container).toBeHidden()
+        expect($domNode).toBeHidden()
         done()
       }, 110)
+    });
+
+    [{
+      eventNs: "UpdateOperation",
+      elName: "$update"
+    }, {
+      eventNs: "DeleteOperation",
+      elName: "$delete"
+    }, {
+      eventNs: "ShareOperation",
+      elName: "$share"
+    }].forEach(function (testDefinition) {
+      itWithAlbum("should publish " + testDefinition.eventNs, function (done) {
+        communicator.subscribeOnce("clicked:" + testDefinition.eventNs, function (model) {
+          expect(model.title).toEqual("Album")
+          done()
+        })
+        widget[testDefinition.elName].trigger("click")
+      })
     })
   })
 })

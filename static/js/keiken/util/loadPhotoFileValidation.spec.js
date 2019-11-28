@@ -17,7 +17,7 @@ function (TestEnv, mockInputFiles) {
     }
 
     beforeEach(function () {
-      $container = new TestEnv().append($("<form target=''><input type='file' class='$photoValidation' name='fileInput'/><input type='submit'/></form>"))
+      $container = TestEnv.createCustomContainer($("<form target=''><input type='file' class='$photoValidation' name='fileInput'/><input type='submit'/></form>"))
     });
 
     [

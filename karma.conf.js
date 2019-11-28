@@ -7,7 +7,8 @@ var isDevelopMachine = function () {
 }
 
 // Karma does currently not supported nocache on pre-processed files: https://github.com/karma-runner/karma/issues/2264
-// I made a fix for it that may or may not be part of the official release at some point
+// I made a fix for it that may or may not be part of the official release at some point: https://github.com/fvclaus/karma/tree/force-preprocess-v2
+// It is necessary to soft link jasmine and jasmine-core in the checkout node_modules folder to avoid a different version of those libraries to be used.
 var makeNoCacheFilePatternIfSupported = function (fileName) {
   if (isDevelopMachine()) {
     return {
@@ -77,7 +78,10 @@ module.exports = function (config) {
         watched: false
       },
       {
-        pattern: "node_modules/+(" + ["dijit", "dojox", "jasmine-jquery-matchers"].join("|") + ")/**",
+        pattern: "node_modules/+(" + [
+          "dijit",
+          "dojox",
+          "jasmine-jquery-matchers"].join("|") + ")/**",
         served: true,
         included: false,
         watched: false
@@ -109,7 +113,7 @@ module.exports = function (config) {
     port: port,
 
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
-    logLevel: config.LOG_INFO,
+    logLevel: config.LOG_DEBUG,
 
     browsers: ["Chrome"],
 

@@ -17,7 +17,7 @@ function (CarouselAnimation, TestEnv) {
       var interval
 
       beforeEach(function () {
-        var $container = new TestEnv().append($("<div id='CarouselAnimation" + specDefinition.containerId + "'><span class='mp-carousel-animation-loader' /><span class='mp-carousel-animation-item' /></div>"))
+        var $container = TestEnv.createCustomContainer($("<div id='CarouselAnimation" + specDefinition.containerId + "'><span class='mp-carousel-animation-loader' /><span class='mp-carousel-animation-item' /></div>"))
         $item = $container.find(".mp-carousel-animation-item")
         $loader = $container.find(".mp-carousel-animation-loader")
         animation = new CarouselAnimation({

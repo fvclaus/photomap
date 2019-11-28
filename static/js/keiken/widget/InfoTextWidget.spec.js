@@ -1,10 +1,8 @@
 "use strict"
 
 define(["./InfoTextWidget",
-  "./_DomTemplatedWidget",
-  "dojo/_base/declare",
   "../tests/loadTestEnv!"],
-function (InfoTextWidget, _DomTemplatedWidget, declare, TestEnv) {
+function (InfoTextWidget, TestEnv) {
   describe("InfoTextWidget", function () {
     var $container
     var widget
@@ -14,7 +12,7 @@ function (InfoTextWidget, _DomTemplatedWidget, declare, TestEnv) {
     })
 
     var itWithOpenInfoText = TestEnv.wrapJasmineIt(function (testFnWrapper) {
-      return setTimeout(testFnWrapper, 300)
+      return setTimeout(testFnWrapper, 200)
     }, function () {
       var t = new TestEnv().createWidget(null, InfoTextWidget)
 
@@ -23,7 +21,8 @@ function (InfoTextWidget, _DomTemplatedWidget, declare, TestEnv) {
       widget.startup()
       widget.show({
         message: "Hello, World!",
-        hideOnMouseover: true
+        hideOnMouseover: true,
+        fadingTime: 50
       })
     })
 

@@ -91,6 +91,8 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
       communicator.subscribe({
         mouseover: function (marker) {
           if (this._isAdmin === true) {
+            // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
+            // offset.top *= 1.01
             controls.show({
               modelInstance: marker.getModel(),
               offset: map.getPositionInPixel(marker),
