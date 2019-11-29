@@ -36,15 +36,15 @@ function (InfoTextWidget, TestEnv) {
       setTimeout(function () {
         expect($container).toBeHidden()
         done()
-      }, 300)
+      }, 100)
     })
 
     itWithOpenInfoText("should hide on mouseover", function (done) {
-      widget.domNode.dispatchEvent(new Event("mouseover"))
+      widget.domNode.dispatchEvent(new Event("mouseenter"))
       setTimeout(function () {
         expect($container).toBeHidden()
         done()
-      }, 300)
+      }, 100)
     })
   })
 })

@@ -3,10 +3,11 @@
 define(["./_DomTemplatedWidget",
   "dojo/_base/declare",
   "../tests/loadTestEnv!",
+  "./tests/_DomTemplatedWidgetWithCounter",
   "./tests/_DomTemplatedWidgetWithContainerNode",
   "./tests/_DomTemplatedWidgetWithContainerNodeWrapper",
   "./tests/_DomTemplatedWidgetWithoutContainerNode"],
-function (_DomTemplatedWidget, declare, TestEnv) {
+function (_DomTemplatedWidget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
   describe("_DomTemplatedWidget", function () {
     var widget
     var $container
@@ -65,6 +66,18 @@ function (_DomTemplatedWidget, declare, TestEnv) {
         widget.instance[nodeName].dispatchEvent(new Event("click"))
         expect(widget.instance[clickFlag]).toBeTruthy()
       })
+    })
+
+    it("should attach only once", function () {
+      // Dijit's parser EventNode and _AttachMixin implement the same functionality
+      var t = new TestEnv().createWidget(null, _DomTemplateWidgetWithCounter)
+
+      widget = t.widget
+      widget.startup()
+
+      expect(widget.counter).toBe(0)
+      widget.$counter.trigger("click")
+      expect(widget.counter).toBe(1)
     })
   })
 })

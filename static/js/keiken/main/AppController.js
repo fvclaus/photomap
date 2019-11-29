@@ -32,6 +32,8 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
   var controls = main.getControls()
   var dialog = main.getInput()
 
+  // TODO Add listener for keyup event
+
   return declare(null, {
 
     constructor: function () {
@@ -71,6 +73,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           quota.update(clientstate.getUsedSpace(), clientstate.getLimit())
         },
         updated: function (model) {
+          <!-- TODO: #mp-user-limit .update -->
           quota.update(clientstate.getUsedSpace(), clientstate.getLimit())
           description.update(model)
         },
@@ -211,6 +214,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         }, "Fullscreen")
 
         /* --------------- Other Albumview Events ----------------- */
+        <!-- Click on #mp-page-title. What the hell is that? -->
         communicator.subscribe("clicked:PageTitle", function () {
           description.update(state.getAlbum())
           appState.updateDescription("album")

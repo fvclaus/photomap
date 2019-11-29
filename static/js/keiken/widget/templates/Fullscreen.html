@@ -6,24 +6,25 @@
   <header class="mp-fullscreen-header"
           id="mp-fullscreen-header">
     <div class="mp-fullscreen-nav">
-      <img class="mp-fullscreen-nav-prev mp-cursor-pointer mp-control"
-           id="mp-fullscreen-nav-prev"
+      <img class="mp-cursor-pointer mp-control"
            src="/static/images/image-arrow-left.png"
-           data-dojo-attach-point="navLeftNode" />
+           data-dojo-attach-point="navLeftNode"
+           data-dojo-attach-event="onclick: _navigateLeft" />
     </div>
     <div class="mp-fullscreen-title-wrapper">
       <h2 id="mp-fullscreen-title"
           data-dojo-attach-point="titleNode"></h2>
     </div>
     <div class="mp-fullscreen-nav">
-      <img class="mp-fullscreen-nav-next mp-cursor-pointer mp-control"
-           id="mp-fullscreen-nav-next"
+      <img class="mp-cursor-pointer mp-control"
            src="/static/images/image-arrow-right.png"
-           data-dojo-attach-point="navRightNode" />
+           data-dojo-attach-point="navRightNode"
+           data-dojo-attach-event="onclick: _navigateRight" />
     </div>
     <div class="mp-fullscreen-close mp-cursor-pointer"
          id="mp-fullscreen-close"
-         data-dojo-attach-point="closeNode">
+         data-dojo-attach-point="closeNode"
+         data-dojo-attach-event="onclick: hide">
       {% trans "close" %}
     </div>
   </header>

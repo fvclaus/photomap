@@ -4,8 +4,8 @@
       <img class="mp-cursor-pointer mp-control"
            id="mp-slideshow-nav-prev"
            data-dojo-attach-point="navLeftNode"
-           src="/static/images/album-arrow-left.png"
-           title='${messages.previousPhoto}' />
+           data-dojo-attach-event="onclick: _navigateLeft"
+           src="/static/images/album-arrow-left.png" />
     </div>
     <div data-dojo-attach-point="carouselNode">
     </div>
@@ -13,8 +13,8 @@
       <img class="mp-cursor-pointer mp-control"
            id="mp-slideshow-nav-next"
            data-dojo-attach-point="navRightNode"
-           src="/static/images/album-arrow-right.png"
-           title='${messages.nextPhoto}' />
+           data-dojo-attach-event="onclick: _navigateRight"
+           src="/static/images/album-arrow-right.png" />
     </div>
   </div>
   <div class="mp-slideshow-info">

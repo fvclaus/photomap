@@ -12,6 +12,15 @@ define(["dojo/_base/declare",
   "../model/Collection",
   "dojo/text!./templates/Gallery.html"],
 function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Collection, templateString) {
+  var navigateCarousel = function (navigationFnName) {
+    return function () {
+      if (this._run && this.active) {
+        this.carousel[navigationFnName]()
+        communicator.publish("opened:GalleryPage", this.carousel.getCurrentPageIndex())
+      }
+    }
+  }
+
   return declare(_DomTemplatedWidget, {
     VISITED_PHOTO_CLASSNAME: "mp-gallery-visited",
     templateString: templateString,
@@ -62,7 +71,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
       this._unbindPhotoCollectionListener()
       this._run = true
 
-      this.$insert.show()
+      this.$insert && this.$insert.show()
       this.carousel.load(photos)
       if (photo) {
         this.carousel.navigateTo(photo)
@@ -85,7 +94,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
      */
     reset: function () {
       this._run = false
-      this.$insert.hide()
+      this.$insert && this.$insert.hide()
       this.carousel.reset()
       this._unbindPhotoCollectionListener()
       this._showNoPlaceSelectedInfoText()
@@ -147,32 +156,8 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
         }
       }.bind(this))
     },
-    _bindListener: function () {
-      var navigateGallery = function (navigationFnName) {
-        return function () {
-          if (this._run && this.active) {
-            this.carousel[navigationFnName]()
-            communicator.publish("opened:GalleryPage", this.carousel.getCurrentPageIndex())
-          }
-        }.bind(this)
-      }.bind(this)
-
-      // carousel is undefined when listeners are registered.
-      var navigateLeft = navigateGallery("navigateLeft")
-      var navigateRight = navigateGallery("navigateRight")
-
-      this.$navLeft.on("click", navigateLeft)
-      this.$navRight.on("click", navigateRight)
-
-      $("body")
-        .on("keyup.Gallery", null, "left", navigateLeft)
-        .on("keyup.Gallery", null, "right", navigateRight)
-
-      // the following events are not relevant for guests
-      if (this._isAdmin) {
-        this.$insert.on("click", this._insert.bind(this))
-      }
-    },
+    _navigateLeft: navigateCarousel("navigateLeft"),
+    _navigateRight: navigateCarousel("navigateRight"),
     _insert: function () {
       communicator.publish("clicked:GalleryInsert")
     }

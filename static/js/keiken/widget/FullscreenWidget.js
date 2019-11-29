@@ -12,6 +12,15 @@ define(["dojo/_base/declare",
   "dojo/text!./templates/Fullscreen.html",
   "dojo/domReady!"],
 function (declare, _DomTemplatedWidget, PhotoCarouselWidget, Collection, communicator, templateString) {
+  // carousel is undefined when listeners are registered.
+  var navigateCarousel = function (navigationFnName) {
+    return function () {
+      if (this.active) {
+        this.carousel[navigationFnName]()
+      }
+    }
+  }
+
   return declare([_DomTemplatedWidget], {
     templateString: templateString,
 
@@ -38,7 +47,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, Collection, communi
     },
     load: function (photos) {
       assertInstance(photos, Collection, "Photos must be of type Collection.")
-      assert(this._started, true, "Must call startup() before.")
+      assertTrue(this._started, true, "Must call startup() before.")
       this._loaded = true
       this.carousel.load(photos)
     },
@@ -69,36 +78,18 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, Collection, communi
     _onCarouselUpdate: function () {
       communicator.publish("updated:Fullscreen")
     },
+    _navigateLeft: navigateCarousel("navigateLeft"),
+    _navigateRight: navigateCarousel("navigateRight"),
     _bindListener: function () {
-      var navigateGallery = function (navigationFnName) {
-        return function () {
-          if (this.active) {
-            this.carousel[navigationFnName]()
-          }
-        }.bind(this)
-      }.bind(this)
-
-      // carousel is undefined when listeners are registered.
-      var navigateLeft = navigateGallery("navigateLeft")
-      var navigateRight = navigateGallery("navigateRight")
-
-      var instance = this
-      this.$navLeft.on("click.Fullscreen", navigateLeft)
-      this.$navRight.on("click.Fullscreen", navigateRight)
-
-      this.$close.on("click.Fullscreen", function () {
-        console.log("FullscreenWidget: close")
-        instance.hide()
-      })
       $("body")
         .on("keyup.Fullscreen", null, "esc", function () {
-          if (instance.active) {
+          if (this.active) {
             this.hide()
             communicator.publish("closed:Fullscreen")
           }
         }.bind(this))
-        .on("keyup.Fullscreen", null, "left", navigateLeft)
-        .on("keyup.Fullscreen", null, "right", navigateRight)
+        .on("keyup.Fullscreen", null, "left", this._navigateLeft.bind(this))
+        .on("keyup.Fullscreen", null, "right", this._navigateRight.bind(this))
     }
   })
 })

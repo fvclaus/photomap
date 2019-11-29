@@ -5,8 +5,8 @@
  * @description Base class for all widgets. It defines and enforces certain API conventions that all widgets must follow.
 */
 define(["dojo/_base/declare",
+  "dojo/_base/lang",
   "dijit/_WidgetBase",
-  "dijit/_AttachMixin",
   "dojox/dtl/_DomTemplated",
   "dojox/dtl/contrib/dijit",
   "dojox/dtl/_base",
@@ -14,24 +14,60 @@ define(["dojo/_base/declare",
   "../view/View",
   "./loadDtlDirectives!",
   "dojo/domReady!"],
-function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, on, View) {
-  return declare([View, _WidgetBase, _DomTemplated, _AttachMixin], {
+function (declare, lang, _WidgetBase, _DomTemplated, ddcd, dd, on, View) {
+  ddcd.AttachNode = declare(ddcd.AttachNode, {
+    render: function (context, buffer) {
+      if (!this.rendered) {
+        this._keys.forEach(function (key) {
+          context.getThis()["$" + key.replace("Node", "")] = $(this._object || buffer.getParent())
+        })
+      }
+      return this.inherited(this.render, arguments)
+    }
+  })
+
+  ddcd.DojoTypeNode = declare(ddcd.DojoTypeNode, {
+    constructor: function (node) {
+      this._instanceName = node.getAttribute("data-widget-instance-name")
+    },
+    render: function (context, buffer) {
+      buffer = this.inherited(this.render, arguments)
+      if (this._instanceName) {
+        context.getThis()[this._instanceName] = this._dijit
+      }
+      return buffer
+    }
+  })
+
+  /**
+    * Patch addEvent function of DomBuffer.
+    * It uses dojo/on which uses dojo/mouse to map mouseenter and mouseleave events to mouseover and mouseout.
+    * This was done to make all browsers compatible with IE.
+    */
+  dd.DomBuffer = declare(dd.DomBuffer, {
+    addEvent: function (context, type, fn, /* Array|Function */ args) {
+      if (!context.getThis()) { throw new Error("You must use Context.setObject(instance)") }
+      this.onAddEvent && this.onAddEvent(this.getParent(), type, fn)
+      var resolved = fn
+      if (lang.isArray(args)) {
+        resolved = function (e) {
+          this[fn].apply(this, [e].concat(args))
+        }
+      }
+      return on(this.getParent(), type.replace(/^on/, "").toLowerCase(), lang.hitch(context.getThis(), resolved))
+    }
+  })
+
+  return declare([View, _WidgetBase, _DomTemplated], {
     widgetsInTemplate: true,
-    /*
-     * @public
-     * @description Widgets must expose a certain number of function. The constructor will check if they have been defined in the child class.
-     */
+    // eslint-disable-next-line no-unused-vars
     constructor: function (params, srcNodeRef) {
       assertString(this.viewName, "Every PhotoWidget must define a viewName")
       assertString(this.templateString, "Every PhotoWidget must define a templateString.")
-      var $children = $(srcNodeRef)
+      this.$children = $(srcNodeRef)
         .children()
         .detach()
         .removeClass("mp-cloak")
-      if ($children.length > 0) {
-        this.children = $children.get(0)
-        this.children.safe = true
-      }
     },
     /*
      * @public
@@ -41,64 +77,16 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, on, View)
     buildRendering: function () {
       this.inherited(this.buildRendering, arguments)
       this.$domNode = $(this.domNode)
-      if (this.children && this.containerNode) {
-        $(this.containerNode).append(this.children)
+      this.$container = this.$domNode
+      // containerNode is used for this exact purpose in _TemplatedMixin._fillContent()
+      if (this.$children && this.containerNode) {
+        $(this.containerNode).append(this.$children)
       }
-      this._attachChildContainers()
-      this._wireJQueryElements()
-      this._wireWidgetInTemplateInstances()
-    },
-    /**
-      * See _attachChildContainers for detailed explanation
-      * Prevent _AttachMixin from attaching to elements of descendant widget.
-      */
-    // eslint-disable-next-line no-unused-vars
-    _processTemplateNode: function (baseNode, getAttrFunc, attachFunc) {
-      var widgetid = getAttrFunc(baseNode, "widgetid")
-      if (widgetid && widgetid !== this.id) {
-        return false
-      } else {
-        return this.inherited(this._processTemplateNode, arguments)
-      }
-    },
-    _removeContainerNodeAttachPoint: function (el) {
-      el.childNodes.forEach(function (child) {
-        if (child.getAttribute && child.getAttribute("data-dojo-attach-point") === "containerNode") {
-          child.removeAttribute("data-dojo-attach-point")
-        }
-        this._removeContainerNodeAttachPoint(child)
-      }.bind(this))
-    },
-    _isUnattachedContainerNode: function (attachNode, domNode) {
-      var isContainerNode = attachNode._keys.indexOf("containerNode") !== -1
-      var isUnattachedNode = !domNode.hasAttribute("data-container-node-attached")
-      return isContainerNode && isUnattachedNode
-    },
-    _attachChildContainer: function (childWidgetInstance) {
-      var currentDomNode
-      childWidgetInstance.template.nodelist.contents.forEach(function (renderNode) {
-        if (renderNode.constructor === dd._DomNode) {
-          currentDomNode = renderNode.contents
-        } else if (renderNode.constructor === ddcd.AttachNode &&
-          this._isUnattachedContainerNode(renderNode, currentDomNode)) {
-          currentDomNode.childNodes.forEach(function (childNode) {
-            this._attachTemplateNodes(childNode)
-          }.bind(this))
-          currentDomNode.setAttribute("data-container-node-attached", true)
-        }
-      }.bind(this))
-    },
-    /**
-      * Patch the _attach function of _AttachMixin.
-      * It uses dojo/mouse which maps mouseenter and mouseleave events to mouseover and mouseout.
-      * This was done to make all browsers compatible with IE.
-      */
-    _attach: function (node, type, func) {
-      return on(node, type.replace(/^on/, "").toLowerCase(), func)
+      this._attachChildContainers2()
     },
     /**
       * Attach dojo-attach-event and dojo-attach-point of elements inside
-      * containerNodes of immediate descendants of this widget:
+      * containerNodes of immediate children of this widget:
       * <div>
       *  <div data-dojo-type="otherWidget">
       *    <span data-dojo-attach-point="myAttachPoint" />
@@ -106,28 +94,17 @@ function (declare, _WidgetBase, _AttachMixin, _DomTemplated, ddcd, dd, on, View)
       * </div>
       * In the above example the myAttachPoint should not be attached to the otherWidget instance,
       * but to the enclosing widget instance.
-      * AFAIK This is not supported by dojo. dojo will attach myAttachPoint to all ancestors of otherWidget.
-      * This is not really relevant for attach-points, but breaks attach-events bind listeners to the dom.
-      * This method only works with the overwritten _processTemplateNode function.
+      * AFAIK This is not supported by dojo. _AttachMixin will ignore everything in a containerNode.
+      * There will also be no Attach- or EventNode because the node list only contains nodes that belong this this widget.
       */
-    _attachChildContainers: function () {
+    _attachChildContainers2: function () {
       this._findTypeNodes(this.template)
         .forEach(function (typeNode) {
-          this._attachChildContainer(typeNode._dijit)
-        }.bind(this))
-    },
-    _wireJQueryElements: function () {
-      this._attachPoints.forEach(function (attachPoint) {
-        this["$" + attachPoint.replace("Node", "")] = $(this[attachPoint])
-      }.bind(this))
-      this.$container = $(this.domNode)
-    },
-    _wireWidgetInTemplateInstances: function () {
-      this._findTypeNodes(this.template)
-        .forEach(function (node) {
-          var instanceName = node._node.getAttribute("data-widget-instance-name")
-          if (instanceName) {
-            this[instanceName] = node._dijit
+          var $children = typeNode._dijit.$children
+          if ($children && $children.length > 0) {
+            var template = new dd.DomTemplate($children.get(0))
+
+            this._render.render(this._getContext(), template)
           }
         }.bind(this))
     },

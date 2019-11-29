@@ -14,6 +14,15 @@ define(["dojo/_base/declare",
   "dojo/text!./templates/Slideshow.html",
   "./InfoTextWidget"],
 function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Collection, templateString) {
+  var navigateCarousel = function (navigationFnName) {
+    return function () {
+      if (this._run && this.active) {
+        this.carousel[navigationFnName]()
+        communicator.publish("opened:GalleryPage", this.carousel.getCurrentPageIndex())
+      }
+    }
+  }
+
   return declare([_DomTemplatedWidget], {
     templateString: templateString,
 
@@ -151,30 +160,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
     _emptyPhotoNumber: function () {
       this.$photoNumber.text("")
     },
-    /**
-      * @private
-      * @description Sets listener for both navigation elements and the image to start the fullscreen
-      */
-    _bindListener: function () {
-      var navigateGallery = function (navigationFnName) {
-        return function () {
-          if (this._run && this.active) {
-            this.carousel[navigationFnName]()
-            communicator.publish("opened:GalleryPage", this.carousel.getCurrentPageIndex())
-          }
-        }.bind(this)
-      }.bind(this)
-
-      // carousel is undefined when listeners are registered.
-      var navigateLeft = navigateGallery("navigateLeft")
-      var navigateRight = navigateGallery("navigateRight")
-
-      this.$navLeft.on("click", navigateLeft)
-      this.$navRight.on("click", navigateRight)
-
-      $("body")
-        .on("keyup.Slideshow", null, "left", navigateLeft)
-        .on("keyup.Slideshow", null, "right", navigateRight)
-    }
+    _navigateLeft: navigateCarousel("navigateLeft"),
+    _navigateRight: navigateCarousel("navigateRight")
   })
 })

@@ -9,13 +9,12 @@
       <img class="mp-cursor-pointer mp-control"
            id="mp-gallery-nav-left"
            src="/static/images/album-arrow-left.png"
-           title='${messages.previousPage}'
-           data-dojo-attach-point="navLeftNode" />
+           data-dojo-attach-point="navLeftNode"
+           data-dojo-attach-event="onclick: _navigateLeft" />
     </span>
   </div>
   <!-- photo: .mp-thumb mp-cursor-pointer mp-control !-->
   <!-- loader: .mp-gallery-loader !-->
-  <!-- .mp-thumb-visited /static/images/visited.png!-->
   <div data-dojo-attach-point="carouselNode">
   </div>
   <div class="mp-gallery-nav column"
@@ -24,15 +23,15 @@
       <img class="mp-cursor-pointer mp-control"
            id="mp-gallery-nav-right"
            src="/static/images/album-arrow-right.png"
-           title='${messages.nextPage}'
-           data-dojo-attach-point="navRightNode" />
+           data-dojo-attach-point="navRightNode"
+           data-dojo-attach-event="onclick: _navigateRight" />
     </span>
     {% if _isAdmin %}
     <span>
       <img class="mp-option-insert-photo mp-cursor-pointer mp-control mp-nodisplay"
            src="/static/images/add.png"
-           title='${messages.insertPhoto}'
-           data-dojo-attach-point="insertNode" />
+           data-dojo-attach-point="insertNode"
+           data-dojo-attach-event="onclick: _insert" />
     </span>
     {% endif %}
   </div>
