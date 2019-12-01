@@ -7,13 +7,13 @@
 
 define([
   "dojo/_base/declare",
-  "../widget/_DomTemplatedWidget",
+  "../widget/_Widget",
   "../util/ClientState",
   "dojo/text!./templates/DialogMessage.html",
   "dojo/domReady!"
 ],
-function (declare, View, clientstate, templateString) {
-  return declare(View, {
+function (declare, _Widget, clientstate, templateString) {
+  return declare(_Widget, {
     viewName: "DialogMessageWidget",
     templateString: templateString,
     // eslint-disable-next-line no-unused-vars

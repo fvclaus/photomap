@@ -6,12 +6,12 @@
  * @requires UICarousel
  */
 define(["dojo/_base/declare",
-  "./_DomTemplatedWidget",
+  "./_Widget",
   "./PhotoCarouselWidget",
   "../util/Communicator",
   "../model/Collection",
   "dojo/text!./templates/Gallery.html"],
-function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Collection, templateString) {
+function (declare, _Widget, PhotoCarouselWidget, communicator, Collection, templateString) {
   var navigateCarousel = function (navigationFnName) {
     return function () {
       if (this._run && this.active) {
@@ -21,7 +21,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, communicator, Colle
     }
   }
 
-  return declare(_DomTemplatedWidget, {
+  return declare(_Widget, {
     VISITED_PHOTO_CLASSNAME: "mp-gallery-visited",
     templateString: templateString,
     viewName: "Gallery",

@@ -2,12 +2,12 @@
 
 define([
   "dojo/_base/declare",
-  "./_DomTemplatedWidget",
+  "./_Widget",
   "../util/Communicator",
   "dojo/text!./templates/ModelOperation.html",
   "dojo/mouse"],
-function (declare, _DomTemplatedWidget, communicator, template) {
-  return declare(_DomTemplatedWidget, {
+function (declare, _Widget, communicator, template) {
+  return declare(_Widget, {
     templateString: template,
     viewName: "ModelOperation",
 

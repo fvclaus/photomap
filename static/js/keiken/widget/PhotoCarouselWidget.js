@@ -16,12 +16,12 @@
 
 define(["dojo/_base/declare",
   "dojo/_base/lang",
-  "../widget/_DomTemplatedWidget",
+  "../widget/_Widget",
   "../util/PhotoPages",
   "../util/CarouselAnimation",
   "dojo/text!./templates/PhotoCarousel.html"],
-function (declare, lang, _DomTemplatedWidget, PhotoPages, CarouselAnimation, templateString) {
-  return declare(_DomTemplatedWidget, {
+function (declare, lang, _Widget, PhotoPages, CarouselAnimation, templateString) {
+  return declare(_Widget, {
     ID_DATA_ATTRIBUTE: "data-keiken-id",
     ABSENT_PHOTO_CLASSNAME: "mp-carousel-photo-empty",
     PRESENT_PHOTO_CLASSNAME: "mp-carousel-photo",

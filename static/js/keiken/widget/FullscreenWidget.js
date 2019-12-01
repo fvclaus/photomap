@@ -5,13 +5,13 @@
  * @description Displays current slideshow-image as fullscreen, supports zooming into the image
  */
 define(["dojo/_base/declare",
-  "./_DomTemplatedWidget",
+  "./_Widget",
   "./PhotoCarouselWidget",
   "../model/Collection",
   "../util/Communicator",
   "dojo/text!./templates/Fullscreen.html",
   "dojo/domReady!"],
-function (declare, _DomTemplatedWidget, PhotoCarouselWidget, Collection, communicator, templateString) {
+function (declare, _Widget, PhotoCarouselWidget, Collection, communicator, templateString) {
   // carousel is undefined when listeners are registered.
   var navigateCarousel = function (navigationFnName) {
     return function () {
@@ -21,7 +21,7 @@ function (declare, _DomTemplatedWidget, PhotoCarouselWidget, Collection, communi
     }
   }
 
-  return declare([_DomTemplatedWidget], {
+  return declare([_Widget], {
     templateString: templateString,
 
     viewName: "Fullscreen",

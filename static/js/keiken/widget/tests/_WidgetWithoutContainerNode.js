@@ -1,6 +1,6 @@
 define(["dojo/_base/declare",
-  "../_DomTemplatedWidget"], function (declare, _DomTemplatedWidget) {
-  return declare(_DomTemplatedWidget, {
+  "../_Widget"], function (declare, _Widget) {
+  return declare(_Widget, {
     templateString:
     "<div data-dojo-attach-point='rootNode' " +
     "     data-dojo-attach-event='onclick: clickRoot' >" +
@@ -8,7 +8,7 @@ define(["dojo/_base/declare",
     "      data-dojo-attach-event='onclick: clickChild' > " +
     " </div> " +
     "</div>",
-    viewName: "_DomTemplatedWidgetWithoutContainerNode",
+    viewName: "_WidgetWithoutContainerNode",
     clickRoot: function () {
       this.isRootNodeClicked = true
     },

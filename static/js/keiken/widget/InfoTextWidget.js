@@ -7,10 +7,10 @@
  */
 
 define(["dojo/_base/declare",
-  "./_DomTemplatedWidget",
+  "./_Widget",
   "dojo/text!./templates/InfoText.html"],
-function (declare, _DomTemplatedWidget, templateString) {
-  return declare(_DomTemplatedWidget, {
+function (declare, _Widget, templateString) {
+  return declare(_Widget, {
     viewName: "",
     templateString: templateString,
     _extendDefaults: function (options) {

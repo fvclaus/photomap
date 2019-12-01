@@ -1,8 +1,8 @@
 define(["dojo/_base/declare",
-  "../_DomTemplatedWidget"], function (declare, _DomTemplatedWidget) {
-  return declare(_DomTemplatedWidget, {
+  "../_Widget"], function (declare, _Widget) {
+  return declare(_Widget, {
     templateString: "<div>" +
-      " <div data-dojo-type='keiken/widget/tests/_DomTemplatedWidgetWithContainerNode'>" +
+      " <div data-dojo-type='keiken/widget/tests/_WidgetWithContainerNode'>" +
       "   <div class='mp-cloak'>" +
       "     <button data-dojo-attach-point='buttonNode' " +
       "             data-dojo-attach-event='onclick: click'>" +
@@ -11,7 +11,7 @@ define(["dojo/_base/declare",
       "   </div>" +
       " </div>" +
       "</div>",
-    viewName: "_DomTemplatedWidgetWithContainerNodeWrapper",
+    viewName: "_WidgetWithContainerNodeWrapper",
     click: function () {
       this.isClicked = true
     }

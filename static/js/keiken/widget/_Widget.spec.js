@@ -1,14 +1,14 @@
 "use strict"
 
-define(["./_DomTemplatedWidget",
+define(["./_Widget",
   "dojo/_base/declare",
   "../tests/loadTestEnv!",
-  "./tests/_DomTemplatedWidgetWithCounter",
-  "./tests/_DomTemplatedWidgetWithContainerNode",
-  "./tests/_DomTemplatedWidgetWithContainerNodeWrapper",
-  "./tests/_DomTemplatedWidgetWithoutContainerNode"],
-function (_DomTemplatedWidget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
-  describe("_DomTemplatedWidget", function () {
+  "./tests/_WidgetWithCounter",
+  "./tests/_WidgetWithContainerNode",
+  "./tests/_WidgetWithContainerNodeWrapper",
+  "./tests/_WidgetWithoutContainerNode"],
+function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
+  describe("_Widget", function () {
     var widget
     var $container
 
@@ -17,9 +17,9 @@ function (_DomTemplatedWidget, declare, TestEnv, _DomTemplateWidgetWithCounter) 
     })
 
     it("should connect data-event of container nodes of immediate children", function () {
-      var Widget = declare(_DomTemplatedWidget, {
+      var Widget = declare(_Widget, {
         templateString: "<div>" +
-          "<div data-dojo-type='keiken/widget/tests/_DomTemplatedWidgetWithContainerNodeWrapper' " +
+          "<div data-dojo-type='keiken/widget/tests/_WidgetWithContainerNodeWrapper' " +
                "data-widget-instance-name='wrapper'>" +
           "</div>" +
         "</div>",
@@ -39,10 +39,10 @@ function (_DomTemplatedWidget, declare, TestEnv, _DomTemplateWidgetWithCounter) 
     })
 
     it("should not connect data-event of children", function () {
-      var Widget = declare(_DomTemplatedWidget, {
+      var Widget = declare(_Widget, {
         templateString: "<div>" +
         " <div data-dojo-attach-point='myNode' /> " +
-        " <div data-dojo-type='keiken/widget/tests/_DomTemplatedWidgetWithoutContainerNode' " +
+        " <div data-dojo-type='keiken/widget/tests/_WidgetWithoutContainerNode' " +
         "      data-widget-instance-name='instance'>" +
         " </div>" +
         "</div>",
