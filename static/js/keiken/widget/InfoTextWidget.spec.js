@@ -11,7 +11,7 @@ function (InfoTextWidget, TestEnv) {
       widget.destroy()
     })
 
-    var itWithOpenInfoText = TestEnv.wrapJasmineIt(function (testFnWrapper) {
+    var itWithOpenInfoText = TestEnv.wrapJasmineItAsyncSetup(function (testFnWrapper) {
       return setTimeout(testFnWrapper, 200)
     }, function () {
       var t = new TestEnv().createWidget(null, InfoTextWidget)

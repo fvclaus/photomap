@@ -16,15 +16,8 @@ function (declare, _Widget, clientstate, templateString) {
   return declare(_Widget, {
     viewName: "DialogMessageWidget",
     templateString: templateString,
-    // eslint-disable-next-line no-unused-vars
-    constructor: function (params, srcNodeRef) {
-
-    },
     startup: function () {
       this.inherited(this.startup, arguments)
-      this.$container.hide()
-      this.$success.hide()
-      this.$failure.hide()
       this.$autoCloseInput
         .prop("checked", clientstate.getDialogAutoClose())
     },
@@ -35,12 +28,14 @@ function (declare, _Widget, clientstate, templateString) {
         })
     },
     showSuccess: function () {
-      this.$container.show()
-      this.$success.show("slow")
+      this.$success
+        .toggleClass("mp-nodisplay", false)
+        .show("slow")
     },
     showFailure: function (error) {
-      this.$container.show()
-      this.$failure.show("slow")
+      this.$failure
+        .toggleClass("mp-nodisplay", false)
+        .show("slow")
       this.$error.html(error.toString())
     }
   })

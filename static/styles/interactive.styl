@@ -10,7 +10,7 @@
  top 0
  left 50%
  z-index 10 //maybe we can get rid of that
- 
+
 .mp-full-page
   width 100%
   height 80% // === content height
@@ -41,8 +41,8 @@
 .mp-full-column
   width 100%
   height 100%
-  position absolute 
-  top 0 
+  position absolute
+  top 0
   left 0
   background-color $background-color
   //TODO mp-data is not a good name
@@ -54,7 +54,7 @@
 .mp-full-left-column
   /* absolute is behind the map, unless z-index is specified. But: EditControls don't have z-index. */
   position relative
-  
+
 
 .mp-full-column-controls
   width 100%
@@ -92,23 +92,29 @@
  * #mp-detail-wrapper and #mp-detail-teaser. The title is a simple p and the description is wrapped
  * inside a div both times. */
 
-#mp-detail
-  z-index 100
+.mp-description
+  height: 100%
+  &__short-description-wrapper
+    display: flex
+    flex-direction: column
+    height: 100%
+  &__short-description
+    overflow: overlay
 
 #mp-detail-wrapper
   height 90% // 100% - 10% (detail-controls)
 
 #mp-detail-teaser
-  height 40% // 100% - 56% (+ 1% margin of slideshow) 
+  height 40% // 100% - 56% (+ 1% margin of slideshow)
 
 /* Styling all titles & all descriptions.*/
 #mp-detail-title,
 #mp-detail-teaser-title,
 #mp-detail-description-wrapper,
 #mp-detail-teaser-description-wrapper
-  width 80% 
+  width 80%
   padding 0 10%
-  
+
 /* Changes only the titles */
 #mp-detail-title,
 #mp-detail-teaser-title

@@ -6,15 +6,17 @@
 */
 define(["dojo/_base/declare",
   "dojo/_base/lang",
+  "dojo/parser",
   "dijit/_WidgetBase",
   "dojox/dtl/_DomTemplated",
   "dojox/dtl/contrib/dijit",
   "dojox/dtl/_base",
+  "dojox/dtl/render/dom",
   "dojo/on",
   "../view/View",
   "./loadDtlDirectives!",
   "dojo/domReady!"],
-function (declare, lang, _WidgetBase, _DomTemplated, ddcd, dd, on, View) {
+function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on, View) {
   ddcd.AttachNode = declare(ddcd.AttachNode, {
     render: function (context, buffer) {
       if (!this.rendered) {
@@ -58,12 +60,74 @@ function (declare, lang, _WidgetBase, _DomTemplated, ddcd, dd, on, View) {
     }
   })
 
+  var origConstruct = parser.construct
+
+  parser.construct = function (ctor, node, mixin, options, scripts, inherited) {
+    if (!options.propsThis) {
+      options.propsThis = currentRenderedWidget
+    }
+    return origConstruct.apply(this, arguments)
+  }
+
+  var orig_functionFromScript = parser._functionFromScript
+
+  parser._functionFromScript = function () {
+    var fn = orig_functionFromScript.apply(this, arguments)
+    return fn.bind(currentRenderedWidget)
+  }
+
+  var currentRenderedWidget
+
+  parser.construct = function (ctor, node) {
+    var params = {}
+
+    // Get list of attributes explicitly listed in the markup
+    var attributes = node.attributes
+    var consumedAttributes = []
+    // Read in attributes and process them, including data-dojo-props, data-dojo-type,
+    // dojoAttachPoint, etc., as well as normal foo=bar attributes.
+    var i = 0; var item
+    while (item = attributes[i++]) {
+      var name = item.name
+      if (!name.startsWith("data-")) {
+        var camelCaseName = name
+          .replace(/-\w/g,
+            function (group) {
+              return group[1].toUpperCase()
+            })
+        var resolveName = function (context, name) {
+          var contextValue = context[name]
+          if (typeof contextValue !== "undefined") {
+            return contextValue.bind ? contextValue.bind(context) : contextValue
+          } else {
+            try {
+              // eslint-disable-next-line no-eval
+              return eval(name)
+            } catch (e) {
+              return undefined
+            }
+          }
+        }
+        params[camelCaseName] = resolveName(currentRenderedWidget, item.value)
+        consumedAttributes.push(name)
+      }
+    }
+
+    consumedAttributes.forEach(function (attribute) {
+      node.removeAttribute(attribute)
+    })
+
+    // create the instance
+    return new ctor(params, node)
+  }
+
   return declare([View, _WidgetBase, _DomTemplated], {
     widgetsInTemplate: true,
     // eslint-disable-next-line no-unused-vars
     constructor: function (params, srcNodeRef) {
       assertString(this.viewName, "Every PhotoWidget must define a viewName")
       assertString(this.templateString, "Every PhotoWidget must define a templateString.")
+      this.hasChildren = false
       this.$children = $(srcNodeRef)
         .children()
         .detach()
@@ -75,14 +139,21 @@ function (declare, lang, _WidgetBase, _DomTemplated, ddcd, dd, on, View) {
      * The dijit domNode member will be converted to $container. $container will be the root element of your widget.
      */
     buildRendering: function () {
+      var previousRenderedWidget = currentRenderedWidget
+      currentRenderedWidget = this
       this.inherited(this.buildRendering, arguments)
-      this.$domNode = $(this.domNode)
-      this.$container = this.$domNode
+      currentRenderedWidget = previousRenderedWidget
+    },
+
+    postCreate: function () {
       // containerNode is used for this exact purpose in _TemplatedMixin._fillContent()
-      if (this.$children && this.containerNode) {
-        $(this.containerNode).append(this.$children)
+      if (this.$children.length > 0 && this.containerNode) {
+        $(this.containerNode).html(this.$children)
+        this.hasChildren = true
       }
       this._attachChildContainers2()
+      this.$domNode = $(this.domNode)
+      this.$container = this.$domNode
     },
     /**
       * Attach dojo-attach-event and dojo-attach-point of elements inside
@@ -102,9 +173,12 @@ function (declare, lang, _WidgetBase, _DomTemplated, ddcd, dd, on, View) {
         .forEach(function (typeNode) {
           var $children = typeNode._dijit.$children
           if ($children && $children.length > 0) {
-            var template = new dd.DomTemplate($children.get(0))
+            // Make sure the original is not modified.
+            var template = new dd.DomTemplate($children.parent().html())
 
-            this._render.render(this._getContext(), template)
+            // Create a 'virtual' DOM node that does not overwrite the actual nodes
+            new ddrd.Render(document.createElement("div"))
+              .render(this._getContext(), template)
           }
         }.bind(this))
     },

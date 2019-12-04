@@ -75,7 +75,6 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         updated: function (model) {
           <!-- TODO: #mp-user-limit .update -->
           quota.update(clientstate.getUsedSpace(), clientstate.getLimit())
-          description.update(model)
         },
         deleted: function (model) {
           if (model === this._loadedPlace) {
@@ -85,7 +84,6 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
             fullscreen.reset()
           }
           quota.update(clientstate.getUsedSpace(), clientstate.getLimit())
-          description.empty(model)
           this._hideDetail()
         }
       }, "Model", this)
@@ -154,7 +152,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           },
           clicked: function (photo) {
             map.resetSelectedMarker()
-            this._hideDetail()
+            description.show(photo)
             this._navigateSlideshow(photo)
             appState.updatePhoto(photo.getId())
           },
@@ -186,7 +184,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           },
           updated: function (photo) {
             if (!this.ignoreNextSlideshowUpdate) {
-              description.update(photo)
+              description.show(photo)
               gallery.navigateTo(photo)
               // TODO Why is this not updated in a collection listener?
               clientstate.insertVisitedPhoto(photo)
@@ -216,7 +214,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         /* --------------- Other Albumview Events ----------------- */
         <!-- Click on #mp-page-title. What the hell is that? -->
         communicator.subscribe("clicked:PageTitle", function () {
-          description.update(state.getAlbum())
+          description.show(state.getAlbum())
           appState.updateDescription("album")
         })
       }
@@ -238,12 +236,6 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         map.startup(albumData, true, albumData.isOwner())
         gallery.startup({ adminMode: albumData.isOwner() })
         this._updateState(initialState, true)
-        // Guests should not see the Add description link.
-        // TODO This is a hack
-        if (this._isAdmin === false) {
-          $(".mp-insert-description").remove()
-          description.removeAddDescriptionLink()
-        }
       } else {
         this._isAdmin = true
         albums = new Collection(albumData, {
@@ -356,22 +348,22 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
       if (!markerModel) {
         return
       }
-      description.update(markerModel)
 
+      description.show(markerModel)
       if (state.isDashboardView()) {
         map.centerMarker(markerModel, -0.25)
-        description.slideIn()
       }
     },
     _hideDetail: function () {
-      description.closeDetail()
+      // TODO Animate description box.
+      description.hide()
       if (state.isDashboardView()) {
         map.showAll()
       }
     },
     _startPhotoWidgets: function (place) {
       var photos = place.getPhotos()
-      description.update(place)
+      description.show(place)
       gallery.load(photos)
       gallery.run()
       slideshow.load(photos)

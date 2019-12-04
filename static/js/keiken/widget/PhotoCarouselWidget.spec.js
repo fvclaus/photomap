@@ -57,7 +57,7 @@ function (PhotoCarouselWidget, Photo, Collection, TestEnv) {
       widget.destroy()
     })
 
-    var itWithPhotos = TestEnv.wrapJasmineIt(function (testFnWrapper) {
+    var itWithPhotos = TestEnv.wrapJasmineItAsyncSetup(function (testFnWrapper) {
       widget.options.onUpdate = testFnWrapper
     }, function () {
       widget.load(photos)

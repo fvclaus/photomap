@@ -51,7 +51,7 @@ function (declare, _Widget, communicator, template) {
       if (this._isMouseInsideWidget) {
         return
       }
-      this.$domNode.hide()
+      this.$domNode.toggleClass("mp-nodisplay", true)
     },
     hideAfterDelay: function (delayInMs) {
       this.hideControlsTimeoutId = window.setTimeout(this.hide.bind(this), delayInMs || 2000)
@@ -65,11 +65,13 @@ function (declare, _Widget, communicator, template) {
     _showMarkerControls: function (center) {
       center.left -= this.$domNode.outerWidth(true) / 2
 
-      this.$domNode.css({
-        top: center.top,
-        left: center.left,
-        display: "inline-block"
-      })
+      this.$domNode
+        .toggleClass("mp-nodisplay", false)
+        .css({
+          top: center.top,
+          left: center.left,
+          display: "inline-block"
+        })
     },
     publishOperation: function (event) {
       var operationName = event.target.getAttribute("data-operation-name")

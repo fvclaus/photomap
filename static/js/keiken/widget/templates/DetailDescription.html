@@ -1,0 +1,25 @@
+<div id="mp-detail-wrapper">
+  <p id="mp-detail-title"
+     data-dojo-attach-point="titleNode">{% trans "When selecting a Photo, Place or Album you
+    will view the description of the selected object in this box." %}</p>
+  <div id="mp-detail-description-wrapper"
+       class="mp-wrapper">
+    <p data-dojo-attach-point="descriptionNode" />
+
+    {% if options.isAdmin %}
+    <p>
+      <button data-dojo-attach-point="insertDescriptionNode"
+              data-dojo-attach-event="onclick: _onInsertDescription"
+              class="mp-nodisplay">
+        {% trans "ADD_DESCRIPTION" %}
+      </button>
+    </p>
+    {% endif %}
+
+    {% if options.abbreviateDescription %}
+    <span class='mp-control mp-cursor-pointer mp-open-full-description mp-nodisplay'
+          data-dojo-attach-event="onclick: _onShowDetail"
+          data-dojo-attach-point="detailLinkNode"> [...]</span>
+    {% endif %}
+  </div>
+</div>

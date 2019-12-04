@@ -20,7 +20,8 @@ function (DialogMessageWidget, clientState, TestEnv) {
     })
 
     it("should hide on startup", function () {
-      expect($container).toBeHidden()
+      expect(widget.$success).toBeHidden()
+      expect(widget.$failure).toBeHidden()
     })
 
     it("should show success", function () {

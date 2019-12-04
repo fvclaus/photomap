@@ -22,9 +22,7 @@ function (ModelOperationWidget, Album, communicator, TestEnv) {
       widget.destroy()
     })
 
-    var itWithAlbum = TestEnv.wrapJasmineIt(function (testFnWrapper) {
-      testFnWrapper()
-    }, function () {
+    var itWithAlbum = TestEnv.wrapJasmineItSyncSetup(function () {
       widget.show({
         modelInstance: new Album({
           title: "Album"

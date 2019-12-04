@@ -18,10 +18,9 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
 
     it("should connect data-event of container nodes of immediate children", function () {
       var Widget = declare(_Widget, {
-        templateString: "<div>" +
-          "<div data-dojo-type='keiken/widget/tests/_WidgetWithContainerNodeWrapper' " +
-               "data-widget-instance-name='wrapper'>" +
-          "</div>" +
+        templateString: "<div data-testid='containerNodeWrapperWrapper'>" +
+        " <div data-dojo-type='keiken/widget/tests/_WidgetWithContainerNodeWrapper' " +
+        "      data-widget-instance-name='wrapper' />" +
         "</div>",
         viewName: "Widget"
       })
@@ -31,11 +30,22 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
       widget = t.widget; $container = t.$container
 
       widget.startup()
+      expect(widget.hasChildren).toBeFalsy();
+      // Check that all wrapper containers still exist and have not been accidentally overwritten
+      ["containerNodeWrapper", "containerNodeWrapper", "containerNode"].forEach(function (containerId) {
+        expect(widget.$domNode.find("[data-testid='" + containerId + "']")).toBeInDom()
+      })
+      // Make sure children are rendered in correct container
+      expect(widget.$domNode.find("[data-testid='containerNode'] button")).toHaveLength(1)
       expect(widget.buttonNode).toBeUndefined()
+      expect(widget.wrapper.hasChildren).toBeFalsy()
       expect(widget.wrapper.buttonNode).toBeDefined()
       expect(widget.wrapper.isClicked).toBeFalsy()
       widget.wrapper.buttonNode.dispatchEvent(new Event("click"))
       expect(widget.wrapper.isClicked).toBeTruthy()
+
+      expect(widget.wrapper.container.buttonNode).toBeUndefined()
+      expect(widget.wrapper.container.hasChildren).toBeTruthy()
     })
 
     it("should not connect data-event of children", function () {

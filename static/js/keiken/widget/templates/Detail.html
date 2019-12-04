@@ -1,0 +1,32 @@
+<section class="mp-description">
+  <div data-dojo-attach-point="fullDescriptionWrapperNode"
+       class="mp-nodisplay">
+    <section class="mp-description__full-description">
+      <div class="mp-full-column-controls"
+           data-dojo-attach-point="closeNode">
+        <span class="mp-control mp-cursor-pointer mp-full-column-closer mp-close-full-description"
+              data-testid="mp-description-close"
+              data-dojo-attach-event="onclick: _close">
+          {% trans "Close" %}
+        </span>
+      </div>
+      <div data-dojo-type="keiken/widget/DetailDescriptionWidget"
+           data-widget-instance-name="fullDescription" />
+    </section>
+  </div>
+  <div data-dojo-attach-point="shortDescriptionWrapperNode"
+       class="mp-description__short-description-wrapper mp-nodisplay">
+    <div data-dojo-attach-point="containerNode"
+         class="mp-description__container"></div>
+    <section class="mp-description__short-description">
+
+      <div data-dojo-type="keiken/widget/DetailDescriptionWidget"
+           is-admin="options.adminMode"
+           abbreviate-description="true"
+           on-show-detail="_showFullDescription"
+           on-description-insert="_publishInsertDescription"
+           data-widget-instance-name="shortDescription">
+      </div>
+    </section>
+  </div>
+</section>

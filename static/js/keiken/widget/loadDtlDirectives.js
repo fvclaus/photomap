@@ -16,6 +16,9 @@ define([
     render: function (context, buffer) {
       this.contents.set(this.translation)
       return this.contents.render(context, buffer)
+    },
+    unrender: function (context, buffer) {
+      return buffer.remove(this.contents)
     }
   })
 

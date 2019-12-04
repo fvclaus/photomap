@@ -27,7 +27,7 @@ define(["dojo/_base/declare",
           } else {
             $container = this.createContainer()
           }
-          this.widget = new Widget(params, $container.get(0))
+          this.widget = new Widget(params || {}, $container.get(0))
           this.$container = TestEnv.findContainer().attr("id", this.widget.viewName)
           this.domNode = this.$container.get(0)
           return this
@@ -66,39 +66,61 @@ define(["dojo/_base/declare",
         return $els
       }
 
-      TestEnv.wrapJasmineIt = function (eventFn, triggerFn) {
+      var executeTestFn = function (testFn, done) {
+        return function () {
+          // We must release the subscription function
+          // otherwise a new publish event could result in an infinte loop.
+          setTimeout(function () {
+            switch (testFn.length) {
+              case 0:
+                try {
+                  testFn()
+                } catch (e) {
+                  console.error(e)
+                  throw e
+                } finally {
+                  done()
+                }
+                break
+              case 1:
+                testFn(done)
+                break
+              default:
+                console.error(name, "testFn has too many arguments")
+            }
+          })
+        }
+      }
+
+      var executeSetupFn = function (setupFn) {
+        try {
+          setupFn()
+        } catch (e) {
+          console.error("Error while preparing it " + e)
+          throw e
+        }
+      }
+
+      TestEnv.wrapJasmineItAsyncSetup = function (registerAsyncFn, setupFn) {
         return function (name, testFn) {
           it(name, function (done) {
-            eventFn(function () {
-              // We must release the subscription function
-              // otherwise a new publish event could result in an infinte loop.
-              setTimeout(function () {
-                switch (testFn.length) {
-                  case 0:
-                    try {
-                      testFn()
-                    } catch (e) {
-                      console.error(e)
-                      throw e
-                    } finally {
-                      done()
-                    }
-                    break
-                  case 1:
-                    testFn(done)
-                    break
-                  default:
-                    console.error(name, "testFn has too many arguments")
-                }
-              })
-            })
-            triggerFn()
+            registerAsyncFn(executeTestFn(testFn, done))
+            executeSetupFn(setupFn)
+          })
+        }
+      }
+
+      TestEnv.wrapJasmineItSyncSetup = function (setupFn) {
+        return function (name, testFn) {
+          it(name, function (done) {
+            executeSetupFn(setupFn)
+            executeTestFn(testFn, done)()
           })
         }
       }
 
       TestEnv.waitForPublishEvent = function (eventName, triggerPublishFn) {
-        return TestEnv.wrapJasmineIt(function (testFnWrapper) {
+        return TestEnv.wrapJasmineItAsyncSetup(function (testFnWrapper) {
           return communicator.subscribeOnce(eventName, testFnWrapper)
         }, triggerPublishFn)
       }
