@@ -32,7 +32,9 @@ module.exports = {
     "assertInstance": "readonly",
     "$": "readonly",
     "gettext": "readonly",
-    "interpolate": "readonly"
+    "interpolate": "readonly",
+    "google": "readonly",
+    "ol": "readonly"
   },
   rules: {
     "quotes": ["error", "double"],

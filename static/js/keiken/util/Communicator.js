@@ -89,6 +89,11 @@ function (declare, EventConfigurationParser) {
         return !eventObject.removeAfterNextInvocation
       })
     },
+    makePublishFn: function (event, data) {
+      return function () {
+        this.publish(event, data)
+      }
+    },
     clear: function () {
       this.events = {}
     }

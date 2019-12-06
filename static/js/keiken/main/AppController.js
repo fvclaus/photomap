@@ -1,6 +1,3 @@
-/* jslint */
-/* global $, define, main, window, init, initTest, finalizeInit, assertTrue, gettext */
-
 "use strict"
 
 /**
@@ -13,14 +10,12 @@ define([
   "./Main",
   "../util/Communicator",
   "./UIState",
-  "../model/Album",
-  "../model/Collection",
   "../util/ClientState",
   "../util/InfoText",
   "../util/Tools",
   "./AppStateHelper"
 ],
-function (declare, main, communicator, state, Album, Collection, clientstate, InfoText, tools, appState) {
+function (declare, main, communicator, state, clientstate, InfoText, tools, appState) {
   var map = main.getMap()
   var gallery = main.getGallery()
   var slideshow = main.getSlideshow()
@@ -91,7 +86,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
       /* ------------------------- Marker -------------------- */
       communicator.subscribe({
         mouseover: function (marker) {
-          if (this._isAdmin === true) {
+          if (this._isAdmin) {
             // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
             // offset.top *= 1.01
             controls.show({
@@ -108,7 +103,6 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         },
         clicked: function (markerPresenter) {
           this._showDetail(markerPresenter.getModel())
-          map.updateMarkerStatus(markerPresenter, "select")
           if (markerPresenter.getModel().getType() === "Album") {
             appState.updateAlbum(markerPresenter.getModel().getId())
           } else {
@@ -122,7 +116,6 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
           } else {
             this._loadedPlace = markerPresenter.getModel()
             this._startPhotoWidgets(markerPresenter.getModel())
-            map.updateMarkerStatus(markerPresenter, "open")
             appState.updateOpenedPlace(markerPresenter.getModel().getId())
           }
         }
@@ -130,7 +123,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
 
       /* ----------------------- Description  -------------------- */
       communicator.subscribe("closed:Detail", function () {
-        map.resetSelectedMarker()
+        map.resetMarkerDisplayStatus()
         this._hideDetail()
         appState.updateDescription(null)
       }, this)
@@ -151,7 +144,6 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
             controls.hideAfterDelay()
           },
           clicked: function (photo) {
-            map.resetSelectedMarker()
             description.show(photo)
             this._navigateSlideshow(photo)
             appState.updatePhoto(photo.getId())
@@ -233,7 +225,8 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         initialState = appState.setInitialState()
         pageTitle.update(albumData.getTitle())
         this._isAdmin = albumData.isOwner()
-        map.startup(albumData, true, albumData.isOwner())
+        map.startup(albumData.getPlaces(), albumData.isOwner(), albumData)
+        map.setMapMessage(true, albumData.isOwner())
         gallery.startup({ adminMode: albumData.isOwner() })
         this._updateState(initialState, true)
       } else {
@@ -241,7 +234,8 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         albums = new Collection(albumData, {
           modelType: "Album"
         })
-        map.startup(albums, false)
+        map.startup(albums, true)
+        map.setMapMessage(false, false)
         state.setAlbums(albums)
       }
     },
@@ -255,7 +249,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         if (album) {
           map.updateMarkerStatus(album, "select")
         } else if (!newState.album) {
-          map.resetSelectedMarker()
+          map.resetMarkerDisplayStatus()
         }
         // if not -> albumview -> more actions possible
       } else {
@@ -268,14 +262,12 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
         }
         // open place if necessary
         if (openedPlace) {
-          if (!map.getOpenedMarker() || openedPlace !== map.getOpenedMarker().getModel()) {
-            this._startPhotoWidgets(openedPlace)
-            map.updateMarkerStatus(openedPlace, "open")
-          }
+          this._startPhotoWidgets(openedPlace)
+          map.updateMarkerStatus(openedPlace, "open")
         } else if (newState.openedPlace) {
           this.infoText.alert(gettext("INVALID_OPENED_PLACE"))
         } else {
-          map.resetOpenedMarker()
+          map.resetMarkerDisplayStatus()
         }
         // load photo if necessary
         if (photo) {
@@ -351,7 +343,7 @@ function (declare, main, communicator, state, Album, Collection, clientstate, In
 
       description.show(markerModel)
       if (state.isDashboardView()) {
-        map.centerMarker(markerModel, -0.25)
+        map.showOne(markerModel)
       }
     },
     _hideDetail: function () {

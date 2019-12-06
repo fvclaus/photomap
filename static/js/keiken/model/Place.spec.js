@@ -39,5 +39,17 @@ function (Place, Collection) {
       expect(place.getPhotos()).toBeInstanceOf(Collection)
       expect(place.getTitle()).toBe("New title")
     })
+
+    it("should mark place as visited when all photos are visited", function () {
+      place.photos.forEach(function (photo) {
+        photo.visited = true
+      })
+      expect(place.isVisited()).toBeTruthy()
+    })
+
+    it("should mark place as not visited ", function () {
+      place.photos.get(0).visited = true
+      expect(place.isVisited()).toBeTruthy()
+    })
   })
 })

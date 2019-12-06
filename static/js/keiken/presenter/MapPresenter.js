@@ -1,11 +1,9 @@
-/* global $, define, main, assertTrue, gettext */
-
 "use strict"
 
 define([
   "dojo/_base/declare",
   "./Presenter",
-  "../util/Communicator",
+  "../utils/Communicator",
   "../view/MarkerView"
 ],
 function (declare, Presenter, communicator, MarkerView) {
@@ -17,168 +15,94 @@ function (declare, Presenter, communicator, MarkerView) {
       this.openedMarker = null
     },
 
-    startup: function (mapData, albumview, admin) {
-      if (albumview) {
-        // in this case mapData is actually just a single album with a place-collection
-        this.markerModelCollection = mapData.getPlaces()
-        // zoom out when no places are created yet
-        if (this.markerModelCollection.size() === 0) {
-          this.view.expandBounds(mapData)
-        }
-        this._setMapMessage(true, admin)
-        if (admin) {
-          this.view.bindClickListener()
-        }
-      } else {
-        // here mapData is a collection of all albums of the user
-        this.markerModelCollection = mapData
-        // show whole world if no albums are created yet
-        if (this.markerModelCollection.size() === 0) {
-          this.view.showWorld()
-        }
+    startup: function (markerModelCollection, admin, fallbackMarker) {
+      this.markerModelCollection = markerModelCollection
+      if (admin) {
         this.view.bindClickListener()
-        this._setMapMessage(false)
       }
       // set array of marker-presenter
-      this.markerPresenter = this.initMarkers(this.markerModelCollection.getAll())
-      // show the map depending on amount of markers
-      if (this.markerModelCollection.size() === 1) {
-        this.view.expandBounds(this.markerModelCollection.getByIndex(0))
+      this.markerPresenter = this._initMarkers(this.markerModelCollection)
+
+      if (this.markerModelCollection.isEmpty()) {
+        fallbackMarker ? this.showOne(fallbackMarker) : this.showWorld()
       } else {
-        this._fitMapToMarkers(this.markerModelCollection.getAll())
+        this.showAll()
       }
-      // set map options if interactive
-      this.view.map.setOptions(this.view.mapOptions)
-      this.view.setMapCursor()
-      // show message if no markers are displayed
-      this.view.toggleMessage((this.markerModelCollection.size() === 0))
+      this.view.toggleMessage(this.markerModelCollection.isEmpty())
       this._bindCollectionListener()
     },
-    getOpenedMarker: function () {
-      return this.openedMarker
-    },
-    getSelectedMarker: function () {
-      return this.selectedMarker
-    },
-    /* ------------------------------------- */
-    /* ---------- Map Management  ---------- */
-
     getPositionInPixel: function (element) {
       return this.view.getPositionInPixel(element)
     },
-    /* ------------------------------------- */
-    /* --------- Marker Management --------- */
     updateMarkerStatus: function (presenterOrModel, status) {
       assertTrue((status === "select" || status === "open"), "Marker status can just be 'select' or 'open'.")
 
       // if the given place or album is not a presenter of a marker you have to get its presenter first..
-      var presenter = (presenterOrModel instanceof Presenter) ? presenterOrModel : this.getMarkerPresenter(presenterOrModel)
+      var marker = (presenterOrModel instanceof Presenter) ? presenterOrModel : this._getMarkerPresenter(presenterOrModel)
+      this.resetMarkerDisplayStatus()
 
       if (status === "select") {
-        // change icon of selected (soon to be old) marker; (!) when a marker is deselected it might still be opened in which case its icon has to change to selected
-        if (this.selectedMarker) {
-          this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), false)
-        }
-        // change selected marker
-        this.selectedMarker = presenter
-        // change icon of new selected marker; (!) when a marker is selected it might already be opened in which case its icon doesn't change
-        this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), true)
+        marker.displayAsSelected()
       } else {
-        // when a marker is opened it's also selected at first -> both selected and opened have to be changed and updated (icon-wise)
-        if (this.selectedMarker) {
-          this.selectedMarker.updateIcon(false, false)
-        }
-        this.selectedMarker = presenter
-        if (this.openedMarker) {
-          this.openedMarker.updateIcon(false, false)
-        }
-        this.openedMarker = presenter
-        // change icon of new opened marker
-        this.openedMarker.updateIcon(true, true)
+        marker.displayAsOpened()
       }
     },
-    resetSelectedMarker: function () {
-      if (this.selectedMarker) {
-        this.selectedMarker.updateIcon((this.selectedMarker === this.openedMarker), false)
-        this.selectedMarker = null
-      }
-    },
-    resetOpenedMarker: function () {
-      if (this.openedMarker) {
-        this.openedMarker.updateIcon(false, (this.selectedMarker === this.openedMarker))
-        this.openedMarker = null
-      }
-    },
-    updateMarkerIcons: function (presenter) {
-      var opened, selected
-
-      this.markerPresenter.forEach(function (markerPresenter) {
-        opened = (markerPresenter === this.openedMarker)
-        selected = (markerPresenter === this.selectedMarker)
-        markerPresenter.checkIconStatus(opened, selected)
+    resetMarkerDisplayStatus: function () {
+      this.markerPresenter.forEach(function (marker) {
+        marker.displayAsUnselected()
       })
     },
-    getMarkerPresenter: function (model) {
+    _getMarkerPresenter: function (model) {
       return this.markerPresenter.filter(function (markerPresenter) {
-        return (markerPresenter.getModel() === model)
+        return markerPresenter.model === model
       })[0]
     },
-    centerMarker: function (model, offset) {
-      var presenter = this.getMarkerPresenter(model)
-      if (offset < 0) {
-        presenter.centerAndMoveLeft(-offset)
-      } else {
-        presenter.centerAndMoveRight(offset)
-      }
-    },
-    /**
-          * @public
-          * @param {Marker} marker
-          */
-    triggerClickOnMarker: function (marker) {
-      this.view.triggerEventOnMarker(marker, "click")
-    },
-    /**
-          * @public
-          * @param {Marker} marker
-          */
-    triggerDblClickOnMarker: function (marker) {
-      this.view.triggerEventOnMarker(marker, "dblclick")
-    },
-    triggerMouseOverOnMarker: function (marker) {
-      this.view.triggerEventOnMarker(marker, "mouseover")
-    },
     insertMarker: function (model, init) {
-      var markerImplementation = this.view.createMarker(model)
-      var markerView = new MarkerView(this.view, markerImplementation, model)
+      var markerView = new MarkerView(this.view, Marker.createMarker(model), model)
       var marker = markerView.getPresenter()
 
-      marker.show()
-      marker.updateIcon(false, false)
+      marker
+        .addListener("mouseover", communicator.makePublishFn("mouseover:Marker", marker))
+        .addListener("mouseout", communicator.makePublishFn("mouseout:Marker", marker))
+        .addListener("dblclick", this._openMarker)
+        .addListener("click", function () {
+          this.updateMarkerStatus(marker, "select")
+          communicator.publish("clicked:Marker", marker)
+        }.bind(this))
+
+      marker
+        .show()
+        .displayAsUnselected()
+
+      // TODO This does not belong here. AppController probably.
       if (!init) {
         this.view.toggleMessage(false)
-        this.triggerDblClickOnMarker(marker)
+        this._openMarker()
       }
 
       return marker
     },
-    initMarkers: function (models) {
-      var instance = this
-      var presenter = []
-      models.forEach(function (model) {
-        presenter.push(instance.insertMarker(model, true))
-      })
-      return presenter
+    _openMarker: function (marker) {
+      this.updateMarkerStatus(marker, "open")
+      communicator.publish("dblClicked:Marker", marker)
+    },
+    _initMarkers: function (models) {
+      return models.map(function (model) {
+        return this.insertMarker(model, true)
+      }.bind(this))
     },
     showAll: function () {
-      this._fitMapToMarkers(this.markerModelCollection.getAll())
+      this.view.fit(this.markerModelCollection.getAll())
     },
     showWorld: function () {
       this.view.showWorld()
     },
+    showOne: function (markerModel) {
+      this.view.fit([markerModel])
+    },
     /* ----------------------------------- */
     /* --------- private methods --------- */
-    _setMapMessage: function (albumview, admin) {
+    setMapMessage: function (albumview, admin) {
       if (!albumview) {
         this.view.setMessage(gettext("MAP_NO_ALBUMS"), {
           hideOnMouseover: false,
@@ -193,21 +117,10 @@ function (declare, Presenter, communicator, MarkerView) {
         }
       }
     },
-    _fitMapToMarkers: function (models) {
-      var latLngData = []
-
-      models.forEach(function (model) {
-        latLngData.push({
-          lat: model.getLat(),
-          lng: model.getLng()
-        })
-      })
-      this.view.fit(latLngData)
-    },
     _bindCollectionListener: function () {
       this.markerModelCollection
         .onDelete(function (model) {
-          this.getMarkerPresenter(model).hide()
+          this._getMarkerPresenter(model).hide()
         }, this, "Map")
         .onInsert(function (model) {
           this.insertMarker(model)

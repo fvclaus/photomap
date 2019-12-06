@@ -54,7 +54,7 @@ function (Collection, Photo) {
       expect(photoCollection.has(101)).toBe(-1)
       expect(photoCollection.has(100)).toBe(2)
       expect(photoCollection.has(200)).toBe(1)
-      expect(photoCollection.get(100)).toBe(photo100)
+      expect(photoCollection.getById(100)).toBe(photo100)
       expect(photoCollection.getByIndex(0)).toBe(photo300)
       expect(photoCollection.getByAttribute("title", "Photo 300")).toBe(photo300)
       expect(photoCollection.getByAttribute("order", 200)).toBe(photo200)
@@ -68,7 +68,7 @@ function (Collection, Photo) {
 
       photoCollection.onInsert(function (model) {
         expect(model).toBe(photo101)
-        expect(photoCollection.get(101)).toBe(photo101)
+        expect(photoCollection.getById(101)).toBe(photo101)
         done()
       })
 
@@ -93,7 +93,7 @@ function (Collection, Photo) {
         expect(model).toEqual(photo100)
         done()
       })
-      $(photoCollection.get(100)).trigger("updated", photo100)
+      $(photoCollection.getById(100)).trigger("updated", photo100)
     })
 
     it("should remove event listeners", function () {
@@ -112,6 +112,17 @@ function (Collection, Photo) {
       })
       photoCollection.insert(photo100)
       expect(photoCollection.getByIndex(0)).toBeDefined()
+    })
+
+    it("should be an empty collection", function () {
+      photoCollection = new Collection([], {
+        modelType: "Photo"
+      })
+      expect(photoCollection.isEmpty()).toBeTruthy()
+    })
+
+    it("should not be an empty collection", function () {
+      expect(photoCollection.isEmpty()).toBeFalsy()
     })
   })
 })

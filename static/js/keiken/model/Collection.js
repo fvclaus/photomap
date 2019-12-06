@@ -26,7 +26,13 @@ define(["dojo/_base/declare"],
           this.sort()
         }
 
-        this._bindModelListener(this.models)
+        this._bindModelListener(this.models);
+
+        ["slice", "reduce", "map", "indexOf"].forEach(function (fnName) {
+          this[fnName] = function () {
+            this.models[fnName].apply(this.models, arguments)
+          }
+        }.bind(this))
       },
       /**
           * @description Inserts a model into the collection and informs the subscribed classes about the insertion.
@@ -82,10 +88,13 @@ define(["dojo/_base/declare"],
           * @description Retrieves a model from the collection, without deleting or modifying it. (!) returns undefined when model doesn't exist in collection
           * @param {Integer} id Id of the model
           */
-      get: function (id) {
+      getById: function (id) {
         return this.models.filter(function (model) {
           return (model.getId() === id)
         })[0]
+      },
+      get: function (index) {
+        return this.models[index]
       },
       getAll: function () {
         return this.models
@@ -126,17 +135,8 @@ define(["dojo/_base/declare"],
         })
         return true
       },
-      slice: function (from, to) {
-        return this.models.slice(from, to)
-      },
-      forEach: function (fn) {
-        return this.models.forEach(fn)
-      },
       isEmpty: function () {
-        return this.models.length !== 0
-      },
-      indexOf: function (model) {
-        return this.models.indexOf(model)
+        return this.models.length === 0
       },
       /**
           * ---------------------------------------

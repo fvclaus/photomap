@@ -5,29 +5,6 @@
 var DASHBOARD_VIEW = "/dashboard/"
 var ALBUM_VIEW = /album\/\d+\/view/
 
-var ALBUM_ICON_WIDTH = 25
-var ALBUM_ICON_HEIGHT = 25
-var ALBUM_VISITED_ICON = "/static/images/marker-icons/suitcase-visited.png"
-var ALBUM_SELECTED_ICON = "/static/images/marker-icons/suitcase-current.png"
-var ALBUM_LOADED_ICON = "/static/images/marker-icons/suitcase-loaded.png"
-var ALBUM_UNSELECTED_ICON = "/static/images/marker-icons/suitcase-not-visited.png"
-var ALBUM_DISABLED_ICON = "/static/images/marker-icons/suitcase-disabled.png"
-var ALBUM_DEFAULT_ICON = ALBUM_UNSELECTED_ICON
-
-var PLACE_ICON_WIDTH = 18
-var PLACE_ICON_HEIGHT = 15
-var PLACE_VISITED_ICON = "/static/images/marker-icons/camera-visited.png"
-var PLACE_SELECTED_ICON = "/static/images/marker-icons/camera-current.png"
-var PLACE_LOADED_ICON = "/static/images/marker-icons/camera-loaded.png"
-var PLACE_UNSELECTED_ICON = "/static/images/marker-icons/camera-not-visited.png"
-var PLACE_DISABLED_ICON = "/static/images/marker-icons/camera-disabled.png"
-var PLACE_DEFAULT_ICON = PLACE_UNSELECTED_ICON
-
-var PLACE_ICON_SHADOW_WIDTH = 20
-var ALBUM_ICON_SHADOW_WIDTH = 29
-var PLACE_SHADOW_ICON = "/static/images/marker-icons/camera-shadow.png"
-var ALBUM_SHADOW_ICON = "/static/images/marker-icons/suitcase-shadow.png"
-
 var TEMP_TITLE_KEY = "temp_title"
 var TEMP_DESCRIPTION_KEY = "temp_description"
 

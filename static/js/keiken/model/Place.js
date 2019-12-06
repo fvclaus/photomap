@@ -40,6 +40,11 @@ function (declare, MarkerModel, Photo, Collection) {
     },
     getPhotos: function () {
       return this.photos
+    },
+    isVisited: function () {
+      return this.photos.reduce(function (acc, current) {
+        return acc && current.visited
+      }, true)
     }
   })
 })
