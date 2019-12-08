@@ -9,6 +9,7 @@ var isDevelopMachine = function () {
 // Karma does currently not supported nocache on pre-processed files: https://github.com/karma-runner/karma/issues/2264
 // I made a fix for it that may or may not be part of the official release at some point: https://github.com/fvclaus/karma/tree/force-preprocess-v2
 // It is necessary to soft link jasmine and jasmine-core in the checkout node_modules folder to avoid a different version of those libraries to be used.
+// Use CUSTOM_KARMA=true NODE_PATH=node_modules/ ../karma/bin/karma start to start.
 var makeNoCacheFilePatternIfSupported = function (fileName) {
   if (isDevelopMachine()) {
     return {

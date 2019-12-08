@@ -9,11 +9,12 @@ define([
   "dojo/_base/declare",
   "../widget/_Widget",
   "../util/Communicator",
+  "./ol",
   "./Marker",
   "dojo/text!./templates/Map.html",
   "./loadGMaps!"
 ],
-function (declare, _Widget, communicator, Marker, templateString) {
+function (declare, _Widget, communicator, ol, Marker, templateString) {
   return declare(_Widget, {
     ZOOM_OUT_LEVEL: 3,
     // MAP_OPTIONS: {
@@ -53,17 +54,18 @@ function (declare, _Widget, communicator, Marker, templateString) {
     },
     postCreate: function () {
       this.inherited(this.postCreate, arguments)
+      this.markerSource = new ol.source.Vector()
       this.map = new ol.Map({
         target: this.$map.get(0),
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
+          }),
+          new ol.layer.Vector({
+            source: this.markerSource
           })
         ]
       })
-      this.map.addLayer(new OpenLayers.Layer.OSM())
-      this.markerLayer = new OpenLayers.Layer.Markers("Markers")
-      this.map.addLayer(this.markerLayer)
       // define overlay to retrieve pixel position on mouseover event
       // this.overlay = new google.maps.OverlayView()
       // this.overlay.draw = function () {}
@@ -77,11 +79,11 @@ function (declare, _Widget, communicator, Marker, templateString) {
       // set array of marker-presenter
       this.marker = this._initMarkers(this.markerModelCollection)
 
-      // if (this.markerModelCollection.isEmpty()) {
-      //   fallbackMarker ? this.showOne(fallbackMarker) : this.showWorld()
-      // } else {
-      //   this.showAll()
-      // }
+      if (this.markerModelCollection.isEmpty()) {
+        fallbackMarker ? this.showOne(fallbackMarker) : this.showWorld()
+      } else {
+        this.showAll()
+      }
       this.toggleMessage(this.markerModelCollection.isEmpty())
       this._bindCollectionListener()
     },
@@ -107,13 +109,25 @@ function (declare, _Widget, communicator, Marker, templateString) {
     },
     fit: function (markersinfo) {
       // fit these bounds to the map
-      this.map.fitBounds(markersinfo.reduce(function (bounds, marker) {
-        bounds.extend(new google.maps.LatLng(marker.lat, marker.lng))
-        return bounds
-      }, new google.maps.LatLngBounds()))
 
+      // var view = new ol.View({
+      //   center: new ol.geom.MultiPoint(
+      //     markersinfo.map(function (marker) {
+      //       return [marker.lat, marker.lng]
+      //     })
+      //   ),
+      //   zoom: 4
+      // })
+      var view = this.map.getView()
+      view.fit(this.markerSource.getExtent())
+      // this.map.fitBounds(markersinfo.reduce(function (bounds, marker) {
+      //   bounds.extend(new google.maps.LatLng(marker.lat, marker.lng))
+      //   return bounds
+      // }, new google.maps.LatLngBounds()))
+      //
+      // view.setZoom(4)
+      view.setZoom(view.getZoom() - 1)
       if (markersinfo.length < 2) {
-        this._setZoom(10)
       }
     },
     showWorld: function () {
@@ -164,7 +178,7 @@ function (declare, _Widget, communicator, Marker, templateString) {
       })[0]
     },
     insertMarker: function (model, init) {
-      var marker = new Marker(this.markerLayer, model)
+      var marker = new Marker(this.markerSource, model)
 
       // marker
       //   .addListener("mouseover", communicator.makePublishFn("mouseover:Marker", marker))

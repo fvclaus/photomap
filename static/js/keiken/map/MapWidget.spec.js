@@ -12,15 +12,15 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
 
     var album100 = new Album({
       title: "Album 100",
-      lat: 90,
-      lon: 80
+      lat: 52,
+      lon: 7
     })
     var album200 = new Album({
       title: "Album 200",
-      lat: 100,
-      lon: 70
+      lat: 48,
+      lon: 12
     })
-    var albums = new Collection([album100, album200], {
+    var albums = new Collection([album100], {
       modelType: "Album"
     })
 
