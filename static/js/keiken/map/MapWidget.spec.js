@@ -20,7 +20,7 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
       lat: 48,
       lon: 12
     })
-    var albums = new Collection([album100], {
+    var albums = new Collection([album100, album200], {
       modelType: "Album"
     })
 

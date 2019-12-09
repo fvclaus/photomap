@@ -92,7 +92,7 @@ module.exports = function (config) {
         served: true,
         included: false,
         watched: false,
-        nocache: false
+        nocache: true
       },
       {
         pattern: "static/test/**",

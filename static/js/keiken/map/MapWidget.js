@@ -11,8 +11,9 @@ define([
   "../util/Communicator",
   "./ol",
   "./Marker",
-  "dojo/text!./templates/Map.html",
-  "./loadGMaps!"
+  "dojo/text!./templates/Map.html"
+  // "./loadGMaps!"
+  // "./loadGMaps!"
 ],
 function (declare, _Widget, communicator, ol, Marker, templateString) {
   return declare(_Widget, {

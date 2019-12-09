@@ -7,82 +7,32 @@
  */
 
 define(["dojo/_base/declare",
-  "./ol"],
-function (declare, ol) {
-  var img = new Image()
-  img.src = "/static/images/marker-icons/suitcase2.png"
-  img.onload = function () {
-    draw(this)
-  }
-
-  var regularCanvas = document.createElement("canvas")
-  var regularCanvasSize
-
-  var shadowCanvas = document.createElement("canvas")
-  var shadowCanvasSize
-  // canvas.style.width = "100px"
-  // canvas.style.height = "100px"
-  var draw = function (img) {
-    document.body.appendChild(shadowCanvas)
-    shadowCanvasSize = drawShadowCanvas(shadowCanvas)
-    document.body.appendChild(regularCanvas)
-    regularCanvasSize = drawRegularCanvas(regularCanvas, shadowCanvasSize)
-  }
-
-  var horizontalSkew = -0.5
-  var shadowMargin = 10
-  var imageHeight = 25
-  var imageWidth = 25
-
-  var drawShadowCanvas = function (canvas) {
-    var ctx = canvas.getContext("2d")
-    ctx.save()
-    ctx.transform(1, 0, horizontalSkew, 1, 0, 0)
-    ctx.shadowColor = "black"
-    ctx.shadowBlur = 5
-    // Calculate an x so that the bottom left pixel will equal the shadow margin after the transformation matrix is applied.
-    // The calculate below solves the following equation: 1 * x + c * y where y =  bottom left pixel = shadowMargin + imageHeight
-    //  a c e   x
-    //  d d f * y
-    //  0 0 1   1
-    // a = d = 1 and c = horizontalSkew. (x y) is the bottom left pixel of the image
-    ctx.drawImage(img, -1 * horizontalSkew * (shadowMargin + imageHeight) + shadowMargin, shadowMargin, imageWidth, imageHeight)
-    // Restore default transformation matrix
-    ctx.restore()
-    ctx.globalCompositeOperation = "source-in"
-    ctx.fillStyle = "black"
-    ctx.fillRect(0, 0, canvas.width, canvas.height)
-    var imageData = ctx.getImageData(0, 0, (1 + -1 * horizontalSkew) * imageWidth + shadowMargin, imageHeight + 2 * shadowMargin)
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.canvas.width = imageData.width
-    ctx.canvas.height = imageData.height
-
-    ctx.putImageData(imageData, 0, 0)
-    return [imageData.width, imageData.height]
-  }
-
-  var drawRegularCanvas = function (canvas, shadowCanvasSize) {
-    var ctx = canvas.getContext("2d")
-    ctx.drawImage(img, 10, 10, imageWidth, imageHeight)
-    var imageData = ctx.getImageData(0, 0, shadowCanvasSize[0], shadowCanvasSize[1])
-    ctx.clearRect(0, 0, canvas.width, canvas.height)
-    ctx.canvas.width = imageData.width
-    ctx.canvas.height = imageData.height
-
-    ctx.putImageData(imageData, 0, 0)
-    return [imageData.width, imageData.height]
-  }
+  "./ol",
+  "./preloadMarkerIconImages!"],
+function (declare, ol, modelToIconImage) {
+  var horizontalSkew = -0.3
+  var shadowMargin = 4
 
   return declare(null, {
 
-    ALBUM_ICON_WIDTH: 25,
-    ALBUM_ICON_HEIGHT: 25,
+    ALBUM_SIZE: [25, 25],
 
     PLACE_ICON_WIDTH: 18,
     PLACE_ICON_HEIGHT: 15,
 
     PLACE_ICON_SHADOW_WIDTH: 20,
     ALBUM_ICON_SHADOW_WIDTH: 29,
+
+    MODEL_TO_ICON_SIZE: {
+      Album: [25, 25]
+    },
+
+    STATUS_COLOR: {
+      "not-visited": "#3bff5c",
+      loaded: "#ff9c3b",
+      visited: "#ff453b",
+      opened: "#ffe53b"
+    },
 
     constructor: function (map, model) {
       assertTrue(model.getType() === "Place" || model.getType() === "Album", "model has to be either place or album")
@@ -91,56 +41,119 @@ function (declare, ol) {
       this.map = map
       this.model = model
 
-      // this._iconSize = this.model.type === "Album"
-      //   ? new google.maps.Size(this.ALBUM_ICON_WIDTH, this.ALBUM_ICON_HEIGHT, "px", "px")
-      //   : new google.maps.Size(this.PLACE_ICON_WIDTH, this.PLACE_ICON_HEIGHT, "px", "px")
-
-      this.marker = this._makeOSMMarker(model)
+      this.marker = this._makeMarker(model, "not-visited")
       this.map.addFeature(this.marker)
-      // map.addMarker(this.marker)
 
       this.isSingleClick = false // needed to prevent click/dblClick interference
     },
-    _makeMarker: function (model) {
-      var shadowWidth = this.model.type === "Place" ? this.PLACE_ICON_SHADOW_WIDTH : this.ALBUM_ICON_SHADOW_WIDTH
-      return new google.maps.Marker({
-        position: this.getLatLng(),
-        map: this.map,
-        icon: this._makeIcon("not-visited"),
-        shadow: {
-          url: this._makeMarkerIconPath("shadow"),
-          anchor: new google.maps.Point(shadowWidth - this._iconSize.width, this._iconSize.height),
-          scaledSize: new google.maps.Size(shadowWidth, this._iconSize.height, "px", "px")
-        },
-        title: model.title
-      })
-    },
-    _makeOSMMarker: function (model) {
+    _makeMarker: function (model, status) {
       var marker = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([model.lng, model.lat])),
         name: model.title
       })
-      marker.setStyle([
-        new ol.style.Style({
-          image: new ol.style.Icon({
-            img: regularCanvas,
-            imgSize: regularCanvasSize
-            // About 25x25
-            // scale: 0.2
-          }),
-          zIndex: 1
-        }),
-        new ol.style.Style({
-          image: new ol.style.Icon({
-            img: shadowCanvas,
-            // About 25x25
-            // imgSize: [canvas.style.width, canvas.style.heigth]
-            imgSize: shadowCanvasSize
-            // scale: 0.2
-          }),
-          zIndex: 0
-        })])
+      marker.setStyle(this._createIconStyles(model, status))
       return marker
+    },
+    _iconCanvasCache: {},
+    _createIconStyles: function (model, status) {
+      var shadowCacheKey = model.type + "-shadow"
+      var shadowCanvas = this._iconCanvasCache[shadowCacheKey]
+      if (!shadowCanvas) {
+        shadowCanvas = (this._iconCanvasCache[shadowCacheKey] = this._createShadowIconCanvas(model))
+      }
+
+      var iconCacheKey = model.type + "-" + status
+      var iconCanvas = this._iconCanvasCache[iconCacheKey]
+      if (!iconCanvas) {
+        iconCanvas = (this._iconCanvasCache[iconCacheKey] = this._createIconCanvas(model, status, [shadowCanvas.width, shadowCanvas.height]))
+      }
+
+      return [new ol.style.Style({
+        image: new ol.style.Icon({
+          img: iconCanvas,
+          imgSize: [iconCanvas.width, iconCanvas.height]
+        }),
+        zIndex: 1
+      }),
+      new ol.style.Style({
+        image: new ol.style.Icon({
+          img: shadowCanvas,
+          imgSize: [shadowCanvas.width, shadowCanvas.height]
+        }),
+        zIndex: 0
+      })]
+    },
+    _findNonEmptyImageData: function (canvas, ctx) {
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+      var maxWidth = 0
+      var maxHeight = 0
+      var numberOfRGBAValuesInRow = 4 * imageData.width
+      for (var rowIndex = 0; rowIndex < imageData.height; rowIndex++) {
+      // Iterate one row backwards
+        for (var columnRGBAIndex = numberOfRGBAValuesInRow; columnRGBAIndex >= 0; columnRGBAIndex--) {
+          if (imageData.data[rowIndex * numberOfRGBAValuesInRow + columnRGBAIndex] > 0) {
+            var columnIndex = Math.floor(columnRGBAIndex / 4)
+            maxWidth = Math.max(maxWidth, columnIndex + 1)
+            maxHeight = rowIndex + 1
+            break
+          }
+        }
+      }
+      return ctx.getImageData(0, 0,
+        maxWidth,
+        maxHeight)
+    },
+    _createShadowIconCanvas: function (model) {
+      var canvas = document.createElement("canvas")
+      var ctx = canvas.getContext("2d")
+      var imageWidth = this.MODEL_TO_ICON_SIZE[model.type][0]
+      var imageHeight = this.MODEL_TO_ICON_SIZE[model.type][1]
+      ctx.save()
+      ctx.globalAlpha = 0.2
+      ctx.shadowColor = "black"
+      ctx.shadowBlur = 4
+      // Calculate the x-coordinate of the bottom left pixel that will equal the shadow margin after the transformation matrix is applied.
+      // The calculation below solves the following equation: 1 * x + c * y where y = y-coordinate of bottom left pixel = shadowMargin + imageHeight
+      //  a c e   x
+      //  d d f * y
+      //  0 0 1   1
+      // a = d = 1 and c = horizontalSkew. (x y) is the bottom left pixel of the image
+      // This is required for aligning the two images.
+      ctx.fillStyle = "black"
+      var x = Math.floor(-1 * horizontalSkew * (shadowMargin + imageHeight) + shadowMargin)
+      ctx.transform(1, 0, horizontalSkew, 1, 0, 0)
+      ctx.drawImage(modelToIconImage[model.type], x, shadowMargin, imageWidth, imageHeight)
+      // Restore default transformation matrix
+      ctx.restore()
+      ctx.globalCompositeOperation = "source-in"
+      ctx.fillStyle = "black"
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      var imageData = this._findNonEmptyImageData(canvas, ctx)
+      // var imageData = ctx.getImageData(0, 0, (1 + -1 * horizontalSkew) * imageWidth + shadowMargin, imageHeight + 2 * shadowMargin)
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.canvas.width = imageData.width
+      ctx.canvas.height = imageData.height
+
+      ctx.putImageData(imageData, 0, 0)
+      return canvas
+    },
+    _createIconCanvas: function (model, status, shadowCanvasSize) {
+      var canvas = document.createElement("canvas")
+      var ctx = canvas.getContext("2d")
+      var imageWidth = this.MODEL_TO_ICON_SIZE[model.type][0]
+      var imageHeight = this.MODEL_TO_ICON_SIZE[model.type][1]
+      // Should cover the shadow on the left and bottom side.
+      ctx.drawImage(modelToIconImage[model.type], shadowMargin - 1, shadowMargin + 1, imageWidth, imageHeight)
+      ctx.globalCompositeOperation = "source-in"
+      ctx.fillStyle = this.STATUS_COLOR[status]
+      ctx.fillRect(0, 0, canvas.width, canvas.height)
+      var imageData = ctx.getImageData(0, 0, shadowCanvasSize[0], shadowCanvasSize[1])
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      ctx.canvas.width = imageData.width
+      ctx.canvas.height = imageData.height
+
+      ctx.putImageData(imageData, 0, 0)
+      return canvas
     },
     _makeMarkerIconPath: function (status) {
       return "/static/images/marker-icons/" +
