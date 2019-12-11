@@ -48,7 +48,9 @@ function (Place, Collection) {
     })
 
     it("should mark place as not visited ", function () {
-      place.photos.get(0).visited = true
+      place.photos.forEach(function (photo) {
+        photo.visited = true
+      })
       expect(place.isVisited()).toBeTruthy()
     })
   })

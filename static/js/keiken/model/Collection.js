@@ -28,9 +28,9 @@ define(["dojo/_base/declare"],
 
         this._bindModelListener(this.models);
 
-        ["slice", "reduce", "map", "indexOf"].forEach(function (fnName) {
+        ["slice", "reduce", "map", "indexOf", "forEach"].forEach(function (fnName) {
           this[fnName] = function () {
-            this.models[fnName].apply(this.models, arguments)
+            return this.models[fnName].apply(this.models, arguments)
           }
         }.bind(this))
       },
@@ -114,7 +114,7 @@ define(["dojo/_base/declare"],
           * @return Index of the model. Returns -1 if model doesn't exist.
           */
       has: function (id) {
-        var model = (typeof id === "number") ? this.get(id) : id
+        var model = (typeof id === "number") ? this.getById(id) : id
         if (!model) {
           return -1
         }

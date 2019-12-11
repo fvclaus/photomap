@@ -342,9 +342,6 @@ function (declare, main, communicator, state, clientstate, InfoText, tools, appS
       }
 
       description.show(markerModel)
-      if (state.isDashboardView()) {
-        map.showOne(markerModel)
-      }
     },
     _hideDetail: function () {
       // TODO Animate description box.

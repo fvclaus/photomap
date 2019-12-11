@@ -39,17 +39,14 @@ function (Collection, Photo) {
         modelType: "Photo"
       })
     })
-    // test 1 - sorting upon creation
     it("initial sorting", function () {
       expect(photoCollection.getAll()).toEqual([photo300, photo200, photo100])
     })
-    // test 2 - manual sorting
     it("manual sorting", function () {
       // shuffle Collection again
       photoCollection.insert(photo101)
       expect(photoCollection.getAll()).toEqual([photo300, photo200, photo101, photo100])
     })
-    // test 3 - accessor methods
     it("accessor methods", function () {
       expect(photoCollection.has(101)).toBe(-1)
       expect(photoCollection.has(100)).toBe(2)
@@ -60,7 +57,6 @@ function (Collection, Photo) {
       expect(photoCollection.getByAttribute("order", 200)).toBe(photo200)
       expect(photoCollection.size()).toBe(3)
     })
-    // test 4 - insert
     it("insert", function (done) {
       expect(function () {
         photoCollection.insert(photo100)
@@ -75,7 +71,6 @@ function (Collection, Photo) {
       photoCollection.insert(photo101)
     })
 
-    // test 5 - delete
     it("delete", function (done) {
       expect(function () {
         photoCollection.delete(photo101)
@@ -104,7 +99,6 @@ function (Collection, Photo) {
       $(photoCollection).trigger("deleted")
     })
 
-    // Bug: _getCorrectIndex assumed that modelList was not empty.
     it("emptyCollection", function () {
       photoCollection = new Collection([], {
         orderBy: "order",

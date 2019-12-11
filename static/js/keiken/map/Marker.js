@@ -15,8 +15,6 @@ function (declare, ol, modelToIconImage) {
 
   return declare(null, {
 
-    ALBUM_SIZE: [25, 25],
-
     PLACE_ICON_WIDTH: 18,
     PLACE_ICON_HEIGHT: 15,
 
@@ -29,29 +27,28 @@ function (declare, ol, modelToIconImage) {
 
     STATUS_COLOR: {
       "not-visited": "#3bff5c",
-      loaded: "#ff9c3b",
+      selected: "#ff9c3b",
       visited: "#ff453b",
       opened: "#ffe53b"
     },
 
-    constructor: function (map, model) {
+    constructor: function (model) {
       assertTrue(model.getType() === "Place" || model.getType() === "Album", "model has to be either place or album")
 
       this.opened = false
-      this.map = map
       this.model = model
 
-      this.marker = this._makeMarker(model, "not-visited")
-      this.map.addFeature(this.marker)
+      this.marker = this._makeMarker(model)
+      this.marker._markerInstance = this
+      this.displayAsUnselected()
 
       this.isSingleClick = false // needed to prevent click/dblClick interference
     },
-    _makeMarker: function (model, status) {
+    _makeMarker: function (model) {
       var marker = new ol.Feature({
         geometry: new ol.geom.Point(ol.proj.fromLonLat([model.lng, model.lat])),
         name: model.title
       })
-      marker.setStyle(this._createIconStyles(model, status))
       return marker
     },
     _iconCanvasCache: {},
@@ -105,9 +102,13 @@ function (declare, ol, modelToIconImage) {
     },
     _createShadowIconCanvas: function (model) {
       var canvas = document.createElement("canvas")
-      var ctx = canvas.getContext("2d")
+      document.body.appendChild(canvas)
       var imageWidth = this.MODEL_TO_ICON_SIZE[model.type][0]
       var imageHeight = this.MODEL_TO_ICON_SIZE[model.type][1]
+      // Make sure the icon fits the canvas after transformation
+      canvas.width = 2 * imageWidth
+      canvas.height = 2 * imageHeight
+      var ctx = canvas.getContext("2d")
       ctx.save()
       ctx.globalAlpha = 0.2
       ctx.shadowColor = "black"
@@ -139,6 +140,9 @@ function (declare, ol, modelToIconImage) {
     },
     _createIconCanvas: function (model, status, shadowCanvasSize) {
       var canvas = document.createElement("canvas")
+      document.body.appendChild(canvas)
+      canvas.width = shadowCanvasSize[0]
+      canvas.height = shadowCanvasSize[1]
       var ctx = canvas.getContext("2d")
       var imageWidth = this.MODEL_TO_ICON_SIZE[model.type][0]
       var imageHeight = this.MODEL_TO_ICON_SIZE[model.type][1]
@@ -147,43 +151,26 @@ function (declare, ol, modelToIconImage) {
       ctx.globalCompositeOperation = "source-in"
       ctx.fillStyle = this.STATUS_COLOR[status]
       ctx.fillRect(0, 0, canvas.width, canvas.height)
-      var imageData = ctx.getImageData(0, 0, shadowCanvasSize[0], shadowCanvasSize[1])
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-      ctx.canvas.width = imageData.width
-      ctx.canvas.height = imageData.height
-
-      ctx.putImageData(imageData, 0, 0)
       return canvas
     },
-    _makeMarkerIconPath: function (status) {
-      return "/static/images/marker-icons/" +
-          (this.model.type === "Album" ? "suitcase" : "camera") +
-          "-" + status +
-          ".png"
-    },
-    show: function () {
-      this.marker.setVisible(true)
-      return this
-    },
-    hide: function () {
-      this.marker.setVisible(false)
-      return this
-    },
     displayAsSelected: function () {
-      this._showIcon("current")
+      this._showIcon("selected")
       return this
     },
     displayAsOpened: function () {
-      this._showIcon("loaded")
+      this._showIcon("opened")
       return this
     },
     displayAsUnselected: function () {
-      if (this.model.getType() === "Place" && this.model.isVisited()) {
+      if (this.model.isVisited) {
         this._showIcon("visited")
       } else {
         this._showIcon("not-visited")
       }
       return this
+    },
+    getCoordinates: function () {
+      return this.marker.getGeometry().getCoordinates()
     },
     getLatLng: function () {
       return new google.maps.LatLng(this.model.lat, this.model.lng)
@@ -211,15 +198,7 @@ function (declare, ol, modelToIconImage) {
       google.maps.event.trigger(this.marker, event)
     },
     _showIcon: function (status) {
-      this.marker.setIcon(this._makeIcon(status))
-    },
-    _makeIcon: function (status) {
-      return new google.maps.MarkerImage(
-        this._makeMarkerIconPath(status),
-        undefined,
-        undefined,
-        undefined,
-        this._iconSize)
+      this.marker.setStyle(this._createIconStyles(this.model, status))
     }
   })
 })

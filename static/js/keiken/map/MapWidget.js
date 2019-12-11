@@ -11,80 +11,56 @@ define([
   "../util/Communicator",
   "./ol",
   "./Marker",
-  "dojo/text!./templates/Map.html"
-  // "./loadGMaps!"
-  // "./loadGMaps!"
+  "dojo/text!./templates/Map.html",
+  "./loadGMaps!"
 ],
 function (declare, _Widget, communicator, ol, Marker, templateString) {
   return declare(_Widget, {
-    ZOOM_OUT_LEVEL: 3,
-    // MAP_OPTIONS: {
-    //   mapTypeId: google.maps.MapTypeId.ROADMAP,
-    //   mapTypeControl: true,
-    //   mapTypeControlOptions: {
-    //     style: google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-    //     position: google.maps.ControlPosition.TOP_LEFT
-    //   },
-    //   panControl: true,
-    //   panControlOptions: {
-    //     position: google.maps.ControlPosition.TOP_LEFT
-    //   },
-    //   zoomControl: true,
-    //   zoomControlOptions: {
-    //     style: google.maps.ZoomControlStyle.SMALL,
-    //     position: google.maps.ControlPosition.TOP_LEFT
-    //   },
-    //   streetViewControl: true,
-    //   streetViewControlOptions: {
-    //     position: google.maps.ControlPosition.TOP_LEFT
-    //   },
-    //   disableDoubleClickZoom: true
-    // },
+    // Try & error
+    ONE_MARKER_DEFAULT_ZOOM_LEVEL: 13,
     viewName: "Map",
     templateString: templateString,
     constructor: function (params) {
-      // this.$mapEl.data({
-      //   originalWidth: this.$mapEl.width(),
-      //   originalHeight: this.$mapEl.height()
-      // })
       this.options = $.extend({}, {
-        isAdmin: false,
-        draggableCursor: "crosshair",
-        draggingCursor: "move"
+        draggableCursor: "grab",
+        draggingCursor: "grabbing"
       }, this.MAP_OPTIONS, params)
     },
     postCreate: function () {
       this.inherited(this.postCreate, arguments)
-      this.markerSource = new ol.source.Vector()
+      this.markerLayerSource = new ol.source.Vector()
+      this.markerLayer = new ol.layer.Vector({
+        source: this.markerLayerSource
+      })
       this.map = new ol.Map({
         target: this.$map.get(0),
+        interactions: ol.interaction.defaults({ doubleClickZoom: false }),
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
           }),
-          new ol.layer.Vector({
-            source: this.markerSource
-          })
+          this.markerLayer
         ]
       })
-      // define overlay to retrieve pixel position on mouseover event
-      // this.overlay = new google.maps.OverlayView()
-      // this.overlay.draw = function () {}
-      // this.overlay.setMap(this.map)
     },
-    startup: function (markerModelCollection, fallbackMarker) {
-      this.markerModelCollection = markerModelCollection
-      if (this.options.isAdmin) {
-        this.bindClickListener()
+    startup: function (markerModelCollection, fallbackMarkerModel) {
+      if (this._started) {
+        return
       }
+      this.inherited(this.startup, arguments)
+      this.$map.css("cursor", this.options.draggableCursor)
+      this.markerModelCollection = markerModelCollection
       // set array of marker-presenter
-      this.marker = this._initMarkers(this.markerModelCollection)
+      this.markers = this._initMarkers(this.markerModelCollection)
 
       if (this.markerModelCollection.isEmpty()) {
-        fallbackMarker ? this.showOne(fallbackMarker) : this.showWorld()
+        fallbackMarkerModel ? this.showOne(fallbackMarkerModel) : this.showWorld()
       } else {
         this.showAll()
       }
+      this.map.once("rendercomplete", function () {
+        communicator.publish("loaded:Map")
+      })
       this.toggleMessage(this.markerModelCollection.isEmpty())
       this._bindCollectionListener()
     },
@@ -94,53 +70,22 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       * @param {InfoMarker} element
       * @returns {Object} Containing the bottom and left coordinate as (!!)top(!!) and left attribute
       */
-    getPositionInPixel: function (element) {
-      var pixel = this.overlay.getProjection().fromLatLngToContainerPixel(element.getLatLng())
-      var offset = this.$map.offset()
-      return {
-        top: pixel.y + offset.top,
-        left: pixel.x + offset.left
-      }
-    },
-    _setZoom: function (level) {
-      var zoomListener = google.maps.event.addListener(this.map, "tilesloaded", function () {
-        this.map.setZoom(level)
-        google.maps.event.removeListener(zoomListener)
-      }.bind(this))
+    getPositionInPixel: function (marker) {
+      return this.map.getPixelFromCoordinate(marker.getCoordinates())
     },
     fit: function (markersinfo) {
-      // fit these bounds to the map
-
-      // var view = new ol.View({
-      //   center: new ol.geom.MultiPoint(
-      //     markersinfo.map(function (marker) {
-      //       return [marker.lat, marker.lng]
-      //     })
-      //   ),
-      //   zoom: 4
-      // })
       var view = this.map.getView()
-      view.fit(this.markerSource.getExtent())
-      // this.map.fitBounds(markersinfo.reduce(function (bounds, marker) {
-      //   bounds.extend(new google.maps.LatLng(marker.lat, marker.lng))
-      //   return bounds
-      // }, new google.maps.LatLngBounds()))
-      //
-      // view.setZoom(4)
-      view.setZoom(view.getZoom() - 1)
+      view.fit(this.markerLayerSource.getExtent())
       if (markersinfo.length < 2) {
+        view.setZoom(this.ONE_MARKER_DEFAULT_ZOOM_LEVEL)
+      } else {
+        view.setZoom(view.getZoom() - 1)
       }
     },
     showWorld: function () {
-      // TODO Wrap all methods in initialization fn.
-      var initialize = function () {
-        this.map.fitBounds(
-          new google.maps.LatLngBounds(
-            new google.maps.LatLng(-37, -92),
-            new google.maps.LatLng(61, 60)))
-      }.bind(this)
-
-      google.maps.event.addDomListener(window, "load", initialize)
+      var view = this.map.getView()
+      view.setZoom(1)
+      view.setCenter(ol.proj.fromLonLat([0, 0]))
     },
     toggleMessage: function (noMarker) {
       if (noMarker) {
@@ -149,13 +94,60 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
         this.infotext.hide()
       }
     },
-    bindClickListener: function () {
-      google.maps.event.addListener(this.map, "click", function (event) {
-        communicator.publish("clicked:Map", {
-          lat: parseFloat(event.latLng.lat()),
-          lng: parseFloat(event.latLng.lng())
-        })
-      })
+    _bindListener: function () {
+      console.log("Binding click listener")
+      this.map.on("singleclick", function (event) {
+        console.log("Triggered event", event)
+        var pixel = this.map.getEventPixel(event.originalEvent)
+        var features = this.map.getFeaturesAtPixel(pixel)
+        if (features.length) {
+          var marker = features[0]._markerInstance
+          this.updateMarkerStatus(marker, "select")
+          communicator.publish("clicked:Marker", marker)
+        } else {
+          var coordinate = ol.proj.toLonLat(this.map.getEventCoordinate(event.originalEvent))
+          communicator.publish("clicked:Map", {
+            lat: coordinate[1],
+            lng: coordinate[0]
+          })
+        }
+      }.bind(this))
+
+      this.map.on("dblclick", function (event) {
+        console.log("Triggered event", event)
+        var pixel = this.map.getEventPixel(event.originalEvent)
+        var features = this.map.getFeaturesAtPixel(pixel)
+        if (features.length) {
+          var marker = features[0]._markerInstance
+          this._openMarker(marker)
+        }
+      }.bind(this))
+
+      var currentMarkerOnMouse
+
+      this.map.on("pointermove", function (event) {
+        var pixel = this.map.getEventPixel(event.originalEvent)
+        var features = this.map.getFeaturesAtPixel(pixel)
+
+        if (features.length && !currentMarkerOnMouse) {
+          var marker = features[0]._markerInstance
+          currentMarkerOnMouse = marker
+          communicator.publish("mouseover:Marker", marker)
+        } else if (!features.length && currentMarkerOnMouse) {
+          communicator.publish("mouseout:Marker", marker)
+          currentMarkerOnMouse = null
+        }
+
+        if (features.length) {
+          this.$map.css("cursor", "pointer")
+        } else {
+          this.$map.css("cursor", this.options.draggableCursor)
+        }
+      }.bind(this))
+
+      this.map.on("pointerdrag", function () {
+        this.$map.css("cursor", this.options.draggingCursor)
+      }.bind(this))
     },
     updateMarkerStatus: function (markerOrModel, status) {
       assertTrue((status === "select" || status === "open"), "Marker status can just be 'select' or 'open'.")
@@ -169,26 +161,18 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
         : marker.displayAsOpened()
     },
     resetMarkerDisplayStatus: function () {
-      this.marker.forEach(function (marker) {
+      this.markers.forEach(function (marker) {
         marker.displayAsUnselected()
       })
     },
     _getMarkerPresenter: function (model) {
-      return this.marker.filter(function (marker) {
+      return this.markers.filter(function (marker) {
         return marker.model === model
       })[0]
     },
     insertMarker: function (model, init) {
-      var marker = new Marker(this.markerSource, model)
-
-      // marker
-      //   .addListener("mouseover", communicator.makePublishFn("mouseover:Marker", marker))
-      //   .addListener("mouseout", communicator.makePublishFn("mouseout:Marker", marker))
-      //   .addListener("dblclick", this._openMarker)
-      //   .addListener("click", function () {
-      //     this.updateMarkerStatus(marker, "select")
-      //     communicator.publish("clicked:Marker", marker)
-      //   }.bind(this))
+      var marker = new Marker(model)
+      this.markerLayerSource.addFeature(marker.marker)
 
       // TODO This does not belong here. AppController probably.
       if (!init) {
@@ -211,7 +195,9 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       this.fit(this.markerModelCollection.getAll())
     },
     showOne: function (markerModel) {
-      this.fit([markerModel])
+      var view = this.map.getView()
+      view.setCenter(ol.proj.fromLonLat([markerModel.lng, markerModel.lat]))
+      view.setZoom(this.ONE_MARKER_DEFAULT_ZOOM_LEVEL)
     },
     /* ----------------------------------- */
     /* --------- private methods --------- */
@@ -231,7 +217,9 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
     _bindCollectionListener: function () {
       this.markerModelCollection
         .onDelete(function (model) {
-          this._getMarkerPresenter(model).hide()
+          var marker = this._getMarkerPresenter(model)
+          this.markerLayerSource.removeFeature(marker.marker)
+          this.markers.splice(this.markers.indexOf(marker), 1)
         }, this, "Map")
         .onInsert(function (model) {
           this.insertMarker(model)
