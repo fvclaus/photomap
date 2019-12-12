@@ -13,6 +13,9 @@ function (declare, _Widget, templateString) {
   return declare(_Widget, {
     viewName: "",
     templateString: templateString,
+    constructor: function () {
+      this._extendDefaults()
+    },
     _extendDefaults: function (options) {
       this.options = $.extend({}, {
         hideOnMouseover: true,

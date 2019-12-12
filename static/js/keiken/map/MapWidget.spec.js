@@ -147,7 +147,7 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
     }), album100)
 
     itWithUniqueAlbums("should show world for zero markers", function () {
-      expect(widget.map.getView().getZoom()).toBe(1)
+      expect(widget.map.getView().getZoom()).not.toBeGreaterThan(3)
     }, new Collection([], {
       modelType: "Album"
     }))
