@@ -58,7 +58,7 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       } else {
         this.showAll()
       }
-      this.map.once("rendercomplete", function () {
+      this.map.once("postcompose", function () {
         communicator.publish("loaded:Map")
       })
       this.toggleMessage(this.markerModelCollection.isEmpty())
