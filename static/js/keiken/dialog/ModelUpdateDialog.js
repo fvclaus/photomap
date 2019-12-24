@@ -7,8 +7,8 @@ function (declare, _ModelDialogBase, templateString) {
     show: function (model) {
       this.inherited("show", arguments, [{
         model: model,
-        submit: function (data) {
-          model.save(data)
+        submit: function (data, errorFn) {
+          model.save(data, errorFn)
         },
         title: gettext("Update form"),
         templateContext: {

@@ -135,12 +135,6 @@ function (declare, DialogMessageView, clientState) {
         this._enableCloseButton()
       }
     },
-    showNetworkErrorMessage: function () {
-      this.$loader.hide()
-      this._scrollToMessage(this.message)
-      this.message.showFailure(gettext("NETWORK_ERROR"))
-      this._enableCloseButton()
-    },
     _enableCloseButton: function () {
       this._findCloseButton().button("enable")
     },

@@ -36,7 +36,6 @@ function (SlideshowWidget, Photo, Collection, communicator, TestEnv) {
       widget = t.widget; $container = t.$container
 
       widget.startup()
-      widget.setActive(true)
       $photo = $container.find("img.mp-carousel-photo")
       $infoText = $container.find(".mp-infotext")
     })

@@ -16,32 +16,26 @@ function (declare, Dialog, communicator, renderDialogTemplate) {
       var collection = options.collection
       this.inherited("show", arguments, [{
         submit: function (data) {
+          var showSuccessMessage = function () {
+            return function () {
+              this.showSuccessMessage()
+            }.bind(this)
+          }.bind(this)
           model
-            .onSuccess(function (data) {
-              this.showSuccessMessage(data)
-            }, this)
             .onInsert(function () {
+              this.showSuccessMessage(data)
               // TODO Why only insert?
               if (collection) {
                 collection.insert(model)
               }
-              communicator.publish("inserted:Model")
-            })
-            .onUpdate(function () {
-              communicator.publish("updated:Model", model)
-            })
-            .onDelete(function () {
-              communicator.publish("deleted:Model", model)
-            }, this)
-            .onFailure(function (data) {
-              this.showFailureMessage(data)
-            }, this)
-            .onError(function () {
-              this.showNetworkErrorMessage()
-            }, this)
+            }.bind(this))
+            .onUpdate(showSuccessMessage())
+            .onDelete(showSuccessMessage())
 
           assertFunction(options.submit, "Must specify submit function")
-          options.submit.call(this, data)
+          options.submit.call(this, data, function (errorResponse) {
+            this.showFailureMessage(errorResponse)
+          }.bind(this))
         },
         thisContext: this,
         type: options.type !== undefined ? options.type : this.CONFIRM_DIALOG,

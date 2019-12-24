@@ -24,7 +24,7 @@ function (declare, MarkerModel, Place, Collection) {
       var places = []
       var rawPlacesData = (data && data.places) || []
       assertArray(rawPlacesData)
-      $.each(rawPlacesData, function (index, placeData) {
+      rawPlacesData.forEach(function (placeData) {
         places.push(new Place(placeData))
       })
       this.places = new Collection(places, {
@@ -48,26 +48,19 @@ function (declare, MarkerModel, Place, Collection) {
     getUrl: function (protocolAndHost) {
       return protocolAndHost + "/album/" + this.getId() + "/view/" + this.getSecret() + "/"
     },
-    updatePassword: function (password) {
-      $.ajax({
-        url: "/album" + this.id + "/password",
-        type: "post",
-        data: {
-          password: password
-        },
-        dataType: "json",
-        success: function (data, status, xhr) {
-          if (data.success) {
-            this._trigger("success", [data, status, xhr])
-            this._trigger("updated", this)
-          } else {
-            this._trigger("failure", [data, status, xhr])
+    updatePassword: function (password, errorFn) {
+      this._sendRequest(
+        {
+          url: "/album" + this.id + "/password",
+          type: "post",
+          data: {
+            password: password
           }
+        },
+        function successFn () {
+          this._trigger("update", this)
         }.bind(this),
-        error: function (xhr, status, error) {
-          this._trigger("error", [xhr, status, error])
-        }.bind(this)
-      })
+        errorFn)
       return this
     }
   })

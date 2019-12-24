@@ -88,15 +88,15 @@ function (Collection, Photo) {
         expect(model).toEqual(photo100)
         done()
       })
-      $(photoCollection.getById(100)).trigger("updated", photo100)
+      $(photoCollection.getById(100)).trigger("update", photo100)
     })
 
     it("should remove event listeners", function () {
       photoCollection.onDelete(function () {
         throw new Error("Not supposed to trigger onDelete")
       }, this, "Test")
-      photoCollection.removeEvents("Test", "deleted")
-      $(photoCollection).trigger("deleted")
+      photoCollection.removeEvents("Test", ["delete"])
+      photoCollection._trigger("delete")
     })
 
     it("emptyCollection", function () {

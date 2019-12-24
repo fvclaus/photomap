@@ -7,8 +7,9 @@ function (declare, _ModelDialogBase, templateString) {
     show: function (model) {
       this.inherited("show", arguments, [{
         model: model,
-        submit: function () {
-          model.delete()
+        // eslint-disable-next-line no-unused-vars
+        submit: function (data, errorFn) {
+          model.delete(errorFn)
         },
         title: gettext("Confirm delete"),
         templateContext: {

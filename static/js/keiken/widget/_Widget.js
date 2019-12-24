@@ -13,10 +13,9 @@ define(["dojo/_base/declare",
   "dojox/dtl/_base",
   "dojox/dtl/render/dom",
   "dojo/on",
-  "../view/View",
   "./loadDtlDirectives!",
   "dojo/domReady!"],
-function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on, View) {
+function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on) {
   ddcd.AttachNode = declare(ddcd.AttachNode, {
     render: function (context, buffer) {
       if (!this.rendered) {
@@ -62,6 +61,7 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on,
 
   var origConstruct = parser.construct
 
+  // eslint-disable-next-line no-unused-vars
   parser.construct = function (ctor, node, mixin, options, scripts, inherited) {
     if (!options.propsThis) {
       options.propsThis = currentRenderedWidget
@@ -69,16 +69,16 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on,
     return origConstruct.apply(this, arguments)
   }
 
-  var orig_functionFromScript = parser._functionFromScript
+  var origfunctionFromScript = parser._functionFromScript
 
   parser._functionFromScript = function () {
-    var fn = orig_functionFromScript.apply(this, arguments)
+    var fn = origfunctionFromScript.apply(this, arguments)
     return fn.bind(currentRenderedWidget)
   }
 
   var currentRenderedWidget
 
-  parser.construct = function (ctor, node) {
+  parser.construct = function (Ctor, node) {
     var params = {}
 
     // Get list of attributes explicitly listed in the markup
@@ -86,8 +86,7 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on,
     var consumedAttributes = []
     // Read in attributes and process them, including data-dojo-props, data-dojo-type,
     // dojoAttachPoint, etc., as well as normal foo=bar attributes.
-    var i = 0; var item
-    while (item = attributes[i++]) {
+    for (var i = 0, item = attributes[i]; i < attributes.length; i++) {
       var name = item.name
       if (!name.startsWith("data-")) {
         var camelCaseName = name
@@ -118,16 +117,18 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on,
     })
 
     // create the instance
-    return new ctor(params, node)
+    return new Ctor(params, node)
   }
 
-  return declare([View, _WidgetBase, _DomTemplated], {
+  return declare([_WidgetBase, _DomTemplated], {
     widgetsInTemplate: true,
     // eslint-disable-next-line no-unused-vars
     constructor: function (params, srcNodeRef) {
       assertString(this.viewName, "Every PhotoWidget must define a viewName")
       assertString(this.templateString, "Every PhotoWidget must define a templateString.")
       this.hasChildren = false
+      // Relict of View.js
+      this.active = true
       this.$children = $(srcNodeRef)
         .children()
         .detach()

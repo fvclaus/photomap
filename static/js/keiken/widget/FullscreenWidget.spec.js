@@ -34,7 +34,6 @@ function (FullscreenWidget, Photo, Collection, communicator, TestEnv) {
 
       widget.startup()
       $photo = $container.find("img.mp-carousel-photo")
-      widget.setActive(true)
     })
 
     afterEach(function () {

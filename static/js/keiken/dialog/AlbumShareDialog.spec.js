@@ -28,7 +28,7 @@ function (AlbumShareDialog, Album, TestEnv) {
       $("input[name='password']").val("New password")
       dialog._submitForm()
 
-      expect(album.updatePassword).toHaveBeenCalledWith("New password")
+      expect(album.updatePassword).toHaveBeenCalledWith("New password", jasmine.any(Function))
     })
   })
 })

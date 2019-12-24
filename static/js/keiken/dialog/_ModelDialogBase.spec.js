@@ -33,16 +33,10 @@ function (_ModelDialogBase, Album, communicator, TestEnv) {
       })
     }
 
-    ["inserted", "updated", "deleted"].forEach(function (eventType) {
-      it("should publish " + eventType + " event", function (done) {
+    ["insert", "update", "delete"].forEach(function (eventType) {
+      it("should publish " + eventType + " event", function () {
         showDialog(function () {
-          // This should show success message
-          album._trigger("success")
-          // This should publish event
           album._trigger(eventType)
-        })
-        communicator.subscribe(eventType + ":Model", function () {
-          done()
         })
 
         spyOn(dialog, "showSuccessMessage")
@@ -52,21 +46,15 @@ function (_ModelDialogBase, Album, communicator, TestEnv) {
     })
 
     it("should show failure message", function () {
-      showDialog(function () {
-        album._trigger("failure")
+      // eslint-disable-next-line no-unused-vars
+      showDialog(function (data, errorFn) {
+        errorFn({
+          error: "error"
+        })
       })
       spyOn(dialog, "showFailureMessage")
       dialog._submitForm()
       expect(dialog.showFailureMessage).toHaveBeenCalled()
-    })
-
-    it("should show error message", function () {
-      showDialog(function () {
-        album._trigger("error")
-      })
-      spyOn(dialog, "showNetworkErrorMessage")
-      dialog._submitForm()
-      expect(dialog.showNetworkErrorMessage).toHaveBeenCalled()
     })
   })
 })

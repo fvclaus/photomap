@@ -1,0 +1,24 @@
+<section id="mp-full-page"
+         class="mp-full-page">
+  <div data-dojo-type="keiken/widget/MapWidget"
+       data-widget-instance-name="map" />
+</section>
+
+
+<section id="mp-right-column"
+         class="mp-right-column">
+  <div data-dojo-type="keiken/widget/DetailWidget"
+       data-widget-instance-name="information" />
+</section>
+
+<div data-dojo-type="keiken/widget/ModelOperationWidget"
+     data-widget-instance-name="controls"> </div>
+
+<div data-dojo-type="keiken/widget/LoadingScreenWidget"
+     data-widget-instance-name="loadingScreen" />
+
+<div data-dojo-type="keiken/widget/InfoText">
+  <p id='mp-infotext-closing-help'>
+    {% trans CLOSE_INFOTEXT_ALERT %}
+  </p>
+</div>

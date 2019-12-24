@@ -7,8 +7,8 @@ function (declare, _ModelDialogBase, templateString) {
     show: function (album) {
       this.inherited("show", arguments, [{
         model: album,
-        submit: function (data) {
-          album.updatePassword(data.password)
+        submit: function (data, errorFn) {
+          album.updatePassword(data.password, errorFn)
         },
         title: gettext("Share-link & album password"),
         templateContext: {

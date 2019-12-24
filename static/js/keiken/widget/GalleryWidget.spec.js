@@ -42,7 +42,6 @@ function (GalleryWidget, Photo, Collection, communicator, TestEnv) {
       widget.startup()
       $photos = $container.find("img.mp-carousel-photo")
       $infoText = $container.find(".mp-infotext")
-      widget.setActive(true)
     })
 
     afterEach(function () {

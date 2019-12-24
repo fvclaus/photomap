@@ -32,7 +32,7 @@ function (ModelUpdateDialog, Album, TestEnv) {
       expect(model.save).toHaveBeenCalledWith({
         title: "New title",
         description: "New description"
-      })
+      }, jasmine.any(Function))
     })
   })
 })

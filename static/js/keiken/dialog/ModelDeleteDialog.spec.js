@@ -26,7 +26,7 @@ function (ModelDeleteDialog, Album, TestEnv) {
       dialog.show(model)
       dialog._submitForm()
 
-      expect(model.delete).toHaveBeenCalled()
+      expect(model.delete).toHaveBeenCalledWith(jasmine.any(Function))
     })
   })
 })

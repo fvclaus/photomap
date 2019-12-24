@@ -45,7 +45,7 @@ function (PhotoInsertDialog, Place, mockInputFiles, TestEnv) {
         title: "Title",
         description: "Description",
         photo: undefined
-      })
+      }, jasmine.any(Function))
     })
   })
 })

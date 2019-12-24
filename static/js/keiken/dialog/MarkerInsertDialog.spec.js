@@ -36,7 +36,7 @@ function (MarkerInsertDialog, Album, Collection, TestEnv) {
         lat: "50",
         lon: "40",
         album: "1"
-      })
+      }, jasmine.any(Function))
     })
     it("should save album", function () {
       var album = dialog.showAlbum(new Collection([], {
@@ -54,7 +54,7 @@ function (MarkerInsertDialog, Album, Collection, TestEnv) {
         description: "Description",
         lat: "50",
         lon: "40"
-      })
+      }, jasmine.any(Function))
     })
   })
 })

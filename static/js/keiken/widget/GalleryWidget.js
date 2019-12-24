@@ -101,8 +101,7 @@ function (declare, _Widget, PhotoCarouselWidget, communicator, Collection, templ
     },
     _unbindPhotoCollectionListener: function () {
       if (this._photos) {
-        this._photos.removeEvents(this.viewName, "inserted")
-        this._photos.removeEvents(this.viewName, "deleted")
+        this._photos.removeEvents(this.viewName, ["inserted", "deleted"])
         this._photos = null
       }
     },

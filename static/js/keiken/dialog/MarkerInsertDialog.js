@@ -35,8 +35,8 @@ function (declare, _ModelDialogBase, Place, Album, templateString) {
     },
     _show: function (options) {
       this.inherited("show", arguments, [$.extend(options, {
-        submit: function (data) {
-          options.model.save(data)
+        submit: function (data, errorFn) {
+          options.model.save(data, errorFn)
         },
         type: this.INPUT_DIALOG,
         templateString: templateString

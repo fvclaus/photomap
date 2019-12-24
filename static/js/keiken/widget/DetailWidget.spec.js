@@ -39,14 +39,14 @@ function (DetailWidget, Photo, communicator, declare, _Widget, TestEnv) {
     itWithoutChildren("should update description widget when model changes", function () {
       widget.show(photo)
       spyOn(widget.fullDescription, "show")
-      photo._trigger("updated", photo)
+      photo._trigger("update", photo)
       expect(widget.fullDescription.show).toHaveBeenCalledWith(photo)
     })
 
     itWithoutChildren("should empty widget when model is deleted", function () {
       widget.show(photo)
       spyOn(widget.fullDescription, "empty")
-      photo._trigger("deleted", photo)
+      photo._trigger("delete", photo)
       expect(widget.fullDescription.empty).toHaveBeenCalled()
     })
 

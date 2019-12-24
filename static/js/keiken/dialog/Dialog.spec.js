@@ -107,18 +107,6 @@ function (Dialog, clientState, TestEnv) {
       expect(dialog._findCloseButton()).toBeEnabled()
     })
 
-    it("should show network error message", function () {
-      showDialog({
-        submit: function () {
-          dialog.showNetworkErrorMessage()
-        }
-      })
-      spyOn(dialog.message, "showFailure")
-      triggerSubmit()
-      expect(dialog.message.showFailure).toHaveBeenCalled()
-      expect(dialog._findCloseButton()).toBeEnabled()
-    })
-
     it("should show failure message", function () {
       showDialog({
         submit: function () {

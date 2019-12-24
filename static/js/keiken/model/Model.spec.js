@@ -3,11 +3,11 @@
 
 define(["../model/Model", "../tests/ModelServerTest"],
   function (Model, ModelServerTest) {
-    var model = null
-    var modelData = null
-    var server = null
+    describe("Model", function () {
+      var model = null
+      var modelData = null
+      var server = null
 
-    describe("ModelTest", function () {
       beforeEach(function () {
         modelData = {
           title: "Title",
@@ -52,9 +52,6 @@ define(["../model/Model", "../tests/ModelServerTest"],
       })
 
       it("should trigger onInsert", function (done) {
-        model.onSuccess(function (data, status, xhr) {
-          expect(status).toBe("200")
-        })
         model.onInsert(function (data) {
           console.log("data", data)
           expect(data.title).toBe("Title")
@@ -68,32 +65,29 @@ define(["../model/Model", "../tests/ModelServerTest"],
       })
 
       it("should trigger onFailure", function (done) {
-        model.onFailure(function (data, status, xhr) {
-          expect(status).toBe("200")
-          expect(typeof data.success === "boolean" && !data.success).toBeTruthy()
+        server.mockFailureResponse(modelData, "/album/")
+        model.save(modelData, function (error) {
+          expect(error).toEqual({
+            error: gettext("Something went wrong"),
+            success: false
+          })
           done()
         })
-
-        server.mockFailureResponse(modelData, "/album/")
-        model.save(modelData)
       })
 
       it("should trigger onError", function (done) {
-        model.onError(function (xhr, status, error) {
-          expect(status).toBe("500")
-          expect(error).toBe("Something went wrong.")
+        server.mockErrorResponse(modelData, "/album/")
+        model.save(modelData, function (error) {
+          expect(error).toEqual({
+            error: gettext("NETWORK_ERROR"),
+            success: false
+          })
           done()
         })
-
-        server.mockErrorResponse(modelData, "/album/")
-        model.save(modelData)
       })
 
       it("should trigger onUpdate", function (done) {
         model.id = 5
-        model.onSuccess(function (data, status, xhr) {
-          expect(status).toBe("200")
-        })
         model.onUpdate(function (data) {
           console.log("data", data)
           expect(data.title).toBe("New Title")
