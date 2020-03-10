@@ -21,7 +21,7 @@
   "homepage": "https://bitbucket.org/fvclaus/keiken#readme",
   "dependencies": {
     "dijit": "^1.15.0",
-    "dojo": "^1.15.0",
+    "dojo": "^1.15.3",
     "dojox": "^1.15.0",
     "ol": "^6.1.1",
     "stylus": "^0.54.7"
