@@ -86,7 +86,8 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on)
     var consumedAttributes = []
     // Read in attributes and process them, including data-dojo-props, data-dojo-type,
     // dojoAttachPoint, etc., as well as normal foo=bar attributes.
-    for (var i = 0, item = attributes[i]; i < attributes.length; i++) {
+    for (var i = 0; i < attributes.length; i++) {
+      var item = attributes[i]
       var name = item.name
       if (!name.startsWith("data-")) {
         var camelCaseName = name
@@ -124,8 +125,9 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on)
     widgetsInTemplate: true,
     // eslint-disable-next-line no-unused-vars
     constructor: function (params, srcNodeRef) {
-      assertString(this.viewName, "Every PhotoWidget must define a viewName")
-      assertString(this.templateString, "Every PhotoWidget must define a templateString.")
+      assertTrue(!!this.viewName, "Every _Widget must define a viewName")
+      assertTrue(!!this.templateString, this.viewName + " must define a templateString.")
+      assertFalse(this.templateString.match("/>"), this.viewName + " templateString must not contain self closing tags. The dtl parser will ignore them and read until the next closing tag.")
       this.hasChildren = false
       // Relict of View.js
       this.active = true

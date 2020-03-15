@@ -25,12 +25,16 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
       albums = new Collection([album100, album200], {
         modelType: "Album"
       })
-      var t = new TestEnv().createWidget({
+    })
+
+    var createWidget = function (options) {
+      var t = new TestEnv().createWidget(Object.assign({
+        markerModels: albums,
         isAdmin: true
-      }, MapWidget)
+      }, options), MapWidget)
 
       widget = t.widget
-    })
+    }
 
     afterEach(function () {
       widget.destroy()
@@ -38,17 +42,15 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
     })
 
     it("should hide on startup", function () {
+      createWidget()
       spyOn(widget.infotext, "hide")
-      widget.startup(albums)
+      widget.startup()
       expect(widget.infotext.hide).toHaveBeenCalled()
     })
 
-    var itWithCustomLoadedMap = function (triggerPublishFn) {
-      return TestEnv.waitForPublishEvent("loaded:Map", triggerPublishFn)
-    }
-
-    var itWithLoadedMap = itWithCustomLoadedMap(function () {
-      widget.startup(albums)
+    var itWithLoadedMap = TestEnv.waitForPublishEvent("loaded:Map", function (options) {
+      createWidget(options)
+      widget.startup()
     })
 
     itWithLoadedMap("should change marker status", function () {
@@ -124,32 +126,27 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
       expect(widget.markers[0].model).toBe(album200)
     })
 
-    var itWithUniqueAlbums = function () {
-      var args = Array.prototype.slice.call(arguments)
-      var itName = args.shift()
-      var testFn = args.shift()
-      return itWithCustomLoadedMap(function () {
-        // eslint-disable-next-line no-useless-call
-        widget.startup.apply(widget, args)
-      })(itName, testFn)
-    }
-
-    itWithUniqueAlbums("should zoom out for only one marker", function () {
+    itWithLoadedMap("should zoom out for only one marker", function () {
       expect(widget.map.getView().getZoom()).not.toBeGreaterThan(18)
-    }, new Collection([album200], {
-      modelType: "Album"
-    }))
+    }, {
+      markerModels: new Collection([album200])
+    })
 
-    itWithUniqueAlbums("should zoom out for fallback marker", function () {
+    itWithLoadedMap("should zoom out for fallback marker", function () {
       expect(widget.map.getView().getZoom()).not.toBeGreaterThan(18)
-    }, new Collection([], {
-      modelType: "Album"
-    }), album100)
+    }, {
+      markerModels: new Collection([], {
+        modelType: "Album"
+      }),
+      fallbackMarkerModel: album100
+    })
 
-    itWithUniqueAlbums("should show world for zero markers", function () {
+    itWithLoadedMap("should show world for zero markers", function () {
       expect(widget.map.getView().getZoom()).not.toBeGreaterThan(3)
-    }, new Collection([], {
-      modelType: "Album"
-    }))
+    }, {
+      markerModels: new Collection([], {
+        modelType: "Album"
+      })
+    })
   })
 })

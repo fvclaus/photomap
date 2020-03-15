@@ -94,12 +94,6 @@ function (declare, EventConfigurationParser) {
         this.publish(event, data)
       }
     },
-    // This exists, because I don't have arrow functions.
-    makeSubscribeFn: function (fn, data) {
-      return function () {
-        fn(data)
-      }
-    },
     clear: function () {
       this.events = {}
     }

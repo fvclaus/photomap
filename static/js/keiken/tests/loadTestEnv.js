@@ -92,9 +92,9 @@ define(["dojo/_base/declare",
         }
       }
 
-      var executeSetupFn = function (setupFn) {
+      var executeSetupFn = function (setupFn, additionalArgs) {
         try {
-          setupFn()
+          setupFn.apply(null, additionalArgs)
         } catch (e) {
           console.error("Error while preparing it " + e)
           throw e
@@ -103,9 +103,10 @@ define(["dojo/_base/declare",
 
       TestEnv.wrapJasmineItAsyncSetup = function (registerAsyncFn, setupFn) {
         return function (name, testFn) {
+          var args = Array.prototype.slice.call(arguments)
           it(name, function (done) {
             registerAsyncFn(executeTestFn(testFn, done))
-            executeSetupFn(setupFn)
+            executeSetupFn(setupFn, args.slice(2))
           })
         }
       }

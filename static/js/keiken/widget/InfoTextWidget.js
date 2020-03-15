@@ -11,7 +11,7 @@ define(["dojo/_base/declare",
   "dojo/text!./templates/InfoText.html"],
 function (declare, _Widget, templateString) {
   return declare(_Widget, {
-    viewName: "",
+    viewName: "InfoText",
     templateString: templateString,
     constructor: function () {
       this._extendDefaults()

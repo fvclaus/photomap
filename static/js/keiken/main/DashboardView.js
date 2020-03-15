@@ -7,116 +7,53 @@
 
 define([
   "dojo/_base/declare",
-  "./Main",
+  "../widget/_Widget",
   "../util/Communicator",
-  "./UIState",
   "../util/ClientState",
-  "../util/InfoText",
   "../util/Tools",
-  "./RouterState",
-  "../widget/QuotaWidget"
+  "dojo/text!./templates/Dashboard.html",
+  "../map/MapWidget",
+  "../widget/InfoTextWidget",
+  "../widget/SlideshowWidget"
 ],
-function (declare, main, communicator, state, clientstate, InfoText, tools, RouterState, QuotaWidget) {
+function (declare, _Widget, communicator, clientstate, tools, templateString) {
   // TODO Add listener for keyup event
 
-  var quota = new QuotaWidget($("#mp-user-limit"))
+  return declare(_Widget, {
+    templateString: templateString,
+    viewName: "DashboardView",
 
-  return declare(null, {
-
-    constructor: function (markerModels) {
-      communicator.subscribeOnce("init", function () {
-        this.loadingScreen.hide()
-
-        this.isAlbumView = markerModels.modelType === "Album"
-
-        var selectMarker = function (action) {
-          return function (modelId) {
-            var model = markerModels.get(modelId)
-            if (model) {
-              map.updateMarkerStatus(model, action)
-            } else {
-              map.resetMarkerDisplayStatus()
-            }
-          }
-        }
-        this.routerState = new RouterState({
-          selectedMarker: selectMarker("select"),
-          openedMarker: selectMarker("open"),
-          fullscreen: function (showFullscreen) {
-            if (showFullscreen) {
-              fullscreen.run()
-              fullscreen.show()
-            } else {
-              fullscreen.hide()
-            }
-          },
-          page: function (galleryPage) {
-            if (gallery.isValidPage(galleryPage)) {
-              gallery.navigateTo(galleryPage)
-            }
-          },
-          photo: function (photoId) {
-            if (photoId) {
-              // ignore next slideshow update to prevent gallery page from being auto navigated, unless (!) it is the initial appstate update
-              this.ignoreNextSlideshowUpdate = !initialCall
-              this._navigateSlideshow(photo)
-            }
-          },
-          description: function (description) {
-            switch (newState.description) {
-              case "album":
-                this._showDetail(album)
-                break
-              case "place":
-                this._showDetail(selectedPlace)
-                break
-              case "photo":
-                this._showDetail(photo)
-                break
-              default:
-                this._hideDetail()
-                break
-            }
-          }
-        })
-        this.routerState.loadState()
-      })
-
-      /* ----------------------- Model -------------------------- */
-      // @see AppModelController
+    constructor: function (params, srcNodeRef) {
+      this._isAdmin = params.isAdmin
+      var markerModels = params.markerModels
+      this.isAlbumView = markerModels.size() === 1
+      this.isDashboardView = !this.isAlbumView
+      this.mapMarkerModels = this.isAlbumView ? markerModels.getPlaces() : markerModels
+      this.mapFallbackMarkerModel = this.isAlbumView ? markerModels : undefined
+    },
+    _bindListener: function () {
       communicator.subscribe({
-        inserted: function () {
-          quota.update()
-        },
-        updated: function () {
-          quota.update()
-        },
         deleted: function (model) {
           if (model === this._loadedPlace) {
-            slideshow.reset()
-            gallery.reset()
-            adminGallery.reset()
-            fullscreen.reset()
+            this.slideshow.reset()
+            this.gallery.reset()
+            this.fullscreen.reset()
           }
-          quota.update()
           this._hideDetail()
         }
       }, "Model", this)
 
-      /* ------------------------- Marker -------------------- */
       communicator.subscribe({
         mouseover: function (marker) {
-          if (this._isAdmin) {
-            // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
-            // offset.top *= 1.01
-            this.controls.show({
-              modelInstance: marker.getModel(),
-              offset: map.getPositionInPixel(marker),
-              dimension: {
-                width: marker.getView().getSize().width
-              }
-            })
-          }
+          // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
+          // offset.top *= 1.01
+          this.controls && this.controls.show({
+            modelInstance: marker.getModel(),
+            offset: this.map.getPositionInPixel(marker),
+            dimension: {
+              width: marker.getView().getSize().width
+            }
+          })
         },
         mouseout: function () {
           this.controls.hideAfterDelay()
@@ -124,10 +61,6 @@ function (declare, main, communicator, state, clientstate, InfoText, tools, Rout
         clicked: function (markerPresenter) {
           var model = markerPresenter.getModel()
           this._showDetail(model)
-          this.routerState.update({
-            description: model.type,
-            selectedMarker: model.id
-          })
         },
         dblClicked: function (markerPresenter) {
           var model = markerPresenter.getModel()
@@ -136,157 +69,95 @@ function (declare, main, communicator, state, clientstate, InfoText, tools, Rout
           } else {
             this._loadedPlace = model
             this._startPhotoWidgets(model)
-            this.routerState.update({
-              openedMarker: model.id,
-              page: null
-            })
           }
         }
       }, "Marker", this)
 
-      /* ----------------------- Description  -------------------- */
       communicator.subscribe("closed:Detail", function () {
-        map.resetMarkerDisplayStatus()
+        this.map.resetMarkerDisplayStatus()
         this._hideDetail()
-        this.routerState.update({
-          description: null,
-          selectedMarker: null,
-          openedMarker: null
-        })
       }, this)
 
-      communicator.subscribe("opened:PhotoDetail", communicator.makeSubscribeFn(this.routerState.update, {
-        description: "photo"
-      }))
-
-      communicator.subscribeOnce("init", this._init, this)
-
       communicator.subscribe({
+        mouseenter: function (data) {
+          this.controls && this.controls.show({
+            modelInstance: data.photo,
+            offset: data.element.offset(),
+            dimension: {
+              width: tools.getRealWidth(data.element)
+            }
+          })
+        },
         mouseleave: function () {
           this.controls.hideAfterDelay()
         },
         clicked: function (photo) {
           this.information.show(photo)
           this._navigateSlideshow(photo)
-          this.routerState.update({
-            photo: photo.id,
-            description: null
-          })
-        },
-        mouseenter: function (data) {
-          if (this._isAdmin === true) {
-            controls.show({
-              modelInstance: data.photo,
-              offset: data.element.offset(),
-              dimension: {
-                width: tools.getRealWidth(data.element)
-              }
-            })
-          }
         }
       }, "GalleryPhoto", this)
 
-      communicator.subscribe("opened:GalleryPage", function (pageIndex) {
-        this.routerState.update({
-          page: pageIndex
-        })
-      })
-
       communicator.subscribe({
-        beforeLoad: communicator.makeSubscribeFn(this._hideDetail),
+        beforeLoad: function () {
+          this._hideDetail()
+        },
         updated: function (photo) {
           // TODO This might be triggered unnecessarily on startup
-          description.show(photo)
-          gallery.navigateTo(photo)
+          this.description.show(photo)
+          this.gallery.navigateTo(photo)
           // TODO Why is this not updated in a collection listener?
           clientstate.insertVisitedPhoto(photo)
           photo.setVisited(true)
-          appState.update({
-            photo: photo.getId(),
-            description: false,
-            selectedPlace: null
-          })
         }
       }, "Slideshow", this)
 
       communicator.subscribe("clicked:SlideshowPhoto", function (photo) {
-        fullscreen.show()
-        appState.update({
-          fullscreen: true
-        })
+        this.fullscreen.show(photo)
       })
 
-      /* -------------- Fullscreen ----------------- */
       communicator.subscribe({
-        navigated: this.slideshow.navigateWithDirection,
-        closed: communicator.makeSubscribeFn(this.routerState.update, {
-          fullscreen: false
-        })
-      }, "Fullscreen")
+        navigated: function () {
+          this.slideshow.navigateWithDirection()
+        }
+      }, "Fullscreen", this)
 
       if (this.isAlbumView) {
-        /* --------------- Other Albumview Events ----------------- */
-        <!-- Click on #mp-page-title. What the hell is that? -->
         communicator.subscribe("clicked:PageTitle", function () {
-          description.show(this.album)
-          appState.update({
-            description: "album"
-          })
+          this.description.show(this.album)
         })
       }
     },
-    /*
-          * --------------------------------------------------
-          * Handler:
-          * --------------------------------------------------
-          */
     _init: function (albumData) {
-      var albums, initialState
       if (this.isAlbumView) {
-        // albumData is a single album
-        state.setAlbum(albumData)
-        // set initial state -> opened description, and maybe place or even photo
-        pageTitle.update(albumData.getTitle())
-        this._isAdmin = albumData.isOwner()
-        map.startup(albumData.getPlaces(), albumData.isOwner(), albumData)
-        map.setMapMessage(true, albumData.isOwner())
-        gallery.startup({ adminMode: albumData.isOwner() })
+        this.map.startup(albumData.getPlaces(), albumData)
+        this.map.setNoMarkerMessage(this._isAdmin ? "MAP_NO_PLACES_ADMIN" : "MAP_NO_PLACES_GUEST", true)
+        this.gallery.startup()
       } else {
-        this._isAdmin = true
-        albums = new Collection(albumData, {
-          modelType: "Album"
-        })
-        map.startup(albums, true)
-        map.setMapMessage(false, false)
-        state.setAlbums(albums)
+        this.map.startup(albumData)
+        this.map.setNoMarkerMessage("MAP_NO_ALBUMS", false)
       }
     },
-    /*
-          * @private
-          * @param {Photo} photo
-          */
     _navigateSlideshow: function (photo) {
-      controls.hide()
-      slideshow.run()
-      slideshow.navigateTo(photo)
+      this.controls.hide()
+      this.slideshow.run()
+      this.slideshow.navigateTo(photo)
     },
     _showDetail: function (markerModel) {
-      description.show(markerModel)
+      this.description.show(markerModel)
     },
     _hideDetail: function () {
-      description.hide()
-      if (state.isDashboardView()) {
-        map.showAll()
+      this.description.hide()
+      if (this.isDashboardView) {
+        this.map.showAll()
       }
     },
     _startPhotoWidgets: function (place) {
       var photos = place.getPhotos()
-      description.show(place)
-      gallery.load(photos)
-      gallery.run()
-      slideshow.load(photos)
-      adminGallery.load(photos)
-      fullscreen.load(photos)
+      this.description.show(place)
+      this.gallery.load(photos)
+      this.gallery.run()
+      this.slideshow.load(photos)
+      this.fullscreen.load(photos)
     }
   })
 })

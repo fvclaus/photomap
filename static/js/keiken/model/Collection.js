@@ -19,10 +19,10 @@ function (declare, _EventEmitter) {
       }
       this.options = $.extend({}, this.defaults, options)
 
-      this.modelType = options.modelType
+      this.modelType = this._detectModelType(models, this.options)
       this.models = models
 
-      if (options.orderBy) {
+      if (this.options.orderBy) {
         this.sort()
       }
 
@@ -33,6 +33,13 @@ function (declare, _EventEmitter) {
           return this.models[fnName].apply(this.models, arguments)
         }
       }.bind(this))
+    },
+    _detectModelType: function (models, options) {
+      if (models.length > 0) {
+        return models[0].type
+      } else {
+        return options.modelType
+      }
     },
     /**
           * @description Inserts a model into the collection and informs the subscribed classes about the insertion.

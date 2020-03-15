@@ -43,25 +43,25 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
         ]
       })
     },
-    startup: function (markerModelCollection, fallbackMarkerModel) {
+    startup: function () {
       if (this._started) {
         return
       }
       this.inherited(this.startup, arguments)
       this.$map.css("cursor", this.options.draggableCursor)
-      this.markerModelCollection = markerModelCollection
+      this.markerModels = this.options.markerModels
       // set array of marker-presenter
-      this.markers = this._initMarkers(this.markerModelCollection)
+      this.markers = this._initMarkers(this.markerModels)
 
-      if (this.markerModelCollection.isEmpty()) {
-        fallbackMarkerModel ? this.showOne(fallbackMarkerModel) : this.showWorld()
+      if (this.markerModels.isEmpty()) {
+        this.options.fallbackMarkerModel ? this.showOne(this.options.fallbackMarkerModel) : this.showWorld()
       } else {
         this.showAll()
       }
       this.map.once("postcompose", function () {
         communicator.publish("loaded:Map")
       })
-      this.toggleMessage(this.markerModelCollection.isEmpty())
+      this.toggleMessage(this.markerModels.isEmpty())
       this._bindCollectionListener()
     },
     /**
@@ -192,30 +192,23 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       }.bind(this))
     },
     showAll: function () {
-      this.fit(this.markerModelCollection.getAll())
+      this.fit(this.markerModels.getAll())
     },
     showOne: function (markerModel) {
       var view = this.map.getView()
       view.setCenter(ol.proj.fromLonLat([markerModel.lng, markerModel.lat]))
       view.setZoom(this.ONE_MARKER_DEFAULT_ZOOM_LEVEL)
     },
-    /* ----------------------------------- */
-    /* --------- private methods --------- */
-    setMapMessage: function (albumview, admin) {
-      if (!albumview) {
+    setNoMarkerMessage: function (i18nKey, hideOnMouseover) {
+      if (this.markerModels.isEmpty()) {
         this.infotext.show({
-          message: gettext("MAP_NO_ALBUMS"),
-          hideOnMouseover: false
-        })
-      } else {
-        this.infotext.show({
-          message: admin ? gettext("MAP_NO_PLACES_ADMIN")
-            : gettext("MAP_NO_PLACES_GUEST")
+          message: gettext(i18nKey),
+          hideOnMouseover: hideOnMouseover
         })
       }
     },
     _bindCollectionListener: function () {
-      this.markerModelCollection
+      this.markerModels
         .onDelete(function (model) {
           var marker = this._getMarkerPresenter(model)
           this.markerLayerSource.removeFeature(marker.marker)

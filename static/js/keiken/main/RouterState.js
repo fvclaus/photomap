@@ -11,8 +11,9 @@
 define(["dojo/_base/declare"],
   function (declare) {
     return declare(null, {
-      constructor: function (updateStateFns) {
+      constructor: function (updateStateFns, context) {
         this.updateStateFns = updateStateFns
+        this.context = context
         // Safari triggers popstate on pageload. This can cause problems, because the app may not be initialized yet.
         // Create the listener here to avoid too early state updates. In Safari, the app may load the state twice:
         // Once when the init event is triggered and once when the popstate event is triggered. This is not harmful
@@ -33,7 +34,7 @@ define(["dojo/_base/declare"],
           state = this._parseState(window.location.hash)
         }
         $.each(state, function (property, newValue) {
-          this.updateStateFns[property](newValue)
+          this.updateStateFns[property].call(this.context, newValue)
         }.bind(this))
       },
       /**

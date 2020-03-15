@@ -15,11 +15,14 @@ define([
   "./AppModelController",
   "../util/Communicator",
   "./UIState",
+  "../util/Collection",
   "../util/ClientState",
   "../model/Album",
-  "../util/InfoText"
+  "../util/InfoText",
+  "../widget/QuotaWidget",
+  "../widget/PageTitleWidget"
 ],
-function (declare, main, AppController, AppModelController, communicator, state, clientstate, Album, InfoText) {
+function (declare, main, AppController, AppModelController, communicator, state, Collection, clientstate, Album, InfoText, QuotaWidget, PageTitleWidget) {
   return declare(null, {
 
     start: function () {
@@ -34,6 +37,23 @@ function (declare, main, AppController, AppModelController, communicator, state,
       } else {
         this._getAlbums()
       }
+    },
+    postCreate: function () {
+      this.quota = new QuotaWidget(null, $("#mp-user-limit"))
+      this.pageTitle = new PageTitleWidget(null, $("#mp-page-title"))
+    },
+    _bindListener: function () {
+      communicator.subscribe({
+        inserted: function () {
+          this.quota.update()
+        },
+        updated: function () {
+          this.quota.update()
+        },
+        deleted: function () {
+          this.quota.update()
+        }
+      }, "Model", this)
     },
     /**
           * @private
@@ -54,7 +74,6 @@ function (declare, main, AppController, AppModelController, communicator, state,
           * @private
           */
     _getInitialData: function (url) {
-      var processedData
       var instance = this
       var info = new InfoText()
       // get the albums and their info
@@ -101,7 +120,22 @@ function (declare, main, AppController, AppModelController, communicator, state,
         })
       }
       console.dir(processedData)
-      communicator.publish("init", processedData)
+      var isAdmin
+      if (this.isAlbumView) {
+        isAdmin = processedData.isOwner()
+        this.pageTitle.update(processedData.getTitle())
+      } else {
+        isAdmin = true
+        processedData = new Collection(processedData, {
+          modelType: "Album"
+        })
+      }
+      this.loadingScreen.hide()
+      this.loadingScreen.destroy()
+      this.dashboard = new DashboardView({
+        markerModels: processedData,
+        isAdmin: isAdmin
+      })
     }
   })
 })

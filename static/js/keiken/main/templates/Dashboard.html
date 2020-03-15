@@ -1,11 +1,14 @@
 <section>
   <section id="mp-left-column"
            class="mp-left-column">
-    <div data-dojo-type="keiken/widget/MapWidget"
-         data-widget-instance-name="map" />
+    <div data-dojo-type="keiken/map/MapWidget"
+         data-widget-instance-name="map"
+         marker-models="mapMarkerModels"
+         fallback-marker-model="mapFallbackMarkerModel"></div>
     {% if is_album_view %}
     <div data-dojo-type="keiken/widget/GalleryWidget"
-         data-widget-instance-name="gallery" />
+         data-widget-instance-name="gallery"
+         admin-mode="isAdmin"></div>
     {% endif %}
   </section>
 
@@ -13,22 +16,26 @@
   <section id="mp-right-column"
            class="mp-right-column">
     <div data-dojo-type="keiken/widget/DetailWidget"
-         data-widget-instance-name="information">
-      {% if is_album_view %}
-      <div data-dojo-type="keiken/SlideshowWidget"
-           data-widget-instance-name="slideshow" />
-      {% endif %}
+         data-widget-instance-name="description">
+      <div>
+        {% if is_album_view %}
+        <div data-dojo-type="keiken/widget/SlideshowWidget"
+             data-widget-instance-name="slideshow"></div>
+        {% endif %}
+      </div>
     </div>
   </section>
 
+  {% if isAdmin %}
   <div data-dojo-type="keiken/widget/ModelOperationWidget"
        include-share-operation="is_album_view"
        data-widget-instance-name="controls"> </div>
+  {% endif %}
 
-  <div data-dojo-type="keiken/widget/LoadingScreenWidget"
-       data-widget-instance-name="loadingScreen" />
+  <div data-dojo-type="keiken/widget/FullscreenWidget"
+       data-widget-instance-name="fullscreen"></div>
 
-  <div data-dojo-type="keiken/widget/InfoText">
+  <div data-dojo-type="keiken/widget/InfoTextWidget">
     <p id='mp-infotext-closing-help'>
       {% trans CLOSE_INFOTEXT_ALERT %}
     </p>

@@ -35,8 +35,7 @@ function (Collection, Photo) {
       })
 
       photoCollection = new Collection([photo300, photo100, photo200], {
-        orderBy: "order",
-        modelType: "Photo"
+        orderBy: "order"
       })
     })
     it("initial sorting", function () {
@@ -69,6 +68,10 @@ function (Collection, Photo) {
       })
 
       photoCollection.insert(photo101)
+    })
+
+    it("should automatically detect model type", function () {
+      expect(photoCollection.modelType).toBe("Photo")
     })
 
     it("delete", function (done) {

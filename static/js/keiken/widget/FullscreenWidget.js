@@ -56,6 +56,7 @@ function (declare, _Widget, PhotoCarouselWidget, Collection, communicator, templ
       this.$container
         .show()
         .focus()
+      communicator.publish("opened:Fullscreen")
     },
     hide: function () {
       this.$container.hide()

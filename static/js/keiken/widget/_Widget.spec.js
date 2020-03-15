@@ -10,7 +10,6 @@ define(["./_Widget",
 function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
   describe("_Widget", function () {
     var widget
-    var $container
 
     afterEach(function () {
       widget.destroy()
@@ -20,14 +19,14 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
       var Widget = declare(_Widget, {
         templateString: "<div data-testid='containerNodeWrapperWrapper'>" +
         " <div data-dojo-type='keiken/widget/tests/_WidgetWithContainerNodeWrapper' " +
-        "      data-widget-instance-name='wrapper' />" +
+        "      data-widget-instance-name='wrapper'></div>" +
         "</div>",
         viewName: "Widget"
       })
 
       var t = new TestEnv().createWidget(null, Widget)
 
-      widget = t.widget; $container = t.$container
+      widget = t.widget
 
       widget.startup()
       expect(widget.hasChildren).toBeFalsy();
@@ -51,7 +50,7 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
     it("should not connect data-event of children", function () {
       var Widget = declare(_Widget, {
         templateString: "<div>" +
-        " <div data-dojo-attach-point='myNode' /> " +
+        " <div data-dojo-attach-point='myNode' ></div> " +
         " <div data-dojo-type='keiken/widget/tests/_WidgetWithoutContainerNode' " +
         "      data-widget-instance-name='instance'>" +
         " </div>" +
@@ -61,7 +60,7 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
 
       var t = new TestEnv().createWidget(null, Widget)
 
-      widget = t.widget; $container = t.$container
+      widget = t.widget
 
       widget.startup()
 
@@ -89,5 +88,23 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
       widget.$counter.trigger("click")
       expect(widget.counter).toBe(1)
     })
+
+    it("should not allow self closing tags in template string", function (done) {
+      var Widget = declare(_Widget, {
+        templateString: "<div>" +
+        " <div/> " +
+        " <div/>" +
+        "</div>",
+        viewName: "Widget"
+      })
+
+      try {
+        new TestEnv().createWidget(null, Widget)
+      } catch (e) {
+        expect(e.message).toContain("self closing tag")
+        done()
+      }
+    })
   })
+  // TODO Add spec to test that html attributes are passed in as params
 })
