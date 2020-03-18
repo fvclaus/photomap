@@ -12,7 +12,9 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
     var widget
 
     afterEach(function () {
-      widget.destroy()
+      if (widget) {
+        widget.destroy()
+      }
     })
 
     it("should connect data-event of container nodes of immediate children", function () {
@@ -104,6 +106,29 @@ function (_Widget, declare, TestEnv, _DomTemplateWidgetWithCounter) {
         expect(e.message).toContain("self closing tag")
         done()
       }
+    })
+
+    it("should render dtl as children", function () {
+      var Widget = declare(_Widget, {
+        templateString: "<div>" +
+        " <div data-dojo-type='keiken/widget/tests/_WidgetWithContainerNode'>" +
+        "   <div> " +
+        "     {% if shouldRender %}" +
+        "     <span id='text'>Hello, World</span>" +
+        "     {% endif %}" +
+        "   </div>" +
+        " </div>" +
+        "</div>",
+        viewName: "Widget",
+        shouldRender: true
+      })
+      var t = new TestEnv().createWidget(null, Widget)
+
+      widget = t.widget
+
+      widget.startup()
+
+      expect(widget.domNode).toHaveDescendantWithText("span", "Hello, World")
     })
   })
   // TODO Add spec to test that html attributes are passed in as params

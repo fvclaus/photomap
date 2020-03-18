@@ -4,7 +4,7 @@ define(["dojo/_base/declare",
     templateString: "<div data-testid='containerNodeWrapper'>" +
       " <div data-dojo-type='keiken/widget/tests/_WidgetWithContainerNode' " +
       "      data-widget-instance-name='container'>" +
-      "   <div class='mp-cloak'>" +
+      "   <div>" +
       "     <button data-dojo-attach-point='buttonNode' " +
       "             data-dojo-attach-event='onclick: click'>" +
       "       I am a button " +

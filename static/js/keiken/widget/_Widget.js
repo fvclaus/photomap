@@ -131,10 +131,10 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on)
       this.hasChildren = false
       // Relict of View.js
       this.active = true
-      this.$children = $(srcNodeRef)
-        .children()
-        .detach()
-        .removeClass("mp-cloak")
+      this.childrenHtml = $(srcNodeRef)
+        .html()
+        .trim()
+      $(srcNodeRef).children().detach()
     },
     /*
      * @public
@@ -149,12 +149,7 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on)
     },
 
     postCreate: function () {
-      // containerNode is used for this exact purpose in _TemplatedMixin._fillContent()
-      if (this.$children.length > 0 && this.containerNode) {
-        $(this.containerNode).html(this.$children)
-        this.hasChildren = true
-      }
-      this._attachChildContainers2()
+      this._attachChildContainers()
       this.$domNode = $(this.domNode)
       this.$container = this.$domNode
     },
@@ -171,17 +166,25 @@ function (declare, lang, parser, _WidgetBase, _DomTemplated, ddcd, dd, ddrd, on)
       * AFAIK This is not supported by dojo. _AttachMixin will ignore everything in a containerNode.
       * There will also be no Attach- or EventNode because the node list only contains nodes that belong this this widget.
       */
-    _attachChildContainers2: function () {
+    _attachChildContainers: function () {
       this._findTypeNodes(this.template)
         .forEach(function (typeNode) {
-          var $children = typeNode._dijit.$children
-          if ($children && $children.length > 0) {
+          var childWidget = typeNode._dijit
+          var childrenHtml = childWidget.childrenHtml
+          if (childrenHtml) {
             // Make sure the original is not modified.
-            var template = new dd.DomTemplate($children.parent().html())
+            var template = new dd.DomTemplate(childrenHtml)
 
-            // Create a 'virtual' DOM node that does not overwrite the actual nodes
-            new ddrd.Render(document.createElement("div"))
+            // Render children in new DOM node that does not overwrite the actual nodes
+            var renderer = new ddrd.Render(document.createElement("div"))
+            renderer
               .render(this._getContext(), template)
+            // containerNode is used for this exact purpose in _TemplatedMixin._fillContent()
+            // We must render it to enable support for dtl with the correct context.
+            if (childWidget.containerNode) {
+              $(childWidget.containerNode).html(renderer.domNode)
+              childWidget.hasChildren = true
+            }
           }
         }.bind(this))
     },
