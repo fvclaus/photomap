@@ -88,8 +88,8 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
 
     itWithLoadedMap("should publish click marker event on click", function (done) {
       spyOn(widget.markers[0], "displayAsSelected")
-      communicator.subscribe("clicked:Marker", function (marker) {
-        expect(marker.model).toBe(album100)
+      communicator.subscribe("clicked:Marker", function (model) {
+        expect(model).toBe(album100)
         expect(widget.markers[0].displayAsSelected).toHaveBeenCalled()
         done()
       })
@@ -98,8 +98,8 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
 
     itWithLoadedMap("should publish dblclick maker event on dblclick", function (done) {
       spyOn(widget.markers[0], "displayAsOpened")
-      communicator.subscribe("dblClicked:Marker", function (marker) {
-        expect(marker.model).toBe(album100)
+      communicator.subscribe("dblClicked:Marker", function (model) {
+        expect(model).toBe(album100)
         expect(widget.markers[0].displayAsOpened).toHaveBeenCalled()
         done()
       })
