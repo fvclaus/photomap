@@ -22,9 +22,7 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
     var albums
 
     beforeEach(function () {
-      albums = new Collection([album100, album200], {
-        modelType: "Album"
-      })
+      albums = new Collection([album100, album200])
     })
 
     var createWidget = function (options) {

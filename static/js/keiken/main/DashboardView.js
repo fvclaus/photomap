@@ -23,9 +23,10 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
     templateString: templateString,
     viewName: "DashboardView",
 
-    constructor: function (params, srcNodeRef) {
-      this._isAdmin = params.isAdmin
+    constructor: function (params) {
+      this.isAdmin = params.isAdmin
       var markerModels = params.markerModels
+      this.markerModels = markerModels
       this.isAlbumView = markerModels.size() === 1
       this.isDashboardView = !this.isAlbumView
       this.mapMarkerModels = this.isAlbumView ? markerModels.getPlaces() : markerModels
@@ -48,7 +49,7 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
           // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
           // offset.top *= 1.01
           this.controls && this.controls.show({
-            modelInstance: marker.getModel(),
+            modelInstance: marker.model,
             offset: this.map.getPositionInPixel(marker),
             dimension: {
               width: marker.getView().getSize().width
@@ -58,12 +59,10 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
         mouseout: function () {
           this.controls.hideAfterDelay()
         },
-        clicked: function (markerPresenter) {
-          var model = markerPresenter.getModel()
+        clicked: function (model) {
           this._showDetail(model)
         },
-        dblClicked: function (markerPresenter) {
-          var model = markerPresenter.getModel()
+        dblClicked: function (model) {
           if (this.isAlbumView) {
             window.location.href = "/album/" + model.id + "/view/" + model.secret + "/"
           } else {
@@ -127,13 +126,11 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
         })
       }
     },
-    _init: function (albumData) {
+    postCreate: function () {
+      this.inherited(this.postCreate, arguments)
       if (this.isAlbumView) {
-        this.map.startup(albumData.getPlaces(), albumData)
-        this.map.setNoMarkerMessage(this._isAdmin ? "MAP_NO_PLACES_ADMIN" : "MAP_NO_PLACES_GUEST", true)
-        this.gallery.startup()
+        this.map.setNoMarkerMessage(this.isAdmin ? "MAP_NO_PLACES_ADMIN" : "MAP_NO_PLACES_GUEST", true)
       } else {
-        this.map.startup(albumData)
         this.map.setNoMarkerMessage("MAP_NO_ALBUMS", false)
       }
     },

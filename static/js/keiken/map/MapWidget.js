@@ -58,9 +58,18 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       } else {
         this.showAll()
       }
+      var isMapLoaded = false
       this.map.once("postcompose", function () {
         communicator.publish("loaded:Map")
+        isMapLoaded = true
       })
+      // Map would only render after window resize
+      // TODO Maybe there is a better way to do it.
+      setTimeout(function () {
+        if (!isMapLoaded) {
+          this.map.updateSize()
+        }
+      }.bind(this), 200)
       this.toggleMessage(this.markerModels.isEmpty())
       this._bindCollectionListener()
     },
@@ -103,7 +112,7 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
         if (features.length) {
           var marker = features[0]._markerInstance
           this.updateMarkerStatus(marker, "select")
-          communicator.publish("clicked:Marker", marker)
+          communicator.publish("clicked:Marker", marker.model)
         } else {
           var coordinate = ol.proj.toLonLat(this.map.getEventCoordinate(event.originalEvent))
           communicator.publish("clicked:Map", {
@@ -184,7 +193,7 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
     },
     _openMarker: function (marker) {
       this.updateMarkerStatus(marker, "open")
-      communicator.publish("dblClicked:Marker", marker)
+      communicator.publish("dblClicked:Marker", marker.model)
     },
     _initMarkers: function (models) {
       return models.map(function (model) {

@@ -9,10 +9,10 @@ function (DashboardView, Album, Collection, communicator, TestEnv) {
   describe("DashboardView", function () {
     var widget
 
-    // afterEach(function () {
-    //   widget.destroy()
-    //   communicator.clear()
-    // })
+    afterEach(function () {
+      widget.destroy()
+      communicator.clear()
+    })
 
     var itWithAlbums = TestEnv.wrapJasmineItSyncSetup(function () {
       var t = new TestEnv().createWidget({
@@ -21,14 +21,14 @@ function (DashboardView, Album, Collection, communicator, TestEnv) {
           new Album({
             title: "Album 1",
             id: 1,
-            lat: 90,
-            lng: 90
+            lat: 52,
+            lon: 7
           }),
           new Album({
             title: "Album 2",
             id: 2,
-            lat: 90,
-            lng: 90
+            lat: 48,
+            lon: 12
           })])
       }, DashboardView)
 

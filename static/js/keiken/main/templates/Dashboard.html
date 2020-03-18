@@ -1,11 +1,10 @@
-<section>
-  <section id="mp-left-column"
-           class="mp-left-column">
+<section class="dashboard">
+  <section class="dashboard__map">
     <div data-dojo-type="keiken/map/MapWidget"
          data-widget-instance-name="map"
          marker-models="mapMarkerModels"
          fallback-marker-model="mapFallbackMarkerModel"></div>
-    {% if is_album_view %}
+    {% if isAlbumView %}
     <div data-dojo-type="keiken/widget/GalleryWidget"
          data-widget-instance-name="gallery"
          admin-mode="isAdmin"></div>
@@ -13,12 +12,11 @@
   </section>
 
 
-  <section id="mp-right-column"
-           class="mp-right-column">
+  <section class="dashboard__detail">
     <div data-dojo-type="keiken/widget/DetailWidget"
          data-widget-instance-name="description">
       <div>
-        {% if is_album_view %}
+        {% if isAlbumView %}
         <div data-dojo-type="keiken/widget/SlideshowWidget"
              data-widget-instance-name="slideshow"></div>
         {% endif %}

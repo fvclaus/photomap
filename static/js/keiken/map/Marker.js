@@ -102,7 +102,6 @@ function (declare, ol, modelToIconImage) {
     },
     _createShadowIconCanvas: function (model) {
       var canvas = document.createElement("canvas")
-      document.body.appendChild(canvas)
       var imageWidth = this.MODEL_TO_ICON_SIZE[model.type][0]
       var imageHeight = this.MODEL_TO_ICON_SIZE[model.type][1]
       // Make sure the icon fits the canvas after transformation
@@ -140,7 +139,6 @@ function (declare, ol, modelToIconImage) {
     },
     _createIconCanvas: function (model, status, shadowCanvasSize) {
       var canvas = document.createElement("canvas")
-      document.body.appendChild(canvas)
       canvas.width = shadowCanvasSize[0]
       canvas.height = shadowCanvasSize[1]
       var ctx = canvas.getContext("2d")
@@ -171,31 +169,6 @@ function (declare, ol, modelToIconImage) {
     },
     getCoordinates: function () {
       return this.marker.getGeometry().getCoordinates()
-    },
-    getLatLng: function () {
-      return new google.maps.LatLng(this.model.lat, this.model.lng)
-    },
-    addListener: function (event, callback) {
-      google.maps.event.addListener(this.marker, event, function (eventObject) {
-        if (eventObject.type === "click") {
-          this.isSingleClick = true
-          window.setTimeout(function () {
-            if (this.isSingleClick) {
-              this.isSingleClick = false
-              callback(eventObject)
-            }
-          }.bind(this), 800)
-        } else if (eventObject.type === "dblclick") {
-          this.isSingleClick = false
-          callback(eventObject)
-        } else {
-          callback(eventObject)
-        }
-      }.bind(this))
-      return this
-    },
-    triggerEvent: function (event) {
-      google.maps.event.trigger(this.marker, event)
     },
     _showIcon: function (status) {
       this.marker.setStyle(this._createIconStyles(this.model, status))
