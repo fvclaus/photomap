@@ -10,6 +10,7 @@ define([
   "../widget/_Widget",
   "../util/Communicator",
   "../util/ClientState",
+  "./DashboardDialogController",
   "../model/Collection",
   "../util/Tools",
   "dojo/text!./templates/Dashboard.html",
@@ -17,7 +18,7 @@ define([
   "../widget/InfoTextWidget",
   "../widget/SlideshowWidget"
 ],
-function (declare, _Widget, communicator, clientstate, Collection, tools, templateString) {
+function (declare, _Widget, communicator, clientstate, DashboardDialogController, Collection, tools, templateString) {
   // TODO Add listener for keyup event
 
   return declare(_Widget, {
@@ -27,6 +28,7 @@ function (declare, _Widget, communicator, clientstate, Collection, tools, templa
     constructor: function (params) {
       this.isAdmin = params.isAdmin
       var markerModels = params.markerModels
+      this.dialogController = new DashboardDialogController(markerModels)
       this.markerModels = markerModels
       this.isAlbumView = markerModels.constructor !== Collection
       this.isDashboardView = !this.isAlbumView

@@ -7,8 +7,6 @@
 
 define([
   "dojo/_base/declare",
-  "./Main",
-  "./UIState",
   "../util/Communicator",
   "../dialog/ModelDeleteDialog",
   "../dialog/MarkerInsertDialog",
@@ -16,12 +14,14 @@ define([
   "../dialog/AlbumShareDialog",
   "../dialog/ModelUpdateDialog"
 ],
-function (declare, main, state, communicator, ModelDeleteDialog, MarkerInsertDialog, PhotoInsertDialog, AlbumShareDialog, ModelUpdateDialog) {
-  var map = main.getMap()
-
+function (declare, communicator, ModelDeleteDialog, MarkerInsertDialog, PhotoInsertDialog, AlbumShareDialog, ModelUpdateDialog) {
   return declare(null, {
 
-    constructor: function () {
+    constructor: function (markerModels) {
+      this.markerModels = markerModels
+      communicator.subscribe("dblClicked:Marker", function (model) {
+        this.loadedMarkerModel = model
+      }.bind(this))
       communicator.subscribe("clicked:GalleryInsert", this._openPhotoInsertDialog.bind(this))
       communicator.subscribe("clicked:Map", this._openMarkerInsertDialog.bind(this))
       communicator.subscribe("clicked:UpdateOperation", this._openModelUpdateDialog.bind(this))
@@ -30,19 +30,14 @@ function (declare, main, state, communicator, ModelDeleteDialog, MarkerInsertDia
       communicator.subscribe("clicked:ShareOperation", this._openAlbumShareDialog.bind(this))
     },
     _openPhotoInsertDialog: function () {
-      var place = map.getOpenedMarker().getModel()
-      new PhotoInsertDialog().show(place)
+      new PhotoInsertDialog().show(this.loadedMarkerModel)
     },
     _openMarkerInsertDialog: function (eventData) {
       var dialog = new MarkerInsertDialog()
       var lat = eventData.lat.toFixed(7)
       var lng = eventData.lng.toFixed(7)
 
-      if (state.isDashboardView()) {
-        dialog.showAlbum(state.getAlbums(), lat, lng)
-      } else if (state.isAlbumView()) {
-        dialog.showPlace(state.getAlbum(), lat, lng)
-      }
+      dialog.show(this.markerModels, lat, lng)
     },
     _openModelUpdateDialog: function (model) {
       new ModelUpdateDialog().show(model)

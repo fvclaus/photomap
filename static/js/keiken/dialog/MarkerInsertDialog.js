@@ -1,11 +1,20 @@
 define(["dojo/_base/declare",
   "./_ModelDialogBase",
+  "../model/Collection",
   "../model/Place",
   "../model/Album",
   "dojo/text!./templates/MarkerInsertForm.html"],
-function (declare, _ModelDialogBase, Place, Album, templateString) {
+function (declare, _ModelDialogBase, Collection, Place, Album, templateString) {
   return declare(_ModelDialogBase, {
 
+    showAlbumOrPlace: function (model, lat, lng) {
+      assertTrue(model.constructor === Album || (model.constructor === Collection && model.type === "Album"))
+      if (model.constructor === Album) {
+        this.showPlace(model, lat, lng)
+      } else {
+        this.showAlbum(model, lat, lng)
+      }
+    },
     showPlace: function (album, lat, lng) {
       var place = new Place()
       this._show({

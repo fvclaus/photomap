@@ -1,7 +1,7 @@
-/* jslint */
-/* global $, define, window, init, initTest, finalizeInit, assertTrue, gettext */
-
 "use strict"
+
+var DASHBOARD_VIEW = "/dashboard/"
+var ALBUM_VIEW = /album\/\d+\/view/
 
 /**
  * @author Marc-Leon Roemer
@@ -10,33 +10,39 @@
 
 define([
   "dojo/_base/declare",
-  "./Main",
-  "./AppController",
-  "./AppModelController",
   "../util/Communicator",
-  "./UIState",
   "../util/Collection",
   "../util/ClientState",
   "../model/Album",
   "../util/InfoText",
   "../widget/QuotaWidget",
-  "../widget/PageTitleWidget"
+  "../widget/PageTitleWidget",
+  "./DashboardView"
 ],
-function (declare, main, AppController, AppModelController, communicator, state, Collection, clientstate, Album, InfoText, QuotaWidget, PageTitleWidget) {
+function (declare, communicator, Collection, clientstate, Album, InfoText, QuotaWidget, PageTitleWidget, DashboardView) {
   return declare(null, {
 
     start: function () {
       console.log("AppInitializer started")
-      assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview")
+      assertTrue(this.isAlbumView() || this.isDashboardView(), "current view has to be either albumview or dashboardview")
 
-      var appController = new AppController()
-      var appModelController = new AppModelController()
-
-      if (state.isAlbumView()) {
+      if (this.isAlbumView()) {
         this._getPlaces()
       } else {
         this._getAlbums()
       }
+    },
+    isDashboardView: function () {
+      if (this.page.search(DASHBOARD_VIEW) !== -1) {
+        return true
+      }
+      return false
+    },
+    isAlbumView: function () {
+      if (this.page.search(ALBUM_VIEW) !== -1) {
+        return true
+      }
+      return false
     },
     postCreate: function () {
       this.quota = new QuotaWidget(null, $("#mp-user-limit"))
@@ -94,7 +100,7 @@ function (declare, main, AppController, AppModelController, communicator, state,
       })
     },
     _processInitialData: function (data) {
-      assertTrue(state.isAlbumView() || state.isDashboardView(), "current view has to be either albumview or dashboardview")
+      assertTrue(this.isAlbumView() || this.isDashboardView(), "current view has to be either albumview or dashboardview")
 
       var processedData
       var placeIndex = 0
@@ -102,7 +108,7 @@ function (declare, main, AppController, AppModelController, communicator, state,
       var place = null
       var photo = null
 
-      if (state.isAlbumView()) {
+      if (this.isAlbumView()) {
         // Set the visited attribute on every photo.
         for (placeIndex = 0; placeIndex < data.places.length; placeIndex++) {
           place = data.places[placeIndex]
@@ -112,7 +118,7 @@ function (declare, main, AppController, AppModelController, communicator, state,
           }
         }
         processedData = new Album(data)
-      } else if (state.isDashboardView()) {
+      } else if (this.isDashboardView()) {
         processedData = []
 
         $.each(data, function (index, albumData) {
