@@ -15,14 +15,9 @@ function (declare, ol, modelToIconImage) {
 
   return declare(null, {
 
-    PLACE_ICON_WIDTH: 18,
-    PLACE_ICON_HEIGHT: 15,
-
-    PLACE_ICON_SHADOW_WIDTH: 20,
-    ALBUM_ICON_SHADOW_WIDTH: 29,
-
     MODEL_TO_ICON_SIZE: {
-      Album: [25, 25]
+      Album: [25, 25],
+      Place: [25, 25]
     },
 
     STATUS_COLOR: {
@@ -64,6 +59,8 @@ function (declare, ol, modelToIconImage) {
       if (!iconCanvas) {
         iconCanvas = (this._iconCanvasCache[iconCacheKey] = this._createIconCanvas(model, status, [shadowCanvas.width, shadowCanvas.height]))
       }
+
+      this.size = [Math.max(iconCanvas.width, shadowCanvas.width), Math.max(iconCanvas.height, shadowCanvas.height)]
 
       return [new ol.style.Style({
         image: new ol.style.Icon({

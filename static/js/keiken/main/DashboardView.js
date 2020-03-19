@@ -10,13 +10,14 @@ define([
   "../widget/_Widget",
   "../util/Communicator",
   "../util/ClientState",
+  "../model/Collection",
   "../util/Tools",
   "dojo/text!./templates/Dashboard.html",
   "../map/MapWidget",
   "../widget/InfoTextWidget",
   "../widget/SlideshowWidget"
 ],
-function (declare, _Widget, communicator, clientstate, tools, templateString) {
+function (declare, _Widget, communicator, clientstate, Collection, tools, templateString) {
   // TODO Add listener for keyup event
 
   return declare(_Widget, {
@@ -27,7 +28,7 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
       this.isAdmin = params.isAdmin
       var markerModels = params.markerModels
       this.markerModels = markerModels
-      this.isAlbumView = markerModels.size() === 1
+      this.isAlbumView = markerModels.constructor !== Collection
       this.isDashboardView = !this.isAlbumView
       this.mapMarkerModels = this.isAlbumView ? markerModels.getPlaces() : markerModels
       this.mapFallbackMarkerModel = this.isAlbumView ? markerModels : undefined
@@ -45,26 +46,21 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
       }, "Model", this)
 
       communicator.subscribe({
-        mouseover: function (marker) {
+        mouseover: function (modelPositionDescriptor) {
+          // TODO Is this still relevant?
           // box is glued under the marker. this looks ugly, but is necessary if multiple markers are close by another
           // offset.top *= 1.01
-          this.controls && this.controls.show({
-            modelInstance: marker.model,
-            offset: this.map.getPositionInPixel(marker),
-            dimension: {
-              width: marker.getView().getSize().width
-            }
-          })
+          this.controls && this.controls.show(modelPositionDescriptor)
         },
         mouseout: function () {
-          this.controls.hideAfterDelay()
+          this.controls && this.controls.hideAfterDelay()
         },
         clicked: function (model) {
           this._showDetail(model)
         },
         dblClicked: function (model) {
-          if (this.isAlbumView) {
-            window.location.href = "/album/" + model.id + "/view/" + model.secret + "/"
+          if (this.isDashboardView) {
+            this.goToPath("/album/" + model.id + "/view/" + model.secret + "/")
           } else {
             this._loadedPlace = model
             this._startPhotoWidgets(model)
@@ -80,9 +76,9 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
       communicator.subscribe({
         mouseenter: function (data) {
           this.controls && this.controls.show({
-            modelInstance: data.photo,
+            model: data.photo,
             offset: data.element.offset(),
-            dimension: {
+            dimensions: {
               width: tools.getRealWidth(data.element)
             }
           })
@@ -126,6 +122,9 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
         })
       }
     },
+    goToPath: function (path) {
+      window.location.href = path
+    },
     postCreate: function () {
       this.inherited(this.postCreate, arguments)
       if (this.isAlbumView) {
@@ -149,12 +148,11 @@ function (declare, _Widget, communicator, clientstate, tools, templateString) {
       }
     },
     _startPhotoWidgets: function (place) {
-      var photos = place.getPhotos()
       this.description.show(place)
-      this.gallery.load(photos)
-      this.gallery.run()
-      this.slideshow.load(photos)
-      this.fullscreen.load(photos)
+      this.gallery.run(place.photos)
+      // TODO This should lazy load
+      this.slideshow.load(place.photos)
+      this.fullscreen.load(place.photos)
     }
   })
 })

@@ -24,11 +24,11 @@ function (ModelOperationWidget, Album, communicator, TestEnv) {
 
     var itWithAlbum = TestEnv.wrapJasmineItSyncSetup(function () {
       widget.show({
-        modelInstance: new Album({
+        model: new Album({
           title: "Album"
         }),
         offset: $("body").offset(),
-        dimension: {
+        dimensions: {
           width: 18
         }
       })
@@ -41,9 +41,9 @@ function (ModelOperationWidget, Album, communicator, TestEnv) {
     it("should center above item", function () {
       var $text = TestEnv.append("<span style='position: absolute; top: 200px; left: 200px'>Center above me</span>", true)
       widget.show({
-        modelInstance: null,
+        model: null,
         offset: $text.offset(),
-        dimension: {
+        dimensions: {
           width: $text.outerWidth(true)
         }
       })

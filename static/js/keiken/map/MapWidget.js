@@ -103,6 +103,16 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
         this.infotext.hide()
       }
     },
+    makeModelPositionDescriptor: function (marker) {
+      return {
+        model: marker.model,
+        offset: this.getPositionInPixel(marker),
+        dimensions: {
+          width: marker.size[0],
+          height: marker.size[1]
+        }
+      }
+    },
     _bindListener: function () {
       console.log("Binding click listener")
       this.map.on("singleclick", function (event) {
@@ -141,9 +151,9 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
         if (features.length && !currentMarkerOnMouse) {
           var marker = features[0]._markerInstance
           currentMarkerOnMouse = marker
-          communicator.publish("mouseover:Marker", marker)
+          communicator.publish("mouseover:Marker", this.makeModelPositionDescriptor(marker))
         } else if (!features.length && currentMarkerOnMouse) {
-          communicator.publish("mouseout:Marker", marker)
+          communicator.publish("mouseout:Marker", this.makeModelPositionDescriptor(marker))
           currentMarkerOnMouse = null
         }
 

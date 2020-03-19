@@ -113,8 +113,9 @@ define(["dojo/_base/declare",
 
       TestEnv.wrapJasmineItSyncSetup = function (setupFn) {
         return function (name, testFn) {
+          var args = Array.prototype.slice.call(arguments)
           it(name, function (done) {
-            executeSetupFn(setupFn)
+            executeSetupFn(setupFn, args.slice(2))
             executeTestFn(testFn, done)()
           })
         }

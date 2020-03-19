@@ -15,7 +15,7 @@ function (declare, _Widget, communicator, template) {
     constructor: function (params, srcNodeRef) {
       this.includeShareOperation = params.includeShareOperation
       this._isMouseInsideWidget = false
-      this._modelInstance = null
+      this._model = null
     },
 
     /**
@@ -26,9 +26,9 @@ function (declare, _Widget, communicator, template) {
       * @param options.dimension {Object} Contains width.
       */
     show: function (options) {
-      this._modelInstance = options.modelInstance
+      this._model = options.model
 
-      var width = options.dimension.width
+      var width = options.dimensions.width
       var center = {
         top: options.offset.top - this.$domNode.outerHeight(true),
         left: options.offset.left + width / 2
@@ -76,7 +76,7 @@ function (declare, _Widget, communicator, template) {
     publishOperation: function (event) {
       var operationName = event.target.getAttribute("data-operation-name")
       if (operationName) {
-        communicator.publish("clicked:" + operationName, this._modelInstance)
+        communicator.publish("clicked:" + operationName, this._model)
       } else {
         console.error(event.target + " has no data-operation-name")
       }

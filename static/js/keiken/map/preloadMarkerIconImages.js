@@ -4,8 +4,10 @@ define(["dojo/domReady!"], function () {
     load: function (id, require, callback) {
       var imageUrlDefinitions = [{
         modelName: "Album",
-        url: "/static/images/marker-icons/suitcase2.png",
-        isLoaded: false
+        url: "/static/images/marker-icons/album.png"
+      }, {
+        modelName: "Place",
+        url: "/static/images/marker-icons/place.png"
       }]
 
       var areAllImagesLoaded = function () {
@@ -22,6 +24,7 @@ define(["dojo/domReady!"], function () {
       }
 
       imageUrlDefinitions.forEach(function (definition) {
+        definition.isLoaded = false
         var img = new Image()
         img.onload = function () {
           definition.isLoaded = true
