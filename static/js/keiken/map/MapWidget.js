@@ -116,7 +116,6 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
     _bindListener: function () {
       console.log("Binding click listener")
       this.map.on("singleclick", function (event) {
-        console.log("Triggered event", event)
         var pixel = this.map.getEventPixel(event.originalEvent)
         var features = this.map.getFeaturesAtPixel(pixel)
         if (features.length) {
@@ -133,7 +132,6 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       }.bind(this))
 
       this.map.on("dblclick", function (event) {
-        console.log("Triggered event", event)
         var pixel = this.map.getEventPixel(event.originalEvent)
         var features = this.map.getFeaturesAtPixel(pixel)
         if (features.length) {
@@ -153,7 +151,7 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
           currentMarkerOnMouse = marker
           communicator.publish("mouseover:Marker", this.makeModelPositionDescriptor(marker))
         } else if (!features.length && currentMarkerOnMouse) {
-          communicator.publish("mouseout:Marker", this.makeModelPositionDescriptor(marker))
+          communicator.publish("mouseout:Marker", this.makeModelPositionDescriptor(currentMarkerOnMouse))
           currentMarkerOnMouse = null
         }
 

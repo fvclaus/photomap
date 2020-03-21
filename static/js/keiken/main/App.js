@@ -10,39 +10,39 @@ var ALBUM_VIEW = /album\/\d+\/view/
 
 define([
   "dojo/_base/declare",
+  "../widget/_Widget",
   "../util/Communicator",
-  "../util/Collection",
+  "../model/Collection",
   "../util/ClientState",
   "../model/Album",
-  "../util/InfoText",
   "../widget/QuotaWidget",
   "../widget/PageTitleWidget",
-  "./DashboardView"
+  "./DashboardView",
+  "dojo/text!./templates/App.html",
+  "../widget/InfoTextWidget",
+  "../widget/LoadingScreenWidget"
 ],
-function (declare, communicator, Collection, clientstate, Album, InfoText, QuotaWidget, PageTitleWidget, DashboardView) {
-  return declare(null, {
+function (declare, _Widget, communicator, Collection, clientstate, Album, QuotaWidget, PageTitleWidget, DashboardView, templateString) {
+  return declare(_Widget, {
 
-    start: function () {
-      console.log("AppInitializer started")
-      assertTrue(this.isAlbumView() || this.isDashboardView(), "current view has to be either albumview or dashboardview")
+    viewName: "App",
+    templateString: templateString,
 
-      if (this.isAlbumView()) {
+    constructor: function () {
+      this.isDashboardView = window.location.pathname.search(DASHBOARD_VIEW) !== -1
+      this.isAlbumView = !this.isDashboardView
+    },
+
+    startup: function () {
+      this.inherited(this.startup, arguments)
+
+      if (this.isAlbumView) {
+        this.pageTitle.update(gettext("Albumsansicht"))
         this._getPlaces()
       } else {
+        this.pageTitle.update("Dashboard")
         this._getAlbums()
       }
-    },
-    isDashboardView: function () {
-      if (this.page.search(DASHBOARD_VIEW) !== -1) {
-        return true
-      }
-      return false
-    },
-    isAlbumView: function () {
-      if (this.page.search(ALBUM_VIEW) !== -1) {
-        return true
-      }
-      return false
     },
     postCreate: function () {
       this.quota = new QuotaWidget(null, $("#mp-user-limit"))
@@ -80,8 +80,6 @@ function (declare, communicator, Collection, clientstate, Album, InfoText, Quota
           * @private
           */
     _getInitialData: function (url) {
-      var instance = this
-      var info = new InfoText()
       // get the albums and their info
       $.ajax({
         type: "GET",
@@ -89,26 +87,28 @@ function (declare, communicator, Collection, clientstate, Album, InfoText, Quota
         success: function (data) {
           // TODO "get-all-albums" does not return a data.success or data.error
           if ((data && data.success) || (data && !data.success)) {
-            instance._processInitialData(data)
+            this._processInitialData(data)
           } else {
-            info.alert(gettext("GET_ALBUM_ERROR") + data.error)
+            this.infoText.show({
+              message: gettext("GET_ALBUM_ERROR") + data.error
+            })
           }
-        },
+        }.bind(this),
         error: function () {
-          info.alert(gettext("NETWORK_ERROR"))
-        }
+          this.infoText.show({
+            message: gettext("NETWORK_ERROR")
+          })
+        }.bind(this)
       })
     },
     _processInitialData: function (data) {
-      assertTrue(this.isAlbumView() || this.isDashboardView(), "current view has to be either albumview or dashboardview")
-
       var processedData
       var placeIndex = 0
       var photoIndex = 0
       var place = null
       var photo = null
 
-      if (this.isAlbumView()) {
+      if (this.isAlbumView) {
         // Set the visited attribute on every photo.
         for (placeIndex = 0; placeIndex < data.places.length; placeIndex++) {
           place = data.places[placeIndex]
@@ -118,7 +118,7 @@ function (declare, communicator, Collection, clientstate, Album, InfoText, Quota
           }
         }
         processedData = new Album(data)
-      } else if (this.isDashboardView()) {
+      } else {
         processedData = []
 
         $.each(data, function (index, albumData) {
@@ -138,10 +138,11 @@ function (declare, communicator, Collection, clientstate, Album, InfoText, Quota
       }
       this.loadingScreen.hide()
       this.loadingScreen.destroy()
-      this.dashboard = new DashboardView({
+      var dashboard = new DashboardView({
         markerModels: processedData,
         isAdmin: isAdmin
-      })
+      }, this.childNode)
+      dashboard.startup()
     }
   })
 })

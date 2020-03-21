@@ -15,6 +15,10 @@ define([
   "../util/Tools",
   "dojo/text!./templates/Dashboard.html",
   "../map/MapWidget",
+  "../widget/GalleryWidget",
+  "../widget/DetailWidget",
+  "../widget/ModelOperationWidget",
+  "../widget/FullscreenWidget",
   "../widget/InfoTextWidget",
   "../widget/SlideshowWidget"
 ],

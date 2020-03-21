@@ -3,6 +3,18 @@
 {% load i18n %}
 {% load static %}
 
+{% block css %}
+<!-- pull in the compiled css from base.html -->
+{{ block.super }}
+{% load compress %}
+{% compress css %}
+<link rel="stylesheet"
+      type="text/x-stylus"
+      href="/static/styles/viewalbum-main.styl" />
+{% endcompress %}
+{% endblock %}
+
+
 {% block js %}
 <!-- pull in the compressed javascript from base.html -->
 {{ block.super }}
@@ -12,6 +24,8 @@
         src="/static/js/lib/jquery.jqote2.js"></script>
 <script type="text/javascript"
         src="/static/js/lib/jquery.hotkeys.js"></script>
+<script type="text/javascript"
+        src="/static/js/keiken/main/dashboard.js"></script>
 <!-- Feature currently disabled -->
 <!-- <script type="text/javascript" src="/static/js/lib/pixastic.custom.js"></script> -->
 <!-- <script type="text/javascript" src="/static/js/lib/jquery.mousewheel.min.js" ></script> -->
@@ -21,73 +35,7 @@
 
 {% block content %}
 
-{% block content_top %}
-{% endblock %}
-
-
-<section id="mp-left-column"
-         class="mp-left-column">
-  <section class="mp-full-column mp-full-left-column mp-nodisplay"
-           id="mp-full-left-column"> </section>
-  {% block content_inner_left %}
-  {% endblock %}
-</section>
-
-
-<section id="mp-right-column"
-         class="mp-right-column">
-  {% block content_inner_right %}
-  {% endblock %}
-
-  <section class="mp-full-column"
-           id="mp-detail">
-    <div class="mp-full-column-controls">
-      <span class="mp-control mp-cursor-pointer mp-full-column-closer mp-close-full-description">
-        {% trans "Schließen" %}
-      </span>
-    </div>
-    <div id="mp-detail-wrapper">
-      <p id="mp-detail-title">{% trans "SELECT_PLACE_OR_ALBUM" %}</p>
-      <div id="mp-detail-description-wrapper"
-           class="mp-wrapper">
-        <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;"
-             class="mp-insert-description"
-             href="#"
-             title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
-      </div>
-    </div>
-  </section>
-
-  <section class="mp-description-wrapper mp-nodisplay"
-           id="mp-detail-teaser">
-    <p id="mp-detail-teaser-title">{% trans "SELECT_PHOTO" %}</p>
-    <div id="mp-detail-teaser-description-wrapper"
-         class="mp-wrapper">
-      <p><em>{% trans "NO_DESCRIPTION" %}</em> <a style="margin-left: 10px; font-size: 0.8em;"
-           class="mp-insert-description"
-           href="#"
-           title='{% trans "ADD_DESCRIPTION" %}'>{% trans "ADD_DESCRIPTION" %}</a></p>
-    </div>
-  </section>
-</section>
-
-<!-- ff does not change the width of the conrols wrapper, unless it is a span tag -->
-<!-- changing the display to inline-block alone does not do the trick -->
-<span class="mp-controls-wrapper ui-corner-all mp-nodisplay"
-      id="mp-controls"> </span>
-
-{% include "loading-screen.html" %}
-
-<!-- TODO Add close after delay (2s) feature -->
-<div data-dojo-type="keiken/widget/InfoText">
-  <p id='mp-infotext-closing-help'>
-    {% trans CLOSE_INFOTEXT_ALERT %}
-  </p>
-</div>
-
-<script type="text/javascript"
-        src="//maps.googleapis.com/maps/api/js?key=AIzaSyDWnE-Kkl7ifiNjQVLv-N3UwY_KxuYqm_Q&sensor=false">
-</script>
+<section id="app" />
 
 {% if not compress_enabled %}
 <script type="text/javascript">

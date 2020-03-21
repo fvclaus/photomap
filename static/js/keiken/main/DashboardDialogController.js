@@ -37,7 +37,7 @@ function (declare, communicator, ModelDeleteDialog, MarkerInsertDialog, PhotoIns
       var lat = eventData.lat.toFixed(7)
       var lng = eventData.lng.toFixed(7)
 
-      dialog.show(this.markerModels, lat, lng)
+      dialog.showAlbumOrPlace(this.markerModels, lat, lng)
     },
     _openModelUpdateDialog: function (model) {
       new ModelUpdateDialog().show(model)

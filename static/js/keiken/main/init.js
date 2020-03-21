@@ -1,8 +1,7 @@
-/*jslint */
-/*global $, $$, gettext, navigator*/
+/* jslint */
+/* global $, $$, gettext, navigator */
 
-"use strict";
-
+"use strict"
 
 /**
  * Photo Map
@@ -16,8 +15,7 @@
 /**
  * @description Initializes main constructor. Needs document ready!
  */
-require(["keiken/main/AppInitializer", "dojo/domReady!"], function (AppInitializer) {
-   var appInit = new AppInitializer();
-   appInit.start();
-});
-
+require(["keiken/main/App", "dojo/domReady!"], function (App) {
+  var app = new App(null, $("#app").get(0))
+  app.startup()
+})
