@@ -12,12 +12,14 @@ define(["dojo/_base/declare",
 function (declare, ol, modelToIconImage) {
   var horizontalSkew = -0.3
   var shadowMargin = 4
+  var shadowMarginIconAdjustment = 1
 
   return declare(null, {
 
+    // Size should be multiple of 2. Otherwise calculation of center will be inaccurate
     MODEL_TO_ICON_SIZE: {
-      Album: [25, 25],
-      Place: [25, 25]
+      Album: [28, 28],
+      Place: [28, 28]
     },
 
     STATUS_COLOR: {
@@ -60,6 +62,7 @@ function (declare, ol, modelToIconImage) {
         iconCanvas = (this._iconCanvasCache[iconCacheKey] = this._createIconCanvas(model, status, [shadowCanvas.width, shadowCanvas.height]))
       }
 
+      this.iconCenter = [this.MODEL_TO_ICON_SIZE[model.type][0] / 2 + shadowMargin - shadowMarginIconAdjustment, shadowMargin + shadowMarginIconAdjustment]
       this.size = [Math.max(iconCanvas.width, shadowCanvas.width), Math.max(iconCanvas.height, shadowCanvas.height)]
 
       return [new ol.style.Style({
@@ -126,7 +129,6 @@ function (declare, ol, modelToIconImage) {
       ctx.fillStyle = "black"
       ctx.fillRect(0, 0, canvas.width, canvas.height)
       var imageData = this._findNonEmptyImageData(canvas, ctx)
-      // var imageData = ctx.getImageData(0, 0, (1 + -1 * horizontalSkew) * imageWidth + shadowMargin, imageHeight + 2 * shadowMargin)
       ctx.clearRect(0, 0, canvas.width, canvas.height)
       ctx.canvas.width = imageData.width
       ctx.canvas.height = imageData.height
@@ -142,7 +144,7 @@ function (declare, ol, modelToIconImage) {
       var imageWidth = this.MODEL_TO_ICON_SIZE[model.type][0]
       var imageHeight = this.MODEL_TO_ICON_SIZE[model.type][1]
       // Should cover the shadow on the left and bottom side.
-      ctx.drawImage(modelToIconImage[model.type], shadowMargin - 1, shadowMargin + 1, imageWidth, imageHeight)
+      ctx.drawImage(modelToIconImage[model.type], shadowMargin - shadowMarginIconAdjustment, shadowMargin + shadowMarginIconAdjustment, imageWidth, imageHeight)
       ctx.globalCompositeOperation = "source-in"
       ctx.fillStyle = this.STATUS_COLOR[status]
       ctx.fillRect(0, 0, canvas.width, canvas.height)

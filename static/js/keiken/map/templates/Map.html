@@ -5,4 +5,30 @@
        id="map"></div>
   <div data-dojo-type="keiken/widget/InfoTextWidget"
        data-widget-instance-name="infotext"></div>
+  <div data-dojo-attach-point="popupNode"
+       class="map__popup">
+    <a class="map__popup__close"
+       data-dojo-attach-point="popupCloseNode"></a>
+    <div data-dojo-attach-point="popupContentNode">
+      <img class="mp-option-delete mp-control mp-cursor-pointer"
+           src="/static/images/delete.png"
+           data-dojo-attach-event="onclick: publishOperation"
+           data-operation-name="DeleteOperation"
+           data-dojo-attach-point="deleteNode"></img>
+
+      <img class="mp-option-modify mp-control mp-cursor-pointer"
+           src="/static/images/modify.png"
+           data-dojo-attach-event="onclick: publishOperation"
+           data-operation-name="UpdateOperation"
+           data-dojo-attach-point="updateNode"></img>
+
+      {% if includeShareOperation %}
+      <img class="mp-cursor-pointer mp-control mp-option-share"
+           src="/static/images/share.png"
+           data-dojo-attach-event="onclick: publishOperation"
+           data-operation-name="ShareOperation"
+           data-dojo-attach-point="shareNode"></img>
+      {% endif %}
+    </div>
+  </div>
 </section>

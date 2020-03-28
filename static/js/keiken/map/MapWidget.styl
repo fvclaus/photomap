@@ -1,0 +1,40 @@
+$downArrowCenter = 48px
+$downArrowBorder = 12px
+
+.map__popup
+  position: absolute;
+  background-color: white;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  padding: 15px;
+  border-radius: 10px;
+  bottom: $downArrowBorder;
+  // The border of this border has effect on "left"
+  left: -1 * $downArrowCenter;
+  width: 280px;
+  height: 120px;
+  z-index: 10000
+  &:after, &:before
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+  // &:after
+  //   border-top-color: white;
+  //   border-width: 10px;
+  //   left: 48px;
+  //   margin-left: -10px;
+  &:before
+    border-top-color: #cccccc;
+    border-width: $downArrowBorder;
+    left: $downArrowCenter;
+    margin-left: -1 * $downArrowBorder;
+  &__close
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    &:after
+      content: "✖";

@@ -32,9 +32,14 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       this.markerLayer = new ol.layer.Vector({
         source: this.markerLayerSource
       })
+      this.popup = new ol.Overlay({
+        element: this.popupNode,
+        positioning: "bottom-center"
+      })
       this.map = new ol.Map({
         target: this.$map.get(0),
         interactions: ol.interaction.defaults({ doubleClickZoom: false }),
+        overlays: [this.popup],
         layers: [
           new ol.layer.Tile({
             source: new ol.source.OSM()
@@ -80,7 +85,12 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       * @returns {Object} Containing the bottom and left coordinate as (!!)top(!!) and left attribute
       */
     getPositionInPixel: function (marker) {
-      return this.map.getPixelFromCoordinate(marker.getCoordinates())
+      var pixel = this.map.getPixelFromCoordinate(marker.getCoordinates())
+      var mapOffset = this.$domNode.offset()
+      return {
+        top: pixel[1] + mapOffset.top,
+        left: pixel[0] + mapOffset.left
+      }
     },
     fit: function (markersinfo) {
       var view = this.map.getView()
@@ -114,12 +124,23 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       }
     },
     _bindListener: function () {
-      console.log("Binding click listener")
+      this.$popupClose.click(function () {
+        this.popup.setPosition(undefined)
+        this.popupCloseNode.blur()
+        return false
+      }.bind(this))
       this.map.on("singleclick", function (event) {
         var pixel = this.map.getEventPixel(event.originalEvent)
         var features = this.map.getFeaturesAtPixel(pixel)
         if (features.length) {
           var marker = features[0]._markerInstance
+          var coordinates = features[0].getGeometry().getCoordinates()
+          var hdms = ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates))
+          // this.$popupContent.html("<p>You clicked here:</p><code>" + hdms +
+          // "</code>")
+          // this.popup.setOffset([0, -1 * marker.topOfHandle])
+          this.popup.setOffset([marker.iconCenter[0] - marker.size[0] / 2, marker.iconCenter[1] - marker.size[1] / 2])
+          this.popup.setPosition(coordinates)
           this.updateMarkerStatus(marker, "select")
           communicator.publish("clicked:Marker", marker.model)
         } else {
@@ -165,6 +186,14 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
       this.map.on("pointerdrag", function () {
         this.$map.css("cursor", this.options.draggingCursor)
       }.bind(this))
+    },
+    publishOperation: function (event) {
+      var operationName = event.target.getAttribute("data-operation-name")
+      if (operationName) {
+        communicator.publish("clicked:" + operationName, this._model)
+      } else {
+        console.error(event.target + " has no data-operation-name")
+      }
     },
     updateMarkerStatus: function (markerOrModel, status) {
       assertTrue((status === "select" || status === "open"), "Marker status can just be 'select' or 'open'.")
