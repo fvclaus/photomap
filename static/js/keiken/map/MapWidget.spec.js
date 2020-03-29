@@ -61,11 +61,10 @@ function (MapWidget, Album, Collection, communicator, TestEnv) {
       var position = (markerOrPosition.constructor === Array)
         ? markerOrPosition
         : widget.getPositionInPixel(markerOrPosition)
-      var viewPortPosition = $(".ol-viewport").get(0).getBoundingClientRect()
       var event = new Event(type)
       // Reverse engineer map.getEventPixel
-      event.clientX = position[0] + viewPortPosition.left
-      event.clientY = position[1] + viewPortPosition.top
+      event.clientX = position.left
+      event.clientY = position.top
       event.button = 0
       event.pointerId = 1
       return event

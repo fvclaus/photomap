@@ -135,10 +135,6 @@ function (declare, _Widget, communicator, ol, Marker, templateString) {
         if (features.length) {
           var marker = features[0]._markerInstance
           var coordinates = features[0].getGeometry().getCoordinates()
-          var hdms = ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinates))
-          // this.$popupContent.html("<p>You clicked here:</p><code>" + hdms +
-          // "</code>")
-          // this.popup.setOffset([0, -1 * marker.topOfHandle])
           this.popup.setOffset([marker.iconCenter[0] - marker.size[0] / 2, marker.iconCenter[1] - marker.size[1] / 2])
           this.popup.setPosition(coordinates)
           this.updateMarkerStatus(marker, "select")

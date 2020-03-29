@@ -130,32 +130,30 @@ gradientEW()
   font-style: normal;
 }
 
-.icon-share:before {
-  font-family: "icomoon"
-  content: "\e902";
-  speak: none;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
-}
+// Copy with
+// unzip -o /tmp/icomoon.zip -d /tmp/icomoon; cp /tmp/icomoon/fonts/icomoon.* static/fonts/
 
-.icon-trash:before {
-  font-family: "icomoon"
-  content: "\e901";
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
   speak: none;
+  font-style: normal;
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
   line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .icon-edit:before {
-  font-family: "icomoon"
   content: "\e900";
-  speak: none;
-  font-weight: normal;
-  font-variant: normal;
-  text-transform: none;
-  line-height: 1;
+}
+.icon-trash:before {
+  content: "\e901";
+}
+.icon-share:before {
+  content: "\e902";
 }
