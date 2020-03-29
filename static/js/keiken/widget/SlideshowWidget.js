@@ -47,6 +47,8 @@ function (declare, _Widget, PhotoCarouselWidget, communicator, Collection, templ
         context: this
       }, this.carouselNode)
 
+      this.carousel.startup()
+
       this._showNotStartedInfoText()
     },
     load: function (photos) {

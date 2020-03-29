@@ -84,7 +84,7 @@ def view(request, album_id, secret):
         if request.method == "GET":
             # user owns the album
             if request.user == album.user or request.session.get("album_%d" % album_id):
-                return render(request, "view-album.html")
+                return render(request, "base-interactive.html")
             if not hashers.is_password_usable(album.password):
                 logger.debug("Album does not has a password yet.")
                 return render(request, "album-share-failure.html")

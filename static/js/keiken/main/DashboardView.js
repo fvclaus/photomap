@@ -93,7 +93,7 @@ function (declare, _Widget, communicator, clientstate, DashboardDialogController
           this.controls.hideAfterDelay()
         },
         clicked: function (photo) {
-          this.information.show(photo)
+          this.description.show(photo)
           this._navigateSlideshow(photo)
         }
       }, "GalleryPhoto", this)
@@ -114,7 +114,7 @@ function (declare, _Widget, communicator, clientstate, DashboardDialogController
 
       communicator.subscribe("clicked:SlideshowPhoto", function (photo) {
         this.fullscreen.show(photo)
-      })
+      }.bind(this))
 
       communicator.subscribe({
         navigated: function () {
@@ -141,8 +141,7 @@ function (declare, _Widget, communicator, clientstate, DashboardDialogController
     },
     _navigateSlideshow: function (photo) {
       this.controls.hide()
-      this.slideshow.run()
-      this.slideshow.navigateTo(photo)
+      this.slideshow.run(photo)
     },
     _showDetail: function (markerModel) {
       this.description.show(markerModel)

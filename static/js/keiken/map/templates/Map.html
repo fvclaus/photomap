@@ -6,25 +6,40 @@
   <div data-dojo-type="keiken/widget/InfoTextWidget"
        data-widget-instance-name="infotext"></div>
   <div data-dojo-attach-point="popupNode"
-       class="map__popup">
-    <a class="map__popup__close"
+       class="map__operations">
+    <a class="map__operations__close"
        data-dojo-attach-point="popupCloseNode"></a>
-    <div data-dojo-attach-point="popupContentNode">
-      <img class="mp-option-delete mp-control mp-cursor-pointer"
-           src="/static/images/delete.png"
+    <div class="map__operations__operations">
+      <button class="map__operations__operations__operation">
+        <span class="icon-edit">
+        </span>
+        <span class="map__operations__operations__operation__name">edit</span>
+      </button>
+      <button class="map__operations__operations__operation">
+        <span class="icon-trash">
+        </span>
+        <span class="map__operations__operations__operation__name">delete</span>
+      </button>
+      <button class="map__operations__operations__operation">
+        <span class="icon-share">
+        </span>
+        <span class="map__operations__operations__operation__name">share</span>
+      </button>
+      <!-- <img class="map__operations__operation"
+           src="/static/images/delete-new.png"
            data-dojo-attach-event="onclick: publishOperation"
            data-operation-name="DeleteOperation"
-           data-dojo-attach-point="deleteNode"></img>
+           data-dojo-attach-point="deleteNode"></img> -->
 
-      <img class="mp-option-modify mp-control mp-cursor-pointer"
-           src="/static/images/modify.png"
+      <!-- <img class="map__operations__operation"
+           src="/static/images/edit-new.png"
            data-dojo-attach-event="onclick: publishOperation"
            data-operation-name="UpdateOperation"
-           data-dojo-attach-point="updateNode"></img>
+           data-dojo-attach-point="updateNode"></img> -->
 
       {% if includeShareOperation %}
-      <img class="mp-cursor-pointer mp-control mp-option-share"
-           src="/static/images/share.png"
+      <img class="map__operations__operation"
+           src="/static/images/share-new.png"
            data-dojo-attach-event="onclick: publishOperation"
            data-operation-name="ShareOperation"
            data-dojo-attach-point="shareNode"></img>

@@ -87,7 +87,7 @@ function (declare, _EventEmitter, _HttpClient) {
           url: this._buildPostUrl(),
           type: "post",
           data: newData
-        }, this._overrideAjaxSettings()),
+        }, this._overrideAjaxSettings(newData)),
         function successFn (data) {
           if (this.id > -1) {
             this._updateProperties(newData)
