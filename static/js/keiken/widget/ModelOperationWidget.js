@@ -28,10 +28,10 @@ function (declare, _Widget, communicator, template) {
     show: function (options) {
       this._model = options.model
 
-      var width = options.dimensions.width
+      var dimensions = options.dimensions
       var center = {
-        top: options.offset.top - this.$domNode.outerHeight(true),
-        left: options.offset.left + width / 2
+        top: options.offset.top + dimensions.height / 2,
+        left: options.offset.left
       }
 
       if (this.hideControlsTimeoutId) {
