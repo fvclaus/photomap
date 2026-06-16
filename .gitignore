@@ -10,6 +10,12 @@ test_db.sqlite
 
 environment.py
 
+# Terraform
+terraform/.terraform/
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
+terraform/*.tfvars
+
 python_libs/
 
 # Dojo dependencies

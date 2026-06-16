@@ -1,0 +1,61 @@
+resource "google_cloud_run_v2_service" "photomap_production" {
+  name     = "photomap-production"
+  location = var.region
+
+  template {
+    service_account = google_service_account.photomap_production.email
+
+    containers {
+      image = var.app_image
+
+      ports {
+        container_port = 8080
+      }
+
+      env {
+        name  = "DJANGO_SETTINGS_MODULE"
+        value = "settings.gcp"
+      }
+
+      env {
+        name = "DATABASE_URL"
+        value_source {
+          secret_key_ref {
+            secret  = "db-connection-production"
+            version = "latest"
+          }
+        }
+      }
+
+      env {
+        name  = "GCS_BUCKET_NAME"
+        value = google_storage_bucket.photos.name
+      }
+
+      resources {
+        limits = {
+          cpu    = "1"
+          memory = "512Mi"
+        }
+      }
+    }
+
+    scaling {
+      min_instance_count = 0
+      max_instance_count = 3
+    }
+  }
+
+  traffic {
+    type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
+    percent = 100
+  }
+}
+
+# Allow unauthenticated public access.
+resource "google_cloud_run_v2_service_iam_member" "public_access" {
+  name     = google_cloud_run_v2_service.photomap_production.name
+  location = var.region
+  role     = "roles/run.invoker"
+  member   = "allUsers"
+}

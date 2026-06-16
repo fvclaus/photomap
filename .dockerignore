@@ -1,0 +1,12 @@
+.venv/
+node_modules/
+staticfiles/
+__pycache__/
+*.pyc
+*.pyo
+.git/
+.github/
+terraform/
+test_db.sqlite
+*.log
+.env
