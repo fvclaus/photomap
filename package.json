@@ -10,7 +10,7 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "karma start --single-run --browsers ChromeHeadlessNoSandbox"
+    "test": "karma start --single-run --browsers ChromeHeadless"
   },
   "repository": {
     "type": "git",

@@ -116,14 +116,7 @@ module.exports = function (config) {
     // possible values: LOG_DISABLE || LOG_ERROR || LOG_WARN || LOG_INFO || LOG_DEBUG
     logLevel: config.LOG_INFO,
 
-    browsers: ["ChromeHeadlessNoSandbox"],
-
-    customLaunchers: {
-      ChromeHeadlessNoSandbox: {
-        base: "ChromeHeadless",
-        flags: ["--no-sandbox", "--disable-dev-shm-usage"]
-      }
-    },
+    browsers: ["Chrome"],
 
     singleRun: false,
 

@@ -18,8 +18,6 @@ if 'test' in sys.argv:
     }
     # This is required by mail_managers().
     SERVER_EMAIL = "test@test"
-    COMPRESS_ENABLED = False
-    COMPRESS_PRECOMPILERS = ()
 else:
     DATABASES = {
         'default': {
