@@ -7,13 +7,29 @@ These tests are skipped when the emulator is not available.
 """
 
 import os
+import socket
 import unittest
 from decimal import Decimal
 
 EMULATOR_HOST = os.environ.get("FIRESTORE_EMULATOR_HOST")
 
 
-@unittest.skipUnless(EMULATOR_HOST, "Firestore emulator not running (set FIRESTORE_EMULATOR_HOST)")
+def _emulator_reachable():
+    if not EMULATOR_HOST:
+        return False
+    host, _, port = EMULATOR_HOST.rpartition(":")
+    try:
+        sock = socket.create_connection((host, int(port)), timeout=2)
+        sock.close()
+        return True
+    except OSError:
+        return False
+
+
+EMULATOR_AVAILABLE = _emulator_reachable()
+
+
+@unittest.skipUnless(EMULATOR_AVAILABLE, "Firestore emulator not reachable")
 class FirestoreAlbumTest(unittest.TestCase):
 
     def setUp(self):
@@ -97,7 +113,7 @@ class FirestoreAlbumTest(unittest.TestCase):
         self.assertIn("id", data)
 
 
-@unittest.skipUnless(EMULATOR_HOST, "Firestore emulator not running (set FIRESTORE_EMULATOR_HOST)")
+@unittest.skipUnless(EMULATOR_AVAILABLE, "Firestore emulator not reachable")
 class FirestorePlaceTest(unittest.TestCase):
 
     def setUp(self):
@@ -141,7 +157,7 @@ class FirestorePlaceTest(unittest.TestCase):
         self.assertEqual(len(places), 2)
 
 
-@unittest.skipUnless(EMULATOR_HOST, "Firestore emulator not running (set FIRESTORE_EMULATOR_HOST)")
+@unittest.skipUnless(EMULATOR_AVAILABLE, "Firestore emulator not reachable")
 class FirestoreUserProfileTest(unittest.TestCase):
 
     def setUp(self):
