@@ -7,12 +7,43 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - name: Install uv
         uses: astral-sh/setup-uv@v5
         with:
           python-version: "3.9"
+
       - run: uv sync
-      - run: uv run python manage.py test tests
+
+      # Django ORM tests (SQLite, no emulator needed)
+      - name: Run Django ORM tests
+        run: uv run python manage.py test tests --exclude-tag=firestore
+
+      # Start Firestore emulator and run Firestore model tests
+      - name: Set up Java for Firestore emulator
+        uses: actions/setup-java@v4
+        with:
+          java-version: "21"
+          distribution: "temurin"
+
+      - name: Download Firestore emulator
+        run: |
+          mkdir -p $HOME/.cache/firebase/emulators
+          curl -Lo $HOME/.cache/firebase/emulators/cloud-firestore-emulator.jar \
+            https://storage.googleapis.com/firebase-preview-drop/emulator/cloud-firestore-emulator-v1.21.0.jar
+
+      - name: Start Firestore emulator
+        run: |
+          java -jar $HOME/.cache/firebase/emulators/cloud-firestore-emulator.jar \
+            --host=127.0.0.1 --port=8080 > /tmp/emulator.log 2>&1 &
+          until curl -sf http://127.0.0.1:8080 > /dev/null 2>&1; do sleep 1; done
+          echo "Firestore emulator ready"
+
+      - name: Run Firestore model tests
+        env:
+          FIRESTORE_EMULATOR_HOST: 127.0.0.1:8080
+          GCLOUD_PROJECT: photomap-test
+        run: uv run python -m pytest tests/test_firestore_models.py -v
 
   frontend:
     name: frontend tests
@@ -22,5 +53,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
-      - run: npm install
+      - run: npm install --legacy-peer-deps
       - run: npm run test
