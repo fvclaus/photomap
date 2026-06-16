@@ -1,4 +1,6 @@
 resource "google_storage_bucket" "photos" {
+  depends_on = [google_project_service.storage]
+
   name          = "${var.project_id}-photos"
   location      = var.region
   force_destroy = false

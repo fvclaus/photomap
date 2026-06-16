@@ -1,6 +1,7 @@
 resource "google_cloud_run_v2_service" "photomap_production" {
-  name     = "photomap-production"
-  location = var.region
+  name                = "photomap-production"
+  location            = var.region
+  deletion_protection = false
 
   template {
     service_account = google_service_account.photomap_production.email
@@ -50,6 +51,8 @@ resource "google_cloud_run_v2_service" "photomap_production" {
     type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
     percent = 100
   }
+
+  depends_on = [google_project_service.run]
 }
 
 # Allow unauthenticated public access.

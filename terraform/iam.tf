@@ -2,6 +2,8 @@
 resource "google_service_account" "photomap_production" {
   account_id   = "photomap-production"
   display_name = "Photomap Production (Cloud Run)"
+
+  depends_on = [google_project_service.iam]
 }
 
 # Allow the Cloud Run SA to read the DB connection string secret.
@@ -22,6 +24,8 @@ resource "google_storage_bucket_iam_member" "photos_access" {
 resource "google_service_account" "photomap_ci" {
   account_id   = "photomap-ci"
   display_name = "Photomap CI/CD (GitHub Actions)"
+
+  depends_on = [google_project_service.iam]
 }
 
 # Allow CI to push Docker images to Artifact Registry.
