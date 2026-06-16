@@ -42,7 +42,7 @@ jobs:
     name: build & push Docker image
     needs: [backend, frontend]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/fix/docker-auth-token-format'
     permissions:
       contents: read
       id-token: write
@@ -87,7 +87,7 @@ jobs:
     name: deploy to Cloud Run
     needs: docker
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/master'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/fix/docker-auth-token-format'
     permissions:
       contents: read
       id-token: write
