@@ -2,6 +2,7 @@ import json
 import logging
 from io import BytesIO
 
+from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.http.response import HttpResponse
 from django.views.decorators.http import (require_GET, require_http_methods,
@@ -100,9 +101,13 @@ def insert(request):
 
         photo = Photo(**form.cleaned_data, order=0, size=size)
 
-        # Necessary to avoid "multiple values for argument" error
-        photo.photo = original
-        photo.thumb = thumb
+        if getattr(settings, 'GCS_BUCKET_NAME', None):
+            from pm import gcs
+            gcs.upload(photo.uuid, original, thumb)
+        else:
+            # Necessary to avoid "multiple values for argument" error
+            photo.photo = original
+            photo.thumb = thumb
 
         userprofile.used_space += photo.size
 
@@ -120,15 +125,14 @@ def insert(request):
 
 @require_GET
 def get_photo_or_thumb(request, photo_id):
-    print("Trying to find %s" % (photo_id, ))
     photo = Photo.objects.get(uuid=photo_id)
-    if 'thumb' in request.path:
-        image = photo.thumb
-    elif 'photo' in request.path:
-        image = photo.photo
+    kind = 'thumb' if 'thumb' in request.path else 'original'
+    if getattr(settings, 'GCS_BUCKET_NAME', None):
+        from pm import gcs
+        image = gcs.download(photo.uuid, kind)
     else:
-        raise ValueError("Unrecognized path %s" % (request.path, ))
-    return HttpResponse(bytes(image), content_type="image/jpeg")
+        image = bytes(photo.thumb if kind == 'thumb' else photo.photo)
+    return HttpResponse(image, content_type="image/jpeg")
 
 
 @login_required
@@ -218,6 +222,9 @@ def delete(request, photo_id):
             return error("not your photo")
 
         used_space = update_used_space(request.user, -1 * photo.size)
+        if getattr(settings, 'GCS_BUCKET_NAME', None):
+            from pm import gcs
+            gcs.delete(photo.uuid)
         logger.info("Photo %d deleted." % photo_id)
         photo.delete()
         response = success()
