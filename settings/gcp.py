@@ -34,6 +34,15 @@ DATABASES = {
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 STATIC_ROOT = os.path.join(PROJECT_PATH, "staticfiles")
 
+# Expose only the Dojo AMD packages from node_modules so collectstatic
+# puts them at /static/dojo/, /static/dijit/, /static/dojox/.
+_nm = os.path.join(PROJECT_PATH, "node_modules")
+STATICFILES_DIRS = list(STATICFILES_DIRS) + [
+    ("dojo", os.path.join(_nm, "dojo")),
+    ("dijit", os.path.join(_nm, "dijit")),
+    ("dojox", os.path.join(_nm, "dojox")),
+]
+
 # Offline compression — CSS/JS built during Docker image build.
 COMPRESS_OFFLINE = True
 COMPRESS_ROOT = STATIC_ROOT

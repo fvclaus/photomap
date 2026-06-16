@@ -34,6 +34,11 @@ resource "google_cloud_run_v2_service" "photomap_production" {
         value = google_storage_bucket.photos.name
       }
 
+      env {
+        name  = "SKIP_ACTIVATION"
+        value = "1"
+      }
+
       resources {
         limits = {
           cpu    = "1"
