@@ -7,7 +7,8 @@ resource "google_cloud_run_v2_service" "photomap_production" {
     service_account = google_service_account.photomap_production.email
 
     containers {
-      image = var.app_image
+      # Image is deployed externally via 'gcloud run services update', not managed by Terraform.
+      image = "us-docker.pkg.dev/cloudrun/container/hello:latest"
 
       ports {
         container_port = 8080
@@ -50,6 +51,10 @@ resource "google_cloud_run_v2_service" "photomap_production" {
   traffic {
     type    = "TRAFFIC_TARGET_ALLOCATION_TYPE_LATEST"
     percent = 100
+  }
+
+  lifecycle {
+    ignore_changes = [template[0].containers[0].image]
   }
 
   depends_on = [google_project_service.run]

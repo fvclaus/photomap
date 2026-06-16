@@ -3,7 +3,7 @@ FROM python:3.9-slim AS builder
 
 RUN pip install --no-cache-dir uv && \
     apt-get update && \
-    apt-get install -y --no-install-recommends curl && \
+    apt-get install -y --no-install-recommends curl build-essential python3-dev && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y --no-install-recommends nodejs && \
     rm -rf /var/lib/apt/lists/*

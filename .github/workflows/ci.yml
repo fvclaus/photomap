@@ -8,6 +8,7 @@ env:
   REGION: europe-west1
   PROJECT_ID: photomap-499617
   IMAGE: europe-west1-docker.pkg.dev/photomap-499617/photomap/app
+  SERVICE: photomap-production
 
 jobs:
   backend:
@@ -43,7 +44,6 @@ jobs:
           java -jar $HOME/.cache/firebase/emulators/cloud-firestore-emulator.jar \
             --host=127.0.0.1 --port=8080 > /tmp/emulator.log 2>&1 &
           until curl -sf http://127.0.0.1:8080 > /dev/null 2>&1; do sleep 1; done
-          echo "Firestore emulator ready"
 
       - name: Run Firestore model tests
         env:
@@ -66,10 +66,13 @@ jobs:
     name: build & push Docker image
     needs: [backend, frontend]
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/reborn'
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/reborn'
     permissions:
       contents: read
       id-token: write
+
+    outputs:
+      image: ${{ steps.meta.outputs.image }}
 
     steps:
       - uses: actions/checkout@v4
@@ -92,6 +95,7 @@ jobs:
           password: ${{ steps.auth.outputs.access_token }}
 
       - name: Build and push
+        id: meta
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -101,3 +105,27 @@ jobs:
             ${{ env.IMAGE }}:${{ github.sha }}
           cache-from: type=registry,ref=${{ env.IMAGE }}:latest
           cache-to: type=inline
+
+  deploy:
+    name: deploy to Cloud Run
+    needs: docker
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/master'
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Authenticate to GCP
+        id: auth
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: projects/44054328514/locations/global/workloadIdentityPools/github/providers/github
+          service_account: photomap-ci@photomap-499617.iam.gserviceaccount.com
+
+      - name: Deploy to Cloud Run
+        uses: google-github-actions/deploy-cloudrun@v2
+        with:
+          service: ${{ env.SERVICE }}
+          region: ${{ env.REGION }}
+          image: ${{ env.IMAGE }}:${{ github.sha }}

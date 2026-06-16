@@ -8,11 +8,10 @@ terraform {
     }
   }
 
-  # Local state — gitignored. Migrate to GCS backend once the state bucket exists.
-  # backend "gcs" {
-  #   bucket = "photomap-499617-tfstate"
-  #   prefix = "terraform/state"
-  # }
+  backend "gcs" {
+    bucket = "photomap-499617-tfstate"
+    prefix = "terraform/state"
+  }
 }
 
 provider "google" {
