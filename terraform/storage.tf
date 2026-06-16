@@ -36,3 +36,10 @@ resource "google_storage_bucket" "photos" {
     }
   }
 }
+
+# Allow public read access so the app can redirect to GCS URLs directly.
+resource "google_storage_bucket_iam_member" "photos_public_read" {
+  bucket = google_storage_bucket.photos.name
+  role   = "roles/storage.objectViewer"
+  member = "allUsers"
+}

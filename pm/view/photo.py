@@ -128,11 +128,14 @@ def get_photo_or_thumb(request, photo_id):
     photo = Photo.objects.get(uuid=photo_id)
     kind = 'thumb' if 'thumb' in request.path else 'original'
     if getattr(settings, 'GCS_BUCKET_NAME', None):
-        from pm import gcs
-        image = gcs.download(photo.uuid, kind)
+        from django.http import HttpResponseRedirect
+        url = "https://storage.googleapis.com/%s/photos/%s/%s.jpg" % (
+            settings.GCS_BUCKET_NAME, photo.uuid, kind
+        )
+        return HttpResponseRedirect(url)
     else:
         image = bytes(photo.thumb if kind == 'thumb' else photo.photo)
-    return HttpResponse(image, content_type="image/jpeg")
+        return HttpResponse(image, content_type="image/jpeg")
 
 
 @login_required

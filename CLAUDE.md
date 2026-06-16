@@ -87,11 +87,15 @@ The builder stage runs `compilemessages` (needs `gettext`), `compress --force`, 
 
 WIF uses the shared `fvclaus` provider — see global CLAUDE.md for the full WIF reference table.
 
-## Known issues / not yet configured
+## Production gaps
 
-- **Email backend**: `settings/common.py` uses `console.EmailBackend` — activation emails print to stdout only. Production needs SMTP configured in `settings/gcp.py`. Account activation currently doesn't work in production.
-- **Demo user**: `/album/demo` 500s because `demo@keiken.de` doesn't exist in the production DB. Needs a management command to seed demo data.
-- **Photo storage**: `GCS_BUCKET_NAME` is wired up in settings but photo upload/serve code still reads from the Django model `photo` / `thumb` byte fields. GCS integration is incomplete.
+| # | Issue | Impact | Fix |
+|---|-------|--------|-----|
+| 1 | **Email backend** | Critical — account activation emails never delivered (printed to Cloud Run stdout). New users cannot activate accounts. | Configure SMTP in `settings/gcp.py`. Gmail credentials are commented out in `settings/common.py`. |
+| 2 | **Demo user not seeded** | `/album/demo` returns 500 — `demo@keiken.de` does not exist in the production DB. | Run `python manage.py import_demo_album` against production DB, or seed via a migration. |
+| 3 | **No `DJANGO_SECRET_KEY` in production** | Session and CSRF tokens use the hardcoded insecure key from `settings/common.py`. | Add `DJANGO_SECRET_KEY` to Secret Manager, inject into Cloud Run env. |
+| 4 | **GCS photo serving is a proxy** | ~~Every photo request hits Cloud Run, which fetches from GCS and streams bytes. Adds latency and wastes Cloud Run CPU.~~ Fixed: bucket is now public; views redirect to public GCS URLs. | Done |
+| 5 | **User avatar (`UserProfile.picture`)** | Avatar still stored as BinaryField in PostgreSQL — same issue photos had before. | Apply same GCS pattern as photos once upload flow is verified. |
 
 ## Python version
 
