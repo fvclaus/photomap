@@ -31,7 +31,7 @@ DATABASES = {
     }
 }
 
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
 STATIC_ROOT = os.path.join(PROJECT_PATH, "staticfiles")
 
 # Expose only the Dojo AMD packages from node_modules so collectstatic
