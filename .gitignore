@@ -5,6 +5,8 @@ node_modules/
 *.pyc
 .pydevproject
 __pycache__/
+.venv/
+test_db.sqlite
 
 environment.py
 

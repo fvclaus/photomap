@@ -2,16 +2,25 @@ name: tests
 on: [push]
 
 jobs:
-  build:
-    name: tests
-    # Run on windows because it provides a graphics server
-    runs-on: windows-latest
+  backend:
+    name: backend tests
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v4
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
         with:
-          fetch-depth: 1
-      - uses: actions/setup-node@v1
+          python-version: "3.9"
+      - run: uv sync
+      - run: uv run python manage.py test tests
+
+  frontend:
+    name: frontend tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: '12.10'
+          node-version: "20"
       - run: npm install
       - run: npm run test
