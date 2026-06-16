@@ -37,17 +37,9 @@
 
 <section id="app" />
 
-{% if not compress_enabled %}
-<script type="text/javascript">
-  var dojoConfig = {
-    async: true
-  };
-
-</script>
 <script type="text/javascript">
   var dojoConfig = {
     async: true,
-    isDebug: true,
     packages: [{
         name: "keiken",
         location: "/static/js/keiken"
@@ -73,20 +65,4 @@
 
 <script type="text/javascript"
         src="{% static 'js/keiken/main/init.js' %}"></script>
-
-{% else %}
-<script type="text/javascript">
-  var dojoConfig = {
-    baseUrl: "/static/CACHE/js/",
-    async: true
-  };
-
-</script>
-<script type="text/javascript"
-        src="/static/CACHE/js/main.js"> </script>
-<script type="text/javascript">
-  require(["keiken/main/init"], function() {});
-
-</script>
-{% endif %}
 {% endblock %}

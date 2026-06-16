@@ -10,8 +10,8 @@ class Photo(Description):
     uuid = models.UUIDField(default=uuid.uuid4, editable=False)
     place = models.ForeignKey(Place, on_delete=models.CASCADE)
     order = models.IntegerField()
-    photo = models.BinaryField()
-    thumb = models.BinaryField()
+    photo = models.BinaryField(null=True, blank=True)
+    thumb = models.BinaryField(null=True, blank=True)
     size = models.IntegerField()
 
     def getphotourl(self):
